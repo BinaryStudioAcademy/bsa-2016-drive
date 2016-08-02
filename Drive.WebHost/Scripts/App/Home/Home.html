@@ -1,9 +1,9 @@
 ﻿@{
     ViewBag.Title = "Main Page";
 }
-<div class="header">
-    <h2>Main Page</h2>
-    <div class="header">
-        <p>{{Message}}</p>
+<div class="header" data-ng-controller="HomeController">
+    <div class="jumbotron">
+        <h1>{{Message}}</h1>
+        <p class="lead">This site brings together two great platforms for web development.</p>
     </div>
 </div>
