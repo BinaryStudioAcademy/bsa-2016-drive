@@ -6,6 +6,7 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/angular")
 </head>
 <body ng-app="driveApp">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -33,12 +34,11 @@
     </footer>
 </div>
 
-    @Scripts.Render("~/bundles/app")
-    @Scripts.Render("~/bundles/app")
-    @Scripts.Render("~/bundles/angular")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/app")
+    @Scripts.Render("~/bundles/route")
+    @Scripts.Render("~/bundles/controllers")
     @RenderSection("scripts", required: false)
 </body>
 </html>

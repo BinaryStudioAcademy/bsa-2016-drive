@@ -1,5 +1,6 @@
-﻿var appMain = angular.module('driveApp');
-app.controller('HomeController', ['$scope', '$routeParams', function ($scope) {
-    $scope.Message = "Coming Soon...";
-    $scope.Title = "Stay tuned...";
-}]);
+﻿var app = angular.module('driveApp');
+
+app.controller('HomeController', function ($scope) {
+    $scope.Title = "Binary.Drive";
+    $scope.Message = "Coming soon... Stay tuned...";
+})

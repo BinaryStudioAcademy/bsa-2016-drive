@@ -22,3 +22,22 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/*Style for jumbotron on Home page*/
+.jumbotron {
+    margin: 5px 0;
+    text-align: center;
+    background-color:mintcream;
+
+}
+
+.jumbotron h1 {
+    font-size: 72px;
+    line-height: 1;
+    font-weight: bold;
+    color:midnightblue;
+
+}
+.jumbotron p {
+    color: darkblue;
+}
