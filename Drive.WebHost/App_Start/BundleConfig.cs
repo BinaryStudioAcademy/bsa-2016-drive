@@ -30,9 +30,9 @@ namespace Drive.WebHost
                 "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/angular").Include(
-                       "~/Scripts/angular.js",
-                       "~/Scripts/angular-route.js",
-                       "~/Scripts/angular-sanitize.js"));
+                       "~/Scripts/Libs/angular.js",
+                       "~/Scripts/Libs/angular-route.js",
+                       "~/Scripts/Libs/angular-sanitize.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/route").Include(
                        "~/Scripts/App/Routing.js"));
