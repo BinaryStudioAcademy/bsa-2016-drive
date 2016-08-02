@@ -171,6 +171,9 @@
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\App\app.js" />
+    <Content Include="Scripts\App\Home\Home.html" />
+    <Content Include="Scripts\App\Home\HomeController.js" />
+    <Content Include="Scripts\App\Routing.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-dj.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-er.js" />
     <Content Include="Scripts\i18n\angular-locale_aa-et.js" />
