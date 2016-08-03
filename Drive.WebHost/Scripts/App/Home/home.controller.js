@@ -9,5 +9,6 @@
 
         vm.title = "Binary.Drive";
         vm.message = "Coming soon... Stay tuned...";
+        
     }
 }());
