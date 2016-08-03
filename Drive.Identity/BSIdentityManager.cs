@@ -11,5 +11,6 @@ namespace Drive.Identity
         public int UserId => Identity.UserId;
         public string Token => Identity.Token;
         public string Name => Identity.Name;
+        public bool IsAuthenticated => Identity.IsAuthenticated;
     }
 }
