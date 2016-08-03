@@ -172,6 +172,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\App\Home\homeService.js" />
+    <Content Include="Scripts\App\Space\Space.html" />
     <Content Include="Scripts\Bundles\libs.js" />
     <Content Include="Scripts\Bundles\libs.min.js">
       <DependentUpon>libs.js</DependentUpon>

@@ -6877,3 +6877,10 @@ textarea {
 .jumbotron p {
     color: darkblue;
 }
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+.limiter {
+    border-left: 1px solid;
+}
