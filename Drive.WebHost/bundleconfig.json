@@ -21,5 +21,13 @@
       "Scripts/Libs/jquery.validate.unobtrusive.min.js",
       "Scripts/Libs/respond.js"
     ]
+  },
+  {
+    "outputFileName": "Content/Bundles/styles.css",
+    "inputFiles": [
+      "Content/bootstrap.css",
+      "Content/bootstrap.min.css",
+      "Content/Site.css"
+    ]
   }
 ]
