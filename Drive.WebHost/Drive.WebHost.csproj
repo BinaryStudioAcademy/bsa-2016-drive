@@ -144,6 +144,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\App\Home\homeService.js" />
     <Content Include="Scripts\Libs\angular-mocks.js" />
     <Content Include="Scripts\Libs\angular-route.js" />
     <Content Include="Scripts\Libs\angular-route.min.js" />
@@ -151,7 +152,7 @@
     <Content Include="Scripts\Libs\angular.min.js" />
     <Content Include="Scripts\App\app.js" />
     <Content Include="Scripts\App\Home\Home.html" />
-    <Content Include="Scripts\App\Home\home.controller.js" />
+    <Content Include="Scripts\App\Home\homeController.js" />
     <Content Include="Scripts\Libs\bootstrap.js" />
     <Content Include="Scripts\Libs\bootstrap.min.js" />
     <Content Include="Scripts\Libs\angular.min.js.map" />

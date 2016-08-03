@@ -8,14 +8,14 @@
          .when('/', // Home Page
          {
              templateUrl: '/Scripts/App/Home/Home.html',
-             controller: 'homeController',
-             controllerAs: 'vm'
+             controller: 'HomeController',
+             controllerAs: 'homeCtrl'
          })
          .when('/Home/Index', // Home Page
          {
              templateUrl: '/Scripts/App/Home/Home.html',
-             controller: 'homeController',
-             controllerAs: 'vm'
+             controller: 'HomeController',
+             controllerAs: 'homeCtrl'
          })
          .otherwise({ // This is when any route not matched - error
              controller: 'ErrorController'

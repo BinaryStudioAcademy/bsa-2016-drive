@@ -35,7 +35,8 @@ namespace Drive.WebHost
                        "~/Scripts/App/app.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/controllers").Include(
-                       "~/Scripts/App/Home/home.controller.js"));
+                       "~/Scripts/App/Home/homeController.js",
+                       "~/Scripts/App/Home/homeService.js"));
         }
     }
 }
