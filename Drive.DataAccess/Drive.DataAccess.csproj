@@ -55,7 +55,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DI\DataAccessModule.cs" />
+    <Compile Include="Entities\ApplicationUnit.cs" />
+    <Compile Include="Entities\DataUnit.cs" />
+    <Compile Include="Entities\FileUnit.cs" />
+    <Compile Include="Entities\FolderUnit.cs" />
+    <Compile Include="Entities\Role.cs" />
+    <Compile Include="Entities\Space.cs" />
+    <Compile Include="Entities\User.cs" />
+    <Compile Include="Interfaces\IEntity.cs" />
+    <Compile Include="Interfaces\IRepository.cs" />
+    <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\Repository.cs" />
+    <Compile Include="Repositories\UnitOfWork.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -63,10 +75,7 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Entities\" />
-    <Folder Include="Repositories\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
