@@ -151,8 +151,7 @@
     <Content Include="Scripts\Libs\angular.min.js" />
     <Content Include="Scripts\App\app.js" />
     <Content Include="Scripts\App\Home\Home.html" />
-    <Content Include="Scripts\App\Home\HomeController.js" />
-    <Content Include="Scripts\App\Routing.js" />
+    <Content Include="Scripts\App\Home\home.controller.js" />
     <Content Include="Scripts\Libs\bootstrap.js" />
     <Content Include="Scripts\Libs\bootstrap.min.js" />
     <Content Include="Scripts\Libs\angular.min.js.map" />

@@ -32,10 +32,10 @@ namespace Drive.WebHost
                        "~/Scripts/Libs/angular-sanitize.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/route").Include(
-                       "~/Scripts/App/Routing.js"));
+                       "~/Scripts/App/app.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/controllers").Include(
-                       "~/Scripts/App/Home/HomeController.js"));
+                       "~/Scripts/App/Home/home.controller.js"));
         }
     }
 }
