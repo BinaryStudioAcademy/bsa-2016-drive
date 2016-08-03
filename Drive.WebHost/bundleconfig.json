@@ -1,0 +1,25 @@
+[
+  {
+    "outputFileName": "Scripts/Bundles/main.js",
+    "inputFiles": [
+      "Scripts/App/app.js",
+      "Scripts/App/Home/homeService.js",
+      "Scripts/App/Home/homeController.js"
+    ]
+  },
+  {
+    "outputFileName": "Scripts/Bundles/libs.js",
+    "inputFiles": [
+      "Scripts/Libs/angular.js",
+      "Scripts/Libs/angular-route.js",
+      "Scripts/Libs/bootstrap.js",
+      "Scripts/Libs/jquery-1.10.2.js",
+      "Scripts/Libs/jquery.validate-vsdoc.js",
+      "Scripts/Libs/jquery.validate.js",
+      "Scripts/Libs/jquery.validate.min.js",
+      "Scripts/Libs/jquery.validate.unobtrusive.js",
+      "Scripts/Libs/jquery.validate.unobtrusive.min.js",
+      "Scripts/Libs/respond.js"
+    ]
+  }
+]

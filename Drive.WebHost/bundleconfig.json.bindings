@@ -1,0 +1,1 @@
+﻿///<binding BeforeBuild='Scripts/Bundles/main.js, Scripts/Bundles/libs.js' />

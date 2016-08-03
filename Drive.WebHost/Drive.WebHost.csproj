@@ -145,6 +145,14 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\App\Home\homeService.js" />
+    <Content Include="Scripts\Bundles\libs.js" />
+    <Content Include="Scripts\Bundles\libs.min.js">
+      <DependentUpon>libs.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\Bundles\main.js" />
+    <Content Include="Scripts\Bundles\main.min.js">
+      <DependentUpon>main.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\Libs\angular-mocks.js" />
     <Content Include="Scripts\Libs\angular-route.js" />
     <Content Include="Scripts\Libs\angular-route.min.js" />
@@ -157,6 +165,10 @@
     <Content Include="Scripts\Libs\bootstrap.min.js" />
     <Content Include="Scripts\Libs\angular.min.js.map" />
     <Content Include="Scripts\Libs\angular-route.min.js.map" />
+    <None Include="bundleconfig.json" />
+    <Content Include="bundleconfig.json.bindings">
+      <DependentUpon>bundleconfig.json</DependentUpon>
+    </Content>
     <None Include="Scripts\Libs\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\Libs\jquery-1.10.2.js" />
     <Content Include="Scripts\Libs\jquery-1.10.2.min.js" />
