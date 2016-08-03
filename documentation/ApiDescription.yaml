@@ -1,0 +1,113 @@
+swagger: '2.0'
+info:
+  title: BinaryDrive API
+  description: Application program interface for Binary Drive
+  version: 1.0.0
+host: drive-bsa.ml
+schemes:
+  - https
+basePath: /api
+produces:
+  - application/json
+paths:
+  /users:
+    get:
+      summary: Get user by id
+      description: Allows to get the user object by its ID
+      parameters:
+        - name: id
+          in: query
+          description: Unique identifier of the user.
+          required: true
+          type: integer
+          format: int32
+      tags:
+        - User
+      responses:
+        '200':
+          description: User object
+          schema:
+            $ref: '#/definitions/User'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+  /spaces:
+    get:
+      summary: Get space by id
+      description: Allows to get the space object by its ID
+      parameters:
+        - name: id
+          in: query
+          description: Identifier of the space.
+          required: true
+          type: integer
+          format: int32
+      tags:
+        - Space
+      responses:
+        '200':
+          description: Space object
+          schema:
+            $ref: '#/definitions/Space'
+        default:
+          description: Unexpected error
+          schema:
+            $ref: '#/definitions/Error'
+            
+definitions:
+  User:
+    type: object
+    properties:
+      Id:
+        type: integer
+        format: int32
+        description: Unique identifier of the user.
+      UserName:
+        type: string
+        description: The name of the user.
+      IsDeleted:
+        type: boolean
+        format: boolean
+        description: A flag that indicates whether the user is deleted.
+  Space:
+    type: object
+    properties:
+      Id:
+        type: integer
+        format: int32
+        description: Unique identifier of the space.
+      Name:
+        type: string
+        description: The name of the space.
+      IsDeleted:
+        type: boolean
+        format: boolean
+        description: A flag that indicates whether the space is deleted.
+      CreateAt:
+        type: string
+        format: date
+      OwnerId:
+        type: integer
+        format: int32
+        description: Identifier of the user who owns the space.
+      Owner:
+        type: object
+        items:
+          $ref: '#/definitions/User'
+        description: This object representing a user who owns the space.
+      MaxCountOfFiles:
+        type: integer
+        format: int32
+        description: The maximum number of files which can be stored in the space.
+        
+  Error:
+    type: object
+    properties:
+      code:
+        type: integer
+        format: int32
+      message:
+        type: string
+      fields:
+        type: string
