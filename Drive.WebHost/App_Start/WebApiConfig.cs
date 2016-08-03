@@ -11,9 +11,7 @@ namespace Drive.WebHost
         public static void Register(HttpConfiguration config)
         {
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
-            // Web API configuration and services
-
-            // Web API routes
+            
             config.MapHttpAttributeRoutes();
 
             config.Routes.MapHttpRoute(
