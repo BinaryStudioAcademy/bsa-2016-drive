@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Principal;
 
-namespace Drive.Identity
+namespace Drive.Identity.Services.Abstract
 {
-    public class GenericIdentityManager<T> where T : IIdentity
+    public abstract class GenericIdentityManager<T> where T : IIdentity
     {
         public T Identity => (T)System.Threading.Thread.CurrentPrincipal.Identity;
 
