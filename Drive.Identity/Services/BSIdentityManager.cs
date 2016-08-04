@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Drive.Identity.Entities;
+using Drive.Identity.Services.Abstract;
 
-namespace Drive.Identity
+namespace Drive.Identity.Services
 {
     public class BSIdentityManager : GenericIdentityManager<BSIdentity>
     {
-        public int UserId => Identity.UserId;
+        public string UserId => Identity.UserId;
         public string Token => Identity.Token;
         public string Name => Identity.Name;
         public bool IsAuthenticated => Identity.IsAuthenticated;
