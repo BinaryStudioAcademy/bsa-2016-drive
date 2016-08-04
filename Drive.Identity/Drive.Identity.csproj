@@ -37,6 +37,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,10 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BSIdentityManager.cs" />
-    <Compile Include="BSIdentity.cs" />
-    <Compile Include="GenericIdentityManager.cs" />
+    <Compile Include="Entities\BSAuthResponse.cs" />
+    <Compile Include="Errors\AuthException.cs" />
+    <Compile Include="Errors\AuthRequestException.cs" />
+    <Compile Include="Services\BSAuthResponceSerializer.cs" />
+    <Compile Include="Services\BSIdentityManager.cs" />
+    <Compile Include="Entities\BSIdentity.cs" />
+    <Compile Include="Services\BSIdentityService.cs" />
+    <Compile Include="Services\Abstract\GenericIdentityManager.cs" />
     <Compile Include="DI\IdentityModule.cs" />
+    <Compile Include="Services\Abstract\IIdentityService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
