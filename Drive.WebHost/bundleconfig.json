@@ -22,6 +22,7 @@
     ]
   },
   {
+<<<<<<< HEAD
     "outputFileName": "Scripts/Bundles/libs.min.js",
     "inputFiles": [
       "Scripts/Libs/angular.js",
@@ -38,5 +39,13 @@
         "enabled": true,
         "commentMode": "all"
     }
+=======
+    "outputFileName": "Content/Bundles/styles.css",
+    "inputFiles": [
+      "Content/bootstrap.css",
+      "Content/bootstrap.min.css",
+      "Content/Site.css"
+    ]
+>>>>>>> origin/develop
   }
 ]

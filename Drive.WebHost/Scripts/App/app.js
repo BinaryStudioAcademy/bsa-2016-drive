@@ -7,13 +7,13 @@
          $routeProvider
          .when('/', // Home Page
          {
-             templateUrl: '/Scripts/App/Home/Home.html',
+             templateUrl: '/Scripts/App/Space/Space.html',
              controller: 'HomeController',
              controllerAs: 'homeCtrl'
          })
          .when('/Home/Index', // Home Page
          {
-             templateUrl: '/Scripts/App/Home/Home.html',
+             templateUrl: '/Scripts/App/Space/Space.html',
              controller: 'HomeController',
              controllerAs: 'homeCtrl'
          })
