@@ -22,7 +22,6 @@
     ]
   },
   {
-<<<<<<< HEAD
     "outputFileName": "Scripts/Bundles/libs.min.js",
     "inputFiles": [
       "Scripts/Libs/angular.js",
@@ -36,16 +35,16 @@
       "Scripts/Libs/respond.min.js"
     ],
     "minify": {
-        "enabled": true,
-        "commentMode": "all"
+      "enabled": true,
+      "commentMode": "all"
     }
-=======
+  },
+    {
     "outputFileName": "Content/Bundles/styles.css",
-    "inputFiles": [
-      "Content/bootstrap.css",
-      "Content/bootstrap.min.css",
-      "Content/Site.css"
-    ]
->>>>>>> origin/develop
+      "inputFiles": [
+        "Content/bootstrap.css",
+        "Content/bootstrap.min.css",
+        "Content/Site.css"
+      ]
   }
 ]
