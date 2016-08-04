@@ -31,7 +31,6 @@ namespace Drive.DataAccess.Repositories
                     throw new ArgumentNullException("entity");
                 }
                 this.Entities.Add(entity);
-                this._context.SaveChanges();
             }
             catch (Exception Ex)
             {
@@ -47,7 +46,7 @@ namespace Drive.DataAccess.Repositories
                 {
                     throw new ArgumentNullException("entity");
                 }
-                this._context.SaveChanges();
+                _context.Entry(entity).State = EntityState.Modified;
             }
             catch (Exception Ex)
             {
@@ -66,7 +65,6 @@ namespace Drive.DataAccess.Repositories
                 }
 
                 this.Entities.Remove(entity);
-                this._context.SaveChanges();
             }
             catch (Exception Ex)
             {
@@ -79,13 +77,8 @@ namespace Drive.DataAccess.Repositories
             return Entities;
         }
 
-        private IDbSet<T> Entities
-        {
-            get
-            {
-                return _entities ?? _context.Set<T>();
-            }
-        }
+        private IDbSet<T> Entities => _entities ?? _context.Set<T>();
+
     }
 }
 
