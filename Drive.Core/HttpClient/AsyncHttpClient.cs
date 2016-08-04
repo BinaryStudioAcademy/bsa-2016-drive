@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,36 +21,42 @@ namespace Drive.Core.HttpClient
         {
             var response = await _client.GetAsync(url);
 
-            response.EnsureSuccessStatusCode();
-
-            return await response.Content.ReadAsStringAsync();
+            return await ProcessResult(response);
         }
 
         public async Task<string> PostAsync(string url, string content)
         {
             var response = await _client.PostAsync(url, new StringContent(content));
 
-            response.EnsureSuccessStatusCode();
-
-            return await response.Content.ReadAsStringAsync();
+            return await ProcessResult(response);
         }
 
         public async Task<string> PutAsync(string url, string content)
         {
             var response = await _client.PutAsync(url, new StringContent(content));
 
-            response.EnsureSuccessStatusCode();
-
-            return await response.Content.ReadAsStringAsync();
+            return await ProcessResult(response);
         }
 
         public async Task<string> DeleteAsync(string url)
         {
             var response = await _client.DeleteAsync(url);
+            return await ProcessResult(response);
+        }
 
-            response.EnsureSuccessStatusCode();
+        private static async Task<string> ProcessResult(HttpResponseMessage response)
+        {
+            var code = (int)response.StatusCode;
 
-            return await response.Content.ReadAsStringAsync();
+            if (code == 200)
+            {
+                return await response.Content.ReadAsStringAsync();
+            }
+            if (code >= 400 && code < 500)
+            {
+                return null;
+            }
+            throw new HttpRequestException(response.StatusCode.ToString());
         }
 
         #region IDisposable Support
