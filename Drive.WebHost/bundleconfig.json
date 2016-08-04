@@ -10,51 +10,25 @@
   {
     "outputFileName": "Scripts/Bundles/libs.js",
     "inputFiles": [
-      "Scripts/Libs/angular.js",
-      "Scripts/Libs/angular-route.js",
-      "Scripts/Libs/jquery-1.10.2.js",
-      "Scripts/Libs/jquery.validate-vsdoc.js",
-      "Scripts/Libs/jquery.validate.js",
-      "Scripts/Libs/jquery.validate.unobtrusive.js",
-      "Scripts/Libs/bootstrap.js",
-      "Scripts/Libs/modernizr-2.6.2.js",
-      "Scripts/Libs/respond.js"
+      "bower_components/angular/angular.js",
+      "bower_components/angular-route/angular-route.js",
+      "bower_components/bootstrap/dist/js/bootstrap.js",
+      "bower_components/jquery/dist/jquery.js",
+      "bower_components/jquery/dist/core.js",
+      "bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
+      "bower_components/jquery.validate/dist/jquery.validate.js",
+      "bower_components/jquery.validate/dist/additional-methods.js",
+      "bower_components/modernizr/modernizr.js",
+      "bower_components/respond/src/respond.js",
+      "Scripts/Libs/jquery-1.10.2.intellisense.js",
+      "Scripts/Libs/jquery.validate-vsdoc.js"
     ]
-  },
-  {
-    "outputFileName": "Scripts/Bundles/libs.min.js",
-    "inputFiles": [
-      "Scripts/Libs/angular.js",
-      "Scripts/Libs/angular-mocks.js",
-      "Scripts/Libs/angular-route.min.js",
-      "Scripts/Libs/jquery-1.10.2.min.js",
-      "Scripts/Libs/jquery.validate.min.js",
-      "Scripts/Libs/jquery.validate.unobtrusive.min.js",
-      "Scripts/Libs/bootstrap.min.js",
-      "Scripts/Libs/modernizr-2.6.2.js",
-      "Scripts/Libs/respond.min.js"
-    ],
-    "minify": {
-      "enabled": true,
-      "commentMode": "all"
-    }
   },
   {
     "outputFileName": "Content/Bundles/styles.css",
     "inputFiles": [
-      "Content/bootstrap.css",
-      "Content/Site.css"
+      "Content/Site.css",
+      "bower_components/bootstrap/dist/css/bootstrap.css"
     ]
-  },
-  {
-    "outputFileName": "Content/Bundles/styles.min.css",
-    "inputFiles": [
-      "Content/bootstrap.min.css",
-      "Content/Site.css"
-    ],
-    "minify": {
-      "enabled": true,
-      "commentMode": "all"
-    }
   }
 ]
