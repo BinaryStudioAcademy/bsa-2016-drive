@@ -4,9 +4,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
+    @Styles.Render("~/bundles/styles")
     @Scripts.Render("~/bundles/modernizr")
-    @Scripts.Render("~/bundles/angular")
+    @Scripts.Render("~/bundles/libs")
 </head>
 <body ng-app="driveApp">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -34,11 +34,12 @@
     </footer>
 </div>
 
-    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/main")
+    @*@Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/app")
     @Scripts.Render("~/bundles/route")
-    @Scripts.Render("~/bundles/controllers")
+    @Scripts.Render("~/bundles/controllers")*@
     @RenderSection("scripts", required: false)
 </body>
 </html>
