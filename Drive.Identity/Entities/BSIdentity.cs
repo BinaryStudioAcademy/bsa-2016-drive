@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Security.Principal;
 
-namespace Drive.Identity
+namespace Drive.Identity.Entities
 {
     public class BSIdentity : IIdentity
     {
         public string Name { get; }
         public string Token { get; set; }
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public string AuthenticationType { get; }
         public bool IsAuthenticated { get; }
 
