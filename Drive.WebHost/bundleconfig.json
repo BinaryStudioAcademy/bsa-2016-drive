@@ -12,14 +12,31 @@
     "inputFiles": [
       "Scripts/Libs/angular.js",
       "Scripts/Libs/angular-route.js",
-      "Scripts/Libs/bootstrap.js",
       "Scripts/Libs/jquery-1.10.2.js",
       "Scripts/Libs/jquery.validate-vsdoc.js",
       "Scripts/Libs/jquery.validate.js",
-      "Scripts/Libs/jquery.validate.min.js",
       "Scripts/Libs/jquery.validate.unobtrusive.js",
-      "Scripts/Libs/jquery.validate.unobtrusive.min.js",
+      "Scripts/Libs/bootstrap.js",
+      "Scripts/Libs/modernizr-2.6.2.js",
       "Scripts/Libs/respond.js"
     ]
+  },
+  {
+    "outputFileName": "Scripts/Bundles/libs.min.js",
+    "inputFiles": [
+      "Scripts/Libs/angular.js",
+      "Scripts/Libs/angular-mocks.js",
+      "Scripts/Libs/angular-route.min.js",
+      "Scripts/Libs/jquery-1.10.2.min.js",
+      "Scripts/Libs/jquery.validate.min.js",
+      "Scripts/Libs/jquery.validate.unobtrusive.min.js",
+      "Scripts/Libs/bootstrap.min.js",
+      "Scripts/Libs/modernizr-2.6.2.js",
+      "Scripts/Libs/respond.min.js"
+    ],
+    "minify": {
+        "enabled": true,
+        "commentMode": "all"
+    }
   }
 ]
