@@ -46,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DI\CoreModule.cs" />
+    <Compile Include="HttpClient\AsyncHttpClient.cs" />
+    <Compile Include="HttpClient\IHttpClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
