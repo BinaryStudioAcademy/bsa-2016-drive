@@ -39,12 +39,22 @@
       "commentMode": "all"
     }
   },
-    {
+  {
     "outputFileName": "Content/Bundles/styles.css",
-      "inputFiles": [
-        "Content/bootstrap.css",
-        "Content/bootstrap.min.css",
-        "Content/Site.css"
-      ]
+    "inputFiles": [
+      "Content/bootstrap.css",
+      "Content/Site.css"
+    ]
+  },
+  {
+    "outputFileName": "Content/Bundles/styles.min.css",
+    "inputFiles": [
+      "Content/bootstrap.min.css",
+      "Content/Site.css"
+    ],
+    "minify": {
+      "enabled": true,
+      "commentMode": "all"
+    }
   }
 ]

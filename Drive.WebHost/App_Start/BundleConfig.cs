@@ -44,7 +44,7 @@ namespace Drive.WebHost
             bundles.Add(new ScriptBundle("~/bundles/main").Include(
                        "~/Scripts/Bundles/main.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/styles").Include(
+            bundles.Add(new StyleBundle("~/bundles/styles").Include(
                        "~/Content/Bundles/styles.css"));
         }
     }
