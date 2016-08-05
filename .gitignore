@@ -253,3 +253,6 @@ paket-files/
 
 # Exclude bower_components
 bower_components/
+
+# Exclude Dependencies
+Dependencies/
