@@ -161,24 +161,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Bundles\styles.css" />
-    <Content Include="Content\Bundles\styles.min.css">
-      <DependentUpon>styles.css</DependentUpon>
-    </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="gulpfile.js" />
     <Content Include="Scripts\App\Home\homeService.js" />
     <Content Include="Scripts\App\Space\Space.html" />
-    <Content Include="Scripts\Bundles\libs.js" />
-    <Content Include="Scripts\Bundles\libs.min.js">
-      <DependentUpon>libs.js</DependentUpon>
-    </Content>
-    <Content Include="Scripts\Bundles\main.js" />
-    <Content Include="Scripts\Bundles\main.min.js">
-      <DependentUpon>main.js</DependentUpon>
-    </Content>
     <Content Include="Scripts\App\app.js" />
     <Content Include="Scripts\App\Home\Home.html" />
     <Content Include="Scripts\App\Home\homeController.js" />
@@ -207,8 +195,10 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\Bundles\" />
     <Folder Include="Dependencies\" />
     <Folder Include="Models\" />
+    <Folder Include="Scripts\Bundles\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

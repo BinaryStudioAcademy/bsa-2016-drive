@@ -256,3 +256,11 @@ bower_components/
 
 # Exclude Dependencies
 Dependencies/
+
+# Exclude bundles
+styles.css
+styles.min.css
+libs.js
+libs.min.js
+main.js
+main.min.js
