@@ -1,21 +1,22 @@
-using Drive.WebHost.DI;
+using System;
+using System.Web;
+using Drive.Core.Infrastructure;
+using Drive.DataAccess.Infrastructure;
+using Drive.Identity.DI;
+using Drive.WebHost;
+using Drive.WebHost.Infrastructure;
+using Microsoft.Web.Infrastructure.DynamicModuleHelper;
+using Ninject;
+using Ninject.Web.Common;
 
-[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(Drive.WebHost.App_Start.NinjectWebCommon), "Start")]
-[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(Drive.WebHost.App_Start.NinjectWebCommon), "Stop")]
+[assembly: WebActivatorEx.PreApplicationStartMethod(typeof(NinjectWebCommon), "Start")]
+[assembly: WebActivatorEx.ApplicationShutdownMethodAttribute(typeof(NinjectWebCommon), "Stop")]
 
-namespace Drive.WebHost.App_Start
+namespace Drive.WebHost
 {
-    using System;
-    using System.Web;
-
-    using Microsoft.Web.Infrastructure.DynamicModuleHelper;
-
-    using Ninject;
-    using Ninject.Web.Common;
-
     public static class NinjectWebCommon 
     {
-        private static readonly Bootstrapper bootstrapper = new Bootstrapper();
+        private static readonly Bootstrapper Bootstrapper = new Bootstrapper();
 
         /// <summary>
         /// Starts the application
@@ -24,7 +25,7 @@ namespace Drive.WebHost.App_Start
         {
             DynamicModuleUtility.RegisterModule(typeof(OnePerRequestHttpModule));
             DynamicModuleUtility.RegisterModule(typeof(NinjectHttpModule));
-            bootstrapper.Initialize(CreateKernel);
+            Bootstrapper.Initialize(CreateKernel);
         }
         
         /// <summary>
@@ -32,7 +33,7 @@ namespace Drive.WebHost.App_Start
         /// </summary>
         public static void Stop()
         {
-            bootstrapper.ShutDown();
+            Bootstrapper.ShutDown();
         }
         
         /// <summary>
@@ -63,7 +64,7 @@ namespace Drive.WebHost.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            System.Web.Mvc.DependencyResolver.SetResolver(new DependencyResolver(kernel));
+            kernel.Load(new CoreModule(), new DataAccessModule(), new IdentityModule(), new WebHostModule());
         }        
     }
 }
