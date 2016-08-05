@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Drive.DataAccess.Context;
 using Drive.DataAccess.Entities;
 using Drive.DataAccess.Interfaces;
@@ -32,9 +27,8 @@ namespace Drive.DataAccess.Repositories
         {
             get
             {
-                if (_folderRepository == null)
-                    _folderRepository = _repositoryFactory.CreateRepository<FolderUnit>(_context);
-                return _folderRepository;
+                return _folderRepository ??
+                       (_folderRepository = _repositoryFactory.CreateRepository<FolderUnit>(_context));
             }
         }
 
@@ -42,39 +36,25 @@ namespace Drive.DataAccess.Repositories
         {
             get
             {
-                if (_fileRepository == null)
-                    _fileRepository = _repositoryFactory.CreateRepository<FileUnit>(_context);
-                return _fileRepository;
+                return _fileRepository ?? (_fileRepository = _repositoryFactory.CreateRepository<FileUnit>(_context));
             }
         }
 
         public IRepository<User> Users
         {
-            get
-            {
-                if (_userRepository == null)
-                    _userRepository = _repositoryFactory.CreateRepository<User>(_context);
-                return _userRepository;
-            }
+            get { return _userRepository ?? (_userRepository = _repositoryFactory.CreateRepository<User>(_context)); }
         }
 
         public IRepository<Role> Roles
         {
-            get
-            {
-                if (_roleRepository == null)
-                    _roleRepository = _repositoryFactory.CreateRepository<Role>(_context);
-                return _roleRepository;
-            }
+            get { return _roleRepository ?? (_roleRepository = _repositoryFactory.CreateRepository<Role>(_context)); }
         }
 
         public IRepository<Space> Spaces
         {
             get
             {
-                if (_spaceRepository == null)
-                    _spaceRepository = _repositoryFactory.CreateRepository<Space>(_context);
-                return _spaceRepository;
+                return _spaceRepository ?? (_spaceRepository = _repositoryFactory.CreateRepository<Space>(_context));
             }
         }
 
@@ -101,25 +81,5 @@ namespace Drive.DataAccess.Repositories
         {
             _context.SaveChanges();
         }
-
-        //public Repository<T> GetRepository<T>() where T : class
-        //{
-        //    if (_repositories == null)
-        //    {
-        //        _repositories = new Dictionary<string, object>();
-        //    }
-
-        //    var type = typeof(T).Name;
-
-        //    if (!_repositories.ContainsKey(type))
-        //    {
-        //        var repositoryType = typeof(Repository<>);
-        //        var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(T)), _context);
-        //        _repositories.Add(type, repositoryInstance);
-        //    }
-
-        //    return (Repository<T>)_repositories[type];
-        //}
-
     }
 }

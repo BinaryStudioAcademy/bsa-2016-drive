@@ -63,7 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\DriveContext.cs" />
-    <Compile Include="DI\DataAccessModule.cs" />
+    <Compile Include="Infrastructure\DataAccessModule.cs" />
     <Compile Include="Entities\ApplicationUnit.cs" />
     <Compile Include="Entities\DataUnit.cs" />
     <Compile Include="Entities\FileUnit.cs" />
