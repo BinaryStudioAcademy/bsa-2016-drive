@@ -3,9 +3,9 @@
 	"name": "asp.net",
 	"private": true,
   "devDependencies": {
-    "gulp": "3.9.1",
-    "gulp-bower": "0.0.13",
-    "gulp-config": "0.3.0",
-    "bower": "1.7.9"
+      "gulp": "3.9.1",
+      "gulp-bower": "0.0.13",
+      "gulp-config": "0.3.0",
+      "bower": "1.7.9"
   }
 }

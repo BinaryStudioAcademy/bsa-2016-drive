@@ -262,5 +262,7 @@ Dependencies/
 **/Bundles/styles.min.css
 **/Bundles/libs.js
 **/Bundles/libs.min.js
+**/Bundles/jquerylibs.js
+**/Bundles/jquerylibs.min.js
 **/Bundles/main.js
 **/Bundles/main.min.js
