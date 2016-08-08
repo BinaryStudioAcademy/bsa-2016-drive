@@ -14,7 +14,7 @@ namespace Drive.Identity.Entities
         public string Email { get; set; }
 
         [JsonProperty("iat")]
-        public string IssuedAt { get; set; }
+        public int IssuedAt { get; set; }
 
         [JsonProperty("id")]
         public string UserId { get; set; }
@@ -24,9 +24,16 @@ namespace Drive.Identity.Entities
 
         public string Token { get; set; }
 
-        public bool IsAuthenticated { get; }
+        public bool IsAuthenticated => !string.IsNullOrEmpty(UserId);
+
         public string AuthenticationType { get; }
 
-        // TODO: Add fields for identity
+        public bool IsExpired => Expired();
+
+        private bool Expired()
+        {
+            var dt = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(IssuedAt).ToLocalTime();
+            return dt.AddMinutes(1440) >= DateTime.Now;
+        }
     }
 }
