@@ -1,8 +1,4 @@
-﻿using System;
-using System.IdentityModel.Tokens;
-using System.Security.Principal;
-using System.ServiceModel.Security.Tokens;
-using System.Text;
+﻿using System.Security.Principal;
 using Drive.Identity.Entities;
 using Drive.Identity.Services.Abstract;
 using JWT;
@@ -15,6 +11,7 @@ namespace Drive.Identity.Services
         {
             try
             {
+                JsonWebToken.JsonSerializer = new BSIdentitiySerializer();
                 var identity = JsonWebToken.DecodeToObject<BSIdentity>(token, secret);
                 identity.Token = token;
                 GenericPrincipal principal = new GenericPrincipal(identity, new[] { identity.Role });
