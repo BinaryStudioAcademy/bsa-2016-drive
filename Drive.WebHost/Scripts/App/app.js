@@ -5,19 +5,19 @@
      function ($routeProvider) {
 
          $routeProvider
-         .when('/', // Home Page
-         {
-             templateUrl: '/Scripts/App/Space/Space.html',
-             controller: 'HomeController',
-             controllerAs: 'homeCtrl'
-         })
-         .when('/Home/Index', // Home Page
-         {
-             templateUrl: '/Scripts/App/Space/Space.html',
-             controller: 'HomeController',
-             controllerAs: 'homeCtrl'
-         })
-         .when('/Home/Settings', // Space settings Page
+         //.when('/', // Home Page
+         //{
+         //    templateUrl: '/Scripts/App/Space/Space.html',
+         //    controller: 'HomeController',
+         //    controllerAs: 'homeCtrl'
+         //})
+         //.when('/Home/Index', // Home Page
+         //{
+         //    templateUrl: '/Scripts/App/Space/Space.html',
+         //    controller: 'HomeController',
+         //    controllerAs: 'homeCtrl'
+         //})
+         .when('/', // Space settings Page
          {
              templateUrl: '/Scripts/App/Space/Settings.html',
              controller: 'SettingsController',
