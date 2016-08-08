@@ -6,6 +6,7 @@ using Drive.WebHost.Services;
 
 namespace Drive.WebHost.Api
 {
+    [RoutePrefix("api/spaces")]
     public class SpacesController : ApiController
     {
 
@@ -17,33 +18,57 @@ namespace Drive.WebHost.Api
         }
 
         [HttpGet]
-        public IEnumerable<Space> GetAll()
+        public IHttpActionResult GetAll()
         {
-           return _spaceService.SpaceRepository().GetAll();
+            var result = _spaceService.SpaceRepository().GetAll();
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
         }
 
         [HttpGet]
-        public Space Get(int id)
+        public IHttpActionResult GetSpace(int id)
         {
-            return _spaceService.SpaceRepository().GetById(id);
+            var result = _spaceService.SpaceRepository().GetById(id);
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
         }
         
         [HttpPost]
-        public void Add(Space entity)
+        public IHttpActionResult AddSpace(Space entity)
         {
+            if (!ModelState.IsValid)
+               return BadRequest();
+
             _spaceService.SpaceRepository().Create(entity);
+            return Ok();
         }
 
         [HttpDelete]
-        public void Delete(int id)
+        public IHttpActionResult DeleteSpace(int id)
         {
+            var result = _spaceService.SpaceRepository().GetById(id);
+
+            if(result == null)
+               return NotFound();
+
             _spaceService.SpaceRepository().Delete(id);
+            return Ok();
         }
 
         [HttpPut]
-        public void Update(Space entity)
+        public IHttpActionResult UpdateSpace(Space entity)
         {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
             _spaceService.SpaceRepository().Update(entity);
+            return Ok();
         }
     }
 }
