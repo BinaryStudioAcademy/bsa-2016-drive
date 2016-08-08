@@ -1,27 +1,62 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Drive.DataAccess.Context;
+using Drive.DataAccess.Entities;
 using Drive.DataAccess.Interfaces;
 
 namespace Drive.DataAccess.Repositories
 {
     public class UnitOfWork : IUnitOfWork
     {
-        private readonly DbContext _context;
+        private readonly DriveContext _context;
         private bool _isDisposed;
-        private Dictionary<string, object> _repositories;
+        private readonly IRepositoryFactory _repositoryFactory;
 
-        public UnitOfWork(DbContext context)
+        public UnitOfWork(DriveContext context, IRepositoryFactory factory)
         {
             _context = context;
+            _repositoryFactory = factory;
         }
 
-        //public UnitOfWork()
-        //{
-        //}
+        private IRepository<FolderUnit> _folderRepository;
+        private IRepository<FileUnit> _fileRepository;
+        private IRepository<User> _userRepository;
+        private IRepository<Role> _roleRepository;
+        private IRepository<Space> _spaceRepository;
+
+        public IRepository<FolderUnit> Folders
+        {
+            get
+            {
+                return _folderRepository ??
+                       (_folderRepository = _repositoryFactory.CreateRepository<FolderUnit>(_context));
+            }
+        }
+
+        public IRepository<FileUnit> Files
+        {
+            get
+            {
+                return _fileRepository ?? (_fileRepository = _repositoryFactory.CreateRepository<FileUnit>(_context));
+            }
+        }
+
+        public IRepository<User> Users
+        {
+            get { return _userRepository ?? (_userRepository = _repositoryFactory.CreateRepository<User>(_context)); }
+        }
+
+        public IRepository<Role> Roles
+        {
+            get { return _roleRepository ?? (_roleRepository = _repositoryFactory.CreateRepository<Role>(_context)); }
+        }
+
+        public IRepository<Space> Spaces
+        {
+            get
+            {
+                return _spaceRepository ?? (_spaceRepository = _repositoryFactory.CreateRepository<Space>(_context));
+            }
+        }
 
         public void Dispose()
         {
@@ -46,25 +81,5 @@ namespace Drive.DataAccess.Repositories
         {
             _context.SaveChanges();
         }
-
-        public IRepository<T> Repository<T>() where T : class
-        {
-            if (_repositories == null)
-            {
-                _repositories = new Dictionary<string, object>();
-            }
-
-            var type = typeof(T).Name;
-
-            if (!_repositories.ContainsKey(type))
-            {
-                var repositoryType = typeof(Repository<>);
-                var repositoryInstance = Activator.CreateInstance(repositoryType.MakeGenericType(typeof(T)), _context);
-                _repositories.Add(type, repositoryInstance);
-            }
-
-            return (Repository<T>)_repositories[type];
-        }
-
     }
 }

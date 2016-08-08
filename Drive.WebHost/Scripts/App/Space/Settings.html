@@ -1,0 +1,105 @@
+﻿<div class="container">
+    <nav aria-label="...">
+        <ul class="pager">
+            <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Back</a></li>
+        </ul>
+    </nav>
+    <ol class="breadcrumb">
+        <li><a href="#">BinarySpace</a></li>
+        <li><a href="#">Space1</a></li>
+        <li class="active">Settings</li>
+    </ol>
+    <div class="page-header">
+        <h2>
+            Space settings <small>{{settingsCtrl.title}}</small>
+        </h2>
+    </div>
+    <div class="row">
+        <div class="col-md-3" style="padding-right: 20px; border-right: 1px solid #ccc;">
+            <h4>General settings</h4>
+            <form name="settingsForm" novalidate>
+                <div class="col-md-12">
+                    <label>Space name:</label>
+                    <input type="text" class="form-control" ng-model="settingsCtrl.spaceName">
+                </div>
+                <div class="col-md-12">
+                    <label>Description:</label>
+                    <input type="text" class="form-control" ng-model="settingsCtrl.description">
+                </div>
+                <div class="col-md-12">
+                    <label>Maximum Files Quantity:</label>
+                    <input type="number" class="form-control" min="0" step="1" ng-model="settingsCtrl.maxFilesQuantity">
+                </div>
+                <div class="col-md-12">
+                    <label>Maximum file size:</label>
+                    <input type="number" class="form-control" min="0" step="1" max="1024" ng-model="settingsCtrl.maxFileSize">
+                </div>
+                <div class="col-md-12">
+                    <br />
+                    <button class="btn btn-primary" ng-click="settingsCtrl.save()">Save</button>
+                    <button class="btn btn-default" ng-click="settingsCtrl.cancel()">Cancel</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-md-9">
+            <h4>Settings user access to space</h4>
+            <ul id="permissionsTab" class="nav nav-tabs">
+                <li class="active"><a href="#panel1">Users permission</a></li>
+            </ul>
+            <div class="tab-content">
+                <br />
+                <div id="panel1" class="tab-pane fade in active">
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <div class="dropdown" data-toggle="tooltip" data-placement="top" title="Select user">
+                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        Users<span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li ng-repeat="a in settingsCtrl.users">
+                                            <a ng-click="settingsCtrl.setChoice(a.name, a.id);">{{a.name}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control" ng-model="settingsCtrl.userAddName" placeholder="User name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-5">
+                                <button class="btn btn-primary" ng-click="settingsCtrl.addSpaceUser()">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>User name</th>
+                                <th>Id</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in settingsCtrl.spaceUsers">
+                                <td>{{item.name}}</td>
+                                <td>{{item.id}}</td>
+                                <td>
+                                    <input type="button" value="Remove" class="btn btn-danger" ng-click="settingsCtrl.removeUser(item.id)" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--For Tooltip-->
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('[data-toggle="tooltip"]').tooltip();
+    });
+</script>

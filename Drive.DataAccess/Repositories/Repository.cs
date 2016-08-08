@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Data.Entity;
 using Drive.DataAccess.Interfaces;
 
@@ -19,7 +17,7 @@ namespace Drive.DataAccess.Repositories
 
         public T GetById(int id)
         {
-            return this.Entities.Find(id);
+            return Entities.Find(id);
         }
 
         public void Create(T entity)
@@ -28,14 +26,13 @@ namespace Drive.DataAccess.Repositories
             {
                 if (entity == null)
                 {
-                    throw new ArgumentNullException("entity");
+                    throw new ArgumentNullException(nameof(entity));
                 }
-                this.Entities.Add(entity);
-                this._context.SaveChanges();
+                Entities.Add(entity);
             }
-            catch (Exception Ex)
+            catch (Exception ex)
             {
-                throw Ex;
+                throw ex;
             }
         }
 
@@ -45,13 +42,13 @@ namespace Drive.DataAccess.Repositories
             {
                 if (entity == null)
                 {
-                    throw new ArgumentNullException("entity");
+                    throw new ArgumentNullException(nameof(entity));
                 }
-                this._context.SaveChanges();
+                _context.Entry(entity).State = EntityState.Modified;
             }
-            catch (Exception Ex)
+            catch (Exception ex)
             {
-                throw Ex;
+                throw ex;
             }
         }
 
@@ -62,15 +59,14 @@ namespace Drive.DataAccess.Repositories
                 var entity = GetById(id);
                 if (entity == null)
                 {
-                    throw new ArgumentNullException("entity");
+                    throw new ArgumentNullException(nameof(id));
                 }
 
-                this.Entities.Remove(entity);
-                this._context.SaveChanges();
+                Entities.Remove(entity);
             }
-            catch (Exception Ex)
+            catch (Exception ex)
             {
-                throw Ex;
+                throw ex;
             }
         }
 
@@ -79,13 +75,8 @@ namespace Drive.DataAccess.Repositories
             return Entities;
         }
 
-        private IDbSet<T> Entities
-        {
-            get
-            {
-                return _entities ?? _context.Set<T>();
-            }
-        }
+        private IDbSet<T> Entities => _entities ?? _context.Set<T>();
+
     }
 }
 
