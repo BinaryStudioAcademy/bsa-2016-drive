@@ -41,18 +41,18 @@
 
         function getUsers() {
             return [
-                { 'name': 'Nikita Krasnov', 'amount': 1 },
-                { 'name': 'Alex Aza', 'amount': 2 },
-                { 'name': 'Anton Kumpan', 'amount': 3 },
-                { 'name': 'Artem Kostenko', 'amount': 4 },
-                { 'name': 'Irina Antonenko', 'amount': 5 }
+                { 'name': 'Nikita Krasnov', 'id': 1 },
+                { 'name': 'Alex Aza', 'id': 2 },
+                { 'name': 'Anton Kumpan', 'id': 3 },
+                { 'name': 'Artem Kostenko', 'id': 4 },
+                { 'name': 'Irina Antonenko', 'id': 5 }
             ];
         }
 
         function getSpaceUsers() {
             return [
-                { 'name': 'Alex Aza', 'amount': 2 },
-                { 'name': 'Artem Kostenko', 'amount': 4 }
+                { 'name': 'Alex Aza', 'id': 2 },
+                { 'name': 'Artem Kostenko', 'id': 4 }
             ];
         }
 
