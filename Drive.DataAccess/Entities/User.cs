@@ -12,6 +12,8 @@ namespace Drive.DataAccess.Entities
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
 
+        public string GlobalId { get; set; }
+
         public string Login { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
