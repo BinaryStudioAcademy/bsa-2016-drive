@@ -197,9 +197,6 @@
       <DependentUpon>bundleconfig.json</DependentUpon>
     </Content>
     <Content Include="package.json" />
-    <None Include="Scripts\Libs\jquery-1.10.2.intellisense.js" />
-    <None Include="Scripts\Libs\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\Libs\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -217,6 +214,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
+    <Folder Include="Scripts\Libs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
