@@ -1,4 +1,5 @@
-﻿using Ninject.Modules;
+﻿using Drive.WebHost.Services;
+using Ninject.Modules;
 
 namespace Drive.WebHost.Infrastructure
 {
@@ -6,6 +7,7 @@ namespace Drive.WebHost.Infrastructure
     {
         public override void Load()
         {
+            Kernel.Bind<ISpaceService>().To<SpaceService>();
         }
     }
 }
