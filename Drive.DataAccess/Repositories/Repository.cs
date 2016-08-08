@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using Drive.DataAccess.Interfaces;
 
 namespace Drive.DataAccess.Repositories
@@ -72,10 +73,10 @@ namespace Drive.DataAccess.Repositories
 
         public IEnumerable<T> GetAll()
         {
-            return Entities;
+            return Entities.ToList();
         }
 
-        private IDbSet<T> Entities => _entities ?? _context.Set<T>();
+        public IDbSet<T> Entities => _entities ?? _context.Set<T>();
 
     }
 }
