@@ -1,1 +1,1 @@
-﻿///<binding BeforeBuild='Scripts/Bundles/main.js, Scripts/Bundles/libs.js, Update all files, Content/Bundles/styles.css, Scripts/Bundles/jquerylibs.js' />
+﻿///<binding BeforeBuild='Scripts/Bundles/main.js, Scripts/Bundles/libs.js, Update all files, Content/Bundles/styles.css, Scripts/Bundles/jquerylibs.js' ProjectOpened='Scripts/Bundles/jquerylibs.js' />

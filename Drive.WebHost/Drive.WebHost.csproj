@@ -179,6 +179,10 @@
     <Compile Include="Services\SpaceController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Bundles\styles.css" />
+    <Content Include="Content\Bundles\styles.min.css">
+      <DependentUpon>styles.css</DependentUpon>
+    </Content>
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -199,6 +203,14 @@
     <Content Include="package.json" />
     <None Include="Scripts\Libs\jquery-1.10.2.intellisense.js" />
     <None Include="Scripts\Libs\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\Bundles\libs.js" />
+    <Content Include="Scripts\Bundles\libs.min.js">
+      <DependentUpon>libs.js</DependentUpon>
+    </Content>
+    <Content Include="Scripts\Bundles\main.js" />
+    <Content Include="Scripts\Bundles\main.min.js">
+      <DependentUpon>main.js</DependentUpon>
+    </Content>
     <Content Include="Scripts\Libs\_references.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
@@ -216,7 +228,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Dependencies\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
