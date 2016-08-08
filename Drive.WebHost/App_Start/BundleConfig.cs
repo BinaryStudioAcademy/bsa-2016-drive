@@ -20,16 +20,13 @@ namespace Drive.WebHost
                 "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/libs").Include(
-                    "~/Scripts/Bundles/libs.js"));
-
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                    "~/Scripts/Bundles/jquerylibs.js"));
+                "~/Scripts/Bundles/libs.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/main").Include(
-                       "~/Scripts/Bundles/main.js"));
+                "~/Scripts/Bundles/main.js"));
 
             bundles.Add(new StyleBundle("~/bundles/styles").Include(
-                       "~/Content/Bundles/styles.css"));
+                "~/Content/Bundles/styles.css"));
         }
     }
 }

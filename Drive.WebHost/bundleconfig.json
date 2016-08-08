@@ -21,21 +21,16 @@
     "inputFiles": [
       "bower_components/angular/angular.js",
       "bower_components/angular-route/angular-route.js",
-      "bower_components/bootstrap/dist/js/bootstrap.js",
-      "bower_components/modernizr/modernizr.js",
-      "bower_components/respond/src/respond.js"
-    ]
-  },
-  {
-    "outputFileName": "Scripts/Bundles/jquerylibs.js",
-    "inputFiles": [
       "bower_components/jquery/dist/jquery.js",
+      "bower_components/bootstrap/dist/js/bootstrap.js",
       "bower_components/jquery/dist/core.js",
       "bower_components/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js",
       "bower_components/jquery.validate/dist/additional-methods.js",
       "bower_components/jquery.validate/dist/jquery.validate.js",
       "Scripts/Libs/jquery-1.10.2.intellisense.js",
-      "Scripts/Libs/jquery.validate-vsdoc.js"
+      "Scripts/Libs/jquery.validate-vsdoc.js",
+      "bower_components/modernizr/modernizr.js",
+      "bower_components/respond/src/respond.js"
     ]
   }
 ]
