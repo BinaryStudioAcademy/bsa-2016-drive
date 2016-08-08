@@ -10,7 +10,7 @@ namespace Drive.Identity.Services.Abstract
         public void SetIdentity(T identity, string[] roles)
         {
             var principal = new GenericPrincipal(identity, roles);
-            System.Threading.Thread.CurrentPrincipal = principal;
+            SetPrincipal(principal);
         }
 
         public void SetPrincipal(IPrincipal principal)
