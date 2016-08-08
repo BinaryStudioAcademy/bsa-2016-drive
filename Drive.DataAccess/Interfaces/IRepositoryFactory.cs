@@ -10,6 +10,6 @@ namespace Drive.DataAccess.Interfaces
 {
     public interface IRepositoryFactory
     {
-        Repository<T> CreateRepository<T>(DbContext context) where T : class;
+        IRepository<T> CreateRepository<T>(DbContext context) where T : class;
     }
 }
