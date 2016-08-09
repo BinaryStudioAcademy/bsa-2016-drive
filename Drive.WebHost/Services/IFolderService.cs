@@ -17,7 +17,7 @@ namespace Drive.WebHost.Services
 
         Task UpdateAsync(FolderUnit folder);
 
-        Task Delete(int id);
+        Task DeleteAsync(int id);
 
         void Dispose();
     }

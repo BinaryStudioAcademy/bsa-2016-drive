@@ -57,9 +57,9 @@ namespace Drive.WebHost.Api
 
         // DELETE api/folders/1
         [HttpDelete]
-        public IHttpActionResult Delete(int id)
+        public async Task<IHttpActionResult> DeleteAsync(int id)
         {
-            _service.Delete(id);
+            await _service.DeleteAsync(id);
 
             return Ok();
         }

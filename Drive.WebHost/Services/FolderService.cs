@@ -45,7 +45,7 @@ namespace Drive.WebHost.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             _unitOfWork.Folders.Delete(id);
             await _unitOfWork.SaveChangesAsync();
