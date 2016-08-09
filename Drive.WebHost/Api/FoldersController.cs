@@ -51,7 +51,7 @@ namespace Drive.WebHost.Api
         [HttpPut]
         public async Task<IHttpActionResult> UpdateAsync(int id, FolderUnitDto folder)
         {
-            await _service.UpdateAsync(folder);
+            await _service.UpdateAsync(id, folder);
 
             return Ok();
         }

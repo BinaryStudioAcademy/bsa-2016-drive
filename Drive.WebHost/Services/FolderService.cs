@@ -65,18 +65,16 @@ namespace Drive.WebHost.Services
             return folder.Id;
         }
 
-        public async Task UpdateAsync(FolderUnitDto dto)
+        public async Task UpdateAsync(int id, FolderUnitDto dto)
         {
-            var folder = new FolderUnit
-            {
-                Description = dto.Description,
-                IsDeleted = dto.IsDeleted,
-                Name = dto.Name,
+            var folder = await _unitOfWork.Folders.GetByIdAsync(id);
 
-                LastModified = DateTime.Now
-            };
+            folder.Description = dto.Description;
+            folder.IsDeleted = dto.IsDeleted;
+            folder.Name = dto.Name;
 
-            _unitOfWork.Folders.Update(folder);
+            folder.LastModified = DateTime.Now;
+
             await _unitOfWork.SaveChangesAsync();
         }
 
