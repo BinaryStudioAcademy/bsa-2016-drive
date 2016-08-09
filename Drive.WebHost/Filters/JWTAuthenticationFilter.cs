@@ -30,7 +30,7 @@ namespace Drive.WebHost.Filters
             var user = filterContext.HttpContext.User;
             if (user == null || !user.Identity.IsAuthenticated)
             {
-                filterContext.Result = new HttpUnauthorizedResult();
+                //filterContext.Result = new HttpUnauthorizedResult();
             }
         }
     }
