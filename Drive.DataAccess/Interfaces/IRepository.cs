@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Drive.DataAccess.Interfaces
@@ -13,6 +14,7 @@ namespace Drive.DataAccess.Interfaces
         void Create(T item);
         void Update(T item);
         void Delete(int id);
+        IQueryable<T> Query { get; }
     }
 
 }

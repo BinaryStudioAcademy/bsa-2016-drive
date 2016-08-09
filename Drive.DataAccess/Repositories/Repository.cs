@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Threading.Tasks;
+using System.Linq;
 using Drive.DataAccess.Interfaces;
 
 namespace Drive.DataAccess.Repositories
@@ -22,7 +23,7 @@ namespace Drive.DataAccess.Repositories
         }
         public async Task<T> GetByIdAsync(int id)
         {
-             return await Entities.SingleOrDefaultAsync(i => i.Id == id);
+            return await Entities.SingleOrDefaultAsync(i => i.Id == id);
         }
 
         public void Create(T entity)
@@ -77,16 +78,21 @@ namespace Drive.DataAccess.Repositories
 
         public IEnumerable<T> GetAll()
         {
-            return Entities;
+            return Entities.ToList();
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-              return await Entities.ToListAsync();
+            return await Entities.ToListAsync();
         }
 
-        private IDbSet<T> Entities => _entities ?? _context.Set<T>();
+        protected IDbSet<T> Entities => _entities ?? (_entities = _context.Set<T>());
+
+        public IQueryable<T> Query => Entities;
+
     }
+
 }
+
 
 
