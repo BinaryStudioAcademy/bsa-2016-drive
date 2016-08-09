@@ -76,7 +76,9 @@ namespace Drive.DataAccess.Repositories
             return Entities.ToList();
         }
 
-        public IDbSet<T> Entities => _entities ?? (_entities = _context.Set<T>());
+        protected IDbSet<T> Entities => _entities ?? (_entities = _context.Set<T>());
+
+        public IQueryable<T> Query => Entities;
     }
 
 }
