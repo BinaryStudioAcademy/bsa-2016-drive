@@ -240,6 +240,10 @@
       <Project>{6E1728F5-E668-4FC3-8ECD-863227ED8B61}</Project>
       <Name>Drive.Identity</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Driver.Shared\Driver.Shared.csproj">
+      <Project>{6AD80389-1ECD-4223-AFFF-693FFA80958F}</Project>
+      <Name>Driver.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

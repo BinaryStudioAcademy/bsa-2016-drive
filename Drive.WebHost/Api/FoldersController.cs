@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Drive.DataAccess.Entities;
 using Drive.WebHost.Services;
+using Driver.Shared.Dto;
 
 namespace Drive.WebHost.Api
 {
@@ -39,7 +40,7 @@ namespace Drive.WebHost.Api
 
         // POST api/folders
         [HttpPost]
-        public async Task<IHttpActionResult> CreateAsync(FolderUnit folder)
+        public async Task<IHttpActionResult> CreateAsync(FolderUnitDto folder)
         {
             await _service.CreateAsync(folder);
 
@@ -48,7 +49,7 @@ namespace Drive.WebHost.Api
 
         //PUT api/folders/1
         [HttpPut]
-        public async Task<IHttpActionResult> UpdateAsync(int id, FolderUnit folder)
+        public async Task<IHttpActionResult> UpdateAsync(int id, FolderUnitDto folder)
         {
             await _service.UpdateAsync(folder);
 

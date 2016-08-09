@@ -4,18 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Drive.DataAccess.Entities;
+using Driver.Shared.Dto;
 
 namespace Drive.WebHost.Services
 {
     public interface IFolderService
     {
-        Task<IEnumerable<FolderUnit>> GetAllAsync();
+        Task<IEnumerable<FolderUnitDto>> GetAllAsync();
 
-        Task<FolderUnit> GetAsync(int id);
+        Task<FolderUnitDto> GetAsync(int id);
 
-        Task<int> CreateAsync(FolderUnit folder);
+        Task<int> CreateAsync(FolderUnitDto folder);
 
-        Task UpdateAsync(FolderUnit folder);
+        Task UpdateAsync(FolderUnitDto folder);
 
         Task DeleteAsync(int id);
 

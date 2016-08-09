@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Drive.DataAccess.Entities;
 using Drive.DataAccess.Interfaces;
+using Driver.Shared.Dto;
 
 namespace Drive.WebHost.Services
 {
@@ -17,21 +18,46 @@ namespace Drive.WebHost.Services
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<IEnumerable<FolderUnit>> GetAllAsync()
+        public async Task<IEnumerable<FolderUnitDto>> GetAllAsync()
         {
-            return await _unitOfWork.Folders.GetAllAsync();
+            var data = await _unitOfWork.Folders.GetAllAsync();
+
+            var dto = from d in data
+                      select new FolderUnitDto
+                      {
+                          Id = d.Id,
+                          Description = d.Description,
+                          Name = d.Name,
+                          IsDeleted = d.IsDeleted
+                      };
+
+            return dto;
         }
 
-        public async Task<FolderUnit> GetAsync(int id)
+        public async Task<FolderUnitDto> GetAsync(int id)
         {
-            return await _unitOfWork.Folders.GetByIdAsync(id);
+            var folder = await _unitOfWork.Folders.GetByIdAsync(id);
+
+            return new FolderUnitDto
+            {
+                Id = folder.Id,
+                Description = folder.Description,
+                Name = folder.Name,
+                IsDeleted = folder.IsDeleted
+            };
         }
 
-        public async Task<int> CreateAsync(FolderUnit folder)
+        public async Task<int> CreateAsync(FolderUnitDto dto)
         {
-            folder.CreatedAt = DateTime.Now;
-            folder.LastModified = DateTime.Now;
-            folder.IsDeleted = false;
+            var folder = new FolderUnit
+            {
+                Description = dto.Description,
+                Name = dto.Name,
+
+                CreatedAt = DateTime.Now,
+                LastModified = DateTime.Now,
+                IsDeleted = false
+            };
 
             _unitOfWork.Folders.Create(folder);
             await _unitOfWork.SaveChangesAsync();
@@ -39,9 +65,16 @@ namespace Drive.WebHost.Services
             return folder.Id;
         }
 
-        public async Task UpdateAsync(FolderUnit folder)
+        public async Task UpdateAsync(FolderUnitDto dto)
         {
-            folder.LastModified = DateTime.Now;
+            var folder = new FolderUnit
+            {
+                Description = dto.Description,
+                IsDeleted = dto.IsDeleted,
+                Name = dto.Name,
+
+                LastModified = DateTime.Now
+            };
 
             _unitOfWork.Folders.Update(folder);
             await _unitOfWork.SaveChangesAsync();
