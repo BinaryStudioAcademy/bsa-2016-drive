@@ -11,7 +11,7 @@ namespace Drive.Logging.DI
     {
         public override void Load()
         {
-            //Bind<ILogging>().To<Logging>();
+            Bind<ILogging>().To<Logging>();
         }
     }
 }

@@ -9,19 +9,23 @@ namespace Drive.Logging
 {
     public class Logging : ILogging
     {
-        public Logger Log { get; }
+        private Logger _log;
 
-        public Logging(Logger log)
+        public Logging()
         {
-            LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(@"C:\FILES\GitHub\bsa-2016-drive\Drive.Logging\NLog.config", true);
 
-            Log = log;
+            _log = LogManager.GetLogger("TestLoger");
 
             //using (DriveContext context = new DriveContext())
             //{
             //    context.LogEntries.Add(new LogEntry());
             //    context.SaveChanges();
             //}
+        }
+
+        public void Write(string log)
+        {
+            _log.Log(LogLevel.Info, log);
         }
     }
 }

@@ -9,6 +9,6 @@ namespace Drive.Logging
 {
     public interface ILogging
     {
-        Logger Log { get; }
+        void Write(string log);
     }
 }
