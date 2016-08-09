@@ -78,10 +78,6 @@ namespace Drive.DataAccess.Repositories
             _isDisposed = true;
         }
 
-        public void SaveChanges()
-        {
-            _context.SaveChanges();
-        }
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();

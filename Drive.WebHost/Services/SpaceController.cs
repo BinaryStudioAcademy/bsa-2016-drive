@@ -42,9 +42,5 @@ namespace Drive.WebHost.Services
         {
             _unitOfWork.Dispose();
         }
-        public void SaveChanges()
-        {
-            _unitOfWork.SaveChanges();
-        }
     }
 }
