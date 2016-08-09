@@ -13,7 +13,7 @@ namespace Drive.WebHost.Services
 
         Task<FolderUnit> GetAsync(int id);
 
-        Task CreateAsync(FolderUnit folder);
+        Task<int> CreateAsync(FolderUnit folder);
 
         Task UpdateAsync(FolderUnit folder);
 

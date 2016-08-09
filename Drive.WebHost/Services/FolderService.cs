@@ -27,7 +27,7 @@ namespace Drive.WebHost.Services
             return await _unitOfWork.Folders.GetByIdAsync(id);
         }
 
-        public async Task CreateAsync(FolderUnit folder)
+        public async Task<int> CreateAsync(FolderUnit folder)
         {
             folder.CreatedAt = DateTime.Now;
             folder.LastModified = DateTime.Now;
@@ -35,6 +35,8 @@ namespace Drive.WebHost.Services
 
             _unitOfWork.Folders.Create(folder);
             await _unitOfWork.SaveChangesAsync();
+
+            return folder.Id;
         }
 
         public async Task UpdateAsync(FolderUnit folder)
