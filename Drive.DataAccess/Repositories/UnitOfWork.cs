@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Drive.DataAccess.Context;
 using Drive.DataAccess.Entities;
 using Drive.DataAccess.Interfaces;
@@ -81,5 +82,9 @@ namespace Drive.DataAccess.Repositories
         {
             _context.SaveChanges();
         }
-    }
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
+}
 }

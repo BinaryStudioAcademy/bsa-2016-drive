@@ -10,7 +10,11 @@ namespace Drive.WebHost.Services
 {
     public interface ISpaceService
     {
-        IRepository<Space> SpaceRepository();
+        Task<IEnumerable<Space>> GetAllAsync();
+        Task<Space> GetAsync(int id);
+        Task CreateAsync(Space space);
+        Task UpdateAsync(Space space);
+        Task Delete(int id);
         void SaveChanges();
         void Dispose();
     }

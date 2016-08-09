@@ -15,5 +15,6 @@ namespace Drive.DataAccess.Interfaces
         IRepository<Role> Roles { get; }
         IRepository<Space> Spaces { get; }
         void SaveChanges();
+        Task SaveChangesAsync();
     }
 }

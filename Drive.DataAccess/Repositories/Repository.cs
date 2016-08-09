@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Threading.Tasks;
 using Drive.DataAccess.Interfaces;
 
 namespace Drive.DataAccess.Repositories
 {
-    public class Repository<T> : IRepository<T> where T : class
+    public class Repository<T> : IRepository<T> where T : class, IEntity
     {
         private readonly DbContext _context;
         private IDbSet<T> _entities;
@@ -18,6 +19,10 @@ namespace Drive.DataAccess.Repositories
         public T GetById(int id)
         {
             return Entities.Find(id);
+        }
+        public async Task<T> GetByIdAsync(int id)
+        {
+             return await Entities.SingleOrDefaultAsync(i => i.Id == id);
         }
 
         public void Create(T entity)
@@ -75,8 +80,12 @@ namespace Drive.DataAccess.Repositories
             return Entities;
         }
 
-        private IDbSet<T> Entities => _entities ?? _context.Set<T>();
+        public async Task<IEnumerable<T>> GetAllAsync()
+        {
+              return await Entities.ToListAsync();
+        }
 
+        private IDbSet<T> Entities => _entities ?? _context.Set<T>();
     }
 }
 

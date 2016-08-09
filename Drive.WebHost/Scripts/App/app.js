@@ -11,11 +11,11 @@
          //    controller: 'HomeController',
          //    controllerAs: 'homeCtrl'
          //})
-         //.when('/Home/Index', // Home Page
+         //.when('/Home/Index', // Space page
          //{
          //    templateUrl: '/Scripts/App/Space/Space.html',
-         //    controller: 'HomeController',
-         //    controllerAs: 'homeCtrl'
+         //    controller: 'SpaceController',
+         //    controllerAs: 'spaceCtrl'
          //})
          .when('/', // Space settings Page
          {

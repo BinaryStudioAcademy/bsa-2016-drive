@@ -199,6 +199,8 @@
       <DependentUpon>bundleconfig.json</DependentUpon>
     </Content>
     <Content Include="package.json" />
+    <Content Include="Scripts\App\Space\spaceController.js" />
+    <Content Include="Scripts\App\Space\spaceService.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

@@ -28,14 +28,14 @@
     </div>
     <div class="pull-right">
         <div>
-            <ul class="list-inline">
-                <li>
-                    <a href="#">Card view</a>
-                </li>
-                <li class="limiter">
-                    <a href="#">List view</a>
-                </li>
-            </ul>
+            <div class="btn-group">
+                <a href="#" id="list" class="btn btn-default btn-sm" ng-click="spaceCtrl.listView">
+                    <span class="glyphicon glyphicon-th-list">
+                    </span>List
+                </a> <a href="#" id="grid" class="btn btn-default btn-sm" ng-click="spaceCtrl.gridView">
+                    <span class="glyphicon glyphicon-th"></span>Grid
+                </a>
+            </div>
         </div>
     </div>
     <br />
@@ -43,45 +43,64 @@
         <h4>Folders</h4>
         <hr />
         <div class="container">
-            <div class="row">
-                <div class="col-xs-6 col-md-4">
-                    <div class="thumbnail">
-                        <p>Folder name</p>
+            <div id="folders" class="row list-group">
+                <div class="container">
+                    <div class="item  col-xs-4 col-lg-4" ng-repeat=""> 
+                        <div class="thumbnail">
+                            <p>Folder name {{}}</p>
+                        </div>
                     </div>
-                </div>
-                <div class="col-xs-6 col-md-4">
-                    <div class="thumbnail">
-                        <p>Folder name</p>
-                    </div>
-                </div>
-                <div class="col-xs-6 col-md-4">
-                    <div class="thumbnail">
-                        <p>Folder name</p>
+                    <div class="text-center">
+                        <nav aria-label="Page navigation">
+                            <ul class="pagination">
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Previous">
+                                        <span aria-hidden="true">&laquo;</span>
+                                        <span class="sr-only">Previous</span>
+                                    </a>
+                                </li>
+                                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                                <li class="page-item">
+                                    <a class="page-link" href="#" aria-label="Next">
+                                        <span aria-hidden="true">&raquo;</span>
+                                        <span class="sr-only">Next</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </nav>
                     </div>
                 </div>
             </div>
-        </div>
         <hr />
     </div>
     <div>
         <h4>Files</h4>
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-6 col-md-4">
+        <div id="folders" class="row list-group">
+            <div class="container">
+                <div class="item  col-xs-4 col-lg-4" ng-repeat="">
                     <div class="thumbnail">
-                        <p>Name</p>
+                        <p>Folder name {{}}</p>
                     </div>
                 </div>
-                <div class="col-xs-6 col-md-4">
-                    <div class="thumbnail">
-                        <p>Name</p>
-                    </div>
-                </div>
-                <div class="col-xs-6 col-md-4">
-                    <div class="thumbnail">
-                        <p>Other.file</p>
-                    </div>
-                </div>
+            </div>
+            <div class="text-center">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                                <span class="sr-only">Previous</span>
+                            </a>
+                        </li>
+                        <li class="page-item"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item">
+                            <a class="page-link" href="#" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                                <span class="sr-only">Next</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </div>
     </div>

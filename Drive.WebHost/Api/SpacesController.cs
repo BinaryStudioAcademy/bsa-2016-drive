@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Net;
+﻿using System.Net;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Drive.DataAccess.Entities;
 using Drive.WebHost.Services;
@@ -18,9 +18,9 @@ namespace Drive.WebHost.Api
         }
 
         [HttpGet]
-        public IHttpActionResult GetAll()
+        public async Task<IHttpActionResult> GetAll()
         {
-            var result = _spaceService.SpaceRepository().GetAll();
+            var result = await _spaceService.GetAllAsync();
 
             if (result == null)
                 return NotFound();
@@ -29,9 +29,9 @@ namespace Drive.WebHost.Api
         }
 
         [HttpGet]
-        public IHttpActionResult GetSpace(int id)
+        public async Task<IHttpActionResult> GetSpace(int id)
         {
-            var result = _spaceService.SpaceRepository().GetById(id);
+            var result = await _spaceService.GetAsync(id);
 
             if (result == null)
                 return NotFound();
@@ -40,34 +40,34 @@ namespace Drive.WebHost.Api
         }
         
         [HttpPost]
-        public IHttpActionResult AddSpace(Space entity)
+        public async Task<IHttpActionResult> AddSpace(Space space)
         {
             if (!ModelState.IsValid)
                return BadRequest();
 
-            _spaceService.SpaceRepository().Create(entity);
+            await _spaceService.CreateAsync(space);
             return Ok();
         }
 
         [HttpDelete]
-        public IHttpActionResult DeleteSpace(int id)
+        public async Task<IHttpActionResult> DeleteSpace(int id)
         {
-            var result = _spaceService.SpaceRepository().GetById(id);
+            var result = await _spaceService.GetAsync(id);
 
             if(result == null)
                return NotFound();
 
-            _spaceService.SpaceRepository().Delete(id);
+            await _spaceService.Delete(id);
             return Ok();
         }
 
         [HttpPut]
-        public IHttpActionResult UpdateSpace(Space entity)
+        public async Task<IHttpActionResult> UpdateSpace(Space space)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            _spaceService.SpaceRepository().Update(entity);
+            await _spaceService.UpdateAsync(space);
             return Ok();
         }
     }
