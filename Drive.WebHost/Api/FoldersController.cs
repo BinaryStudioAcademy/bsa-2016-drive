@@ -17,26 +17,17 @@ namespace Drive.WebHost.Api
     {
         private readonly IFolderService _service;
 
-        private IUnitOfWork _unitOfWork;
-
-        public FoldersController(IFolderService service, IUnitOfWork unitOfWork)
+        public FoldersController(IFolderService service)
         {
             _service = service;
-            _unitOfWork = unitOfWork;
         }
-
-        //public FoldersController(IFolderService service)
-        //{
-        //    _service = service;
-        //}
-
 
         // GET api/folders
         public async Task<IHttpActionResult> GetAllAsync()
         {
-            //var data = await _service.GetAllAsync();
+            var data = await _service.GetAllAsync();
 
-            return Ok();
+            return Ok(data);
         }
 
         // GET api/folders/1
@@ -51,9 +42,9 @@ namespace Drive.WebHost.Api
         [HttpPost]
         public async Task<IHttpActionResult> CreateAsync(FolderUnitDto folder)
         {
-            await _service.CreateAsync(folder);
+            int id = await _service.CreateAsync(folder);
 
-            return Ok();
+            return Ok(id);
         }
 
         //PUT api/folders/1
