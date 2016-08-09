@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 using Drive.DataAccess.Entities;
+using Drive.DataAccess.Interfaces;
 using Drive.WebHost.Services;
 using Driver.Shared.Dto;
 
@@ -16,18 +17,26 @@ namespace Drive.WebHost.Api
     {
         private readonly IFolderService _service;
 
-        public FoldersController(IFolderService service)
+        private IUnitOfWork _unitOfWork;
+
+        public FoldersController(IFolderService service, IUnitOfWork unitOfWork)
         {
             _service = service;
+            _unitOfWork = unitOfWork;
         }
+
+        //public FoldersController(IFolderService service)
+        //{
+        //    _service = service;
+        //}
 
 
         // GET api/folders
         public async Task<IHttpActionResult> GetAllAsync()
         {
-            var data = await _service.GetAllAsync();
+            //var data = await _service.GetAllAsync();
 
-            return Ok(data);
+            return Ok();
         }
 
         // GET api/folders/1
