@@ -38,7 +38,7 @@
         }
 
         function updateFolder(id, folder, callback) {
-            $http.put('api/folders/'+ id)
+            $http.put('api/folders/'+ id, folder)
                 .then(function(response) {
                     if (callback)
                         callback(response);
