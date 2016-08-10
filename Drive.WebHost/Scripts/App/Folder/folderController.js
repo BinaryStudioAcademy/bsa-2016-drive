@@ -1,4 +1,4 @@
-﻿(function () {
+﻿(function() {
     "use strict";
 
     angular
@@ -22,6 +22,26 @@
         vm.create = create;
         vm.updateFolder = updateFolder;
         vm.deleteFolder = deleteFolder;
+        vm.menuOptions = [
+            [
+                'Edit', function($itemScope) {
+
+                }
+            ],
+            null,
+            [
+                'Delete', function($itemScope) {
+                }
+            ],
+            null
+        ];
+        vm.otherMenuOptions = [
+            [
+                'Create', function($itemScope) {
+
+                }
+            ]
+        ];
 
         activate();
 
@@ -30,36 +50,38 @@
         }
 
         function get(id) {
-            return folderService.get(id, function (folder) {
-                vm.folder = folder;
-                return vm.folder;
-            });
+            folderService.get(id,
+                function(folder) {
+                    vm.folder = folder;
+
+                });
         }
 
         function getAll() {
-            return folderService.getAll(function (folders) {
+            folderService.getAll(function(folders) {
                 vm.folders = folders;
-                return vm.folders;
             });
         }
 
         function create() {
-            return folderService.create(vm.folder, function (id) {
-                vm.folder.id = id;
-                return vm.folder.id;
-            });
+            folderService.create(vm.folder,
+                function(id) {
+                    vm.folder.id = id;
+                });
         }
 
         function updateFolder(id, folder) {
-            folderService.updateFolder(id, folder, function() {});
+            folderService.updateFolder(id, folder);
         }
 
         function deleteFolder(id) {
-            folderService.deleteFolder(id, function () { });
+            folderService.deleteFolder(id,
+                function() {
 
-            folderService.getAll(function(folders) {
-                vm.folders = folders;
-            });
+                    folderService.getAll(function(folders) {
+                        vm.folders = folders;
+                    });
+                });
         }
     }
 }());

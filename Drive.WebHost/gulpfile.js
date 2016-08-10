@@ -43,8 +43,8 @@ gulp.task("libs", function () {
       paths.bower + "angular-route.js",
       paths.bower + "jquery.js",
       paths.bower + "bootstrap.js",
-      paths.bower + "angular-bootstrap-contextmenu",
-      paths.bower + "angular-ui-bootstrap"
+      paths.bower + "contextMenu.js",
+      paths.bower + "ui-bootstrap.js"
     ])
         .pipe(concat("libs.js"))
         .pipe(gulp.dest(paths.scriptBundles));
