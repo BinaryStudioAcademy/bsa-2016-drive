@@ -8,55 +8,59 @@
 
     function SettingsController(settingsService) {
         var vm = this;
+        vm.save = save;
+        vm.cancel = cancel;
+        vm.addSpaceUser = addSpaceUser;
+        vm.removeSpaceUser = removeSpaceUser;
+        vm.setChoice = setChoice;
 
         activate();
 
         function activate() {
-            vm.title = settingsService.getTitle();
-            vm.spaceName = settingsService.getSpaceName();
-            vm.description = settingsService.getDescription();
-            vm.maxFilesQuantity = settingsService.getMaxFilesQuantity();
-            vm.maxFileSize = settingsService.getMaxFileSize();
-            vm.users = settingsService.getUsers();
-            vm.spaceUsers = settingsService.getSpaceUsers();
-
+            settingsService.getSpace(1, function (data) {
+                vm.space = data;
+            });
+            settingsService.getAllUsers(function (data) {
+                vm.users = data;
+            })
             vm.userAddName = null;
             vm.userAddId = null;
+        }
 
-            vm.save = function () {
+        function save() {
+            settingsService.pushChanges(vm.space);
+        };
 
-            };
+        function cancel() {
+            location.reload();
+        };
 
-            vm.cancel = function () {
-
-            };
-
-            vm.setChoice = function (name, id) {
-                vm.userAddName = name;
-                vm.userAddId = id;
-            };
-
-            vm.addSpaceUser = function () {
-                if (vm.userAddId != null) {
-                    vm.spaceUsers.push({
-                        name: vm.userAddName,
-                        id: vm.userAddId
-                    });
+        function addSpaceUser() {
+            if (vm.userAddId != null) {
+                if (vm.space.ReadPermittedUsers.find(x => x.Id === vm.userAddId)) {
                     vm.userAddName = null;
                     vm.userAddId = null;
-                }
-            };
+                    alert('The user already exist in this space!');
+                    return;
+                };
+                vm.space.ReadPermittedUsers.push({
+                    Login: vm.userAddName,
+                    Id: vm.userAddId
+                });
+                vm.userAddName = null;
+                vm.userAddId = null;
+            }
+        };
 
-            vm.removeUser = function (id) {
-                var i;
-                for (i in vm.spaceUsers) {
-                    if (vm.spaceUsers.hasOwnProperty(i)) {
-                        if (vm.spaceUsers[i].id === id) {
-                            vm.spaceUsers.splice(i, 1);
-                        }
-                    }
-                }
-            };
-        }
+        function removeSpaceUser(id) {
+            for (var i = 0; i < vm.space.ReadPermittedUsers.length; i++) {
+                if (vm.space.ReadPermittedUsers[i].Id === id) { vm.space.ReadPermittedUsers.splice(i, 1); break; }
+            }
+        };
+
+        function setChoice(name, id) {
+            vm.userAddName = name;
+            vm.userAddId = id;
+        };
     }
 }());

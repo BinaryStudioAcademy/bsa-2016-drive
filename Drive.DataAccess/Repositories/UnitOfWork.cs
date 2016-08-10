@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Drive.DataAccess.Context;
 using Drive.DataAccess.Entities;
 using Drive.DataAccess.Interfaces;
@@ -77,9 +78,9 @@ namespace Drive.DataAccess.Repositories
             _isDisposed = true;
         }
 
-        public void SaveChanges()
+        public async Task SaveChangesAsync()
         {
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-    }
+}
 }

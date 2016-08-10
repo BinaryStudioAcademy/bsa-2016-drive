@@ -1,1 +1,0 @@
-﻿///<binding BeforeBuild='Scripts/Bundles/main.js, Scripts/Bundles/libs.js, Update all files, Content/Bundles/styles.css, Scripts/Bundles/jquerylibs.js' />

@@ -11,17 +11,23 @@
          //    controller: 'HomeController',
          //    controllerAs: 'homeCtrl'
          //})
-         //.when('/Home/Index', // Home Page
+         //.when('/Home/Index', // Space page
          //{
          //    templateUrl: '/Scripts/App/Space/Space.html',
-         //    controller: 'HomeController',
-         //    controllerAs: 'homeCtrl'
+         //    controller: 'SpaceController',
+         //    controllerAs: 'spaceCtrl'
          //})
          .when('/', // Space settings Page
          {
              templateUrl: '/Scripts/App/Space/Settings.html',
              controller: 'SettingsController',
              controllerAs: 'settingsCtrl'
+         })
+         .when('/Logs', // Logs page
+         {
+             templateUrl: '/Scripts/App/Logs/Logs.html',
+             controller: 'LogsController',
+             controllerAs: 'logsCtrl'
          })
          .otherwise({ // This is when any route not matched - error
              controller: 'ErrorController'

@@ -62,6 +62,10 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
       <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
       <Private>True</Private>
@@ -148,9 +152,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.Formatting">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -162,6 +163,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\FoldersController.cs" />
     <Compile Include="Api\SpacesController.cs" />
     <Compile Include="Api\UsersController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -171,19 +173,26 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Infrastructure\DependencyResolver.cs" />
+    <Compile Include="Filters\JWTAuthenticationFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\FolderService.cs" />
+    <Compile Include="Services\IFolderService.cs" />
     <Compile Include="Services\ISpaceService.cs" />
     <Compile Include="Services\SpaceController.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Bundles\styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="gulpfile.js" />
     <Content Include="Scripts\App\Home\homeService.js" />
+    <Content Include="Scripts\App\Logs\Logs.html" />
+    <Content Include="Scripts\App\Logs\logsController.js" />
+    <Content Include="Scripts\App\Logs\logsService.js" />
     <Content Include="Scripts\App\Space\Settings.html" />
     <Content Include="Scripts\App\Space\settingsController.js" />
     <Content Include="Scripts\App\Space\settingsService.js" />
@@ -192,14 +201,11 @@
     <Content Include="Scripts\App\Home\Home.html" />
     <Content Include="Scripts\App\Home\homeController.js" />
     <Content Include="bower.json" />
-    <None Include="bundleconfig.json" />
-    <Content Include="bundleconfig.json.bindings">
-      <DependentUpon>bundleconfig.json</DependentUpon>
-    </Content>
     <Content Include="package.json" />
-    <None Include="Scripts\Libs\jquery-1.10.2.intellisense.js" />
-    <None Include="Scripts\Libs\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\Libs\_references.js" />
+    <Content Include="Scripts\App\Space\spaceController.js" />
+    <Content Include="Scripts\App\Space\spaceService.js" />
+    <Content Include="Scripts\Bundles\libs.js" />
+    <Content Include="Scripts\Bundles\main.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -216,8 +222,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Dependencies\" />
     <Folder Include="Models\" />
+    <Folder Include="Scripts\Libs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -239,6 +245,9 @@
     <ProjectReference Include="..\Drive.Logging\Drive.Logging.csproj">
       <Project>{72eccfc0-457c-4741-bb40-3ec3c5015be9}</Project>
       <Name>Drive.Logging</Name>
+    <ProjectReference Include="..\Driver.Shared\Driver.Shared.csproj">
+      <Project>{6AD80389-1ECD-4223-AFFF-693FFA80958F}</Project>
+      <Name>Driver.Shared</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Drive.DataAccess.Interfaces
@@ -11,11 +9,12 @@ namespace Drive.DataAccess.Interfaces
 
     public interface IRepository<T> : IRepository
     {
-        IEnumerable<T> GetAll();
-        T GetById(int id);
+        Task<IEnumerable<T>> GetAllAsync();
+        Task<T> GetByIdAsync(int id);
         void Create(T item);
         void Update(T item);
         void Delete(int id);
+        IQueryable<T> Query { get; }
     }
 
 }

@@ -6,12 +6,6 @@ namespace Drive.WebHost
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                "~/Scripts/Libs/jquery.validate*"));
-
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                "~/Scripts/Libs/modernizr-*"));
-
             bundles.Add(new ScriptBundle("~/bundles/app").Include(
                 "~/Scripts/App/"));
 
