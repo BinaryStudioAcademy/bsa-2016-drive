@@ -26,9 +26,7 @@
         activate();
 
         function activate() {
-            folderService.getAll(function(folders) {
-                vm.folders = folders;
-            });
+            return getAll();
         }
 
         function get(id) {

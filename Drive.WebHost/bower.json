@@ -5,6 +5,7 @@
         "bootstrap": "~3.3.7",
         "jquery": "~3.1.0",
         "angular": "~v1.5.8",
-        "angular-route": "~v1.5.8"
-  }
+        "angular-route": "~v1.5.8",
+        "angular-bootstrap-contextmenu":  "~0.9.7"  
+    }
 }
