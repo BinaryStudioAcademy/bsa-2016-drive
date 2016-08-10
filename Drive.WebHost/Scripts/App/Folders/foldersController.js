@@ -12,8 +12,12 @@
         vm.title = "Folders";
 
         vm.folders = [];
-        vm.folder = {};
-        vm.id;
+        vm.folder = {
+            id: 0,
+            isDeleted: false,
+            name: '',
+            description: ''
+        };
 
         vm.getAll = getAll;
         vm.get = get;
@@ -22,7 +26,7 @@
         activate();
 
         function activate() {
-            return getAll();
+            return create();
         }
 
         function get(id) {
@@ -36,15 +40,13 @@
             return foldersService.getAll(function (folders) {
                 vm.folders = folders;
                 return vm.folders;
-
             });
         }
 
         function create() {
-            return foldersService.create(function (id) {
-                vm.id = id;
-                return vm.id;
-
+            return foldersService.create(vm.folder, function (id) {
+                vm.folder.id = id;
+                return vm.folder.id;
             });
         }
     }

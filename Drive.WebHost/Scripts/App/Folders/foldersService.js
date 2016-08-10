@@ -31,8 +31,8 @@
             });
         }
 
-        function create(callBack) {
-            $http.post('api/folders', {isDeleted: false, name: 'from js', description: ''}).success(function (response) {
+        function create(data, callBack) {
+            $http.post('api/folders', data).success(function (response) {
                 if (callBack)
                     callBack(response);
             });

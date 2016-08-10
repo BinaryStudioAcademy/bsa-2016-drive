@@ -25,15 +25,9 @@
          //})
          .when('/', // Space settings Page
          {
-             templateUrl: '/Scripts/App/Folders/GetAll.html',
+             templateUrl: '/Scripts/App/Folders/Create.html',
              controller: 'FoldersController',
              controllerAs: 'foldersCtrl'
-         })
-         .when('/Logs', // Logs page
-         {
-             templateUrl: '/Scripts/App/Logs/Logs.html',
-             controller: 'LogsController',
-             controllerAs: 'logsCtrl'
          })
          .otherwise({ // This is when any route not matched - error
              controller: 'ErrorController'
