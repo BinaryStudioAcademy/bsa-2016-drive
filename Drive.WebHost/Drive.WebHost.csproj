@@ -197,10 +197,6 @@
     <Content Include="Scripts\App\Home\Home.html" />
     <Content Include="Scripts\App\Home\homeController.js" />
     <Content Include="bower.json" />
-    <None Include="bundleconfig.json" />
-    <Content Include="bundleconfig.json.bindings">
-      <DependentUpon>bundleconfig.json</DependentUpon>
-    </Content>
     <Content Include="package.json" />
     <Content Include="Scripts\App\Space\spaceController.js" />
     <Content Include="Scripts\App\Space\spaceService.js" />
