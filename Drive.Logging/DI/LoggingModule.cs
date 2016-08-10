@@ -11,13 +11,14 @@ namespace Drive.Logging.DI
 {
     public class LoggingModule : NinjectModule
     {
+        public static string className { get; set; }
         public override void Load()
         {
             //Bind<ILogger>().To<Logger>();
             Bind<ILogger>().ToMethod(x =>
             {
-                var scope = x.Request.ParentRequest.Service.FullName;
-                var log = (ILogger)LogManager.GetLogger(scope, typeof(Logger));
+                var className = x.Request.ParentRequest.Service.FullName;
+                var log = (ILogger)LogManager.GetLogger(className, typeof(Logger));
                 return log;
             });
         }

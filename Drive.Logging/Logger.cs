@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Drive.Logging.DI;
 using NLog;
 using NLog.Fluent;
 
@@ -17,44 +18,39 @@ namespace Drive.Logging
             _log = LogManager.GetLogger("TestLoger");
         }
 
-        public void WriteFatal(string log)
+        public void WriteFatal(string message, Type callername)
         {
-            _log.Log(LogLevel.Fatal, log);
+            _log.Fatal().Message(message).Property("ClassName", callername.Name).Write();
         }
 
-        public void WriteError(string log)
+        public void WriteError(string message, Type callername)
         {
-            _log.Log(LogLevel.Error, log);
+            _log.Error().Message(message).Property("ClassName", callername.Name).Write();
         }
 
-        public void WriteError(Exception e, string log)
+        public void WriteError(Exception e, string message, Type callername)
         {
-            _log.Error(e, log);
-
-        }
-        public void WriteError(Exception e, Type type, string log)
-        {
-            _log.Error().Exception(e).Message(log).Property("ClassName", type.ToString()).Write();
+            _log.Error().Exception(e).Message(message).Property("ClassName", callername.Name).Write();
         }
 
-        public void WriteWarn(string log)
+        public void WriteWarn(string message, Type callername)
         {
-            _log.Log(LogLevel.Warn, log);
+            _log.Warn().Message(message).Property("ClassName", callername.Name).Write();
         }
 
-        public void WriteInfo(string log)
+        public void WriteInfo(string message, Type callername)
         {
-            _log.Log(LogLevel.Info, log);
+            _log.Info().Message(message).Property("ClassName", callername.Name).Write();
         }
 
-        public void WriteDebug(string log)
+        public void WriteDebug(string message, Type callername)
         {
-            _log.Log(LogLevel.Debug, log);
+            _log.Debug().Message(message).Property("ClassName", callername.Name).Write();
         }
 
-        public void WriteTrace(string log)
+        public void WriteTrace(string message, Type callername)
         {
-            _log.Log(LogLevel.Trace, log);
+            _log.Trace().Message(message).Property("ClassName", callername.Name).Write();
         }
     }
 }
