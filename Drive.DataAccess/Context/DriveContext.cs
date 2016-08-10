@@ -13,7 +13,8 @@ namespace Drive.DataAccess.Context
         public DriveContext() : base()
         {
             //to change when DB structure is stable!!!
-            //Database.SetInitializer<DriveContext>(new DropCreateDatabaseAlways<DriveContext>());
+            Database.SetInitializer<DriveContext>(new CreateDatabaseIfNotExists<DriveContext>());
+
         }
 
         public DbSet<FolderUnit> Folders { get; set; }

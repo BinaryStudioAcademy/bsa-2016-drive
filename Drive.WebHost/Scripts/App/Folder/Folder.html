@@ -1,0 +1,14 @@
+﻿<div>
+    <h1>Folders</h1>
+    <table class="table table-striped">
+        <tr ng-repeat="folder in folderCtrl.folders">
+            <td>{{folder.Name}}</td>
+            <td>{{folder.Id}}</td>
+            <td>{{folder.Description}}</td>
+            <td>
+                <input type="button" value="Remove" class="btn btn-danger" ng-click="folderCtrl.deleteFolder(folder.Id)" />
+            </td>
+        </tr>
+    </table>
+
+</div>

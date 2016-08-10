@@ -14,7 +14,7 @@ namespace Drive.DataAccess.Entities
         public DateTime CreatedAt { get; set; }
         public DateTime LastModified { get; set; }
 
-        public int UserId { get; set; }
+        //public int UserId { get; set; }
         public User Owner { get; set; }
     }
 }

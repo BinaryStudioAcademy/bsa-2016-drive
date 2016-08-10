@@ -8,7 +8,6 @@ namespace Drive.WebHost.Infrastructure
         public override void Load()
         {
             Kernel.Bind<ISpaceService>().To<SpaceService>();
-
             Kernel.Bind<IFolderService>().To<FolderService>();
         }
     }
