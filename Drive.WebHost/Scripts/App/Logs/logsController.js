@@ -15,6 +15,7 @@
             vm.logs = logsService.getLogs();
             vm.sortType = 'date';
             vm.sortReverse = true;
+            vm.searchLevel = '';
         }
     }
 })();
