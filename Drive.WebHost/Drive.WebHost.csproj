@@ -245,6 +245,7 @@
     <ProjectReference Include="..\Drive.Logging\Drive.Logging.csproj">
       <Project>{72eccfc0-457c-4741-bb40-3ec3c5015be9}</Project>
       <Name>Drive.Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Driver.Shared\Driver.Shared.csproj">
       <Project>{6AD80389-1ECD-4223-AFFF-693FFA80958F}</Project>
       <Name>Driver.Shared</Name>
