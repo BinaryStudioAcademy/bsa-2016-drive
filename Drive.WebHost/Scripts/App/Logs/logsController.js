@@ -6,13 +6,13 @@
 
     LogsController.$inject = ['LogsService'];
 
-    function LogsController() {
+    function LogsController(logsService) {
         var vm = this;
 
         activate();
 
         function activate() {
-            
+            vm.logs = logsService.getLogs();
         }
     }
 })();
