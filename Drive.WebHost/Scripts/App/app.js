@@ -17,11 +17,17 @@
          //    controller: 'SpaceController',
          //    controllerAs: 'spaceCtrl'
          //})
+         //.when('/', // Space settings Page
+         //{
+         //    templateUrl: '/Scripts/App/Space/Settings.html',
+         //    controller: 'SettingsController',
+         //    controllerAs: 'settingsCtrl'
+         //})
          .when('/', // Space settings Page
          {
-             templateUrl: '/Scripts/App/Space/Settings.html',
-             controller: 'SettingsController',
-             controllerAs: 'settingsCtrl'
+             templateUrl: '/Scripts/App/Folders/Folders.html',
+             controller: 'FoldersController',
+             controllerAs: 'foldersCtrl'
          })
          .otherwise({ // This is when any route not matched - error
              controller: 'ErrorController'

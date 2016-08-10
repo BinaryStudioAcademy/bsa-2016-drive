@@ -189,6 +189,9 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="gulpfile.js" />
+    <Content Include="Scripts\App\Folders\Folders.html" />
+    <Content Include="Scripts\App\Folders\foldersController.js" />
+    <Content Include="Scripts\App\Folders\foldersService.js" />
     <Content Include="Scripts\App\Home\homeService.js" />
     <Content Include="Scripts\App\Space\Settings.html" />
     <Content Include="Scripts\App\Space\settingsController.js" />
