@@ -181,7 +181,7 @@
     <Compile Include="Services\FolderService.cs" />
     <Compile Include="Services\IFolderService.cs" />
     <Compile Include="Services\ISpaceService.cs" />
-    <Compile Include="Services\SpaceController.cs" />
+    <Compile Include="Services\SpaceService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Bundles\styles.css" />
