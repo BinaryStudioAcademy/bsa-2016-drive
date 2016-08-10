@@ -31,7 +31,13 @@ namespace Drive.WebHost.Controllers
             }
             catch (DivideByZeroException e)
             {
-                _logging.WriteError(e, "error", GetType());
+                _logging.WriteError(e, "error");
+                _logging.WriteTrace( "error");
+
+                _logging.WriteInfo( "error");
+                _logging.WriteDebug( "error");
+                _logging.WriteWarn( "error");
+
             }
 
         }

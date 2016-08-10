@@ -13,44 +13,44 @@ namespace Drive.Logging
     {
         private readonly NLog.Logger _log;
 
-        public Logger()
+        public Logger(Type type)
         {
-            _log = LogManager.GetLogger("TestLoger");
+            _log = LogManager.GetLogger(type.Name);
         }
 
-        public void WriteFatal(string message, Type callername)
+        public void WriteFatal(string message)
         {
-            _log.Fatal().Message(message).Property("ClassName", callername.Name).Write();
+            _log.Fatal().Message(message).Property("ClassName", _log.Name).Write();
         }
 
-        public void WriteError(string message, Type callername)
+        public void WriteError(string message)
         {
-            _log.Error().Message(message).Property("ClassName", callername.Name).Write();
+            _log.Error().Message(message).Property("ClassName", _log.Name).Write();
         }
 
-        public void WriteError(Exception e, string message, Type callername)
+        public void WriteError(Exception e, string message)
         {
-            _log.Error().Exception(e).Message(message).Property("ClassName", callername.Name).Write();
+            _log.Error().Exception(e).Message(message).Property("ClassName", _log.Name).Write();
         }
 
-        public void WriteWarn(string message, Type callername)
+        public void WriteWarn(string message)
         {
-            _log.Warn().Message(message).Property("ClassName", callername.Name).Write();
+            _log.Warn().Message(message).Property("ClassName", _log.Name).Write();
         }
 
-        public void WriteInfo(string message, Type callername)
+        public void WriteInfo(string message)
         {
-            _log.Info().Message(message).Property("ClassName", callername.Name).Write();
+            _log.Info().Message(message).Property("ClassName", _log.Name).Write();
         }
 
-        public void WriteDebug(string message, Type callername)
+        public void WriteDebug(string message)
         {
-            _log.Debug().Message(message).Property("ClassName", callername.Name).Write();
+            _log.Debug().Message(message).Property("ClassName", _log.Name).Write();
         }
 
-        public void WriteTrace(string message, Type callername)
+        public void WriteTrace(string message)
         {
-            _log.Trace().Message(message).Property("ClassName", callername.Name).Write();
+            _log.Trace().Message(message).Property("ClassName", _log.Name).Write();
         }
     }
 }

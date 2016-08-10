@@ -9,12 +9,12 @@ namespace Drive.Logging
 {
     public interface ILogger
     {
-        void WriteFatal(string message, Type callername);
-        void WriteError(Exception e, string message, Type callername);
-        void WriteError(string message, Type callername);
-        void WriteWarn(string message, Type callername);
-        void WriteInfo(string message, Type callername);
-        void WriteDebug(string message, Type callername);
-        void WriteTrace(string message, Type callername);
+        void WriteFatal(string message);
+        void WriteError(Exception e, string message);
+        void WriteError(string message);
+        void WriteWarn(string message);
+        void WriteInfo(string message);
+        void WriteDebug(string message);
+        void WriteTrace(string message);
     }
 }
