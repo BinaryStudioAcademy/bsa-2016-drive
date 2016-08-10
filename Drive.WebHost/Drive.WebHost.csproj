@@ -189,6 +189,8 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="gulpfile.js" />
+    <Content Include="Scripts\App\Error404\404.html" />
+    <Content Include="Scripts\App\Error404\ErrorController.js" />
     <Content Include="Scripts\App\Home\homeService.js" />
     <Content Include="Scripts\App\Space\Settings.html" />
     <Content Include="Scripts\App\Space\settingsController.js" />

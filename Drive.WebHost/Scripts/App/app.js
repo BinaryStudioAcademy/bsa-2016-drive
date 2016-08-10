@@ -24,6 +24,7 @@
              controllerAs: 'settingsCtrl'
          })
          .otherwise({ // This is when any route not matched - error
+             templateUrl: '/Scripts/App/Error404/404.html',
              controller: 'ErrorController'
          });
  }]);
