@@ -192,9 +192,9 @@
     <Content Include="Scripts\App\Folder\Folder.html" />
     <Content Include="Scripts\App\Folder\folderController.js" />
     <Content Include="Scripts\App\Folder\folderService.js" />
-    <Content Include="Scripts\App\Folders\Create.html" />
-    <Content Include="Scripts\App\Folders\Get.html" />
-    <Content Include="Scripts\App\Folders\GetAll.html" />
+    <Content Include="Scripts\App\Folder\Create.html" />
+    <Content Include="Scripts\App\Folder\Get.html" />
+    <Content Include="Scripts\App\Folder\GetAll.html" />
     <Content Include="Scripts\App\Home\homeService.js" />
     <Content Include="Scripts\App\Logs\Logs.html" />
     <Content Include="Scripts\App\Logs\logsController.js" />

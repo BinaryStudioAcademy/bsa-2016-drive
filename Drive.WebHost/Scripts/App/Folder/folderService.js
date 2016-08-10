@@ -9,15 +9,31 @@
 
     function FolderService($http) {
         var service = {
-            getFolders: getFolders,
+            getAll: getAll,
+            get: get,
+            create: create,
             updateFolder: updateFolder,
             deleteFolder : deleteFolder
         };
 
-        function getFolders(callback) {
-            return $http.get('api/folders').then(function (response) {
-                if (callback)
-                    callback(response.data);
+        function getAll(callBack) {
+            $http.get('api/folders').success(function (response) {
+                if (callBack)
+                    callBack(response);
+            });
+        }
+
+        function get(id, callBack) {
+            $http.get('api/folders/' + id).success(function (response) {
+                if (callBack)
+                    callBack(response);
+            });
+        }
+
+        function create(data, callBack) {
+            $http.post('api/folders', data).success(function (response) {
+                if (callBack)
+                    callBack(response);
             });
         }
 
