@@ -190,6 +190,9 @@
     <Content Include="Content\Site.css" />
     <Content Include="gulpfile.js" />
     <Content Include="Scripts\App\Home\homeService.js" />
+    <Content Include="Scripts\App\Logs\Logs.html" />
+    <Content Include="Scripts\App\Logs\logsController.js" />
+    <Content Include="Scripts\App\Logs\logsService.js" />
     <Content Include="Scripts\App\Space\Settings.html" />
     <Content Include="Scripts\App\Space\settingsController.js" />
     <Content Include="Scripts\App\Space\settingsService.js" />
