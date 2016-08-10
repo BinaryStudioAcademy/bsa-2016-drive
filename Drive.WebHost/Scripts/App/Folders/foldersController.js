@@ -1,0 +1,53 @@
+﻿(function () {
+    "use strict";
+
+    angular.module("driveApp")
+        .controller("FoldersController", FoldersController);
+
+    FoldersController.$inject = ['$http', 'FoldersService'];
+
+    function FoldersController($http, foldersService) {
+        var vm = this;
+
+        vm.title = "Folders";
+
+        vm.folders = [];
+        vm.folder = {
+            id: 0,
+            isDeleted: false,
+            name: '',
+            description: ''
+        };
+
+        vm.getAll = getAll;
+        vm.get = get;
+        vm.create = create;
+
+        activate();
+
+        function activate() {
+            return create();
+        }
+
+        function get(id) {
+            return foldersService.get(id, function (folder) {
+                vm.folder = folder;
+                return vm.folder;
+            });
+        }
+
+        function getAll() {
+            return foldersService.getAll(function (folders) {
+                vm.folders = folders;
+                return vm.folders;
+            });
+        }
+
+        function create() {
+            return foldersService.create(vm.folder, function (id) {
+                vm.folder.id = id;
+                return vm.folder.id;
+            });
+        }
+    }
+}());

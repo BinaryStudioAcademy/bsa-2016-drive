@@ -23,11 +23,19 @@
          //    controller: 'SettingsController',
          //    controllerAs: 'settingsCtrl'
          //})
+<<<<<<< HEAD
          .when('/Folders', // Space settings Page
          {
              templateUrl: '/Scripts/App/Folder/Folder.html',
              controller: 'FolderController',
              controllerAs: 'folderCtrl'
+=======
+         .when('/', // Space settings Page
+         {
+             templateUrl: '/Scripts/App/Folders/Create.html',
+             controller: 'FoldersController',
+             controllerAs: 'foldersCtrl'
+>>>>>>> 5ad2191391030f04f1cee8bdd70ad72d37c892a3
          })
          .otherwise({ // This is when any route not matched - error
              controller: 'ErrorController'

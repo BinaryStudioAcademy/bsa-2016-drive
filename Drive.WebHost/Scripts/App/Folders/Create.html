@@ -1,0 +1,10 @@
+﻿<div>
+    <form novalidate class="simple-form">
+        Name: <input type="text" ng-model="foldersCtrl.folder.name"/><br/>
+        Description: <input type="text" ng-model="foldersCtrl.folder.description" /><br />
+        <input type="submit" ng-click="foldersCtrl.create(foldersCtrl.folder)" value="Save" />
+    </form>
+</div>
+<div>
+    {{foldersCtrl.folder.id}}
+</div>
