@@ -7,7 +7,7 @@ var cssmin = require("gulp-cssmin");
 var uglify = require("gulp-uglify");
 var rename = require("gulp-rename");
 
-gulp.task("prod", ["bower", "main", "libs", "styles", "minify"]);
+gulp.task("prod", ["main", "libs", "styles", "minify"]);
 gulp.task("develop", ["clean", "bower", "main", "libs", "styles"]);
 gulp.task("noBower", ["main", "libs", "styles"]);
 
