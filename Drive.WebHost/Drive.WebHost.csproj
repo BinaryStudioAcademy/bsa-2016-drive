@@ -189,6 +189,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="gulpfile.js" />
+    <Content Include="Scripts\App\Folders\Create.html" />
     <Content Include="Scripts\App\Folders\Get.html" />
     <Content Include="Scripts\App\Folders\GetAll.html" />
     <Content Include="Scripts\App\Folders\foldersController.js" />

@@ -25,7 +25,7 @@
          //})
          .when('/', // Space settings Page
          {
-             templateUrl: '/Scripts/App/Folders/Get.html',
+             templateUrl: '/Scripts/App/Folders/GetAll.html',
              controller: 'FoldersController',
              controllerAs: 'foldersCtrl'
          })

@@ -13,14 +13,16 @@
 
         vm.folders = [];
         vm.folder = {};
+        vm.id;
 
         vm.getAll = getAll;
         vm.get = get;
+        vm.create = create;
 
         activate();
 
         function activate() {
-            return get();
+            return getAll();
         }
 
         function get(id) {
@@ -34,6 +36,14 @@
             return foldersService.getAll(function (folders) {
                 vm.folders = folders;
                 return vm.folders;
+
+            });
+        }
+
+        function create() {
+            return foldersService.create(function (id) {
+                vm.id = id;
+                return vm.id;
 
             });
         }
