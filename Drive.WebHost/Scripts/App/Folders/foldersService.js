@@ -10,12 +10,19 @@
     function FoldersService($http) {
 
         var service = {
-            getFolders: getFolders
+            getAll: getAll,
+            get: get
         };
 
-        function getFolders(callBack) {
+        function getAll(callBack) {
             $http.get('api/folders').success(function (response) {
-                console.log(response);
+                if (callBack)
+                    callBack(response);
+            });
+        }
+
+        function get(id, callBack) {
+            $http.get('api/folders/' + 1).success(function (response) {
                 if (callBack)
                     callBack(response);
             });
