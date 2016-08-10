@@ -258,9 +258,3 @@ bower_components/
 Dependencies/
 
 # Exclude bundles
-**/Bundles/styles.css
-**/Bundles/styles.min.css
-**/Bundles/libs.js
-**/Bundles/libs.min.js
-**/Bundles/main.js
-**/Bundles/main.min.js
