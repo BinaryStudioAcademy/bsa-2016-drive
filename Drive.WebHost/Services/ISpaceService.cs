@@ -4,18 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Drive.DataAccess.Entities;
+using Driver.Shared.Dto;
 
 namespace Drive.WebHost.Services
 {
     public interface ISpaceService
     {
-        Task<IEnumerable<Space>> GetAllAsync();
+        Task<IEnumerable<SpaceDto>> GetAllAsync();
 
-        Task<Space> GetAsync(int id);
+        Task<SpaceDto> GetAsync(int id);
 
-        Task CreateAsync(Space space);
+        Task<int> CreateAsync(SpaceDto space);
 
-        Task UpdateAsync(Space space);
+        Task UpdateAsync(int id, SpaceDto space);
 
         Task Delete(int id);
 

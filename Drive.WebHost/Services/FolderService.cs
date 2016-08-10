@@ -72,7 +72,6 @@ namespace Drive.WebHost.Services
             folder.Description = dto.Description;
             folder.IsDeleted = dto.IsDeleted;
             folder.Name = dto.Name;
-
             folder.LastModified = DateTime.Now;
 
             await _unitOfWork.SaveChangesAsync();

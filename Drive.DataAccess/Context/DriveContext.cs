@@ -21,6 +21,7 @@ namespace Drive.DataAccess.Context
         public DbSet<User> Users { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<Space> Spaces { get; set; }
+        public DbSet<Log> Logs { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

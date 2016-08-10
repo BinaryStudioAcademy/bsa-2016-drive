@@ -181,7 +181,7 @@
     <Compile Include="Services\FolderService.cs" />
     <Compile Include="Services\IFolderService.cs" />
     <Compile Include="Services\ISpaceService.cs" />
-    <Compile Include="Services\SpaceController.cs" />
+    <Compile Include="Services\SpaceService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Bundles\styles.css" />
@@ -241,6 +241,10 @@
     <ProjectReference Include="..\Drive.Identity\Drive.Identity.csproj">
       <Project>{6E1728F5-E668-4FC3-8ECD-863227ED8B61}</Project>
       <Name>Drive.Identity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Drive.Logging\Drive.Logging.csproj">
+      <Project>{72eccfc0-457c-4741-bb40-3ec3c5015be9}</Project>
+      <Name>Drive.Logging</Name>
     </ProjectReference>
     <ProjectReference Include="..\Driver.Shared\Driver.Shared.csproj">
       <Project>{6AD80389-1ECD-4223-AFFF-693FFA80958F}</Project>
