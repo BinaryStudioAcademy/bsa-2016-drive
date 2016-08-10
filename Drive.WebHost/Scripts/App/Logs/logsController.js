@@ -1,4 +1,4 @@
-﻿(function() {
+﻿(function () {
     'use strict';
 
     angular.module('driveApp')
@@ -13,9 +13,10 @@
 
         function activate() {
             vm.logs = logsService.getLogs();
-            vm.sortType = 'date';
-            vm.sortReverse = true;
-            vm.searchLevel = '';
+            vm.sort = {
+                sortType: 'date',
+                sortReverse: true
+            }
         }
     }
 })();

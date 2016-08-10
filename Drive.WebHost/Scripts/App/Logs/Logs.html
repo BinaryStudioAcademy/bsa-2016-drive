@@ -23,52 +23,52 @@
     </form>
     <table class="table table-striped">
         <thead>
-        <tr>
-            <td>
-                <a href="" ng-click="logsCtrl.sortType = 'id'; logsCtrl.sortReverse = !logsCtrl.sortReverse">
-                    Id
-                    <span ng-show="logsCtrl.sortType == 'id' && !logsCtrl.sortReverse">&#8595</span>
-                    <span ng-show="logsCtrl.sortType == 'id' && logsCtrl.sortReverse">&#8593</span>
-                </a>
-            </td>
-            <td>
-                <a href="" ng-click="logsCtrl.sortType = 'time'; logsCtrl.sortReverse = !logsCtrl.sortReverse">
-                    Time
-                    <span ng-show="logsCtrl.sortType == 'time' && !logsCtrl.sortReverse">&#8595</span>
-                    <span ng-show="logsCtrl.sortType == 'time' && logsCtrl.sortReverse">&#8593</span>
-                </a>
-            </td>
-            <td>
-                <a href="" ng-click="logsCtrl.sortType = 'level'; logsCtrl.sortReverse = !logsCtrl.sortReverse">
-                    Log level
-                    <span ng-show="logsCtrl.sortType == 'level' && !logsCtrl.sortReverse">&#8595</span>
-                    <span ng-show="logsCtrl.sortType == 'level' && logsCtrl.sortReverse">&#8593</span>
-                </a>
-            </td>
-            <td>
-                <a href="" ng-click="logsCtrl.sortType = 'message'; logsCtrl.sortReverse = !logsCtrl.sortReverse">
-                    Log message
-                    <span ng-show="logsCtrl.sortType == 'message' && !logsCtrl.sortReverse">&#8595</span>
-                    <span ng-show="logsCtrl.sortType == 'message' && logsCtrl.sortReverse">&#8593</span>
-                </a>
-            </td>
-            <td>
-                <a href="" ng-click="logsCtrl.sortType = 'exception'; logsCtrl.sortReverse = !logsCtrl.sortReverse">
-                    Exception
-                    <span ng-show="logsCtrl.sortType == 'exception' && !logsCtrl.sortReverse">&#8595</span>
-                    <span ng-show="logsCtrl.sortType == 'exception' && logsCtrl.sortReverse">&#8593</span>
-                </a>
-            </td>
-        </tr>
+            <tr>
+                <td>
+                    <a href="" ng-click="logsCtrl.sort.sortType = 'id'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                        Id
+                        <span ng-show="logsCtrl.sort.sortType == 'id' && !logsCtrl.sort.sortReverse">&#8595</span>
+                        <span ng-show="logsCtrl.sort.sortType == 'id' && logsCtrl.sort.sortReverse">&#8593</span>
+                    </a>
+                </td>
+                <td>
+                    <a href="" ng-click="logsCtrl.sort.sortType = 'time'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                        Time
+                        <span ng-show="logsCtrl.sort.sortType == 'time' && !logsCtrl.sort.sortReverse">&#8595</span>
+                        <span ng-show="logsCtrl.sort.sortType == 'time' && logsCtrl.sort.sortReverse">&#8593</span>
+                    </a>
+                </td>
+                <td>
+                    <a href="" ng-click="logsCtrl.sort.sortType = 'level'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                        Log level
+                        <span ng-show="logsCtrl.sort.sortType == 'level' && !logsCtrl.sort.sortReverse">&#8595</span>
+                        <span ng-show="logsCtrl.sort.sortType == 'level' && logsCtrl.sort.sortReverse">&#8593</span>
+                    </a>
+                </td>
+                <td>
+                    <a href="" ng-click="logsCtrl.sort.sortType = 'message'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                        Log message
+                        <span ng-show="logsCtrl.sort.sortType == 'message' && !logsCtrl.sort.sortReverse">&#8595</span>
+                        <span ng-show="logsCtrl.sort.sortType == 'message' && logsCtrl.sort.sortReverse">&#8593</span>
+                    </a>
+                </td>
+                <td>
+                    <a href="" ng-click="logsCtrl.sort.sortType = 'exception'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                        Exception
+                        <span ng-show="logsCtrl.sort.sortType == 'exception' && !logsCtrl.sort.sortReverse">&#8595</span>
+                        <span ng-show="logsCtrl.sort.sortType == 'exception' && logsCtrl.sort.sortReverse">&#8593</span>
+                    </a>
+                </td>
+            </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="log in logsCtrl.logs | orderBy:logsCtrl.sortType:logsCtrl.sortReverse | filter:logsCtrl.searchLevel">
-            <td>{{ log.id }}</td>
-            <td>{{ log.time }}</td>
-            <td>{{ log.level }}</td>
-            <td>{{ log.message }}</td>
-            <td>{{ log.exception }}</td>
-        </tr>
+            <tr ng-repeat="log in logsCtrl.logs | orderBy:logsCtrl.sort.sortType:logsCtrl.sort.sortReverse | filter:logsCtrl.searchLevel">
+                <td>{{ log.id }}</td>
+                <td>{{ log.time }}</td>
+                <td>{{ log.level }}</td>
+                <td>{{ log.message }}</td>
+                <td>{{ log.exception }}</td>
+            </tr>
         </tbody>
     </table>
 </div>
