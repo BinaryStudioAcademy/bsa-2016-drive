@@ -59,7 +59,7 @@
         function deleteFolder(id) {
             folderService.deleteFolder(id, function () { });
 
-            folderService.getFolders(function(folders) {
+            folderService.getAll(function(folders) {
                 vm.folders = folders;
             });
         }
