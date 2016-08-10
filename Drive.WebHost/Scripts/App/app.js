@@ -26,8 +26,8 @@
          .when('/', // Space settings Page
          {
              templateUrl: '/Scripts/App/Folders/Create.html',
-             controller: 'FoldersController',
-             controllerAs: 'foldersCtrl'
+             controller: 'FolderController',
+             controllerAs: 'folderCtrl'
          })
          .otherwise({ // This is when any route not matched - error
              controller: 'ErrorController'
