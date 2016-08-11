@@ -34,8 +34,8 @@
                 }
             ],
             [
-                'Edit', function($itemScope) {
-                    folderService.setfolder($itemScope.folder);
+                'Edit', function ($itemScope) {
+                    vm.folder = $itemScope.folder;
                     vm.open();
                 }
             ],
@@ -54,7 +54,7 @@
                 [
                     [
                         'Folder', function () {
-                            folderService.setfolder({id: 0});
+                            vm.folder = {}
                             vm.open();
                         }
                     ],
@@ -76,14 +76,14 @@
                 controller: 'ModalInstanceCtrl',
                 controllerAs: 'modalCtrl',
                 size: size,
-                resolve: {
-                    items: function () {
-                        //return $scope.items;
+                resolve : {
+                    items : function () {
+                        return vm.folder;
                     }
                 }
             });
 
-            modalInstance.result.then(function () {
+            modalInstance.result.then(function (id) {
                 vm.id = id;
                 folderService.getAll(function (folders) {
                     vm.folders = folders;

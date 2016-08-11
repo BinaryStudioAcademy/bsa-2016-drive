@@ -1,43 +1,43 @@
-﻿(function () {
+﻿(function() {
     "use strict";
 
     angular
         .module("driveApp")
         .controller("ModalInstanceCtrl", ModalInstanceCtrl);
 
-    ModalInstanceCtrl.$inject = ['FolderService', '$uibModalInstance'];
+    ModalInstanceCtrl.$inject = ['FolderService', '$uibModalInstance', 'items'];
 
-    function ModalInstanceCtrl(folderService, $uibModalInstance) {
+    function ModalInstanceCtrl(folderService, $uibModalInstance, items) {
         var vm = this;
-        vm.folder = {
-            id: 0,
-            isDeleted: false,
-            name: '',
-            description: '',
-            createdAt: '',
-            lastModified: ''
-        };
+        vm.save = save;
+        vm.cancel = cancel;
+        vm.submitted = false;
+        vm.folder = {};
 
         activate();
 
         function activate() {
-            vm.folder = folderService.getfolder();
+            vm.folder = items;
         }
 
-        vm.save = save;
-        vm.cancel = cancel;
-
         function save() {
-            if (vm.folder.id == 0) {
-                folderService.create(vm.folder, function (id) {
-                    vm.folder.id = id;
-                });
+            vm.submitted = true;
+            if (vm.folder.name !== undefined) {
+                if (vm.folder.id === undefined) {
+                    folderService.create(vm.folder,
+                        function (id) {
+                            if (id > 0)
+                                $uibModalInstance.close(id);
+                        });
+                } else {
+                    folderService.updateFolder(vm.folder.id,
+                        vm.folder,
+                        function (callback) {
+                            if (callback)
+                                $uibModalInstance.close(vm.folder.id);
+                        });
+                }
             }
-            else {
-                folderService.updateFolder(vm.folder.id, vm.folder);
-            }
-            $uibModalInstance.close(vm.folder.id);
-            vm.folder = {};
         }
 
         function cancel() {
