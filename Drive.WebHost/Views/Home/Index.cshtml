@@ -1,7 +1,7 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-<div ng-include="'Scripts/App/Menu/Menu.html'" style="width:180px; float:left"></div>
+<div ng-include="'Scripts/App/Menu/Menu.html'" style="float: left; max-width: 160px; margin: 0;"></div>
 <div>
-    <div ng-view style="margin-left:150px; width: 100%;"></div>
+    <div ng-view style="margin-left: 160px; overflow: hidden"></div>
 </div>
