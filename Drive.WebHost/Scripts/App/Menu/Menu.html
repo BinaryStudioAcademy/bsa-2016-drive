@@ -11,17 +11,17 @@
     }
 
         #wrapper.toggled {
-            padding-left: 180px;
+            padding-left: 200px;
             overflow: scroll;
         }
 
     #sidebar-wrapper {
         z-index: 1000;
         position: absolute;
-        left: 180px;
+        left: 200px;
         width: 0;
         height: 100%;
-        margin-left: -180px;
+        margin-left: -200px;
         overflow-y: auto;
         background: #000;
         -webkit-transition: all 0.5s ease;
@@ -31,7 +31,7 @@
     }
 
     #wrapper.toggled #sidebar-wrapper {
-        width: 180px;
+        width: 200px;
     }
 
     #page-content-wrapper {
@@ -54,7 +54,7 @@
     .sidebar-nav {
         position: absolute;
         top: 0;
-        width: 180px;
+        width: 200px;
         margin: 0;
         padding: 0;
         list-style: none;
@@ -105,11 +105,11 @@
 
     @media(min-width:768px) {
         #wrapper {
-            padding-left: 180px;
+            padding-left: 200px;
         }
 
         .fixed-brand {
-            width: 180px;
+            width: 200px;
         }
 
         #wrapper.toggled {
@@ -117,11 +117,11 @@
         }
 
         #sidebar-wrapper {
-            width: 180px;
+            width: 200px;
         }
 
         #wrapper.toggled #sidebar-wrapper {
-            width: 180px;
+            width: 200px;
         }
 
         #wrapper.toggled-2 #sidebar-wrapper {
@@ -129,7 +129,7 @@
         }
 
             #wrapper.toggled-2 #sidebar-wrapper:hover {
-                width: 180px;
+                width: 200px;
             }
 
 
@@ -145,13 +145,13 @@
         #wrapper.toggled #page-content-wrapper {
             position: relative;
             margin-right: 0;
-            padding-left: 180px;
+            padding-left: 200px;
         }
 
         #wrapper.toggled-2 #page-content-wrapper {
             position: relative;
             margin-right: 0;
-            margin-left: -180px;
+            margin-left: -200px;
             -webkit-transition: all 0.5s ease;
             -moz-transition: all 0.5s ease;
             -o-transition: all 0.5s ease;
@@ -159,15 +159,26 @@
             width: auto;
         }
     }
+    /*button style*/
+    .btn-custom {
+        border-color: white;
+        color: #000;
+    }
 </style>
 
 <div id="wrapper">
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
             <li class="active">
+                <input type="button" class="btn btn-custom pull-right" value="File">
+                <input type="button" class="btn btn-custom pull-right" value="Add">
+                <input type="button" class="btn btn-custom pull-right" value="S">
                 <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span> Binary Space</a>
             </li>
             <li>
+                <input type="button" class="btn btn-custom pull-right" value="File">
+                <input type="button" class="btn btn-custom pull-right" value="Add">
+                <input type="button" class="btn btn-custom pull-right" value="S">
                 <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>My Space</a>
             </li>
             <li>
