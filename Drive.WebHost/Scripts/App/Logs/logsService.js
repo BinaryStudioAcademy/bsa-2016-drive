@@ -3,11 +3,11 @@
 
     angular
         .module('driveApp')
-        .factory('LogsService', HomeService);
+        .factory('LogsService', LogsService);
 
-    HomeService.$inject = [];
+    LogsService.$inject = [];
 
-    function HomeService() {
+    function LogsService() {
         var service = {
             getLogs: getLogs
         };

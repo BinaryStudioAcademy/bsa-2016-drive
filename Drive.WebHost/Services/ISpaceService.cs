@@ -14,7 +14,7 @@ namespace Drive.WebHost.Services
 
         Task<SpaceDto> GetAsync(int id);
 
-        Task<int> CreateAsync(SpaceDto space);
+        Task CreateAsync(SpaceDto space);
 
         Task UpdateAsync(int id, SpaceDto space);
 

@@ -14,6 +14,7 @@ namespace Drive.DataAccess.Interfaces
         IRepository<User> Users { get; }
         IRepository<Role> Roles { get; }
         IRepository<Space> Spaces { get; }
+        IRepository<Log> Logs { get; }
 
         Task SaveChangesAsync();
     }
