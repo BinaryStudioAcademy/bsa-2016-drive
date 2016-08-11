@@ -21,7 +21,6 @@
         vm.folders = [];
         vm.getAll = getAll;
         vm.get = get;
-        vm.updateFolder = updateFolder;
         vm.deleteFolder = deleteFolder;
         vm.open = open;
 
@@ -34,7 +33,8 @@
             ],
             [
                 'Edit', function($itemScope) {
-                    console.log($itemScope.folder.id);
+                    folderService.setfolder($itemScope.folder);
+                    vm.open();
                 }
             ],
             [
@@ -95,9 +95,7 @@
             });
         }
 
-        function updateFolder(id, folder) {
-            folderService.updateFolder(id, folder);
-        }
+        
 
         function deleteFolder(id) {
             folderService.deleteFolder(id, function () {

@@ -9,12 +9,23 @@
 
     function FolderService($http) {
         var service = {
+            folder: {},
+            getfolder: getfolder,
+            setfolder: setfolder,
             getAll: getAll,
             get: get,
             create: create,
             updateFolder: updateFolder,
             deleteFolder : deleteFolder
         };
+
+        function getfolder() {
+            return service.folder;
+        }
+
+        function setfolder(value) {
+            service.folder = value;
+        }
 
         function getAll(callBack) {
             $http.get('api/folders').success(function (response) {

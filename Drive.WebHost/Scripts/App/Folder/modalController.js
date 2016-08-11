@@ -1,20 +1,4 @@
-﻿angular.module('driveApp').controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, items) {
-
-    //$scope.items = items;
-    //$scope.selected = {
-    //    item: $scope.items[0]
-    //};
-
-    //$scope.ok = function () {
-    //    $uibModalInstance.close($scope.selected.item);
-    //};
-
-    //$scope.cancel = function () {
-    //    $uibModalInstance.dismiss('cancel');
-    //};
-});
-
-(function () {
+﻿(function () {
     "use strict";
 
     angular
@@ -32,14 +16,25 @@
             description: ''
         };
 
-        vm.create = create;
+        activate();
+
+        function activate() {
+            vm.folder = folderService.getfolder();
+        }
+
+        vm.save = save;
         vm.cancel = cancel;
 
-        function create() {
-            folderService.create(vm.folder, function (id) {
-                vm.folder.id = id;
+        function save() {
+            if (vm.folder.id == 0) {
+                folderService.create(vm.folder, function(id) {
+                        vm.folder.id = id;
+                    });
+                }
+                else {
+                    folderService.updateFolder(vm.folder.id, vm.folder);
+                }
                 $uibModalInstance.close(vm.folder.id);
-            });
         }
 
         function cancel() {

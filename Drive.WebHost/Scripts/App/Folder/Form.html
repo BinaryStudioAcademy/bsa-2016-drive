@@ -3,9 +3,10 @@
 </div>
 <div class="modal-body">
     Name: <input type="text" ng-model="modalCtrl.folder.name" /><br />
-    Description: <input type="text" ng-model="modalCtrl.folder.description" /><br />
+    Description: <input type="text" ng-model="modalCtrl.folder.description"/><br/>
+    Id: {{modalCtrl.id}}
 </div>
 <div class="modal-footer">
-    <input type="submit" ng-click="modalCtrl.create()" value="Save" />
+    <input type="submit" ng-click="modalCtrl.save()" value="Save" />
     <input type="submit" ng-click="modalCtrl.cancel()" value="Cancel" />
 </div>
