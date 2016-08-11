@@ -46,7 +46,7 @@ namespace Drive.WebHost.Api
             if (!ModelState.IsValid)
                return BadRequest();
 
-            int id = await _spaceService.CreateAsync(space);
+            await _spaceService.CreateAsync(space);
             return Ok();
         }
 
