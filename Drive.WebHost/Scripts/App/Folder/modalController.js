@@ -27,14 +27,15 @@
 
         function save() {
             if (vm.folder.id == 0) {
-                folderService.create(vm.folder, function(id) {
-                        vm.folder.id = id;
-                    });
-                }
-                else {
-                    folderService.updateFolder(vm.folder.id, vm.folder);
-                }
-                $uibModalInstance.close(vm.folder.id);
+                folderService.create(vm.folder, function (id) {
+                    vm.folder.id = id;
+                });
+            }
+            else {
+                folderService.updateFolder(vm.folder.id, vm.folder);
+            }
+            $uibModalInstance.close(vm.folder.id);
+            vm.folder = {};
         }
 
         function cancel() {

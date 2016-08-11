@@ -43,13 +43,27 @@
                 }
             ]
         ];
-        //vm.otherMenuOptions = [
-        //    [
-        //        'Create', function ($itemScope) {
 
-        //        }
-        //    ]
-        //];
+        vm.createOption = [
+            [
+                'Create', function ($itemScope) {
+
+                },
+                [
+                    [
+                        'Folder', function () {
+                            folderService.setfolder({id: 0});
+                            vm.open();
+                        }
+                    ],
+                    [
+                        'File', function ($itemScope) {
+
+                        }
+                    ]
+                ]
+            ]
+        ];
 
         function open(size) {
 
@@ -67,7 +81,7 @@
                 }
             });
 
-            modalInstance.result.then(function (id) {
+            modalInstance.result.then(function () {
                 vm.id = id;
                 folderService.getAll(function (folders) {
                     vm.folders = folders;
