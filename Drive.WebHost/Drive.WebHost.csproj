@@ -193,6 +193,10 @@
     <Content Include="Scripts\App\Logs\Logs.html" />
     <Content Include="Scripts\App\Logs\logsController.js" />
     <Content Include="Scripts\App\Logs\logsService.js" />
+    <Content Include="Scripts\App\Menu\menu.css" />
+    <Content Include="Scripts\App\Menu\Menu.html" />
+    <Content Include="Scripts\App\Menu\menu.js" />
+    <Content Include="Scripts\App\Menu\menuController.js" />
     <Content Include="Scripts\App\Space\Settings.html" />
     <Content Include="Scripts\App\Space\settingsController.js" />
     <Content Include="Scripts\App\Space\settingsService.js" />
