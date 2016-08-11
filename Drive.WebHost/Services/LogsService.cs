@@ -23,6 +23,7 @@ namespace Drive.WebHost.Services
             
             return new LogUnit
             {
+                Id = data.Id,
                 Logged = data.Logged,
                 Level = data.Level,
                 Message = data.Message,
@@ -38,6 +39,7 @@ namespace Drive.WebHost.Services
             var dto = from d in data
                 select new LogUnit()
                 {
+                    Id = d.Id,
                     Logged = d.Logged,
                     Level = d.Level,
                     Message = d.Message,
@@ -60,6 +62,7 @@ namespace Drive.WebHost.Services
             var dto = from d in data
                       select new LogUnit()
                       {
+                          Id = d.Id,
                           Logged = d.Logged,
                           Level = d.Level,
                           Message = d.Message,
@@ -107,6 +110,7 @@ namespace Drive.WebHost.Services
             var dto = (from d in data                                        
                       select new LogUnit()
                       {
+                          Id = d.Id,
                           Logged = d.Logged,
                           Level = d.Level,
                           Message = d.Message,
