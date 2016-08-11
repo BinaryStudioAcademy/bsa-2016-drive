@@ -7,11 +7,14 @@ using System.Threading.Tasks;
 
 namespace Drive.Core.HttpClient
 {
-    public interface IHttpClient
+    public interface IAsyncHttpClient
     {
-        Task<string> GetAsync(string url);
-        Task<string> PostAsync(string url, string content);
-        Task<string> PutAsync(string url, string content);
-        Task<string> DeleteAsync(string url);
+        Task PostAsync<TContent>(string url, TContent content);
+        Task<TResult> PostAsync<TContent, TResult>(string url, TContent content);
+        Task PutAsync<T>(string url, T content);
+        Task<TResult> PutAsync<TContent, TResult>(string url, TContent content);
+        Task DeleteAsync(string url);
+        Task<TResult> DeleteAsync<TResult>(string url);
+        Task<TResult> GetAsync<TResult>(string url);
     }
 }

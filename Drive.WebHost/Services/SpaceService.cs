@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Drive.Core.HttpClient;
 using Drive.DataAccess.Entities;
 using Drive.DataAccess.Interfaces;
 using Driver.Shared.Dto;
@@ -11,10 +12,12 @@ namespace Drive.WebHost.Services
     public class SpaceService : ISpaceService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IAsyncHttpClient _httpClient;
 
-        public SpaceService(IUnitOfWork unitOfWork)
+        public SpaceService(IUnitOfWork unitOfWork, IAsyncHttpClient httpClient)
         {
             _unitOfWork = unitOfWork;
+            _httpClient = httpClient;
         }
 
         public async Task<SpaceDto> GetAsync(int id)
