@@ -84,3 +84,16 @@ textarea {
 {
     clear: both;
 }
+
+/*Side menu on Index page*/
+ #wrapper {
+  margin-left: 200px;
+}
+#content {
+  float: right;
+  width: 100%;
+}
+#sidebar {
+  float: left;
+  width: 200px;
+}

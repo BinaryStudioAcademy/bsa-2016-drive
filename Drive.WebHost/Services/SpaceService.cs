@@ -20,8 +20,6 @@ namespace Drive.WebHost.Services
         public async Task<SpaceDto> GetAsync(int id)
         {
             var data = await _unitOfWork.Spaces.GetByIdAsync(id);
-            var folders = data.ContentList.OfType<FolderUnitDto>();
-            var files = data.ContentList.OfType<FileUnitDto>();
 
             return new SpaceDto
             {
@@ -30,8 +28,22 @@ namespace Drive.WebHost.Services
                 MaxFileSize = data.MaxFileSize,
                 MaxFilesQuantity = data.MaxFilesQuantity,
                 ReadPermittedUsers = data.ReadPermittedUsers,
-                Files = files,
-                Folders = folders
+                Files = from file in data.ContentList.OfType<FileUnit>()
+                        select new FileUnitDto
+                        {
+                            Name = file.Name,
+                            Description = file.Description,
+                            Id = file.Id,
+                            IsDeleted = file.IsDeleted
+                        },
+                Folders = from folder in data.ContentList.OfType<FolderUnit>()
+                          select new FolderUnitDto
+                          {
+                              Name = folder.Name,
+                              Description = folder.Description,
+                              Id = folder.Id,
+                              IsDeleted = folder.IsDeleted
+                          }
             };
         }
 
@@ -47,13 +59,27 @@ namespace Drive.WebHost.Services
                           MaxFileSize = d.MaxFileSize,
                           MaxFilesQuantity = d.MaxFilesQuantity,
                           ReadPermittedUsers = d.ReadPermittedUsers,
-                          Files = d.ContentList.OfType<FileUnitDto>(),
-                          Folders = d.ContentList.OfType<FolderUnitDto>()
+                          Files = from file in d.ContentList.OfType<FileUnit>()
+                                  select new FileUnitDto
+                                  {
+                                      Name = file.Name,
+                                      Description = file.Description,
+                                      Id = file.Id,
+                                      IsDeleted = file.IsDeleted
+                                  },
+                          Folders = from folder in d.ContentList.OfType<FolderUnit>()
+                                    select new FolderUnitDto
+                                    {
+                                        Name = folder.Name,
+                                        Description = folder.Description,
+                                        Id = folder.Id,
+                                        IsDeleted = folder.IsDeleted
+                                    }
                       };
             return dto;
         }
 
-        public async Task<int> CreateAsync(SpaceDto dto)
+        public async Task CreateAsync(SpaceDto dto)
         {
             var space = new Space
             {
@@ -68,7 +94,6 @@ namespace Drive.WebHost.Services
             };
             _unitOfWork.Spaces.Create(space);
             await _unitOfWork.SaveChangesAsync();
-            return space.Id;
         }
 
         public async Task UpdateAsync(int id, SpaceDto dto)

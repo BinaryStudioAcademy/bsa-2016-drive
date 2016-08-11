@@ -10,6 +10,8 @@ namespace Drive.WebHost.Infrastructure
             Kernel.Bind<ISpaceService>().To<SpaceService>();
 
             Kernel.Bind<IFolderService>().To<FolderService>();
+
+            Kernel.Bind<ILogsService>().To<LogsService>();
         }
     }
 }
