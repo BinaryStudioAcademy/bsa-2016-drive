@@ -41,7 +41,7 @@ gulp.task("libs", function () {
     gulp.src([
       paths.bower + "angular.js",
       paths.bower + "angular-route.js",
-      paths.bower + "jquery.js",
+      paths.bower + "dist/jquery.js",
       paths.bower + "bootstrap.js"
     ])
         .pipe(concat("libs.js"))
