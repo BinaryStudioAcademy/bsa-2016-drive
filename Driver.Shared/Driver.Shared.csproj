@@ -45,6 +45,7 @@
     <Compile Include="Dto\FolderUnitDto.cs" />
     <Compile Include="Dto\LogUnit.cs" />
     <Compile Include="Dto\SpaceDto.cs" />
+    <Compile Include="Dto\UserDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

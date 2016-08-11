@@ -1,5 +1,7 @@
 ﻿using Drive.DataAccess.Entities;
+using Drive.WebHost.Services;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace Drive.WebHost.Api
@@ -7,10 +9,17 @@ namespace Drive.WebHost.Api
     [RoutePrefix("api/users")]
     public class UsersController : ApiController
     {
-        [HttpGet]
-        public IHttpActionResult GetAll()
+        private readonly IUsersService _usersService;
+
+        public UsersController(IUsersService usersService)
         {
-            List<User> users = new List<User>();
+            _usersService = usersService;
+        }
+
+        [HttpGet]
+        public async Task<IHttpActionResult> GetAllAsync()
+        {
+            var users = await _usersService.GetAllAsync();
 
             if (users == null)
                 return NotFound();
@@ -19,9 +28,16 @@ namespace Drive.WebHost.Api
         }
 
         [HttpGet]
-        public string Get(int id)
+        public async Task<IHttpActionResult> GetUserAsync(int id)
         {
-            return "value";
+            var user = await _usersService.GetAsync(id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(user);
         }
 
         [HttpDelete]

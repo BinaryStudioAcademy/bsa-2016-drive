@@ -186,8 +186,12 @@
     <Compile Include="Services\IFolderService.cs" />
     <Compile Include="Services\ILogsService.cs" />
     <Compile Include="Services\ISpaceService.cs" />
+    <Compile Include="Providers\IUsersProvider.cs" />
+    <Compile Include="Services\IUsersService.cs" />
     <Compile Include="Services\LogsService.cs" />
     <Compile Include="Services\SpaceService.cs" />
+    <Compile Include="Providers\UsersProvider.cs" />
+    <Compile Include="Services\UsersService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Bundles\styles.css" />
