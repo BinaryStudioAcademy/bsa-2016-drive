@@ -40,6 +40,27 @@ namespace Drive.WebHost.Api
             return Ok(result);
         }
 
+        [HttpGet]
+        public async Task<IHttpActionResult> SortSearchAsync(string sortOrder, string searchStr)
+        {
+            var result = await _logService.SortSearchAsync(sortOrder, searchStr);
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
+        }
+
+        public async Task<IHttpActionResult> FromToAsync(int from, int to)
+        {
+            var result = await _logService.FromToAsync(from, to);
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
+        }
+
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteAsync(int id)
         {

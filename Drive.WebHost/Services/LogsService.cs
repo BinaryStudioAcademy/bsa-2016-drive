@@ -100,6 +100,25 @@ namespace Drive.WebHost.Services
             return dto;
         }
 
+        public async Task<IEnumerable<LogUnit>> FromToAsync(int from, int to)
+        {
+            var data = await _unitOfWork.Logs.GetAllAsync();
+
+            var dto = (from d in data                                        
+                      select new LogUnit()
+                      {
+                          Logged = d.Logged,
+                          Level = d.Level,
+                          Message = d.Message,
+                          Exception = d.Exception,
+                          CallerName = d.CallerName
+                      })
+                      .Skip(from)
+                      .Take(to);
+
+            return dto;
+        }
+
         public void Dispose()
         {
             _unitOfWork.Dispose();

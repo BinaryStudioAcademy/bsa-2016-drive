@@ -17,6 +17,8 @@ namespace Drive.WebHost.Services
 
         Task<IEnumerable<LogUnit>> SortSearchAsync(string sortOrder, string searchStr);
 
+        Task<IEnumerable<LogUnit>> FromToAsync(int from, int to);
+
         void Dispose();
     }
 }
