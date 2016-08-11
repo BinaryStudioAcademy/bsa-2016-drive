@@ -12,10 +12,13 @@ namespace Drive.WebHost.Infrastructure
             Kernel.Bind<IFolderService>().To<FolderService>();
 
             Kernel.Bind<ILogsService>().To<LogsService>();
+<<<<<<< HEAD
 
             Kernel.Bind<IUsersService>().To<UsersService>();
 
             Kernel.Bind<IUsersProvider>().To<UsersProvider>();
+=======
+>>>>>>> origin/develop
         }
     }
 }

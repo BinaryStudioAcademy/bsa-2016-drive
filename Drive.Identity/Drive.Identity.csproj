@@ -65,13 +65,8 @@
     <Compile Include="Services\JWTAuthService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Drive.Core\Drive.Core.csproj">
-      <Project>{e0489859-279e-4bff-807b-1051fe7607df}</Project>
-      <Name>Drive.Core</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
