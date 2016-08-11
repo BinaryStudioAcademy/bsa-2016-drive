@@ -16,12 +16,11 @@
             description: ''
         };
 
-        
+        vm.id = 0;
 
         vm.folders = [];
         vm.getAll = getAll;
         vm.get = get;
-        vm.create = create;
         vm.updateFolder = updateFolder;
         vm.deleteFolder = deleteFolder;
         vm.open = open;
@@ -59,6 +58,7 @@
                 templateUrl: 'Scripts/App/Folder/Form.html',
                 windowTemplateUrl: 'Scripts/App/Folder/Modal.html',
                 controller: 'ModalInstanceCtrl',
+                controllerAs: 'modalCtrl',
                 size: size,
                 resolve: {
                     items: function () {
@@ -67,8 +67,11 @@
                 }
             });
 
-            modalInstance.result.then(function (selectedItem) {
-                //$scope.selected = selectedItem;
+            modalInstance.result.then(function (id) {
+                vm.id = id;
+                folderService.getAll(function (folders) {
+                    vm.folders = folders;
+                });
             }, function () {
                 console.log('Modal dismissed');
             });
@@ -89,12 +92,6 @@
         function getAll() {
             folderService.getAll(function (folders) {
                 vm.folders = folders;
-            });
-        }
-
-        function create() {
-            folderService.create(vm.folder, function (id) {
-                vm.folder.id = id;
             });
         }
 
