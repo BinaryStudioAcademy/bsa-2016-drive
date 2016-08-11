@@ -5,9 +5,9 @@
         .module("driveApp")
         .controller("FolderController", FolderController);
 
-    FolderController.$inject = ['FolderService'];
+    FolderController.$inject = ['FolderService', '$uibModal'];
 
-    function FolderController(folderService) {
+    function FolderController(folderService, $uibModal) {
         var vm = this;
         vm.folder = {
             id: 0,
@@ -16,12 +16,17 @@
             description: ''
         };
 
+        
+
         vm.folders = [];
         vm.getAll = getAll;
         vm.get = get;
         vm.create = create;
         vm.updateFolder = updateFolder;
         vm.deleteFolder = deleteFolder;
+        vm.open = open;
+
+
         vm.menuOptions = [
             [
                 'Share', function ($itemScope) {
@@ -46,6 +51,28 @@
         //        }
         //    ]
         //];
+
+        function open(size) {
+
+            var modalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'Scripts/App/Folder/Form.html',
+                windowTemplateUrl: 'Scripts/App/Folder/Modal.html',
+                controller: 'ModalInstanceCtrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        //return $scope.items;
+                    }
+                }
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+                //$scope.selected = selectedItem;
+            }, function () {
+                console.log('Modal dismissed');
+            });
+        };
 
         activate();
 

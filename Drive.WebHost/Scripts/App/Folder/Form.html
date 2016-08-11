@@ -1,0 +1,11 @@
+﻿<div class="modal-header">
+    <h3 class="modal-title">Create Folder</h3>
+</div>
+<div class="modal-body">
+    Name: <input type="text" ng-model="folderCtrl.folder.name" /><br />
+    Description: <input type="text" ng-model="folderCtrl.folder.description" /><br />
+</div>
+<div class="modal-footer">
+    <input type="submit" ng-click="folderCtrl.create(folderCtrl.folder)" value="Save" />
+    <input type="submit" ng-click="folderCtrl.create(folderCtrl.folder)" value="Cancel" />
+</div>
