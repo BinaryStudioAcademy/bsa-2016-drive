@@ -9,8 +9,12 @@
 
     function MenuService() {
         var service = {
-            
+            getMessage: getMessage
         };
+
+        function getMessage() {
+            return "...";
+        }
 
         return service;
     }

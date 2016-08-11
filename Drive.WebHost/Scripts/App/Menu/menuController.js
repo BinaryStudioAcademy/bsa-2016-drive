@@ -15,26 +15,30 @@
         vm.redirectToAddFile = redirectToAddFile;
         vm.redirectToAddMySpace = redirectToAddMySpace;
 
+        activate();
+
+        function activate() {
+            vm.message = menuService.getMessage();
+        }
+
         function redirectToBinarySpace(id) {
-           $location.url('App/Space/Space' + id);
+            $location.url('/api/spaces/' + id);
         };
 
         function redirectToSpaceSettings(id) {
-            $location.url('App/Space/Settings/' + id);
+            $location.url('/api/spaces/settings/' + id);
         };
 
         function redirectToAddBinarySpace() {
-            $location.url('App/Space/AddSpace');
+            $location.url('/api/spaces/');
         };
 
         function redirectToAddFile() {
-            $location.url('App/Space/AddFile');
+            $location.url('api/files');
         };
 
         function redirectToAddMySpace() {
-            $location.url('App/Space/AddSpace');
+            $location.url('api/Space/spaces');
         };
-
-        
     }
 }());
