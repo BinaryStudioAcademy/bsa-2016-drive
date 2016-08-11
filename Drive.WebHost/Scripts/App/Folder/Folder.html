@@ -13,15 +13,15 @@
                 <td>{{folder.name}}</td>
                 <td>{{folder.id}}</td>
                 <td>{{folder.description}}</td>
-                <td>{{folder.createdAt}}</td>
-                <td>{{folder.lastModified}}</td>
+                <td>{{folder.createdAt | date:"MM/dd/yyyy 'at' h:mma"}}</td>
+                <td>{{folder.lastModified | date:"MM/dd/yyyy 'at' h:mma"}}</td>
                 <!--<td>
-            <div class="btn-group" role="group">
-                <button type="button" class="btn btn-default" ng-click="">Share</button>
-                <button type="button" class="btn btn-default" ng-click="">Edit</button>
-                <button type="button" class="btn btn-danger" ng-click="folderCtrl.deleteFolder(folder.id)">Delete</button>
-            </div>
-        </td>-->
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-default" ng-click="">Share</button>
+                        <button type="button" class="btn btn-default" ng-click="">Edit</button>
+                        <button type="button" class="btn btn-danger" ng-click="folderCtrl.deleteFolder(folder.id)">Delete</button>
+                    </div>
+                </td>-->
             </tr>
         </table>
     </div>
