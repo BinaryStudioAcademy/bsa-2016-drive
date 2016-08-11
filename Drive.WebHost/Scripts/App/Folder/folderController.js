@@ -24,16 +24,20 @@
         vm.deleteFolder = deleteFolder;
         vm.menuOptions = [
             [
-                'Edit', function($itemScope) {
-
+                'Share', function ($itemScope) {
+                    console.log($itemScope.folder.id);
                 }
             ],
-            null,
             [
-                'Delete', function($itemScope) {
+                'Edit', function($itemScope) {
+                    console.log($itemScope.folder.id);
                 }
             ],
-            null
+            [
+                'Delete', function ($itemScope) {
+                    return deleteFolder($itemScope.folder.id);
+                }
+            ]
         ];
         vm.otherMenuOptions = [
             [

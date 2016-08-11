@@ -1,5 +1,5 @@
 ﻿angular.module('driveApp',
-    ['ngRoute'])
+    ['ui.bootstrap.contextMenu','ui-bootstrap', 'ngRoute'])
     .config([
         '$routeProvider',
         function($routeProvider) {

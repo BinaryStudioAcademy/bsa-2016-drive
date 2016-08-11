@@ -41,11 +41,12 @@ gulp.task("libs", function () {
     gulp.src([
       paths.bower + "angular.js",
       paths.bower + "angular-route.js",
+      paths.bower + "contextMenu.js",
       paths.bower + "jquery.js",
       paths.bower + "bootstrap.js",
-      paths.bower + "contextMenu.js",
       paths.bower + "ui-bootstrap.js"
     ])
+
         .pipe(concat("libs.js"))
         .pipe(gulp.dest(paths.scriptBundles));
 });
