@@ -3,14 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Drive.DataAccess.Interfaces;
 
-namespace Drive.DataAccess.Entities
+namespace Driver.Shared.Dto
 {
-    public class Log : IEntity
+    public class LogUnit
     {
-        public bool IsDeleted { get; set; }
-
         public int Id { get; set; }
 
         public DateTime Logged { get; set; }

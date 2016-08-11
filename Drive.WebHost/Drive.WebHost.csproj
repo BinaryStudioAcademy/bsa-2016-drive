@@ -164,6 +164,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\FoldersController.cs" />
+    <Compile Include="Api\LogsController.cs" />
     <Compile Include="Api\SpacesController.cs" />
     <Compile Include="Api\UsersController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -182,7 +183,9 @@
     <Compile Include="Services\FolderService.cs" />
     <Compile Include="Services\IFileService.cs" />
     <Compile Include="Services\IFolderService.cs" />
+    <Compile Include="Services\ILogsService.cs" />
     <Compile Include="Services\ISpaceService.cs" />
+    <Compile Include="Services\LogsService.cs" />
     <Compile Include="Services\SpaceService.cs" />
   </ItemGroup>
   <ItemGroup>

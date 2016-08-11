@@ -23,6 +23,7 @@ namespace Drive.DataAccess.Repositories
         private IRepository<User> _userRepository;
         private IRepository<Role> _roleRepository;
         private IRepository<Space> _spaceRepository;
+        private IRepository<Log> _logRepository;
 
         public IRepository<FolderUnit> Folders
         {
@@ -56,6 +57,14 @@ namespace Drive.DataAccess.Repositories
             get
             {
                 return _spaceRepository ?? (_spaceRepository = _repositoryFactory.CreateRepository<Space>(_context));
+            }
+        }
+
+        public IRepository<Log> Logs
+        {
+            get
+            {
+                return _logRepository ?? (_logRepository = _repositoryFactory.CreateRepository<Log>(_context));
             }
         }
 
