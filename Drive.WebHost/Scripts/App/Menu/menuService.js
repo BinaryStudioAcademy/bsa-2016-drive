@@ -5,16 +5,36 @@
         .module('driveApp')
         .factory('MenuService', MenuService);
 
-    MenuService.$inject = [];
+    MenuService.$inject = ['$location'];
 
     function MenuService() {
         var service = {
-            getMessage: getMessage
+            redirectToBinarySpace: redirectToBinarySpace,
+            redirectToSpaceSettings: redirectToSpaceSettings,
+            redirectToAddBinarySpace: redirectToAddBinarySpace,
+            redirectToAddFile: redirectToAddFile,
+            redirectToAddMySpace: redirectToAddMySpace
         };
 
-        function getMessage() {
-            return "...";
-        }
+        function redirectToBinarySpace(id) {
+            $location.url('/api/spaces/' + id);
+        };
+
+        function redirectToSpaceSettings(id) {
+            $location.url('/api/spaces/settings/' + id);
+        };
+
+        function redirectToAddBinarySpace() {
+            $location.url('/api/spaces/');
+        };
+
+        function redirectToAddFile() {
+            $location.url('api/files');
+        };
+
+        function redirectToAddMySpace() {
+            $location.url('api/Space/spaces');
+        };
 
         return service;
     }
