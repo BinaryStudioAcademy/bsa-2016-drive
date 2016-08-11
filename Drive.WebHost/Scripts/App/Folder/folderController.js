@@ -13,7 +13,9 @@
             id: 0,
             isDeleted: false,
             name: '',
-            description: ''
+            description: '',
+            createdAt: '',
+            lastModified: ''
         };
 
         vm.id = 0;

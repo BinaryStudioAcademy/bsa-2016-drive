@@ -20,15 +20,17 @@ namespace Drive.WebHost.Services
 
         public async Task<IEnumerable<FolderUnitDto>> GetAllAsync()
         {
-            var data = await _unitOfWork.Folders.GetAllAsync();
+            var folders = await _unitOfWork.Folders.GetAllAsync();
 
-            var dto = from d in data
+            var dto = from folder in folders
                       select new FolderUnitDto
                       {
-                          Id = d.Id,
-                          Description = d.Description,
-                          Name = d.Name,
-                          IsDeleted = d.IsDeleted
+                          Id = folder.Id,
+                          Description = folder.Description,
+                          Name = folder.Name,
+                          IsDeleted = folder.IsDeleted,
+                          CreatedAt = folder.CreatedAt,
+                          LastModified = folder.LastModified
                       };
 
             return dto;
@@ -43,7 +45,9 @@ namespace Drive.WebHost.Services
                 Id = folder.Id,
                 Description = folder.Description,
                 Name = folder.Name,
-                IsDeleted = folder.IsDeleted
+                IsDeleted = folder.IsDeleted,
+                CreatedAt = folder.CreatedAt,
+                LastModified = folder.LastModified
             };
         }
 
