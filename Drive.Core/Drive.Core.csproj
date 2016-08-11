@@ -54,7 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HttpClient\AsyncHttpClient.cs" />
-    <Compile Include="HttpClient\IHttpClient.cs" />
+    <Compile Include="HttpClient\IAsyncHttpClient.cs" />
     <Compile Include="HttpClient\PolymorphicMediaTypeFormatter.cs" />
     <Compile Include="Infrastructure\CoreModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

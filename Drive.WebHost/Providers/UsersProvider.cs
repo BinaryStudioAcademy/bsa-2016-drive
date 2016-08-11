@@ -12,9 +12,9 @@ namespace Drive.WebHost.Services
 {
     public class UsersProvider : IUsersProvider
     {
-        private readonly IHttpClient _client;
+        private readonly IAsyncHttpClient _client;
 
-        public UsersProvider(IHttpClient client)
+        public UsersProvider(IAsyncHttpClient client)
         {
             _client = client;
         }
@@ -26,9 +26,10 @@ namespace Drive.WebHost.Services
 
         public async Task<IEnumerable<UserDto>> GetAsync()
         {
-            var response = await _client.GetAsync("");
-            var result = JsonConvert.DeserializeObject<List<UserDto>>(response);
-            return result;
+            //var response = await _client.GetAsync("");
+            var response = await _client.GetAsync<List<UserDto>>("profile/user/filter");
+            //var result = JsonConvert.DeserializeObject<List<UserDto>>(response);
+            return response;
         }
     }
 }

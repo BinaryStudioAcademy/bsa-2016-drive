@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-<<<<<<< HEAD
 using System.IO;
 using System.Linq;
-=======
 using System.Diagnostics;
->>>>>>> origin/develop
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
@@ -17,33 +14,12 @@ namespace Drive.Core.HttpClient
 {
     public class AsyncHttpClient : IAsyncHttpClient
     {
-<<<<<<< HEAD
-        System.Net.Http.HttpClient _client;
-=======
         private readonly BSIdentityManager _identityManager;
         private const string BaseAddress = "http://team.binary-studio.com";
         private readonly IEnumerable<JsonMediaTypeFormatter> _formatter;
->>>>>>> origin/develop
 
         public AsyncHttpClient(BSIdentityManager identityManager)
         {
-<<<<<<< HEAD
-
-        }
-
-        public async Task<string> GetAsync(string url)
-        {       
-            var cookieContainer = new CookieContainer();
-            var handler = new HttpClientHandler() { CookieContainer = cookieContainer };
-            var baseAddress = new Uri("http://team.binary-studio.com");
-            cookieContainer.Add(baseAddress, new Cookie("x-access-token", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjU3N2ExNjY1OTgyOWZlMDUwYWRiM2Y1YyIsImVtYWlsIjoidGVzdGVyX2FAZXhhbXBsZS5jb20iLCJyb2xlIjoiREVWRUxPUEVSIiwiaWF0IjoxNDcwOTA1MjczfQ.2I_Ml5jEfSG0W5czpC5mwoedrQm-uIiy5aFiqW38gRE"));
-            var client = new System.Net.Http.HttpClient(handler);
-            HttpResponseMessage result;
-            client.BaseAddress = baseAddress;
-            result = client.GetAsync("/profile/user/filter").Result;
-            result.EnsureSuccessStatusCode();
-            return await result.Content.ReadAsStringAsync();
-=======
             _identityManager = identityManager;
             _formatter = PolymorphicMediaTypeFormatter.GetFormatterAsEnumerable();
         }
@@ -51,18 +27,11 @@ namespace Drive.Core.HttpClient
         public async Task PostAsync<TContent>(string url, TContent content)
         {
             await SendRequest(url, content, (c, u, p) => c.PostAsync(u, p)).ConfigureAwait(false);
->>>>>>> origin/develop
         }
 
         public async Task<TResult> PostAsync<TContent, TResult>(string url, TContent content)
         {
-<<<<<<< HEAD
-
-            var response = await _client.PostAsync(url, new StringContent(content));
-=======
             var response = await SendRequest(url, content, (c, u, p) => c.GetAsync(u)).ConfigureAwait(false);
->>>>>>> origin/develop
-
             var result = await ParseResponseAsync<TResult>(response);
             return result;
         }
@@ -113,16 +82,11 @@ namespace Drive.Core.HttpClient
             {
                 var baseAddress = new Uri(BaseAddress);
                 var cookieContainer = new CookieContainer();
-                using (var handler = new HttpClientHandler {CookieContainer = cookieContainer})
-                using (var client = new System.Net.Http.HttpClient(handler) {BaseAddress = baseAddress})
+                using (var handler = new HttpClientHandler { CookieContainer = cookieContainer })
+                using (var client = new System.Net.Http.HttpClient(handler) { BaseAddress = baseAddress })
                 {
-<<<<<<< HEAD
-                    //_client.Dispose();
-                }
-=======
                     var payload = CreatePayload(content);
                     cookieContainer.Add(baseAddress, new Cookie("x-access-token", _identityManager.Token));
->>>>>>> origin/develop
 
                     response = await func(client, url, payload);
                     response.EnsureSuccessStatusCode();
