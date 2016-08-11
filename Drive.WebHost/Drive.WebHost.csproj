@@ -193,8 +193,6 @@
     <Content Include="Scripts\App\Folder\folderController.js" />
     <Content Include="Scripts\App\Folder\folderService.js" />
     <Content Include="Scripts\App\Folder\Form.html" />
-    <Content Include="Scripts\App\Folder\Get.html" />
-    <Content Include="Scripts\App\Folder\GetAll.html" />
     <Content Include="Scripts\App\Folder\Modal.html" />
     <Content Include="Scripts\App\Folder\modalController.js" />
     <Content Include="Scripts\App\Home\homeService.js" />
