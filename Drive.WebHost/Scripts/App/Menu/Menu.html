@@ -170,16 +170,16 @@
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
             <li class="active">
-                <input type="button" class="btn btn-custom pull-right" value="File">
-                <input type="button" class="btn btn-custom pull-right" value="Add">
-                <input type="button" class="btn btn-custom pull-right" value="S">
-                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span> Binary Space</a>
+                <input type="button" class="btn btn-custom pull-right" value="File" ng-click="redirectToAddFile">
+                <input type="button" class="btn btn-custom pull-right" value="Add" ng-click="redirectToAddBinarySpace">
+                <input type="button" class="btn btn-custom pull-right" value="S" ng-click="redirectToSpaceSettings(id)">
+                <a href="#" ng-click="redirectToBinarySpace(id)"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span> Binary Space</a>
             </li>
             <li>
-                <input type="button" class="btn btn-custom pull-right" value="File">
-                <input type="button" class="btn btn-custom pull-right" value="Add">
-                <input type="button" class="btn btn-custom pull-right" value="S">
-                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>My Space</a>
+                <input type="button" class="btn btn-custom pull-right" value="File" ng-click="redirectToAddFile">
+                <input type="button" class="btn btn-custom pull-right" value="Add" ng-click="redirectToAddMySpace">
+                <input type="button" class="btn btn-custom pull-right" value="S" ng-click="redirectToSpaceSettings(id)">
+                <a href="#" ng-click="redirectToBinarySpace(id)"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>My Space</a>
             </li>
             <li>
                 <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>Other</a>
