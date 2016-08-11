@@ -23,13 +23,8 @@ namespace Drive.WebHost.Services
 
         public async Task<UserDto> GetAsync(int id)
         {
-            //var user = await _unitOfWork.Users.GetByIdAsync(id);
-            var user = new User
-            {
-                Id = 1
-            };
-            var result = await _userProvider.GetByIdAsync(user.GlobalId);
-            return result;
+            var user = await _unitOfWork.Users.GetByIdAsync(id);
+            return await _userProvider.GetByIdAsync(user.GlobalId);
         }
 
         public async Task<IEnumerable<UserDto>> GetAllAsync()

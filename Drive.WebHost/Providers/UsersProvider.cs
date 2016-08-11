@@ -21,15 +21,12 @@ namespace Drive.WebHost.Services
 
         public async Task<UserDto> GetByIdAsync(string id)
         {
-            return new UserDto();
+            return await _client.GetAsync<UserDto>("profile/api /user/public/" + id);
         }
 
         public async Task<IEnumerable<UserDto>> GetAsync()
         {
-            //var response = await _client.GetAsync("");
-            var response = await _client.GetAsync<List<UserDto>>("profile/user/filter");
-            //var result = JsonConvert.DeserializeObject<List<UserDto>>(response);
-            return response;
+            return await _client.GetAsync<List<UserDto>>("profile/user/filter");
         }
     }
 }
