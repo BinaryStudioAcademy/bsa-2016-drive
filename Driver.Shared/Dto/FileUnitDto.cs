@@ -1,4 +1,5 @@
 ﻿using Drive.DataAccess.Entities;
+using System;
 
 namespace Driver.Shared.Dto
 {
@@ -9,5 +10,7 @@ namespace Driver.Shared.Dto
         public FileType FyleType { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public AuthorDto Author { get; set; }
     }
 }
