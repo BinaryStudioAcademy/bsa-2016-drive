@@ -60,7 +60,7 @@
         };
 
         function redirectToUsersSettings() {
-            $location.url('api/usersSettings/');
+            $location.url('/settings');
         };
 
         function activate() {

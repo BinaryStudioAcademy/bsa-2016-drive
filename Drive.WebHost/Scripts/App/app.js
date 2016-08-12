@@ -17,12 +17,12 @@
              controller: 'SpaceController',
              controllerAs: 'spaceCtrl'
          })
-         //.when('/', // Space settings Page
-         //{
-         //    templateUrl: '/Scripts/App/Space/Settings.html',
-         //    controller: 'SettingsController',
-         //    controllerAs: 'settingsCtrl'
-         //})
+         .when('/settings', // Space settings Page
+         {
+             templateUrl: '/Scripts/App/Space/Settings.html',
+             controller: 'SettingsController',
+             controllerAs: 'settingsCtrl'
+         })
          .when('/Logs', // Logs page
          {
              templateUrl: '/Scripts/App/Logs/Logs.html',

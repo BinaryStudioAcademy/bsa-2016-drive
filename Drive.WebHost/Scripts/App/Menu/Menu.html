@@ -180,12 +180,17 @@
         background-image: -ms-linear-gradient(left, #333, #ccc, #333);
         background-image: -o-linear-gradient(left, #333, #ccc, #333);
     }
+
+    .iconCustom {
+        margin-left: -35px;
+        width: 3em;
+    }
 </style>
 
 <div id="wrapper" ng-controller="MenuController as menuController">
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
-            <button class="btn btn-info btn-md" style="width: 100%; height: 40px;" ng-click="menuController.redirectToAddNewSpace()"><i class="fa fa-plus-circle fa-cog fa-lg"></i>    Add new Space</button>
+            <button class="btn btn-info btn-md" style="width: 100%; height: 40px;" ng-click="menuController.redirectToAddNewSpace()"><i class="fa iconCustom fa-plus-circle fa-cog fa-lg"></i>Add new Space</button>
             <hr class="style" />
             <li class="active">
                 <button class="btn btn-custom pull-right btn-md" title="Binary Space Settings" ng-click="menuController.redirectToSpaceSettings(id)"><i class="fa fa-inverse fa-cog fa-lg"></i></button>
