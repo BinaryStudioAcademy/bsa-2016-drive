@@ -31,8 +31,8 @@
             $location.url('/api/spaces/' + id);
         };
 
-        function redirectToSpaceSettings(id) {
-            $location.url('/api/spaces/settings/' + id);
+        function redirectToSpaceSettings() {
+            $location.url('/settings/');
         };
 
         function redirectToAddNewSpace() {
@@ -60,7 +60,7 @@
         };
 
         function redirectToUsersSettings() {
-            $location.url('/settings');
+            $location.url('/user/settings');
         };
 
         function activate() {

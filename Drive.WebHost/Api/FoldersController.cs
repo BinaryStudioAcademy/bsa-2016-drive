@@ -42,18 +42,18 @@ namespace Drive.WebHost.Api
         [HttpPost]
         public async Task<IHttpActionResult> CreateAsync(FolderUnitDto folder)
         {
-            int id = await _service.CreateAsync(folder);
+            var dto = await _service.CreateAsync(folder);
 
-            return Ok(id);
+            return Ok(dto);
         }
 
         //PUT api/folders/1
         [HttpPut]
         public async Task<IHttpActionResult> UpdateAsync(int id, FolderUnitDto folder)
         {
-            await _service.UpdateAsync(id, folder);
+            var dto = await _service.UpdateAsync(id, folder);
 
-            return Ok();
+            return Ok(dto);
         }
 
         // DELETE api/folders/1

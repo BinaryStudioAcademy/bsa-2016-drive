@@ -22,7 +22,7 @@
             });
             settingsService.getAllUsers(function (data) {
                 vm.users = data;
-            })
+            });
             vm.userAddName = null;
             vm.userAddId = null;
         }
