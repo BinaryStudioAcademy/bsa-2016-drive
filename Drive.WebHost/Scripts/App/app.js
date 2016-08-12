@@ -23,7 +23,19 @@
              controller: 'SettingsController',
              controllerAs: 'settingsCtrl'
          })
+         .when('/create_file',
+         {
+             templateUrl: '/Scripts/App/File/FileForm.html',
+             controller: 'FileController',
+             controllerAs: 'fileCtrl'
+         })
+         .when('/edit/:id',
+         {
+             templateUrl: '/Scripts/App/File/FileForm.html',
+             controller: 'FileController',
+             controllerAs: 'fileCtrl'
+         })
          .otherwise({ // This is when any route not matched - error
              controller: 'ErrorController'
          });
- }]);
+     }]);
