@@ -14,15 +14,16 @@
         vm.submitted = false;
         vm.folder = {};
 
-        //vm.title = 'Update Folder';
+        vm.title = 'Update Folder';
 
         activate();
 
         function activate() {
             vm.folder = items;
-            //if (vm.folder == undefined) {
-            //    vm.title = 'Create Folder';
-            //}
+            console.log(vm.folder);
+            if (vm.folder.id == undefined) {
+                vm.title = 'Create Folder';
+            }
         }
 
         function save() {
