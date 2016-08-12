@@ -31,17 +31,18 @@
         }
 
         function create(data, callBack) {
-            $http.post('api/folders', data).success(function (response) {
+            $http.post('api/folders', data.folder).success(function (response) {
                 if (callBack)
                     callBack(response);
             });
         }
 
-        function updateFolder(id, folder, callback) {
-            $http.put('api/folders/'+ id, folder)
-                .then(function(response) {
-                    if (callback)
+        function updateFolder(data, callback) {
+            $http.put('api/folders/' + data.id, data)
+                .then(function (response) {
+                    if (callback) {
                         callback(response);
+                    }
                 });
         }
 

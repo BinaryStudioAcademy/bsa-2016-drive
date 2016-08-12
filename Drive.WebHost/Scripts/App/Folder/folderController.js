@@ -5,9 +5,9 @@
         .module("driveApp")
         .controller("FolderController", FolderController);
 
-    FolderController.$inject = ['FolderService', '$uibModal'];
+    FolderController.$inject = ['FolderService', '$uibModal', '$rootScope'];
 
-    function FolderController(folderService, $uibModal) {
+    function FolderController(folderService, $uibModal, $rootScope) {
         var vm = this;
         vm.folder = {
             id: 0,
@@ -25,6 +25,8 @@
         vm.get = get;
         vm.deleteFolder = deleteFolder;
         vm.open = open;
+        vm.create = create;
+        vm.update = update;
 
 
         vm.menuOptions = [
@@ -83,15 +85,36 @@
                 }
             });
 
-            modalInstance.result.then(function (id) {
-                vm.id = id;
-                folderService.getAll(function (folders) {
-                    vm.folders = folders;
-                });
+            modalInstance.result.then(function () {
             }, function () {
                 console.log('Modal dismissed');
             });
         };
+
+        $rootScope.$on("Create", function (event, data) {
+            vm.create(data);
+        });
+
+        $rootScope.$on("Update", function (event, data) {
+            vm.update(data);
+        });
+
+        function create(folder) {
+            folderService.create(folder, function (response) {
+                vm.folders.push(response);
+            });
+        }
+
+        function update(data) {
+
+            folderService.updateFolder(data.folder, function (response) {
+                for (var i = 0, len = vm.folders.length; i < len; i++) {
+                    if (vm.folders[i].id == data.folder.id) {
+                        vm.folders[i] = response.data;
+                    }
+                }
+            });
+        }
 
         activate();
 

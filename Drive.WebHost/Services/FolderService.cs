@@ -51,7 +51,7 @@ namespace Drive.WebHost.Services
             };
         }
 
-        public async Task<int> CreateAsync(FolderUnitDto dto)
+        public async Task<FolderUnitDto> CreateAsync(FolderUnitDto dto)
         {
             var folder = new FolderUnit
             {
@@ -66,10 +66,14 @@ namespace Drive.WebHost.Services
             _unitOfWork.Folders.Create(folder);
             await _unitOfWork.SaveChangesAsync();
 
-            return folder.Id;
+            dto.Id = folder.Id;
+            dto.CreatedAt = folder.CreatedAt;
+            dto.LastModified = folder.LastModified;
+
+            return dto;
         }
 
-        public async Task UpdateAsync(int id, FolderUnitDto dto)
+        public async Task<FolderUnitDto> UpdateAsync(int id, FolderUnitDto dto)
         {
             var folder = await _unitOfWork.Folders.GetByIdAsync(id);
 
@@ -80,6 +84,10 @@ namespace Drive.WebHost.Services
             folder.LastModified = DateTime.Now;
 
             await _unitOfWork.SaveChangesAsync();
+
+            dto.LastModified = DateTime.Now;
+
+            return dto;
         }
 
         public async Task DeleteAsync(int id)
