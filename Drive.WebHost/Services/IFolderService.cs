@@ -14,9 +14,9 @@ namespace Drive.WebHost.Services
 
         Task<FolderUnitDto> GetAsync(int id);
 
-        Task<int> CreateAsync(FolderUnitDto folder);
+        Task<FolderUnitDto> CreateAsync(FolderUnitDto folder);
 
-        Task UpdateAsync(int id, FolderUnitDto folder);
+        Task<FolderUnitDto> UpdateAsync(int id, FolderUnitDto folder);
 
         Task DeleteAsync(int id);
 
