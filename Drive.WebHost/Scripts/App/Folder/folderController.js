@@ -51,7 +51,6 @@
         vm.createOption = [
             [
                 'Create', function ($itemScope) {
-
                 },
                 [
                     [
@@ -78,26 +77,24 @@
                 controller: 'ModalInstanceCtrl',
                 controllerAs: 'modalCtrl',
                 size: size,
-                resolve : {
-                    items : function () {
+                resolve: {
+                    items: function () {
                         return vm.folder;
                     }
                 }
             });
 
-            modalInstance.result.then(function () {
+            modalInstance.result.then(function (folder) {
+                console.log(folder);
+                if (folder.id == 0) {
+                    vm.create(folder);
+                } else {
+                    vm.update(folder);
+                }
             }, function () {
                 console.log('Modal dismissed');
             });
         };
-
-        $rootScope.$on("Create", function (event, data) {
-            vm.create(data);
-        });
-
-        $rootScope.$on("Update", function (event, data) {
-            vm.update(data);
-        });
 
         function create(folder) {
             folderService.create(folder, function (response) {
@@ -105,11 +102,10 @@
             });
         }
 
-        function update(data) {
-
-            folderService.updateFolder(data.folder, function (response) {
+        function update(folder) {
+            folderService.updateFolder(folder, function (response) {
                 for (var i = 0, len = vm.folders.length; i < len; i++) {
-                    if (vm.folders[i].id == data.folder.id) {
+                    if (vm.folders[i].id == folder.id) {
                         vm.folders[i] = response.data;
                     }
                 }
@@ -134,7 +130,7 @@
             });
         }
 
-        
+
 
         function deleteFolder(id) {
             folderService.deleteFolder(id, function () {

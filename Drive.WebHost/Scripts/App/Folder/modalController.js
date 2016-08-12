@@ -26,13 +26,7 @@
         }
 
         function save() {
-            if (vm.folder.id == undefined) {
-                $rootScope.$emit("Create", { folder: vm.folder });
-            }
-            else {
-                $rootScope.$emit("Update", { folder: vm.folder });
-            }
-            $uibModalInstance.close();
+            $uibModalInstance.close(vm.folder);
         }
 
         function cancel() {
