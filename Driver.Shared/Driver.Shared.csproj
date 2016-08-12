@@ -41,6 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto\AuthorDto.cs" />
     <Compile Include="Dto\FileUnitDto.cs" />
     <Compile Include="Dto\FolderUnitDto.cs" />
     <Compile Include="Dto\LogUnit.cs" />
