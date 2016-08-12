@@ -71,5 +71,29 @@ namespace Drive.WebHost.Api
             await _spaceService.UpdateAsync(id, space);
             return Ok();
         }
+
+
+        // GET: api/spaces/(int)?folderId=(int?)&text=(string)&from=(int)&to=(int)
+        [HttpGet]
+        [Route("{spaceId:int}")]
+        public async Task<IHttpActionResult> SearchFolderAndFile(int spaceId, string text, int page, int count, int? folderId = null)
+        {
+            var searchResultDto = await _spaceService.SearchFoldersAndFilesAsync(spaceId, folderId, text, page, count);
+
+            if (searchResultDto == null || (searchResultDto.Files.Count == 0 && searchResultDto.Folders.Count == 0))
+                return NotFound();
+            return Ok(searchResultDto);
+        }
+
+        // GET: api/spaces/(int)?folderId=(int?)&text=(string)
+        [HttpGet]
+        [Route("{spaceId:int}")]
+        public async Task<IHttpActionResult> NumberOfFoundFoldersAndFiles(int spaceId, string text, int? folderId = null)
+        {
+            int result = await _spaceService.NumberOfFoundFoldersAndFilesAsync(spaceId, folderId, text);
+            if (result == 0)
+                return NotFound();
+            return Ok(result);
+        }
     }
 }
