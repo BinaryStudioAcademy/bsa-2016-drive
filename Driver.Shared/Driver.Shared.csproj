@@ -41,10 +41,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto\FileUnitDto.cs" />
     <Compile Include="Dto\FolderUnitDto.cs" />
+    <Compile Include="Dto\LogUnit.cs" />
+    <Compile Include="Dto\SpaceDto.cs" />
+    <Compile Include="Dto\UserDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Drive.DataAccess\Drive.DataAccess.csproj">
+      <Project>{1fd29625-9a63-412a-9e76-006aa7c3b761}</Project>
+      <Name>Drive.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <None Include="EntityDiagram\class-diagram.pdf" />
   </ItemGroup>

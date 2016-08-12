@@ -1,5 +1,5 @@
 ﻿using Ninject.Modules;
-using Drive.Core.HttpClient;
+using Drive.Identity.Services;
 
 namespace Drive.Identity.DI
 {
@@ -7,8 +7,7 @@ namespace Drive.Identity.DI
     {
         public override void Load()
         {
-            //Bind<IIdentityInterface>().To<IdentityClass>();
-            Kernel.Bind<IHttpClient>().To<AsyncHttpClient>();
+            Bind<BSIdentityManager>().ToSelf();
         }
     }
 }

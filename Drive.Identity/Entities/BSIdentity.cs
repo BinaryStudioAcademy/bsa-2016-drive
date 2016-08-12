@@ -33,7 +33,7 @@ namespace Drive.Identity.Entities
         private bool Expired()
         {
             var dt = new DateTime(1970, 1, 1, 0, 0, 0, 0).AddSeconds(IssuedAt).ToLocalTime();
-            return dt.AddMinutes(1440) >= DateTime.Now;
+            return dt.AddMinutes(1440) <= DateTime.Now;
         }
     }
 }

@@ -1,0 +1,82 @@
+﻿<div class="container">
+    <nav aria-label="...">
+        <ul class="pager">
+            <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Back</a></li>
+        </ul>
+    </nav>
+    <ol class="breadcrumb">
+        <li><a href="#">Home</a></li>
+        <li class="active">Logs</li>
+    </ol>
+    <div class="page-header">
+        <h2>
+            Logs
+        </h2>
+    </div>
+    <form>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon"></div>
+                <input type="text" class="form-control" placeholder="Level filter" ng-model="logsCtrl.searchLevel.Level">
+            </div>
+        </div>
+    </form>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <td>
+                    <a href="" ng-click="logsCtrl.sort.sortType = 'Id'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                        Id
+                        <span ng-show="logsCtrl.sort.sortType == 'Id' && !logsCtrl.sort.sortReverse">&#8595</span>
+                        <span ng-show="logsCtrl.sort.sortType == 'Id' && logsCtrl.sort.sortReverse">&#8593</span>
+                    </a>
+                </td>
+                <td>
+                    <a href="" ng-click="logsCtrl.sort.sortType = 'Logged'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                        Logged
+                        <span ng-show="logsCtrl.sort.sortType == 'Logged' && !logsCtrl.sort.sortReverse">&#8595</span>
+                        <span ng-show="logsCtrl.sort.sortType == 'Logged' && logsCtrl.sort.sortReverse">&#8593</span>
+                    </a>
+                </td>
+                <td>
+                    <a href="" ng-click="logsCtrl.sort.sortType = 'Level'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                        Log level
+                        <span ng-show="logsCtrl.sort.sortType == 'Level' && !logsCtrl.sort.sortReverse">&#8595</span>
+                        <span ng-show="logsCtrl.sort.sortType == 'Level' && logsCtrl.sort.sortReverse">&#8593</span>
+                    </a>
+                </td>
+                <td>
+                    <a href="" ng-click="logsCtrl.sort.sortType = 'Message'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                        Log message
+                        <span ng-show="logsCtrl.sort.sortType == 'Message' && !logsCtrl.sort.sortReverse">&#8595</span>
+                        <span ng-show="logsCtrl.sort.sortType == 'Message' && logsCtrl.sort.sortReverse">&#8593</span>
+                    </a>
+                </td>
+                <td>
+                    <a href="" ng-click="logsCtrl.sort.sortType = 'Exception'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                        Exception
+                        <span ng-show="logsCtrl.sort.sortType == 'Exception' && !logsCtrl.sort.sortReverse">&#8595</span>
+                        <span ng-show="logsCtrl.sort.sortType == 'Exception' && logsCtrl.sort.sortReverse">&#8593</span>
+                    </a>
+                </td>
+                <td>
+                    <a href="" ng-click="logsCtrl.sort.sortType = 'CallerName'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                        Caller Name
+                        <span ng-show="logsCtrl.sort.sortType == 'CallerName' && !logsCtrl.sort.sortReverse">&#8595</span>
+                        <span ng-show="logsCtrl.sort.sortType == 'CallerName' && logsCtrl.sort.sortReverse">&#8593</span>
+                    </a>
+                </td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="log in logsCtrl.logs | orderBy:logsCtrl.sort.sortType:logsCtrl.sort.sortReverse | filter:logsCtrl.searchLevel:Level">
+                <td>{{ log.Id }}</td>
+                <td>{{ log.Logged }}</td>
+                <td>{{ log.Level }}</td>
+                <td>{{ log.Message }}</td>
+                <td>{{ log.Exception }}</td>
+                <td>{{ log.CallerName }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

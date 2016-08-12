@@ -7,21 +7,22 @@ var cssmin = require("gulp-cssmin");
 var uglify = require("gulp-uglify");
 var rename = require("gulp-rename");
 
-gulp.task("prod", ["bower", "main", "libs", "styles", "minify"]);
-gulp.task("develop", ["clean", "bower", "main", "libs", "styles"]);
-gulp.task("noBower", ["main", "libs", "styles"]);
+gulp.task("prod", ["main", "libs", "styles", "minify", "fonts"]);
+gulp.task("develop", ["clean", "bower", "main", "libs", "styles", "fonts"]);
+gulp.task("noBower", ["main", "libs", "styles", "fonts"]);
 
 var paths = {
     bower: "bower_components/**/",
     scriptBundles: "./Scripts/Bundles",
-    contentBundles: "./Content/Bundles"
+    contentBundles: "./Content/Bundles",
+    fontBundles: "./Content/Fonts"
 };
 
 gulp.task("bower", function () {
     return bower("./bower_components");
 });
 
-gulp.task("clean", ["clean:js", "clean:css"]);
+gulp.task("clean", ["clean:js", "clean:css", "clean:fonts"]);
 
 gulp.task("clean:js", function (cb) {
     rimraf(paths.scriptBundles, cb);
@@ -29,6 +30,10 @@ gulp.task("clean:js", function (cb) {
 
 gulp.task("clean:css", function (cb) {
     rimraf(paths.contentBundles, cb);
+});
+
+gulp.task("clean:fonts", function (cb) {
+    rimraf(paths.fontBundles, cb);
 });
 
 gulp.task("main", function () {
@@ -41,7 +46,7 @@ gulp.task("libs", function () {
     gulp.src([
       paths.bower + "angular.js",
       paths.bower + "angular-route.js",
-      paths.bower + "jquery.js",
+      paths.bower + "dist/jquery.js",
       paths.bower + "bootstrap.js"
     ])
         .pipe(concat("libs.js"))
@@ -51,10 +56,20 @@ gulp.task("libs", function () {
 gulp.task("styles", function () {
     gulp.src([
         paths.bower + "bootstrap.css",
+        paths.bower + "font-awesome.css",
         "./Content/*.css"
     ])
         .pipe(concat("styles.css"))
         .pipe(gulp.dest(paths.contentBundles));
+});
+
+gulp.task("fonts", function () {
+    gulp.src([
+        paths.bower + "bootstrap/fonts/*",
+        paths.bower + "fontawesome/fonts/*"
+    ])
+        .pipe(rename({ dirname: '' }))
+        .pipe(gulp.dest(paths.fontBundles));
 });
 
 gulp.task("minify", ["min:js", "min:css"]);

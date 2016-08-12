@@ -3,6 +3,7 @@ using System.Web;
 using Drive.Core.Infrastructure;
 using Drive.DataAccess.Infrastructure;
 using Drive.Identity.DI;
+using Drive.Logging.DI;
 using Drive.WebHost;
 using Drive.WebHost.Infrastructure;
 using Microsoft.Web.Infrastructure.DynamicModuleHelper;
@@ -64,7 +65,7 @@ namespace Drive.WebHost
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Load(new CoreModule(), new DataAccessModule(), new IdentityModule(), new WebHostModule());
+            kernel.Load(new CoreModule(), new DataAccessModule(), new IdentityModule(), new WebHostModule(), new LoggingModule());
         }        
     }
 }

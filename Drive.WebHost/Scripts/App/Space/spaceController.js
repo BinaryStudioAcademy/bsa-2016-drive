@@ -13,16 +13,9 @@
         activate();
 
         function activate() {
-            
-            vm.listView = function () {
-                angular.element(document.getElementsByClassName("item")).addClass("list-group-item");
-                angular.element(document.getElementsByClassName("item")).removeClass("grid-group-item");
-            };
-
-            vm.gridView = function () {
-                angular.element(document.getElementsByClassName("item")).addClass("grid-group-item");
-                angular.element(document.getElementsByClassName("item")).removeClass("list-group-item");
-            };
+            spaceService.getSpace(1, function (data) {
+                vm.space = data;
+            });
         }
     }
 }());

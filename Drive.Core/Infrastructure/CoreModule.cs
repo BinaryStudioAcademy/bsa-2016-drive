@@ -1,4 +1,5 @@
-﻿using Ninject.Modules;
+﻿using Drive.Core.HttpClient;
+using Ninject.Modules;
 
 namespace Drive.Core.Infrastructure
 {
@@ -6,7 +7,7 @@ namespace Drive.Core.Infrastructure
     {
         public override void Load()
         {
-            //Bind<ICoreInterface>().To<CoreClass>();
+            Bind<IAsyncHttpClient>().To<AsyncHttpClient>();
         }
     }
 }

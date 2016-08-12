@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Drive.DataAccess.Entities;
 using Drive.WebHost.Services;
+using Driver.Shared.Dto;
 
 namespace Drive.WebHost.Api
 {
@@ -18,7 +19,7 @@ namespace Drive.WebHost.Api
         }
 
         [HttpGet]
-        public async Task<IHttpActionResult> GetAll()
+        public async Task<IHttpActionResult> GetAllAsync()
         {
             var result = await _spaceService.GetAllAsync();
 
@@ -40,7 +41,7 @@ namespace Drive.WebHost.Api
         }
         
         [HttpPost]
-        public async Task<IHttpActionResult> AddSpace(Space space)
+        public async Task<IHttpActionResult> CreateSpace(SpaceDto space)
         {
             if (!ModelState.IsValid)
                return BadRequest();
@@ -62,12 +63,12 @@ namespace Drive.WebHost.Api
         }
 
         [HttpPut]
-        public async Task<IHttpActionResult> UpdateSpace(Space space)
+        public async Task<IHttpActionResult> UpdateSpace(int id, SpaceDto space)
         {
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            await _spaceService.UpdateAsync(space);
+            await _spaceService.UpdateAsync(id, space);
             return Ok();
         }
     }

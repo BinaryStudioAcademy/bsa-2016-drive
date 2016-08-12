@@ -6,12 +6,12 @@
     </nav>
     <ol class="breadcrumb">
         <li><a href="#">BinarySpace</a></li>
-        <li><a href="#">Space1</a></li>
+        <li><a href="#">{{settingsCtrl.space.Name}}</a></li>
         <li class="active">Settings</li>
     </ol>
     <div class="page-header">
         <h2>
-            Space settings <small>{{settingsCtrl.title}}</small>
+            Space settings <small>{{settingsCtrl.space.Name}}</small>
         </h2>
     </div>
     <div class="row">
@@ -20,19 +20,19 @@
             <form name="settingsForm" novalidate>
                 <div class="col-md-12">
                     <label>Space name:</label>
-                    <input type="text" class="form-control" ng-model="settingsCtrl.spaceName">
+                    <input type="text" class="form-control" ng-model="settingsCtrl.space.Name">
                 </div>
                 <div class="col-md-12">
                     <label>Description:</label>
-                    <input type="text" class="form-control" ng-model="settingsCtrl.description">
+                    <input type="text" class="form-control" ng-model="settingsCtrl.space.Description">
                 </div>
                 <div class="col-md-12">
                     <label>Maximum Files Quantity:</label>
-                    <input type="number" class="form-control" min="0" step="1" ng-model="settingsCtrl.maxFilesQuantity">
+                    <input type="number" class="form-control" min="0" step="1" ng-model="settingsCtrl.space.MaxFilesQuantity">
                 </div>
                 <div class="col-md-12">
-                    <label>Maximum file size:</label>
-                    <input type="number" class="form-control" min="0" step="1" max="1024" ng-model="settingsCtrl.maxFileSize">
+                    <label>Maximum file size (MB):</label>
+                    <input type="number" class="form-control" min="0" step="1" max="1024" ng-model="settingsCtrl.space.MaxFileSize">
                 </div>
                 <div class="col-md-12">
                     <br />
@@ -58,14 +58,14 @@
                                         Users<span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li ng-repeat="a in settingsCtrl.users">
-                                            <a ng-click="settingsCtrl.setChoice(a.name, a.id);">{{a.name}}</a>
+                                        <li ng-repeat="item in settingsCtrl.users">
+                                            <a ng-click="settingsCtrl.setChoice(item.Login, item.Id);">{{item.Login}}</a>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <input class="form-control" ng-model="settingsCtrl.userAddName" placeholder="User name" />
+                                <input class="form-control" ng-model="settingsCtrl.userAddName" placeholder="User name" disabled/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -83,11 +83,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in settingsCtrl.spaceUsers">
-                                <td>{{item.name}}</td>
-                                <td>{{item.id}}</td>
+                            <tr ng-repeat="item in settingsCtrl.space.ReadPermittedUsers">
+                                <td>{{item.Login}}</td>
+                                <td>{{item.Id}}</td>
                                 <td>
-                                    <input type="button" value="Remove" class="btn btn-danger" ng-click="settingsCtrl.removeUser(item.id)" />
+                                    <input type="button" value="Remove" class="btn btn-danger" ng-click="settingsCtrl.removeSpaceUser(item.Id)" />
                                 </td>
                             </tr>
                         </tbody>

@@ -1,6 +1,11 @@
 ﻿@{
     ViewBag.Title = "Home Page";
 }
-<div>
-    <div ng-view></div>
+<div ng-include="'Scripts/App/Menu/Menu.html'" class="include-index">
+
 </div>
+<div>
+    <div ng-view class="view-index"></div>
+</div>
+
+
