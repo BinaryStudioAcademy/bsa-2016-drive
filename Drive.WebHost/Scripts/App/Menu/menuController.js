@@ -6,16 +6,15 @@
 
     MenuController.$inject = ['$location'];
 
-    function MenuController() {
+    function MenuController($location) {
 
         var vm = this;
 
         vm.redirectToBinarySpace = redirectToBinarySpace;
         vm.redirectToMySpace = redirectToMySpace;
         vm.redirectToSpaceSettings = redirectToSpaceSettings;
-        vm.redirectToAddBinarySpace = redirectToAddBinarySpace;
+        vm.redirectToAddNewSpace = redirectToAddNewSpace;
         vm.redirectToAddFile = redirectToAddFile;
-        vm.redirectToAddMySpace = redirectToAddMySpace;
         vm.redirectToNetSpace = redirectToNetSpace;
         vm.redirectToDocs = redirectToDocs;
         vm.redirectToEvents = redirectToEvents;
@@ -36,16 +35,12 @@
             $location.url('/api/spaces/settings/' + id);
         };
 
-        function redirectToAddBinarySpace() {
+        function redirectToAddNewSpace() {
             $location.url('/api/spaces/');
         };
 
         function redirectToAddFile() {
             $location.url('api/files/');
-        };
-
-        function redirectToAddMySpace() {
-            $location.url('api/spaces/');
         };
 
         function redirectToNetSpace() {

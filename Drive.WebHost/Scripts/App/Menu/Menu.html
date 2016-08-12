@@ -171,17 +171,16 @@
 <div id="wrapper" ng-controller="MenuController as menuController">
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+            <li>
+                <a href="#" ng-click="menuController.redirectToAddNewSpace()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-inverse fa-plus-circle fa-stack-1x "></i></span>Add new Space</a>
+            </li>
             <li class="active">
-                <button class="btn btn-custom pull-right btn-md" title="Add new file in Space" ng-click="menuController.redirectToAddFile()"><i class="fa fa-inverse fa-file-o fa-lg"></i></button>
-                <button class="btn btn-custom pull-right btn-md" title="Add new Space" ng-click="menuController.redirectToAddBinarySpace()"><i class="fa fa-inverse fa-plus-circle fa-lg"></i></button>
                 <button class="btn btn-custom pull-right btn-md" title="Binary Space Settings" ng-click="menuController.redirectToSpaceSettings(id)"><i class="fa fa-inverse fa-cog fa-lg"></i></button>
-                <a href="#" ng-click="menuController.redirectToBinarySpace(id)"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x "></i></span> Binary Space</a>
+                <a href="#" ng-click="menuController.redirectToBinarySpace(id)"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x "></i></span>Binary Space</a>
             </li>
             <li>
-                <button class="btn btn-custom pull-right btn-md" title="Add new file in Space" ng-click="menuController.redirectToAddFile()"><i class="fa fa-inverse fa-file-o fa-lg"></i></button>
-                <button class="btn btn-custom pull-right btn-md" title="Add new Space" ng-click="menuController.redirectToAddMySpace()"><i class="fa fa-inverse fa-plus-circle fa-lg"></i></button>
                 <button class="btn btn-custom pull-right btn-md" title="My Space Settings" ng-click="menuController.redirectToSpaceSettings(id)"><i class="fa fa-inverse fa-cog fa-lg"></i></button>
-                <a href="#" ng-click="menuController.redirectToMySpace(id)"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-upload fa-stack-1x "></i></span>My Space</a>
+                <a href="#" ng-click="menuController.redirectToMySpace(id)"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x "></i></span>My Space</a>
             </li>
             <li>
                 <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-ellipsis-v fa-stack-1x "></i></span>Other</a>
