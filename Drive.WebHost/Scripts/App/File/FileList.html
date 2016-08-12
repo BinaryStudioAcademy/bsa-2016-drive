@@ -1,0 +1,18 @@
+﻿<div>
+    <h1>Files</h1>
+    <p><a href="#/create_file">create</a></p>
+    <table>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+        <tr ng-repeat="file in fileCtrl.files">
+            <td>{{file.id}}</td>
+            <td>{{file.name}}</td>
+            <td>{{file.description}}</td>
+            <td><a href="#/edit/{{file.id}}">edit</a></td>
+        </tr>
+    </table>
+
+</div>

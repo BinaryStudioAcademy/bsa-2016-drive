@@ -29,6 +29,12 @@
              controller: 'LogsController',
              controllerAs: 'logsCtrl'
          })
+         .whet('/file_list',
+         {
+             templateUrl: '/Scripts/App/File/FileList.html',
+             controller: 'FileController',
+             controllerAs: 'fileCtrl'
+         })
          .when('/create_file',
          {
              templateUrl: '/Scripts/App/File/FileForm.html',

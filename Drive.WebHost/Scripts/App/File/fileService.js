@@ -12,21 +12,40 @@
         var service = {
             createFile: createFile,
             updateFile: updateFile,
-            removeFile: removeFile
+            deleteFile: deleteFile,
+            getFile: getFile,
+            getAllFiles: getAllFiles
         };
 
-
-        function createFile(file, callBack) {
-            $http.post('/ApiUrl', file)
+        function getAllFiles(callBack) {
+            $http.get('api/files')
             .then(function (response) {
                 if (callBack) {
-                    callBack();
+                    callBack(response);
                 }
             });
-        };
+        }
 
-        function updateFile(file, callBack) {
-            $http.put('ApiUrl/' + file.id, callBack)
+        function getFile(id, callBack) {
+            $http.get('api/files/' + id)
+            .then(function (response) {
+                if (callBack) {
+                    callBack(response);
+                }
+            });
+        }
+
+        function createFile(file, callBack) {
+            $http.post('api/files', file)
+            .then(function (response) {
+                if (callBack) {
+                    callBack(response);
+                }
+            });
+        }
+
+        function updateFile(id, file, callBack) {
+            $http.put('api/files' + id, file)
             .then(function (response) {
                 if (callBack) {
                     callBack();
@@ -34,8 +53,8 @@
             })
         }
 
-        function removeFile(id, callBack) {
-            $http.delete('/url/' + id)
+        function deleteFile(id, callBack) {
+            $http.delete('api/files' + id)
             .then(function (response) {
                 if (callBack) {
                     callBack();

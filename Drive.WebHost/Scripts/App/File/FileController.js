@@ -9,36 +9,22 @@
     function FileController(fileService, $routeParams) {
         var vm = this;
 
-        var file;
-        activate();
+        vm.file = {
+            id: 0,
+            idDeleted: false,
+            name: "",
+            description: ""
+        }
+        vm.files = [];
 
         vm.saveFile = saveFile;
-        vm.update = update;
-        vm.create = create;
+        vm.updateFile = updateFile;
+        vm.createFile = createFile;
+        vm.deleteFile = deleteFile;
+        vm.getFile = getFile;
+        vm.getAllFiles = getAllFiles;
 
-
-        function saveFile() {
-            if (id !== undefined) {
-                function update() {
-                    fileService.updateFile(id, file, function () { });
-                }
-            }
-            else {
-                function create() {
-                    fileService.createFile(file, function() { });
-                }
-            }
-        }
-
-        //function create() {
-        //    fileService.createFile(file, function() { });
-        //}
-        //function update() {
-        //    fileService.updateFile(id, function () { });
-        //}
-
-
-
+        activate();
         function activate() {
             var id = $routeParams["id"];
 
@@ -49,7 +35,43 @@
             else {
                 vm.formTitle = 'Create new file';
             }
-           //file = { id: vm.id, name: vm.name, link: vm.link, description: vm.description };
+           
         }
+
+        function saveFile() {
+            if (id !== undefined) {
+                vm.update();
+            }
+            else {
+                vm.create();
+            }
+        }
+
+        function createFile(file) {
+            fileService.createFile(file, function (id) {
+                vm.file.id = id;
+            });
+        }
+
+        function getAllFiles() {
+            fileService.getAllFiles(function (files) {
+                vm.files = files;
+            });
+        }
+
+        function getFile(id) {
+            fileService.getFile(id, function (file) {
+                vm.file = file;
+            });
+        }
+
+        function updateFile(id, file) {
+            fileService.updateFile(id, file);
+        }
+
+        function deleteFile(id) {
+            fileService.deleteFile(id);
+        }
+          
     }
 }());

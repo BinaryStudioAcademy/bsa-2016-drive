@@ -201,6 +201,7 @@
     <Content Include="gulpfile.js" />
     <Content Include="Scripts\App\File\FileForm.html" />
     <Content Include="Scripts\App\File\FileController.js" />
+    <Content Include="Scripts\App\File\FileList.html" />
     <Content Include="Scripts\App\File\fileService.js" />
     <Content Include="Scripts\App\Home\homeService.js" />
     <Content Include="Scripts\App\Logs\Logs.html" />
