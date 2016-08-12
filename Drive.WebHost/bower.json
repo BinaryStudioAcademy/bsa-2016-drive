@@ -8,6 +8,7 @@
     "angular-route": "~v1.5.8",
     "fontawesome": "~4.6.3",
     "angular-bootstrap": "~2.0.1",
-    "angular-bootstrap-contextmenu": "~0.9.7"
+    "angular-bootstrap-contextmenu": "~0.9.7",
+    "font-awesome-animation": "0.0.9"
   }
 }

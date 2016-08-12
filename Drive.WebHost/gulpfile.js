@@ -62,6 +62,7 @@ gulp.task("styles", function () {
     gulp.src([
         paths.bower + "bootstrap.css",
         paths.bower + "font-awesome.css",
+        paths.bower + "font-awesome-animation.css",
         "./Content/*.css"
     ])
         .pipe(concat("styles.css"))
