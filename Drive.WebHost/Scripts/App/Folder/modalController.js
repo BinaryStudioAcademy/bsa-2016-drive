@@ -38,7 +38,7 @@
                     folderService.updateFolder(vm.folder,
                         function (response) {
                             if (response)
-                                $uibModalInstance.close(response.data);
+                                $uibModalInstance.close(response);
                         });
                 }
             }
