@@ -25,8 +25,6 @@
         vm.get = get;
         vm.deleteFolder = deleteFolder;
         vm.open = open;
-        //vm.create = create;
-        //vm.update = update;
 
 
         vm.menuOptions = [
@@ -92,31 +90,10 @@
                 } else {
                     vm.folders[index] = folder;
                 }
-                //if (folder.id == 0) {
-                //    vm.create(folder);
-                //} else {
-                //    vm.update(folder);
-                //}
-                }, function () {
+            }, function () {
                 console.log('Modal dismissed');
             });
         };
-
-        //function create(folder) {
-        //    folderService.create(folder, function (response) {
-        //        vm.folders.push(response);
-        //    });
-        //}
-
-        //function update(folder) {
-        //    folderService.updateFolder(folder, function (response) {
-        //        for (var i = 0, len = vm.folders.length; i < len; i++) {
-        //            if (vm.folders[i].id == folder.id) {
-        //                vm.folders[i] = response.data;
-        //            }
-        //        }
-        //    });
-        //}
 
         activate();
 
