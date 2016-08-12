@@ -16,10 +16,15 @@
         vm.redirectToAddNewSpace = redirectToAddNewSpace;
         vm.redirectToAddFile = redirectToAddFile;
         vm.redirectToNetSpace = redirectToNetSpace;
+        vm.redirectToAdminPanel = redirectToAdminPanel;
+        vm.redirectToAcademyPro = redirectToAcademyPro;
         vm.redirectToDocs = redirectToDocs;
         vm.redirectToEvents = redirectToEvents;
-        vm.redirectToAdminPanel = redirectToAdminPanel;
-        vm.redirectToUsersSettings = redirectToUsersSettings;
+        vm.redirectToEmployees = redirectToEmployees;
+        vm.redirectToChecklist = redirectToChecklist;
+        vm.redirectToTrello = redirectToTrello;
+        vm.redirectToSheets = redirectToSheets;
+        vm.redirectToSlides = redirectToSlides;
         
         activate();
 
@@ -59,8 +64,28 @@
             $location.url('api/adminPanel/');
         };
 
-        function redirectToUsersSettings() {
-            $location.url('/user/settings');
+        function redirectToEmployees() {
+            $location.url('/employees');
+        };
+
+        function redirectToChecklist() {
+            $location.url('/checklist');
+        };
+
+        function redirectToTrello() {
+            $location.url('/trello');
+        };
+
+        function redirectToSheets() {
+            $location.url('/sheets');
+        };
+
+        function redirectToSlides() {
+            $location.url('/slides');
+        };
+
+        function redirectToAcademyPro() {
+            $location.url('/academy');
         };
 
         function activate() {

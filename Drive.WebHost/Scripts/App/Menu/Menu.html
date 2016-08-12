@@ -193,17 +193,18 @@
         <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
             <button class="btn btn-info btn-md" style="width: 100%; height: 40px;" ng-click="menuController.redirectToAddNewSpace()"><i class="fa iconCustom fa-plus-circle fa-cog fa-lg"></i>Add new Space</button>
             <hr class="style" />
-            <li class="active">
+            <li>
                 <button class="btn btn-custom pull-right btn-md" title="Binary Space Settings" ng-click="menuController.redirectToSpaceSettings()"><i class="fa fa-inverse fa-cog fa-lg"></i></button>
                 <a href="#" ng-click="menuController.redirectToBinarySpace(id)"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x "></i></span>Binary Space</a>
             </li>
-            <li>
+            <li class="active">
                 <button class="btn btn-custom pull-right btn-md" title="My Space Settings" ng-click="menuController.redirectToSpaceSettings()"><i class="fa fa-inverse fa-cog fa-lg"></i></button>
                 <a href="#" ng-click="menuController.redirectToMySpace(id)"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x "></i></span>My Space</a>
             </li>
             <li>
                 <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-ellipsis-v fa-stack-1x "></i></span>Other</a>
                 <ul class="nav-pills nav-stacked" style="list-style-type: none;">
+                    <button class="btn btn-custom pull-right btn-md" title=".Net Space Settings" ng-click="menuController.redirectToSpaceSettings()"><i class="fa fa-inverse fa-cog fa-lg"></i></button>
                     <li><a href="#" ng-click="menuController.redirectToNetSpace()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-code fa-stack-1x "></i></span>.Net</a></li>
                 </ul>
             </li>
@@ -211,15 +212,18 @@
             <li>
                 <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-desktop fa-stack-1x "></i></span>Apps</a>
                 <ul class="nav-pills nav-stacked" style="list-style-type: none;">
-                    <li><a href="#" ng-click="menuController.redirectToDocs()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-file-text fa-stack-1x "></i></span>Doc</a></li>
+                    <li><a href="#" ng-click="menuController.redirectToAcademyPro()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-graduation-cap fa-stack-1x "></i></span>Academy Pro</a></li>
                     <li><a href="#" ng-click="menuController.redirectToEvents()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x "></i></span>Events</a></li>
+                    <li><a href="#" ng-click="menuController.redirectToEmployees()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-users fa-stack-1x "></i></span>Employees</a></li>
+                    <li><a href="#" ng-click="menuController.redirectToChecklist()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-check-square-o fa-stack-1x "></i></span>Checklist</a></li>
+                    <li><a href="#" ng-click="menuController.redirectToTrello()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-trello fa-stack-1x "></i></span>Trello</a></li>
+                    <li><a href="#" ng-click="menuController.redirectToDocs()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-file-text fa-stack-1x "></i></span>Docs</a></li>
+                    <li><a href="#" ng-click="menuController.redirectToSheets()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-table fa-stack-1x "></i></span>Sheets</a></li>
+                    <li><a href="#" ng-click="menuController.redirectToSlides()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-slideshare fa-stack-1x "></i></span>Slides</a></li>
                 </ul>
             </li>
             <li>
                 <a href="#" ng-click="menuController.redirectToAdminPanel()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-sliders fa-stack-1x "></i></span>Admin Panel</a>
-            </li>
-            <li>
-                <a href="#" ng-click="menuController.redirectToUsersSettings()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-users fa-stack-1x "></i></span>Users settings</a>
             </li>
         </ul>
     </div>
