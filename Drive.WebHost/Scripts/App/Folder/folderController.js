@@ -5,9 +5,9 @@
         .module("driveApp")
         .controller("FolderController", FolderController);
 
-    FolderController.$inject = ['FolderService', '$uibModal', '$rootScope'];
+    FolderController.$inject = ['FolderService', '$uibModal'];
 
-    function FolderController(folderService, $uibModal, $rootScope) {
+    function FolderController(folderService, $uibModal) {
         var vm = this;
         vm.folder = {
             id: 0,
@@ -25,8 +25,8 @@
         vm.get = get;
         vm.deleteFolder = deleteFolder;
         vm.open = open;
-        vm.create = create;
-        vm.update = update;
+        //vm.create = create;
+        //vm.update = update;
 
 
         vm.menuOptions = [
@@ -86,31 +86,37 @@
 
             modalInstance.result.then(function (folder) {
                 console.log(folder);
-                if (folder.id == 0) {
-                    vm.create(folder);
+                var index = findById(vm.folders, folder.id);
+                if (index == -1) {
+                    vm.folders.push(folder);
                 } else {
-                    vm.update(folder);
+                    vm.folders[index] = folder;
                 }
-            }, function () {
+                //if (folder.id == 0) {
+                //    vm.create(folder);
+                //} else {
+                //    vm.update(folder);
+                //}
+                }, function () {
                 console.log('Modal dismissed');
             });
         };
 
-        function create(folder) {
-            folderService.create(folder, function (response) {
-                vm.folders.push(response);
-            });
-        }
+        //function create(folder) {
+        //    folderService.create(folder, function (response) {
+        //        vm.folders.push(response);
+        //    });
+        //}
 
-        function update(folder) {
-            folderService.updateFolder(folder, function (response) {
-                for (var i = 0, len = vm.folders.length; i < len; i++) {
-                    if (vm.folders[i].id == folder.id) {
-                        vm.folders[i] = response.data;
-                    }
-                }
-            });
-        }
+        //function update(folder) {
+        //    folderService.updateFolder(folder, function (response) {
+        //        for (var i = 0, len = vm.folders.length; i < len; i++) {
+        //            if (vm.folders[i].id == folder.id) {
+        //                vm.folders[i] = response.data;
+        //            }
+        //        }
+        //    });
+        //}
 
         activate();
 
@@ -128,6 +134,15 @@
             folderService.getAll(function (folders) {
                 vm.folders = folders;
             });
+        }
+
+        function findById(folders, id) {
+            for (var i = 0; i < folders.length; i++) {
+                if (folders[i].id === id) {
+                    return i;
+                }
+            }
+            return -1;
         }
 
 

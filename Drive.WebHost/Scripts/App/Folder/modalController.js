@@ -5,9 +5,9 @@
         .module("driveApp")
         .controller("ModalInstanceCtrl", ModalInstanceCtrl);
 
-    ModalInstanceCtrl.$inject = ['FolderService', '$uibModalInstance', '$rootScope', 'items'];
+    ModalInstanceCtrl.$inject = ['FolderService', '$uibModalInstance', 'items'];
 
-    function ModalInstanceCtrl(folderService, $uibModalInstance, $rootScope, items) {
+    function ModalInstanceCtrl(folderService, $uibModalInstance, items) {
         var vm = this;
         vm.save = save;
         vm.cancel = cancel;
@@ -26,7 +26,22 @@
         }
 
         function save() {
-            $uibModalInstance.close(vm.folder);
+            vm.submitted = true;
+            if (vm.folder.name !== undefined) {
+                if (vm.folder.id === undefined) {
+                    folderService.create(vm.folder,
+                        function (response) {
+                            if (response)
+                                $uibModalInstance.close(response);
+                        });
+                } else {
+                    folderService.updateFolder(vm.folder,
+                        function (response) {
+                            if (response)
+                                $uibModalInstance.close(response.data);
+                        });
+                }
+            }
         }
 
         function cancel() {
