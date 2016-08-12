@@ -27,32 +27,35 @@ textarea {
 .jumbotron {
     margin: 5px 0;
     text-align: center;
-    background-color:mintcream;
-
+    background-color: mintcream;
 }
 
-.jumbotron h1 {
-    font-size: 72px;
-    line-height: 1;
-    font-weight: bold;
-    color:midnightblue;
+    .jumbotron h1 {
+        font-size: 72px;
+        line-height: 1;
+        font-weight: bold;
+        color: midnightblue;
+    }
 
-}
-.jumbotron p {
-    color: darkblue;
-}
+    .jumbotron p {
+        color: darkblue;
+    }
+
 .nopadding {
-   padding: 0 !important;
-   margin: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
 }
+
 .limiter {
     border-left: 1px solid;
 }
 
 /*Grid-list view*/
-.glyphicon { margin-right:5px; }
-.thumbnail
-{
+.glyphicon {
+    margin-right: 5px;
+}
+
+.thumbnail {
     margin-bottom: 20px;
     padding: 0px;
     -webkit-border-radius: 0px;
@@ -60,40 +63,59 @@ textarea {
     border-radius: 0px;
 }
 
-.item.list-group-item
-{
+.item.list-group-item {
     float: none;
     width: 100%;
     margin-bottom: 10px;
 }
 
-.item.list-group-item .list-group-image
-{
-    margin-right: 10px;
-}
-.item.list-group-item .thumbnail
-{
-    margin-bottom: 0px;
-}
+    .item.list-group-item .list-group-image {
+        margin-right: 10px;
+    }
 
-.item.list-group-item img
-{
-    float: left;
-}
-.item.list-group-item:after
-{
-    clear: both;
-}
+    .item.list-group-item .thumbnail {
+        margin-bottom: 0px;
+    }
+
+    .item.list-group-item img {
+        float: left;
+    }
+
+    .item.list-group-item:after {
+        clear: both;
+    }
 
 /*Side menu on Index page*/
- #wrapper {
-  margin-left: 200px;
+#wrapper {
+    margin-left: 200px;
 }
+
 #content {
-  float: right;
-  width: 100%;
+    float: right;
+    width: 100%;
 }
+
 #sidebar {
-  float: left;
-  width: 200px;
+    float: left;
+    width: 200px;
+}
+
+/*Footer on _Layout page*/
+.footer-margin {
+    margin-left: 190px;
+    overflow: hidden;
+}
+
+/*Ng-include on Index page*/
+.include-index {
+    float: left;
+    max-width: 190px;
+    margin: 0;
+    overflow: hidden;
+}
+
+/*Ng-view on Index page*/
+.view-index {
+    margin-left: 190px;
+    overflow: hidden;
 }
