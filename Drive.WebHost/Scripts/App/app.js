@@ -17,7 +17,7 @@
              controller: 'SpaceController',
              controllerAs: 'spaceCtrl'
          })
-         .when('/settings', // Space settings Page
+         .when('/settings/', // Space settings Page
          {
              templateUrl: '/Scripts/App/Space/Settings.html',
              controller: 'SettingsController',

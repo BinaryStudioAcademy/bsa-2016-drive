@@ -20,7 +20,7 @@
                         callback(response.data);
                     }
                 }, function () {
-                    alert('Error while getting space!')
+                    alert('Error while getting space!');
                 });
         }
 
