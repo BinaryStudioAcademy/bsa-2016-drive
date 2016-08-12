@@ -171,34 +171,34 @@
         <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
             <li class="active">
                 <input type="button" class="btn btn-custom pull-right" value="File" ng-click="menuController.redirectToAddFile()">
-                <input type="button" class="btn btn-custom pull-right" value="Add" ng-click="redirectToAddBinarySpace()">
-                <input type="button" class="btn btn-custom pull-right" value="S" ng-click="redirectToSpaceSettings(id)">
-                <a href="#" ng-click="redirectToBinarySpace(id)"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span> Binary Space</a>
+                <input type="button" class="btn btn-custom pull-right" value="Add" ng-click="menuController.redirectToAddBinarySpace()">
+                <input type="button" class="btn btn-custom pull-right" value="S" ng-click="menuController.redirectToSpaceSettings(id)">
+                <a href="#" ng-click="menuController.redirectToBinarySpace(id)"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span> Binary Space</a>
             </li>
             <li>
-                <input type="button" class="btn btn-custom pull-right" value="File" ng-click="redirectToAddFile()">
-                <input type="button" class="btn btn-custom pull-right" value="Add" ng-click="redirectToAddMySpace()">
-                <input type="button" class="btn btn-custom pull-right" value="S" ng-click="redirectToSpaceSettings(id)">
-                <a href="#" ng-click="redirectToBinarySpace(id)"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>My Space</a>
+                <input type="button" class="btn btn-custom pull-right" value="File" ng-click="menuController.redirectToAddFile()">
+                <input type="button" class="btn btn-custom pull-right" value="Add" ng-click="menuController.redirectToAddMySpace()">
+                <input type="button" class="btn btn-custom pull-right" value="S" ng-click="menuController.redirectToSpaceSettings(id)">
+                <a href="#" ng-click="menuController.redirectToMySpace(id)"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud-download fa-stack-1x "></i></span>My Space</a>
             </li>
             <li>
                 <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-cart-plus fa-stack-1x "></i></span>Other</a>
                 <ul class="nav-pills nav-stacked" style="list-style-type: none;">
-                    <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>.Net</a></li>
+                    <li><a href="#" ng-click="menuController.redirectToNetSpace()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>.Net</a></li>
                 </ul>
             </li>
             <li>
                 <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-youtube-play fa-stack-1x "></i></span>Apps</a>
                 <ul class="nav-pills nav-stacked" style="list-style-type: none;">
-                    <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Doc</a></li>
-                    <li><a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Events</a></li>
+                    <li><a href="#" ng-click="menuController.redirectToDocs()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Doc</a></li>
+                    <li><a href="#" ng-click="menuController.redirectToEvents()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-flag fa-stack-1x "></i></span>Events</a></li>
                 </ul>
             </li>
             <li>
-                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>Admin Panel</a>
+                <a href="#" ng-click="menuController.redirectToAdminPanel()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>Admin Panel</a>
             </li>
             <li>
-                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>Users settings</a>
+                <a href="#" ng-click="menuController.redirectToUsersSettings()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-wrench fa-stack-1x "></i></span>Users settings</a>
             </li>
         </ul>
     </div>
