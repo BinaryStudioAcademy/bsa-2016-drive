@@ -21,7 +21,7 @@
                         callback(response.data);
                     }
                 }, function () {
-                    alert('Error while getting space!')
+                    console.log('Error while getting space!')
                 });
         }
 
@@ -32,16 +32,16 @@
                     callback(response.data);
                 }
             }, function () {
-                alert('Error while getting all users!');
+                console.log('Error while getting all users!');
             });
         }
 
         function pushChanges(data) {
             $http.put('/api/spaces', data)
                 .then(function (response) {
-                    alert('Success!');
+                    console.log('Success!');
                 }, function (response) {
-                    alert('Error while pushing changes!');
+                    console.log('Error while pushing changes!');
                 });
         }
 

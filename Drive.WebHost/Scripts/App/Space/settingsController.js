@@ -40,7 +40,7 @@
                 if (vm.space.ReadPermittedUsers.find(x => x.Id === vm.userAddId)) {
                     vm.userAddName = null;
                     vm.userAddId = null;
-                    alert('The user already exist in this space!');
+                    console.log('The user already exist in this space!');
                     return;
                 };
                 vm.space.ReadPermittedUsers.push({

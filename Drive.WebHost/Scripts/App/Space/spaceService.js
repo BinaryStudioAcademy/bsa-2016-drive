@@ -20,7 +20,7 @@
                         callback(response.data);
                     }
                 }, function () {
-                    alert('Error while getting space!')
+                    console.log('Error while getting space!')
                 });
         }
 
@@ -31,7 +31,7 @@
                     callback(response.data);
                 }
             }, function () {
-                alert('Error while getting all spaces!');
+                console.log('Error while getting all spaces!');
             });
         }
         return service;
