@@ -119,3 +119,10 @@ textarea {
     margin-left: 190px;
     overflow: hidden;
 }
+
+/*Modal window for creating new space*/
+.modal-body {
+    position: relative;
+    max-height: 400px;
+    padding: 15px;
+}

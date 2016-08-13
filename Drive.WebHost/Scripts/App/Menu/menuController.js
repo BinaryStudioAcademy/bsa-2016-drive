@@ -4,16 +4,15 @@
     angular.module("driveApp")
         .controller("MenuController", MenuController);
 
-    MenuController.$inject = ['$location'];
+    MenuController.$inject = ['$location',  '$uibModal'];
 
-    function MenuController($location) {
+    function MenuController($location,  $uibModal) {
 
         var vm = this;
 
         vm.redirectToBinarySpace = redirectToBinarySpace;
         vm.redirectToMySpace = redirectToMySpace;
         vm.redirectToSpaceSettings = redirectToSpaceSettings;
-        vm.redirectToAddNewSpace = redirectToAddNewSpace;
         vm.redirectToAddFile = redirectToAddFile;
         vm.redirectToNetSpace = redirectToNetSpace;
         vm.redirectToAdminPanel = redirectToAdminPanel;
@@ -25,6 +24,7 @@
         vm.redirectToTrello = redirectToTrello;
         vm.redirectToSheets = redirectToSheets;
         vm.redirectToSlides = redirectToSlides;
+        vm.open = open;
         
         activate();
 
@@ -38,10 +38,6 @@
 
         function redirectToSpaceSettings() {
             $location.url('/settings/');
-        };
-
-        function redirectToAddNewSpace() {
-            $location.url('/api/spaces/');
         };
 
         function redirectToAddFile() {
@@ -86,6 +82,26 @@
 
         function redirectToAcademyPro() {
             $location.url('/academy');
+        };
+
+        //Open modal window for creating new space
+        function open(size) {
+
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'Scripts/App/Space/Create.html',
+                windowTemplateUrl: 'Scripts/App/Space/Modal.html',
+                controller: 'CreateController',
+                controllerAs: 'createCtrl',
+                keyboard: true,
+                size: size
+
+            });
+
+            modalInstance.result.then(function (selectedItem) {
+                $scope.selected = selectedItem;
+            }, function () {
+            });
         };
 
         function activate() {

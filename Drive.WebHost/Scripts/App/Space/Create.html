@@ -1,0 +1,109 @@
+﻿<style type="text/css">
+   
+</style>
+
+<div>
+    <div class="modal-header">
+        <h3 class="modal-title">Add new Space</h3>
+    </div>
+    <div class="modal-body">
+        <div class="bs-example">
+            <ul class="nav nav-tabs" id="myTab">
+                <li><a data-toggle="tab" href="#sectionA">General settings</a></li>
+                <li><a data-toggle="tab" href="#sectionB">Users settings</a></li>
+            </ul>
+            <div class="tab-content">
+                <div id="sectionA" class="tab-pane fade in active">
+                    <div class="container">
+                        <form class="form-horizontal" role="form">
+                            <br />
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="name">Space name:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="name" ng-model="settingsCtrl.space.Name" placeholder="Enter space name">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="description">Description:</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="description" ng-model="settingsCtrl.space.Description" placeholder="Enter description">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="quantity">Maximum Files Quantity:</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" min="0" step="1" id="quantity" ng-model="settingsCtrl.space.MaxFilesQuantity" placeholder="Enter max files quantity">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="size">Maximum file size (MB):</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" min="0" step="1" max="1024" id="size" ng-model="settingsCtrl.space.MaxFileSize" placeholder="Enter max file size">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div id="sectionB" class="tab-pane fade">
+                    <br />
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <div class="dropdown" title="Select user">
+                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        Users<span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li ng-repeat="item in settingsCtrl.users">
+                                            <a ng-click="settingsCtrl.setChoice(item.Login, item.Id);">{{item.Login}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control" ng-model="settingsCtrl.userAddName" placeholder="User name" disabled />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-5">
+                                <button class="btn btn-primary" ng-click="settingsCtrl.addSpaceUser()">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>User name</th>
+                                <th>Id</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in settingsCtrl.space.ReadPermittedUsers">
+                                <td>{{item.Login}}</td>
+                                <td>{{item.Id}}</td>
+                                <td>
+                                    <input type="button" value="Remove" class="btn btn-danger" ng-click="settingsCtrl.removeSpaceUser(item.Id)" />
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="createCtrl.ok()">Save</button>
+    <button class="btn btn-default" type="button" ng-click="createCtrl.cancel()">Cancel</button>
+</div>
+
+<!--For changing tabs-->
+<script type="text/javascript">
+    $('#myTabs a')
+        .click(function(e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+</script>

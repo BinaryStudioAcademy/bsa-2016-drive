@@ -69,7 +69,7 @@
         function open(size) {
 
             var modalInstance = $uibModal.open({
-                animation: false,
+                animation: true,
                 templateUrl: 'Scripts/App/Folder/CreateUpdateFolderForm.html',
                 windowTemplateUrl: 'Scripts/App/Folder/Modal.html',
                 controller: 'ModalInstanceCtrl',
