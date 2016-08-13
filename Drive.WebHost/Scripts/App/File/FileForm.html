@@ -6,7 +6,7 @@
     <form role="form" name="fileForm" novalidate>
         <div class="form-group">
             <label for="title">Title:</label>
-            <input type="text" class="form-control" placeholder="enter title" name="title" ng-model="fileCtrl.name" required>
+            <input type="text" class="form-control" placeholder="enter title" name="title" ng-model="fileCtrl.file.Name" required>
             <span ng-show="fileForm.title.$invalid && fileForm.title.$touched" style="color: red">
                 Title is required.
             </span>
@@ -14,7 +14,7 @@
         </div>
         <div class="form-group">
             <label>Link:</label>
-            <input type="url" class="form-control" placeholder="paste the URL" name="link" ng-model="fileCtrl.link" required>
+            <input type="url" class="form-control" placeholder="paste the URL" name="link" ng-model="fileCtrl.file.Link" required>
             <span style="color:red">
                 <span ng-show="fileForm.link.$error.required && fileForm.link.$touched">Link is required.</span>
                 <span ng-show="fileForm.link.$error.url">Invalid URL.</span>
@@ -22,10 +22,10 @@
         </div>
         <div class="form-group">
             <label for="descript">Description:</label>
-            <textarea rows="5" class="form-control" placeholder="Description" id="descript" ng-model="fileCtrl.description"></textarea>
+            <textarea rows="5" class="form-control" placeholder="Description" id="descript" ng-model="fileCtrl.file.Description"></textarea>
         </div>
         <input type="submit" class="btn btn-primary" value="Post this document"
-               ng-click="fileCtrl.saveFile()"
+               ng-click="fileCtrl.saveFile(fileCtrl.file)"
                ng-disabled="fileForm.title.$invalid || fileForm.link.$invalid">
     </form>
 </div>

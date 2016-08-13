@@ -1,4 +1,5 @@
 ﻿using Drive.DataAccess.Entities;
+using System;
 
 namespace Driver.Shared.Dto
 {
@@ -8,6 +9,7 @@ namespace Driver.Shared.Dto
         public bool IsDeleted { get; set; }
         public FileType FyleType { get; set; }
         public string Name { get; set; }
+       // public Uri Link { get; set; }
         public string Description { get; set; }
     }
 }

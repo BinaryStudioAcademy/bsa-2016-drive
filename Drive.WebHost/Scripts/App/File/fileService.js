@@ -45,7 +45,7 @@
         }
 
         function updateFile(id, file, callBack) {
-            $http.put('api/files' + id, file)
+            $http.put('api/files/' + id, file)
             .then(function (response) {
                 if (callBack) {
                     callBack();
@@ -54,7 +54,7 @@
         }
 
         function deleteFile(id, callBack) {
-            $http.delete('api/files' + id)
+            $http.delete('api/files/' + id)
             .then(function (response) {
                 if (callBack) {
                     callBack();

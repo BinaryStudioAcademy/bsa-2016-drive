@@ -4,18 +4,13 @@
     angular.module("driveApp")
         .controller("FileController", FileController);
 
-    FileController.$inject = ["FileService", "$routeParams"];
+    FileController.$inject = ["$routeParams", "$location" , "FileService" ];
 
-    function FileController(fileService, $routeParams) {
+    function FileController($routeParams, $location, fileService) {
         var vm = this;
 
-        vm.file = {
-            id: 0,
-            idDeleted: false,
-            name: "",
-            description: ""
-        }
-        vm.files = [];
+        vm.file;
+        vm.files;
 
         vm.saveFile = saveFile;
         vm.updateFile = updateFile;
@@ -29,33 +24,35 @@
             var id = $routeParams["id"];
 
             if (id !== undefined) {
-                vm.formTitle = 'Edit file';
+                console.log(vm.file);
+                return vm.formTitle = 'Edit file';
                 // init model
             }
             else {
                 vm.formTitle = 'Create new file';
             }
-           
+            vm.getAllFiles();
         }
 
-        function saveFile() {
+        function saveFile(file) {
+            var id = $routeParams["id"];
             if (id !== undefined) {
-                vm.update();
+                vm.updateFile(vm.file.Id, file);
             }
             else {
-                vm.create();
+                vm.createFile(file);
             }
         }
 
         function createFile(file) {
             fileService.createFile(file, function (id) {
-                vm.file.id = id;
+                $location.path('/file_list');
             });
         }
 
         function getAllFiles() {
-            fileService.getAllFiles(function (files) {
-                vm.files = files;
+            fileService.getAllFiles(function (response) {
+                vm.files = response.data;
             });
         }
 
@@ -66,7 +63,9 @@
         }
 
         function updateFile(id, file) {
-            fileService.updateFile(id, file);
+            fileService.updateFile(id, file, function (id) {
+                $location.path('/file_list');
+            });
         }
 
         function deleteFile(id) {

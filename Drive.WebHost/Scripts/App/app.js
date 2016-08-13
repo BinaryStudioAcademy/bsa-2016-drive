@@ -5,18 +5,18 @@
      function ($routeProvider) {
 
          $routeProvider
-         //.when('/', // Home Page
-         //{
-         //    templateUrl: '/Scripts/App/Space/Space.html',
-         //    controller: 'HomeController',
-         //    controllerAs: 'homeCtrl'
-         //})
-         .when('/', // Space page
+         .when('/', // Home Page
          {
              templateUrl: '/Scripts/App/Space/Space.html',
-             controller: 'SpaceController',
-             controllerAs: 'spaceCtrl'
+             controller: 'HomeController',
+             controllerAs: 'homeCtrl'
          })
+         //.when('/', // Space page
+         //{
+         //    templateUrl: '/Scripts/App/Space/Space.html',
+         //    controller: 'SpaceController',
+         //    controllerAs: 'spaceCtrl'
+         //})
          //.when('/', // Space settings Page
          //{
          //    templateUrl: '/Scripts/App/Space/Settings.html',
@@ -29,7 +29,7 @@
              controller: 'LogsController',
              controllerAs: 'logsCtrl'
          })
-         .whet('/file_list',
+         .when('/file_list',
          {
              templateUrl: '/Scripts/App/File/FileList.html',
              controller: 'FileController',
