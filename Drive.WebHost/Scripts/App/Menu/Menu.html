@@ -168,6 +168,11 @@
         vertical-align: middle;
     }
 
+    /*Remove button focus after click*/
+    .btn:focus, .btn:active {
+        outline: none !important;
+    }
+
     /*Hr line style*/
     hr.style {
         border-top: 1px solid #8c8b8b;
@@ -179,11 +184,6 @@
         background-image: -moz-linear-gradient(left, #333, #ccc, #333);
         background-image: -ms-linear-gradient(left, #333, #ccc, #333);
         background-image: -o-linear-gradient(left, #333, #ccc, #333);
-    }
-
-    /*Remove button focus after click*/
-    .btn:focus, .btn:active {
-        outline: none !important;
     }
 
     /*Icon on createSpace button*/
@@ -207,16 +207,16 @@
                 <a href="#" ng-click="menuController.redirectToMySpace(id)"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x "></i></span>My Space</a>
             </li>
             <li>
-                <a href="#"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-ellipsis-v fa-stack-1x "></i></span>Other</a>
-                <ul class="nav-pills nav-stacked" style="list-style-type: none;">
+                <a href="#" data-toggle="collapse" data-target="#other"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-ellipsis-v fa-stack-1x "></i></span>Other</a>
+                <ul class="nav-pills nav-stacked collapse" style="list-style-type: none;" id="other">
                     <button class="btn btn-custom pull-right btn-md" title=".Net Space Settings" ng-click="menuController.redirectToSpaceSettings()"><i class="fa fa-inverse fa-wrench faa-wrench animated-hover fa-lg"></i></button>
                     <li><a href="#" ng-click="menuController.redirectToNetSpace()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-code fa-stack-1x "></i></span>.Net</a></li>
                 </ul>
             </li>
             <hr class="style" />
             <li>
-                <a href="#"><span class="fa-stack fa-lg pull-left"><i class="fa fa-desktop fa-stack-1x "></i></span>Apps</a>
-                <ul class="nav-pills nav-stacked" style="list-style-type: none;">
+                <a href="#" data-toggle="collapse" data-target="#apps"><span class="fa-stack fa-lg pull-left"><i class="fa fa-desktop fa-stack-1x "></i></span>Apps</a>
+                <ul class="nav-pills nav-stacked collapse" style="list-style-type: none;" id="apps">
                     <li><a href="#" ng-click="menuController.redirectToEvents()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-graduation-cap fa-stack-1x "></i></span>Academy Pro</a></li>
                     <li><a href="#" ng-click="menuController.redirectToEvents()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x "></i></span>Events</a></li>
                     <li><a href="#" ng-click="menuController.redirectToEmployees()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-users fa-stack-1x "></i></span>Employees</a></li>
