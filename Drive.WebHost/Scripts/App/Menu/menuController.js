@@ -52,8 +52,12 @@
             $location.url('api/docs/');
         };
 
+        function redirectToAcademyPro() {
+            $location.url('/apps/academy');
+        };
+
         function redirectToEvents() {
-            $location.url('api/events/');
+            $location.url('/apps/events');
         };
 
         function redirectToAdminPanel() {
@@ -61,27 +65,23 @@
         };
 
         function redirectToEmployees() {
-            $location.url('/employees');
+            $location.url('/apps/employees');
         };
 
         function redirectToChecklist() {
-            $location.url('/checklist');
+            $location.url('/apps/checklist');
         };
 
         function redirectToTrello() {
-            $location.url('/trello');
+            $location.url('/apps/trello');
         };
 
         function redirectToSheets() {
-            $location.url('/sheets');
+            $location.url('/apps/sheets');
         };
 
         function redirectToSlides() {
-            $location.url('/slides');
-        };
-
-        function redirectToAcademyPro() {
-            $location.url('/academy');
+            $location.url('/apps/slides');
         };
 
         //Open modal window for creating new space

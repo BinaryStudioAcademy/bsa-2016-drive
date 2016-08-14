@@ -201,6 +201,16 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="gulpfile.js" />
+    <Content Include="Scripts\App\Academy\Academy.html" />
+    <Content Include="Scripts\App\Academy\academyController.js" />
+    <Content Include="Scripts\App\Checklist\Checklist.html" />
+    <Content Include="Scripts\App\Checklist\checklistController.js" />
+    <Content Include="Scripts\App\Docs\Docs.html" />
+    <Content Include="Scripts\App\Docs\docsController.js" />
+    <Content Include="Scripts\App\Employees\Employees.html" />
+    <Content Include="Scripts\App\Employees\employeesController.js" />
+    <Content Include="Scripts\App\Events\Events.html" />
+    <Content Include="Scripts\App\Events\eventsController.js" />
     <Content Include="Scripts\App\Folder\Folder.html" />
     <Content Include="Scripts\App\Folder\folderController.js" />
     <Content Include="Scripts\App\Folder\folderService.js" />
@@ -213,6 +223,10 @@
     <Content Include="Scripts\App\Logs\logsService.js" />
     <Content Include="Scripts\App\Menu\Menu.html" />
     <Content Include="Scripts\App\Menu\menuController.js" />
+    <Content Include="Scripts\App\Sheets\Sheets.html" />
+    <Content Include="Scripts\App\Sheets\sheetsController.js" />
+    <Content Include="Scripts\App\Slides\Slides.html" />
+    <Content Include="Scripts\App\Slides\slidesController.js" />
     <Content Include="Scripts\App\Space\Create.html" />
     <Content Include="Scripts\App\Space\createController.js" />
     <Content Include="Scripts\App\Space\createService.js" />
@@ -228,6 +242,8 @@
     <Content Include="package.json" />
     <Content Include="Scripts\App\Space\spaceController.js" />
     <Content Include="Scripts\App\Space\spaceService.js" />
+    <Content Include="Scripts\App\Trello\Trello.html" />
+    <Content Include="Scripts\App\Trello\trelloController.js" />
     <Content Include="Scripts\Bundles\libs.js" />
     <Content Include="Scripts\Bundles\main.js" />
     <Content Include="Web.config" />
