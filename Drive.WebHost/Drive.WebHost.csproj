@@ -165,6 +165,7 @@
   <ItemGroup>
     <Compile Include="Api\FilesController.cs" />
     <Compile Include="Api\FoldersController.cs" />
+    <Compile Include="Api\GlobalExceptionHandler.cs" />
     <Compile Include="Api\LogsController.cs" />
     <Compile Include="Api\SpacesController.cs" />
     <Compile Include="Api\UsersController.cs" />

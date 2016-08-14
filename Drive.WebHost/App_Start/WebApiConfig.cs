@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
+using Drive.WebHost.Api;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 
@@ -20,6 +22,8 @@ namespace Drive.WebHost
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             
             config.MapHttpAttributeRoutes();
+
+            config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
