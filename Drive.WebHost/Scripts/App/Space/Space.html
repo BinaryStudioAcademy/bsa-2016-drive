@@ -24,7 +24,7 @@
             </div>
         </div>
     </div>
-    <div class="table-responsive">
+    <div class="table-responsive" context-menu="spaceCtrl.createOption">
         <table class="table">
             <thead>
                 <tr>
@@ -35,14 +35,14 @@
                     <th class="type" style="width: 10%">Type</th>
                 </tr>
             </thead>
-            <tr ng-repeat="folder in spaceCtrl.space.folders ">
+            <tr ng-repeat="folder in spaceCtrl.space.folders" context-menu="spaceCtrl.folderMenuOptions">
                 <td>{{ folder.name }}</td>
                 <td>{{ folder.description }}</td>
                 <td>{{ folder.author.firstName }} {{ folder.author.lastName }}</td>
                 <td>{{ folder.createdAt | date : 'short' }}</td>
                 <td>Folder</td>
             </tr>
-            <tr ng-repeat="file in spaceCtrl.space.files ">
+            <tr ng-repeat="file in spaceCtrl.space.files">
                 <td>{{ file.name }}</td>
                 <td>{{ file.description }}</td>
                 <td>{{ file.author.firstName }} {{ file.author.lastName }}</td>

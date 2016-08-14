@@ -202,7 +202,6 @@
     <Content Include="Content\Site.css" />
     <Content Include="gulpfile.js" />
     <Content Include="Scripts\App\Folder\Folder.html" />
-    <Content Include="Scripts\App\Folder\folderController.js" />
     <Content Include="Scripts\App\Folder\folderService.js" />
     <Content Include="Scripts\App\Folder\CreateUpdateFolderForm.html" />
     <Content Include="Scripts\App\Folder\Modal.html" />

@@ -29,12 +29,12 @@
                 controller: 'LogsController',
                 controllerAs: 'logsCtrl'
             })
-            .when('/Folders', // Folders page
-                   {
-                       templateUrl: '/Scripts/App/Folder/Folder.html',
-                       controller: 'FolderController',
-                       controllerAs: 'folderCtrl'
-                   })
+            //.when('/Folders', // Folders page
+            //       {
+            //           templateUrl: '/Scripts/App/Folder/Folder.html',
+            //           controller: 'FolderController',
+            //           controllerAs: 'folderCtrl'
+            //       })
             .otherwise({ // This is when any route not matched - error
                 controller: 'ErrorController'
             });

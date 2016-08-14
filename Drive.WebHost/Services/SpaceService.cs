@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Drive.Core.HttpClient;
@@ -23,7 +24,9 @@ namespace Drive.WebHost.Services
         public async Task<SpaceDto> GetAsync(int id)
         {
             var data = await _unitOfWork.Spaces.GetByIdAsync(id);
-
+            //to replace!!! with contentlist
+            var folders = await _unitOfWork.Folders.Query.Where(x => x.Space.Id == data.Id).Cast<DataUnit>().ToListAsync();
+            var files = await _unitOfWork.Files.Query.Where(x => x.Space.Id == data.Id).Cast<DataUnit>().ToListAsync();
             return new SpaceDto
             {
                 Name = data.Name,
@@ -31,7 +34,7 @@ namespace Drive.WebHost.Services
                 MaxFileSize = data.MaxFileSize,
                 MaxFilesQuantity = data.MaxFilesQuantity,
                 ReadPermittedUsers = data.ReadPermittedUsers,
-                Files = from file in data.ContentList.OfType<FileUnit>()
+                Files = from file in files
                         select new FileUnitDto
                         {
                             Name = file.Name,
@@ -39,7 +42,7 @@ namespace Drive.WebHost.Services
                             Id = file.Id,
                             IsDeleted = file.IsDeleted
                         },
-                Folders = from folder in data.ContentList.OfType<FolderUnit>()
+                Folders = from folder in folders
                           select new FolderUnitDto
                           {
                               Name = folder.Name,

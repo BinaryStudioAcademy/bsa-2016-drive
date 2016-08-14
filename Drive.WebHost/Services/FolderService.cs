@@ -30,7 +30,8 @@ namespace Drive.WebHost.Services
                           Name = folder.Name,
                           IsDeleted = folder.IsDeleted,
                           CreatedAt = folder.CreatedAt,
-                          LastModified = folder.LastModified
+                          LastModified = folder.LastModified,
+                          SpaceId = folder.Space.Id
                       };
 
             return dto;
@@ -47,12 +48,14 @@ namespace Drive.WebHost.Services
                 Name = folder.Name,
                 IsDeleted = folder.IsDeleted,
                 CreatedAt = folder.CreatedAt,
-                LastModified = folder.LastModified
+                LastModified = folder.LastModified,
+                SpaceId = folder.Space.Id
             };
         }
 
         public async Task<FolderUnitDto> CreateAsync(FolderUnitDto dto)
         {
+            var space = await _unitOfWork.Spaces.GetByIdAsync(dto.SpaceId);
             var folder = new FolderUnit
             {
                 Description = dto.Description,
@@ -60,7 +63,8 @@ namespace Drive.WebHost.Services
 
                 CreatedAt = DateTime.Now,
                 LastModified = DateTime.Now,
-                IsDeleted = false
+                IsDeleted = false,
+                Space = space
             };
 
             _unitOfWork.Folders.Create(folder);
