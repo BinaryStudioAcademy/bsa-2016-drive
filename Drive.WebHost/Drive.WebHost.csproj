@@ -215,6 +215,7 @@
     <Content Include="Scripts\App\Menu\menuController.js" />
     <Content Include="Scripts\App\Space\Create.html" />
     <Content Include="Scripts\App\Space\createController.js" />
+    <Content Include="Scripts\App\Space\createService.js" />
     <Content Include="Scripts\App\Space\Modal.html" />
     <Content Include="Scripts\App\Space\Settings.html" />
     <Content Include="Scripts\App\Space\settingsController.js" />

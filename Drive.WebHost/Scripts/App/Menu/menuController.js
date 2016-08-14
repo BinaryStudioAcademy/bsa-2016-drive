@@ -98,13 +98,14 @@
 
             });
 
-            modalInstance.result.then(function (selectedItem) {
-                $scope.selected = selectedItem;
+            modalInstance.result.then(function () {
             }, function () {
+
             });
         };
 
         function activate() {
+            
         };
     }
 }());

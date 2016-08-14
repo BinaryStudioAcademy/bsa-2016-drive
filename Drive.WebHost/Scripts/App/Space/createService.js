@@ -3,15 +3,15 @@
 
     angular
         .module('driveApp')
-        .factory('SettingsService', SettingsService);
+        .factory('CreateService', CreateService);
 
-    SettingsService.$inject = ['$http'];
+    CreateService.$inject = ['$http'];
 
-    function SettingsService($http) {
+    function CreateService($http) {
         var service = {
             getSpace: getSpace,
             getAllUsers: getAllUsers,
-            pushChanges: pushChanges
+            pushData: pushData
         };
 
         function getSpace(id, callback) {
@@ -36,12 +36,12 @@
             });
         }
 
-        function pushChanges(data) {
+        function pushData(data) {
             $http.put('/api/spaces', data)
-                .then(function (response) {
+                .then(function () {
                     console.log('Success!');
-                }, function (response) {
-                    console.log('Error while pushing changes!');
+                }, function () {
+                    console.log('Error while pushing data!');
                 });
         }
 
