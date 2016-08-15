@@ -4,9 +4,9 @@
     angular.module("driveApp")
         .controller("MenuController", MenuController);
 
-    MenuController.$inject = ['$location',  '$uibModal'];
+    MenuController.$inject = ['MenuService', '$location',  '$uibModal'];
 
-    function MenuController($location,  $uibModal) {
+    function MenuController(menuService, $location, $uibModal) {
 
         var vm = this;
 
@@ -25,8 +25,16 @@
         vm.redirectToSheets = redirectToSheets;
         vm.redirectToSlides = redirectToSlides;
         vm.open = open;
+        vm.spaces = [];
+        vm.getAllSpaces = getAllSpaces;
         
         activate();
+
+        function getAllSpaces() {
+            menuService.getAllSpaces(function (spaces) {
+                vm.spaces = spaces;
+            });
+        }
 
         function redirectToBinarySpace(id) {
             $location.url('/api/spaces/' + id);
@@ -105,7 +113,7 @@
         };
 
         function activate() {
-            
-        };
+            //return getAllSpaces();
+        }
     }
 }());

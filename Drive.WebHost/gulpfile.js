@@ -49,6 +49,7 @@ gulp.task("libs", function () {
       paths.bower + "angular.js",
       paths.bower + "angular-route.js",
       paths.bower + "contextMenu.js",
+      paths.bower + "massautocomplete.js",
       paths.bower + "ui-bootstrap.js",
       paths.bower + "dist/jquery.js",
       paths.bower + "bootstrap.js"
@@ -63,6 +64,7 @@ gulp.task("styles", function () {
         paths.bower + "bootstrap.css",
         paths.bower + "font-awesome.css",
         paths.bower + "font-awesome-animation.css",
+        paths.bower + "massautocomplete.theme.css",
         "./Content/*.css"
     ])
         .pipe(concat("styles.css"))

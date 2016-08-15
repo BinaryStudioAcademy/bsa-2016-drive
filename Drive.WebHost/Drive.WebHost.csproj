@@ -86,6 +86,10 @@
       <HintPath>..\packages\Ninject.Web.WebApi.WebHost.3.2.4.0\lib\net45-full\Ninject.Web.WebApi.WebHost.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NLog.4.3.7\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -165,6 +169,7 @@
   <ItemGroup>
     <Compile Include="Api\FilesController.cs" />
     <Compile Include="Api\FoldersController.cs" />
+    <Compile Include="Api\GlobalExceptionLogger.cs" />
     <Compile Include="Api\LogsController.cs" />
     <Compile Include="Api\SpacesController.cs" />
     <Compile Include="Api\UsersController.cs" />
@@ -173,6 +178,7 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Infrastructure\DependencyResolver.cs" />
     <Compile Include="Filters\JWTAuthenticationFilter.cs" />
@@ -225,6 +231,7 @@
     <Content Include="Scripts\App\Logs\logsService.js" />
     <Content Include="Scripts\App\Menu\Menu.html" />
     <Content Include="Scripts\App\Menu\menuController.js" />
+    <Content Include="Scripts\App\Menu\menuService.js" />
     <Content Include="Scripts\App\Sheets\Sheets.html" />
     <Content Include="Scripts\App\Sheets\sheetsController.js" />
     <Content Include="Scripts\App\Slides\Slides.html" />
@@ -279,6 +286,7 @@
     <Content Include="Content\Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Project_Readme.html" />
+    <Content Include="Views\Error\NotFound.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Drive.Core\Drive.Core.csproj">
