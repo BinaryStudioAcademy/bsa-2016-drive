@@ -7,7 +7,6 @@ using System.Web.Mvc;
 
 namespace Drive.WebHost.Controllers
 {
-    [HandleError]
     public class ErrorController : Controller
     {
         public ActionResult NotFound()
@@ -18,10 +17,8 @@ namespace Drive.WebHost.Controllers
 
         public ActionResult InternalServerError()
         {
-            var info = new HandleErrorInfo(new Exception(), "Error", "Get");
-
             Response.StatusCode = 500;
-            return View(info);
+            return View();
         }
     }
 }

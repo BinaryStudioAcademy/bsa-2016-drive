@@ -167,10 +167,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Api\ErrorController.cs" />
     <Compile Include="Api\FilesController.cs" />
     <Compile Include="Api\FoldersController.cs" />
-    <Compile Include="Api\GlobalExceptionHandler.cs" />
     <Compile Include="Api\GlobalExceptionLogger.cs" />
     <Compile Include="Api\LogsController.cs" />
     <Compile Include="Api\SpacesController.cs" />
@@ -253,7 +251,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Scripts\Libs\" />
-    <Folder Include="Views\Errors\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -268,7 +265,6 @@
     <Content Include="Content\Fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Error\NotFound.cshtml" />
-    <Content Include="Views\Error\InternalServerError.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Drive.Core\Drive.Core.csproj">

@@ -19,7 +19,7 @@ namespace Drive.WebHost.Api
 
         public override void Log(ExceptionLoggerContext context)
         {
-            _logger.WriteError("Error from Log method.");
+            _logger.WriteError(context.Exception, "Internal server error:");
         }
     }
 }

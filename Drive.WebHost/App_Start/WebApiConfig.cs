@@ -25,7 +25,6 @@ namespace Drive.WebHost
             
             config.MapHttpAttributeRoutes();
 
-            config.Services.Replace(typeof(IExceptionHandler), new GlobalExceptionHandler());
             config.Services.Replace(typeof(IExceptionLogger), new GlobalExceptionLogger(new Logger(typeof(GlobalExceptionLogger))));
 
             config.Routes.MapHttpRoute(

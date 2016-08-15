@@ -27,6 +27,9 @@ namespace Drive.WebHost.Api
         {
             var data = await _service.GetAllAsync();
 
+            if (data == null)
+                return NotFound();
+
             return Ok(data);
         }
 
@@ -34,6 +37,9 @@ namespace Drive.WebHost.Api
         public async Task<IHttpActionResult> GetAsync(int id)
         {
             var folder = await _service.GetAsync(id);
+
+            if (folder == null)
+                return NotFound();
 
             return Ok(folder);
         }
