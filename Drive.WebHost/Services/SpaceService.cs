@@ -7,7 +7,6 @@ using Drive.DataAccess.Entities;
 using Drive.DataAccess.Interfaces;
 using Driver.Shared.Dto;
 using Drive.Logging;
-using System.Data.Entity;
 
 namespace Drive.WebHost.Services
 {

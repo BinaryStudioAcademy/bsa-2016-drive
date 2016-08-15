@@ -32,7 +32,7 @@
         activate();
 
         function activate() {
-            spaceService.getSpace(3, function (data) {
+            spaceService.getSpace(1, function (data) {
                 vm.space = data;
             });
         }

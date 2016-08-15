@@ -48,7 +48,10 @@ namespace Drive.WebHost.Api
         public async Task<IHttpActionResult> CreateFileAsync(FileUnitDto file)
         {
             var dto = await _service.CreateAsync(file);
-
+            if (dto == null)
+            {
+                return BadRequest();
+            }
             return Ok(dto);
 
         }

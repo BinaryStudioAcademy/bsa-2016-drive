@@ -62,25 +62,29 @@ namespace Drive.WebHost.Services
         public async Task<FolderUnitDto> CreateAsync(FolderUnitDto dto)
         {
             var space = await _unitOfWork.Spaces.GetByIdAsync(dto.SpaceId);
-            var folder = new FolderUnit
+            if (space != null)
             {
-                Description = dto.Description,
-                Name = dto.Name,
+                var folder = new FolderUnit
+                {
+                    Description = dto.Description,
+                    Name = dto.Name,
 
-                CreatedAt = DateTime.Now,
-                LastModified = DateTime.Now,
-                IsDeleted = false,
-                Space = space
-            };
+                    CreatedAt = DateTime.Now,
+                    LastModified = DateTime.Now,
+                    IsDeleted = false,
+                    Space = space
+                };
 
-            _unitOfWork.Folders.Create(folder);
-            await _unitOfWork.SaveChangesAsync();
+                _unitOfWork.Folders.Create(folder);
+                await _unitOfWork.SaveChangesAsync();
 
-            dto.Id = folder.Id;
-            dto.CreatedAt = folder.CreatedAt;
-            dto.LastModified = folder.LastModified;
+                dto.Id = folder.Id;
+                dto.CreatedAt = folder.CreatedAt;
+                dto.LastModified = folder.LastModified;
 
-            return dto;
+                return dto;
+            }
+            return null;
         }
 
         public async Task<FolderUnitDto> UpdateAsync(int id, FolderUnitDto dto)
