@@ -28,7 +28,8 @@ namespace Drive.WebHost.Services
                           IsDeleted = d.IsDeleted,
                           FyleType = d.FileType,
                           Name = d.Name,
-                          Description = d.Description
+                          Description = d.Description,
+                          Owner=d.Owner
                       };
 
             return dto;
@@ -44,7 +45,8 @@ namespace Drive.WebHost.Services
                 IsDeleted = file.IsDeleted,
                 FyleType = file.FileType,
                 Name = file.Name,
-                Description = file.Description
+                Description = file.Description,
+                Owner=file.Owner
             };
         }
 
@@ -58,13 +60,13 @@ namespace Drive.WebHost.Services
 
                 CreatedAt = DateTime.Now,
                 LastModified = DateTime.Now,
-                IsDeleted = false
+                IsDeleted = false,
+                Owner=dto.Owner
             };
 
             _unitOfWork.Files.Create(file);
             await _unitOfWork.SaveChangesAsync();
 
-            dto.Id = file.Space.Owner.Id;
             return file.Id;
         }
 
@@ -77,6 +79,7 @@ namespace Drive.WebHost.Services
             file.Description = dto.Description;
             file.IsDeleted = dto.IsDeleted;
             file.LastModified = DateTime.Now;
+            file.Owner = dto.Owner;
 
             await _unitOfWork.SaveChangesAsync();
         }
