@@ -4,22 +4,27 @@
     angular.module("driveApp")
         .controller("MenuController", MenuController);
 
-    MenuController.$inject = ['$location'];
+    MenuController.$inject = ['$location',  '$uibModal'];
 
-    function MenuController($location) {
+    function MenuController($location,  $uibModal) {
 
         var vm = this;
 
         vm.redirectToBinarySpace = redirectToBinarySpace;
         vm.redirectToMySpace = redirectToMySpace;
         vm.redirectToSpaceSettings = redirectToSpaceSettings;
-        vm.redirectToAddNewSpace = redirectToAddNewSpace;
         vm.redirectToAddFile = redirectToAddFile;
         vm.redirectToNetSpace = redirectToNetSpace;
+        vm.redirectToAdminPanel = redirectToAdminPanel;
+        vm.redirectToAcademyPro = redirectToAcademyPro;
         vm.redirectToDocs = redirectToDocs;
         vm.redirectToEvents = redirectToEvents;
-        vm.redirectToAdminPanel = redirectToAdminPanel;
-        vm.redirectToUsersSettings = redirectToUsersSettings;
+        vm.redirectToEmployees = redirectToEmployees;
+        vm.redirectToChecklist = redirectToChecklist;
+        vm.redirectToTrello = redirectToTrello;
+        vm.redirectToSheets = redirectToSheets;
+        vm.redirectToSlides = redirectToSlides;
+        vm.open = open;
         
         activate();
 
@@ -35,10 +40,6 @@
             $location.url('/settings/');
         };
 
-        function redirectToAddNewSpace() {
-            $location.url('/api/spaces/');
-        };
-
         function redirectToAddFile() {
             $location.url('api/files/');
         };
@@ -51,19 +52,60 @@
             $location.url('api/docs/');
         };
 
+        function redirectToAcademyPro() {
+            $location.url('/apps/academy');
+        };
+
         function redirectToEvents() {
-            $location.url('api/events/');
+            $location.url('/apps/events');
         };
 
         function redirectToAdminPanel() {
             $location.url('api/adminPanel/');
         };
 
-        function redirectToUsersSettings() {
-            $location.url('/user/settings');
+        function redirectToEmployees() {
+            $location.url('/apps/employees');
+        };
+
+        function redirectToChecklist() {
+            $location.url('/apps/checklist');
+        };
+
+        function redirectToTrello() {
+            $location.url('/apps/trello');
+        };
+
+        function redirectToSheets() {
+            $location.url('/apps/sheets');
+        };
+
+        function redirectToSlides() {
+            $location.url('/apps/slides');
+        };
+
+        //Open modal window for creating new space
+        function open(size) {
+
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'Scripts/App/Space/Create.html',
+                windowTemplateUrl: 'Scripts/App/Space/Modal.html',
+                controller: 'CreateController',
+                controllerAs: 'createCtrl',
+                keyboard: true,
+                size: size
+
+            });
+
+            modalInstance.result.then(function () {
+            }, function () {
+
+            });
         };
 
         function activate() {
+            
         };
     }
 }());

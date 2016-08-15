@@ -1,13 +1,8 @@
 ﻿<div class="container">
-    <nav aria-label="...">
-        <ul class="pager">
-            <li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> Back</a></li>
-        </ul>
-    </nav>
-    <ol class="breadcrumb">
-        <li><a href="#">BinarySpace</a></li>
-        <li><a href="#">{{settingsCtrl.space.Name}}</a></li>
-        <li class="active">Settings</li>
+    <br />
+    <ol class="breadcrumb breadcrumb-arrow">
+        <li><a href="#"><i class="glyphicon glyphicon-home"></i>Space</a></li>
+        <li class="active"><span>Settings</span></li>
     </ol>
     <div class="page-header">
         <h2>
@@ -65,7 +60,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <input class="form-control" ng-model="settingsCtrl.userAddName" placeholder="User name" disabled/>
+                                <input class="form-control" ng-model="settingsCtrl.userAddName" placeholder="User name" disabled />
                             </div>
                         </div>
                         <div class="form-group">
