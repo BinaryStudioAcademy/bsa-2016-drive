@@ -30,23 +30,6 @@
 
         vm.findById = findById;
 
-        vm.folder = {
-            id: 0,
-            isDeleted: false,
-            name: '',
-            description: '',
-            createdAt: ''
-        };
-        vm.file = {
-            id: 0,
-            isDeleted: false,
-            name: '',
-            description: '',
-            createdAt: '',
-            fileType:0
-        }
-
-
         activate();
 
         function activate() {
@@ -121,13 +104,13 @@
                 [
                     [
                         'Folder', function () {
-                            vm.folder = {};
+                            vm.folder = { spaceid : vm.space.id};
                             vm.openFolderWindow();
                         }
                     ],
                     [
                         'File', function ($itemScope) {
-                            vm.file = {};
+                            vm.file = { spaceid: vm.space.id };
                             vm.openFileWindow();
                         }
                     ]

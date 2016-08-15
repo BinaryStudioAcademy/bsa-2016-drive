@@ -25,10 +25,11 @@ namespace Drive.WebHost.Services
         {
             var data = await _unitOfWork.Spaces.GetByIdAsync(id);
             //to replace!!! with contentlist
-            var folders = await _unitOfWork.Folders.Query.Where(x => x.Space.Id == data.Id).Cast<DataUnit>().ToListAsync();
-            var files = await _unitOfWork.Files.Query.Where(x => x.Space.Id == data.Id).Cast<DataUnit>().ToListAsync();
+            var folders = await _unitOfWork.Folders.Query.Where(x => x.Space.Id == data.Id).OfType<FolderUnit>().ToListAsync();
+            var files = await _unitOfWork.Files.Query.Where(x => x.Space.Id == data.Id).OfType<FileUnit>().ToListAsync();
             return new SpaceDto
             {
+                Id = data.Id,
                 Name = data.Name,
                 Description = data.Description,
                 MaxFileSize = data.MaxFileSize,
@@ -63,6 +64,7 @@ namespace Drive.WebHost.Services
             var dto = from d in data
                       select new SpaceDto
                       {
+                          Id = d.Id,
                           Name = d.Name,
                           Description = d.Description,
                           MaxFileSize = d.MaxFileSize,
