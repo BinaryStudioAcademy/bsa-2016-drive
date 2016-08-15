@@ -201,7 +201,10 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="gulpfile.js" />
-    <Content Include="Scripts\App\Folder\Folder.html" />
+    <Content Include="Scripts\App\File\FileForm.html" />
+    <Content Include="Scripts\App\File\FileController.js" />
+    <Content Include="Scripts\App\File\FileList.html" />
+    <Content Include="Scripts\App\File\fileService.js" />    <Content Include="Scripts\App\Folder\Folder.html" />
     <Content Include="Scripts\App\Folder\folderService.js" />
     <Content Include="Scripts\App\Folder\CreateUpdateFolderForm.html" />
     <Content Include="Scripts\App\Folder\Modal.html" />
