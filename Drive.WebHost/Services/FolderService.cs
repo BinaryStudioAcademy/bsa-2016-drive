@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -97,6 +98,34 @@ namespace Drive.WebHost.Services
         {
             _unitOfWork.Folders.Delete(id);
             await _unitOfWork.SaveChangesAsync();
+        }
+
+        public async Task<FolderContentDto> GetContentAsync(int id)
+        {
+            var folders = await _unitOfWork.Folders.Query.Where(x => x.FolderUnit.Id == id).OfType<DataUnit>().ToListAsync();
+            var files = await _unitOfWork.Files.Query.Where(x => x.FolderUnit.Id == id).OfType<DataUnit>().ToListAsync();
+
+            return new FolderContentDto
+            {
+                Files = from file in files
+                        select new FileUnitDto
+                        {
+                            Name = file.Name,
+                            Description = file.Description,
+                            Id = file.Id,
+                            IsDeleted = file.IsDeleted
+                        },
+                Folders = from folder in folders
+                          select new FolderUnitDto
+                          {
+                              Name = folder.Name,
+                              Description = folder.Description,
+                              Id = folder.Id,
+                              IsDeleted = folder.IsDeleted,
+                              CreatedAt = folder.CreatedAt,
+                              LastModified = folder.LastModified
+                          }
+            };
         }
 
         public void Dispose()

@@ -48,7 +48,10 @@ namespace Drive.WebHost.Services
                               Name = folder.Name,
                               Description = folder.Description,
                               Id = folder.Id,
-                              IsDeleted = folder.IsDeleted
+                              IsDeleted = folder.IsDeleted,
+                              CreatedAt = folder.CreatedAt,
+                              LastModified = folder.LastModified,
+                              SpaceId = folder.Space.Id
                           }
             };
         }

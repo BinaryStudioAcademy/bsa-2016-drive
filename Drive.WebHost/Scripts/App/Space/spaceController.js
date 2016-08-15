@@ -22,6 +22,7 @@
         vm.getFolder = getFolder;
         vm.deleteFolder = deleteFolder;
         vm.openFolderWindow = openFolderWindow;
+        vm.getFolderContent = getFolderContent;
 
         vm.getFile = getFile;
         vm.deleteFile = deleteFile;
@@ -217,6 +218,13 @@
             folderService.deleteFolder(id, function () {
                 var index = findById(vm.space.folders, id);
                 vm.space.folders.splice(index, 1);
+            });
+        }
+
+        function getFolderContent(id) {
+            folderService.getContent(id, function(data) {
+                vm.space.folders = data.folders;
+                vm.space.files = data.files;
             });
         }
 
