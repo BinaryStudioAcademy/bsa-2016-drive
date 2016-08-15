@@ -73,7 +73,7 @@ namespace Drive.WebHost.Api
         }
 
 
-        // GET: api/spaces/(int)/search?folderId=(int?)&text=(string)&from=(int)&to=(int)
+        // GET: api/spaces/(int)/search?folderId=(int?)&text=(string)&page=(int)&count=(int)
         [HttpGet]
         [Route("{spaceId:int}/search")]
         public async Task<IHttpActionResult> SearchFolderAndFile(int spaceId, string text = "", int page = 1, int count = 100, int? folderId = null)
