@@ -207,6 +207,12 @@
                 <a href="#" ng-click="menuController.redirectToMySpace(id)"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x "></i></span>My Space</a>
             </li>
             <li>
+                <a href="#" data-toggle="collapse" data-target="#spaces"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x "></i></span>Spaces</a>
+                <ul class="nav-pills nav-stacked collapse" style="list-style-type: none;" id="spaces" ng-repeat="space in menuController.spaces">
+                    <li><a href="#!/{{space.name}}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-graduation-cap fa-stack-1x "></i></span>{{space.name}}</a></li>
+                </ul>
+            </li>
+            <li>
                 <a href="#" data-toggle="collapse" data-target="#other"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-ellipsis-v fa-stack-1x "></i></span>Other</a>
                 <ul class="nav-pills nav-stacked collapse" style="list-style-type: none;" id="other">
                     <button class="btn btn-custom pull-right btn-md" title=".Net Space Settings" ng-click="menuController.redirectToSpaceSettings()"><i class="fa fa-inverse fa-wrench faa-wrench animated-hover fa-lg"></i></button>

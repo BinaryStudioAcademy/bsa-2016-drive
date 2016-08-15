@@ -37,7 +37,7 @@
         }
 
         function pushChanges(data) {
-            $http.put('/api/spaces', data)
+            $http.post('/api/spaces', data)
                 .then(function (response) {
                     console.log('Success!');
                 }, function (response) {
