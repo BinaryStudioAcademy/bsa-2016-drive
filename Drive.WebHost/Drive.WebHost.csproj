@@ -217,6 +217,8 @@
     <Content Include="Scripts\App\Folder\CreateUpdateFolderForm.html" />
     <Content Include="Scripts\App\Folder\Modal.html" />
     <Content Include="Scripts\App\Folder\modalController.js" />
+    <Content Include="Scripts\App\Error404\404.html" />
+    <Content Include="Scripts\App\Error404\ErrorController.js" />
     <Content Include="Scripts\App\Home\homeService.js" />
     <Content Include="Scripts\App\Logs\Logs.html" />
     <Content Include="Scripts\App\Logs\logsController.js" />
