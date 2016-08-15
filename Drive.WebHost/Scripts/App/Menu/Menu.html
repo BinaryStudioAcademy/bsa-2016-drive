@@ -207,7 +207,7 @@
                 <a href="#" ng-click="menuController.redirectToMySpace(id)"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x "></i></span>My Space</a>
             </li>
             <li>
-                <a href="#" data-toggle="collapse" data-target="#spaces"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x "></i></span>Spaces</a>
+                <a href="#" data-toggle="collapse" data-target="#spaces" ng-click="menuController.getAllSpaces()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x "></i></span>Spaces</a>
                 <ul class="nav-pills nav-stacked collapse" style="list-style-type: none;" id="spaces" ng-repeat="space in menuController.spaces">
                     <li><a href="#!/{{space.name}}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-graduation-cap fa-stack-1x "></i></span>{{space.name}}</a></li>
                 </ul>

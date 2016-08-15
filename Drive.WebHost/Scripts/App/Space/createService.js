@@ -45,11 +45,20 @@
         //        });
         //}
 
-        function pushData(data, callBack) {
-            $http.post('api/spaces', data).success(function (response) {
-                if (callBack)
-                    callBack(response);
-            });
+        //function pushData(data, callBack) {
+        //    $http.post('api/spaces', data).success(function (response) {
+        //        if (callBack)
+        //            callBack(response);
+        //    });
+        //}
+
+        function pushData(data) {
+            $http.post('/api/spaces', data)
+                .then(function (response) {
+                    console.log('Success!');
+                }, function (response) {
+                    console.log('Error while pushing data!');
+                });
         }
 
         return service;
