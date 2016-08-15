@@ -14,6 +14,8 @@ namespace Drive.DataAccess.Interfaces
         void Create(T item);
         void Update(T item);
         void Delete(int id);
+        void ForceDelete(int id);
+        void Restore(int id);
         IQueryable<T> Query { get; }
     }
 

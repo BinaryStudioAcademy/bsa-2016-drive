@@ -68,7 +68,45 @@ namespace Drive.DataAccess.Repositories
                     throw new ArgumentNullException(nameof(id));
                 }
 
-                Entities.Remove(entity);
+                entity.IsDeleted = true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void ForceDelete(int id)
+        {
+            try
+            {
+                var entity = GetById(id);
+                if (entity == null)
+                {
+                    throw new ArgumentNullException(nameof(id));
+                }
+
+                if( entity.IsDeleted == true)
+                    Entities.Remove(entity);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void Restore(int id)
+        {
+            try
+            {
+                var entity = GetById(id);
+                if (entity == null)
+                {
+                    throw new ArgumentNullException(nameof(id));
+                }
+
+                if (entity.IsDeleted == true)
+                    entity.IsDeleted = false;
             }
             catch (Exception ex)
             {
