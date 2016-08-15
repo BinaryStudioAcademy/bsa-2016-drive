@@ -24,6 +24,8 @@ namespace Drive.WebHost.Api
             response.Headers.Add("Error", errorMessage);
             context.Result = new ResponseMessageResult(response);
 
+            context.Result = new RedirectToRouteResult("api/error", null, new ErrorController());
+
             base.Handle(context);
         }
     }
