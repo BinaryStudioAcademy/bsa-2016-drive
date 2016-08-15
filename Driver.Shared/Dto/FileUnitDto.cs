@@ -4,6 +4,7 @@ namespace Driver.Shared.Dto
 {
     public class FileUnitDto
     {
+        public User Owner { get; set; }
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
         public FileType FyleType { get; set; }
