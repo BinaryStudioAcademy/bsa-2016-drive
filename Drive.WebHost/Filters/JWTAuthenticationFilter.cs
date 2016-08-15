@@ -21,7 +21,13 @@ namespace Drive.WebHost.Filters
                 var secret = ConfigurationManager.AppSettings["JWTSecret"];
                 ITokenAuthenticationService authService = new JWTAuthService();
                 var principal = authService.VerifyToken(token, secret);
-                if (((BSIdentity)principal.Identity).IsExpired) return;
+                var checkExpiracy = bool.Parse(ConfigurationManager.AppSettings["CheckExpiracy"]);
+                if (checkExpiracy && ((BSIdentity) principal.Identity).IsExpired)
+                {
+                    var clearCookie = new HttpCookie("x-access-token", "") {Expires = DateTime.Now.AddDays(-1)};
+                    filterContext.RequestContext.HttpContext.Response.SetCookie(clearCookie);
+                    return;
+                }
                 var idManager = new BSIdentityManager();
                 idManager.SetPrincipal(principal);
                 filterContext.Principal = principal;
@@ -39,10 +45,8 @@ namespace Drive.WebHost.Filters
                 if (filterContext.HttpContext.Request.Url != null)
                 {
                     var url = HttpUtility.UrlDecode(filterContext.HttpContext.Request.Url.ToString());
-                    var cookie = new HttpCookie("referer", url + "auth");
-                    //filterContext.RequestContext.HttpContext.Response.Cookies.Add(cookie);
-                    var myCookie = new CookieHeaderValue("referer", url + "auth");
-                    filterContext.RequestContext.HttpContext.Response.Headers.Add("Set-Cookie", myCookie.ToString());
+                    var myCookie = new HttpCookie("referer", url);
+                    filterContext.RequestContext.HttpContext.Response.SetCookie(myCookie);
                 }
                 if (authServer != null) filterContext.Result = new RedirectResult(authServer);
             }
