@@ -1,88 +1,84 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using Drive.Core.HttpClient;
 using Drive.DataAccess.Entities;
 using Drive.DataAccess.Interfaces;
 using Driver.Shared.Dto;
+using Drive.Logging;
+using System.Data.Entity;
 
 namespace Drive.WebHost.Services
 {
     public class SpaceService : ISpaceService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly IAsyncHttpClient _httpClient;
+        private readonly ILogger _logger;
 
-        public SpaceService(IUnitOfWork unitOfWork, IAsyncHttpClient httpClient)
+        public SpaceService(IUnitOfWork unitOfWork, ILogger logger)
         {
             _unitOfWork = unitOfWork;
-            _httpClient = httpClient;
+            _logger = logger;
         }
 
         public async Task<SpaceDto> GetAsync(int id)
         {
-            var data = await _unitOfWork.Spaces.GetByIdAsync(id);
-            //to replace!!! with contentlist
-            var folders = await _unitOfWork.Folders.Query.Where(x => x.Space.Id == data.Id).Cast<DataUnit>().ToListAsync();
-            var files = await _unitOfWork.Files.Query.Where(x => x.Space.Id == data.Id).Cast<DataUnit>().ToListAsync();
-            return new SpaceDto
+            var space = await _unitOfWork.Spaces.Query.Where(s=>s.Id == id).Select(s => new SpaceDto
             {
-                Name = data.Name,
-                Description = data.Description,
-                MaxFileSize = data.MaxFileSize,
-                MaxFilesQuantity = data.MaxFilesQuantity,
-                ReadPermittedUsers = data.ReadPermittedUsers,
-                Files = from file in files
-                        select new FileUnitDto
-                        {
-                            Name = file.Name,
-                            Description = file.Description,
-                            Id = file.Id,
-                            IsDeleted = file.IsDeleted
-                        },
-                Folders = from folder in folders
-                          select new FolderUnitDto
-                          {
-                              Name = folder.Name,
-                              Description = folder.Description,
-                              Id = folder.Id,
-                              IsDeleted = folder.IsDeleted
-                          }
-            };
+                Name = s.Name,
+                Description = s.Description,
+                MaxFileSize = s.MaxFileSize,
+                MaxFilesQuantity = s.MaxFilesQuantity,
+                ReadPermittedUsers = s.ReadPermittedUsers,
+                Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null).Select(f => new FileUnitDto
+                {
+                    Description = f.Description,
+                    FyleType = f.FileType,
+                    Id = f.Id,
+                    IsDeleted = f.IsDeleted,
+                    Name = f.Name
+                }),
+                Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.Parent == null).Select(f => new FolderUnitDto
+                {
+                    Id = f.Id,
+                    Name = f.Name,
+                    Description = f.Description,
+                    CreatedAt = f.CreatedAt,
+                    LastModified = f.LastModified,
+                    IsDeleted = f.IsDeleted
+                })
+            }).SingleOrDefaultAsync();
+            return space;
         }
 
-        public async Task<IEnumerable<SpaceDto>> GetAllAsync()
+        public async Task<IList<SpaceDto>> GetAllAsync()
         {
-            var data = await _unitOfWork.Spaces.GetAllAsync();
-
-            var dto = from d in data
-                      select new SpaceDto
-                      {
-                          Name = d.Name,
-                          Description = d.Description,
-                          MaxFileSize = d.MaxFileSize,
-                          MaxFilesQuantity = d.MaxFilesQuantity,
-                          ReadPermittedUsers = d.ReadPermittedUsers,
-                          Files = from file in d.ContentList.OfType<FileUnit>()
-                                  select new FileUnitDto
-                                  {
-                                      Name = file.Name,
-                                      Description = file.Description,
-                                      Id = file.Id,
-                                      IsDeleted = file.IsDeleted
-                                  },
-                          Folders = from folder in d.ContentList.OfType<FolderUnit>()
-                                    select new FolderUnitDto
-                                    {
-                                        Name = folder.Name,
-                                        Description = folder.Description,
-                                        Id = folder.Id,
-                                        IsDeleted = folder.IsDeleted
-                                    }
-                      };
-            return dto;
+            var spacesList = await _unitOfWork.Spaces.Query.Select(s => new SpaceDto
+            {
+                Name = s.Name,
+                Description = s.Description,
+                MaxFileSize = s.MaxFileSize,
+                MaxFilesQuantity = s.MaxFilesQuantity,
+                ReadPermittedUsers = s.ReadPermittedUsers,
+                Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null).Select(f => new FileUnitDto
+                {
+                    Description = f.Description,
+                    FyleType = f.FileType,
+                    Id = f.Id,
+                    IsDeleted = f.IsDeleted,
+                    Name = f.Name
+                }),
+                Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.Parent == null).Select(f => new FolderUnitDto
+                {
+                    Id = f.Id,
+                    Name = f.Name,
+                    Description = f.Description,
+                    CreatedAt = f.CreatedAt,
+                    LastModified = f.LastModified,
+                    IsDeleted = f.IsDeleted
+                })
+            }).ToListAsync();
+            return spacesList;
         }
 
         public async Task<int> CreateAsync(SpaceDto dto)
@@ -121,6 +117,146 @@ namespace Drive.WebHost.Services
         {
             _unitOfWork.Spaces.Delete(id);
             await _unitOfWork.SaveChangesAsync();
+        }
+
+
+        public async Task<SearchResultDto> SearchFoldersAndFilesAsync(int spaceId, int? folderId, string text, int page, int count)
+        {
+            IEnumerable<FolderUnitDto> resultFolder = new List<FolderUnitDto>();
+            IEnumerable<FileUnitDto> resultFiles = new List<FileUnitDto>();
+            try
+            {
+                if (folderId != null)
+                {
+                    var folder = await _unitOfWork.Folders.Query.Where(f => f.Id == folderId)
+                        .Select(s => new
+                        {
+                            Folders = s.DataUnits.OfType<FolderUnit>(),
+                            Files = s.DataUnits.OfType<FileUnit>()
+                        }).SingleOrDefaultAsync();
+                    if (folder == null)
+                        return null;
+                    resultFolder = folder.Folders
+                        .Where(f => f.Name.ToLower().Contains(text.ToLower()))
+                        .Select(f => new FolderUnitDto()
+                        {
+                            Id = f.Id,
+                            Name = f.Name,
+                            Description = f.Description,
+                            IsDeleted = f.IsDeleted,
+                            CreatedAt = f.CreatedAt,
+                            LastModified = f.LastModified
+                        });
+
+                    resultFiles = folder.Files
+                        .Where(f => f.Name.ToLower().Contains(text.ToLower()))
+                        .Select(f => new FileUnitDto
+                        {
+                            Id = f.Id,
+                            Name = f.Name,
+                            Description = f.Description,
+                            FyleType = f.FileType,
+                            IsDeleted = f.IsDeleted
+                        });
+                }
+                else
+                {
+                    var space = await _unitOfWork.Spaces.Query
+                        .Where(s => s.Id == spaceId)
+                        .Select(s => new
+                        {
+                            Folders = s.ContentList.OfType<FolderUnit>().Where(f=>f.Parent==null),
+                            Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null)
+                        }).SingleOrDefaultAsync();
+                    if (space == null)
+                        return null;
+                    resultFolder = space.Folders
+                        .Where(f => f.Name.ToLower().Contains(text.ToLower()))
+                        .Select(f => new FolderUnitDto()
+                        {
+                            Id = f.Id,
+                            Name = f.Name,
+                            Description = f.Description,
+                            IsDeleted = f.IsDeleted,
+                            CreatedAt = f.CreatedAt,
+                            LastModified = f.LastModified
+                        });
+                    resultFiles = space.Files
+                        .Where(f => f.Name.ToLower().Contains(text.ToLower()))
+                        .Select(f => new FileUnitDto
+                        {
+                            Id = f.Id,
+                            Name = f.Name,
+                            Description = f.Description,
+                            FyleType = f.FileType,
+                            IsDeleted = f.IsDeleted
+                        });
+                }
+
+                int skipCount = (page - 1) * count;
+                if (resultFolder.Count() <= skipCount)
+                {
+                    skipCount -= resultFolder.Count();
+                    resultFolder = new List<FolderUnitDto>();
+                    resultFiles = resultFiles.Skip(skipCount).Take(count);
+                }
+                else
+                {
+                    resultFolder = resultFolder.Skip(skipCount).Take(count);
+                    count -= resultFolder.Count();
+                    resultFiles = resultFiles.Take(count);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.WriteError(ex, ex.Message);
+            }
+            return new SearchResultDto { Folders = resultFolder.ToList(), Files = resultFiles.ToList() };
+        }
+
+        public async Task<int> NumberOfFoundFoldersAndFilesAsync(int spaceId, int? folderId, string text)
+        {
+            int counter = 0;
+            try
+            {
+                if (folderId != null)
+                {
+                    var folder = await _unitOfWork.Folders.Query.Where(f => f.Id == folderId)
+                        .Select(s => new
+                        {
+                            Folders = s.DataUnits.OfType<FolderUnit>(),
+                            Files = s.DataUnits.OfType<FileUnit>()
+                        }).SingleOrDefaultAsync();
+                    if (folder == null)
+                        return 0;
+                    counter += folder.Folders
+                        .Count(f => f.Name.ToLower().Contains(text.ToLower()));
+
+                    counter += folder.Files
+                        .Count(f => f.Name.ToLower().Contains(text.ToLower()));
+                }
+                else
+                {
+                    var space = await _unitOfWork.Spaces.Query
+                        .Where(s => s.Id == spaceId)
+                        .Select(s => new
+                        {
+                            Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.Parent == null),
+                            Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null)
+                        }).SingleOrDefaultAsync();
+                    if (space == null)
+                        return 0;
+                    counter += space.Folders
+                        .Count(f => f.Name.ToLower().Contains(text.ToLower()));
+                    counter += space.Files
+                        .Count(f => f.Name.ToLower().Contains(text.ToLower()));
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.WriteError(ex, ex.Message);
+            }
+            return counter;
         }
 
         public void Dispose()

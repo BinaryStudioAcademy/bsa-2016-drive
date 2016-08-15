@@ -10,7 +10,7 @@ namespace Drive.WebHost.Services
 {
     public interface ISpaceService
     {
-        Task<IEnumerable<SpaceDto>> GetAllAsync();
+        Task<IList<SpaceDto>> GetAllAsync();
 
         Task<SpaceDto> GetAsync(int id);
 
@@ -19,6 +19,8 @@ namespace Drive.WebHost.Services
         Task UpdateAsync(int id, SpaceDto space);
 
         Task Delete(int id);
+        Task<SearchResultDto> SearchFoldersAndFilesAsync(int spaceId, int? folderId, string text, int page, int count);
+        Task<int> NumberOfFoundFoldersAndFilesAsync(int spaceId, int? folderId, string text);
 
         void Dispose();
     }

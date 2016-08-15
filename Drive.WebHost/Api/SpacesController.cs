@@ -23,7 +23,7 @@ namespace Drive.WebHost.Api
         {
             var result = await _spaceService.GetAllAsync();
 
-            if (result == null)
+            if (result == null || result.Count == 0)
                 return NotFound();
 
             return Ok(result);
@@ -64,6 +64,30 @@ namespace Drive.WebHost.Api
         {
             await _spaceService.UpdateAsync(id, space);
             return Ok();
+        }
+
+
+        // GET: api/spaces/(int)/search?folderId=(int?)&text=(string)&page=(int)&count=(int)
+        [HttpGet]
+        [Route("{spaceId:int}/search")]
+        public async Task<IHttpActionResult> SearchFolderAndFile(int spaceId, string text = "", int page = 1, int count = 100, int? folderId = null)
+        {
+            var searchResultDto = await _spaceService.SearchFoldersAndFilesAsync(spaceId, folderId, text, page, count);
+
+            if (searchResultDto == null || (searchResultDto.Files.Count == 0 && searchResultDto.Folders.Count == 0))
+                return NotFound();
+            return Ok(searchResultDto);
+        }
+
+        // GET: api/spaces/(int)/total?folderId=(int?)&text=(string)
+        [HttpGet]
+        [Route("{spaceId:int}/total")]
+        public async Task<IHttpActionResult> NumberOfFoundFoldersAndFiles(int spaceId, string text = "", int? folderId = null)
+        {
+            int result = await _spaceService.NumberOfFoundFoldersAndFilesAsync(spaceId, folderId, text);
+            if (result == 0)
+                return NotFound();
+            return Ok(result);
         }
     }
 }
