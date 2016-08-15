@@ -9,6 +9,13 @@
 
     function SpaceController(spaceService, folderService, $uibModal) {
         var vm = this;
+
+        vm.view = "fa fa-th";
+        vm.showTable = true;
+        vm.showGrid = false;
+
+        vm.changeView = changeView;
+
         vm.folder = {
             id: 0,
             isDeleted: false,
@@ -25,6 +32,26 @@
             spaceService.getSpace(1, function (data) {
                 vm.space = data;
             });
+        }
+
+        function changeView(view) {
+            if (view == "fa fa-th") {
+                activateGridView();
+            } else {
+                activateTableView();
+            }
+        }
+
+        function activateTableView() {
+            vm.view = "fa fa-th";
+            vm.showTable = true;
+            vm.showGrid = false;
+        }
+
+        function activateGridView() {
+            vm.view = "fa fa-list";
+            vm.showTable = false;
+            vm.showGrid = true;
         }
 
 //        vm.getAllFolders = getAllFolders;
