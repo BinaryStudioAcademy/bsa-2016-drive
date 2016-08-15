@@ -21,7 +21,7 @@
                         callback(response.data);
                     }
                 }, function () {
-                    console.log('Error while getting space!')
+                    console.log('Error while getting space!');
                 });
         }
 

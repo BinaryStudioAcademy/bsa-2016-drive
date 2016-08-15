@@ -47,33 +47,18 @@ namespace Drive.WebHost.Api
         [HttpPost]
         public async Task<IHttpActionResult> CreateFileAsync(FileUnitDto file)
         {
-            int id = await _service.CreateAsync(file);
+            var dto = await _service.CreateAsync(file);
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            return Ok(id);
+            return Ok(dto);
         }
 
         // PUT: api/files/5
         [HttpPut]
         public async Task<IHttpActionResult> UpdateFileAsync(int id, FileUnitDto file)
         {
-            await _service.UpdateAsync(id, file);
+            var dto = await _service.UpdateAsync(id, file);
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (id != file.Id)
-            {
-                return BadRequest();
-            }
-
-            return Ok();
+            return Ok(dto);
         }
 
         // DELETE: api/files/5

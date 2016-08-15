@@ -3,11 +3,11 @@
 
     angular
         .module("driveApp")
-        .controller("ModalInstanceCtrl", ModalInstanceCtrl);
+        .controller("FolderModalCtrl", FolderModalCtrl);
 
-    ModalInstanceCtrl.$inject = ['FolderService', '$uibModalInstance', 'items'];
+    FolderModalCtrl.$inject = ['FolderService', '$uibModalInstance', 'items'];
 
-    function ModalInstanceCtrl(folderService, $uibModalInstance, items) {
+    function FolderModalCtrl(folderService, $uibModalInstance, items) {
         var vm = this;
         vm.save = save;
         vm.cancel = cancel;

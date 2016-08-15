@@ -8,9 +8,6 @@
         </ol>
     </div>
     <div class="row" style="margin:1em 0 1em 0">
-        <div class="btn-group" role="group" aria-label="...">
-            <button type="button" class="btn btn-default">Create</button>
-        </div>
         <div class="col-sm-1 pull-right">
             <button class="btn btn-default" ng-click="spaceCtrl.changeView(spaceCtrl.view)">
                 <i class={{spaceCtrl.view}} title="view"> </i>
@@ -29,9 +26,9 @@
             </div>
         </div>
     </div>
-    <div class="wrapper" ng-show="spaceCtrl.showGrid">
+    <div class="wrapper" ng-show="spaceCtrl.showGrid" context-menu="spaceCtrl.createOption">
         <div class="masonry">
-            <div class="item btn-default" ng-repeat="folder in spaceCtrl.space.folders" title="Created {{ folder.createdAt | date : 'short' }}">
+            <div class="item btn-default" context-menu="spaceCtrl.folderMenuOptions" ng-repeat="folder in spaceCtrl.space.folders" title="Created {{ folder.createdAt | date : 'short' }}">
                 <i class="fa fa-folder-o fa-5x"></i>
                 <br><span class="bold">Name: </span><span>{{ folder.name }}</span>
                 <br><span class="bold">Description: </span><span>{{ folder.description }}</span>
@@ -39,7 +36,7 @@
             </div>
         </div>
         <div class="masonry">
-            <div class="item btn-default" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}">
+            <div class="item btn-default" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}">
                 <i class="fa fa-file-o fa-5x"></i>
                 <br><span class="bold">File type: </span><span>{{ file.fyleType | typeOfFile }}</span>
                 <br><span class="bold">Name: </span><span>{{ file.name }}</span>
@@ -66,7 +63,7 @@
                 <td>{{ folder.createdAt | date : 'short' }}</td>
                 <td>Folder</td>
             </tr>
-            <tr ng-repeat="file in spaceCtrl.space.files">
+            <tr ng-repeat="file in spaceCtrl.space.files" context-menu="spaceCtrl.fileMenuOptions">
                 <td>{{ file.name }}</td>
                 <td>{{ file.description }}</td>
                 <td>{{ file.author.firstName }} {{ file.author.lastName }}</td>

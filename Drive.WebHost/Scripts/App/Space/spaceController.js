@@ -5,9 +5,9 @@
         .module("driveApp")
         .controller("SpaceController", SpaceController);
 
-    SpaceController.$inject = ['SpaceService', 'FolderService', '$uibModal'];
+    SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', '$uibModal'];
 
-    function SpaceController(spaceService, folderService, $uibModal) {
+    function SpaceController(spaceService, folderService, fileService, $uibModal) {
         var vm = this;
 
         vm.view = "fa fa-th";
@@ -15,15 +15,35 @@
         vm.showGrid = false;
 
         vm.changeView = changeView;
+        vm.activateTableView = activateTableView;
+        vm.activateGridView = activateGridView;
+
+        // vm.getAllFolders = getAllFolders;
+        vm.getFolder = getFolder;
+        vm.deleteFolder = deleteFolder;
+        vm.openFolderWindow = openFolderWindow;
+
+        vm.getFile = getFile;
+        vm.deleteFile = deleteFile;
+        vm.openFileWindow = openFileWindow;
+
+        vm.findById = findById;
 
         vm.folder = {
             id: 0,
             isDeleted: false,
             name: '',
             description: '',
-            createdAt: '',
-            lastModified: ''
+            createdAt: ''
         };
+        vm.file = {
+            id: 0,
+            isDeleted: false,
+            name: '',
+            description: '',
+            createdAt: '',
+            fileType:0
+        }
 
 
         activate();
@@ -54,11 +74,6 @@
             vm.showGrid = true;
         }
 
-//        vm.getAllFolders = getAllFolders;
-        vm.getFolder = getFolder;
-        vm.deleteFolder = deleteFolder;
-        vm.openFolderWindow = openFolderWindow;
-
 
         vm.folderMenuOptions = [
             [
@@ -79,6 +94,25 @@
             ]
         ];
 
+        vm.fileMenuOptions = [
+    [
+        'Share', function ($itemScope) {
+            console.log($itemScope.file.id);
+        }
+    ],
+    [
+        'Edit', function ($itemScope) {
+            vm.file = $itemScope.file;
+            vm.openFileWindow();
+        }
+    ],
+    [
+        'Delete', function ($itemScope) {
+            return deleteFile($itemScope.file.id);
+        }
+    ]
+        ];
+
         vm.createOption = [
             [
                 'Create', function ($itemScope) {
@@ -86,13 +120,14 @@
                 [
                     [
                         'Folder', function () {
-                            vm.folder = {}
+                            vm.folder = {};
                             vm.openFolderWindow();
                         }
                     ],
                     [
                         'File', function ($itemScope) {
-
+                            vm.file = {};
+                            vm.openFileWindow();
                         }
                     ]
                 ]
@@ -105,8 +140,8 @@
                 animation: false,
                 templateUrl: 'Scripts/App/Folder/CreateUpdateFolderForm.html',
                 windowTemplateUrl: 'Scripts/App/Folder/Modal.html',
-                controller: 'ModalInstanceCtrl',
-                controllerAs: 'modalCtrl',
+                controller: 'FolderModalCtrl',
+                controllerAs: 'folderModalCtrl',
                 size: size,
                 resolve: {
                     items: function () {
@@ -127,6 +162,35 @@
                 console.log('Modal dismissed');
             });
         };
+
+        function openFileWindow(size) {
+
+            var fileModalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'Scripts/App/File/FileForm.html',
+                windowTemplateUrl: 'Scripts/App/File/Modal.html',
+                controller: 'FileModalCtrl',
+                controllerAs: 'fileModalCtrl',
+                size: size,
+                resolve: {
+                    items: function() {
+                        return vm.file;
+                    }
+                }
+            });
+
+            fileModalInstance.result.then(function (file) {
+                console.log(file);
+                var index = findById(vm.space.files, file.id);
+                if (index == -1) {
+                    vm.space.files.push(file);
+                } else {
+                    vm.space.files[index] = file;
+                }
+            }, function () {
+                console.log('Modal dismissed');
+            });
+        }
 
         function getFolder(id) {
             folderService.get(id, function (folder) {
@@ -153,6 +217,19 @@
             folderService.deleteFolder(id, function () {
                 var index = findById(vm.space.folders, id);
                 vm.space.folders.splice(index, 1);
+            });
+        }
+
+        function getFile(id) {
+            fileService.getFile(id, function (file) {
+                vm.file = file;
+            });
+        }
+
+        function deleteFile(id) {
+            fileService.deleteFile(id, function () {
+                var index = findById(vm.space.files, id);
+                vm.space.files.splice(index, 1);
             });
         }
     }
