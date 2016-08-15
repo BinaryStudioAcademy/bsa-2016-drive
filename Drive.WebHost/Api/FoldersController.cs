@@ -54,11 +54,6 @@ namespace Drive.WebHost.Api
         {
             var dto = await _service.CreateAsync(folder);
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             return Ok(dto);
         }
 

@@ -49,11 +49,6 @@ namespace Drive.WebHost.Api
         {
             int id = await _service.CreateAsync(file);
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             return Ok(id);
         }
 
@@ -62,11 +57,6 @@ namespace Drive.WebHost.Api
         public async Task<IHttpActionResult> UpdateFileAsync(int id, FileUnitDto file)
         {
             await _service.UpdateAsync(id, file);
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
 
             if (id != file.Id)
             {

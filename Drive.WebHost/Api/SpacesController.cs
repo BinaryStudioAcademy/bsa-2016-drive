@@ -43,9 +43,6 @@ namespace Drive.WebHost.Api
         [HttpPost]
         public async Task<IHttpActionResult> CreateSpace(SpaceDto space)
         {
-            if (!ModelState.IsValid)
-               return BadRequest();
-
             await _spaceService.CreateAsync(space);
             return Ok();
         }
@@ -65,9 +62,6 @@ namespace Drive.WebHost.Api
         [HttpPut]
         public async Task<IHttpActionResult> UpdateSpace(int id, SpaceDto space)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
-
             await _spaceService.UpdateAsync(id, space);
             return Ok();
         }

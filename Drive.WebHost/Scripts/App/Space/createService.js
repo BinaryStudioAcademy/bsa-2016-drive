@@ -36,13 +36,20 @@
             });
         }
 
-        function pushData(data) {
-            $http.put('/api/spaces', data)
-                .then(function () {
-                    console.log('Success!');
-                }, function () {
-                    console.log('Error while pushing data!');
-                });
+        //function pushData(data) {
+        //    $http.post('/api/spaces', data)
+        //        .then(function () {
+        //            console.log('Success!');
+        //        }, function () {
+        //            console.log('Error while pushing data!');
+        //        });
+        //}
+
+        function pushData(data, callBack) {
+            $http.post('api/spaces', data).success(function (response) {
+                if (callBack)
+                    callBack(response);
+            });
         }
 
         return service;
