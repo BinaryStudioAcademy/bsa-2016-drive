@@ -17,7 +17,7 @@
         <div class="form-group">
             <div class="input-group">
                 <div class="input-group-addon"></div>
-                <input type="text" class="form-control" placeholder="Level filter" ng-model="logsCtrl.searchLevel.Level">
+                <input type="text" class="form-control" placeholder="Level filter" ng-model="logsCtrl.searchLevel.level">
             </div>
         </div>
     </form>
@@ -69,14 +69,21 @@
             </tr>
         </thead>
         <tbody>
-            <tr ng-repeat="log in logsCtrl.logs | orderBy:logsCtrl.sort.sortType:logsCtrl.sort.sortReverse | filter:logsCtrl.searchLevel:Level">
-                <td>{{ log.Id }}</td>
-                <td>{{ log.Logged }}</td>
-                <td>{{ log.Level }}</td>
-                <td>{{ log.Message }}</td>
-                <td>{{ log.Exception }}</td>
-                <td>{{ log.CallerName }}</td>
-            </tr>
+        <tr dir-paginate="log in logsCtrl.logs 
+            | orderBy:logsCtrl.sort.sortType:logsCtrl.sort.sortReverse 
+            | filter:logsCtrl.searchLevel 
+            | itemsPerPage: logsCtrl.paginate.pageSize"
+            current-page="logsCtrl.paginate.currentPage">
+            <td>{{ log.id }}</td>
+            <td>{{ log.logged }}</td>
+            <td>{{ log.level }}</td>
+            <td>{{ log.message }}</td>
+            <td>{{ log.exception }}</td>
+            <td>{{ log.callerName }}</td>
+        </tr>
         </tbody>
+        <tfoot>
+            <dir-pagination-controls boundary-links="true"></dir-pagination-controls>
+        </tfoot>
     </table>
 </div>
