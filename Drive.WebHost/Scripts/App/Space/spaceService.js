@@ -36,4 +36,25 @@
         }
         return service;
     }
+
+    var app = angular.module('driveApp');
+
+    app.filter('typeOfFile', function () {
+        return function (input, uppercase) {
+            switch (input) {
+                case 0:
+                    return 'None';
+                case 1:
+                    return 'Document';
+                case 2:
+                    return 'Archive';
+                case 3:
+                    return 'Presentation';
+                case 4:
+                    return 'WebPage';
+                default:
+                    return '';
+            }
+        }
+    });
 })();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using Drive.DataAccess.Entities;
@@ -25,6 +26,7 @@ namespace Drive.WebHost.Services
         {
             var space = await _unitOfWork.Spaces.Query.Where(s=>s.Id == id).Select(s => new SpaceDto
             {
+                Id = s.Id,
                 Name = s.Name,
                 Description = s.Description,
                 MaxFileSize = s.MaxFileSize,
@@ -55,6 +57,7 @@ namespace Drive.WebHost.Services
         {
             var spacesList = await _unitOfWork.Spaces.Query.Select(s => new SpaceDto
             {
+                Id = s.Id,
                 Name = s.Name,
                 Description = s.Description,
                 MaxFileSize = s.MaxFileSize,

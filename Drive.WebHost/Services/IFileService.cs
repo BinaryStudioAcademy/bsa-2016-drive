@@ -8,8 +8,8 @@ namespace Drive.WebHost.Services
     {
         Task<IEnumerable<FileUnitDto>> GetAllAsync();
         Task<FileUnitDto> GetAsync(int id);
-        Task<int> CreateAsync(FileUnitDto dto);
-        Task UpdateAsync(int id, FileUnitDto dto);
+        Task<FileUnitDto> CreateAsync(FileUnitDto dto);
+        Task<FileUnitDto> UpdateAsync(int id, FileUnitDto dto);
         Task DeleteAsync(int id);
         void Dispose();
     }
