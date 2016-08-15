@@ -29,7 +29,8 @@ namespace Drive.WebHost.Services
                           FyleType = d.FileType,
                           Name = d.Name,
                           //Link = d.Link,
-                          Description = d.Description
+                          Description = d.Description,
+                          SpaceId = d.Space.Id
                       };
 
             return dto;
@@ -45,7 +46,8 @@ namespace Drive.WebHost.Services
                 IsDeleted = file.IsDeleted,
                 FyleType = file.FileType,
                 Name = file.Name,
-                Description = file.Description
+                Description = file.Description,
+                SpaceId = file.Space.Id
             };
         }
 
