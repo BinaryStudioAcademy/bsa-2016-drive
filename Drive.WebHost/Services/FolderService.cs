@@ -22,6 +22,9 @@ namespace Drive.WebHost.Services
         {
             var folders = await _unitOfWork.Folders.GetAllAsync();
 
+            if (folders == null)
+                return null;
+
             var dto = from folder in folders
                       select new FolderUnitDto
                       {
@@ -39,6 +42,9 @@ namespace Drive.WebHost.Services
         public async Task<FolderUnitDto> GetAsync(int id)
         {
             var folder = await _unitOfWork.Folders.GetByIdAsync(id);
+
+            if (folder == null)
+                return null;
 
             return new FolderUnitDto
             {
