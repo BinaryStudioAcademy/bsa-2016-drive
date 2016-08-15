@@ -23,7 +23,7 @@ namespace Drive.WebHost.Api
         {
             var result = await _spaceService.GetAllAsync();
 
-            if (result == null)
+            if (result == null || result.Count == 0)
                 return NotFound();
 
             return Ok(result);
@@ -73,7 +73,7 @@ namespace Drive.WebHost.Api
         }
 
 
-        // GET: api/spaces/(int)?folderId=(int?)&text=(string)&from=(int)&to=(int)
+        // GET: api/spaces/(int)/search?folderId=(int?)&text=(string)&from=(int)&to=(int)
         [HttpGet]
         [Route("{spaceId:int}/search")]
         public async Task<IHttpActionResult> SearchFolderAndFile(int spaceId, string text, int page, int count, int? folderId = null)
@@ -85,7 +85,7 @@ namespace Drive.WebHost.Api
             return Ok(searchResultDto);
         }
 
-        // GET: api/spaces/(int)?folderId=(int?)&text=(string)
+        // GET: api/spaces/(int)/total?folderId=(int?)&text=(string)
         [HttpGet]
         [Route("{spaceId:int}/total")]
         public async Task<IHttpActionResult> NumberOfFoundFoldersAndFiles(int spaceId, string text, int? folderId = null)

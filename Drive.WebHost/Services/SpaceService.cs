@@ -23,64 +23,62 @@ namespace Drive.WebHost.Services
 
         public async Task<SpaceDto> GetAsync(int id)
         {
-            var data = await _unitOfWork.Spaces.GetByIdAsync(id);
-
-            return new SpaceDto
+            var space = await _unitOfWork.Spaces.Query.Where(s=>s.Id == id).Select(s => new SpaceDto
             {
-                Name = data.Name,
-                Description = data.Description,
-                MaxFileSize = data.MaxFileSize,
-                MaxFilesQuantity = data.MaxFilesQuantity,
-                ReadPermittedUsers = data.ReadPermittedUsers,
-                Files = from file in data.ContentList.OfType<FileUnit>()
-                        select new FileUnitDto
-                        {
-                            Name = file.Name,
-                            Description = file.Description,
-                            Id = file.Id,
-                            IsDeleted = file.IsDeleted
-                        },
-                Folders = from folder in data.ContentList.OfType<FolderUnit>()
-                          select new FolderUnitDto
-                          {
-                              Name = folder.Name,
-                              Description = folder.Description,
-                              Id = folder.Id,
-                              IsDeleted = folder.IsDeleted
-                          }
-            };
+                Name = s.Name,
+                Description = s.Description,
+                MaxFileSize = s.MaxFileSize,
+                MaxFilesQuantity = s.MaxFilesQuantity,
+                ReadPermittedUsers = s.ReadPermittedUsers,
+                Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null).Select(f => new FileUnitDto
+                {
+                    Description = f.Description,
+                    FyleType = f.FileType,
+                    Id = f.Id,
+                    IsDeleted = f.IsDeleted,
+                    Name = f.Name
+                }),
+                Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.Parent == null).Select(f => new FolderUnitDto
+                {
+                    Id = f.Id,
+                    Name = f.Name,
+                    Description = f.Description,
+                    CreatedAt = f.CreatedAt,
+                    LastModified = f.LastModified,
+                    IsDeleted = f.IsDeleted
+                })
+            }).SingleOrDefaultAsync();
+            return space;
         }
 
-        public async Task<IEnumerable<SpaceDto>> GetAllAsync()
+        public async Task<IList<SpaceDto>> GetAllAsync()
         {
-            var data = await _unitOfWork.Spaces.GetAllAsync();
-
-            var dto = from d in data
-                      select new SpaceDto
-                      {
-                          Name = d.Name,
-                          Description = d.Description,
-                          MaxFileSize = d.MaxFileSize,
-                          MaxFilesQuantity = d.MaxFilesQuantity,
-                          ReadPermittedUsers = d.ReadPermittedUsers,
-                          Files = from file in d.ContentList.OfType<FileUnit>()
-                                  select new FileUnitDto
-                                  {
-                                      Name = file.Name,
-                                      Description = file.Description,
-                                      Id = file.Id,
-                                      IsDeleted = file.IsDeleted
-                                  },
-                          Folders = from folder in d.ContentList.OfType<FolderUnit>()
-                                    select new FolderUnitDto
-                                    {
-                                        Name = folder.Name,
-                                        Description = folder.Description,
-                                        Id = folder.Id,
-                                        IsDeleted = folder.IsDeleted
-                                    }
-                      };
-            return dto;
+            var spacesList = await _unitOfWork.Spaces.Query.Select(s => new SpaceDto
+            {
+                Name = s.Name,
+                Description = s.Description,
+                MaxFileSize = s.MaxFileSize,
+                MaxFilesQuantity = s.MaxFilesQuantity,
+                ReadPermittedUsers = s.ReadPermittedUsers,
+                Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null).Select(f => new FileUnitDto
+                {
+                    Description = f.Description,
+                    FyleType = f.FileType,
+                    Id = f.Id,
+                    IsDeleted = f.IsDeleted,
+                    Name = f.Name
+                }),
+                Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.Parent == null).Select(f => new FolderUnitDto
+                {
+                    Id = f.Id,
+                    Name = f.Name,
+                    Description = f.Description,
+                    CreatedAt = f.CreatedAt,
+                    LastModified = f.LastModified,
+                    IsDeleted = f.IsDeleted
+                })
+            }).ToListAsync();
+            return spacesList;
         }
 
         public async Task CreateAsync(SpaceDto dto)

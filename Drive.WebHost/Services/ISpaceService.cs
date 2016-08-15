@@ -10,7 +10,7 @@ namespace Drive.WebHost.Services
 {
     public interface ISpaceService
     {
-        Task<IEnumerable<SpaceDto>> GetAllAsync();
+        Task<IList<SpaceDto>> GetAllAsync();
 
         Task<SpaceDto> GetAsync(int id);
 
