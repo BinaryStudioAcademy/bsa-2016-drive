@@ -5,10 +5,13 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web.Http;
+using System.Web.Mvc;
+using Drive.WebHost.Controllers;
 
 namespace Drive.WebHost.Api
 {
-    [RoutePrefix("api/error")]
+    [HandleError]
+    [System.Web.Http.RoutePrefix("api/error")]
     public class ErrorController : ApiController
     {
         public HttpResponseMessage Get()
