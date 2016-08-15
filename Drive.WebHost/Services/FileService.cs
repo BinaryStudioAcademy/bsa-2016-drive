@@ -64,6 +64,7 @@ namespace Drive.WebHost.Services
             _unitOfWork.Files.Create(file);
             await _unitOfWork.SaveChangesAsync();
 
+            dto.Id = file.Space.Owner.Id;
             return file.Id;
         }
 
