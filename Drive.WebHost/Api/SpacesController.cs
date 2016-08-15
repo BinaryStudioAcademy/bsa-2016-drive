@@ -43,8 +43,8 @@ namespace Drive.WebHost.Api
         [HttpPost]
         public async Task<IHttpActionResult> CreateSpace(SpaceDto space)
         {
-            await _spaceService.CreateAsync(space);
-            return Ok();
+            int id = await _spaceService.CreateAsync(space);
+            return Ok(id);
         }
 
         [HttpDelete]

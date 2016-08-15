@@ -82,7 +82,7 @@ namespace Drive.WebHost.Services
             return dto;
         }
 
-        public async Task CreateAsync(SpaceDto dto)
+        public async Task<int> CreateAsync(SpaceDto dto)
         {
             var space = new Space
             {
@@ -97,6 +97,7 @@ namespace Drive.WebHost.Services
             };
             _unitOfWork.Spaces.Create(space);
             await _unitOfWork.SaveChangesAsync();
+            return space.Id;
         }
 
         public async Task UpdateAsync(int id, SpaceDto dto)
