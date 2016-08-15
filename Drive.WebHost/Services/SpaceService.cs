@@ -23,10 +23,10 @@ namespace Drive.WebHost.Services
 
         public async Task<SpaceDto> GetAsync(int id)
         {
-            var data = await _unitOfWork.Spaces.GetByIdAsync(id);
+            var data = await _unitOfWork?.Spaces?.GetByIdAsync(id);
             //to replace!!! with contentlist
-            var folders = await _unitOfWork.Folders.Query.Where(x => x.Space.Id == data.Id).Cast<DataUnit>().ToListAsync();
-            var files = await _unitOfWork.Files.Query.Where(x => x.Space.Id == data.Id).Cast<DataUnit>().ToListAsync();
+            var folders = await _unitOfWork?.Folders.Query.Where(x => x.Space.Id == data.Id).Cast<DataUnit>().ToListAsync();
+            var files = await _unitOfWork?.Files.Query.Where(x => x.Space.Id == data.Id).Cast<DataUnit>().ToListAsync();
             return new SpaceDto
             {
                 Name = data.Name,
@@ -55,7 +55,7 @@ namespace Drive.WebHost.Services
 
         public async Task<IEnumerable<SpaceDto>> GetAllAsync()
         {
-            var data = await _unitOfWork.Spaces.GetAllAsync();
+            var data = await _unitOfWork?.Spaces?.GetAllAsync();
 
             var dto = from d in data
                       select new SpaceDto
@@ -98,14 +98,14 @@ namespace Drive.WebHost.Services
                 LastModified = DateTime.Now,
                 IsDeleted = false
             };
-            _unitOfWork.Spaces.Create(space);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork?.Spaces?.Create(space);
+            await _unitOfWork?.SaveChangesAsync();
             return space.Id;
         }
 
         public async Task UpdateAsync(int id, SpaceDto dto)
         {
-            var space = await _unitOfWork.Spaces.GetByIdAsync(id);
+            var space = await _unitOfWork?.Spaces?.GetByIdAsync(id);
 
             space.Name = dto.Name;
             space.Description = dto.Description;
@@ -114,18 +114,18 @@ namespace Drive.WebHost.Services
             space.ReadPermittedUsers = dto.ReadPermittedUsers;
             space.LastModified = DateTime.Now;
 
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork?.SaveChangesAsync();
         }
 
         public async Task Delete(int id)
         {
-            _unitOfWork.Spaces.Delete(id);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork?.Spaces?.Delete(id);
+            await _unitOfWork?.SaveChangesAsync();
         }
 
         public void Dispose()
         {
-            _unitOfWork.Dispose();
+            _unitOfWork?.Dispose();
         }
     }
 }

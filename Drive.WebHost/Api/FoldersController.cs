@@ -25,12 +25,10 @@ namespace Drive.WebHost.Api
         // GET api/folders
         public async Task<IHttpActionResult> GetAllAsync()
         {
-            var data = await _service.GetAllAsync();
+            var data = await _service?.GetAllAsync();
 
             if (data == null)
-            {
                 return NotFound();
-            }
 
             return Ok(data);
         }
@@ -38,12 +36,10 @@ namespace Drive.WebHost.Api
         // GET api/folders/1
         public async Task<IHttpActionResult> GetAsync(int id)
         {
-            var folder = await _service.GetAsync(id);
+            var folder = await _service?.GetAsync(id);
 
             if (folder == null)
-            {
                 return NotFound();
-            }
 
             return Ok(folder);
         }
@@ -52,7 +48,7 @@ namespace Drive.WebHost.Api
         [HttpPost]
         public async Task<IHttpActionResult> CreateAsync(FolderUnitDto folder)
         {
-            var dto = await _service.CreateAsync(folder);
+            var dto = await _service?.CreateAsync(folder);
 
             return Ok(dto);
         }
@@ -61,9 +57,9 @@ namespace Drive.WebHost.Api
         [HttpPut]
         public async Task<IHttpActionResult> UpdateAsync(int id, FolderUnitDto folder)
         {
-            var dto = await _service.UpdateAsync(id, folder);
+            var dto = await _service?.UpdateAsync(id, folder);
 
-            if (id != folder.Id)
+            if (id != folder?.Id)
             {
                 return BadRequest();
             }
@@ -75,7 +71,7 @@ namespace Drive.WebHost.Api
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteAsync(int id)
         {
-            await _service.DeleteAsync(id);
+            await _service?.DeleteAsync(id);
 
             return Ok();
         }

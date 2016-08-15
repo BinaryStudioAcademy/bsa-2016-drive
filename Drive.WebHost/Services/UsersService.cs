@@ -18,23 +18,22 @@ namespace Drive.WebHost.Services
         {
             _unitOfWork = unitOfWork;
             _userProvider = userProvider;
-
         }
 
         public async Task<UserDto> GetAsync(int id)
         {
-            var user = await _unitOfWork.Users.GetByIdAsync(id);
-            return await _userProvider.GetByIdAsync(user.GlobalId);
+            var user = await _unitOfWork?.Users?.GetByIdAsync(id);
+            return await _userProvider?.GetByIdAsync(user?.GlobalId);
         }
 
         public async Task<IEnumerable<UserDto>> GetAllAsync()
         {
-            return await _userProvider.GetAsync();
+            return await _userProvider?.GetAsync();
         }
 
         public void Dispose()
         {
-            _unitOfWork.Dispose();
+            _unitOfWork?.Dispose();
         }
     }
 }

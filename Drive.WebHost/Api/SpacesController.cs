@@ -21,7 +21,7 @@ namespace Drive.WebHost.Api
         [HttpGet]
         public async Task<IHttpActionResult> GetAllAsync()
         {
-            var result = await _spaceService.GetAllAsync();
+            var result = await _spaceService?.GetAllAsync();
 
             if (result == null)
                 return NotFound();
@@ -32,7 +32,7 @@ namespace Drive.WebHost.Api
         [HttpGet]
         public async Task<IHttpActionResult> GetSpace(int id)
         {
-            var result = await _spaceService.GetAsync(id);
+            var result = await _spaceService?.GetAsync(id);
 
             if (result == null)
                 return NotFound();
@@ -43,26 +43,26 @@ namespace Drive.WebHost.Api
         [HttpPost]
         public async Task<IHttpActionResult> CreateSpace(SpaceDto space)
         {
-            int id = await _spaceService.CreateAsync(space);
+            int id = await _spaceService?.CreateAsync(space);
             return Ok(id);
         }
 
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteSpace(int id)
         {
-            var result = await _spaceService.GetAsync(id);
+            var result = await _spaceService?.GetAsync(id);
 
             if(result == null)
                return NotFound();
 
-            await _spaceService.Delete(id);
+            await _spaceService?.Delete(id);
             return Ok();
         }
 
         [HttpPut]
         public async Task<IHttpActionResult> UpdateSpace(int id, SpaceDto space)
         {
-            await _spaceService.UpdateAsync(id, space);
+            await _spaceService?.UpdateAsync(id, space);
             return Ok();
         }
     }

@@ -19,7 +19,7 @@ namespace Drive.WebHost.Services
 
         public async Task<LogUnit> GetAsync(int id)
         {
-            var data = await _unitOfWork.Logs.GetByIdAsync(id);
+            var data = await _unitOfWork?.Logs?.GetByIdAsync(id);
             
             return new LogUnit
             {
@@ -34,7 +34,7 @@ namespace Drive.WebHost.Services
 
         public async Task<IEnumerable<LogUnit>> GetAllAsync()
         {
-            var data = await _unitOfWork.Logs.GetAllAsync();
+            var data = await _unitOfWork?.Logs?.GetAllAsync();
             
             var dto = from d in data
                 select new LogUnit()
@@ -51,13 +51,13 @@ namespace Drive.WebHost.Services
 
         public async Task DeleteAsync(int id)
         {
-            _unitOfWork.Logs.Delete(id);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork?.Logs?.Delete(id);
+            await _unitOfWork?.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<LogUnit>> SortSearchAsync(string sortOrder, string searchStr)
         {
-            var data = await _unitOfWork.Logs.GetAllAsync();
+            var data = await _unitOfWork?.Logs?.GetAllAsync();
 
             var dto = from d in data
                       select new LogUnit()
@@ -105,7 +105,7 @@ namespace Drive.WebHost.Services
 
         public async Task<IEnumerable<LogUnit>> FromToAsync(int from, int to)
         {
-            var data = await _unitOfWork.Logs.GetAllAsync();
+            var data = await _unitOfWork?.Logs?.GetAllAsync();
 
             var dto = (from d in data                                        
                       select new LogUnit()
@@ -125,7 +125,7 @@ namespace Drive.WebHost.Services
 
         public void Dispose()
         {
-            _unitOfWork.Dispose();
+            _unitOfWork?.Dispose();
         }
     }
 }

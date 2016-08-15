@@ -20,7 +20,7 @@ namespace Drive.WebHost.Services
 
         public async Task<IEnumerable<FolderUnitDto>> GetAllAsync()
         {
-            var folders = await _unitOfWork.Folders.GetAllAsync();
+            var folders = await _unitOfWork?.Folders?.GetAllAsync();
 
             if (folders == null)
                 return null;
@@ -41,7 +41,7 @@ namespace Drive.WebHost.Services
 
         public async Task<FolderUnitDto> GetAsync(int id)
         {
-            var folder = await _unitOfWork.Folders.GetByIdAsync(id);
+            var folder = await _unitOfWork?.Folders?.GetByIdAsync(id);
 
             if (folder == null)
                 return null;
@@ -69,8 +69,8 @@ namespace Drive.WebHost.Services
                 IsDeleted = false
             };
 
-            _unitOfWork.Folders.Create(folder);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork?.Folders?.Create(folder);
+            await _unitOfWork?.SaveChangesAsync();
 
             dto.Id = folder.Id;
             dto.CreatedAt = folder.CreatedAt;
@@ -88,7 +88,7 @@ namespace Drive.WebHost.Services
             folder.Name = dto.Name;
             folder.LastModified = DateTime.Now;
 
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork?.SaveChangesAsync();
 
             dto.LastModified = DateTime.Now;
 
@@ -97,13 +97,13 @@ namespace Drive.WebHost.Services
 
         public async Task DeleteAsync(int id)
         {
-            _unitOfWork.Folders.Delete(id);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork?.Folders?.Delete(id);
+            await _unitOfWork?.SaveChangesAsync();
         }
 
         public void Dispose()
         {
-            _unitOfWork.Dispose();
+            _unitOfWork?.Dispose();
         }
     }
 }
