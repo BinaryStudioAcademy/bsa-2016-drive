@@ -127,31 +127,29 @@ namespace Drive.WebHost.Services
             IEnumerable<FileUnitDto> resultFiles = new List<FileUnitDto>();
             try
             {
-                var space = await _unitOfWork.Spaces.Query
-                    .Where(s => s.Id == spaceId)
-                    .Select(s => new
-                    {
-                        Folders = s.ContentList.OfType<FolderUnit>(),
-                        Files = s.ContentList.OfType<FileUnit>()
-                    }).SingleOrDefaultAsync();
-                if (space == null)
-                    return null;
                 if (folderId != null)
                 {
-                    var folder = space.Folders.SingleOrDefault(f => f.Id == folderId);
+                    var folder = await _unitOfWork.Folders.Query.Where(f => f.Id == folderId)
+                        .Select(s => new
+                        {
+                            Folders = s.DataUnits.OfType<FolderUnit>(),
+                            Files = s.DataUnits.OfType<FileUnit>()
+                        }).SingleOrDefaultAsync();
                     if (folder == null)
                         return null;
-                    resultFolder = folder.DataUnits.OfType<FolderUnit>()
+                    resultFolder = folder.Folders
                         .Where(f => f.Name.ToLower().Contains(text.ToLower()))
                         .Select(f => new FolderUnitDto()
                         {
                             Id = f.Id,
                             Name = f.Name,
                             Description = f.Description,
-                            IsDeleted = f.IsDeleted
+                            IsDeleted = f.IsDeleted,
+                            CreatedAt = f.CreatedAt,
+                            LastModified = f.LastModified
                         });
 
-                    resultFiles = folder.DataUnits.OfType<FileUnit>()
+                    resultFiles = folder.Files
                         .Where(f => f.Name.ToLower().Contains(text.ToLower()))
                         .Select(f => new FileUnitDto
                         {
@@ -164,6 +162,15 @@ namespace Drive.WebHost.Services
                 }
                 else
                 {
+                    var space = await _unitOfWork.Spaces.Query
+                        .Where(s => s.Id == spaceId)
+                        .Select(s => new
+                        {
+                            Folders = s.ContentList.OfType<FolderUnit>().Where(f=>f.Parent==null),
+                            Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null)
+                        }).SingleOrDefaultAsync();
+                    if (space == null)
+                        return null;
                     resultFolder = space.Folders
                         .Where(f => f.Name.ToLower().Contains(text.ToLower()))
                         .Select(f => new FolderUnitDto()
@@ -171,7 +178,9 @@ namespace Drive.WebHost.Services
                             Id = f.Id,
                             Name = f.Name,
                             Description = f.Description,
-                            IsDeleted = f.IsDeleted
+                            IsDeleted = f.IsDeleted,
+                            CreatedAt = f.CreatedAt,
+                            LastModified = f.LastModified
                         });
                     resultFiles = space.Files
                         .Where(f => f.Name.ToLower().Contains(text.ToLower()))
@@ -211,36 +220,37 @@ namespace Drive.WebHost.Services
             int counter = 0;
             try
             {
-                var space = await _unitOfWork.Spaces.Query
-                    .Where(s => s.Id == spaceId)
-                    .Select(s => new
-                    {
-                        Folders = s.ContentList.OfType<FolderUnit>(),
-                        Files = s.ContentList.OfType<FileUnit>()
-                    }).SingleOrDefaultAsync();
-                if (space == null)
-                    return 0;
                 if (folderId != null)
                 {
-                    var folder = space.Folders.SingleOrDefault(f => f.Id == folderId);
+                    var folder = await _unitOfWork.Folders.Query.Where(f => f.Id == folderId)
+                        .Select(s => new
+                        {
+                            Folders = s.DataUnits.OfType<FolderUnit>(),
+                            Files = s.DataUnits.OfType<FileUnit>()
+                        }).SingleOrDefaultAsync();
                     if (folder == null)
                         return 0;
-                    counter += folder.DataUnits.OfType<FolderUnit>()
-                        .Where(f => f.Name.ToLower().Contains(text.ToLower()))
-                        .Count();
+                    counter += folder.Folders
+                        .Count(f => f.Name.ToLower().Contains(text.ToLower()));
 
-                    counter += folder.DataUnits.OfType<FileUnit>()
-                        .Where(f => f.Name.ToLower().Contains(text.ToLower()))
-                        .Count();
+                    counter += folder.Files
+                        .Count(f => f.Name.ToLower().Contains(text.ToLower()));
                 }
                 else
                 {
+                    var space = await _unitOfWork.Spaces.Query
+                        .Where(s => s.Id == spaceId)
+                        .Select(s => new
+                        {
+                            Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.Parent == null),
+                            Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null)
+                        }).SingleOrDefaultAsync();
+                    if (space == null)
+                        return 0;
                     counter += space.Folders
-                        .Where(f => f.Name.ToLower().Contains(text.ToLower()))
-                        .Count();
+                        .Count(f => f.Name.ToLower().Contains(text.ToLower()));
                     counter += space.Files
-                        .Where(f => f.Name.ToLower().Contains(text.ToLower()))
-                        .Count();
+                        .Count(f => f.Name.ToLower().Contains(text.ToLower()));
                 }
             }
             catch (Exception ex)
