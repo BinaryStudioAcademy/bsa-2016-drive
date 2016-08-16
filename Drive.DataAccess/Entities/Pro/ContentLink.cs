@@ -13,9 +13,6 @@ namespace Drive.DataAccess.Entities.Pro
 
         public string Link { get; set; }
         public LinkType LinkType { get; set; }
-
-        public IList<Tag> Tags { get; set; }
-        public IList<CodeSample> CodeSamples { get; set; }
     }
 
     public enum LinkType

@@ -4,7 +4,7 @@ using Drive.DataAccess.Interfaces;
 
 namespace Drive.DataAccess.Entities.Pro
 {
-    public class Course : IEntity
+    public class AcademyProCourse : IEntity
     {
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
@@ -15,6 +15,8 @@ namespace Drive.DataAccess.Entities.Pro
         public DateTime StartDate { get; set; }
 
         public IList<Lecture> Lectures { get; set; }
+
+        public FileUnit FileUnit { get; set; }
 
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
