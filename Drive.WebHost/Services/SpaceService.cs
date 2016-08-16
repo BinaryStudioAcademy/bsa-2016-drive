@@ -98,14 +98,16 @@ namespace Drive.WebHost.Services
                 LastModified = DateTime.Now,
                 IsDeleted = false
             };
-            _unitOfWork.Spaces.Create(space);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork?.Spaces?.Create(space);
+            await _unitOfWork?.SaveChangesAsync();
             return space.Id;
         }
 
         public async Task UpdateAsync(int id, SpaceDto dto)
         {
-            var space = await _unitOfWork.Spaces.GetByIdAsync(id);
+            var space = await _unitOfWork?.Spaces?.GetByIdAsync(id);
+
+            if (space == null) return;
 
             space.Name = dto.Name;
             space.Description = dto.Description;
@@ -114,13 +116,13 @@ namespace Drive.WebHost.Services
             space.ReadPermittedUsers = dto.ReadPermittedUsers;
             space.LastModified = DateTime.Now;
 
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork?.SaveChangesAsync();
         }
 
         public async Task Delete(int id)
         {
-            _unitOfWork.Spaces.Delete(id);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork?.Spaces?.Delete(id);
+            await _unitOfWork?.SaveChangesAsync();
         }
 
 
@@ -265,7 +267,7 @@ namespace Drive.WebHost.Services
 
         public void Dispose()
         {
-            _unitOfWork.Dispose();
+            _unitOfWork?.Dispose();
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Drive.WebHost.Services
 
         public async Task<IEnumerable<FileUnitDto>> GetAllAsync()
         {
-            var data = await _unitOfWork.Files.GetAllAsync();
+            var data = await _unitOfWork?.Files?.GetAllAsync();
 
             if (data != null)
             {
@@ -43,7 +43,7 @@ namespace Drive.WebHost.Services
 
         public async Task<FileUnitDto> GetAsync(int id)
         {
-            var file = await _unitOfWork.Files.GetByIdAsync(id);
+            var file = await _unitOfWork?.Files?.GetByIdAsync(id);
 
             if (file != null)
             {
@@ -63,8 +63,8 @@ namespace Drive.WebHost.Services
 
         public async Task<FileUnitDto> CreateAsync(FileUnitDto dto)
         {
-            var space = await _unitOfWork.Spaces.GetByIdAsync(dto.SpaceId);
-            var parentFolder = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
+            var space = await _unitOfWork?.Spaces?.GetByIdAsync(dto.SpaceId);
+            var parentFolder = await _unitOfWork?.Folders.GetByIdAsync(dto.ParentId);
 
             if (space != null)
             {
@@ -83,8 +83,8 @@ namespace Drive.WebHost.Services
                 };
 
 
-                _unitOfWork.Files.Create(file);
-                await _unitOfWork.SaveChangesAsync();
+                _unitOfWork?.Files?.Create(file);
+                await _unitOfWork?.SaveChangesAsync();
 
                 dto.Id = file.Id;
                 dto.CreatedAt = file.CreatedAt;
@@ -97,7 +97,10 @@ namespace Drive.WebHost.Services
 
         public async Task<FileUnitDto> UpdateAsync(int id, FileUnitDto dto)
         {
-            var file = await _unitOfWork.Files.GetByIdAsync(id);
+            var file = await _unitOfWork?.Files?.GetByIdAsync(id);
+
+            if (file == null)
+                return null;
 
             file.Name = dto.Name;
             file.FileType = FileType.None;
@@ -107,20 +110,20 @@ namespace Drive.WebHost.Services
             file.Owner = dto.Owner;
             file.Link = dto.Link;
 
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork?.SaveChangesAsync();
 
             return dto;
         }
 
         public async Task DeleteAsync(int id)
         {
-            _unitOfWork.Files.Delete(id);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork?.Files?.Delete(id);
+            await _unitOfWork?.SaveChangesAsync();
         }
 
         public void Dispose()
         {
-            _unitOfWork.Dispose();
+            _unitOfWork?.Dispose();
         }
     }
 }

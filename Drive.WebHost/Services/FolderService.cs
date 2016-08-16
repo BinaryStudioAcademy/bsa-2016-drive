@@ -21,7 +21,7 @@ namespace Drive.WebHost.Services
 
         public async Task<IEnumerable<FolderUnitDto>> GetAllAsync()
         {
-            var folders = await _unitOfWork.Folders.GetAllAsync();
+            var folders = await _unitOfWork?.Folders?.GetAllAsync();
 
             if (folders == null)
                 return null;
@@ -43,7 +43,7 @@ namespace Drive.WebHost.Services
 
         public async Task<FolderUnitDto> GetAsync(int id)
         {
-            var folder = await _unitOfWork.Folders.GetByIdAsync(id);
+            var folder = await _unitOfWork?.Folders?.GetByIdAsync(id);
 
             if (folder == null)
                 return null;
@@ -62,11 +62,11 @@ namespace Drive.WebHost.Services
 
         public async Task<FolderUnitDto> CreateAsync(FolderUnitDto dto)
         {
-            var space = await _unitOfWork.Spaces.GetByIdAsync(dto.SpaceId);
-            var parentFolder = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
+            var space = await _unitOfWork?.Spaces?.GetByIdAsync(dto.SpaceId);
+            var parentFolder = await _unitOfWork?.Folders?.GetByIdAsync(dto.ParentId);
 
             if (space != null)
-            {
+            {               
                 var folder = new FolderUnit
                 {
                     Description = dto.Description,
@@ -79,8 +79,8 @@ namespace Drive.WebHost.Services
                     Parent = parentFolder
                 };
 
-                _unitOfWork.Folders.Create(folder);
-                await _unitOfWork.SaveChangesAsync();
+                _unitOfWork?.Folders?.Create(folder);
+                await _unitOfWork?.SaveChangesAsync();
 
                 dto.Id = folder.Id;
                 dto.CreatedAt = folder.CreatedAt;
@@ -93,14 +93,17 @@ namespace Drive.WebHost.Services
 
         public async Task<FolderUnitDto> UpdateAsync(int id, FolderUnitDto dto)
         {
-            var folder = await _unitOfWork.Folders.GetByIdAsync(id);
+            var folder = await _unitOfWork?.Folders?.GetByIdAsync(id);
+
+            if (folder == null)
+                return null;
 
             folder.Description = dto.Description;
             folder.IsDeleted = dto.IsDeleted;
             folder.Name = dto.Name;
             folder.LastModified = DateTime.Now;
 
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork?.SaveChangesAsync();
 
             dto.LastModified = DateTime.Now;
 
@@ -109,8 +112,8 @@ namespace Drive.WebHost.Services
 
         public async Task DeleteAsync(int id)
         {
-            _unitOfWork.Folders.Delete(id);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork?.Folders?.Delete(id);
+            await _unitOfWork?.SaveChangesAsync();
         }
 
         public async Task<FolderContentDto> GetContentAsync(int id)
@@ -143,7 +146,7 @@ namespace Drive.WebHost.Services
 
         public void Dispose()
         {
-            _unitOfWork.Dispose();
+            _unitOfWork?.Dispose();
         }
     }
 }

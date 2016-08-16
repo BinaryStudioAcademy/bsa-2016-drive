@@ -19,7 +19,7 @@ namespace Drive.WebHost.Api
         [HttpGet]
         public async Task<IHttpActionResult> GetAllAsync()
         {
-            var users = await _usersService.GetAllAsync();
+            var users = await _usersService?.GetAllAsync();
 
             if (users == null)
                 return NotFound();
@@ -30,7 +30,7 @@ namespace Drive.WebHost.Api
         [HttpGet]
         public async Task<IHttpActionResult> GetUserAsync(int id)
         {
-            var user = await _usersService.GetAsync(id);
+            var user = await _usersService?.GetAsync(id);
 
             if (user == null)
             {
