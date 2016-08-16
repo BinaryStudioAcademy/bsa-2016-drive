@@ -52,7 +52,8 @@ gulp.task("libs", function () {
       paths.bower + "massautocomplete.js",
       paths.bower + "ui-bootstrap.js",
       paths.bower + "dist/jquery.js",
-      paths.bower + "bootstrap.js"
+      paths.bower + "bootstrap.js",
+      paths.bower + "dirPagination.js"
     ])
 
         .pipe(concat("libs.js"))

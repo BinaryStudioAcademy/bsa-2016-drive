@@ -1,4 +1,4 @@
-﻿(function () {
+﻿(function() {
     'use strict';
 
     angular
@@ -13,45 +13,65 @@
             get: get,
             create: create,
             updateFolder: updateFolder,
-            deleteFolder : deleteFolder
+            deleteFolder: deleteFolder
         };
 
         function getAll(callBack) {
-            $http.get('api/folders').success(function (response) {
-                if (callBack)
-                    callBack(response);
-            });
+            $http.get('api/folders')
+                .then(function(response) {
+                        if (callBack) {
+                            callBack(response.data);
+                        }
+                    },
+                    function() {
+                        console.log('Error while getting folder!');
+                    });
         }
 
         function get(id, callBack) {
-            $http.get('api/folders/' + id).success(function (response) {
-                if (callBack)
-                    callBack(response);
-            });
+            $http.get('api/folders/' + id)
+                .then(function(response) {
+                        if (callBack) {
+                            callBack(response.data);
+                        }
+                    },
+                    function() {
+                        console.log('Error while getting folder!');
+                    });
         }
 
         function create(data, callBack) {
-            $http.post('api/folders', data).success(function (response) {
-                if (callBack)
-                    callBack(response);
-            });
+            $http.post('api/folders', data)
+                .then(function(response) {
+                        if (callBack) {
+                            callBack(response.data);
+                        }
+                    },
+                    function() {
+                        console.log('Error while getting folder!');
+                    });
         }
 
         function updateFolder(data, callback) {
-            $http.put('api/folders/' + data.id, data).success(function (response) {
-                    if (callback) {
-                        callback(response);
-                    }
-                });
+            $http.put('api/folders/' + data.id, data)
+                .then(function(response) {
+                        if (callback) {
+                            callback(response.data);
+                        }
+                    },
+                    function() {
+                        console.log('Error while getting folder!');
+                    });
         }
 
         function deleteFolder(id, callback) {
-            $http.delete('api/folders/'+ id)
-                .then(function (response) {
+            $http.delete('api/folders/' + id)
+                .then(function(response) {
                     if (callback)
                         callback(response);
                 });
         }
+
         return service;
     }
 })();

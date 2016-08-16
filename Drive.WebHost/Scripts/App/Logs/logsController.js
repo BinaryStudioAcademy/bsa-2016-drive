@@ -9,14 +9,14 @@
     function LogsController(logsService) {
         var vm = this;
         vm.logs = [];
-        //vm.logsRange = [];
         vm.sort = {
             sortType: 'Date',
             sortReverse: true
         }
-        vm.logsPerPage = 10;
-        vm.page = 1;
-
+        vm.paginate = {
+            currentPage: 1,
+            pageSize: 10
+        }
         activate();
 
         function activate() {
@@ -30,15 +30,5 @@
                     return vm.logs;
                 });
         }
-
-        //function logsRange() {
-        //    var startIndex = vm.page * vm.logsPerPage - (vm.logsPerPage - 1);
-        //    var endIndex = vm.page * vm.logsPerPage;
-        //    return logsService.getLogsRange(startIndex, endIndex)
-        //        .then(function(data) {
-        //            vm.logsRange = data;
-        //            return vm.logsRange;
-        //        });
-        //}
     }
 })();

@@ -41,9 +41,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto\AuthorDto.cs" />
     <Compile Include="Dto\FileUnitDto.cs" />
     <Compile Include="Dto\FolderUnitDto.cs" />
     <Compile Include="Dto\LogUnit.cs" />
+    <Compile Include="Dto\SearchResultDto.cs" />
     <Compile Include="Dto\SpaceDto.cs" />
     <Compile Include="Dto\UserDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

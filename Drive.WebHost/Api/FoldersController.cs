@@ -50,6 +50,10 @@ namespace Drive.WebHost.Api
         {
             var dto = await _service?.CreateAsync(folder);
 
+            if (dto == null)
+            {
+                return BadRequest();
+            }
             return Ok(dto);
         }
 
