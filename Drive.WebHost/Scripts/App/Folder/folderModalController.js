@@ -20,7 +20,6 @@
 
         function activate() {
             vm.folder = items;
-            console.log(vm.folder);
             if (vm.folder.id == undefined) {
                 vm.title = 'Create Folder';
             }

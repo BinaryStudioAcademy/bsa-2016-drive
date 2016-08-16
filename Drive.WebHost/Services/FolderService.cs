@@ -57,6 +57,8 @@ namespace Drive.WebHost.Services
         public async Task<FolderUnitDto> CreateAsync(FolderUnitDto dto)
         {
             var space = await _unitOfWork.Spaces.GetByIdAsync(dto.SpaceId);
+            var parentFolder = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
+
             var folder = new FolderUnit
             {
                 Description = dto.Description,
@@ -65,7 +67,8 @@ namespace Drive.WebHost.Services
                 CreatedAt = DateTime.Now,
                 LastModified = DateTime.Now,
                 IsDeleted = false,
-                Space = space
+                Space = space,
+                FolderUnit = parentFolder
             };
 
             _unitOfWork.Folders.Create(folder);
@@ -113,7 +116,7 @@ namespace Drive.WebHost.Services
                             Name = file.Name,
                             Description = file.Description,
                             Id = file.Id,
-                            IsDeleted = file.IsDeleted
+                            IsDeleted = file.IsDeleted,
                         },
                 Folders = from folder in folders
                           select new FolderUnitDto
