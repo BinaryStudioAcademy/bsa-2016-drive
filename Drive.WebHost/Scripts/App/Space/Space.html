@@ -56,7 +56,7 @@
                     <th class="type" style="width: 10%">Type</th>
                 </tr>
             </thead>
-            <tr ng-repeat="folder in spaceCtrl.space.folders" context-menu="spaceCtrl.folderMenuOptions">
+            <tr ng-repeat="folder in spaceCtrl.space.folders" context-menu="spaceCtrl.folderMenuOptions" ng-dblclick="spaceCtrl.getFolderContent(folder.id)">
                 <td><i class="fa fa-folder-o">&nbsp;</i>{{ folder.name }}</td>
                 <td>{{ folder.description }}</td>
                 <td>{{ folder.author.firstName }} {{ folder.author.lastName }}</td>

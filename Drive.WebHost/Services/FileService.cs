@@ -29,7 +29,8 @@ namespace Drive.WebHost.Services
                           FyleType = d.FileType,
                           Name = d.Name,
                           Link = d.Link,
-                          Description = d.Description
+                          Description = d.Description,
+                          SpaceId = d.Space.Id
                       };
 
             return dto;

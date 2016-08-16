@@ -22,29 +22,13 @@
         vm.getFolder = getFolder;
         vm.deleteFolder = deleteFolder;
         vm.openFolderWindow = openFolderWindow;
+        vm.getFolderContent = getFolderContent;
 
         vm.getFile = getFile;
         vm.deleteFile = deleteFile;
         vm.openFileWindow = openFileWindow;
 
         vm.findById = findById;
-
-        vm.folder = {
-            id: 0,
-            isDeleted: false,
-            name: '',
-            description: '',
-            createdAt: ''
-        };
-        vm.file = {
-            id: 0,
-            isDeleted: false,
-            name: '',
-            description: '',
-            createdAt: '',
-            fileType: 0
-        }
-
 
         activate();
 
@@ -247,6 +231,13 @@
             folderService.deleteFolder(id, function () {
                 var index = findById(vm.space.folders, id);
                 vm.space.folders.splice(index, 1);
+            });
+        }
+
+        function getFolderContent(id) {
+            folderService.getContent(id, function(data) {
+                vm.space.folders = data.folders;
+                vm.space.files = data.files;
             });
         }
 

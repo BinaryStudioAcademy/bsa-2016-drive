@@ -18,5 +18,6 @@ namespace Driver.Shared.Dto
         public DateTime LastModified { get; set; }
         public AuthorDto Author { get; set; }
         public int SpaceId { get; set; }
+        public int ParentId { get; set; }
     }
 }
