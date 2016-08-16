@@ -16,7 +16,7 @@
 
         vm.folderList = [];
         vm.addElem = addElem;
-
+        vm.deleteElems = deleteElems;
         vm.spaceId = 0;
         vm.parentId = 0;
 
@@ -262,8 +262,19 @@
             });
         }
 
-        function addElem(name) {
-            vm.folderList.push(name);
+        function addElem(folder) {
+            vm.folderList.push(folder);
+            console.log(vm.folderList);
+        }
+
+        function deleteElems(folder) {
+            console.log(folder);
+            for (var i = vm.folderList.length - 1; i > -1; i--) {
+                if (vm.folderList[i] === folder) {
+                    break;
+                }
+                vm.folderList.splice(i, 1);
+            }
         }
     }
 }());

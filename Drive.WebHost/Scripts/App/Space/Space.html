@@ -1,8 +1,8 @@
 ﻿<div class="container col-md-12">
     <br />
     <ol class="breadcrumb breadcrumb-arrow">
-        <li class="active"><a><i class="glyphicon glyphicon-home"></i>Space</a></li>
-        <li ng-repeat="item in spaceCtrl.folderList"><span>{{item}}</span></li>
+        <li class="active"><a><i class="glyphicon glyphicon-home" ng-click="spaceCtrl.activate()"></i>Space</a></li>
+        <li ng-repeat="item in spaceCtrl.folderList" ng-click="spaceCtrl.getFolderContent(item.id); spaceCtrl.deleteElems(item)"><span>{{item.name}}</span></li>
     </ol>
     <div class="row" style="margin:1em 0 1em 0">
         <div class="col-sm-1 pull-right">
@@ -27,7 +27,7 @@
     </div>
     <div class="wrapper" ng-show="spaceCtrl.showGrid" context-menu="spaceCtrl.createOption">
         <div class="masonry">
-            <div class="item btn-default" context-menu="spaceCtrl.folderMenuOptions" ng-repeat="folder in spaceCtrl.space.folders" title="Created {{ folder.createdAt | date : 'short' }}">
+            <div class="item btn-default" context-menu="spaceCtrl.folderMenuOptions" ng-repeat="folder in spaceCtrl.space.folders" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
                 <i class="fa fa-folder-o fa-5x"></i>
                 <br><span class="bold">Name: </span><span>{{ folder.name }}</span>
                 <br><span class="bold">Description: </span><span>{{ folder.description }}</span>
@@ -55,7 +55,7 @@
                     <th class="type" style="width: 10%">Type</th>
                 </tr>
             </thead>
-            <tr ng-repeat="folder in spaceCtrl.space.folders" context-menu="spaceCtrl.folderMenuOptions" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder.name)">
+            <tr ng-repeat="folder in spaceCtrl.space.folders" context-menu="spaceCtrl.folderMenuOptions" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
                 <td><i class="fa fa-folder-o">&nbsp;</i>{{ folder.name }}</td>
                 <td>{{ folder.description }}</td>
                 <td>{{ folder.author.firstName }} {{ folder.author.lastName }}</td>
