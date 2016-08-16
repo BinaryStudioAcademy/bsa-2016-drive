@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Data.Entity.Infrastructure.Annotations;
 using Drive.DataAccess.Entities;
 
 namespace Drive.DataAccess.Context
@@ -69,6 +66,11 @@ namespace Drive.DataAccess.Context
                         m.MapRightKey("RoleId");
                         m.ToTable("DataUnitRoleModifyPermissions");
                     });
+
+            modelBuilder.Entity<User>()
+                .Property(user => user.GlobalId)
+                .HasColumnAnnotation(
+                    IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute()));
 
             modelBuilder.Entity<User>()
                 .HasMany<Space>(s => s.ModifyPermissionSpaces)
