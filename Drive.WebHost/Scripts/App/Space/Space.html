@@ -1,9 +1,9 @@
 ﻿<div class="container col-md-12">
-    <br />
-    <ol class="breadcrumb breadcrumb-arrow">
-        <li class="active"><a><i class="glyphicon glyphicon-home" ng-click="spaceCtrl.activate()"></i>Space</a></li>
-        <li ng-repeat="item in spaceCtrl.folderList" ng-click="spaceCtrl.getFolderContent(item.id); spaceCtrl.deleteElems(item)"><span>{{item.name}}</span></li>
-    </ol>
+    <br/>
+    <div class="btn-group btn-breadcrumb">
+        <a href="#" class="btn btn-info" ng-click="spaceCtrl.activate()"><i class="glyphicon glyphicon-home"></i> Space</a>
+        <a ng-repeat="item in spaceCtrl.folderList" ng-click="spaceCtrl.getFolderContent(item.id); spaceCtrl.deleteElems(item)" class="btn btn-default">{{item.name}}</a>
+    </div>
     <div class="row" style="margin:1em 0 1em 0">
         <div class="col-sm-1 pull-right">
             <button class="btn btn-default" ng-click="spaceCtrl.changeView(spaceCtrl.view)">

@@ -132,102 +132,80 @@ textarea {
 }
 
 /*Breadcrumbs paths*/
-.breadcrumb-arrow {
-    height: 36px;
-    padding: 0;
-    line-height: 36px;
-    list-style: none;
-    background-color: #e6e9ed;
+.btn-breadcrumb .btn:not(:last-child):after {
+    content: " ";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 17px solid transparent;
+    border-bottom: 17px solid transparent;
+    border-left: 10px solid white;
+    position: absolute;
+    top: 50%;
+    margin-top: -17px;
+    left: 100%;
+    z-index: 3;
 }
 
-    .breadcrumb-arrow li:first-child a {
-        border-radius: 4px 0 0 4px;
-        -webkit-border-radius: 4px 0 0 4px;
-        -moz-border-radius: 4px 0 0 4px;
+.btn-breadcrumb .btn:not(:last-child):before {
+    content: " ";
+    display: block;
+    width: 0;
+    height: 0;
+    border-top: 17px solid transparent;
+    border-bottom: 17px solid transparent;
+    border-left: 10px solid rgb(173, 173, 173);
+    position: absolute;
+    top: 50%;
+    margin-top: -17px;
+    margin-left: 1px;
+    left: 100%;
+    z-index: 3;
+}
+
+/** The Spacing **/
+.btn-breadcrumb .btn {
+    padding: 6px 12px 6px 24px;
+}
+
+    .btn-breadcrumb .btn:first-child {
+        padding: 6px 6px 6px 10px;
     }
 
-    .breadcrumb-arrow li, .breadcrumb-arrow li a, .breadcrumb-arrow li span {
-        display: inline-block;
-        vertical-align: top;
+    .btn-breadcrumb .btn:last-child {
+        padding: 6px 18px 6px 24px;
     }
 
-        .breadcrumb-arrow li:not(:first-child) {
-            margin-left: -5px;
-        }
+    /** Default button **/
+    .btn-breadcrumb .btn.btn-default:not(:last-child):after {
+        border-left: 10px solid #fff;
+    }
 
-        .breadcrumb-arrow li + li:before {
-            padding: 0;
-            content: "";
-        }
+    .btn-breadcrumb .btn.btn-default:not(:last-child):before {
+        border-left: 10px solid #ccc;
+    }
 
-        .breadcrumb-arrow li span {
-            padding: 0 10px;
-        }
+    .btn-breadcrumb .btn.btn-default:hover:not(:last-child):after {
+        border-left: 10px solid #ebebeb;
+    }
 
-        .breadcrumb-arrow li a, .breadcrumb-arrow li:not(:first-child) span {
-            height: 36px;
-            padding: 0 10px 0 25px;
-            line-height: 36px;
-        }
+    .btn-breadcrumb .btn.btn-default:hover:not(:last-child):before {
+        border-left: 10px solid #adadad;
+    }
 
-        .breadcrumb-arrow li:first-child a {
-            padding: 0 10px;
-        }
+    /** Info button **/
+    .btn-breadcrumb .btn.btn-info:not(:last-child):after {
+        border-left: 10px solid #5bc0de;
+    }
 
-        .breadcrumb-arrow li a {
-            position: relative;
-            color: #fff;
-            text-decoration: none;
-            background-color: #3bafda;
-            border: 1px solid #3bafda;
-        }
+    .btn-breadcrumb .btn.btn-info:not(:last-child):before {
+        border-left: 10px solid #46b8da;
+    }
 
-        .breadcrumb-arrow li:first-child a {
-            padding-left: 10px;
-        }
+    .btn-breadcrumb .btn.btn-info:hover:not(:last-child):after {
+        border-left: 10px solid #39b3d7;
+    }
 
-        .breadcrumb-arrow li a:after, .breadcrumb-arrow li a:before {
-            position: absolute;
-            top: -1px;
-            width: 0;
-            height: 0;
-            content: '';
-            border-top: 18px solid transparent;
-            border-bottom: 18px solid transparent;
-        }
-
-        .breadcrumb-arrow li a:before {
-            right: -10px;
-            z-index: 3;
-            border-left-color: #3bafda;
-            border-left-style: solid;
-            border-left-width: 11px;
-        }
-
-        .breadcrumb-arrow li a:after {
-            right: -11px;
-            z-index: 2;
-            border-left: 11px solid #2494be;
-        }
-
-        .breadcrumb-arrow li a:focus, .breadcrumb-arrow li a:hover {
-            background-color: #4fc1e9;
-            border: 1px solid #4fc1e9;
-        }
-
-            .breadcrumb-arrow li a:focus:before, .breadcrumb-arrow li a:hover:before {
-                border-left-color: #4fc1e9;
-            }
-
-        .breadcrumb-arrow li a:active {
-            background-color: #2494be;
-            border: 1px solid #2494be;
-        }
-
-            .breadcrumb-arrow li a:active:after, .breadcrumb-arrow li a:active:before {
-                border-left-color: #2494be;
-            }
-
-        .breadcrumb-arrow li span {
-            color: #434a54;
-        }
+    .btn-breadcrumb .btn.btn-info:hover:not(:last-child):before {
+        border-left: 10px solid #269abc;
+    }
