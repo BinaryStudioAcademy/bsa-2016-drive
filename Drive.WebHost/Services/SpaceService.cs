@@ -46,7 +46,9 @@ namespace Drive.WebHost.Services
                     Description = f.Description,
                     CreatedAt = f.CreatedAt,
                     LastModified = f.LastModified,
-                    IsDeleted = f.IsDeleted
+                    IsDeleted = f.IsDeleted,
+                    SpaceId = f.Space.Id,
+                    ParentId = f.Parent.Id
                 })
             }).SingleOrDefaultAsync();
             return space;

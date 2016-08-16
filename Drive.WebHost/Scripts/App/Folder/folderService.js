@@ -13,7 +13,8 @@
             get: get,
             create: create,
             updateFolder: updateFolder,
-            deleteFolder: deleteFolder
+            deleteFolder: deleteFolder,
+            getContent: getContent
         };
 
         function getAll(callBack) {
@@ -72,6 +73,12 @@
                 });
         }
 
+        function getContent(id, callBack) {
+            $http.get('api/content/' + id).success(function (response) {
+                if (callBack)
+                    callBack(response);
+            });
+        }
         return service;
     }
 })();
