@@ -53,6 +53,7 @@
                 vm.spaceId = data.id;
             });
             vm.folderList = [];
+            vm.parentId = 0;
         }
 
         function changeView(view) {
