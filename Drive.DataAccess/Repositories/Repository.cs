@@ -119,9 +119,19 @@ namespace Drive.DataAccess.Repositories
             return Entities.Where(x=>x.IsDeleted == false).ToList();
         }
 
+        public IEnumerable<T> GetAllDeleted()
+        {
+            return Entities.Where(x => x.IsDeleted == true).ToList();
+        }
+
         public async Task<IEnumerable<T>> GetAllAsync()
         {
             return await Entities.Where(x=>x.IsDeleted == false).ToListAsync();
+        }
+
+        public async Task<IEnumerable<T>> GetAllDeletedAsync()
+        {
+            return await Entities.Where(x=>x.IsDeleted==true).ToArrayAsync();
         }
 
         protected IDbSet<T> Entities => _entities ?? (_entities = _context.Set<T>());
