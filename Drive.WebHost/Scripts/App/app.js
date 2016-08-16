@@ -1,5 +1,5 @@
 ﻿angular.module("driveApp",
-    ["ngRoute", "ui.bootstrap.contextMenu", "ui.bootstrap", "angularUtils.directives.dirPagination"])
+    ["ngRoute", "ui.bootstrap.contextMenu", "ui.bootstrap", "angularUtils.directives.dirPagination", "LocalStorageModule"])
     .config([
         "$routeProvider",
         function ($routeProvider) {

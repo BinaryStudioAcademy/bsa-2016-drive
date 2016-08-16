@@ -36,6 +36,8 @@
 
         vm.findById = findById;
 
+        vm.getSpace = getSpace;
+
         activate();
 
         function activate() {
@@ -43,6 +45,14 @@
                 vm.space = data;
                 vm.spaceId = data.id;
             });
+        }
+
+        function getSpace() {
+            spaceService.getSpace(1, function (data) {
+                vm.space = data;
+                vm.spaceId = data.id;
+            });
+            vm.folderList = [];
         }
 
         function changeView(view) {
@@ -264,11 +274,9 @@
 
         function addElem(folder) {
             vm.folderList.push(folder);
-            console.log(vm.folderList);
         }
 
         function deleteElems(folder) {
-            console.log(folder);
             for (var i = vm.folderList.length - 1; i > -1; i--) {
                 if (vm.folderList[i] === folder) {
                     break;
