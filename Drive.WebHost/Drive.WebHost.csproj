@@ -209,6 +209,8 @@
     <Content Include="gulpfile.js" />
     <Content Include="Scripts\App\Academy\Academy.html" />
     <Content Include="Scripts\App\Academy\academyController.js" />
+    <Content Include="Scripts\App\AdminPanel\AdminPanel.html" />
+    <Content Include="Scripts\App\AdminPanel\adminPanelController.js" />
     <Content Include="Scripts\App\Checklist\Checklist.html" />
     <Content Include="Scripts\App\Checklist\checklistController.js" />
     <Content Include="Scripts\App\Docs\Docs.html" />

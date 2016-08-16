@@ -100,12 +100,6 @@ textarea {
     width: 200px;
 }
 
-/*Footer on _Layout page*/
-.footer-margin {
-    margin-left: 190px;
-    overflow: hidden;
-}
-
 /*Ng-include on Index page*/
 .include-index {
     float: left;
@@ -116,7 +110,17 @@ textarea {
 
 /*Ng-view on Index page*/
 .view-index {
-    margin-left: 190px;
+    margin-left: 120px;
+    margin-right: 0%;
+    align-content: center;
+    overflow: hidden;
+}
+
+/*Footer on _Layout page*/
+.footer-margin {
+    margin-left: 120px;
+    margin-right: 0%;
+    align-content: center;
     overflow: hidden;
 }
 

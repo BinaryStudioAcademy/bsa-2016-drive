@@ -4,7 +4,7 @@
     angular.module("driveApp")
         .controller("MenuController", MenuController);
 
-    MenuController.$inject = ['MenuService', '$location',  '$uibModal'];
+    MenuController.$inject = ['MenuService', '$location', '$uibModal'];
 
     function MenuController(menuService, $location, $uibModal) {
 
@@ -12,84 +12,54 @@
 
         vm.redirectToBinarySpace = redirectToBinarySpace;
         vm.redirectToMySpace = redirectToMySpace;
+        vm.redirectToSpace = redirectToSpace;
         vm.redirectToSpaceSettings = redirectToSpaceSettings;
         vm.redirectToAddFile = redirectToAddFile;
         vm.redirectToNetSpace = redirectToNetSpace;
         vm.redirectToAdminPanel = redirectToAdminPanel;
-        vm.redirectToAcademyPro = redirectToAcademyPro;
-        vm.redirectToDocs = redirectToDocs;
-        vm.redirectToEvents = redirectToEvents;
-        vm.redirectToEmployees = redirectToEmployees;
-        vm.redirectToChecklist = redirectToChecklist;
-        vm.redirectToTrello = redirectToTrello;
-        vm.redirectToSheets = redirectToSheets;
-        vm.redirectToSlides = redirectToSlides;
-        vm.open = open;
-        vm.spaces = [];
+        vm.redirectToApps = redirectToApps;
         vm.getAllSpaces = getAllSpaces;
-        
+        vm.open = open;
+        vm.spaces = {};
+
         activate();
 
         function getAllSpaces() {
-            menuService.getAllSpaces(function (spaces) {
-                vm.spaces = spaces;
+            menuService.getAllSpaces(function (data) {
+                vm.spaces = data;
             });
         }
 
-        function redirectToBinarySpace(id) {
-            $location.url('/api/spaces/' + id);
+        function redirectToBinarySpace() {
+            $location.url("/binaryspace");
         };
 
-        function redirectToMySpace(id) {
-            $location.url('/api/spaces/' + id);
+        function redirectToMySpace() {
+            $location.url("/myspace");
         };
 
-        function redirectToSpaceSettings() {
-            $location.url('/settings/');
-        };
-
-        function redirectToAddFile() {
-            $location.url('api/files/');
+        function redirectToSpace(id) {
+            $location.url("/spaces/:id" + id);
         };
 
         function redirectToNetSpace() {
-            $location.url('api/netSpace/');
+            $location.url("/netspace");
         };
 
-        function redirectToDocs() {
-            $location.url('api/docs/');
+        function redirectToSpaceSettings(id) {
+            $location.url("/spaces/:" + id + "id/settings/");
         };
 
-        function redirectToAcademyPro() {
-            $location.url('/apps/academy');
+        function redirectToAddFile() {
+            $location.url("api/files/");
         };
 
-        function redirectToEvents() {
-            $location.url('/apps/events');
+        function redirectToApps(app) {
+            $location.url("/apps/" + app);
         };
 
         function redirectToAdminPanel() {
-            $location.url('api/adminPanel/');
-        };
-
-        function redirectToEmployees() {
-            $location.url('/apps/employees');
-        };
-
-        function redirectToChecklist() {
-            $location.url('/apps/checklist');
-        };
-
-        function redirectToTrello() {
-            $location.url('/apps/trello');
-        };
-
-        function redirectToSheets() {
-            $location.url('/apps/sheets');
-        };
-
-        function redirectToSlides() {
-            $location.url('/apps/slides');
+            $location.url("/AdminPanel");
         };
 
         //Open modal window for creating new space
@@ -113,7 +83,7 @@
         };
 
         function activate() {
-            //return getAllSpaces();
+            return getAllSpaces();
         }
     }
 }());

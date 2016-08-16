@@ -2,7 +2,7 @@
     ["ngRoute", "ui.bootstrap.contextMenu", "ui.bootstrap", "angularUtils.directives.dirPagination"])
     .config([
         "$routeProvider",
-        function($routeProvider) {
+        function ($routeProvider) {
 
             $routeProvider
                 .when("/", // Space page
@@ -11,19 +11,49 @@
                     controller: "SpaceController",
                     controllerAs: "spaceCtrl"
                 })
-                .when("/settings/", // Space settings Page
+                .when("/spaces/:id", // Space page
+                {
+                    templateUrl: "/Scripts/App/Space/Space.html",
+                    controller: "SpaceController",
+                    controllerAs: "spaceCtrl"
+                })
+                .when("/binaryspace", // Binary Space page
+                {
+                    templateUrl: "/Scripts/App/Space/Space.html",
+                    controller: "SpaceController",
+                    controllerAs: "spaceCtrl"
+                })
+                .when("/myspace", // My Space page
+                {
+                    templateUrl: "/Scripts/App/Space/Space.html",
+                    controller: "SpaceController",
+                    controllerAs: "spaceCtrl"
+                })
+                .when("/netspace", // .Net Space page
+                {
+                    templateUrl: "/Scripts/App/Space/Space.html",
+                    controller: "SpaceController",
+                    controllerAs: "spaceCtrl"
+                })
+                 .when("/spaces/:id/settings/", // Space settings Page
                 {
                     templateUrl: "/Scripts/App/Space/Settings.html",
                     controller: "SettingsController",
                     controllerAs: "settingsCtrl"
                 })
-                .when("/Logs", // Logs page
+                .when("/AdminPanel", // Admin Panel
+                {
+                    templateUrl: "/Scripts/App/AdminPanel/AdminPanel.html",
+                    controller: "adminPanelController",
+                    controllerAs: "adminCtrl"
+                })
+                .when("/AdminPanel/Logs", // Logs page
                 {
                     templateUrl: "/Scripts/App/Logs/Logs.html",
                     controller: "LogsController",
                     controllerAs: "logsCtrl"
                 })
-                .when("/Folders", // Folders page
+                .when("/folders", // Folders page
                 {
                     templateUrl: "/Scripts/App/Folder/Folder.html",
                     controller: "FolderController",

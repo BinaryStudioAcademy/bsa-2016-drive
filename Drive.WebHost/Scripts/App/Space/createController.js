@@ -25,24 +25,13 @@
             createService.getAllUsers(function (data) {
                 vm.users = data;
             });
-            
-            vm.Name = null;
-            vm.Description = null;
-            vm.MaxFilesQuantity = null;
-            vm.MaxFileSize = null;
-            vm.userAddName = null;
-            vm.userAddId = null;
+
         }
 
         function addNewSpace() {
-            if (vm.Name != null) {
-                vm.space.push({
-                    Name: vm.Name,
-                    Description: vm.Description,
-                    MaxFilesQuantity: vm.MaxFilesQuantity,
-                    MaxFileSize: vm.MaxFileSize
-                });
-                vm.Name = null;
+            if (vm.space.Name != null) {
+                createService.pushData(vm.space);
+                vm.spaceName = null;
                 vm.Description = null;
                 vm.MaxFilesQuantity = null;
                 vm.MaxFileSize = null;
@@ -68,8 +57,7 @@
 
         function removeSpaceUser(id) {
             for (var i = 0; i < vm.space.ReadPermittedUsers.length; i++) {
-                if (vm.space.ReadPermittedUsers[i].Id === id)
-                {
+                if (vm.space.ReadPermittedUsers[i].Id === id) {
                     vm.space.ReadPermittedUsers.splice(i, 1);
                     break;
                 }
@@ -82,7 +70,7 @@
         };
 
         function save() {
-            createService.pushData(vm.space);
+            vm.addNewSpace();
             $uibModalInstance.close();
         };
 
