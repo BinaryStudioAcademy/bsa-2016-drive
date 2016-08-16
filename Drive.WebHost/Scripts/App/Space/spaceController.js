@@ -14,6 +14,9 @@
         vm.showTable = true;
         vm.showGrid = false;
 
+        vm.folderList = [];
+        vm.addElem = addElem;
+
         vm.spaceId = 0;
         vm.parentId = 0;
 
@@ -257,6 +260,10 @@
                 var index = findById(vm.space.files, id);
                 vm.space.files.splice(index, 1);
             });
+        }
+
+        function addElem(name) {
+            vm.folderList.push(name);
         }
     }
 }());
