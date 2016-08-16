@@ -43,7 +43,8 @@ namespace Drive.WebHost.Services
                             Id = file.Id,
                             IsDeleted = file.IsDeleted,
                             FileType = file.FileType,
-                            Link = file.Link
+                            Link = file.Link,
+                            CreatedAt = file.CreatedAt
                         },
                 Folders = from folder in folders
                           select new FolderUnitDto

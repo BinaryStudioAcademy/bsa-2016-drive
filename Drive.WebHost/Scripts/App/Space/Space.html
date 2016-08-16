@@ -57,21 +57,21 @@
                 </tr>
             </thead>
             <tr ng-repeat="folder in spaceCtrl.space.folders" context-menu="spaceCtrl.folderMenuOptions" ng-dblclick="spaceCtrl.getFolderContent(folder.id)">
-                <td><i class="fa fa-folder-o">&nbsp;</i>{{ folder.name }}</td>
+                <td><i class="fa fa-folder-o">&nbsp;</i><label  class="dataUnit">{{ folder.name }}</label></td>
                 <td>{{ folder.description }}</td>
                 <td>{{ folder.author.firstName }} {{ folder.author.lastName }}</td>
-                <td>{{ folder.createdAt | date : 'short' }}</td>
+                <td>{{ folder.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
                 <td>Folder</td>
             </tr>
-            <tr ng-repeat="file in spaceCtrl.space.files" context-menu="spaceCtrl.fileMenuOptions">
+            <tr ng-repeat="file in spaceCtrl.space.files" context-menu="spaceCtrl.fileMenuOptions" >
                 <td>
                     <i class="fa fa-file-o">&nbsp;</i>
-                    <a ng-href="{{file.link}}" onclick="this.target='_blank';">{{ file.name }}</a>
+                    <a ng-href="{{file.link}}" onclick="this.target='_blank';" class="dataUnit">{{ file.name }}</a>
                 </td>
                 <td>{{ file.description }}</td>
                 <td>{{ file.author.firstName }} {{ file.author.lastName }}</td>
-                <td>{{ file.createdAt | date : 'short' }}</td>
-                <td>{{ file.fyleType | typeOfFile }}</td>
+                <td>{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
+                <td>{{ file.fileType | typeOfFile }}</td>
             </tr>
         </table>
     </div>
