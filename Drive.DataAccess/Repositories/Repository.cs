@@ -116,12 +116,12 @@ namespace Drive.DataAccess.Repositories
 
         public IEnumerable<T> GetAll()
         {
-            return Entities.ToList();
+            return Entities.Where(x=>x.IsDeleted == false).ToList();
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await Entities.ToListAsync();
+            return await Entities.Where(x=>x.IsDeleted == false).ToListAsync();
         }
 
         protected IDbSet<T> Entities => _entities ?? (_entities = _context.Set<T>());
