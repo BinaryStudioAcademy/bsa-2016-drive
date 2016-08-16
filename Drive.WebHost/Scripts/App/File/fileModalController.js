@@ -23,7 +23,7 @@
             vm.file = items;
             console.log(vm.file);
 
-            switch(vm.file.type) {
+            switch(vm.file.fileType) {
                 case 0:
                     vm.icon = "fa fa-file-o"; // Simple file
                     vm.title = 'Create file';

@@ -25,8 +25,8 @@ namespace Drive.WebHost.Services
         {
             var data = await _unitOfWork.Spaces.GetByIdAsync(id);
             //to replace!!! with contentlist
-            var folders = await _unitOfWork.Folders.Query.Where(x => x.Space.Id == data.Id).OfType<FolderUnit>().ToListAsync();
-            var files = await _unitOfWork.Files.Query.Where(x => x.Space.Id == data.Id).OfType<FileUnit>().ToListAsync();
+            var folders = await _unitOfWork.Folders.Query.OfType<FolderUnit>().Where(x => x.Space.Id == data.Id).ToListAsync();
+            var files = await _unitOfWork.Files.Query.OfType<FileUnit>().Where(x => x.Space.Id == data.Id).ToListAsync();
             return new SpaceDto
             {
                 Id = data.Id,
@@ -41,7 +41,9 @@ namespace Drive.WebHost.Services
                             Name = file.Name,
                             Description = file.Description,
                             Id = file.Id,
-                            IsDeleted = file.IsDeleted
+                            IsDeleted = file.IsDeleted,
+                            FileType = file.FileType,
+                            Link = file.Link
                         },
                 Folders = from folder in folders
                           select new FolderUnitDto

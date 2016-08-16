@@ -26,7 +26,7 @@ namespace Drive.WebHost.Services
                       {
                           Id = d.Id,
                           IsDeleted = d.IsDeleted,
-                          FyleType = d.FileType,
+                          FileType = d.FileType,
                           Name = d.Name,
                           Link = d.Link,
                           Description = d.Description,
@@ -44,7 +44,7 @@ namespace Drive.WebHost.Services
             {
                 Id = file.Id,
                 IsDeleted = file.IsDeleted,
-                FyleType = file.FileType,
+                FileType = file.FileType,
                 Name = file.Name,
                 Description = file.Description,
                 Link = file.Link
@@ -58,7 +58,7 @@ namespace Drive.WebHost.Services
             {
                 Name = dto.Name,
                 Link = dto.Link,
-                FileType = FileType.None,
+                FileType = dto.FileType,
                 Description = dto.Description,
 
                 CreatedAt = DateTime.Now,
@@ -83,7 +83,7 @@ namespace Drive.WebHost.Services
             var file = await _unitOfWork.Files.GetByIdAsync(id);
 
             file.Name = dto.Name;
-            file.FileType = FileType.None;
+            file.FileType = dto.FileType;
             file.Description = dto.Description;
             file.IsDeleted = dto.IsDeleted;
             file.LastModified = DateTime.Now;

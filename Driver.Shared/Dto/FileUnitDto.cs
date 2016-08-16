@@ -7,7 +7,7 @@ namespace Driver.Shared.Dto
     {
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
-        public FileType FyleType { get; set; }
+        public FileType FileType { get; set; }
         public string Name { get; set; }
         public string Link { get; set; }
         public string Description { get; set; }

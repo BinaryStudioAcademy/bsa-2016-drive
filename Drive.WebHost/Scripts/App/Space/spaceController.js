@@ -100,7 +100,7 @@
         vm.createOption = [
             [
                 'Create folder', function () {
-                    vm.folder = {};
+                    vm.folder = { spaceId: vm.space.id };
                     vm.openFolderWindow();
                 }
             ],
@@ -110,37 +110,37 @@
                 [
                     [
                         'Document', function () {
-                            vm.file = {type: 1};
+                            vm.file = {spaceId: vm.space.id, fileType: 1};
                             vm.openFileWindow();
                         }
                     ],
                     [
                         'Sheets', function ($itemScope) {
-                            vm.file = {type: 2};
+                            vm.file = {spaceId: vm.space.id, fileType: 2};
                             vm.openFileWindow();
                         }
                     ],
                     [
                         'Slides', function ($itemScope) {
-                            vm.file = {type: 3};
+                            vm.file = {spaceId: vm.space.id, fileType: 3};
                             vm.openFileWindow();
                         }
                     ],
                     [
                         'Trello', function ($itemScope) {
-                            vm.file = {type: 4};
+                            vm.file = {spaceId: vm.space.id, fileType: 4};
                             vm.openFileWindow();
                         }
                     ],
                     [
                         'Link', function ($itemScope) {
-                            vm.file = {type: 5};
+                            vm.file = {spaceId: vm.space.id, fileType: 5};
                             vm.openFileWindow();
                         }
                     ],
                     [
                         'Upload file', function ($itemScope) {
-                            vm.file = {type: 6};
+                            vm.file = {spaceId: vm.space.id, fileType: 6};
                             vm.openFileWindow();
                         }
                     ]
