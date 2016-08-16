@@ -57,14 +57,14 @@
                 </tr>
             </thead>
             <tr ng-repeat="folder in spaceCtrl.space.folders" context-menu="spaceCtrl.folderMenuOptions">
-                <td>{{ folder.name }}</td>
+                <td><i class="fa fa-folder-o">&nbsp;</i>{{ folder.name }}</td>
                 <td>{{ folder.description }}</td>
                 <td>{{ folder.author.firstName }} {{ folder.author.lastName }}</td>
                 <td>{{ folder.createdAt | date : 'short' }}</td>
                 <td>Folder</td>
             </tr>
             <tr ng-repeat="file in spaceCtrl.space.files" context-menu="spaceCtrl.fileMenuOptions">
-                <td>{{ file.name }}</td>
+                <td><i class="fa fa-file-o">&nbsp;</i>{{ file.name }}</td>
                 <td>{{ file.description }}</td>
                 <td>{{ file.author.firstName }} {{ file.author.lastName }}</td>
                 <td>{{ file.createdAt | date : 'short' }}</td>

@@ -42,7 +42,7 @@
             name: '',
             description: '',
             createdAt: '',
-            fileType:0
+            fileType: 0
         }
 
 
@@ -95,38 +95,68 @@
         ];
 
         vm.fileMenuOptions = [
-    [
-        'Share', function ($itemScope) {
-            console.log($itemScope.file.id);
-        }
-    ],
-    [
-        'Edit', function ($itemScope) {
-            vm.file = $itemScope.file;
-            vm.openFileWindow();
-        }
-    ],
-    [
-        'Delete', function ($itemScope) {
-            return deleteFile($itemScope.file.id);
-        }
-    ]
+            [
+                'Share', function ($itemScope) {
+                    console.log($itemScope.file.id);
+                }
+            ],
+            [
+                'Edit', function ($itemScope) {
+                    vm.file = $itemScope.file;
+                    vm.openFileWindow();
+                }
+            ],
+            [
+                'Delete', function ($itemScope) {
+                    return deleteFile($itemScope.file.id);
+                }
+            ]
         ];
 
         vm.createOption = [
             [
-                'Create', function ($itemScope) {
+                'Create folder', function () {
+                    vm.folder = {};
+                    vm.openFolderWindow();
+                }
+            ],
+            [
+                'Create file', function ($itemScope) {
                 },
                 [
                     [
-                        'Folder', function () {
-                            vm.folder = {};
-                            vm.openFolderWindow();
+                        'Document', function () {
+                            vm.file = {type: 1};
+                            vm.openFileWindow();
                         }
                     ],
                     [
-                        'File', function ($itemScope) {
-                            vm.file = {};
+                        'Sheets', function ($itemScope) {
+                            vm.file = {type: 2};
+                            vm.openFileWindow();
+                        }
+                    ],
+                    [
+                        'Slides', function ($itemScope) {
+                            vm.file = {type: 3};
+                            vm.openFileWindow();
+                        }
+                    ],
+                    [
+                        'Trello', function ($itemScope) {
+                            vm.file = {type: 4};
+                            vm.openFileWindow();
+                        }
+                    ],
+                    [
+                        'Link', function ($itemScope) {
+                            vm.file = {type: 5};
+                            vm.openFileWindow();
+                        }
+                    ],
+                    [
+                        'Upload file', function ($itemScope) {
+                            vm.file = {type: 6};
                             vm.openFileWindow();
                         }
                     ]
@@ -173,7 +203,7 @@
                 controllerAs: 'fileModalCtrl',
                 size: size,
                 resolve: {
-                    items: function() {
+                    items: function () {
                         return vm.file;
                     }
                 }
@@ -233,4 +263,4 @@
             });
         }
     }
- }());
+}());
