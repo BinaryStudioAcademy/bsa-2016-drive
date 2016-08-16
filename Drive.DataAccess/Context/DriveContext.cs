@@ -2,6 +2,7 @@
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure.Annotations;
 using Drive.DataAccess.Entities;
+using Drive.DataAccess.Entities.Pro;
 
 namespace Drive.DataAccess.Context
 {
@@ -20,6 +21,11 @@ namespace Drive.DataAccess.Context
         public DbSet<Role> Roles { get; set; }
         public DbSet<Space> Spaces { get; set; }
         public DbSet<Log> Logs { get; set; }
+        public DbSet<AcademyProCourse> AcademyProCourses { get; set; }
+        public DbSet<Lecture> Lectures { get; set; }
+        public DbSet<ContentLink> ContentLinks { get; set; }
+        public DbSet<CodeSample> CodeSamples { get; set; }
+        public DbSet<Tag> Tags { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
