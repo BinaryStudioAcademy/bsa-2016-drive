@@ -9,7 +9,7 @@ namespace Drive.DataAccess.Entities
     public class FileUnit : DataUnit
     {
         public FileType FileType { get; set; }
-       // public Uri Link { get; set; }
+        public string Link { get; set; }
     }
 
     public enum FileType

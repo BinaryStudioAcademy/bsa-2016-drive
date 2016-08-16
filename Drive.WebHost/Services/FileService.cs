@@ -28,7 +28,7 @@ namespace Drive.WebHost.Services
                           IsDeleted = d.IsDeleted,
                           FyleType = d.FileType,
                           Name = d.Name,
-                          //Link = d.Link,
+                          Link = d.Link,
                           Description = d.Description
                       };
 
@@ -45,7 +45,8 @@ namespace Drive.WebHost.Services
                 IsDeleted = file.IsDeleted,
                 FyleType = file.FileType,
                 Name = file.Name,
-                Description = file.Description
+                Description = file.Description,
+                Link = file.Link
             };
         }
 
@@ -55,7 +56,7 @@ namespace Drive.WebHost.Services
             var file = new FileUnit()
             {
                 Name = dto.Name,
-                //Link = dto.Link,
+                Link = dto.Link,
                 FileType = FileType.None,
                 Description = dto.Description,
 
@@ -85,6 +86,7 @@ namespace Drive.WebHost.Services
             file.Description = dto.Description;
             file.IsDeleted = dto.IsDeleted;
             file.LastModified = DateTime.Now;
+            file.Link = dto.Link;
 
             await _unitOfWork.SaveChangesAsync();
 
