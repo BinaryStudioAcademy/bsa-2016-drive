@@ -105,6 +105,8 @@ namespace Drive.WebHost.Services
         {
             var space = await _unitOfWork?.Spaces?.GetByIdAsync(id);
 
+            if (space == null) return;
+
             space.Name = dto.Name;
             space.Description = dto.Description;
             space.MaxFileSize = dto.MaxFileSize;

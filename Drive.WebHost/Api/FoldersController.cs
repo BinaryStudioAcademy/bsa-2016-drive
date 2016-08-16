@@ -27,7 +27,7 @@ namespace Drive.WebHost.Api
         {
             var data = await _service?.GetAllAsync();
 
-            if (data == null)
+            if (data == null || !data.Any())
                 return NotFound();
 
             return Ok(data);

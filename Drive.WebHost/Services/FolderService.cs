@@ -89,7 +89,10 @@ namespace Drive.WebHost.Services
 
         public async Task<FolderUnitDto> UpdateAsync(int id, FolderUnitDto dto)
         {
-            var folder = await _unitOfWork.Folders.GetByIdAsync(id);
+            var folder = await _unitOfWork?.Folders?.GetByIdAsync(id);
+
+            if (folder == null)
+                return null;
 
             folder.Description = dto.Description;
             folder.IsDeleted = dto.IsDeleted;

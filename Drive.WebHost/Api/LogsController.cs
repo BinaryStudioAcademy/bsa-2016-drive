@@ -23,7 +23,7 @@ namespace Drive.WebHost.Api
         {
             var result = await _logService?.GetAllAsync();
 
-            if (result == null)
+            if (result == null || !result.Any())
                 return NotFound();
 
             return Ok(result);

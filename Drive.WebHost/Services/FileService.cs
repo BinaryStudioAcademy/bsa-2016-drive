@@ -95,12 +95,15 @@ namespace Drive.WebHost.Services
         {
             var file = await _unitOfWork?.Files?.GetByIdAsync(id);
 
+            if (file == null)
+                return null;
+
             file.Name = dto.Name;
             file.FileType = FileType.None;
             file.Description = dto.Description;
             file.IsDeleted = dto.IsDeleted;
             file.LastModified = DateTime.Now;
-
+            
             await _unitOfWork?.SaveChangesAsync();
 
             return dto;

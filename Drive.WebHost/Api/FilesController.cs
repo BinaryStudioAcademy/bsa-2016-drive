@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Drive.WebHost.Services;
 using Driver.Shared.Dto;
@@ -21,7 +22,7 @@ namespace Drive.WebHost.Api
         {
             var file = await _service?.GetAllAsync();
 
-            if (file == null)
+            if (file == null || !file.Any())
                 return NotFound();
 
             return Ok(file);
