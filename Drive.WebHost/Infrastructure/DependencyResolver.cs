@@ -7,13 +7,11 @@ namespace Drive.WebHost.Infrastructure
     {
         public override void Load()
         {
+            Kernel.Bind<IRolesService>().To<RolesService>();
             Kernel.Bind<ISpaceService>().To<SpaceService>();
             Kernel.Bind<IFolderService>().To<FolderService>();
-
             Kernel.Bind<ILogsService>().To<LogsService>();
-
             Kernel.Bind<IUsersService>().To<UsersService>();
-
             Kernel.Bind<IUsersProvider>().To<UsersProvider>();
         }
     }

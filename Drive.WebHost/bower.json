@@ -9,6 +9,7 @@
     "fontawesome": "~4.6.3",
     "angular-bootstrap": "~2.0.1",
     "angular-bootstrap-contextmenu": "~0.9.7",
-    "font-awesome-animation": "0.0.9"
+    "font-awesome-animation": "0.0.9",
+    "angular-mass-autocomplete": "0.4.0"
   }
 }

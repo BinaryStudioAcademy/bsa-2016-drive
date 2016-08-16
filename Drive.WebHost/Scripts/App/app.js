@@ -1,5 +1,5 @@
 ﻿angular.module("driveApp",
-    ["ngRoute", "ui.bootstrap.contextMenu", "ui.bootstrap"])
+    ["ngRoute", "ui.bootstrap.contextMenu", "ui.bootstrap", "MassAutoComplete"])
     .config([
         "$routeProvider",
         function($routeProvider) {
@@ -82,6 +82,12 @@
                     templateUrl: "/Scripts/App/Error404/404.html",
                     controller: "ErrorController",
                     controllerAs: "errorCtrl"
+                })
+                .when("/AdminPanel",
+                {
+                    templateUrl: "/Scripts/App/AdminPanel/AdminPanel.html",
+                    controller: "adminPanelController",
+                    controllerAs: "adminCtrl"
                 })
                 .otherwise({
                     // This is when any route not matched - error

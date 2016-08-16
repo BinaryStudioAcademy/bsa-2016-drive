@@ -1,0 +1,18 @@
+﻿<div class="container">
+    <br />
+    <ol class="breadcrumb breadcrumb-arrow">
+        <li><a href="#"><i class="glyphicon glyphicon-home"></i>Space</a></li>
+        <li class="active"><span>Settings</span></li>
+    </ol>
+    <h1>{{adminCtrl.title}}</h1>
+    <h2>Roles</h2>
+    <button class="btn btn-info btn-md" style="width: 15%; height: 40px;" ng-click="adminCtrl.createRole('lg')"><i class="fa iconCustom fa-plus-circle fa-cog fa-lg"></i>New role</button><br/>
+    <br/><div class="list-group" ng-repeat="role in adminCtrl.roles">
+        <a href="#" class="list-group-item" style="width: 20%">{{role}}</a>
+    </div>
+</div>
+<div mass-autocomplete>
+    <input ng-model="adminCtrl.dirty.value"
+           mass-autocomplete-item="adminCtrl.autocomplete_options">
+</div>
+    Selected : {{adminCtrl.dirty.value}}

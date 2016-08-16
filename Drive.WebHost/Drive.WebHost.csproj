@@ -166,6 +166,7 @@
     <Compile Include="Api\FilesController.cs" />
     <Compile Include="Api\FoldersController.cs" />
     <Compile Include="Api\LogsController.cs" />
+    <Compile Include="Api\RolesController.cs" />
     <Compile Include="Api\SpacesController.cs" />
     <Compile Include="Api\UsersController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -185,10 +186,12 @@
     <Compile Include="Services\IFileService.cs" />
     <Compile Include="Services\IFolderService.cs" />
     <Compile Include="Services\ILogsService.cs" />
+    <Compile Include="Services\IRolesService.cs" />
     <Compile Include="Services\ISpaceService.cs" />
     <Compile Include="Providers\IUsersProvider.cs" />
     <Compile Include="Services\IUsersService.cs" />
     <Compile Include="Services\LogsService.cs" />
+    <Compile Include="Services\RolesService.cs" />
     <Compile Include="Services\SpaceService.cs" />
     <Compile Include="Providers\UsersProvider.cs" />
     <Compile Include="Services\UsersService.cs" />
@@ -203,6 +206,12 @@
     <Content Include="gulpfile.js" />
     <Content Include="Scripts\App\Academy\Academy.html" />
     <Content Include="Scripts\App\Academy\academyController.js" />
+    <Content Include="Scripts\App\AdminPanel\AdminPanel.html" />
+    <Content Include="Scripts\App\AdminPanel\adminPanelController.js" />
+    <Content Include="Scripts\App\AdminPanel\adminPanelService.js" />
+    <Content Include="Scripts\App\AdminPanel\Roles\CreateRole.html" />
+    <Content Include="Scripts\App\AdminPanel\Roles\roleController.js" />
+    <Content Include="Scripts\App\AdminPanel\Roles\roleService.js" />
     <Content Include="Scripts\App\Checklist\Checklist.html" />
     <Content Include="Scripts\App\Checklist\checklistController.js" />
     <Content Include="Scripts\App\Docs\Docs.html" />

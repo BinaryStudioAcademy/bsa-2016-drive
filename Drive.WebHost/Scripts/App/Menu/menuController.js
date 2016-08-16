@@ -61,7 +61,7 @@
         };
 
         function redirectToAdminPanel() {
-            $location.url('api/adminPanel/');
+            $location.url('/AdminPanel');
         };
 
         function redirectToEmployees() {
