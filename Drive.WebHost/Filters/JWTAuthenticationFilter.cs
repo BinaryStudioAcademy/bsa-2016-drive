@@ -13,7 +13,7 @@ namespace Drive.WebHost.Filters
     {
         public void OnAuthentication(AuthenticationContext filterContext)
         {
-            var mockToken = bool.Parse(ConfigurationManager.AppSettings["JWTSecret"]);
+            var mockToken = bool.Parse(ConfigurationManager.AppSettings["MockToken"]);
             var token = mockToken ? ConfigurationManager.AppSettings["TestToken"] : 
                 filterContext.RequestContext.HttpContext.Request.Cookies["x-access-token"]?.Value;
 
