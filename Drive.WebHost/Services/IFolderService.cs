@@ -20,6 +20,8 @@ namespace Drive.WebHost.Services
 
         Task DeleteAsync(int id);
 
+        Task<FolderContentDto> GetContentAsync(int id);
+
         void Dispose();
     }
 }

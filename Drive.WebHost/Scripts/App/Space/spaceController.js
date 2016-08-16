@@ -14,6 +14,12 @@
         vm.showTable = true;
         vm.showGrid = false;
 
+        vm.folderList = [];
+        vm.addElem = addElem;
+
+        vm.spaceId = 0;
+        vm.parentId = 0;
+
         vm.changeView = changeView;
         vm.activateTableView = activateTableView;
         vm.activateGridView = activateGridView;
@@ -22,6 +28,7 @@
         vm.getFolder = getFolder;
         vm.deleteFolder = deleteFolder;
         vm.openFolderWindow = openFolderWindow;
+        vm.getFolderContent = getFolderContent;
 
         vm.getFile = getFile;
         vm.deleteFile = deleteFile;
@@ -34,6 +41,7 @@
         function activate() {
             spaceService.getSpace(1, function (data) {
                 vm.space = data;
+                vm.spaceId = data.id;
             });
         }
 
@@ -78,38 +86,68 @@
         ];
 
         vm.fileMenuOptions = [
-    [
-        'Share', function ($itemScope) {
-            console.log($itemScope.file.id);
-        }
-    ],
-    [
-        'Edit', function ($itemScope) {
-            vm.file = $itemScope.file;
-            vm.openFileWindow();
-        }
-    ],
-    [
-        'Delete', function ($itemScope) {
-            return deleteFile($itemScope.file.id);
-        }
-    ]
+            [
+                'Share', function ($itemScope) {
+                    console.log($itemScope.file.id);
+                }
+            ],
+            [
+                'Edit', function ($itemScope) {
+                    vm.file = $itemScope.file;
+                    vm.openFileWindow();
+                }
+            ],
+            [
+                'Delete', function ($itemScope) {
+                    return deleteFile($itemScope.file.id);
+                }
+            ]
         ];
 
         vm.createOption = [
             [
-                'Create', function ($itemScope) {
+                'Create folder', function () {
+                    vm.folder = { parentId: vm.parentId, spaceId: vm.spaceId };
+                    vm.openFolderWindow();
+                }
+            ],
+            [
+                'Create file', function ($itemScope) {
                 },
                 [
                     [
-                        'Folder', function () {
-                            vm.folder = { spaceid : vm.space.id};
-                            vm.openFolderWindow();
+                        'Document', function () {
+                            vm.file = { type: 1, parentId: vm.parentId, spaceId: vm.spaceId };
+                            vm.openFileWindow();
                         }
                     ],
                     [
-                        'File', function ($itemScope) {
-                            vm.file = { spaceid: vm.space.id };
+                        'Sheets', function ($itemScope) {
+                            vm.file = { type: 2, parentId: vm.parentId, spaceId: vm.spaceId };
+                            vm.openFileWindow();
+                        }
+                    ],
+                    [
+                        'Slides', function ($itemScope) {
+                            vm.file = { type: 3, parentId: vm.parentId, spaceId: vm.spaceId };
+                            vm.openFileWindow();
+                        }
+                    ],
+                    [
+                        'Trello', function ($itemScope) {
+                            vm.file = { type: 4, parentId: vm.parentId, spaceId: vm.spaceId };
+                            vm.openFileWindow();
+                        }
+                    ],
+                    [
+                        'Link', function ($itemScope) {
+                            vm.file = { type: 5, parentId: vm.parentId, spaceId: vm.spaceId };
+                            vm.openFileWindow();
+                        }
+                    ],
+                    [
+                        'Upload file', function ($itemScope) {
+                            vm.file = { type: 6, parentId: vm.parentId, spaceId: vm.spaceId };
                             vm.openFileWindow();
                         }
                     ]
@@ -156,7 +194,7 @@
                 controllerAs: 'fileModalCtrl',
                 size: size,
                 resolve: {
-                    items: function() {
+                    items: function () {
                         return vm.file;
                     }
                 }
@@ -203,6 +241,14 @@
             });
         }
 
+        function getFolderContent(id) {
+            vm.parentId = id;
+            folderService.getContent(id, function (data) {
+                vm.space.folders = data.folders;
+                vm.space.files = data.files;
+            });
+        }
+
         function getFile(id) {
             fileService.getFile(id, function (file) {
                 vm.file = file;
@@ -215,5 +261,9 @@
                 vm.space.files.splice(index, 1);
             });
         }
+
+        function addElem(name) {
+            vm.folderList.push(name);
+        }
     }
- }());
+}());

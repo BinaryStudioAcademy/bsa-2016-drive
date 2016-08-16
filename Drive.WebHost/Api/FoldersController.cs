@@ -79,5 +79,14 @@ namespace Drive.WebHost.Api
 
             return Ok();
         }
+
+        [Route("~/api/content/{id:int}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetContentAsync(int id)
+        {
+            var dto = await _service.GetContentAsync(id);
+
+            return Ok(dto);
+        }
     }
 }

@@ -6,19 +6,19 @@
         <div class="modal-body">
             <div class="row">
                 <div class="col-md-2">
-                    <span class="glyphicon glyphicon-file" style="font-size: 50px; color: blue;"></span>
+                    <span style="font-size: 70px; color: darkgray;"><i ng-class="fileModalCtrl.icon"></i></span>
                 </div>
                 <div class="col-md-10">
-                    <div class="form-horizontal">
+                    <div class="form">
                         <div class="form-group">
-                            <label for="title">Title:</label>
+                            <label for="title" class="col-md-3">Name:</label>
                             <input type="text" class="form-control" placeholder="enter title" name="title" ng-model="fileModalCtrl.file.name" required>
                             <span ng-show="fileForm.title.$invalid && fileForm.title.$touched" style="color: red">
-                                Title is required.
+                                Name is required.
                             </span>
                         </div>
                         <div class="form-group">
-                            <label>Link:</label>
+                            <label for="link" class="col-md-3">Link:</label>
                             <input type="url" class="form-control" placeholder="paste the URL" name="link" ng-model="fileModalCtrl.file.link" required>
                             <span style="color: red">
                                 <span ng-show="fileForm.link.$error.required && fileForm.link.$touched">Link is required.</span>
@@ -26,15 +26,17 @@
                             </span>
                         </div>
                         <div class="form-group">
-                            <label for="descript">Description:</label>
+                            <label for="descript" class="col-md-3">Description:</label>
                             <textarea rows="5" class="form-control" placeholder="Description" id="descript" ng-model="fileModalCtrl.file.description"></textarea>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary" ng-click="fileModalCtrl.save()">Save</button>
-                <button class="btn btn-default" type="submit" ng-click="fileModalCtrl.cancel()">Cancel</button>
+                <div class="col-md-offset-3 col-md-8">
+                    <button type="submit" class="btn btn-primary" ng-click="fileModalCtrl.save()" ng-disabled="fileForm.title.$invalid || fileForm.link.$invalid">Save</button>
+                    <button class="btn btn-default" type="submit" ng-click="fileModalCtrl.cancel()">Cancel</button>
+                </div>
             </div>
         </div>
     </form>

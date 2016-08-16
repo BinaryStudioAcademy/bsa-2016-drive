@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Configuration;
-using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Filters;
@@ -14,17 +13,19 @@ namespace Drive.WebHost.Filters
     {
         public void OnAuthentication(AuthenticationContext filterContext)
         {
-            var httpCookie = filterContext.RequestContext.HttpContext.Request.Cookies["x-access-token"];
-            var token = httpCookie?.Value;
+            var mockToken = bool.Parse(ConfigurationManager.AppSettings["MockToken"]);
+            var token = mockToken ? ConfigurationManager.AppSettings["TestToken"] : 
+                filterContext.RequestContext.HttpContext.Request.Cookies["x-access-token"]?.Value;
+
             if (token != null)
             {
                 var secret = ConfigurationManager.AppSettings["JWTSecret"];
                 ITokenAuthenticationService authService = new JWTAuthService();
                 var principal = authService.VerifyToken(token, secret);
                 var checkExpiracy = bool.Parse(ConfigurationManager.AppSettings["CheckExpiracy"]);
-                if (checkExpiracy && ((BSIdentity) principal.Identity).IsExpired)
+                if (checkExpiracy && ((BSIdentity)principal.Identity).IsExpired)
                 {
-                    var clearCookie = new HttpCookie("x-access-token", "") {Expires = DateTime.Now.AddDays(-1)};
+                    var clearCookie = new HttpCookie("x-access-token", "") { Expires = DateTime.Now.AddDays(-1) };
                     filterContext.RequestContext.HttpContext.Response.SetCookie(clearCookie);
                     return;
                 }

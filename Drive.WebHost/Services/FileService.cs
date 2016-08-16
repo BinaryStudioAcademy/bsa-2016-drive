@@ -21,6 +21,7 @@ namespace Drive.WebHost.Services
         public async Task<IEnumerable<FileUnitDto>> GetAllAsync()
         {
             var data = await _unitOfWork?.Files?.GetAllAsync();
+
             if (data != null)
             {
                 var dto = from d in data
@@ -63,6 +64,8 @@ namespace Drive.WebHost.Services
         public async Task<FileUnitDto> CreateAsync(FileUnitDto dto)
         {
             var space = await _unitOfWork?.Spaces?.GetByIdAsync(dto.SpaceId);
+            var parentFolder = await _unitOfWork?.Folders.GetByIdAsync(dto.ParentId);
+
             if (space != null)
             {
                 var file = new FileUnit()
@@ -75,7 +78,8 @@ namespace Drive.WebHost.Services
                     LastModified = DateTime.Now,
                     IsDeleted = false,
                     Owner = dto.Owner,
-                    Space = space
+                    Space = space,
+                    Parent = parentFolder
                 };
 
 
@@ -103,7 +107,9 @@ namespace Drive.WebHost.Services
             file.Description = dto.Description;
             file.IsDeleted = dto.IsDeleted;
             file.LastModified = DateTime.Now;
-            
+            file.Owner = dto.Owner;
+            file.Link = dto.Link;
+
             await _unitOfWork?.SaveChangesAsync();
 
             return dto;
