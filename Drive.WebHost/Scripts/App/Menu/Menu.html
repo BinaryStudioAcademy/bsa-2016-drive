@@ -1,240 +1,89 @@
-﻿<script type="text/javascript" src="menu.js"></script>
-
-<style type="text/css">
-    #wrapper {
-        padding-left: 0;
-        -webkit-transition: all 0.5s ease;
-        -moz-transition: all 0.5s ease;
-        -o-transition: all 0.5s ease;
-        transition: all 0.5s ease;
-        overflow: hidden;
-    }
-
-        #wrapper.toggled {
-            padding-left: 190px;
-            overflow: scroll;
-        }
-
-    #sidebar-wrapper {
-        z-index: 1000;
-        position: absolute;
-        left: 190px;
-        width: 0;
-        height: 100%;
-        margin-left: -190px;
-        overflow-y: auto;
-        background: #000;
-        -webkit-transition: all 0.5s ease;
-        -moz-transition: all 0.5s ease;
-        -o-transition: all 0.5s ease;
-        transition: all 0.5s ease;
-    }
-
-    #wrapper.toggled #sidebar-wrapper {
-        width: 190px;
-    }
-
-    #page-content-wrapper {
-        position: absolute;
-        padding: 15px;
-        width: 100%;
-        overflow-x: hidden;
-    }
-
-    #wrapper.toggled #page-content-wrapper {
-        position: relative;
-        margin-right: 0px;
-    }
-
-    .fixed-brand {
-        width: auto;
-    }
-    /* Sidebar Styles */
-
-    .sidebar-nav {
-        position: absolute;
-        top: 0;
-        width: 190px;
-        margin: 0;
-        padding: 0;
-        list-style: none;
-        margin-top: 2px;
-    }
-
-        .sidebar-nav li {
-            text-indent: 15px;
-            line-height: 40px;
-        }
-
-            .sidebar-nav li a {
-                display: block;
-                text-decoration: none;
-                color: #999999;
-            }
-
-                .sidebar-nav li a:hover {
-                    text-decoration: none;
-                    color: #fff;
-                    background: rgba(255,255,255,0.2);
-                    border-left: green 5px solid;
-                }
-
-                .sidebar-nav li a:active,
-                .sidebar-nav li a:focus {
-                    text-decoration: none;
-                }
-
-        .sidebar-nav > .sidebar-brand {
-            height: 65px;
-            font-size: 18px;
-            line-height: 60px;
-        }
-
-            .sidebar-nav > .sidebar-brand a {
-                color: #999999;
-            }
-
-                .sidebar-nav > .sidebar-brand a:hover {
-                    color: #fff;
-                    background: none;
-                }
-
-    .no-margin {
-        margin: 0;
-    }
-
-    @media(min-width:768px) {
-        #wrapper {
-            padding-left: 190px;
-        }
-
-        .fixed-brand {
-            width: 190px;
-        }
-
-        #wrapper.toggled {
-            padding-left: 0;
-        }
-
-        #sidebar-wrapper {
-            width: 190px;
-        }
-
-        #wrapper.toggled #sidebar-wrapper {
-            width: 190px;
-        }
-
-        #wrapper.toggled-2 #sidebar-wrapper {
-            width: 50px;
-        }
-
-            #wrapper.toggled-2 #sidebar-wrapper:hover {
-                width: 190px;
-            }
-
-        #page-content-wrapper {
-            padding: 20px;
-            position: relative;
-            -webkit-transition: all 0.5s ease;
-            -moz-transition: all 0.5s ease;
-            -o-transition: all 0.5s ease;
-            transition: all 0.5s ease;
-        }
-
-        #wrapper.toggled #page-content-wrapper {
-            position: relative;
-            margin-right: 0;
-            padding-left: 190px;
-        }
-
-        #wrapper.toggled-2 #page-content-wrapper {
-            position: relative;
-            margin-right: 0;
-            margin-left: -190px;
-            -webkit-transition: all 0.5s ease;
-            -moz-transition: all 0.5s ease;
-            -o-transition: all 0.5s ease;
-            transition: all 0.5s ease;
-            width: auto;
-        }
-    }
-
-    /*Menu buttons style*/
-    .btn-custom {
-        -webkit-appearance: none;
-        outline: none;
-        border: 0;
-        background: transparent;
-        vertical-align: middle;
-    }
-
-    /*Remove button focus after click*/
-    .btn:focus, .btn:active {
-        outline: none !important;
-    }
-
-    /*Hr line style*/
-    hr.style {
-        border-top: 1px solid #8c8b8b;
-        margin: 3px;
-        border: 0;
-        height: 1px;
-        background: #333;
-        background-image: -webkit-linear-gradient(left, #333,#ccc, #333);
-        background-image: -moz-linear-gradient(left, #333, #ccc, #333);
-        background-image: -ms-linear-gradient(left, #333, #ccc, #333);
-        background-image: -o-linear-gradient(left, #333, #ccc, #333);
-    }
-
-    /*Icon on createSpace button*/
-    .iconCustom {
-        margin-left: -37px;
-        width: 2.7em;
-    }
-</style>
-
+﻿
 <div id="wrapper" ng-controller="MenuController as menuController">
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
-            <button class="btn btn-info btn-md" style="width: 100%; height: 40px;" ng-click="menuController.open('lg')"><i class="fa iconCustom fa-plus-circle fa-cog fa-lg"></i>Add new Space</button>
+            <button class="btn btn-info menu btn-md" style="width: 100%; height: 40px;" ng-click="menuController.open('lg')"><i class="fa iconCustom fa-plus-circle fa-cog fa-lg"></i>Add new Space</button>
             <hr class="style" />
             <li>
                 <button class="btn btn-custom pull-right btn-md" title="Binary Space Settings" ng-click="menuController.redirectToSpaceSettings()"><i class="fa fa-inverse fa-wrench faa-wrench animated-hover fa-lg"></i></button>
-                <a href="#" ng-click="menuController.redirectToBinarySpace(id)"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x "></i></span>Binary Space</a>
+                <div class="d" ng-click="menuController.redirectToBinarySpace()">
+                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x "></i></span>Binary Space
+                </div>
             </li>
             <li class="active">
                 <button class="btn btn-custom pull-right btn-md" title="My Space Settings" ng-click="menuController.redirectToSpaceSettings()"><i class="fa fa-inverse fa-wrench faa-wrench animated-hover fa-lg"></i></button>
-                <a href="#" ng-click="menuController.redirectToMySpace(id)"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x "></i></span>My Space</a>
+                <div class="d" ng-click="menuController.redirectToMySpace()">
+                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x "></i></span>My Space
+                </div>
             </li>
-            <li>
-                <a href="#" data-toggle="collapse" data-target="#spaces" ng-click="menuController.getAllSpaces()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x "></i></span>Spaces</a>
-                <ul class="nav-pills nav-stacked collapse" style="list-style-type: none;" id="spaces" ng-repeat="space in menuController.spaces">
-                    <li><a href="#!/{{space.name}}"><span class="fa-stack fa-lg pull-left"><i class="fa fa-graduation-cap fa-stack-1x "></i></span>{{space.name}}</a></li>
-                </ul>
-            </li>
-            <li>
-                <a href="#" data-toggle="collapse" data-target="#other"> <span class="fa-stack fa-lg pull-left"><i class="fa fa-ellipsis-v fa-stack-1x "></i></span>Other</a>
+            <li ng-show="menuController.spaces != null">
+                <div class="d" data-toggle="collapse" data-target="#other">
+                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-ellipsis-v fa-stack-1x "></i></span>Other
+                </div>
                 <ul class="nav-pills nav-stacked collapse" style="list-style-type: none;" id="other">
-                    <button class="btn btn-custom pull-right btn-md" title=".Net Space Settings" ng-click="menuController.redirectToSpaceSettings()"><i class="fa fa-inverse fa-wrench faa-wrench animated-hover fa-lg"></i></button>
-                    <li><a href="#" ng-click="menuController.redirectToNetSpace()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-code fa-stack-1x "></i></span>.Net</a></li>
+                    <li ng-repeat="item in menuController.spaces">
+                        <button class="btn btn-custom pull-right btn-md" title="Space Settings" ng-click="menuController.redirectToSpaceSettings(item.id)">
+                            <i class="fa fa-inverse fa-wrench faa-wrench animated-hover fa-lg"></i>
+                        </button>
+                        <div class="d" ng-click='menuController.redirectToSpace(item.id)' title="{{item.name}}">
+                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-circle-o  fa-stack-1x"></i></span>
+                            {{item.name | limitTo: 5}}{{item.name.length > 5 ? '..' : ''}}
+                        </div>
+                    </li>
                 </ul>
             </li>
             <hr class="style" />
             <li>
-                <a href="#" data-toggle="collapse" data-target="#apps"><span class="fa-stack fa-lg pull-left"><i class="fa fa-desktop fa-stack-1x "></i></span>Apps</a>
+                <div class="d" data-toggle="collapse" data-target="#apps">
+                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-desktop fa-stack-1x "></i></span>Apps
+                </div>
                 <ul class="nav-pills nav-stacked collapse" style="list-style-type: none;" id="apps">
-                    <li><a href="#!/apps/academy" ng-click="menuController.redirectToAcademyPro()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-graduation-cap fa-stack-1x "></i></span>Academy Pro</a></li>
-                    <li><a href="#!/apps/events" ng-click="menuController.redirectToEvents()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x "></i></span>Events</a></li>
-                    <li><a href="#!/apps/employees" ng-click="menuController.redirectToEmployees()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-users fa-stack-1x "></i></span>Employees</a></li>
-                    <li><a href="#!/apps/checklist" ng-click="menuController.redirectToChecklist()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-check-square-o fa-stack-1x "></i></span>Checklist</a></li>
-                    <li><a href="#!/apps/trello" ng-click="menuController.redirectToTrello()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-trello fa-stack-1x "></i></span>Trello</a></li>
-                    <li><a href="#!/apps/docs" ng-click="menuController.redirectToDocs()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-file-text fa-stack-1x "></i></span>Docs</a></li>
-                    <li><a href="#!/apps/sheets" ng-click="menuController.redirectToSheets()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-table fa-stack-1x "></i></span>Sheets</a></li>
-                    <li><a href="#!/apps/slides" ng-click="menuController.redirectToSlides()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-slideshare fa-stack-1x "></i></span>Slides</a></li>
+                    <li>
+                        <div class="d" ng-click="menuController.redirectToApps('academy')">
+                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-graduation-cap fa-stack-1x "></i></span>Academy Pro
+                        </div>
+                    </li>
+                    <li>
+                        <div class="d" ng-click="menuController.redirectToApps('events')">
+                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x "></i></span>Events
+                        </div>
+                    </li>
+                    <li>
+                        <div class="d" ng-click="menuController.redirectToApps('employees')">
+                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-users fa-stack-1x "></i></span>Employees
+                        </div>
+                    </li>
+                    <li>
+                        <div class="d" ng-click="menuController.redirectToApps('checklist')">
+                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-check-square-o fa-stack-1x "></i></span>Checklist
+                        </div>
+                    </li>
+                    <li>
+                        <div class="d" ng-click="menuController.redirectToApps('trello')">
+                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-trello fa-stack-1x "></i></span>Trello
+                        </div>
+                    </li>
+                    <li>
+                        <div class="d" ng-click="menuController.redirectToApps('docs')">
+                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-file-text fa-stack-1x "></i></span>Docs
+                        </div>
+                    </li>
+                    <li>
+                        <div class="d" ng-click="menuController.redirectToApps('sheets')">
+                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-table fa-stack-1x "></i></span>Sheets
+                        </div>
+                    </li>
+                    <li>
+                        <div class="d" ng-click="menuController.redirectToApps('slides')">
+                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-slideshare fa-stack-1x "></i></span>Slides
+                        </div>
+                    </li>
                 </ul>
             </li>
             <li>
-                <a href="#" ng-click="menuController.redirectToAdminPanel()"><span class="fa-stack fa-lg pull-left"><i class="fa fa-sliders fa-stack-1x "></i></span>Admin Panel</a>
+                <div class="d" ng-click="menuController.redirectToAdminPanel()">
+                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-sliders fa-stack-1x "></i></span>Admin Panel
+                </div>
             </li>
         </ul>
     </div>

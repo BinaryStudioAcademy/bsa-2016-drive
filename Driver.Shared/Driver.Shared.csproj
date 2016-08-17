@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Dto\AuthorDto.cs" />
     <Compile Include="Dto\FileUnitDto.cs" />
+    <Compile Include="Dto\FolderContentDto.cs" />
     <Compile Include="Dto\FolderUnitDto.cs" />
     <Compile Include="Dto\LogUnit.cs" />
     <Compile Include="Dto\Pro\AcademyProCourseDto.cs" />

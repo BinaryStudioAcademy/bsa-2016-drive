@@ -19,9 +19,9 @@ namespace Drive.WebHost.Services
 
         public async Task<LogUnit> GetAsync(int id)
         {
-            var data = await _unitOfWork.Logs.GetByIdAsync(id);
+            var data = await _unitOfWork?.Logs?.GetByIdAsync(id);
             
-            return new LogUnit
+            return data == null ? null : new LogUnit
             {
                 Id = data.Id,
                 Logged = data.Logged,
@@ -34,8 +34,11 @@ namespace Drive.WebHost.Services
 
         public async Task<IEnumerable<LogUnit>> GetAllAsync()
         {
-            var data = await _unitOfWork.Logs.GetAllAsync();
-            
+            var data = await _unitOfWork?.Logs?.GetAllAsync();
+
+            if (data == null || !data.Any())
+                return null;
+
             var dto = from d in data
                 select new LogUnit()
                 {
@@ -46,18 +49,22 @@ namespace Drive.WebHost.Services
                     Exception = d.Exception,
                     CallerName = d.CallerName
                 };
+
             return dto;
         }
 
         public async Task DeleteAsync(int id)
         {
-            _unitOfWork.Logs.Delete(id);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork?.Logs?.Delete(id);
+            await _unitOfWork?.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<LogUnit>> SortSearchAsync(string sortOrder, string searchStr)
         {
-            var data = await _unitOfWork.Logs.GetAllAsync();
+            var data = await _unitOfWork?.Logs?.GetAllAsync();
+
+            if (data == null)
+                return null;
 
             var dto = from d in data
                       select new LogUnit()
@@ -105,9 +112,9 @@ namespace Drive.WebHost.Services
 
         public async Task<IEnumerable<LogUnit>> FromToAsync(int from, int to)
         {
-            var data = await _unitOfWork.Logs.GetAllAsync();
+            var data = await _unitOfWork?.Logs?.GetAllAsync();
 
-            var dto = (from d in data                                        
+            return data == null ? null : (from d in data                                        
                       select new LogUnit()
                       {
                           Id = d.Id,
@@ -119,13 +126,11 @@ namespace Drive.WebHost.Services
                       })
                       .Skip(from)
                       .Take(to);
-
-            return dto;
         }
 
         public void Dispose()
         {
-            _unitOfWork.Dispose();
+            _unitOfWork?.Dispose();
         }
     }
 }

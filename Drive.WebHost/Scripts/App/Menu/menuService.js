@@ -13,7 +13,7 @@
         };
 
         function getAllSpaces(callBack) {
-            $http.get('api/spaces').success(function (response) {
+            $http.get('api/spaces/').success(function (response) {
                 if (callBack)
                     callBack(response);
             });

@@ -1,12 +1,13 @@
 ﻿<div class="container">
     <br />
-    <ol class="breadcrumb breadcrumb-arrow">
-        <li><a href="#"><i class="glyphicon glyphicon-home"></i>Space</a></li>
-        <li class="active"><span>Settings</span></li>
-    </ol>
+    <div class="btn-group btn-breadcrumb">
+        <a href="#" class="btn btn-info"><i class="glyphicon glyphicon-home"></i> Space</a>
+        <a class="btn btn-default">Settings</a>
+    </div>
     <div class="page-header">
         <h2>
-            Space settings <small>{{settingsCtrl.space.Name}}</small>
+            Space settings
+            <small>{{settingsCtrl.space.Name}}</small>
         </h2>
     </div>
     <div class="row">
@@ -39,7 +40,9 @@
         <div class="col-md-9">
             <h4>Settings user access to space</h4>
             <ul id="permissionsTab" class="nav nav-tabs">
-                <li class="active"><a href="#panel1">Users permission</a></li>
+                <li class="active">
+                    <a href="#panel1">Users permission</a>
+                </li>
             </ul>
             <div class="tab-content">
                 <br />

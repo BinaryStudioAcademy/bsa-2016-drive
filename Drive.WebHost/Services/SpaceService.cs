@@ -31,7 +31,7 @@ namespace Drive.WebHost.Services
                 MaxFileSize = s.MaxFileSize,
                 MaxFilesQuantity = s.MaxFilesQuantity,
                 ReadPermittedUsers = s.ReadPermittedUsers,
-                Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null).Select(f => new FileUnitDto
+                Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null).Where(f => f.IsDeleted == false).Select(f => new FileUnitDto
                 {
                     Description = f.Description,
                     FyleType = f.FileType,
@@ -39,14 +39,15 @@ namespace Drive.WebHost.Services
                     IsDeleted = f.IsDeleted,
                     Name = f.Name
                 }),
-                Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.Parent == null).Select(f => new FolderUnitDto
+                Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.Parent == null).Where(f => f.IsDeleted == false).Select(f => new FolderUnitDto
                 {
                     Id = f.Id,
                     Name = f.Name,
                     Description = f.Description,
                     CreatedAt = f.CreatedAt,
                     LastModified = f.LastModified,
-                    IsDeleted = f.IsDeleted
+                    IsDeleted = f.IsDeleted,
+                    SpaceId = f.Space.Id                    
                 })
             }).SingleOrDefaultAsync();
             return space;
@@ -96,14 +97,16 @@ namespace Drive.WebHost.Services
                 LastModified = DateTime.Now,
                 IsDeleted = false
             };
-            _unitOfWork.Spaces.Create(space);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork?.Spaces?.Create(space);
+            await _unitOfWork?.SaveChangesAsync();
             return space.Id;
         }
 
         public async Task UpdateAsync(int id, SpaceDto dto)
         {
-            var space = await _unitOfWork.Spaces.GetByIdAsync(id);
+            var space = await _unitOfWork?.Spaces?.GetByIdAsync(id);
+
+            if (space == null) return;
 
             space.Name = dto.Name;
             space.Description = dto.Description;
@@ -112,13 +115,13 @@ namespace Drive.WebHost.Services
             space.ReadPermittedUsers = dto.ReadPermittedUsers;
             space.LastModified = DateTime.Now;
 
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork?.SaveChangesAsync();
         }
 
         public async Task Delete(int id)
         {
-            _unitOfWork.Spaces.Delete(id);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork?.Spaces?.Delete(id);
+            await _unitOfWork?.SaveChangesAsync();
         }
 
 
@@ -263,7 +266,7 @@ namespace Drive.WebHost.Services
 
         public void Dispose()
         {
-            _unitOfWork.Dispose();
+            _unitOfWork?.Dispose();
         }
     }
 }
