@@ -8,7 +8,7 @@ namespace Driver.Shared.Dto.Pro
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
 
-        public UserDto Author { get; set; }
+        public AuthorDto Author { get; set; }
 
         public string Name { get; set; }
         public string Description { get; set; }
