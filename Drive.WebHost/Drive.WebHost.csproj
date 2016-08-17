@@ -175,6 +175,7 @@
     <Compile Include="Api\Pro\CodeSamplesController.cs" />
     <Compile Include="Api\Pro\ContentLinkController.cs" />
     <Compile Include="Api\Pro\LectureController.cs" />
+    <Compile Include="Api\Pro\TagsController.cs" />
     <Compile Include="Api\SpacesController.cs" />
     <Compile Include="Api\UsersController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
