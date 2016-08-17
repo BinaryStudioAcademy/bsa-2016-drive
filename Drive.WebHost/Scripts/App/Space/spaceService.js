@@ -10,7 +10,9 @@
     function SpaceService($http) {
         var service = {
             getSpace: getSpace,
-            getAllSpaces: getAllSpaces
+            getAllSpaces: getAllSpaces,
+            searchFoldersAndFiles,
+            getNumberOfResultSearchFoldersAndFiles
         };
 
         function getSpace(id, callback) {
@@ -34,6 +36,41 @@
                 console.log('Error while getting all spaces!');
             });
         }
+
+        function searchFoldersAndFiles(spaceId, folderId, text, currentPage, pageSize, callback) {
+            $http.get('/api/spaces/' + spaceId + '/search', {
+                params: {
+                    folderId: folderId,
+                    text: text,
+                    page: currentPage,
+                    count: pageSize
+                }
+            })
+            .then(function (response) {
+                if (callback) {
+                    callback(response.data);
+                }
+            }, function () {
+                console.log('Error in searchFoldersAndFiles Method!');
+            });
+        }
+
+        function getNumberOfResultSearchFoldersAndFiles(spaceId, folderId, text, callback) {
+            $http.get('/api/spaces/' + spaceId + '/total', {
+                params: {
+                    folderId: folderId,
+                    text: text
+                }
+            })
+            .then(function (response) {
+                if (callback) {
+                    callback(response.data);
+                }
+            }, function () {
+                console.log('Error in getNumberOfResultSearchFoldersAndFiles Method!');
+            });
+        }
+
         return service;
     }
 
