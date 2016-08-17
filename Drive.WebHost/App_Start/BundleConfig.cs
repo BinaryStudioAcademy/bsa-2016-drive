@@ -10,8 +10,8 @@ namespace Drive.WebHost
                 "~/Scripts/App/"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                "~/Content/bootstrap.css",
-                "~/Content/site.css"));
+                "~/Content/bootstrap.css")
+                .Include("~/Content/site.css", new CssRewriteUrlTransform()));
 
             bundles.Add(new ScriptBundle("~/bundles/libs").Include(
                 "~/Scripts/Bundles/libs.js"));
