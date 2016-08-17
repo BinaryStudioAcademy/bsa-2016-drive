@@ -199,6 +199,7 @@
     <Compile Include="Services\Pro\Abstract\IBasicService.cs" />
     <Compile Include="Services\Pro\Abstract\ILectureService.cs" />
     <Compile Include="Services\Pro\AcademyProCourseService.cs" />
+    <Compile Include="Services\Pro\LectureService.cs" />
     <Compile Include="Services\SpaceService.cs" />
     <Compile Include="Providers\UsersProvider.cs" />
     <Compile Include="Services\UsersService.cs" />
