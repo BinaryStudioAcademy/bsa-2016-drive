@@ -12,8 +12,6 @@ namespace Drive.WebHost.Services
     {
         Task<IEnumerable<FolderUnitDto>> GetAllAsync();
 
-        Task<IEnumerable<FolderUnitDto>> GetAllDeletedAsync();
-
         Task<FolderUnitDto> GetAsync(int id);
 
         Task<FolderUnitDto> CreateAsync(FolderUnitDto folder);

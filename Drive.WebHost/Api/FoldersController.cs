@@ -33,16 +33,6 @@ namespace Drive.WebHost.Api
             return Ok(data);
         }
 
-        public async Task<IHttpActionResult> GetAllDeletedAsync()
-        {
-            var data = await _service?.GetAllDeletedAsync();
-
-            if (data == null || !data.Any())
-                return NotFound();
-
-            return Ok(data);
-        }
-
         // GET api/folders/1
         public async Task<IHttpActionResult> GetAsync(int id)
         {
