@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Driver.Shared.Dto.Pro
 {
@@ -16,7 +13,7 @@ namespace Driver.Shared.Dto.Pro
 
         public DateTime StartDate { get; set; }
 
-        public IList<LectureDto> Lectures { get; set; }
+        public IEnumerable<LectureDto> Lectures { get; set; }
 
         public FileUnitDto FileUnit { get; set; }
 
