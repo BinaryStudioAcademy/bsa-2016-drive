@@ -22,9 +22,12 @@
                 </div>
                 <ul class="nav-pills nav-stacked collapse" style="list-style-type: none;" id="other">
                     <li ng-repeat="item in menuController.spaces">
-                        <button class="btn btn-custom pull-right btn-md" title="Space Settings" ng-click="menuController.redirectToSpaceSettings(item.id)"><i class="fa fa-inverse fa-wrench faa-wrench animated-hover fa-lg"></i></button>
-                        <div class="d" ng-click='menuController.redirectToSpace(item.id)' title="{{item.description}}">
-                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-circle-o  fa-stack-1x"></i></span>{{item.name}}
+                        <button class="btn btn-custom pull-right btn-md" title="Space Settings" ng-click="menuController.redirectToSpaceSettings(item.id)">
+                            <i class="fa fa-inverse fa-wrench faa-wrench animated-hover fa-lg"></i>
+                        </button>
+                        <div class="d" ng-click='menuController.redirectToSpace(item.id)' title="{{item.name}}">
+                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-circle-o  fa-stack-1x"></i></span>
+                            {{item.name | limitTo: 5}}{{item.name.length > 5 ? '..' : ''}}
                         </div>
                     </li>
                 </ul>

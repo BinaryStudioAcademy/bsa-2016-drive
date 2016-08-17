@@ -221,17 +221,17 @@ textarea {
 }
 
     #wrapper.toggled {
-        padding-left: 200px;
+        padding-left: 205px;
         overflow: scroll;
     }
 
 #sidebar-wrapper {
     z-index: 1000;
     position: absolute;
-    left: 200px;
+    left: 205px;
     width: 0;
     height: 100%;
-    margin-left: -200px;
+    margin-left: -205px;
     overflow-y: auto;
     background: #000;
     -webkit-transition: all 0.5s ease;
@@ -241,7 +241,7 @@ textarea {
 }
 
 #wrapper.toggled #sidebar-wrapper {
-    width: 200px;
+    width: 205px;
 }
 
 #page-content-wrapper {
@@ -259,12 +259,12 @@ textarea {
 .fixed-brand {
     width: auto;
 }
-/* Sidebar Styles */
 
+/* Sidebar Styles */
 .sidebar-nav {
     position: absolute;
     top: 0;
-    width: 200px;
+    width: 205px;
     margin: 0;
     padding: 0;
     list-style: none;
@@ -317,11 +317,11 @@ textarea {
 
 @media(min-width:768px) {
     #wrapper {
-        padding-left: 200px;
+        padding-left: 205px;
     }
 
     .fixed-brand {
-        width: 200px;
+        width: 205px;
     }
 
     #wrapper.toggled {
@@ -329,11 +329,11 @@ textarea {
     }
 
     #sidebar-wrapper {
-        width: 200px;
+        width: 205px;
     }
 
     #wrapper.toggled #sidebar-wrapper {
-        width: 200px;
+        width: 205px;
     }
 
     #wrapper.toggled-2 #sidebar-wrapper {
@@ -341,7 +341,7 @@ textarea {
     }
 
         #wrapper.toggled-2 #sidebar-wrapper:hover {
-            width: 200px;
+            width: 205px;
         }
 
     #page-content-wrapper {
@@ -356,13 +356,13 @@ textarea {
     #wrapper.toggled #page-content-wrapper {
         position: relative;
         margin-right: 0;
-        padding-left: 200px;
+        padding-left: 205px;
     }
 
     #wrapper.toggled-2 #page-content-wrapper {
         position: relative;
         margin-right: 0;
-        margin-left: -200px;
+        margin-left: -205px;
         -webkit-transition: all 0.5s ease;
         -moz-transition: all 0.5s ease;
         -o-transition: all 0.5s ease;
@@ -400,7 +400,7 @@ hr.style {
 
 /*Icon on createSpace button*/
 .iconCustom {
-    margin-left: -45px;
+    margin-left: -52px;
     width: 2.7em;
 }
 
