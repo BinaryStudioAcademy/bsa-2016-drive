@@ -197,9 +197,11 @@
     <Compile Include="Services\LogsService.cs" />
     <Compile Include="Services\Pro\Abstract\IAcademyProCourseService.cs" />
     <Compile Include="Services\Pro\Abstract\IBasicService.cs" />
+    <Compile Include="Services\Pro\Abstract\ICodeSamplesService.cs" />
     <Compile Include="Services\Pro\Abstract\IContentLinkService.cs" />
     <Compile Include="Services\Pro\Abstract\ILectureService.cs" />
     <Compile Include="Services\Pro\AcademyProCourseService.cs" />
+    <Compile Include="Services\Pro\CodeSamplesService.cs" />
     <Compile Include="Services\Pro\ContentLinkService.cs" />
     <Compile Include="Services\Pro\LectureService.cs" />
     <Compile Include="Services\SpaceService.cs" />
