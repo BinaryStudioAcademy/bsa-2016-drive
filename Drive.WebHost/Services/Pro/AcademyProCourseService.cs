@@ -87,7 +87,7 @@ namespace Drive.WebHost.Services.Pro
 
         public async Task UpdateAsync(int id, AcademyProCourseDto dto)
         {
-            var course = await _unitOfWork.AcademyProCourses.GetByIdAsync(1);
+            var course = await _unitOfWork.AcademyProCourses.GetByIdAsync(id);
             course.Name = dto.Name;
             course.Description = dto.Description;
             course.StartDate = dto.StartDate;
