@@ -57,7 +57,7 @@
                 </tr>
             </thead>
             <tr ng-repeat="folder in spaceCtrl.space.folders" context-menu="spaceCtrl.folderMenuOptions" ng-dblclick="spaceCtrl.getFolderContent(folder.id)">
-                <td><i class="fa fa-folder-o">&nbsp;</i><label  class="dataUnit">{{ folder.name }}</label></td>
+                <td><i class="fa fa-folder-o">&nbsp;</i><span  class="dataUnit">{{ folder.name }}</span></td>
                 <td>{{ folder.description }}</td>
                 <td>{{ folder.author.firstName }} {{ folder.author.lastName }}</td>
                 <td>{{ folder.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
