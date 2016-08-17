@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Principal;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Drive.DataAccess.Entities;
 using Drive.DataAccess.Interfaces;
+using Drive.Identity.Services;
 using Driver.Shared.Dto;
 
 namespace Drive.WebHost.Services
@@ -13,10 +16,12 @@ namespace Drive.WebHost.Services
     public class FolderService : IFolderService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly BSIdentityManager _identityManager;
 
-        public FolderService(IUnitOfWork unitOfWork)
+        public FolderService(IUnitOfWork unitOfWork, BSIdentityManager bsIdentityManager)
         {
             _unitOfWork = unitOfWork;
+            _identityManager = bsIdentityManager;
         }
 
         public async Task<IEnumerable<FolderUnitDto>> GetAllAsync()
@@ -62,6 +67,8 @@ namespace Drive.WebHost.Services
 
         public async Task<FolderUnitDto> CreateAsync(FolderUnitDto dto)
         {
+            var user = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == _identityManager.UserId);
+
             var space = await _unitOfWork.Spaces.GetByIdAsync(dto.SpaceId);
             var parentFolder = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
 
@@ -76,7 +83,8 @@ namespace Drive.WebHost.Services
                     LastModified = DateTime.Now,
                     IsDeleted = false,
                     Space = space,
-                    Parent = parentFolder
+                    Parent = parentFolder,
+                    Owner = user
                 };
 
                 _unitOfWork.Folders.Create(folder);

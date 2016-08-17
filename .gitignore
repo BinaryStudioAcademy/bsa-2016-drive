@@ -267,3 +267,6 @@ Dependencies/
 
 #Exclude fonts
 **/Content/Fonts/
+
+#Exclude log
+**/Logs/

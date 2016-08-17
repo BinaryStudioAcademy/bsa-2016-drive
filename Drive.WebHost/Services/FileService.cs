@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
+using System.Security.Principal;
 using System.Threading.Tasks;
 using Driver.Shared.Dto;
 using Drive.DataAccess.Entities;
@@ -29,10 +30,9 @@ namespace Drive.WebHost.Services
                     {
                         Id = d.Id,
                         IsDeleted = d.IsDeleted,
-                        FyleType = d.FileType,
+                        FileType = d.FileType.ToString(),
                         Name = d.Name,
                         Description = d.Description,
-                        Owner = d.Owner,
                         SpaceId = d.Space.Id
                     };
 
@@ -51,10 +51,9 @@ namespace Drive.WebHost.Services
                 {
                     Id = file.Id,
                     IsDeleted = file.IsDeleted,
-                    FyleType = file.FileType,
+                    FileType = file.FileType.ToString(),
                     Name = file.Name,
                     Description = file.Description,
-                    Owner = file.Owner,
                     SpaceId = file.Space.Id
                 };
             }
@@ -77,7 +76,6 @@ namespace Drive.WebHost.Services
                     CreatedAt = DateTime.Now,
                     LastModified = DateTime.Now,
                     IsDeleted = false,
-                    Owner = dto.Owner,
                     Space = space,
                     Parent = parentFolder
                 };
@@ -104,7 +102,6 @@ namespace Drive.WebHost.Services
             file.Description = dto.Description;
             file.IsDeleted = dto.IsDeleted;
             file.LastModified = DateTime.Now;
-            file.Owner = dto.Owner;
             file.Link = dto.Link;
 
             await _unitOfWork.SaveChangesAsync();

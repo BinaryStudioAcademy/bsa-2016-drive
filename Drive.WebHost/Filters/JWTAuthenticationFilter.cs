@@ -1,16 +1,31 @@
 ﻿using System;
 using System.Configuration;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Filters;
 using Drive.Identity.Entities;
 using Drive.Identity.Services;
 using Drive.Identity.Services.Abstract;
+using Drive.WebHost.Services;
+using Driver.Shared.Dto;
 
 namespace Drive.WebHost.Filters
 {
     public class JWTAuthenticationFilter : FilterAttribute, IAuthenticationFilter
     {
+        //private readonly IUsersService _usersService;
+
+        //public JWTAuthenticationFilter(IUsersService usersService)
+        //{
+        //    _usersService = usersService;
+        //}
+
+        //private void CreateUser(IPrincipal principal)
+        //{
+        //    _usersService.CreateAsync(new UserDto() { id = ((BSIdentity)principal.Identity).UserId });
+        //}
+
         public void OnAuthentication(AuthenticationContext filterContext)
         {
             var mockToken = bool.Parse(ConfigurationManager.AppSettings["MockToken"]);
@@ -32,6 +47,7 @@ namespace Drive.WebHost.Filters
                 var idManager = new BSIdentityManager();
                 idManager.SetPrincipal(principal);
                 filterContext.Principal = principal;
+                //CreateUser(principal);
             }
         }
 
