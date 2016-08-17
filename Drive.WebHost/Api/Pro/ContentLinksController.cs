@@ -1,20 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
 using Drive.WebHost.Services.Pro.Abstract;
 using Driver.Shared.Dto.Pro;
 
 namespace Drive.WebHost.Api.Pro
 {
-    public class ContentLinkController : ApiController
+    [RoutePrefix("api/contentlinks")]
+    public class ContentLinksController : ApiController
     {
         private readonly IContentLinkService _contentLinkService;
 
-        public ContentLinkController(IContentLinkService contentLinkService)
+        public ContentLinksController(IContentLinkService contentLinkService)
         {
             _contentLinkService = contentLinkService;
         }
@@ -41,7 +37,7 @@ namespace Drive.WebHost.Api.Pro
             return Ok(result);
         }
 
-        // POST: api/lecture
+        // POST: api/contentlinks
         [HttpPost]
         public async Task<IHttpActionResult> CreateFileAsync(ContentLinkDto data)
         {
@@ -54,7 +50,7 @@ namespace Drive.WebHost.Api.Pro
 
         }
 
-        // PUT: api/lecture/5
+        // PUT: api/contentlinks/5
         [HttpPut]
         public async Task<IHttpActionResult> UpdateFileAsync(int id, ContentLinkDto data)
         {
@@ -69,7 +65,7 @@ namespace Drive.WebHost.Api.Pro
             return Ok(result);
         }
 
-        // DELETE: api/lecture/5
+        // DELETE: api/contentlinks/5
         [HttpDelete]
         public IHttpActionResult DeleteFileAsync(int id)
         {

@@ -5,11 +5,12 @@ using Driver.Shared.Dto.Pro;
 
 namespace Drive.WebHost.Api.Pro
 {
-    public class LectureController : ApiController
+    [RoutePrefix("api/lectures")]
+    public class LecturesController : ApiController
     {
         private readonly ILectureService _lectureService;
 
-        public LectureController(ILectureService lectureService)
+        public LecturesController(ILectureService lectureService)
         {
             _lectureService = lectureService;
         }
@@ -36,7 +37,7 @@ namespace Drive.WebHost.Api.Pro
             return Ok(result);
         }
 
-        // POST: api/lecture
+        // POST: api/lectures
         [HttpPost]
         public async Task<IHttpActionResult> CreateFileAsync(LectureDto data)
         {
@@ -49,7 +50,7 @@ namespace Drive.WebHost.Api.Pro
 
         }
 
-        // PUT: api/lecture/5
+        // PUT: api/lectures/5
         [HttpPut]
         public async Task<IHttpActionResult> UpdateFileAsync(int id, LectureDto data)
         {
@@ -64,7 +65,7 @@ namespace Drive.WebHost.Api.Pro
             return Ok(result);
         }
 
-        // DELETE: api/lecture/5
+        // DELETE: api/lectures/5
         [HttpDelete]
         public IHttpActionResult DeleteFileAsync(int id)
         {

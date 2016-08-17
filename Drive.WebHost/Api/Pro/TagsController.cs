@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
 using Drive.WebHost.Services.Pro.Abstract;
 using Driver.Shared.Dto.Pro;
 
 namespace Drive.WebHost.Api.Pro
 {
+    [RoutePrefix("api/tags")]
     public class TagsController : ApiController
     {
         private readonly ITagsService _tagsService;
