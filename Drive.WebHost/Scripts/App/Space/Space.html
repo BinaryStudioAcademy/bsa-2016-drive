@@ -15,9 +15,9 @@
                 <div>
                     <form role="search">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search input" name="srch-term" id="srch-term">
+                            <input type="text" class="form-control" placeholder="Search input" name="srch-term" id="srch-term" ng-model="spaceCtrl.searchText">
                             <div class="input-group-btn">
-                                <button class="btn btn-default" type="submit">Search</button>
+                                <button class="btn btn-default" type="submit" ng-click="spaceCtrl.search()">Search</button>
                             </div>
                         </div>
                     </form>

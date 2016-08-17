@@ -18,7 +18,7 @@
         vm.addElem = addElem;
         vm.deleteElems = deleteElems;
         vm.spaceId = 0;
-        vm.parentId = 0;
+        vm.parentId = null;
 
         vm.changeView = changeView;
         vm.activateTableView = activateTableView;
@@ -36,9 +36,20 @@
 
         vm.findById = findById;
 
+        vm.search = search;
+        vm.searchText = '';
+
+        vm.paginate = {
+            currentPage: 1,
+            pageSize: 10,
+            numberOfItems: 0
+        }
+
         activate();
 
         function activate() {
+            vm.searchText = '';
+            vm.parentId = null;
             spaceService.getSpace(1, function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
@@ -242,6 +253,7 @@
         }
 
         function getFolderContent(id) {
+            vm.searchText = '';
             vm.parentId = id;
             folderService.getContent(id, function (data) {
                 vm.space.folders = data.folders;
@@ -276,5 +288,24 @@
                 vm.folderList.splice(i, 1);
             }
         }
+
+        function search() {
+            getResultSearchFoldersAndFiles();
+            getNumberOfResultSearch();
+        }
+
+        function getResultSearchFoldersAndFiles() {
+            spaceService.searchFoldersAndFiles(vm.spaceId, vm.parentId, vm.searchText, vm.paginate.currentPage,vm.paginate.pageSize, function (data) {
+                vm.space.folders = data.folders;
+                vm.space.files = data.files;
+            });
+        }
+
+        function getNumberOfResultSearch(){
+            spaceService.getNumberOfResultSearchFoldersAndFiles(vm.spaceId, vm.parentId, vm.searchText, function (data) {
+                vm.paginate.numberOfItems = data;
+            });
+        }
+
     }
 }());
