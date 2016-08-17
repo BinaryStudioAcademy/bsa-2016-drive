@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Threading.Tasks;
 using System.Web.Http;
 using Drive.WebHost.Services.Pro.Abstract;
 using Driver.Shared.Dto.Pro;
@@ -10,11 +6,11 @@ using Driver.Shared.Dto.Pro;
 namespace Drive.WebHost.Api.Pro
 {
     [RoutePrefix("api/academypro")]
-    public class AcademyProApiController : ApiController
+    public class AcademyProController : ApiController
     {
         private readonly IAcademyProCourseService _academyProCourseService;
 
-        public AcademyProApiController(IAcademyProCourseService academyProCourseService)
+        public AcademyProController(IAcademyProCourseService academyProCourseService)
         {
             _academyProCourseService = academyProCourseService;
         }
