@@ -66,7 +66,7 @@
     </div>
     <div class="wrapper" ng-show="spaceCtrl.showGrid">
         <div class="masonry">
-            <div role="button" class="item btn-default shadow" context-menu="spaceCtrl.folderMenuOptions" ng-repeat="folder in spaceCtrl.space.folders" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
+            <div role="button" class="item btn-default shadow" context-menu="spaceCtrl.folderMenuOptions" dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize" total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
                 <i class="fa fa-folder-o fa-5x"></i>
                 <br>
                 <span class="bold">Name: </span>
@@ -126,6 +126,9 @@
                 <td>{{ file.fileType | typeOfFile }}</td>
             </tr>
         </table>
+    </div>
+    <div class="text-center">
+        <dir-pagination-controls on-page-change="spaceCtrl.paginate.getContent(newPageNumber)"></dir-pagination-controls>
     </div>
 </div>
 

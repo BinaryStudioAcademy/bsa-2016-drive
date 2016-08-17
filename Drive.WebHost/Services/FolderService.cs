@@ -116,32 +116,56 @@ namespace Drive.WebHost.Services
             await _unitOfWork?.SaveChangesAsync();
         }
 
-        public async Task<FolderContentDto> GetContentAsync(int id)
+        public async Task<FolderContentDto> GetContentAsync(int id, int page, int count)
         {
-            var folders = await _unitOfWork.Folders.Query.Where(x => x.Parent.Id == id).OfType<DataUnit>().ToListAsync();
-            var files = await _unitOfWork.Files.Query.Where(x => x.Parent.Id == id).OfType<DataUnit>().ToListAsync();
+            IEnumerable<FolderUnitDto> folders = await _unitOfWork.Folders.Query.Where(x => x.Parent.Id == id)
+            .Select(f => new FolderUnitDto
+            {
+                Name = f.Name,
+                Description = f.Description,
+                Id = f.Id,
+                IsDeleted = f.IsDeleted,
+                CreatedAt = f.CreatedAt,
+                LastModified = f.LastModified
+            }).ToListAsync();
+            IEnumerable<FileUnitDto> files = await _unitOfWork.Files.Query.Where(x => x.Parent.Id == id)
+                .Select(f => new FileUnitDto
+                {
+                    Name = f.Name,
+                    Description = f.Description,
+                    Id = f.Id,
+                    IsDeleted = f.IsDeleted,
+                }).ToListAsync();
+
+            int skipCount = (page - 1) * count;
+            if (folders.Count() <= skipCount)
+            {
+                skipCount -= folders.Count();
+                folders = new List<FolderUnitDto>();
+                files = files.Skip(skipCount).Take(count);
+            }
+            else
+            {
+                folders = folders.Skip(skipCount).Take(count);
+                count -= folders.Count();
+                files = files.Take(count);
+            }
 
             return new FolderContentDto
             {
-                Files = from file in files
-                        select new FileUnitDto
-                        {
-                            Name = file.Name,
-                            Description = file.Description,
-                            Id = file.Id,
-                            IsDeleted = file.IsDeleted,
-                        },
-                Folders = from folder in folders
-                          select new FolderUnitDto
-                          {
-                              Name = folder.Name,
-                              Description = folder.Description,
-                              Id = folder.Id,
-                              IsDeleted = folder.IsDeleted,
-                              CreatedAt = folder.CreatedAt,
-                              LastModified = folder.LastModified
-                          }
+                Files = files,
+                Folders = folders
             };
+        }
+
+        public async Task<int> GetContentTotalAsync(int id)
+        {
+            int counter = 0;
+            var folders = await _unitOfWork.Folders.Query.Where(x => x.Parent.Id == id).ToListAsync();
+            var files = await _unitOfWork.Files.Query.Where(x => x.Parent.Id == id).ToListAsync();
+            counter += folders.Count();
+            counter += files.Count();
+            return counter;
         }
 
         public void Dispose()

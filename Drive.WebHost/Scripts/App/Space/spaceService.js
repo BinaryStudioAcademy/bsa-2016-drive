@@ -12,18 +12,36 @@
             getSpace: getSpace,
             getAllSpaces: getAllSpaces,
             searchFoldersAndFiles,
-            getNumberOfResultSearchFoldersAndFiles
+            getNumberOfResultSearchFoldersAndFiles,
+            getSpaceTotal
         };
 
-        function getSpace(id, callback) {
-            $http.get('/api/spaces/' + id)
+        function getSpace(id, currentPage, pageSize, callback) {
+            $http.get('/api/spaces/' + id, {
+                params: {
+                    page: currentPage,
+                    count: pageSize
+                }
+            })
                 .then(function (response) {
                     if (callback) {
                         callback(response.data);
                     }
                 }, function () {
-                    console.log('Error while getting space!');
+                    console.log('Error getSpace spaceService!');
                 });
+        }
+
+        function getSpaceTotal(id, callback) {
+            $http.get('/api/spaces/' + id + '/sptotal')
+               .then(function (response) {
+                   if (callback) {
+                       callback(response.data);
+                   }
+               }, function () {
+                   console.log('Error getSpaceTotal spaceService!');
+               });
+
         }
 
         function getAllSpaces(callback) {

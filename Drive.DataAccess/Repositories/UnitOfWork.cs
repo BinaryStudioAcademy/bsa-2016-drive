@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Drive.DataAccess.Context;
 using Drive.DataAccess.Entities;
+using Drive.DataAccess.Entities.Pro;
 using Drive.DataAccess.Interfaces;
 
 namespace Drive.DataAccess.Repositories
@@ -24,6 +25,11 @@ namespace Drive.DataAccess.Repositories
         private IRepository<Role> _roleRepository;
         private IRepository<Space> _spaceRepository;
         private IRepository<Log> _logRepository;
+        private IRepository<AcademyProCourse> _academyProRepository;
+        private IRepository<CodeSample> _codeSamplesRepository;
+        private IRepository<ContentLink> _contentLinksRepository;
+        private IRepository<Tag> _tagsRepository;
+        private IRepository<Lecture> _lecturesRepository;
 
         public IRepository<FolderUnit> Folders
         {
@@ -65,6 +71,50 @@ namespace Drive.DataAccess.Repositories
             get
             {
                 return _logRepository ?? (_logRepository = _repositoryFactory.CreateRepository<Log>(_context));
+            }
+        }
+
+        public IRepository<AcademyProCourse> AcademyProCourses
+        {
+            get
+            {
+                return _academyProRepository ?? (_academyProRepository = _repositoryFactory.CreateRepository<AcademyProCourse>(_context));
+            }
+        }
+
+
+        public IRepository<CodeSample> CodeSamples
+        {
+            get
+            {
+                return _codeSamplesRepository ?? (_codeSamplesRepository = _repositoryFactory.CreateRepository<CodeSample>(_context));
+            }
+        }
+
+
+        public IRepository<ContentLink> ContentLinks
+        {
+            get
+            {
+                return _contentLinksRepository ?? (_contentLinksRepository = _repositoryFactory.CreateRepository<ContentLink>(_context));
+            }
+        }
+
+
+        public IRepository<Tag> Tags
+        {
+            get
+            {
+                return _tagsRepository ?? (_tagsRepository = _repositoryFactory.CreateRepository<Tag>(_context));
+            }
+        }
+
+
+        public IRepository<Lecture> Lectures
+        {
+            get
+            {
+                return _lecturesRepository ?? (_lecturesRepository = _repositoryFactory.CreateRepository<Lecture>(_context));
             }
         }
 
