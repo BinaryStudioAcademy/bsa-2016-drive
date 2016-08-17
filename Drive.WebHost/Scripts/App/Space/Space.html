@@ -114,7 +114,7 @@
                 </td>
                 <td>{{ folder.description }}</td>
                 <td>{{ folder.author.firstName }} {{ folder.author.lastName }}</td>
-                <td>{{ folder.createdAt | date : 'short' }}</td>
+                <td>{{ folder.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
                 <td>Folder</td>
             </tr>
             <tr class="shadow" role="button" ng-repeat="file in spaceCtrl.space.files" context-menu="spaceCtrl.fileMenuOptions">
@@ -123,8 +123,8 @@
                 </td>
                 <td>{{ file.description }}</td>
                 <td>{{ file.author.firstName }} {{ file.author.lastName }}</td>
-                <td>{{ file.createdAt | date : 'short' }}</td>
-                <td>{{ file.fyleType | typeOfFile }}</td>
+                <td>{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
+                <td>{{ file.fileType | typeOfFile }}</td>
             </tr>
         </table>
     </div>

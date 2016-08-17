@@ -168,37 +168,38 @@
                 [
                     [
                         'Document', function () {
-                            vm.file = { type: 1, parentId: vm.parentId, spaceId: vm.spaceId };
+                            vm.file = { fileType: 1, parentId: vm.parentId, spaceId: vm.spaceId };
                             vm.openFileWindow();
                         }
                     ],
                     [
                         'Sheets', function ($itemScope) {
-                            vm.file = { type: 2, parentId: vm.parentId, spaceId: vm.spaceId };
+                            vm.file = { fileType: 2, parentId: vm.parentId, spaceId: vm.spaceId };
                             vm.openFileWindow();
                         }
                     ],
                     [
                         'Slides', function ($itemScope) {
-                            vm.file = { type: 3, parentId: vm.parentId, spaceId: vm.spaceId };
+                            vm.file = { fileType: 3, parentId: vm.parentId, spaceId: vm.spaceId };
                             vm.openFileWindow();
                         }
                     ],
                     [
                         'Trello', function ($itemScope) {
-                            vm.file = { type: 4, parentId: vm.parentId, spaceId: vm.spaceId };
+                            vm.file = { fileType: 4, parentId: vm.parentId, spaceId: vm.spaceId };
                             vm.openFileWindow();
                         }
                     ],
                     [
                         'Link', function ($itemScope) {
-                            vm.file = { type: 5, parentId: vm.parentId, spaceId: vm.spaceId };
+                            vm.file = { fileType: 5, parentId: vm.parentId, spaceId: vm.spaceId };
                             vm.openFileWindow();
                         }
                     ],
+                    null,
                     [
                         'Upload file', function ($itemScope) {
-                            vm.file = { type: 6, parentId: vm.parentId, spaceId: vm.spaceId };
+                            vm.file = { fileType: 6, parentId: vm.parentId, spaceId: vm.spaceId };
                             vm.openFileWindow();
                         }
                     ]
