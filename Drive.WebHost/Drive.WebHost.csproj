@@ -195,6 +195,8 @@
     <Compile Include="Providers\IUsersProvider.cs" />
     <Compile Include="Services\IUsersService.cs" />
     <Compile Include="Services\LogsService.cs" />
+    <Compile Include="Services\Pro\Abstract\IAcademyProCourseService.cs" />
+    <Compile Include="Services\Pro\AcademyProCourseService.cs" />
     <Compile Include="Services\SpaceService.cs" />
     <Compile Include="Providers\UsersProvider.cs" />
     <Compile Include="Services\UsersService.cs" />
