@@ -64,8 +64,8 @@ gulp.task("libs", function () {
 gulp.task("styles", function () {
     gulp.src([
         paths.bower + "bootstrap.css",
-        paths.bower + "font-awesome.css",
-        paths.bower + "font-awesome-animation.css",
+        paths.bower + "css/font-awesome.css",
+        paths.bower + "dist/font-awesome-animation.css",
         paths.bower + "massautocomplete.theme.css",
         "./Content/*.css"
     ])
