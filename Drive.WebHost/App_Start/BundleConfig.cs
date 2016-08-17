@@ -6,20 +6,20 @@ namespace Drive.WebHost
     {
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/app").Include(
+            bundles.Add(new ScriptBundle("~/Scripts/bundles/app").Include(
                 "~/Scripts/App/"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
                 "~/Content/site.css"));
 
-            bundles.Add(new ScriptBundle("~/bundles/libs").Include(
+            bundles.Add(new ScriptBundle("~/Scripts/bundles/libs").Include(
                 "~/Scripts/Bundles/libs.js"));
 
-            bundles.Add(new ScriptBundle("~/bundles/main").Include(
+            bundles.Add(new ScriptBundle("~/Scripts/bundles/main").Include(
                 "~/Scripts/Bundles/main.js"));
 
-            bundles.Add(new StyleBundle("~/bundles/styles").Include(
+            bundles.Add(new StyleBundle("~/Content/bundles/styles").Include(
                 "~/Content/Bundles/styles.css", new CssRewriteUrlTransform()));
         }
     }
