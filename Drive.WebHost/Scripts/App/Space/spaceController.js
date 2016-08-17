@@ -18,7 +18,7 @@
         vm.addElem = addElem;
         vm.deleteElems = deleteElems;
         vm.spaceId = 0;
-        vm.parentId = 0;
+        vm.parentId = null;
 
         vm.space = {
             folders: [],
@@ -75,7 +75,7 @@
                 vm.folderList = localStorageService.get('list');
             });
             vm.folderList = [];
-            vm.parentId = 0;
+            vm.parentId = null;
         }
 
         function changeView(view) {
@@ -212,6 +212,7 @@
                 } else {
                     vm.space.folders[index] = folder;
                 }
+                localStorageService.set('folders', vm.space.folders);
             }, function () {
                 console.log('Modal dismissed');
             });
@@ -241,6 +242,7 @@
                 } else {
                     vm.space.files[index] = file;
                 }
+                localStorageService.set('files', vm.space.files);
             }, function () {
                 console.log('Modal dismissed');
             });
@@ -270,8 +272,9 @@
         function deleteFolder(id) {
             folderService.deleteFolder(id, function () {
                 var index = findById(vm.space.folders, id);
-                vm.space.folders.splice(index, 1);
+                vm.space.folders.splice(index, 1);                
             });
+            localStorageService.set('folders', vm.space.folders);
         }
 
         function getFolderContent(id) {
@@ -296,6 +299,7 @@
                 var index = findById(vm.space.files, id);
                 vm.space.files.splice(index, 1);
             });
+            localStorageService.set('files', vm.space.files);
         }
 
         function addElem(folder) {
