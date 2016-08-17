@@ -5,9 +5,9 @@
         .module("driveApp")
         .controller("SpaceController", SpaceController);
 
-    SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', '$uibModal'];
+    SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', '$uibModal', 'localStorageService'];
 
-    function SpaceController(spaceService, folderService, fileService, $uibModal) {
+    function SpaceController(spaceService, folderService, fileService, $uibModal, localStorageService) {
         var vm = this;
 
         vm.view = "fa fa-th";
@@ -19,6 +19,11 @@
         vm.deleteElems = deleteElems;
         vm.spaceId = 0;
         vm.parentId = 0;
+
+        vm.space = {
+            folders: [],
+            fildes: []
+        }
 
         vm.changeView = changeView;
         vm.activateTableView = activateTableView;
@@ -44,6 +49,15 @@
             spaceService.getSpace(1, function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
+
+                if(localStorageService.get('folders') != null)
+                    vm.space.folders = localStorageService.get('folders');
+
+                if (localStorageService.get('files') != null)
+                    vm.space.files = localStorageService.get('files');
+
+                if (localStorageService.get('list') != null)
+                    vm.folderList = localStorageService.get('list');
             });
         }
 
@@ -51,6 +65,14 @@
             spaceService.getSpace(1, function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
+
+                localStorageService.set('folders', data.folders);
+                localStorageService.set('files', data.files);
+                localStorageService.set('list', []);
+
+                vm.space.folders = localStorageService.get('folders');
+                vm.space.files = localStorageService.get('files');
+                vm.folderList = localStorageService.get('list');
             });
             vm.folderList = [];
             vm.parentId = 0;
@@ -257,6 +279,9 @@
             folderService.getContent(id, function (data) {
                 vm.space.folders = data.folders;
                 vm.space.files = data.files;
+
+                localStorageService.set('folders', data.folders);
+                localStorageService.set('files', data.files);
             });
         }
 
@@ -275,6 +300,7 @@
 
         function addElem(folder) {
             vm.folderList.push(folder);
+            localStorageService.set('list', vm.folderList);
         }
 
         function deleteElems(folder) {
@@ -284,6 +310,8 @@
                 }
                 vm.folderList.splice(i, 1);
             }
+
+            localStorageService.set('list', vm.folderList);
         }
     }
 }());
