@@ -14,7 +14,7 @@
         vm.submitted = false;
         vm.folder = {};
 
-        vm.title = 'Update Folder';
+        vm.title = 'Edit';
 
         activate();
 
