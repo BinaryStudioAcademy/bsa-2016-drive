@@ -109,7 +109,7 @@ namespace Drive.WebHost.Services.Pro
             return result;
         }
 
-        public async Task<int> CreateAsync(LectureDto dto)
+        public async Task<LectureDto> CreateAsync(LectureDto dto)
         {
             var lecture = new Lecture
             {
@@ -128,10 +128,10 @@ namespace Drive.WebHost.Services.Pro
 
             _unitOfWork.Lectures.Create(lecture);
             await _unitOfWork.SaveChangesAsync();
-            return lecture.Id;
+            return dto;
         }
 
-        public async Task UpdateAsync(int id, LectureDto dto)
+        public async Task<LectureDto> UpdateAsync(int id, LectureDto dto)
         {
             var lecture = await _unitOfWork.Lectures.GetByIdAsync(id);
             lecture.Name = dto.Name;
@@ -141,6 +141,8 @@ namespace Drive.WebHost.Services.Pro
             lecture.IsDeleted = dto.IsDeleted;
 
             await _unitOfWork.SaveChangesAsync();
+
+            return dto;
         }
 
         public async Task DeleteAsync(int id)

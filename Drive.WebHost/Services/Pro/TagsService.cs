@@ -47,7 +47,7 @@ namespace Drive.WebHost.Services.Pro
             return result;
         }
 
-        public async Task<int> CreateAsync(TagDto dto)
+        public async Task<TagDto> CreateAsync(TagDto dto)
         {
             var tag = new Tag
             {
@@ -57,10 +57,10 @@ namespace Drive.WebHost.Services.Pro
 
             _unitOfWork.Tags.Create(tag);
             await _unitOfWork.SaveChangesAsync();
-            return tag.Id;
+            return dto;
         }
 
-        public async Task UpdateAsync(int id, TagDto dto)
+        public async Task<TagDto> UpdateAsync(int id, TagDto dto)
         {
             var tag = await _unitOfWork.Tags.GetByIdAsync(id);
 
@@ -68,6 +68,8 @@ namespace Drive.WebHost.Services.Pro
             tag.IsDeleted = dto.IsDeleted;
 
             await _unitOfWork.SaveChangesAsync();
+
+            return dto;
         }
 
         public async Task DeleteAsync(int id)

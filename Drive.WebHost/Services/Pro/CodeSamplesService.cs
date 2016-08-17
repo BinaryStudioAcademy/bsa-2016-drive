@@ -49,7 +49,7 @@ namespace Drive.WebHost.Services.Pro
             return result;
         }
 
-        public async Task<int> CreateAsync(CodeSampleDto dto)
+        public async Task<CodeSampleDto> CreateAsync(CodeSampleDto dto)
         {
             var link = new CodeSample
             {
@@ -60,10 +60,10 @@ namespace Drive.WebHost.Services.Pro
 
             _unitOfWork.CodeSamples.Create(link);
             await _unitOfWork.SaveChangesAsync();
-            return link.Id;
+            return dto;
         }
 
-        public async Task UpdateAsync(int id, CodeSampleDto dto)
+        public async Task<CodeSampleDto> UpdateAsync(int id, CodeSampleDto dto)
         {
             var codeSample = await _unitOfWork.CodeSamples.GetByIdAsync(id);
 
@@ -72,6 +72,8 @@ namespace Drive.WebHost.Services.Pro
             codeSample.Code = dto.Code;
 
             await _unitOfWork.SaveChangesAsync();
+
+            return dto;
         }
 
         public async Task DeleteAsync(int id)

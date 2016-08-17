@@ -68,7 +68,7 @@ namespace Drive.WebHost.Services.Pro
             return courses;
         }
 
-        public async Task<int> CreateAsync(AcademyProCourseDto dto)
+        public async Task<AcademyProCourseDto> CreateAsync(AcademyProCourseDto dto)
         {
             var course = new AcademyProCourse
             {
@@ -82,10 +82,10 @@ namespace Drive.WebHost.Services.Pro
 
             _unitOfWork.AcademyProCourses.Create(course);
             await _unitOfWork.SaveChangesAsync();
-            return course.Id;
+            return dto;
         }
 
-        public async Task UpdateAsync(int id, AcademyProCourseDto dto)
+        public async Task<AcademyProCourseDto> UpdateAsync(int id, AcademyProCourseDto dto)
         {
             var course = await _unitOfWork.AcademyProCourses.GetByIdAsync(id);
             course.Name = dto.Name;
@@ -94,6 +94,8 @@ namespace Drive.WebHost.Services.Pro
             course.ModifiedAt = DateTime.Now;
 
             await _unitOfWork.SaveChangesAsync();
+
+            return dto;
         }
 
         public async Task DeleteAsync(int id)

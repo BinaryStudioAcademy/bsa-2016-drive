@@ -11,8 +11,8 @@ namespace Drive.WebHost.Services.Pro.Abstract
     {
         Task<IEnumerable<T>> GetAllAsync();
         Task<T> GetAsync(int id);
-        Task<int> CreateAsync(T dto);
-        Task UpdateAsync(int id, T dto);
+        Task<T> CreateAsync(T dto);
+        Task<T> UpdateAsync(int id, T dto);
         Task DeleteAsync(int id);
         void Dispose();
     }

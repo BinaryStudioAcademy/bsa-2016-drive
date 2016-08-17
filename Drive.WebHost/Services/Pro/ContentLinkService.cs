@@ -53,7 +53,7 @@ namespace Drive.WebHost.Services.Pro
             return result;
         }
 
-        public async Task<int> CreateAsync(ContentLinkDto dto)
+        public async Task<ContentLinkDto> CreateAsync(ContentLinkDto dto)
         {
             var link = new ContentLink
             {
@@ -66,10 +66,10 @@ namespace Drive.WebHost.Services.Pro
 
             _unitOfWork.ContentLinks.Create(link);
             await _unitOfWork.SaveChangesAsync();
-            return link.Id;
+            return dto;
         }
 
-        public async Task UpdateAsync(int id, ContentLinkDto dto)
+        public async Task<ContentLinkDto> UpdateAsync(int id, ContentLinkDto dto)
         {
             var link = await _unitOfWork.ContentLinks.GetByIdAsync(id);
             link.Name = dto.Name;
@@ -79,6 +79,8 @@ namespace Drive.WebHost.Services.Pro
             link.IsDeleted = dto.IsDeleted;
 
             await _unitOfWork.SaveChangesAsync();
+
+            return dto;
         }
 
         public async Task DeleteAsync(int id)
