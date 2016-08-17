@@ -15,7 +15,6 @@
         vm.redirectToSpace = redirectToSpace;
         vm.redirectToSpaceSettings = redirectToSpaceSettings;
         vm.redirectToAddFile = redirectToAddFile;
-        vm.redirectToNetSpace = redirectToNetSpace;
         vm.redirectToAdminPanel = redirectToAdminPanel;
         vm.redirectToApps = redirectToApps;
         vm.getAllSpaces = getAllSpaces;
@@ -40,10 +39,6 @@
 
         function redirectToSpace(id) {
             $location.url("/spaces/:id" + id);
-        };
-
-        function redirectToNetSpace() {
-            $location.url("/netspace");
         };
 
         function redirectToSpaceSettings(id) {

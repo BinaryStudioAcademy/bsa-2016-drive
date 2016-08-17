@@ -1,4 +1,5 @@
-﻿<div id="wrapper" ng-controller="MenuController as menuController">
+﻿
+<div id="wrapper" ng-controller="MenuController as menuController">
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
             <button class="btn btn-info btn-md" style="width: 100%; height: 40px;" ng-click="menuController.open('lg')"><i class="fa iconCustom fa-plus-circle fa-cog fa-lg"></i>Add new Space</button>
@@ -24,12 +25,6 @@
                         <button class="btn btn-custom pull-right btn-md" title="Space Settings" ng-click="menuController.redirectToSpaceSettings(item.id)"><i class="fa fa-inverse fa-wrench faa-wrench animated-hover fa-lg"></i></button>
                         <div class="d" ng-click='menuController.redirectToSpace(item.id)' title="{{item.description}}">
                             <span class="fa-stack fa-lg pull-left"><i class="fa fa-circle-o  fa-stack-1x"></i></span>{{item.name}}
-                        </div>
-                    </li>
-                    <li>
-                        <button class="btn btn-custom pull-right btn-md" title=".Net Space Settings" ng-click="menuController.redirectToSpaceSettings(item.id)"><i class="fa fa-inverse fa-wrench faa-wrench animated-hover fa-lg"></i></button>
-                        <div class="d" ng-click="menuController.redirectToNetSpace()">
-                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-code fa-stack-1x "></i></span>.Net
                         </div>
                     </li>
                 </ul>

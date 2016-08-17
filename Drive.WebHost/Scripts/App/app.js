@@ -29,12 +29,6 @@
                     controller: "SpaceController",
                     controllerAs: "spaceCtrl"
                 })
-                .when("/netspace", // .Net Space page
-                {
-                    templateUrl: "/Scripts/App/Space/Space.html",
-                    controller: "SpaceController",
-                    controllerAs: "spaceCtrl"
-                })
                  .when("/spaces/:id/settings/", // Space settings Page
                 {
                     templateUrl: "/Scripts/App/Space/Settings.html",
