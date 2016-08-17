@@ -1,5 +1,5 @@
 ﻿
-<div class="container col-md-12">
+<div class="container col-md-12" context-menu="spaceCtrl.createOption">
     <br />
     <div class="btn-group btn-breadcrumb">
         <a class="btn btn-info" ng-click="spaceCtrl.getSpace()"><i class="glyphicon glyphicon-home"></i> {{spaceCtrl.space.name}}</a>
@@ -60,9 +60,9 @@
             </div>
         </div>
     </div>
-    <div class="wrapper" ng-show="spaceCtrl.showGrid" context-menu="spaceCtrl.createOption">
+    <div class="wrapper" ng-show="spaceCtrl.showGrid">
         <div class="masonry">
-            <div role="button" class="item btn-default" context-menu="spaceCtrl.folderMenuOptions" ng-repeat="folder in spaceCtrl.space.folders" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
+            <div role="button" class="item btn-default shadow" context-menu="spaceCtrl.folderMenuOptions" ng-repeat="folder in spaceCtrl.space.folders" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
                 <i class="fa fa-folder-o fa-5x"></i>
                 <br>
                 <span class="bold">Name: </span>
@@ -76,7 +76,7 @@
             </div>
         </div>
         <div class="masonry">
-            <div role="button" class="item btn-default" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}">
+            <div role="button" class="item btn-default shadow" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}">
                 <i class="fa fa-file-o fa-5x"></i>
                 <br>
                 <span class="bold">File type: </span>
@@ -104,7 +104,7 @@
                     <th class="type" style="width: 10%">Type</th>
                 </tr>
             </thead>
-            <tr role="button" ng-repeat="folder in spaceCtrl.space.folders" context-menu="spaceCtrl.folderMenuOptions" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
+            <tr class="shadow" role="button" ng-repeat="folder in spaceCtrl.space.folders" context-menu="spaceCtrl.folderMenuOptions" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
                 <td>
                     <i class="fa fa-folder-o">&nbsp;</i>{{ folder.name }}
                 </td>
@@ -113,7 +113,7 @@
                 <td>{{ folder.createdAt | date : 'short' }}</td>
                 <td>Folder</td>
             </tr>
-            <tr role="button" ng-repeat="file in spaceCtrl.space.files" context-menu="spaceCtrl.fileMenuOptions">
+            <tr class="shadow" role="button" ng-repeat="file in spaceCtrl.space.files" context-menu="spaceCtrl.fileMenuOptions">
                 <td>
                     <i class="fa fa-file-o">&nbsp;</i>{{ file.name }}
                 </td>
