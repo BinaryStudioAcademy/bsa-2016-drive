@@ -24,7 +24,7 @@ gulp.task("bower", function () {
     return bower("./bower_components");
 });
 
-gulp.task("clean", ["clean:js", "clean:css", "clean:fonts"]);
+gulp.task("clean", ["clean:js", "clean:css"]);
 
 gulp.task("clean:js", function (cb) {
     rimraf(paths.scriptBundles, cb);
@@ -34,9 +34,9 @@ gulp.task("clean:css", function (cb) {
     rimraf(paths.contentBundles, cb);
 });
 
-gulp.task("clean:fonts", function (cb) {
-    rimraf(paths.fontBundles, cb);
-});
+//gulp.task("clean:fonts", function (cb) {
+//    rimraf(paths.fontBundles, cb);
+//});
 
 gulp.task("main", function () {
     gulp.src(["./Scripts/App/*.js", "./Scripts/App/**/*.js"])
