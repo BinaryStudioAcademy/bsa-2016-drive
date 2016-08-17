@@ -40,8 +40,15 @@
         vm.openFileWindow = openFileWindow;
 
         vm.findById = findById;
-
         vm.getSpace = getSpace;
+
+        vm.createNewFolder = createNewFolder;
+        vm.createNewDocument = createNewDocument;
+        vm.createNewSheet = createNewSheet;
+        vm.createNewSlide = createNewSlide;
+        vm.createNewTrello = createNewTrello;
+        vm.createNewLink = createNewLink;
+        vm.uploadNewFile = uploadNewFile;
 
         activate();
 
@@ -246,6 +253,41 @@
             }, function () {
                 console.log('Modal dismissed');
             });
+        }
+
+        function createNewFolder() {
+            vm.folder = { parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.openFolderWindow();
+        }
+
+        function createNewDocument() {
+            vm.file = { type: 1, parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.openFileWindow();
+        }
+
+        function createNewSheet() {
+            vm.file = { type: 2, parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.openFileWindow();
+        }
+
+        function createNewSlide() {
+            vm.file = { type: 3, parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.openFileWindow();
+        }
+
+        function createNewTrello() {
+            vm.file = { type: 4, parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.openFileWindow();
+        }
+
+        function createNewLink() {
+            vm.file = { type: 5, parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.openFileWindow();
+        }
+
+        function uploadNewFile() {
+            vm.file = { type: 6, parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.openFileWindow();
         }
 
         function getFolder(id) {
