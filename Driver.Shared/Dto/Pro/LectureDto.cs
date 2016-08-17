@@ -15,7 +15,15 @@ namespace Driver.Shared.Dto.Pro
 
         public DateTime StartDate { get; set; }
 
-        public IEnumerable<ContentLinkDto> ContentList { get; set; }
+        public IEnumerable<ContentLinkDto> VideoLinks { get; set; }
+
+        public IEnumerable<ContentLinkDto> SlidesLinks { get; set; }
+
+        public IEnumerable<ContentLinkDto> SampleLinks { get; set; }
+
+        public IEnumerable<ContentLinkDto> UsefulLinks { get; set; }
+
+        public IEnumerable<ContentLinkDto> RepositoryLinks { get; set; }
 
         public IEnumerable<TagDto> Tags { get; set; }
         public IEnumerable<CodeSampleDto> CodeSamples { get; set; }
