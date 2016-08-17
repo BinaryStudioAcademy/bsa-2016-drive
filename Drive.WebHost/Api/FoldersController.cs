@@ -80,13 +80,26 @@ namespace Drive.WebHost.Api
             return Ok();
         }
 
+        // GET: api/content/(int)?page=(int)&count=(int)
         [Route("~/api/content/{id:int}")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetContentAsync(int id)
+        public async Task<IHttpActionResult> GetContentAsync(int id, int page = 1, int count = 100)
         {
-            var dto = await _service.GetContentAsync(id);
+            var result = await _service.GetContentAsync(id, page, count);
 
-            return Ok(dto);
+            return Ok(result);
+        }
+
+        // GET: api/content/(int)/total
+        [Route("~/api/content/{id:int}/total")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetContentTotalAsync(int id)
+        {
+            var result = await _service.GetContentTotalAsync(id);
+            //if (result == 0)
+            //    return NotFound();
+
+            return Ok(result);
         }
     }
 }

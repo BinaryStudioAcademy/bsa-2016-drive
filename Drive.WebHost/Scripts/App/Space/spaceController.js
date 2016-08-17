@@ -55,16 +55,22 @@
 
         vm.paginate = {
             currentPage: 1,
-            pageSize: 10,
-            numberOfItems: 0
+            pageSize: 2,
+            numberOfItems: 0,
+            getContent: null
         }
+
+        vm.pageChanged = function (pageNumber) {
+            vm.paginate.currentPage = pageNumber;
+            vm.paginate.getContent();
+        }
+        
 
         activate();
 
         function activate() {
-            vm.searchText = '';
             vm.parentId = null;
-            spaceService.getSpace(1, function (data) {
+            spaceService.getSpace(1,vm.paginate.currentPage,vm.paginate.pageSize, function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
 
@@ -77,10 +83,18 @@
                 if (localStorageService.get('list') != null)
                     vm.folderList = localStorageService.get('list');
             });
+            getSpace();
         }
 
         function getSpace() {
-            spaceService.getSpace(1, function (data) {
+            vm.searchText = '';
+            getSpaceContent();
+            getSpaceTotal();
+            vm.paginate.getContent = getSpaceContent
+        }
+
+        function getSpaceContent() {
+            spaceService.getSpace(1, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
 
@@ -95,6 +109,13 @@
             vm.folderList = [];
             vm.parentId = null;
         }
+
+        function getSpaceTotal() {
+            spaceService.getSpaceTotal(1, function (data) {
+                vm.paginate.numberOfItems = data;
+            });
+        }
+
 
         function changeView(view) {
             if (view == "fa fa-th") {
@@ -331,14 +352,27 @@
         }
 
         function getFolderContent(id) {
+            vm.paginate.getContent = getFolderContentFromApi;
             vm.searchText = '';
             vm.parentId = id;
-            folderService.getContent(id, function (data) {
+            getFolderContentFromApi();
+            getFolderContentTotal(id);
+        }
+
+        function getFolderContentFromApi() {
+            vm.searchText = '';
+             folderService.getContent(vm.parentId, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
                 vm.space.folders = data.folders;
                 vm.space.files = data.files;
 
                 localStorageService.set('folders', data.folders);
                 localStorageService.set('files', data.files);
+            });
+        }
+
+        function getFolderContentTotal(id) {
+            folderService.getFolderContentTotal(id, function (data) {
+                vm.paginate.numberOfItems = data;
             });
         }
 
@@ -373,6 +407,7 @@
         }
 
         function search() {
+            vm.paginate.getContent = getResultSearchFoldersAndFiles;
             getResultSearchFoldersAndFiles();
             getNumberOfResultSearch();
         }
