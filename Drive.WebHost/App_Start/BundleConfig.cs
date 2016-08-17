@@ -10,8 +10,8 @@ namespace Drive.WebHost
                 "~/Scripts/App/"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                "~/Content/bootstrap.css")
-                .Include("~/Content/site.css", new CssRewriteUrlTransform()));
+                "~/Content/bootstrap.css",
+                "~/Content/site.css"));
 
             bundles.Add(new ScriptBundle("~/bundles/libs").Include(
                 "~/Scripts/Bundles/libs.js"));
@@ -20,7 +20,7 @@ namespace Drive.WebHost
                 "~/Scripts/Bundles/main.js"));
 
             bundles.Add(new StyleBundle("~/bundles/styles").Include(
-                "~/Content/Bundles/styles.css"));
+                "~/Content/Bundles/styles.css", new CssRewriteUrlTransform()));
         }
     }
 }
