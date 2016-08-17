@@ -18,7 +18,7 @@
         vm.addElem = addElem;
         vm.deleteElems = deleteElems;
         vm.spaceId = 0;
-        vm.parentId = 0;
+        vm.parentId = null;
 
         vm.space = {
             folders: [],
@@ -40,12 +40,30 @@
         vm.openFileWindow = openFileWindow;
 
         vm.findById = findById;
-
         vm.getSpace = getSpace;
+
+        vm.createNewFolder = createNewFolder;
+        vm.createNewDocument = createNewDocument;
+        vm.createNewSheet = createNewSheet;
+        vm.createNewSlide = createNewSlide;
+        vm.createNewTrello = createNewTrello;
+        vm.createNewLink = createNewLink;
+        vm.uploadNewFile = uploadNewFile;
+
+        vm.search = search;
+        vm.searchText = '';
+
+        vm.paginate = {
+            currentPage: 1,
+            pageSize: 10,
+            numberOfItems: 0
+        }
 
         activate();
 
         function activate() {
+            vm.searchText = '';
+            vm.parentId = null;
             spaceService.getSpace(1, function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
@@ -75,7 +93,7 @@
                 vm.folderList = localStorageService.get('list');
             });
             vm.folderList = [];
-            vm.parentId = 0;
+            vm.parentId = null;
         }
 
         function changeView(view) {
@@ -212,6 +230,7 @@
                 } else {
                     vm.space.folders[index] = folder;
                 }
+                localStorageService.set('folders', vm.space.folders);
             }, function () {
                 console.log('Modal dismissed');
             });
@@ -241,9 +260,45 @@
                 } else {
                     vm.space.files[index] = file;
                 }
+                localStorageService.set('files', vm.space.files);
             }, function () {
                 console.log('Modal dismissed');
             });
+        }
+
+        function createNewFolder() {
+            vm.folder = { parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.openFolderWindow();
+        }
+
+        function createNewDocument() {
+            vm.file = { type: 1, parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.openFileWindow();
+        }
+
+        function createNewSheet() {
+            vm.file = { type: 2, parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.openFileWindow();
+        }
+
+        function createNewSlide() {
+            vm.file = { type: 3, parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.openFileWindow();
+        }
+
+        function createNewTrello() {
+            vm.file = { type: 4, parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.openFileWindow();
+        }
+
+        function createNewLink() {
+            vm.file = { type: 5, parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.openFileWindow();
+        }
+
+        function uploadNewFile() {
+            vm.file = { type: 6, parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.openFileWindow();
         }
 
         function getFolder(id) {
@@ -270,11 +325,13 @@
         function deleteFolder(id) {
             folderService.deleteFolder(id, function () {
                 var index = findById(vm.space.folders, id);
-                vm.space.folders.splice(index, 1);
+                vm.space.folders.splice(index, 1);                
             });
+            localStorageService.set('folders', vm.space.folders);
         }
 
         function getFolderContent(id) {
+            vm.searchText = '';
             vm.parentId = id;
             folderService.getContent(id, function (data) {
                 vm.space.folders = data.folders;
@@ -296,6 +353,7 @@
                 var index = findById(vm.space.files, id);
                 vm.space.files.splice(index, 1);
             });
+            localStorageService.set('files', vm.space.files);
         }
 
         function addElem(folder) {
@@ -313,5 +371,24 @@
 
             localStorageService.set('list', vm.folderList);
         }
+
+        function search() {
+            getResultSearchFoldersAndFiles();
+            getNumberOfResultSearch();
+        }
+
+        function getResultSearchFoldersAndFiles() {
+            spaceService.searchFoldersAndFiles(vm.spaceId, vm.parentId, vm.searchText, vm.paginate.currentPage,vm.paginate.pageSize, function (data) {
+                vm.space.folders = data.folders;
+                vm.space.files = data.files;
+            });
+        }
+
+        function getNumberOfResultSearch(){
+            spaceService.getNumberOfResultSearchFoldersAndFiles(vm.spaceId, vm.parentId, vm.searchText, function (data) {
+                vm.paginate.numberOfItems = data;
+            });
+        }
+
     }
 }());

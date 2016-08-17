@@ -31,7 +31,7 @@ namespace Drive.WebHost.Services
                 MaxFileSize = s.MaxFileSize,
                 MaxFilesQuantity = s.MaxFilesQuantity,
                 ReadPermittedUsers = s.ReadPermittedUsers,
-                Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null).Select(f => new FileUnitDto
+                Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null).Where(f => f.IsDeleted == false).Select(f => new FileUnitDto
                 {
                     Description = f.Description,
                     FyleType = f.FileType,
@@ -39,7 +39,7 @@ namespace Drive.WebHost.Services
                     IsDeleted = f.IsDeleted,
                     Name = f.Name
                 }),
-                Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.Parent == null).Select(f => new FolderUnitDto
+                Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.Parent == null).Where(f => f.IsDeleted == false).Select(f => new FolderUnitDto
                 {
                     Id = f.Id,
                     Name = f.Name,

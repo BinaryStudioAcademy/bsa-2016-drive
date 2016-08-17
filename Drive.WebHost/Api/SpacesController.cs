@@ -72,6 +72,7 @@ namespace Drive.WebHost.Api
         [Route("{spaceId:int}/search")]
         public async Task<IHttpActionResult> SearchFolderAndFile(int spaceId, string text = "", int page = 1, int count = 100, int? folderId = null)
         {
+            text = text == null? string.Empty : text;
             var searchResultDto = await _spaceService?.SearchFoldersAndFilesAsync(spaceId, folderId, text, page, count);
 
             if (searchResultDto == null || (searchResultDto.Files.Count == 0 && searchResultDto.Folders.Count == 0))
@@ -84,6 +85,7 @@ namespace Drive.WebHost.Api
         [Route("{spaceId:int}/total")]
         public async Task<IHttpActionResult> NumberOfFoundFoldersAndFiles(int spaceId, string text = "", int? folderId = null)
         {
+            text = text == null ? string.Empty : text;
             int result = await _spaceService?.NumberOfFoundFoldersAndFilesAsync(spaceId, folderId, text);
             if (result == 0)
                 return NotFound();

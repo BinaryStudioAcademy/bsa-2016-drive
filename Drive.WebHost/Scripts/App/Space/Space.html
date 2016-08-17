@@ -1,5 +1,6 @@
-﻿<div class="container col-md-12">
-    <br/>
+﻿
+<div class="container col-md-12" context-menu="spaceCtrl.createOption">
+    <br />
     <div class="btn-group btn-breadcrumb">
         <a class="btn btn-info" ng-click="spaceCtrl.getSpace()"><i class="glyphicon glyphicon-home"></i> {{spaceCtrl.space.name}}</a>
         <a ng-repeat="item in spaceCtrl.folderList" ng-click="spaceCtrl.getFolderContent(item.id); spaceCtrl.deleteElems(item)" class="btn btn-default">{{item.name}}</a>
@@ -10,14 +11,48 @@
                 <i class={{spaceCtrl.view}} title="view"> </i>
             </button>
         </div>
+        <div class="col-sm-3 pull-left nopadding">
+            <div class="btn-group">
+                <div class="btn btn-default">Create</div>
+                <button type="button" class="btn btn-primary" ng-click="spaceCtrl.createNewFolder()" title="Create new folder">
+                    <i class="fa fa-folder-open-o fa-lg"></i> Folder
+                </button>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" title="Create new file">
+                        <i class="fa fa-file-o fa-lg"></i> File <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                        <li>
+                            <a href="#" ng-click="spaceCtrl.createNewDocument()"><i class="fa fa-file-text-o fa-lg"></i> Document</a>
+                        </li>
+                        <li>
+                            <a href="#" ng-click="spaceCtrl.createNewSheet()"><i class="fa fa-table fa-lg"></i> Sheet</a>
+                        </li>
+                        <li>
+                            <a href="#" ng-click="spaceCtrl.createNewSlide()"><i class="fa fa-slideshare fa-lg"></i> Slide</a>
+                        </li>
+                        <li>
+                            <a href="#" ng-click="spaceCtrl.createNewTrello()"><i class="fa fa-trello fa-lg"></i> Trello</a>
+                        </li>
+                        <li>
+                            <a href="#" ng-click="spaceCtrl.createNewLink()"><i class="fa fa-link fa-lg"></i> Link</a>
+                        </li>
+                        <li role="separator" class="divider"></li>
+                        <li>
+                            <a href="#" ng-click="spaceCtrl.uploadNewFile()"><i class="fa fa-upload fa-lg"></i> Upload file</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
         <div>
             <div class="col-sm-3 pull-right nopadding">
                 <div>
                     <form role="search">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search input" name="srch-term" id="srch-term">
+                            <input type="text" class="form-control" placeholder="Search input" name="srch-term" id="srch-term" ng-model="spaceCtrl.searchText">
                             <div class="input-group-btn">
-                                <button class="btn btn-default" type="submit">Search</button>
+                                <button class="btn btn-default" type="submit" ng-click="spaceCtrl.search()">Search</button>
                             </div>
                         </div>
                     </form>
@@ -25,22 +60,36 @@
             </div>
         </div>
     </div>
-    <div  class="wrapper" ng-show="spaceCtrl.showGrid" context-menu="spaceCtrl.createOption">
+    <div class="wrapper" ng-show="spaceCtrl.showGrid">
         <div class="masonry">
-            <div role="button" class="item btn-default" context-menu="spaceCtrl.folderMenuOptions" ng-repeat="folder in spaceCtrl.space.folders" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
+            <div role="button" class="item btn-default shadow" context-menu="spaceCtrl.folderMenuOptions" ng-repeat="folder in spaceCtrl.space.folders" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
                 <i class="fa fa-folder-o fa-5x"></i>
-                <br><span class="bold">Name: </span><span>{{ folder.name }}</span>
-                <br><span class="bold">Description: </span><span>{{ folder.description }}</span>
-                <br><span class="bold">Author: </span><span>{{ folder.author.firstName }} {{ folder.author.lastName }}</span>
+                <br>
+                <span class="bold">Name: </span>
+                <span>{{ folder.name }}</span>
+                <br>
+                <span class="bold">Description: </span>
+                <span>{{ folder.description }}</span>
+                <br>
+                <span class="bold">Author: </span>
+                <span>{{ folder.author.firstName }} {{ folder.author.lastName }}</span>
             </div>
         </div>
         <div class="masonry">
-            <div role="button" class="item btn-default" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}">
+            <div role="button" class="item btn-default shadow" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}">
                 <i class="fa fa-file-o fa-5x"></i>
-                <br><span class="bold">File type: </span><span>{{ file.fyleType | typeOfFile }}</span>
-                <br><span class="bold">Name: </span><span>{{ file.name }}</span>
-                <br><span class="bold">Description: </span><span>{{ file.description }}</span>
-                <br><span class="bold">Author: </span><span>{{ file.author.firstName }} {{ file.author.lastName }}</span>
+                <br>
+                <span class="bold">File type: </span>
+                <span>{{ file.fyleType | typeOfFile }}</span>
+                <br>
+                <span class="bold">Name: </span>
+                <span>{{ file.name }}</span>
+                <br>
+                <span class="bold">Description: </span>
+                <span>{{ file.description }}</span>
+                <br>
+                <span class="bold">Author: </span>
+                <span>{{ file.author.firstName }} {{ file.author.lastName }}</span>
             </div>
         </div>
     </div>
@@ -55,15 +104,19 @@
                     <th class="type" style="width: 10%">Type</th>
                 </tr>
             </thead>
-            <tr role="button" ng-repeat="folder in spaceCtrl.space.folders" context-menu="spaceCtrl.folderMenuOptions" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
-                <td><i class="fa fa-folder-o">&nbsp;</i>{{ folder.name }}</td>
+            <tr class="shadow" role="button" ng-repeat="folder in spaceCtrl.space.folders" context-menu="spaceCtrl.folderMenuOptions" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
+                <td>
+                    <i class="fa fa-folder-o">&nbsp;</i>{{ folder.name }}
+                </td>
                 <td>{{ folder.description }}</td>
                 <td>{{ folder.author.firstName }} {{ folder.author.lastName }}</td>
                 <td>{{ folder.createdAt | date : 'short' }}</td>
                 <td>Folder</td>
             </tr>
-            <tr role="button" ng-repeat="file in spaceCtrl.space.files" context-menu="spaceCtrl.fileMenuOptions">
-                <td><i class="fa fa-file-o">&nbsp;</i>{{ file.name }}</td>
+            <tr class="shadow" role="button" ng-repeat="file in spaceCtrl.space.files" context-menu="spaceCtrl.fileMenuOptions">
+                <td>
+                    <i class="fa fa-file-o">&nbsp;</i>{{ file.name }}
+                </td>
                 <td>{{ file.description }}</td>
                 <td>{{ file.author.firstName }} {{ file.author.lastName }}</td>
                 <td>{{ file.createdAt | date : 'short' }}</td>
@@ -75,63 +128,72 @@
 
 <style type="text/css">
     .wrapper {
-	width: 100%;
-	margin: 0 auto;
-}
-.masonry {
-	margin: 0 2em 2em 0;
-	padding: 0.5em;
-	column-gap: 1em;
-	-moz-column-gap: 1em;
-	-webkit-column-gap: 1em;
-}
-.item {
-	display: inline-block;
-	background: #fff;
-	padding: 1em;
-	width: 200px;
-    height: 200px;
-	box-sizing: border-box;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
-    border: 1px solid #ccc;
-}
-.bold {
-    font-weight: bold;
+        width: 100%;
+        margin: 0 auto;
     }
-@media only screen and (min-width: 400px) {
-	.masonry {
-		-moz-column-count: 2;
-		-webkit-column-count: 2;
-		column-count: 2;
-	}
-}
-@media only screen and (min-width: 700px) {
-	.masonry {
-		-moz-column-count: 3;
-		-webkit-column-count: 3;
-		column-count: 3;
-	}
-}
-@media only screen and (min-width: 900px) {
-	.masonry {
-		-moz-column-count: 4;
-		-webkit-column-count: 4;
-		column-count: 4;
-	}
-}
-@media only screen and (min-width: 1100px) {
-	.masonry {
-		-moz-column-count: 5;
-		-webkit-column-count: 5;
-		column-count: 5;
-	}
-}
-@media only screen and (min-width: 1280px) {
-	.wrapper {
-		width: 1260px;
-	}
-}
+
+    .masonry {
+        margin: 0 2em 2em 0;
+        padding: 0.5em;
+        column-gap: 1em;
+        -moz-column-gap: 1em;
+        -webkit-column-gap: 1em;
+    }
+
+    .item {
+        display: inline-block;
+        background: #fff;
+        padding: 1em;
+        width: 200px;
+        height: 200px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        -webkit-box-sizing: border-box;
+        border: 1px solid #ccc;
+    }
+
+    .bold {
+        font-weight: bold;
+    }
+
+    @media only screen and (min-width: 400px) {
+        .masonry {
+            -moz-column-count: 2;
+            -webkit-column-count: 2;
+            column-count: 2;
+        }
+    }
+
+    @media only screen and (min-width: 700px) {
+        .masonry {
+            -moz-column-count: 3;
+            -webkit-column-count: 3;
+            column-count: 3;
+        }
+    }
+
+    @media only screen and (min-width: 900px) {
+        .masonry {
+            -moz-column-count: 4;
+            -webkit-column-count: 4;
+            column-count: 4;
+        }
+    }
+
+    @media only screen and (min-width: 1100px) {
+        .masonry {
+            -moz-column-count: 5;
+            -webkit-column-count: 5;
+            column-count: 5;
+        }
+    }
+
+    @media only screen and (min-width: 1280px) {
+        .wrapper {
+            width: 1260px;
+        }
+    }
+
     table {
         color: #666;
         text-shadow: 1px 1px 0px #fff;
