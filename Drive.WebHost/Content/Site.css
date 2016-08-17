@@ -409,12 +409,12 @@ hr.style {
 }
 
 .btn {
-    box-shadow: 0 7px #999;
+    box-shadow: 0 1px #999;
 }
 
 .btn:active {
-  box-shadow: 0 3px #666;
-  transform: translateY(4px);
+  box-shadow: 0 1px #666;
+  transform: translateY(1px);
 }
 
 .btn.btn-custom, .btn.btn-info.menu {
