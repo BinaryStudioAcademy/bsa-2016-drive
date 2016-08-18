@@ -245,11 +245,10 @@
     <Content Include="Scripts\App\Events\Events.html" />
     <Content Include="Scripts\App\Events\eventsController.js" />
     <Content Include="Scripts\App\File\FileForm.html" />
-    <Content Include="Scripts\App\File\FileList.html" />
     <Content Include="Scripts\App\File\fileService.js" />
     <Content Include="Scripts\App\File\fileModalController.js" />
+    <Content Include="Scripts\App\File\fileType.filter.js" />
     <Content Include="Scripts\App\File\Modal.html" />
-    <Content Include="Scripts\App\Folder\Folder.html" />
     <Content Include="Scripts\App\Folder\folderService.js" />
     <Content Include="Scripts\App\Folder\CreateUpdateFolderForm.html" />
     <Content Include="Scripts\App\Folder\Modal.html" />
