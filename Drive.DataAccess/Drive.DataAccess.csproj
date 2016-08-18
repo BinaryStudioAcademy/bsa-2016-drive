@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\DriveContext.cs" />
+    <Compile Include="Context\DriveDBInitializer.cs" />
     <Compile Include="Entities\Log.cs" />
     <Compile Include="Entities\Pro\AcademyProCourse.cs" />
     <Compile Include="Entities\Pro\CodeSample.cs" />
