@@ -82,7 +82,7 @@
                 <span>{{ folder.description }}</span>
                 <br>
                 <span class="bold">Author: </span>
-                <span>{{ folder.author.firstName }} {{ folder.author.lastName }}</span>
+                <span>{{ folder.author.name }}</span>
             </div>
         </div>
         <div class="small">
@@ -99,7 +99,7 @@
                 <span>{{ file.description }}</span>
                 <br>
                 <span class="bold">Author: </span>
-                <span>{{ file.author.firstName }} {{ file.author.lastName }}</span>
+                <span>{{ file.author.name }}</span>
             </div>
         </div>
     </div>
@@ -117,14 +117,14 @@
             <tr class="shadow" role="button" ng-repeat="folder in spaceCtrl.space.folders" context-menu="spaceCtrl.folderMenuOptions" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
                 <td><i class="fa fa-folder-o">&nbsp;</i>{{ folder.name }}</td>
                 <td>{{ folder.description }}</td>
-                <td>{{ folder.author.firstName }} {{ folder.author.lastName }}</td>
+                <td>{{ folder.author.name }}</td>
                 <td>{{ folder.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
                 <td>Folder</td>
             </tr>
             <tr class="shadow" role="button" ng-repeat="file in spaceCtrl.space.files" context-menu="spaceCtrl.fileMenuOptions" ng-dblclick="spaceCtrl.openDocument(file.link)">
                 <td> <i class="fa fa-file-o">&nbsp;</i>{{ file.name }}</td>
                 <td>{{ file.description }}</td>
-                <td>{{ file.author.firstName }} {{ file.author.lastName }}</td>
+                <td>{{ file.author.name }}</td>
                 <td>{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
                 <td>{{ file.fileType | typeOfFile }}</td>
             </tr>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Driver.Shared.Dto.Users;
 
 namespace Driver.Shared.Dto.Pro
 {

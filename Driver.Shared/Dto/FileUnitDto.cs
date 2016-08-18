@@ -1,11 +1,12 @@
-﻿using Drive.DataAccess.Entities;
-using System;
+﻿using System;
+using Drive.DataAccess.Entities;
+using Driver.Shared.Dto.Users;
 
 namespace Driver.Shared.Dto
 {
     public class FileUnitDto
     {
-        public User Owner { get; set; }
+        //public User Owner { get; set; }
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
         public FileType FileType { get; set; }
