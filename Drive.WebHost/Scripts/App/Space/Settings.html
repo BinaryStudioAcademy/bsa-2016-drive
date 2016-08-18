@@ -16,7 +16,11 @@
             <form name="settingsForm" novalidate>
                 <div class="col-md-12">
                     <label>Space name:</label>
-                    <input type="text" class="form-control" ng-model="settingsCtrl.space.name">
+                    <input type="text" class="form-control" name="spaceName" ng-pattern="/^[a-zA-Z0-9-]*$/" ng-model="settingsCtrl.space.name" required>
+                    <div>
+                        <span style="color:red" ng-show="settingsForm.spaceName.$error.pattern">Not a valid name</span>
+                        <span style="color:red" ng-show="settingsForm.spaceName.$error.required">Data is required</span>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <label>Description:</label>
@@ -24,15 +28,23 @@
                 </div>
                 <div class="col-md-12">
                     <label>Maximum Files Quantity:</label>
-                    <input type="number" class="form-control" min="0" step="1" ng-model="settingsCtrl.space.maxFilesQuantity">
+                    <input type="text" class="form-control" name="maxQuantity" ng-pattern="/^(1|^[1-9][0-9]*)$/" ng-model="settingsCtrl.space.maxFilesQuantity" required>
+                    <div>
+                        <span style="color:red" ng-show="settingsForm.maxQuantity.$error.pattern">Not a valid quantity</span>
+                        <span style="color:red" ng-show="settingsForm.maxQuantity.$error.required">Data is required</span>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <label>Maximum file size (MB):</label>
-                    <input type="number" class="form-control" min="0" step="1" max="1024" ng-model="settingsCtrl.space.maxFileSize">
+                    <input type="text" class="form-control" name="maxSize" ng-pattern="/^(1|^[1-9][0-9]*)$/" ng-model="settingsCtrl.space.maxFileSize" required>
+                    <div>
+                        <span style="color:red" ng-show="settingsForm.maxSize.$error.pattern">Not a valid size</span>
+                        <span style="color:red" ng-show="settingsForm.maxSize.$error.required">Data is required</span>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <br />
-                    <button class="btn btn-primary" ng-click="settingsCtrl.save()">Save</button>
+                    <button class="btn btn-primary" ng-click="settingsCtrl.save()" ng-disabled="settingsForm.spaceName.$invalid || settingsForm.maxQuantity.$invalid || settingsForm.maxSize.$invalid">Save</button>
                     <button class="btn btn-default" ng-click="settingsCtrl.cancel()">Cancel</button>
                 </div>
             </form>
