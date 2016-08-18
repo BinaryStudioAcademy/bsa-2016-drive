@@ -7,6 +7,7 @@ using Drive.DataAccess.Entities;
 using Drive.DataAccess.Interfaces;
 using Driver.Shared.Dto;
 using Drive.Logging;
+using Driver.Shared.Dto.Users;
 
 namespace Drive.WebHost.Services
 {
@@ -59,7 +60,7 @@ namespace Drive.WebHost.Services
                 })
             }).SingleOrDefaultAsync();
 
-            var owners = (await _userService.GetAllAsync()).Select(f => new {Id = f.serverUserId, Name = f.name});
+            var owners = (await _userService.GetAllAsync()).Select(f => new {Id = f.id, Name = f.name});
 
             Parallel.ForEach(space.Files, file =>
             {

@@ -1,5 +1,5 @@
-﻿using Drive.DataAccess.Entities;
-using System;
+﻿using System;
+using Driver.Shared.Dto.Users;
 
 namespace Driver.Shared.Dto
 {

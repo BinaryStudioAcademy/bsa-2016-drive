@@ -1,6 +1,6 @@
 ﻿
 
-namespace Driver.Shared.Dto
+namespace Driver.Shared.Dto.Users
 {
     public class AuthorDto
     {

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Security.Principal;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using Driver.Shared.Dto;
 using Drive.DataAccess.Entities;
 using Drive.DataAccess.Interfaces;
+using Driver.Shared.Dto.Users;
 
 namespace Drive.WebHost.Services
 {
@@ -64,7 +66,7 @@ namespace Drive.WebHost.Services
 
         public async Task<FileUnitDto> CreateAsync(FileUnitDto dto)
         {
-            var user = await _usersService.GetLocalUser();
+            var user = await _usersService.GetCurrentUser();
             var space = await _unitOfWork.Spaces.GetByIdAsync(dto.SpaceId);
             var parentFolder = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
 
@@ -81,7 +83,7 @@ namespace Drive.WebHost.Services
                     IsDeleted = false,
                     Space = space,
                     Parent = parentFolder,
-                    Owner = _unitOfWork.Users.Query.FirstOrDefault(u => u.GlobalId == user.serverUserId)
+                    Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId)
                 };
 
 

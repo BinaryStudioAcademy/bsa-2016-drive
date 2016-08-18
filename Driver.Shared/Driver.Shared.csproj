@@ -41,7 +41,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Dto\Users\UserDto.cs" />
+    <Compile Include="Dto\Users\UsersDto.cs" />
     <Compile Include="Dto\Users\AuthorDto.cs" />
     <Compile Include="Dto\FileUnitDto.cs" />
     <Compile Include="Dto\FolderContentDto.cs" />
@@ -49,6 +49,7 @@
     <Compile Include="Dto\LogUnit.cs" />
     <Compile Include="Dto\SearchResultDto.cs" />
     <Compile Include="Dto\SpaceDto.cs" />
+    <Compile Include="Dto\Users\UserDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

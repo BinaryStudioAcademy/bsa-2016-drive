@@ -11,6 +11,7 @@ using Drive.DataAccess.Interfaces;
 using Drive.Identity.Entities;
 using Drive.Identity.Services;
 using Driver.Shared.Dto;
+using Driver.Shared.Dto.Users;
 
 namespace Drive.WebHost.Services
 {
@@ -68,7 +69,7 @@ namespace Drive.WebHost.Services
 
         public async Task<FolderUnitDto> CreateAsync(FolderUnitDto dto)
         {
-            var user = await _usersService.GetLocalUser();
+            var user = await _usersService.GetCurrentUser();
 
             var space = await _unitOfWork.Spaces.GetByIdAsync(dto.SpaceId);
             var parentFolder = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
@@ -85,7 +86,7 @@ namespace Drive.WebHost.Services
                     IsDeleted = false,
                     Space = space,
                     Parent = parentFolder,
-                    Owner = _unitOfWork.Users.Query.FirstOrDefault(u => u.GlobalId== user.serverUserId)
+                    Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId== user.serverUserId)
                 };
 
                 _unitOfWork.Folders.Create(folder);
