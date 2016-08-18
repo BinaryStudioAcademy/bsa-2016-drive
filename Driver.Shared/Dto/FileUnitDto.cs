@@ -1,4 +1,5 @@
 ﻿using System;
+using Drive.DataAccess.Entities;
 using Driver.Shared.Dto.Users;
 
 namespace Driver.Shared.Dto
@@ -8,7 +9,7 @@ namespace Driver.Shared.Dto
         //public User Owner { get; set; }
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
-        public string FileType { get; set; }
+        public FileType FileType { get; set; }
         public string Name { get; set; }
         public string Link { get; set; }
         public string Description { get; set; }

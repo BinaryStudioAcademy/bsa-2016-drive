@@ -10,18 +10,38 @@
     function SpaceService($http) {
         var service = {
             getSpace: getSpace,
-            getAllSpaces: getAllSpaces
+            getAllSpaces: getAllSpaces,
+            searchFoldersAndFiles,
+            getNumberOfResultSearchFoldersAndFiles,
+            getSpaceTotal
         };
 
-        function getSpace(id, callback) {
-            $http.get('/api/spaces/' + id)
+        function getSpace(id, currentPage, pageSize, callback) {
+            $http.get('/api/spaces/' + id, {
+                params: {
+                    page: currentPage,
+                    count: pageSize
+                }
+            })
                 .then(function (response) {
                     if (callback) {
                         callback(response.data);
                     }
                 }, function () {
-                    console.log('Error while getting space!');
+                    console.log('Error getSpace spaceService!');
                 });
+        }
+
+        function getSpaceTotal(id, callback) {
+            $http.get('/api/spaces/' + id + '/sptotal')
+               .then(function (response) {
+                   if (callback) {
+                       callback(response.data);
+                   }
+               }, function () {
+                   console.log('Error getSpaceTotal spaceService!');
+               });
+
         }
 
         function getAllSpaces(callback) {
@@ -34,6 +54,41 @@
                 console.log('Error while getting all spaces!');
             });
         }
+
+        function searchFoldersAndFiles(spaceId, folderId, text, currentPage, pageSize, callback) {
+            $http.get('/api/spaces/' + spaceId + '/search', {
+                params: {
+                    folderId: folderId,
+                    text: text,
+                    page: currentPage,
+                    count: pageSize
+                }
+            })
+            .then(function (response) {
+                if (callback) {
+                    callback(response.data);
+                }
+            }, function () {
+                console.log('Error in searchFoldersAndFiles Method!');
+            });
+        }
+
+        function getNumberOfResultSearchFoldersAndFiles(spaceId, folderId, text, callback) {
+            $http.get('/api/spaces/' + spaceId + '/total', {
+                params: {
+                    folderId: folderId,
+                    text: text
+                }
+            })
+            .then(function (response) {
+                if (callback) {
+                    callback(response.data);
+                }
+            }, function () {
+                console.log('Error in getNumberOfResultSearchFoldersAndFiles Method!');
+            });
+        }
+
         return service;
     }
 
@@ -43,15 +98,19 @@
         return function (input, uppercase) {
             switch (input) {
                 case 0:
-                    return 'None';
+                    return 'Undefined';
                 case 1:
                     return 'Document';
                 case 2:
-                    return 'Archive';
+                    return 'Sheets';
                 case 3:
-                    return 'Presentation';
+                    return 'Slides';
                 case 4:
-                    return 'WebPage';
+                    return 'Trello';
+                case 5:
+                    return 'Link';
+                case 6:
+                    return 'Physical file';
                 default:
                     return '';
             }

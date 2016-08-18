@@ -1,12 +1,13 @@
 ﻿<div class="container">
     <br />
-    <ol class="breadcrumb breadcrumb-arrow">
-        <li><a href="#"><i class="glyphicon glyphicon-home"></i>Space</a></li>
-        <li class="active"><span>Settings</span></li>
-    </ol>
+    <div class="btn-group btn-breadcrumb">
+        <a href="#" class="btn btn-info"><i class="glyphicon glyphicon-home"></i> Space</a>
+        <a class="btn btn-default">Settings</a>
+    </div>
     <div class="page-header">
         <h2>
-            Space settings <small>{{settingsCtrl.space.Name}}</small>
+            Space settings
+            <small>{{settingsCtrl.space.name}}</small>
         </h2>
     </div>
     <div class="row">
@@ -15,19 +16,19 @@
             <form name="settingsForm" novalidate>
                 <div class="col-md-12">
                     <label>Space name:</label>
-                    <input type="text" class="form-control" ng-model="settingsCtrl.space.Name">
+                    <input type="text" class="form-control" ng-model="settingsCtrl.space.name">
                 </div>
                 <div class="col-md-12">
                     <label>Description:</label>
-                    <input type="text" class="form-control" ng-model="settingsCtrl.space.Description">
+                    <input type="text" class="form-control" ng-model="settingsCtrl.space.description">
                 </div>
                 <div class="col-md-12">
                     <label>Maximum Files Quantity:</label>
-                    <input type="number" class="form-control" min="0" step="1" ng-model="settingsCtrl.space.MaxFilesQuantity">
+                    <input type="number" class="form-control" min="0" step="1" ng-model="settingsCtrl.space.maxFilesQuantity">
                 </div>
                 <div class="col-md-12">
                     <label>Maximum file size (MB):</label>
-                    <input type="number" class="form-control" min="0" step="1" max="1024" ng-model="settingsCtrl.space.MaxFileSize">
+                    <input type="number" class="form-control" min="0" step="1" max="1024" ng-model="settingsCtrl.space.maxFileSize">
                 </div>
                 <div class="col-md-12">
                     <br />
@@ -39,7 +40,9 @@
         <div class="col-md-9">
             <h4>Settings user access to space</h4>
             <ul id="permissionsTab" class="nav nav-tabs">
-                <li class="active"><a href="#panel1">Users permission</a></li>
+                <li class="active">
+                    <a href="#panel1">Users permission</a>
+                </li>
             </ul>
             <div class="tab-content">
                 <br />
@@ -54,13 +57,13 @@
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
                                         <li ng-repeat="item in settingsCtrl.users">
-                                            <a ng-click="settingsCtrl.setChoice(item.Login, item.Id);">{{item.Login}}</a>
+                                            <a role="button" ng-click="settingsCtrl.setChoice(item.name, item.id);">{{item.name}}</a>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <input class="form-control" ng-model="settingsCtrl.userAddName" placeholder="User name" disabled />
+                                <input class="form-control" ng-model="settingsCtrl.userAddName" placeholder="User name" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -78,11 +81,11 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in settingsCtrl.space.ReadPermittedUsers">
-                                <td>{{item.Login}}</td>
-                                <td>{{item.Id}}</td>
+                            <tr ng-repeat="item in settingsCtrl.space.readPermittedUsers">
+                                <td>{{item.name}}</td>
+                                <td></td>
                                 <td>
-                                    <input type="button" value="Remove" class="btn btn-danger" ng-click="settingsCtrl.removeSpaceUser(item.Id)" />
+                                    <input type="button" value="Remove" class="btn btn-danger" ng-click="settingsCtrl.removeSpaceUser(item.id)" />
                                 </td>
                             </tr>
                         </tbody>

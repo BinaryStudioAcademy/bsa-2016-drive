@@ -21,7 +21,7 @@ namespace Drive.WebHost.Api
         [HttpGet]
         public async Task<IHttpActionResult> GetAllAsync()
         {
-            var result = await _spaceService.GetAllAsync();
+            var result = await _spaceService?.GetAllAsync();
 
             if (result == null || result.Count == 0)
                 return NotFound();
@@ -29,40 +29,54 @@ namespace Drive.WebHost.Api
             return Ok(result);
         }
 
+        // GET: api/spaces/(int)/?id=(int)&page=(int)&count=(int)
         [HttpGet]
-        public async Task<IHttpActionResult> GetSpace(int id)
+        public async Task<IHttpActionResult> GetSpace(int id, int page = 1, int count = 100)
         {
-            var result = await _spaceService.GetAsync(id);
+            var result = await _spaceService?.GetAsync(id, page, count);
 
             if (result == null)
                 return NotFound();
 
             return Ok(result);
         }
-        
+
+        // GET: api/spaces/(int)/sptotal
+        [HttpGet]
+        [Route("{id:int}/sptotal")]
+        public async Task<IHttpActionResult> GetSpaceTotal(int id)
+        {
+            var result = await _spaceService?.GetTotalAsync(id);
+
+            //if (result == 0)
+            //    return NotFound();
+
+            return Ok(result);
+        }
+
         [HttpPost]
         public async Task<IHttpActionResult> CreateSpace(SpaceDto space)
         {
-            int id = await _spaceService.CreateAsync(space);
+            int id = await _spaceService?.CreateAsync(space);
             return Ok(id);
         }
 
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteSpace(int id)
         {
-            var result = await _spaceService.GetAsync(id);
+            var result = await _spaceService?.GetAsync(id);
 
             if(result == null)
                return NotFound();
 
-            await _spaceService.Delete(id);
+            await _spaceService?.Delete(id);
             return Ok();
         }
 
         [HttpPut]
         public async Task<IHttpActionResult> UpdateSpace(int id, SpaceDto space)
         {
-            await _spaceService.UpdateAsync(id, space);
+            await _spaceService?.UpdateAsync(id, space);
             return Ok();
         }
 
@@ -72,7 +86,8 @@ namespace Drive.WebHost.Api
         [Route("{spaceId:int}/search")]
         public async Task<IHttpActionResult> SearchFolderAndFile(int spaceId, string text = "", int page = 1, int count = 100, int? folderId = null)
         {
-            var searchResultDto = await _spaceService.SearchFoldersAndFilesAsync(spaceId, folderId, text, page, count);
+            text = text == null? string.Empty : text;
+            var searchResultDto = await _spaceService?.SearchFoldersAndFilesAsync(spaceId, folderId, text, page, count);
 
             if (searchResultDto == null || (searchResultDto.Files.Count == 0 && searchResultDto.Folders.Count == 0))
                 return NotFound();
@@ -84,7 +99,8 @@ namespace Drive.WebHost.Api
         [Route("{spaceId:int}/total")]
         public async Task<IHttpActionResult> NumberOfFoundFoldersAndFiles(int spaceId, string text = "", int? folderId = null)
         {
-            int result = await _spaceService.NumberOfFoundFoldersAndFilesAsync(spaceId, folderId, text);
+            text = text == null ? string.Empty : text;
+            int result = await _spaceService?.NumberOfFoundFoldersAndFilesAsync(spaceId, folderId, text);
             if (result == 0)
                 return NotFound();
             return Ok(result);

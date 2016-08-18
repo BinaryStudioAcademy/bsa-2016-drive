@@ -265,8 +265,3 @@ Dependencies/
 **/Bundles/main.js
 **/Bundles/main.min.js
 
-#Exclude fonts
-**/Content/Fonts/
-
-#Exclude log
-**/Logs/

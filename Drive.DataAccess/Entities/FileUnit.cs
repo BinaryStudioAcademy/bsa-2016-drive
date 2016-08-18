@@ -14,10 +14,12 @@ namespace Drive.DataAccess.Entities
 
     public enum FileType
     {
-        None,
+        Undefined,
         Document,
-        Archive,
-        Presentation,
-        WebPage
+        Sheets,
+        Slides,
+        Trello,
+        Link,
+        Physical
     }
 }

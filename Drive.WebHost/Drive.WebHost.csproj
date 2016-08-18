@@ -171,6 +171,11 @@
     <Compile Include="Api\FoldersController.cs" />
     <Compile Include="Api\GlobalExceptionLogger.cs" />
     <Compile Include="Api\LogsController.cs" />
+    <Compile Include="Api\Pro\AcademyProController.cs" />
+    <Compile Include="Api\Pro\CodeSamplesController.cs" />
+    <Compile Include="Api\Pro\ContentLinksController.cs" />
+    <Compile Include="Api\Pro\LecturesController.cs" />
+    <Compile Include="Api\Pro\TagsController.cs" />
     <Compile Include="Api\SpacesController.cs" />
     <Compile Include="Api\UsersController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -195,20 +200,42 @@
     <Compile Include="Providers\IUsersProvider.cs" />
     <Compile Include="Services\IUsersService.cs" />
     <Compile Include="Services\LogsService.cs" />
+    <Compile Include="Services\Pro\Abstract\IAcademyProCourseService.cs" />
+    <Compile Include="Services\Pro\Abstract\IBasicService.cs" />
+    <Compile Include="Services\Pro\Abstract\ICodeSamplesService.cs" />
+    <Compile Include="Services\Pro\Abstract\IContentLinkService.cs" />
+    <Compile Include="Services\Pro\Abstract\ILectureService.cs" />
+    <Compile Include="Services\Pro\Abstract\ITagsService.cs" />
+    <Compile Include="Services\Pro\AcademyProCourseService.cs" />
+    <Compile Include="Services\Pro\CodeSamplesService.cs" />
+    <Compile Include="Services\Pro\ContentLinkService.cs" />
+    <Compile Include="Services\Pro\LectureService.cs" />
+    <Compile Include="Services\Pro\TagsService.cs" />
     <Compile Include="Services\SpaceService.cs" />
     <Compile Include="Providers\UsersProvider.cs" />
     <Compile Include="Services\UsersService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Bundles\styles.css" />
+    <Content Include="Content\Fonts\fontawesome-webfont.eot" />
     <Content Include="Content\Fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\Fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\Fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\Fonts\FontAwesome.otf" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="gulpfile.js" />
     <Content Include="Scripts\App\Academy\Academy.html" />
     <Content Include="Scripts\App\Academy\academyController.js" />
+    <Content Include="Scripts\App\AdminPanel\AdminPanel.html" />
+    <Content Include="Scripts\App\AdminPanel\adminPanelController.js" />
     <Content Include="Scripts\App\Checklist\Checklist.html" />
     <Content Include="Scripts\App\Checklist\checklistController.js" />
     <Content Include="Scripts\App\Docs\Docs.html" />
@@ -229,7 +256,6 @@
     <Content Include="Scripts\App\Error404\404.html" />
     <Content Include="Scripts\App\Error404\ErrorController.js" />
     <Content Include="Scripts\App\Folder\folderModalController.js" />
-    <Content Include="Scripts\App\Home\homeService.js" />
     <Content Include="Scripts\App\Logs\Logs.html" />
     <Content Include="Scripts\App\Logs\logsController.js" />
     <Content Include="Scripts\App\Logs\logsService.js" />
@@ -249,8 +275,6 @@
     <Content Include="Scripts\App\Space\settingsService.js" />
     <Content Include="Scripts\App\Space\Space.html" />
     <Content Include="Scripts\App\app.js" />
-    <Content Include="Scripts\App\Home\Home.html" />
-    <Content Include="Scripts\App\Home\homeController.js" />
     <Content Include="bower.json" />
     <Content Include="package.json" />
     <Content Include="Scripts\App\Space\spaceController.js" />
@@ -273,15 +297,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="Content\Fonts\fontawesome-webfont.eot" />
-    <Content Include="Content\Fonts\fontawesome-webfont.ttf" />
-    <Content Include="Content\Fonts\fontawesome-webfont.woff" />
-    <Content Include="Content\Fonts\fontawesome-webfont.woff2" />
-    <Content Include="Content\Fonts\FontAwesome.otf" />
-    <Content Include="Content\Fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\Fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Content\Fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\Fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <None Include="Web.Debug.config">

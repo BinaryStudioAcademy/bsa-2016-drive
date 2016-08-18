@@ -14,7 +14,8 @@
             create: create,
             updateFolder: updateFolder,
             deleteFolder: deleteFolder,
-            getContent: getContent
+            getContent: getContent,
+            getFolderContentTotal: getFolderContentTotal
         };
 
         function getAll(callBack) {
@@ -29,7 +30,7 @@
                     });
         }
 
-        function get(id, callBack) {
+        function get(id, currentPage, pageSize, callBack) {
             $http.get('api/folders/' + id)
                 .then(function(response) {
                         if (callBack) {
@@ -73,12 +74,32 @@
                 });
         }
 
-        function getContent(id, callBack) {
-            $http.get('api/content/' + id).success(function (response) {
-                if (callBack)
-                    callBack(response);
+        function getContent(id, currentPage, pageSize, callback) {
+            $http.get('api/content/' + id, {
+                params: {
+                    page: currentPage,
+                    count: pageSize
+                }
+            }).then(function (response) {
+                if (callback) {
+                    callback(response.data);
+                }
+            }, function () {
+                console.log('Error getContent folderService!');
             });
         }
+
+        function getFolderContentTotal(id, callback) {
+            $http.get('api/content/' + id + '/total')
+                .then(function (response) {
+                    if (callback) {
+                        callback(response.data);
+                    }
+                }, function () {
+                    console.log('Error getFolderContentTotal folderService!');
+            });
+        }
+
         return service;
     }
 })();

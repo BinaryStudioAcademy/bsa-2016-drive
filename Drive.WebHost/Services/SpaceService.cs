@@ -35,32 +35,31 @@ namespace Drive.WebHost.Services
                 Description = s.Description,
                 MaxFileSize = s.MaxFileSize,
                 MaxFilesQuantity = s.MaxFilesQuantity,
-                //ReadPermittedUsers = s.ReadPermittedUsers,
+                ReadPermittedUsers = s.ReadPermittedUsers,
                 Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null).Select(f => new FileUnitDto
                 {
                     Description = f.Description,
-                    FileType = f.FileType.ToString(),
+                    FileType = f.FileType,
                     Id = f.Id,
                     IsDeleted = f.IsDeleted,
                     Name = f.Name,
+                    Link = f.Link,
                     CreatedAt = f.CreatedAt,
                     Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId}
-                    }),
+                }),
                 Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.Parent == null).Select(f => new FolderUnitDto
                 {
                     Id = f.Id,
                     Name = f.Name,
                     Description = f.Description,
                     CreatedAt = f.CreatedAt,
-                    LastModified = f.LastModified,
                     IsDeleted = f.IsDeleted,
                     SpaceId = f.Space.Id,
                     Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
-                    
                 })
             }).SingleOrDefaultAsync();
 
-            var owners = (await _userService.GetAllAsync()).Select(f => new {Id = f.id, Name = f.name});
+            var owners = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
 
             Parallel.ForEach(space.Files, file =>
             {
@@ -73,53 +72,99 @@ namespace Drive.WebHost.Services
             return space;
         }
 
+        public async Task<SpaceDto> GetAsync(int id, int page, int count)
+        {
+            var space = await _unitOfWork.Spaces.Query.Where(s => s.Id == id).Select(s => new SpaceDto
+            {
+                Id = s.Id,
+                Name = s.Name,
+                Description = s.Description,
+                MaxFileSize = s.MaxFileSize,
+                MaxFilesQuantity = s.MaxFilesQuantity,
+                ReadPermittedUsers = s.ReadPermittedUsers,
+                Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null).Select(f => new FileUnitDto
+                {
+                    Description = f.Description,
+                    FileType = f.FileType,
+                    Id = f.Id,
+                    IsDeleted = f.IsDeleted,
+                    Name = f.Name,
+                    CreatedAt = f.CreatedAt,
+                    Link = f.Link,
+                    Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
+                }),
+                Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.Parent == null).Select(f => new FolderUnitDto
+                {
+                    Id = f.Id,
+                    Name = f.Name,
+                    Description = f.Description,
+                    CreatedAt = f.CreatedAt,
+                    IsDeleted = f.IsDeleted,
+                    SpaceId = f.Space.Id,
+                    Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
+                })
+            }).SingleOrDefaultAsync();
+
+            if (space == null)
+                return null;
+            int skipCount = (page - 1) * count;
+            if (space.Folders.Count() <= skipCount)
+            {
+                skipCount -= space.Folders.Count();
+                space.Folders = new List<FolderUnitDto>();
+                space.Files = space.Files.Skip(skipCount).Take(count);
+            }
+            else
+            {
+                space.Folders = space.Folders.Skip(skipCount).Take(count);
+                count -= space.Folders.Count();
+                space.Files = space.Files.Take(count);
+            }
+
+            var owners = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
+
+            Parallel.ForEach(space.Files, file =>
+            {
+                file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name;
+            });
+            Parallel.ForEach(space.Folders, folder =>
+            {
+                folder.Author.Name = owners.FirstOrDefault(o => o.Id == folder.Author.GlobalId)?.Name;
+            });
+
+
+            return space;
+        }
+
+        public async Task<int> GetTotalAsync(int id)
+        {
+            int counter = 0;
+            var space = await _unitOfWork.Spaces.Query.Where(s => s.Id == id).Select(s => new
+            {
+                Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null).Count(),
+                Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.Parent == null).Count()
+            }).SingleOrDefaultAsync();
+            if (space == null)
+                return 0;
+            counter += space.Files;
+            counter += space.Folders;
+            return counter;
+        }
+
+
+
+
+
         public async Task<IList<SpaceDto>> GetAllAsync()
         {
-
 
             var spacesList = await _unitOfWork.Spaces.Query.Select(s => new SpaceDto
             {
                 Id = s.Id,
                 Name = s.Name,
-                Description = s.Description,
-                //MaxFileSize = s.MaxFileSize,
-                //MaxFilesQuantity = s.MaxFilesQuantity,
-                //ReadPermittedUsers = s.ReadPermittedUsers,
-                //Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null).Select(f => new FileUnitDto
-                //{
-                //    Description = f.Description,
-                //    FileType = f.FileType.ToString(),
-                //    Id = f.Id,
-                //    IsDeleted = f.IsDeleted,
-                //    Name = f.Name,
-                //    Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId}
-                //}),
-                //Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.Parent == null).Select(f => new FolderUnitDto
-                //{
-                //    Id = f.Id,
-                //    Name = f.Name,
-                //    Description = f.Description,
-                //    CreatedAt = f.CreatedAt,
-                //    LastModified = f.LastModified,
-                //    IsDeleted = f.IsDeleted,
-                //    Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId}
-                //})
+                Description = s.Description
             }).ToListAsync();
 
-            //var owners = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
-
-            //Parallel.ForEach(spacesList, space =>
-            //{
-               
-            //    Parallel.ForEach(space.Files, file =>
-            //    {
-            //        file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name;
-            //    });
-            //    Parallel.ForEach(space.Folders, folder =>
-            //    {
-            //        folder.Author.Name = owners.FirstOrDefault(o => o.Id == folder.Author.GlobalId)?.Name;
-            //    });
-            //});
 
             return spacesList;
         }
@@ -140,14 +185,16 @@ namespace Drive.WebHost.Services
                 IsDeleted = false,
                 Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId)
             };
-            _unitOfWork.Spaces.Create(space);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork?.Spaces?.Create(space);
+            await _unitOfWork?.SaveChangesAsync();
             return space.Id;
         }
 
         public async Task UpdateAsync(int id, SpaceDto dto)
         {
-            var space = await _unitOfWork.Spaces.GetByIdAsync(id);
+            var space = await _unitOfWork?.Spaces?.GetByIdAsync(id);
+
+            if (space == null) return;
 
             space.Name = dto.Name;
             space.Description = dto.Description;
@@ -156,13 +203,13 @@ namespace Drive.WebHost.Services
             space.ReadPermittedUsers = dto.ReadPermittedUsers;
             space.LastModified = DateTime.Now;
 
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork?.SaveChangesAsync();
         }
 
         public async Task Delete(int id)
         {
-            _unitOfWork.Spaces.Delete(id);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork?.Spaces?.Delete(id);
+            await _unitOfWork?.SaveChangesAsync();
         }
 
 
@@ -191,7 +238,8 @@ namespace Drive.WebHost.Services
                             Description = f.Description,
                             IsDeleted = f.IsDeleted,
                             CreatedAt = f.CreatedAt,
-                            LastModified = f.LastModified
+                            LastModified = f.LastModified,
+                            Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
                         });
 
                     resultFiles = folder.Files
@@ -201,8 +249,9 @@ namespace Drive.WebHost.Services
                             Id = f.Id,
                             Name = f.Name,
                             Description = f.Description,
-                            FileType = f.FileType.ToString(),
-                            IsDeleted = f.IsDeleted
+                            FileType = f.FileType,
+                            IsDeleted = f.IsDeleted,
+                            Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
                         });
                 }
                 else
@@ -225,7 +274,7 @@ namespace Drive.WebHost.Services
                             Description = f.Description,
                             IsDeleted = f.IsDeleted,
                             CreatedAt = f.CreatedAt,
-                            LastModified = f.LastModified
+                            Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
                         });
                     resultFiles = space.Files
                         .Where(f => f.Name.ToLower().Contains(text.ToLower()))
@@ -234,8 +283,10 @@ namespace Drive.WebHost.Services
                             Id = f.Id,
                             Name = f.Name,
                             Description = f.Description,
-                            FileType = f.FileType.ToString(),
-                            IsDeleted = f.IsDeleted
+                            FileType = f.FileType,
+                            IsDeleted = f.IsDeleted,
+                            CreatedAt = f.CreatedAt,
+                            Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
                         });
                 }
 
@@ -252,6 +303,19 @@ namespace Drive.WebHost.Services
                     count -= resultFolder.Count();
                     resultFiles = resultFiles.Take(count);
                 }
+
+                var owners = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
+
+                Parallel.ForEach(resultFiles, file =>
+                {
+                    file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name;
+                });
+                Parallel.ForEach(resultFolder, folder =>
+                {
+                    folder.Author.Name = owners.FirstOrDefault(o => o.Id == folder.Author.GlobalId)?.Name;
+                });
+
+
             }
             catch (Exception ex)
             {
@@ -307,7 +371,7 @@ namespace Drive.WebHost.Services
 
         public void Dispose()
         {
-            _unitOfWork.Dispose();
+            _unitOfWork?.Dispose();
         }
     }
 }

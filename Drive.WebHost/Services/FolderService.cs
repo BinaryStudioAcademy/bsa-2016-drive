@@ -28,7 +28,7 @@ namespace Drive.WebHost.Services
 
         public async Task<IEnumerable<FolderUnitDto>> GetAllAsync()
         {
-            var folders = await _unitOfWork.Folders.GetAllAsync();
+            var folders = await _unitOfWork?.Folders?.GetAllAsync();
 
             if (folders == null)
                 return null;
@@ -50,7 +50,7 @@ namespace Drive.WebHost.Services
 
         public async Task<FolderUnitDto> GetAsync(int id)
         {
-            var folder = await _unitOfWork.Folders.GetByIdAsync(id);
+            var folder = await _unitOfWork?.Folders?.GetByIdAsync(id);
 
             if (folder == null)
                 return null;
@@ -69,13 +69,14 @@ namespace Drive.WebHost.Services
 
         public async Task<FolderUnitDto> CreateAsync(FolderUnitDto dto)
         {
-            var user = await _usersService.GetCurrentUser();
+            var user = await _usersService?.GetCurrentUser();
 
-            var space = await _unitOfWork.Spaces.GetByIdAsync(dto.SpaceId);
-            var parentFolder = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
+            var space = await _unitOfWork?.Spaces?.GetByIdAsync(dto.SpaceId);
+            var parentFolder = await _unitOfWork?.Folders?.GetByIdAsync(dto.ParentId);
+
 
             if (space != null)
-            {
+            {               
                 var folder = new FolderUnit
                 {
                     Description = dto.Description,
@@ -86,11 +87,11 @@ namespace Drive.WebHost.Services
                     IsDeleted = false,
                     Space = space,
                     Parent = parentFolder,
-                    Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId== user.serverUserId)
+                    Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId)
                 };
 
-                _unitOfWork.Folders.Create(folder);
-                await _unitOfWork.SaveChangesAsync();
+                _unitOfWork?.Folders?.Create(folder);
+                await _unitOfWork?.SaveChangesAsync();
 
                 dto.Id = folder.Id;
                 dto.CreatedAt = folder.CreatedAt;
@@ -104,14 +105,17 @@ namespace Drive.WebHost.Services
 
         public async Task<FolderUnitDto> UpdateAsync(int id, FolderUnitDto dto)
         {
-            var folder = await _unitOfWork.Folders.GetByIdAsync(id);
+            var folder = await _unitOfWork?.Folders?.GetByIdAsync(id);
+
+            if (folder == null)
+                return null;
 
             folder.Description = dto.Description;
             folder.IsDeleted = dto.IsDeleted;
             folder.Name = dto.Name;
             folder.LastModified = DateTime.Now;
 
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork?.SaveChangesAsync();
 
             dto.LastModified = DateTime.Now;
 
@@ -120,41 +124,81 @@ namespace Drive.WebHost.Services
 
         public async Task DeleteAsync(int id)
         {
-            _unitOfWork.Folders.Delete(id);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork?.Folders?.Delete(id);
+            await _unitOfWork?.SaveChangesAsync();
         }
 
-        public async Task<FolderContentDto> GetContentAsync(int id)
+        public async Task<FolderContentDto> GetContentAsync(int id, int page, int count)
         {
-            var folders = await _unitOfWork.Folders.Query.Where(x => x.Parent.Id == id).OfType<DataUnit>().ToListAsync();
-            var files = await _unitOfWork.Files.Query.Where(x => x.Parent.Id == id).OfType<DataUnit>().ToListAsync();
+            IEnumerable<FolderUnitDto> folders = await _unitOfWork.Folders.Query.Where(x => x.Parent.Id == id)
+            .Select(f => new FolderUnitDto
+            {
+                Name = f.Name,
+                Description = f.Description,
+                Id = f.Id,
+                IsDeleted = f.IsDeleted,
+                CreatedAt = f.CreatedAt,
+                Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
+            }).ToListAsync();
+            IEnumerable<FileUnitDto> files = await _unitOfWork.Files.Query.Where(x => x.Parent.Id == id)
+                .Select(f => new FileUnitDto
+                {
+                    Name = f.Name,
+                    Description = f.Description,
+                    Id = f.Id,
+                    IsDeleted = f.IsDeleted,
+                    Link = f.Link,
+                    CreatedAt = f.CreatedAt,
+                    FileType = f.FileType,
+                    Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
+                }).ToListAsync();
+
+            int skipCount = (page - 1) * count;
+            if (folders.Count() <= skipCount)
+            {
+                skipCount -= folders.Count();
+                folders = new List<FolderUnitDto>();
+                files = files.Skip(skipCount).Take(count);
+            }
+            else
+            {
+                folders = folders.Skip(skipCount).Take(count);
+                count -= folders.Count();
+                files = files.Take(count);
+            }
+
+            var owners = (await _usersService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
+
+            Parallel.ForEach(files, file =>
+            {
+                file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name;
+            });
+            Parallel.ForEach(folders, folder =>
+            {
+                folder.Author.Name = owners.FirstOrDefault(o => o.Id == folder.Author.GlobalId)?.Name;
+            });
+
 
             return new FolderContentDto
             {
-                Files = from file in files
-                        select new FileUnitDto
-                        {
-                            Name = file.Name,
-                            Description = file.Description,
-                            Id = file.Id,
-                            IsDeleted = file.IsDeleted,
-                        },
-                Folders = from folder in folders
-                          select new FolderUnitDto
-                          {
-                              Name = folder.Name,
-                              Description = folder.Description,
-                              Id = folder.Id,
-                              IsDeleted = folder.IsDeleted,
-                              CreatedAt = folder.CreatedAt,
-                              LastModified = folder.LastModified
-                          }
+                Files = files,
+                Folders = folders
             };
+        }
+
+        public async Task<int> GetContentTotalAsync(int id)
+        {
+            int counter = 0;
+            var folders = await _unitOfWork.Folders.Query.Where(x => x.Parent.Id == id).ToListAsync();
+            var files = await _unitOfWork.Files.Query.Where(x => x.Parent.Id == id).ToListAsync();
+            counter += folders.Count();
+            counter += files.Count();
+            return counter;
         }
 
         public void Dispose()
         {
-            _unitOfWork.Dispose();
+            _unitOfWork?.Dispose();
         }
     }
 }

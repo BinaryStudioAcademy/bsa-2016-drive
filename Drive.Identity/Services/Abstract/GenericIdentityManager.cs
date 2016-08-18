@@ -1,10 +1,11 @@
 ﻿using System.Security.Principal;
+using System.Web;
 
 namespace Drive.Identity.Services.Abstract
 {
     public abstract class GenericIdentityManager<T> where T : IIdentity
     {
-        public IPrincipal Principal = System.Threading.Thread.CurrentPrincipal;
+        public IPrincipal Principal => HttpContext.Current.User;
         public T Identity => (T)Principal.Identity;
 
         public void SetIdentity(T identity, string[] roles)
@@ -15,7 +16,7 @@ namespace Drive.Identity.Services.Abstract
 
         public void SetPrincipal(IPrincipal principal)
         {
-            System.Threading.Thread.CurrentPrincipal = principal;
+            HttpContext.Current.User = principal;
         }
     }
 }

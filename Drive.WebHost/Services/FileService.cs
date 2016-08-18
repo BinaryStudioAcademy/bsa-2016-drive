@@ -25,7 +25,7 @@ namespace Drive.WebHost.Services
 
         public async Task<IEnumerable<FileUnitDto>> GetAllAsync()
         {
-            var data = await _unitOfWork.Files.GetAllAsync();
+            var data = await _unitOfWork?.Files?.GetAllAsync();
 
             if (data != null)
             {
@@ -34,10 +34,12 @@ namespace Drive.WebHost.Services
                     {
                         Id = d.Id,
                         IsDeleted = d.IsDeleted,
-                        FileType = d.FileType.ToString(),
+                        FileType = d.FileType,
                         Name = d.Name,
                         Description = d.Description,
-                        SpaceId = d.Space.Id
+                        SpaceId = d.Space.Id,
+                        Link = d.Link,
+                        CreatedAt = d.CreatedAt
                     };
 
                 return dto;
@@ -47,7 +49,7 @@ namespace Drive.WebHost.Services
 
         public async Task<FileUnitDto> GetAsync(int id)
         {
-            var file = await _unitOfWork.Files.GetByIdAsync(id);
+            var file = await _unitOfWork?.Files?.GetByIdAsync(id);
 
             if (file != null)
             {
@@ -55,10 +57,13 @@ namespace Drive.WebHost.Services
                 {
                     Id = file.Id,
                     IsDeleted = file.IsDeleted,
-                    FileType = file.FileType.ToString(),
+                    FileType = file.FileType,
                     Name = file.Name,
                     Description = file.Description,
-                    SpaceId = file.Space.Id
+                    SpaceId = file.Space.Id,
+                    Link = file.Link,
+                    CreatedAt = file.CreatedAt
+
                 };
             }
             return null;
@@ -67,33 +72,34 @@ namespace Drive.WebHost.Services
         public async Task<FileUnitDto> CreateAsync(FileUnitDto dto)
         {
             var user = await _usersService.GetCurrentUser();
-            var space = await _unitOfWork.Spaces.GetByIdAsync(dto.SpaceId);
-            var parentFolder = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
+            var space = await _unitOfWork?.Spaces?.GetByIdAsync(dto.SpaceId);
+            var parentFolder = await _unitOfWork?.Folders.GetByIdAsync(dto.ParentId);
 
             if (space != null)
             {
                 var file = new FileUnit()
                 {
                     Name = dto.Name,
-                    //Link = dto.Link,
-                    FileType = FileType.None,//(FileType)Enum.Parse(typeof(FileType), dto.FileType),
+                    FileType =  dto.FileType,
+                    Link = dto.Link,
                     Description = dto.Description,
                     CreatedAt = DateTime.Now,
                     LastModified = DateTime.Now,
                     IsDeleted = false,
                     Space = space,
                     Parent = parentFolder,
-                    Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId)
+                    Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId)
                 };
 
 
-                _unitOfWork.Files.Create(file);
-                await _unitOfWork.SaveChangesAsync();
+                _unitOfWork?.Files?.Create(file);
+                await _unitOfWork?.SaveChangesAsync();
 
                 dto.Id = file.Id;
                 dto.CreatedAt = file.CreatedAt;
                 dto.LastModified = file.LastModified;
                 dto.Author = new AuthorDto() { Id = file.Owner.Id, Name = user.name +' '+ user.surname };
+                dto.FileType = file.FileType;
 
                 return dto;
             }
@@ -102,29 +108,32 @@ namespace Drive.WebHost.Services
 
         public async Task<FileUnitDto> UpdateAsync(int id, FileUnitDto dto)
         {
-            var file = await _unitOfWork.Files.GetByIdAsync(id);
+            var file = await _unitOfWork?.Files?.GetByIdAsync(id);
+
+            if (file == null)
+                return null;
 
             file.Name = dto.Name;
-            file.FileType = FileType.None;
+            file.FileType = dto.FileType;
             file.Description = dto.Description;
             file.IsDeleted = dto.IsDeleted;
             file.LastModified = DateTime.Now;
             file.Link = dto.Link;
 
-            await _unitOfWork.SaveChangesAsync();
+            await _unitOfWork?.SaveChangesAsync();
 
             return dto;
         }
 
         public async Task DeleteAsync(int id)
         {
-            _unitOfWork.Files.Delete(id);
-            await _unitOfWork.SaveChangesAsync();
+            _unitOfWork?.Files?.Delete(id);
+            await _unitOfWork?.SaveChangesAsync();
         }
 
         public void Dispose()
         {
-            _unitOfWork.Dispose();
+            _unitOfWork?.Dispose();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Drive.WebHost.Services;
 using Driver.Shared.Dto;
@@ -19,12 +20,10 @@ namespace Drive.WebHost.Api
         [HttpGet]
         public async Task<IHttpActionResult> GetAllAsync()
         {
-            var file = await _service.GetAllAsync();
+            var file = await _service?.GetAllAsync();
 
-            if (file == null)
-            {
+            if (file == null || !file.Any())
                 return NotFound();
-            }
 
             return Ok(file);
         }
@@ -33,12 +32,10 @@ namespace Drive.WebHost.Api
         [HttpGet]
         public async Task<IHttpActionResult> GetFileAsync(int id)
         {
-            var file = await _service.GetAsync(id);
+            var file = await _service?.GetAsync(id);
 
             if (file == null)
-            {
                 return NotFound();
-            }
 
             return Ok(file);
         }
@@ -47,26 +44,22 @@ namespace Drive.WebHost.Api
         [HttpPost]
         public async Task<IHttpActionResult> CreateFileAsync(FileUnitDto file)
         {
-            var dto = await _service.CreateAsync(file);
+            var dto = await _service?.CreateAsync(file);
             if (dto == null)
             {
                 return BadRequest();
             }
             return Ok(dto);
-
         }
 
         // PUT: api/files/5
         [HttpPut]
         public async Task<IHttpActionResult> UpdateFileAsync(int id, FileUnitDto file)
         {
-
-            var dto = await _service.UpdateAsync(id, file);
+            var dto = await _service?.UpdateAsync(id, file);
 
             if (id != file.Id)
-            {
                 return BadRequest();
-            }
 
             return Ok(dto);
 
@@ -76,7 +69,7 @@ namespace Drive.WebHost.Api
         [HttpDelete]
         public IHttpActionResult DeleteFileAsync(int id)
         {
-            _service.DeleteAsync(id);
+            _service?.DeleteAsync(id);
 
             return Ok();
         }
