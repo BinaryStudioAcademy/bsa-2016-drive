@@ -5,7 +5,7 @@ namespace Drive.Identity.Services
 {
     public class BSIdentityManager : GenericIdentityManager<BSIdentity>
     {
-        public string UserId => Identity.UserId;
+        public string UserId => "577a16659829fe050adb3f5c";//Identity.UserId;
 
         public string Token
             =>

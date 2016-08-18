@@ -11,5 +11,7 @@ namespace Drive.WebHost.Services
     {
         Task<UserDto> GetByIdAsync(string id);
         Task<IEnumerable<UserDto>> GetAsync();
+
+        Task<UserDto> GetCurrentUser();
     }
 }

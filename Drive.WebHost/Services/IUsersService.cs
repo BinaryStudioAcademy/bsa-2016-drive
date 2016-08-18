@@ -13,7 +13,7 @@ namespace Drive.WebHost.Services
         Task CreateAsync(UserDto dto);
         //Task UpdateAsync(int id, UserDto dto);
         //Task DeleteAsync(int id);
-        Task<User> GetLocalUser(IIdentity identity);
+        Task<UserDto> GetLocalUser();
         void Dispose();
     }
 }

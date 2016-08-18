@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web;
 using Drive.DataAccess.Entities;
 using Drive.DataAccess.Interfaces;
+using Drive.Identity.Entities;
 using Drive.Identity.Services;
 using Driver.Shared.Dto;
 
@@ -16,12 +17,12 @@ namespace Drive.WebHost.Services
     public class FolderService : IFolderService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private readonly BSIdentityManager _identityManager;
+        private readonly IUsersService _usersService;
 
-        public FolderService(IUnitOfWork unitOfWork, BSIdentityManager bsIdentityManager)
+        public FolderService(IUnitOfWork unitOfWork, IUsersService usersService)
         {
             _unitOfWork = unitOfWork;
-            _identityManager = bsIdentityManager;
+            _usersService = usersService;
         }
 
         public async Task<IEnumerable<FolderUnitDto>> GetAllAsync()
@@ -67,7 +68,7 @@ namespace Drive.WebHost.Services
 
         public async Task<FolderUnitDto> CreateAsync(FolderUnitDto dto)
         {
-            var user = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == _identityManager.UserId);
+            var user = await _usersService.GetLocalUser();
 
             var space = await _unitOfWork.Spaces.GetByIdAsync(dto.SpaceId);
             var parentFolder = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
@@ -84,7 +85,7 @@ namespace Drive.WebHost.Services
                     IsDeleted = false,
                     Space = space,
                     Parent = parentFolder,
-                    Owner = user
+                    Owner = _unitOfWork.Users.Query.FirstOrDefault(u => u.GlobalId== user.serverUserId)
                 };
 
                 _unitOfWork.Folders.Create(folder);
@@ -93,6 +94,7 @@ namespace Drive.WebHost.Services
                 dto.Id = folder.Id;
                 dto.CreatedAt = folder.CreatedAt;
                 dto.LastModified = folder.LastModified;
+                dto.Author = new AuthorDto() {Id = folder.Owner.Id, Name = user.name};
 
                 return dto;
             }

@@ -37,23 +37,17 @@ namespace Drive.WebHost.Services
 
         public async Task CreateAsync(UserDto dto)
         {
-            var user = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == dto.id);
+            var user = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == dto.serverUserId);
             if (user == null)
             {
-                _unitOfWork.Users.Create(new User() {GlobalId = dto.id, IsDeleted = false});
+                _unitOfWork.Users.Create(new User() {GlobalId = dto.serverUserId, IsDeleted = false});
                 await _unitOfWork.SaveChangesAsync();
             }
         }
 
-        public async Task<User> GetLocalUser(IIdentity identity)
+        public async Task<UserDto> GetLocalUser()
         {
-            var userIdentity = (BSIdentity)identity;
-
-            if (userIdentity != null)
-            {
-                return await _unitOfWork.Users.Query.SingleOrDefaultAsync(u => u.GlobalId == userIdentity.UserId);
-            }
-            return null;
+            return await _userProvider.GetCurrentUser();
         }
 
         public void Dispose()

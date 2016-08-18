@@ -13,10 +13,12 @@ namespace Drive.WebHost.Services
     public class FileService : IFileService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUsersService _usersService;
 
-        public FileService(IUnitOfWork unitOfWork)
+        public FileService(IUnitOfWork unitOfWork, IUsersService usersService)
         {
             _unitOfWork = unitOfWork;
+            _usersService = usersService;
         }
 
         public async Task<IEnumerable<FileUnitDto>> GetAllAsync()
@@ -62,6 +64,7 @@ namespace Drive.WebHost.Services
 
         public async Task<FileUnitDto> CreateAsync(FileUnitDto dto)
         {
+            var user = await _usersService.GetLocalUser();
             var space = await _unitOfWork.Spaces.GetByIdAsync(dto.SpaceId);
             var parentFolder = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
 
@@ -71,13 +74,14 @@ namespace Drive.WebHost.Services
                 {
                     Name = dto.Name,
                     //Link = dto.Link,
-                    FileType = FileType.None,
+                    FileType = (FileType)Enum.Parse(typeof(FileType), dto.FileType),
                     Description = dto.Description,
                     CreatedAt = DateTime.Now,
                     LastModified = DateTime.Now,
                     IsDeleted = false,
                     Space = space,
-                    Parent = parentFolder
+                    Parent = parentFolder,
+                    Owner = _unitOfWork.Users.Query.FirstOrDefault(u => u.GlobalId == user.serverUserId)
                 };
 
 
@@ -87,6 +91,7 @@ namespace Drive.WebHost.Services
                 dto.Id = file.Id;
                 dto.CreatedAt = file.CreatedAt;
                 dto.LastModified = file.LastModified;
+                dto.Author = new AuthorDto() { Id = file.Owner.Id, Name = user.name };
 
                 return dto;
             }

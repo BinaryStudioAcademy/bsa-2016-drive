@@ -59,7 +59,7 @@ namespace Drive.WebHost.Services
                 })
             }).SingleOrDefaultAsync();
 
-            var owners = (await _userService.GetAllAsync()).Select(f => new {Id = f.id, Name = f.name});
+            var owners = (await _userService.GetAllAsync()).Select(f => new {Id = f.serverUserId, Name = f.name});
 
             Parallel.ForEach(space.Files, file =>
             {
@@ -81,44 +81,44 @@ namespace Drive.WebHost.Services
                 Id = s.Id,
                 Name = s.Name,
                 Description = s.Description,
-                MaxFileSize = s.MaxFileSize,
-                MaxFilesQuantity = s.MaxFilesQuantity,
-                ReadPermittedUsers = s.ReadPermittedUsers,
-                Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null).Select(f => new FileUnitDto
-                {
-                    Description = f.Description,
-                    FileType = f.FileType.ToString(),
-                    Id = f.Id,
-                    IsDeleted = f.IsDeleted,
-                    Name = f.Name,
-                    Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId}
-                }),
-                Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.Parent == null).Select(f => new FolderUnitDto
-                {
-                    Id = f.Id,
-                    Name = f.Name,
-                    Description = f.Description,
-                    CreatedAt = f.CreatedAt,
-                    LastModified = f.LastModified,
-                    IsDeleted = f.IsDeleted,
-                    Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId}
-                })
+                //MaxFileSize = s.MaxFileSize,
+                //MaxFilesQuantity = s.MaxFilesQuantity,
+                //ReadPermittedUsers = s.ReadPermittedUsers,
+                //Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null).Select(f => new FileUnitDto
+                //{
+                //    Description = f.Description,
+                //    FileType = f.FileType.ToString(),
+                //    Id = f.Id,
+                //    IsDeleted = f.IsDeleted,
+                //    Name = f.Name,
+                //    Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId}
+                //}),
+                //Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.Parent == null).Select(f => new FolderUnitDto
+                //{
+                //    Id = f.Id,
+                //    Name = f.Name,
+                //    Description = f.Description,
+                //    CreatedAt = f.CreatedAt,
+                //    LastModified = f.LastModified,
+                //    IsDeleted = f.IsDeleted,
+                //    Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId}
+                //})
             }).ToListAsync();
 
-            var owners = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
+            //var owners = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
 
-            Parallel.ForEach(spacesList, space =>
-            {
+            //Parallel.ForEach(spacesList, space =>
+            //{
                
-                Parallel.ForEach(space.Files, file =>
-                {
-                    file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name;
-                });
-                Parallel.ForEach(space.Folders, folder =>
-                {
-                    folder.Author.Name = owners.FirstOrDefault(o => o.Id == folder.Author.GlobalId)?.Name;
-                });
-            });
+            //    Parallel.ForEach(space.Files, file =>
+            //    {
+            //        file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name;
+            //    });
+            //    Parallel.ForEach(space.Folders, folder =>
+            //    {
+            //        folder.Author.Name = owners.FirstOrDefault(o => o.Id == folder.Author.GlobalId)?.Name;
+            //    });
+            //});
 
             return spacesList;
         }
