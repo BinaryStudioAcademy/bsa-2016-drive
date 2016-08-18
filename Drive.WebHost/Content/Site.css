@@ -426,6 +426,72 @@ hr.style {
   transform: translateY(0);
 }
 
+/*table in space*/
+table {
+    color: #666;
+    text-shadow: 1px 1px 0px #fff;
+    background: #eaebec;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -moz-box-shadow: 0 1px 2px #d1d1d1;
+    -webkit-box-shadow: 0 1px 2px #d1d1d1;
+    box-shadow: 0 1px 2px #d1d1d1;
+}   
+table th {
+    height: 50px;
+    background: #eaebec;
+}
+/*end table in space*/
+
+/*folders and files grid view*/
+.wrap {
+	position: relative;
+	width: 100%;
+	max-width: 960px;
+	margin: 20px auto;
+}
+.small {
+	width: 100%;
+	margin: 10px auto;
+	overflow: hidden;
+}
+.s-block {
+	float: left;
+	width: 23%;
+	margin: 0 2% 20px 0;
+	min-height: 200px;
+	border: 1px solid #222;
+	padding: 30px;
+}
+/*
+.s-block:nth-child(4n+4) {
+	margin: 0 0 20px 0;
+}
+*/
+@media screen and (min-width: 800px) and (max-width: 1200px) {
+	.s-block {
+		width: 31%;
+	}
+	.s-block:nth-child(odd) {
+		margin: 0 2% 0 0;
+	}
+}
+@media screen and (min-width: 400px) and (max-width: 800px) {
+	.s-block {
+		width: 48%;
+	}
+	.s-block:nth-child(odd) {
+		margin: 0 2% 0 0;
+	}
+}
+@media screen and (max-width: 400px) {
+	.s-block {
+		width: 100%;
+	}
+}
+/*end grid view*/
+
 /*dataUnit - folder or file*/
 .dataUnit {
     color: #242424;

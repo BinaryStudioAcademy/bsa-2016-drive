@@ -135,6 +135,9 @@ namespace Drive.WebHost.Services
                     Description = f.Description,
                     Id = f.Id,
                     IsDeleted = f.IsDeleted,
+                    Link = f.Link,
+                    CreatedAt = f.CreatedAt,
+                    FileType = f.FileType
                 }).ToListAsync();
 
             int skipCount = (page - 1) * count;

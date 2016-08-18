@@ -73,10 +73,10 @@ namespace Drive.DataAccess.Context
                         m.ToTable("DataUnitRoleModifyPermissions");
                     });
 
-            modelBuilder.Entity<User>()
-                .Property(user => user.GlobalId)
-                .HasColumnAnnotation(
-                    IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute()));
+            //modelBuilder.Entity<User>()
+            //    .Property(user => user.GlobalId)
+            //    .HasColumnAnnotation(
+            //        IndexAnnotation.AnnotationName, new IndexAnnotation(new IndexAttribute()));
 
             modelBuilder.Entity<User>()
                 .HasMany<Space>(s => s.ModifyPermissionSpaces)
