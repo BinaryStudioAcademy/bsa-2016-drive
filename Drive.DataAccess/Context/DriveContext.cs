@@ -12,7 +12,7 @@ namespace Drive.DataAccess.Context
         {
             //to change when DB structure is stable!!!
             Database.SetInitializer<DriveContext>(new DropCreateDatabaseIfModelChanges<DriveContext>());
-
+            Database.SetInitializer<DriveContext>(new DriveDBInitializer());
         }
 
         public DbSet<FolderUnit> Folders { get; set; }
