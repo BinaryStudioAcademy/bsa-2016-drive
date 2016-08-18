@@ -18,8 +18,8 @@ using RedirectResult = System.Web.Mvc.RedirectResult;
 
 namespace Drive.WebHost.Filters
 {
-    public class JWTAuthenticationFilter : FilterAttribute, 
-        System.Web.Mvc.Filters.IAuthenticationFilter, 
+    public class JWTAuthenticationFilter : FilterAttribute,
+        System.Web.Mvc.Filters.IAuthenticationFilter,
         System.Web.Http.Filters.IAuthenticationFilter
     {
         public void OnAuthentication(AuthenticationContext filterContext)
@@ -71,7 +71,7 @@ namespace Drive.WebHost.Filters
             var requestCookies = context.Request.Headers.GetCookies("x-access-token").SingleOrDefault();
             var token = mockToken ? ConfigurationManager.AppSettings["TestToken"] : requestCookies?["x-access-token"].Value;
 
-            if (token != null)
+            if (!string.IsNullOrWhiteSpace(token))
             {
                 var secret = ConfigurationManager.AppSettings["JWTSecret"];
                 ITokenAuthenticationService authService = new JWTAuthService();
@@ -88,6 +88,14 @@ namespace Drive.WebHost.Filters
                 var idManager = new BSIdentityManager();
                 idManager.SetPrincipal(principal);
                 context.Principal = principal;
+            }
+            else
+            {
+                context.ErrorResult = new AuthenticationFailureResult(new
+                {
+                    Error = true,
+                    Message = "Token is not defined"
+                }, context.Request);
             }
             return Task.FromResult(0);
         }
