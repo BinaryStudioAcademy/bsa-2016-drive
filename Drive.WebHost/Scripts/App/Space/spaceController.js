@@ -294,32 +294,32 @@
         }
 
         function createNewDocument() {
-            vm.file = { type: 1, parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.file = { fileType: 1, parentId: vm.parentId, spaceId: vm.spaceId };
             vm.openFileWindow();
         }
 
         function createNewSheet() {
-            vm.file = { type: 2, parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.file = { fileType: 2, parentId: vm.parentId, spaceId: vm.spaceId };
             vm.openFileWindow();
         }
 
         function createNewSlide() {
-            vm.file = { type: 3, parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.file = { fileType: 3, parentId: vm.parentId, spaceId: vm.spaceId };
             vm.openFileWindow();
         }
 
         function createNewTrello() {
-            vm.file = { type: 4, parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.file = { fileType: 4, parentId: vm.parentId, spaceId: vm.spaceId };
             vm.openFileWindow();
         }
 
         function createNewLink() {
-            vm.file = { type: 5, parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.file = { fileType: 5, parentId: vm.parentId, spaceId: vm.spaceId };
             vm.openFileWindow();
         }
 
         function uploadNewFile() {
-            vm.file = { type: 6, parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.file = { fileType: 6, parentId: vm.parentId, spaceId: vm.spaceId };
             vm.openFileWindow();
         }
 
