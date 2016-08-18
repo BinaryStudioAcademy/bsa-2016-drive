@@ -11,6 +11,9 @@
         var service = {
             getSpace: getSpace,
             getAllSpaces: getAllSpaces,
+            getSpaceCreate: getSpaceCreate,
+            getAllUsers: getAllUsers,
+            pushData: pushData,
             searchFoldersAndFiles,
             getNumberOfResultSearchFoldersAndFiles,
             getSpaceTotal
@@ -53,6 +56,37 @@
             }, function () {
                 console.log('Error while getting all spaces!');
             });
+        }
+
+        function getSpaceCreate(id, callback) {
+            $http.get('/api/spaces/' + id)
+                .then(function (response) {
+                    if (callback) {
+                        callback(response.data);
+                    }
+                }, function () {
+                    console.log('Error while getting space!');
+                });
+        }
+
+        function getAllUsers(callback) {
+            $http.get('/api/users')
+            .then(function (response) {
+                if (callback) {
+                    callback(response.data);
+                }
+            }, function () {
+                console.log('Error while getting all users!');
+            });
+        }
+
+        function pushData(data) {
+            $http.post('/api/spaces', data)
+                .then(function () {
+                    console.log('Success!');
+                }, function () {
+                    console.log('Error while pushing data!');
+                });
         }
 
         function searchFoldersAndFiles(spaceId, folderId, text, currentPage, pageSize, callback) {

@@ -5,9 +5,9 @@
         .module("driveApp")
         .controller("CreateController", CreateController);
 
-    CreateController.$inject = ['CreateService', '$uibModalInstance'];
+    CreateController.$inject = ['SpaceService', '$uibModalInstance'];
 
-    function CreateController(createService, $uibModalInstance) {
+    function CreateController(spaceService, $uibModalInstance) {
         var vm = this;
         vm.save = save;
         vm.cancel = cancel;
@@ -19,10 +19,10 @@
         activate();
 
         function activate() {
-            createService.getSpace(1, function (data) {
+            spaceService.getSpaceCreate(1, function (data) {
                 vm.space = data;
             });
-            createService.getAllUsers(function (data) {
+            spaceService.getAllUsers(function (data) {
                 vm.users = data;
             });
 
@@ -30,7 +30,7 @@
 
         function addNewSpace() {
             if (vm.space.Name != null) {
-                createService.pushData(vm.space);
+                spaceService.pushData(vm.space);
                 vm.spaceName = null;
                 vm.Description = null;
                 vm.MaxFilesQuantity = null;
