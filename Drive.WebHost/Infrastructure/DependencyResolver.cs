@@ -17,6 +17,8 @@ namespace Drive.WebHost.Infrastructure
             Kernel.Bind<IUsersProvider>().To<UsersProvider>();
 
             Kernel.Bind<IFileService>().To<FileService>();
+
+            Kernel.Bind<ISettingsService>().To<SettingsService>();
         }
     }
 }

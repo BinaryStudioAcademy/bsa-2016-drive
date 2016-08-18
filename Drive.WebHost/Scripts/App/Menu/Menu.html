@@ -16,7 +16,7 @@
                     <span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x "></i></span>My Space
                 </div>
             </li>
-            <li ng-show="menuController.spaces.length > 0">
+            <li ng-show="menuController.spaces.length > 0" ng-click="menuController.getAllSpaces()">
                 <div class="d" data-toggle="collapse" data-target="#other">
                     <span class="fa-stack fa-lg pull-left"><i class="fa fa-ellipsis-v fa-stack-1x "></i></span>Other
                 </div>
@@ -27,7 +27,7 @@
                         </button>
                         <div class="d" ng-click='menuController.redirectToSpace(item.id)' title="{{item.name}}">
                             <span class="fa-stack fa-lg pull-left"><i class="fa fa-circle-o  fa-stack-1x"></i></span>
-                            {{item.name | limitTo: 5}}{{item.name.length > 5 ? '..' : ''}}
+                            {{item.name | limitTo: 5 }}{{item.name.length > 5 ? '..' : ''}}
                         </div>
                     </li>
                 </ul>

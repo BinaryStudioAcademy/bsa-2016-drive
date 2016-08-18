@@ -4,7 +4,7 @@
     <div class="btn-group btn-breadcrumb">
         <a class="btn btn-info" ng-click="spaceCtrl.getSpace()" title="{{spaceCtrl.space.name}}">
             <i class="glyphicon glyphicon-home"></i>
-            {{spaceCtrl.space.name | limitTo: 10}}{{spaceCtrl.space.name.length > 10 ? '...' : ''}}
+            {{spaceCtrl.space.name | limitTo: 13}}{{spaceCtrl.space.name.length > 13 ? '...' : ''}}
         </a>
         <a ng-repeat="item in spaceCtrl.folderList" ng-click="spaceCtrl.getFolderContent(item.id); spaceCtrl.deleteElems(item)" title="{{item.name}}" class="btn btn-default">
             {{item.name | limitTo: 10}}{{item.name.length > 10 ? '...' : ''}}

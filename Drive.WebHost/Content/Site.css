@@ -111,6 +111,7 @@ textarea {
 /*Ng-view on Index page*/
 .view-index {
     margin-left: 120px;
+    padding-left: 4%;
     margin-right: 0%;
     align-content: center;
     overflow: hidden;
@@ -119,6 +120,7 @@ textarea {
 /*Footer on _Layout page*/
 .footer-margin {
     margin-left: 120px;
+    padding-left: 4%;
     margin-right: 0%;
     align-content: center;
     overflow: hidden;
@@ -441,6 +443,10 @@ table {
 table th {
     height: 50px;
     background: #eaebec;
+}
+table td {
+    height: 50px;
+    background: white;
 }
 /*end table in space*/
 
