@@ -6,6 +6,7 @@ using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
 using Drive.Logging;
 using Drive.WebHost.Api;
+using Drive.WebHost.Filters;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Ninject.Modules;
@@ -32,6 +33,8 @@ namespace Drive.WebHost
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { controller = "Home", id = RouteParameter.Optional }
             );
+
+            config.Filters.Add(new JWTAuthenticationFilter());
         }
     }
 }
