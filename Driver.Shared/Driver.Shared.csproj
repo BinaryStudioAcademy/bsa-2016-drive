@@ -52,7 +52,6 @@
     <Compile Include="Dto\Pro\LectureDto.cs" />
     <Compile Include="Dto\Pro\TagDto.cs" />
     <Compile Include="Dto\SearchResultDto.cs" />
-    <Compile Include="Dto\SettingsDto.cs" />
     <Compile Include="Dto\SpaceDto.cs" />
     <Compile Include="Dto\UserDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
