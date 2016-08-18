@@ -444,9 +444,9 @@ table th {
     height: 50px;
     background: #eaebec;
 }
-table th {
+table td {
     height: 50px;
-    background: #eaebec;
+    background: white;
 }
 /*end table in space*/
 
