@@ -8,12 +8,12 @@
 
     function AdminPanelController(adminPanelService, $uibModal) {
         var vm = this;
-        vm.roles = ['HR', 'Tech Lead', 'Team Lead', 'Backend Developer'];
         vm.dirty = {};
         vm.suggest_role = suggest_role;
         vm.createRole = createRole;
+        vm.editRole = editRole;
         vm.autocomplete_options = {
-            suggest: suggest_role
+            suggest: vm.suggest_role,
         };
         activate();
 
@@ -25,18 +25,19 @@
             //adminPanelService.getAllUsers(function (data) {
             //    vm.users = data;
             //});
-            //adminPanelService.getAllRoles(function (data) {
-            //    vm.roles = data;
-            //})
+            adminPanelService.getAllRoles(function (data) {
+                vm.roles = data;
+            })
         }
 
         function suggest_role(term) {
             var q = term.toLowerCase().trim();
             var results = [];
             for (var i = 0; i < vm.roles.length && results.length < 10; i++) {
-                var role = vm.roles[i];
+                var role = vm.roles[i].name;
                 if (role.toLowerCase().indexOf(q) === 0) {
-                    results.push({ label: role, value: role });
+                    results.push({  value: role, label: role });
+
                 }
             }
             return results;
@@ -50,12 +51,36 @@
                 controller: 'RoleController',
                 controllerAs: 'roleCtrl',
                 keyboard: true,
-                size: size
+                size: size,
+                resolve: {
+                    items: function () {
+                    }
+            }
             });
             modalInstance.result.then(function () {
             }, function () {
             });
         };
+
+        function editRole(size, id) {
+            var modalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'Scripts/App/AdminPanel/Roles/EditRole.html',
+                windowTemplateUrl: 'Scripts/App/Space/Modal.html',
+                controller: 'RoleController',
+                controllerAs: 'roleCtrl',
+                keyboard: true,
+                size: size,
+                resolve: {
+                items: function () {
+                    return id;
+                }
+        }
+            });
+            modalInstance.result.then(function () {
+            }, function () {
+            });
+        }
 
     }
 }());

@@ -1,18 +1,68 @@
-﻿<div class="container">
+﻿<style>
+    .highlight { background-color:#FFFF00; }
+
+.ac-container {
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  -ms-backface-visibility: hidden;
+  -o-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+  z-index: 999;
+}
+.ac-container .ac-menu {
+  border: 1px solid #ccc;
+  list-style: none;
+  padding: 0;
+  background-color: white;
+  box-shadow: 0 3px 7px 0px rgba(0, 0, 0, 0.15);
+  margin: 0;
+}
+.ac-container .ac-menu .ac-menu-item {
+  border-bottom: 1px dotted #ccc;
+  line-height: 35px;
+  margin: 0;
+  height: 20px;
+}
+.ac-container .ac-menu .ac-menu-item:last-child {
+  border-bottom: 0;
+}
+.ac-container .ac-menu .ac-menu-item:hover {
+  background-color: #e0eaff;
+}
+.ac-container .ac-menu a {
+  padding-left: 5px;
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.ac-container .ac-menu .ac-state-focus {
+  outline: none;
+  background-color: #e0eaff;
+}
+</style>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-sanitize.js"></script>
+<div class="container">
     <br />
     <ol class="breadcrumb breadcrumb-arrow">
         <li><a href="#"><i class="glyphicon glyphicon-home"></i>Space</a></li>
-        <li class="active"><span>Settings</span></li>
+        <li class="active"><span>Admin Panel</span></li>
     </ol>
     <h1>{{adminCtrl.title}}</h1>
     <h2>Roles</h2>
-    <button class="btn btn-info btn-md" style="width: 15%; height: 40px;" ng-click="adminCtrl.createRole('lg')"><i class="fa iconCustom fa-plus-circle fa-cog fa-lg"></i>New role</button><br/>
-    <br/><div class="list-group" ng-repeat="role in adminCtrl.roles">
-        <a href="#" class="list-group-item" style="width: 20%">{{role}}</a>
+    <button class="btn btn-info btn-md" style="width: 15%; height: 40px;" ng-click="adminCtrl.createRole('lg')"><i class="fa iconCustom fa-plus-circle fa-cog fa-lg"></i>New role</button><br />
+    <br /><div class="list-group" ng-repeat="role in adminCtrl.roles">
+              <a  ng-click="adminCtrl.editRole('lg', role.id)" class="list-group-item" style="width: 20%">{{role.name}}</a>
     </div>
 </div>
-<div mass-autocomplete>
-    <input ng-model="adminCtrl.dirty.value"
-           mass-autocomplete-item="adminCtrl.autocomplete_options">
+<div class="container">
+    <br /><div mass-autocomplete>
+        <input ng-model="adminCtrl.dirty.value"
+               mass-autocomplete-item="adminCtrl.autocomplete_options" style="height: 20px">
+    </div>
 </div>
     Selected : {{adminCtrl.dirty.value}}

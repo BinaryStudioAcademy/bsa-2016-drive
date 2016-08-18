@@ -12,7 +12,8 @@
             getAllSpaces: getAllSpaces,
             getAllUsers: getAllUsers,
             getAllRoles: getAllRoles,
-            createRole: createRole
+            createRole: createRole,
+            getById: getById
         };
 
         function getAllSpaces(callback) {
@@ -45,6 +46,17 @@
                 }
             }, function () {
                 console.log('Error while getting roles!');
+            });
+        }
+
+        function getById(id, callback) {
+            $http.get('/api/roles/' + id)
+            .then(function (response) {
+                if (callback) {
+                    callback(response.data);
+                }
+            }, function () {
+                console.log('Error while getting role by ID!');
             });
         }
 
