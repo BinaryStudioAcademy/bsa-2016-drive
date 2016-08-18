@@ -57,7 +57,7 @@
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
                                         <li ng-repeat="item in settingsCtrl.users">
-                                            <a ng-click="settingsCtrl.setChoice(item.login, item.id);">{{item.login}}</a>
+                                            <a role="button" ng-click="settingsCtrl.setChoice(item.login, item.id);">{{item.name}}</a>
                                         </li>
                                     </ul>
                                 </div>
