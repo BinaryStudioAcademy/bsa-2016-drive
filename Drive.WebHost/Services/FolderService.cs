@@ -95,7 +95,7 @@ namespace Drive.WebHost.Services
                 dto.Id = folder.Id;
                 dto.CreatedAt = folder.CreatedAt;
                 dto.LastModified = folder.LastModified;
-                dto.Author = new AuthorDto() {Id = folder.Owner.Id, Name = user.name};
+                dto.Author = new AuthorDto() {Id = folder.Owner.Id, Name = user.name + ' ' + user.surname };
 
                 return dto;
             }

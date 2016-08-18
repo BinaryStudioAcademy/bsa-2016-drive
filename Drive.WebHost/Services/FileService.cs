@@ -76,7 +76,7 @@ namespace Drive.WebHost.Services
                 {
                     Name = dto.Name,
                     //Link = dto.Link,
-                    FileType = (FileType)Enum.Parse(typeof(FileType), dto.FileType),
+                    FileType = FileType.None,//(FileType)Enum.Parse(typeof(FileType), dto.FileType),
                     Description = dto.Description,
                     CreatedAt = DateTime.Now,
                     LastModified = DateTime.Now,
@@ -93,7 +93,7 @@ namespace Drive.WebHost.Services
                 dto.Id = file.Id;
                 dto.CreatedAt = file.CreatedAt;
                 dto.LastModified = file.LastModified;
-                dto.Author = new AuthorDto() { Id = file.Owner.Id, Name = user.name };
+                dto.Author = new AuthorDto() { Id = file.Owner.Id, Name = user.name +' '+ user.surname };
 
                 return dto;
             }

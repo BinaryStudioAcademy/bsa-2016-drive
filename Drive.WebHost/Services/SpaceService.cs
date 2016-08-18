@@ -126,6 +126,8 @@ namespace Drive.WebHost.Services
 
         public async Task<int> CreateAsync(SpaceDto dto)
         {
+            var user = await _userService.GetCurrentUser();
+
             var space = new Space
             {
                 Name = dto.Name,
@@ -135,7 +137,8 @@ namespace Drive.WebHost.Services
                 ReadPermittedUsers = dto.ReadPermittedUsers,
                 CreatedAt = DateTime.Now,
                 LastModified = DateTime.Now,
-                IsDeleted = false
+                IsDeleted = false,
+                Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId)
             };
             _unitOfWork.Spaces.Create(space);
             await _unitOfWork.SaveChangesAsync();
