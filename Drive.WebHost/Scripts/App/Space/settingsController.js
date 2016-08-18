@@ -32,7 +32,9 @@
         };
 
         function cancel() {
-            location.reload();
+            settingsService.getSpace(1, function (data) {
+                vm.space = data;
+            });
         };
 
         function addSpaceUser() {
