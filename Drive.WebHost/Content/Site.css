@@ -444,6 +444,10 @@ table th {
     height: 50px;
     background: #eaebec;
 }
+table th {
+    height: 50px;
+    background: #eaebec;
+}
 /*end table in space*/
 
 /*folders and files grid view*/
