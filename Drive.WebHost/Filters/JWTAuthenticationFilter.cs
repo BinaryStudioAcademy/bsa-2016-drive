@@ -43,6 +43,7 @@ namespace Drive.WebHost.Filters
                 var idManager = new BSIdentityManager();
                 idManager.SetPrincipal(principal);
                 filterContext.Principal = principal;
+                filterContext.HttpContext.User = principal;
             }
         }
 
