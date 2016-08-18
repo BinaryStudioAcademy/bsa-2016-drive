@@ -88,26 +88,11 @@ namespace Drive.WebHost.Filters
                 idManager.SetPrincipal(principal);
                 context.Principal = principal;
             }
-            else
-            {
-                context.ErrorResult = new AuthenticationFailureResult(new
-                {
-                    Error = true,
-                    Message = "No token provided"
-                }, context.Request);
-            }
             return Task.FromResult(0);
         }
 
         public Task ChallengeAsync(HttpAuthenticationChallengeContext context, CancellationToken cancellationToken)
         {
-            var needAuth = bool.Parse(ConfigurationManager.AppSettings["NeedAuth"]);
-            if (needAuth)
-            {
-                var requestUrl = context.Request.RequestUri;
-                string baseUrl = requestUrl.Scheme + "://" + requestUrl.Authority;
-                context.Result = new System.Web.Http.Results.RedirectResult(new Uri(baseUrl), context.Request);
-            }
             return Task.FromResult(0);
         }
     }
