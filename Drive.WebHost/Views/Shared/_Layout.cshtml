@@ -3,7 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link rel="shortcut icon" href="http://binary-studio.com/wp-content/themes/binary-studio/images/favicon/favicon.ico">
+    <title>Drive</title>
 </head>
 <body ng-app="driveApp">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -25,10 +26,6 @@
     </div>
 <div class="container body-content" >
     @RenderBody()
-    <hr class="footer-margin"/>
-    <footer class="footer-margin">
-        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-    </footer>
 </div>
     @Styles.Render("~/Content/bundles/styles")
     @Scripts.Render("~/Scripts/bundles/libs")
