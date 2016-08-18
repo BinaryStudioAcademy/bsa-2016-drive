@@ -256,7 +256,6 @@
     <Content Include="Scripts\App\Error404\404.html" />
     <Content Include="Scripts\App\Error404\ErrorController.js" />
     <Content Include="Scripts\App\Folder\folderModalController.js" />
-    <Content Include="Scripts\App\Home\homeService.js" />
     <Content Include="Scripts\App\Logs\Logs.html" />
     <Content Include="Scripts\App\Logs\logsController.js" />
     <Content Include="Scripts\App\Logs\logsService.js" />
@@ -276,8 +275,6 @@
     <Content Include="Scripts\App\Space\settingsService.js" />
     <Content Include="Scripts\App\Space\Space.html" />
     <Content Include="Scripts\App\app.js" />
-    <Content Include="Scripts\App\Home\Home.html" />
-    <Content Include="Scripts\App\Home\homeController.js" />
     <Content Include="bower.json" />
     <Content Include="package.json" />
     <Content Include="Scripts\App\Space\spaceController.js" />
