@@ -38,11 +38,11 @@
         };
 
         function redirectToSpace(id) {
-            $location.url("/spaces/:id" + id);
+            $location.url("/spaces/" + id);
         };
 
         function redirectToSpaceSettings(id) {
-            $location.url("/spaces/:" + id + "id/settings/");
+            $location.url("/spaces/" + id + "/settings/");
         };
 
         function redirectToAddFile() {

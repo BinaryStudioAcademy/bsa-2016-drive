@@ -245,11 +245,10 @@
     <Content Include="Scripts\App\Events\Events.html" />
     <Content Include="Scripts\App\Events\eventsController.js" />
     <Content Include="Scripts\App\File\FileForm.html" />
-    <Content Include="Scripts\App\File\FileList.html" />
     <Content Include="Scripts\App\File\fileService.js" />
     <Content Include="Scripts\App\File\fileModalController.js" />
+    <Content Include="Scripts\App\File\fileType.filter.js" />
     <Content Include="Scripts\App\File\Modal.html" />
-    <Content Include="Scripts\App\Folder\Folder.html" />
     <Content Include="Scripts\App\Folder\folderService.js" />
     <Content Include="Scripts\App\Folder\CreateUpdateFolderForm.html" />
     <Content Include="Scripts\App\Folder\Modal.html" />
@@ -268,7 +267,6 @@
     <Content Include="Scripts\App\Slides\slidesController.js" />
     <Content Include="Scripts\App\Space\Create.html" />
     <Content Include="Scripts\App\Space\createController.js" />
-    <Content Include="Scripts\App\Space\createService.js" />
     <Content Include="Scripts\App\Space\Modal.html" />
     <Content Include="Scripts\App\Space\Settings.html" />
     <Content Include="Scripts\App\Space\settingsController.js" />

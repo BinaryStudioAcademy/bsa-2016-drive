@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using Drive.DataAccess.Context;
 using Drive.DataAccess.Entities;
 using Drive.DataAccess.Interfaces;
 using Driver.Shared.Dto;
@@ -192,7 +193,7 @@ namespace Drive.WebHost.Services
 
         public async Task UpdateAsync(int id, SpaceDto dto)
         {
-            var space = await _unitOfWork?.Spaces?.GetByIdAsync(id);
+            var space = await  _unitOfWork?.Spaces?.Query.Include(x => x.ReadPermittedUsers).SingleOrDefaultAsync(x => x.Id == id);
 
             if (space == null) return;
 
