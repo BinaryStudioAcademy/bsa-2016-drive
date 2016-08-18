@@ -29,11 +29,13 @@ namespace Drive.WebHost.Services
                     {
                         Id = d.Id,
                         IsDeleted = d.IsDeleted,
-                        FyleType = d.FileType,
+                        FileType = d.FileType,
                         Name = d.Name,
                         Description = d.Description,
                         Owner = d.Owner,
-                        SpaceId = d.Space.Id
+                        SpaceId = d.Space.Id,
+                        Link = d.Link,
+                        CreatedAt = d.CreatedAt
                     };
 
                 return dto;
@@ -51,11 +53,13 @@ namespace Drive.WebHost.Services
                 {
                     Id = file.Id,
                     IsDeleted = file.IsDeleted,
-                    FyleType = file.FileType,
+                    FileType = file.FileType,
                     Name = file.Name,
                     Description = file.Description,
                     Owner = file.Owner,
-                    SpaceId = file.Space.Id
+                    SpaceId = file.Space.Id,
+                    Link = file.Link,
+                    CreatedAt = file.CreatedAt
                 };
             }
             return null;
@@ -71,8 +75,8 @@ namespace Drive.WebHost.Services
                 var file = new FileUnit()
                 {
                     Name = dto.Name,
-                    //Link = dto.Link,
-                    FileType = FileType.None,
+                    Link = dto.Link,
+                    FileType = dto.FileType,
                     Description = dto.Description,
                     CreatedAt = DateTime.Now,
                     LastModified = DateTime.Now,
@@ -103,7 +107,7 @@ namespace Drive.WebHost.Services
                 return null;
 
             file.Name = dto.Name;
-            file.FileType = FileType.None;
+            file.FileType = dto.FileType;
             file.Description = dto.Description;
             file.IsDeleted = dto.IsDeleted;
             file.LastModified = DateTime.Now;

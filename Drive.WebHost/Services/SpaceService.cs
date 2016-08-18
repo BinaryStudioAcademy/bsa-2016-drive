@@ -34,10 +34,12 @@ namespace Drive.WebHost.Services
                 Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null).Select(f => new FileUnitDto
                 {
                     Description = f.Description,
-                    FyleType = f.FileType,
+                    FileType = f.FileType,
                     Id = f.Id,
                     IsDeleted = f.IsDeleted,
-                    Name = f.Name
+                    Name = f.Name,
+                    Link = f.Link,
+                    CreatedAt = f.CreatedAt
                 }),
                 Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.Parent == null).Select(f => new FolderUnitDto
                 {
@@ -66,10 +68,12 @@ namespace Drive.WebHost.Services
                 Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null).Select(f => new FileUnitDto
                 {
                     Description = f.Description,
-                    FyleType = f.FileType,
+                    FileType = f.FileType,
                     Id = f.Id,
                     IsDeleted = f.IsDeleted,
-                    Name = f.Name
+                    Name = f.Name,
+                    CreatedAt = f.CreatedAt,
+                    Link = f.Link
                 }),
                 Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.Parent == null).Select(f => new FolderUnitDto
                 {
@@ -131,7 +135,7 @@ namespace Drive.WebHost.Services
                 Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null).Select(f => new FileUnitDto
                 {
                     Description = f.Description,
-                    FyleType = f.FileType,
+                    FileType = f.FileType,
                     Id = f.Id,
                     IsDeleted = f.IsDeleted,
                     Name = f.Name
@@ -225,7 +229,7 @@ namespace Drive.WebHost.Services
                             Id = f.Id,
                             Name = f.Name,
                             Description = f.Description,
-                            FyleType = f.FileType,
+                            FileType = f.FileType,
                             IsDeleted = f.IsDeleted
                         });
                 }
@@ -258,7 +262,7 @@ namespace Drive.WebHost.Services
                             Id = f.Id,
                             Name = f.Name,
                             Description = f.Description,
-                            FyleType = f.FileType,
+                            FileType = f.FileType,
                             IsDeleted = f.IsDeleted
                         });
                 }

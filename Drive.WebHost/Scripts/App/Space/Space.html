@@ -16,36 +16,42 @@
                 <i class={{spaceCtrl.view}} title="view"> </i>
             </button>
         </div>
-        <div class="col-sm-3 pull-left nopadding">
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary" ng-click="spaceCtrl.createNewFolder()" title="Create new folder">
-                    <i class="fa fa-folder-open-o fa-lg"></i>
-                </button>
-                <div class="btn-group">
-                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" title="Create new file">
-                        <i class="fa fa-file-o fa-lg"></i>  <span class="caret"></span>
+        <div class="form-inline">
+            <div class="form-group col-sm-8 pull-left nopadding">
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-default btn-custom btn-lg" ng-click="spaceCtrl.createNewFolder()" title="Create new folder">
+                        <i class="fa fa-folder-open-o fa-lg"></i>
                     </button>
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="#" ng-click="spaceCtrl.createNewDocument()"><i class="fa fa-file-text-o fa-lg"></i> Document</a>
-                        </li>
-                        <li>
-                            <a href="#" ng-click="spaceCtrl.createNewSheet()"><i class="fa fa-table fa-lg"></i> Sheet</a>
-                        </li>
-                        <li>
-                            <a href="#" ng-click="spaceCtrl.createNewSlide()"><i class="fa fa-slideshare fa-lg"></i> Slide</a>
-                        </li>
-                        <li>
-                            <a href="#" ng-click="spaceCtrl.createNewTrello()"><i class="fa fa-trello fa-lg"></i> Trello</a>
-                        </li>
-                        <li>
-                            <a href="#" ng-click="spaceCtrl.createNewLink()"><i class="fa fa-link fa-lg"></i> Link</a>
-                        </li>
-                        <li role="separator" class="divider"></li>
-                        <li>
-                            <a href="#" ng-click="spaceCtrl.uploadNewFile()"><i class="fa fa-upload fa-lg"></i> Upload file</a>
-                        </li>
-                    </ul>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-default btn-custom btn-lg" ng-click="spaceCtrl.createNewDocument()" title="Create new document">
+                        <i class="fa fa-file-text-o fa-lg"></i>
+                    </button>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-default btn-custom btn-lg" ng-click="spaceCtrl.createNewSheet()" title="Create new sheet">
+                        <i class="fa fa-table fa-lg"></i>
+                    </button>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-default btn-custom btn-lg" ng-click="spaceCtrl.createNewSlide()" title="Create new slide">
+                        <i class="fa fa-slideshare fa-lg"></i>
+                    </button>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-default btn-custom btn-lg" ng-click="spaceCtrl.createNewTrello()" title="Create new Trello">
+                        <i class="fa fa-trello fa-lg"></i>
+                    </button>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-default btn-custom btn-lg" ng-click="spaceCtrl.createNewLink()" title="Create new link">
+                        <i class="fa fa-link fa-lg"></i>
+                    </button>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-default btn-custom btn-lg" ng-click="spaceCtrl.uploadNewFile()" title="Upload new file">
+                        <i class="fa fa-upload fa-lg"></i>
+                    </button>
                 </div>
             </div>
         </div>
@@ -66,7 +72,7 @@
     </div>
     <div class="wrap" ng-show="spaceCtrl.showGrid">
         <div class="small">
-            <div role="button" class="s-block btn-default shadow" context-menu="spaceCtrl.folderMenuOptions" ng-repeat="folder in spaceCtrl.space.folders" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
+            <div role="button" class="s-block btn-default shadow" context-menu="spaceCtrl.folderMenuOptions" dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize" total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
                 <i class="fa fa-folder-o fa-5x"></i>
                 <br>
                 <span class="bold">Name: </span>
@@ -109,22 +115,21 @@
                 </tr>
             </thead>
             <tr class="shadow" role="button" ng-repeat="folder in spaceCtrl.space.folders" context-menu="spaceCtrl.folderMenuOptions" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
-                <td>
-                    <i class="fa fa-folder-o">&nbsp;</i>{{ folder.name }}
-                </td>
+                <td><i class="fa fa-folder-o">&nbsp;</i><span class="dataUnit">{{ folder.name }}</span></td>
                 <td>{{ folder.description }}</td>
                 <td>{{ folder.author.firstName }} {{ folder.author.lastName }}</td>
-                <td>{{ folder.createdAt | date : 'short' }}</td>
+                <td>{{ folder.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
                 <td>Folder</td>
             </tr>
             <tr class="shadow" role="button" ng-repeat="file in spaceCtrl.space.files" context-menu="spaceCtrl.fileMenuOptions">
                 <td>
-                    <i class="fa fa-file-o">&nbsp;</i>{{ file.name }}
+                    <i class="fa fa-file-o">&nbsp;</i>
+                    <a ng-href="{{file.link}}" onclick="this.target='_blank';" class="dataUnit">{{ file.name }}</a>
                 </td>
                 <td>{{ file.description }}</td>
                 <td>{{ file.author.firstName }} {{ file.author.lastName }}</td>
-                <td>{{ file.createdAt | date : 'short' }}</td>
-                <td>{{ file.fyleType | typeOfFile }}</td>
+                <td>{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
+                <td>{{ file.fileType | typeOfFile }}</td>
             </tr>
         </table>
     </div>

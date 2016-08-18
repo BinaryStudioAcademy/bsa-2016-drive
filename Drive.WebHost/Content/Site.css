@@ -491,3 +491,20 @@ table th {
 	}
 }
 /*end grid view*/
+
+/*dataUnit - folder or file*/
+.dataUnit {
+    color: #242424;
+}
+a.dataUnit {
+    text-decoration: none;
+}
+a.dataUnit:active {
+    color: #242424;
+}
+a.dataUnit:visited {
+    color: #242424;
+}
+a.dataUnit:hover {
+    color: #242424;
+}
