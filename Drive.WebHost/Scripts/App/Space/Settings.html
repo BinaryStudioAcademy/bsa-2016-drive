@@ -57,13 +57,13 @@
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
                                         <li ng-repeat="item in settingsCtrl.users">
-                                            <a role="button" ng-click="settingsCtrl.setChoice(item.login, item.id);">{{item.name}}</a>
+                                            <a role="button" ng-click="settingsCtrl.setChoice(item.name, item.id);">{{item.name}}</a>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <input class="form-control" ng-model="settingsCtrl.userAddName" placeholder="User name" disabled />
+                                <input class="form-control" ng-model="settingsCtrl.userAddName" placeholder="User name" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -82,8 +82,8 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat="item in settingsCtrl.space.readPermittedUsers">
-                                <td>{{item.Login}}</td>
-                                <td>{{item.Id}}</td>
+                                <td>{{item.name}}</td>
+                                <td></td>
                                 <td>
                                     <input type="button" value="Remove" class="btn btn-danger" ng-click="settingsCtrl.removeSpaceUser(item.id)" />
                                 </td>
