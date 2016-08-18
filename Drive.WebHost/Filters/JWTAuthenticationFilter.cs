@@ -42,7 +42,7 @@ namespace Drive.WebHost.Filters
                 }
                 var idManager = new BSIdentityManager();
                 idManager.SetPrincipal(principal);
-                filterContext.Principal = principal;
+                //filterContext.Principal = principal;
                 filterContext.HttpContext.User = principal;
             }
         }
@@ -86,7 +86,7 @@ namespace Drive.WebHost.Filters
                     }, context.Request);
                 }
                 var idManager = new BSIdentityManager();
-                idManager.SetPrincipal(principal);
+                //idManager.SetPrincipal(principal);
                 context.Principal = principal;
             }
             else
