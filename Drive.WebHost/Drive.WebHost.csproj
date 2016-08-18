@@ -176,7 +176,6 @@
     <Compile Include="Api\Pro\ContentLinksController.cs" />
     <Compile Include="Api\Pro\LecturesController.cs" />
     <Compile Include="Api\Pro\TagsController.cs" />
-    <Compile Include="Api\SettingsController.cs" />
     <Compile Include="Api\SpacesController.cs" />
     <Compile Include="Api\UsersController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -197,7 +196,6 @@
     <Compile Include="Services\IFileService.cs" />
     <Compile Include="Services\IFolderService.cs" />
     <Compile Include="Services\ILogsService.cs" />
-    <Compile Include="Services\ISettingsService.cs" />
     <Compile Include="Services\ISpaceService.cs" />
     <Compile Include="Providers\IUsersProvider.cs" />
     <Compile Include="Services\IUsersService.cs" />
@@ -213,7 +211,6 @@
     <Compile Include="Services\Pro\ContentLinkService.cs" />
     <Compile Include="Services\Pro\LectureService.cs" />
     <Compile Include="Services\Pro\TagsService.cs" />
-    <Compile Include="Services\SettingsService.cs" />
     <Compile Include="Services\SpaceService.cs" />
     <Compile Include="Providers\UsersProvider.cs" />
     <Compile Include="Services\UsersService.cs" />
