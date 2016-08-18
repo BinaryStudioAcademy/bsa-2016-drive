@@ -10,9 +10,11 @@
         var vm = this;
         vm.createRole = createRole;
         vm.cancel = cancel;
-        vm.addUser = addUser;
+        vm.addSpaceUser = addSpaceUser;
+        vm.removeSpaceUser = removeSpaceUser;
+        vm.setChoice = setChoice;
         //vm.users = [{ id: 2, name: "Nikita Krasnov" }];
-        vm.users = [];
+        //vm.users = [];
         activate();
 
         function activate() {
@@ -25,11 +27,13 @@
                     vm.role = data;
                 })
             }
-        }
-
-        function addUser() {
-            //vm.users = [{ id: 1, name: "Nikita Krasnov" }];
-            vm.users.push({id: 1, name: "Nikita Krasnov" });
+            else {       
+                vm.role = {};
+                vm.role.users = [];
+            }
+            RoleService.getAllUsers(function (data) {
+                vm.users = data;
+            });
         }
 
         function createRole() {
@@ -43,6 +47,37 @@
 
         function cancel() {
             $uibModalInstance.dismiss('cancel');
+        };
+
+        function addSpaceUser() {
+            if (vm.userAddId != null) {
+                if (vm.role !== undefined) {
+                if (vm.role.users.find(x => x.id === vm.userAddId)) {
+                        vm.userAddName = null;
+                        vm.userAddId = null;
+                        console.log('The user already exist in this space!');
+                        return;
+                    }
+                };
+
+                vm.role.users.push({
+                    name: vm.userAddName,
+                    id: vm.userAddId
+                });
+                vm.userAddName = null;
+                vm.userAddId = null;
+            }
+        };
+
+        function removeSpaceUser(id) {
+            for (var i = 0; i < vm.role.users.length; i++) {
+                if (vm.role.users[i].id === id) { vm.role.users.splice(i, 1); break; }
+            }
+        };
+
+        function setChoice(name, id) {
+            vm.userAddName = name;
+            vm.userAddId = id;
         };
     }
 }());
