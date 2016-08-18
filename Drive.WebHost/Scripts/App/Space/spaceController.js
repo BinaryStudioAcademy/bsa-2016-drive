@@ -38,6 +38,7 @@
         vm.getFile = getFile;
         vm.deleteFile = deleteFile;
         vm.openFileWindow = openFileWindow;
+        vm.openDocument = openDocument;
 
         vm.findById = findById;
         vm.getSpace = getSpace;
@@ -426,5 +427,8 @@
             });
         }
 
+        function openDocument(url) {
+            window.open(url, '_blank');
+        }
     }
 }());
