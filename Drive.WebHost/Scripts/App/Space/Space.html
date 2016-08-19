@@ -72,7 +72,11 @@
     </div>
     <div class="wrap" ng-show="spaceCtrl.showGrid">
         <div class="small">
-            <div role="button" class="s-block btn-default shadow" context-menu="spaceCtrl.folderMenuOptions" dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize" total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
+            <div role="button" class="s-block btn-default shadow" context-menu="spaceCtrl.folderMenuOptions"
+                 dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize"
+                 total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage"
+                 title="Created {{ folder.createdAt | date : 'short' }}" 
+                 ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
                 <i class="fa fa-folder-o fa-5x"></i>
                 <br>
                 <span class="bold">Name: </span>
@@ -86,7 +90,9 @@
             </div>
         </div>
         <div class="small">
-            <div role="button" class="s-block btn-default shadow" context-menu="spaceCtrl.folderMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}">
+            <div role="button" class="s-block btn-default shadow" context-menu="spaceCtrl.folderMenuOptions"
+                 ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}"
+                 ng-dblclick="spaceCtrl.openDocument(file.link)">
                 <i class="fa fa-file-o fa-5x"></i>
                 <br>
                 <span class="bold">File type: </span>
