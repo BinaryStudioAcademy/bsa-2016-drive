@@ -11,6 +11,7 @@
         </h2>
     </div>
     <div class="row">
+        <span us-spinner="{radius:30, width:8, length: 16}"></span>
         <div class="col-md-3" style="padding-right: 20px; border-right: 1px solid #ccc;">
             <h4>General settings</h4>
             <form name="settingsForm" novalidate>
@@ -18,8 +19,8 @@
                     <label>Space name:</label>
                     <input type="text" class="form-control" name="spaceName" ng-pattern="/^[A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/" ng-model="settingsCtrl.space.name" required>
                     <div>
-                        <span style="color:red" ng-show="settingsForm.spaceName.$error.pattern">Not a valid name</span>
-                        <span style="color:red" ng-show="settingsForm.spaceName.$error.required">Data is required</span>
+                        <span style="color: red" ng-show="settingsForm.spaceName.$error.pattern">Not a valid name</span>
+                        <span style="color: red" ng-show="settingsForm.spaceName.$error.required">Data is required</span>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -30,20 +31,20 @@
                     <label>Maximum Files Quantity:</label>
                     <input type="text" class="form-control" name="maxQuantity" ng-pattern="/^(1|^[1-9][0-9]*)$/" ng-model="settingsCtrl.space.maxFilesQuantity" required>
                     <div>
-                        <span style="color:red" ng-show="settingsForm.maxQuantity.$error.pattern">Not a valid quantity</span>
-                        <span style="color:red" ng-show="settingsForm.maxQuantity.$error.required">Data is required</span>
+                        <span style="color: red" ng-show="settingsForm.maxQuantity.$error.pattern">Not a valid quantity</span>
+                        <span style="color: red" ng-show="settingsForm.maxQuantity.$error.required">Data is required</span>
                     </div>
                 </div>
                 <div class="col-md-12">
                     <label>Maximum file size (MB):</label>
                     <input type="text" class="form-control" name="maxSize" ng-pattern="/^(1|^[1-9][0-9]*)$/" ng-model="settingsCtrl.space.maxFileSize" required>
                     <div>
-                        <span style="color:red" ng-show="settingsForm.maxSize.$error.pattern">Not a valid size</span>
-                        <span style="color:red" ng-show="settingsForm.maxSize.$error.required">Data is required</span>
+                        <span style="color: red" ng-show="settingsForm.maxSize.$error.pattern">Not a valid size</span>
+                        <span style="color: red" ng-show="settingsForm.maxSize.$error.required">Data is required</span>
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <br />
+                    <br/>
                     <button class="btn btn-primary" ng-click="settingsCtrl.save()" ng-disabled="settingsForm.spaceName.$invalid || settingsForm.maxQuantity.$invalid || settingsForm.maxSize.$invalid">Save</button>
                     <button class="btn btn-default" ng-click="settingsCtrl.cancel()">Cancel</button>
                 </div>
@@ -57,7 +58,7 @@
                 </li>
             </ul>
             <div class="tab-content">
-                <br />
+                <br/>
                 <div id="panel1" class="tab-pane fade in active">
                     <div class="form-inline">
                         <div class="form-group">
@@ -75,7 +76,7 @@
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <input class="form-control" ng-model="settingsCtrl.userAddName" placeholder="User name" />
+                                <input class="form-control" ng-model="settingsCtrl.userAddName" placeholder="User name"/>
                             </div>
                         </div>
                         <div class="form-group">
@@ -86,20 +87,20 @@
                     </div>
                     <table class="table table-striped table-hover">
                         <thead>
-                            <tr>
-                                <th>User name</th>
-                                <th>Id</th>
-                                <th></th>
-                            </tr>
+                        <tr>
+                            <th>User name</th>
+                            <th>Id</th>
+                            <th></th>
+                        </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in settingsCtrl.space.readPermittedUsers">
-                                <td>{{item.name}}</td>
-                                <td></td>
-                                <td>
-                                    <input type="button" value="Remove" class="btn btn-danger" ng-click="settingsCtrl.removeSpaceUser(item.id)" />
-                                </td>
-                            </tr>
+                        <tr ng-repeat="item in settingsCtrl.space.readPermittedUsers">
+                            <td>{{item.name}}</td>
+                            <td></td>
+                            <td>
+                                <input type="button" value="Remove" class="btn btn-danger" ng-click="settingsCtrl.removeSpaceUser(item.id)"/>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>

@@ -10,7 +10,7 @@
             {{item.name | limitTo: 10}}{{item.name.length > 10 ? '...' : ''}}
         </a>
     </div>
-    <div class="row" style="margin:1em 0 1em 0">
+    <div class="row" style="margin: 1em 0 1em 0">
         <div class="col-sm-1 pull-right">
             <button class="btn btn-default" ng-click="spaceCtrl.changeView(spaceCtrl.view)">
                 <i class={{spaceCtrl.view}} title="view"> </i>
@@ -70,6 +70,7 @@
             </div>
         </div>
     </div>
+    <span us-spinner="{radius:30, width:8, length: 16}"></span>
     <div class="wrap" ng-show="spaceCtrl.showGrid">
         <div class="small">
             <div role="button" class="s-block btn-default shadow" context-menu="spaceCtrl.folderMenuOptions"
