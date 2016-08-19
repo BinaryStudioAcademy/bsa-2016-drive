@@ -228,10 +228,10 @@
     <Content Include="Content\Fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="gulpfile.js" />
+    <Content Include="icon.png" />
     <Content Include="Scripts\App\Academy\Academy.html" />
     <Content Include="Scripts\App\Academy\academyController.js" />
     <Content Include="Scripts\App\AdminPanel\AdminPanel.html" />
