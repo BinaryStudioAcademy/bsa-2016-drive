@@ -88,14 +88,16 @@
                         <thead>
                             <tr>
                                 <th>User name</th>
-                                <th>Id</th>
+                                <th>Read</th>
+                                <th>Write</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in settingsCtrl.space.readPermittedUsers">
+                            <tr ng-repeat="item in settingsCtrl.permittedUsers">
                                 <td>{{item.name}}</td>
-                                <td></td>
+                                <td><input type="checkbox" ng-model="item.confirmed" ng-change="settingsCtrl.addReadUser(confirmed, item.globalId)"></td>
+                                <td><input type="checkbox" ng-checked=""></td>
                                 <td>
                                     <input type="button" value="Remove" class="btn btn-danger" ng-click="settingsCtrl.removeSpaceUser(item.id)" />
                                 </td>

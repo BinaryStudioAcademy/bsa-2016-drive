@@ -37,6 +37,7 @@ namespace Drive.WebHost.Services
                 MaxFileSize = s.MaxFileSize,
                 MaxFilesQuantity = s.MaxFilesQuantity,
                 ReadPermittedUsers = s.ReadPermittedUsers,
+                ModifyPermittedUsers = s.ModifyPermittedUsers,
                 Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null).Select(f => new FileUnitDto
                 {
                     Description = f.Description,
@@ -83,6 +84,7 @@ namespace Drive.WebHost.Services
                 MaxFileSize = s.MaxFileSize,
                 MaxFilesQuantity = s.MaxFilesQuantity,
                 ReadPermittedUsers = s.ReadPermittedUsers,
+                ModifyPermittedUsers = s.ModifyPermittedUsers,
                 Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null).Select(f => new FileUnitDto
                 {
                     Description = f.Description,
@@ -181,6 +183,7 @@ namespace Drive.WebHost.Services
                 MaxFilesQuantity = dto.MaxFilesQuantity,
                 MaxFileSize = dto.MaxFileSize,
                 ReadPermittedUsers = dto.ReadPermittedUsers,
+                ModifyPermittedUsers = dto.ModifyPermittedUsers,
                 CreatedAt = DateTime.Now,
                 LastModified = DateTime.Now,
                 IsDeleted = false,
@@ -202,6 +205,7 @@ namespace Drive.WebHost.Services
             space.MaxFileSize = dto.MaxFileSize;
             space.MaxFilesQuantity = dto.MaxFilesQuantity;
             space.ReadPermittedUsers = dto.ReadPermittedUsers;
+            space.ModifyPermittedUsers = dto.ModifyPermittedUsers;
             space.LastModified = DateTime.Now;
 
             await _unitOfWork?.SaveChangesAsync();
