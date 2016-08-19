@@ -42,7 +42,8 @@
 
         vm.findById = findById;
         vm.getSpace = getSpace;
-
+        vm.getSpaceByButton = getSpaceByButton;
+        
         vm.createNewFolder = createNewFolder;
         vm.createNewFile = createNewFile;
 
@@ -65,45 +66,48 @@
         activate();
 
         function activate() {
-            vm.parentId = null;
             spaceService.getSpace(1,vm.paginate.currentPage,vm.paginate.pageSize, function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
-
-                if(localStorageService.get('folders') != null)
-                    vm.space.folders = localStorageService.get('folders');
-
-                if (localStorageService.get('files') != null)
-                    vm.space.files = localStorageService.get('files');
-
+                console.log(localStorageService.get('current'));
                 if (localStorageService.get('list') != null)
                     vm.folderList = localStorageService.get('list');
+
+                if (localStorageService.get('current') != null) {
+                    vm.parentId = localStorageService.get('current');
+                    getFolderContent(vm.parentId);
+                } else {
+                    getSpace();
+                }
+
             });
-            getSpace();
         }
 
         function getSpace() {
             vm.searchText = '';
             getSpaceContent();
             getSpaceTotal();
-            vm.paginate.getContent = getSpaceContent
+            vm.paginate.getContent = getSpaceContent;
         }
 
         function getSpaceContent() {
             spaceService.getSpace(1, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
+            });
+        }
 
-                localStorageService.set('folders', data.folders);
-                localStorageService.set('files', data.files);
+        function getSpaceByButton() {
+            spaceService.getSpace(1, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
+                vm.space = data;
+                vm.spaceId = data.id;
+
+
                 localStorageService.set('list', []);
-
-                vm.space.folders = localStorageService.get('folders');
-                vm.space.files = localStorageService.get('files');
                 vm.folderList = localStorageService.get('list');
             });
-            vm.folderList = [];
             vm.parentId = null;
+            localStorageService.set('current', null);
         }
 
         function getSpaceTotal() {
@@ -248,7 +252,6 @@
                 } else {
                     vm.space.folders[index] = folder;
                 }
-                localStorageService.set('folders', vm.space.folders);
             }, function () {
                 console.log('Modal dismissed');
             });
@@ -278,7 +281,6 @@
                 } else {
                     vm.space.files[index] = file;
                 }
-                localStorageService.set('files', vm.space.files);
             }, function () {
                 console.log('Modal dismissed');
             });
@@ -320,7 +322,6 @@
                 var index = findById(vm.space.folders, id);
                 vm.space.folders.splice(index, 1);                
             });
-            localStorageService.set('folders', vm.space.folders);
         }
 
         function getFolderContent(id) {
@@ -329,6 +330,7 @@
             vm.parentId = id;
             getFolderContentFromApi();
             getFolderContentTotal(id);
+            localStorageService.set('current', id);
         }
 
         function getFolderContentFromApi() {
@@ -336,15 +338,12 @@
              folderService.getContent(vm.parentId, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
                 vm.space.folders = data.folders;
                 vm.space.files = data.files;
-
-                localStorageService.set('folders', data.folders);
-                localStorageService.set('files', data.files);
             });
         }
 
         function getFolderContentTotal(id) {
             folderService.getFolderContentTotal(id, function (data) {
-                vm.paginate.numberOfItems = data;
+                vm.paginate.numberOfItems = data;                
             });
         }
 
