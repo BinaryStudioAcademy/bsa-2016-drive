@@ -117,15 +117,6 @@ textarea {
     overflow: hidden;
 }
 
-/*Footer on _Layout page*/
-.footer-margin {
-    margin-left: 120px;
-    padding-left: 4%;
-    margin-right: 0%;
-    align-content: center;
-    overflow: hidden;
-}
-
 /*Modal window for creating new space*/
 .modal-body {
     position: relative;
