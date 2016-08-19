@@ -5,9 +5,9 @@
         .module("driveApp")
         .controller("SpaceController", SpaceController);
 
-    SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', '$uibModal', 'localStorageService'];
+    SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', '$uibModal', 'localStorageService', '$routeParams'];
 
-    function SpaceController(spaceService, folderService, fileService, $uibModal, localStorageService) {
+    function SpaceController(spaceService, folderService, fileService, $uibModal, localStorageService, $routeParams) {
         var vm = this;
 
         vm.view = "fa fa-th";
@@ -19,6 +19,7 @@
         vm.deleteElems = deleteElems;
         vm.spaceId = 0;
         vm.parentId = null;
+        vm.selectedSpace = $routeParams.id ? $routeParams.id : 1;
 
         vm.space = {
             folders: [],
@@ -66,7 +67,7 @@
 
         function activate() {
             vm.parentId = null;
-            spaceService.getSpace(1,vm.paginate.currentPage,vm.paginate.pageSize, function (data) {
+            spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
 
@@ -86,11 +87,11 @@
             vm.searchText = '';
             getSpaceContent();
             getSpaceTotal();
-            vm.paginate.getContent = getSpaceContent
+            vm.paginate.getContent = getSpaceContent;
         }
 
         function getSpaceContent() {
-            spaceService.getSpace(1, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
+            spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
 
@@ -107,7 +108,7 @@
         }
 
         function getSpaceTotal() {
-            spaceService.getSpaceTotal(1, function (data) {
+            spaceService.getSpaceTotal(vm.selectedSpace, function (data) {
                 vm.paginate.numberOfItems = data;
             });
         }
