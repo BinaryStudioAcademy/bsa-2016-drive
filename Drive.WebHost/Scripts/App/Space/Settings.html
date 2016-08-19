@@ -49,7 +49,7 @@
                 </div>
             </form>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-7">
             <h4>Settings user access to space</h4>
             <ul id="permissionsTab" class="nav nav-tabs">
                 <li class="active">
@@ -99,7 +99,7 @@
                                 <td><input type="checkbox" ng-model="item.confirmedRead" ng-change="settingsCtrl.addReadUser(item.confirmedRead, item.globalId)"></td>
                                 <td><input type="checkbox" ng-model="item.confirmedWrite" ng-change="settingsCtrl.addWriteUser(item.confirmedWrite, item.globalId)"></td>
                                 <td>
-                                    <input type="button" value="Remove" class="btn btn-danger" ng-click="settingsCtrl.removeSpaceUser(item.globalId); settingsCtrl.addReadUser(false, item.globalId); settingsCtrl.addWriteUser(false, item.globalId)" />
+                                    <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="settingsCtrl.removeSpaceUser(item.globalId); settingsCtrl.addReadUser(false, item.globalId); settingsCtrl.addWriteUser(false, item.globalId)"></i>
                                 </td>
                             </tr>
                         </tbody>
