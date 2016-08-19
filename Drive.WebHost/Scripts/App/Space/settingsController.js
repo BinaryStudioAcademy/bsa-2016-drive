@@ -4,15 +4,16 @@
     angular.module("driveApp")
         .controller("SettingsController", SettingsController);
 
-    SettingsController.$inject = ['SettingsService'];
+    SettingsController.$inject = ['SettingsService', '$routeParams'];
 
-    function SettingsController(settingsService) {
+    function SettingsController(settingsService, $routeParams) {
         var vm = this;
         vm.save = save;
         vm.cancel = cancel;
         vm.addSpaceUser = addSpaceUser;
         vm.removeSpaceUser = removeSpaceUser;
         vm.setChoice = setChoice;
+        vm.selectedSpace = $routeParams.id ? $routeParams.id : 1;
             
         vm.space = {
             readPermittedUsers: []
@@ -21,7 +22,7 @@
         activate();
 
         function activate() {
-            settingsService.getSpace(1, function (data) {
+            settingsService.getSpace(vm.selectedSpace, function (data) {
                 vm.space = data;
 
                 settingsService.getAllUsers(function (data) {
@@ -50,7 +51,7 @@
         };
 
         function cancel() {
-            settingsService.getSpace(1, function (data) {
+            settingsService.getSpace(vm.selectedSpace, function (data) {
                 vm.space = data;
             });
         };
@@ -66,7 +67,7 @@
                 };
                 vm.space.readPermittedUsers.push({
                     name: vm.userAddName,
-                    globalId: vm.userAddId,
+                    globalId: vm.userAddId
                 });
                 vm.userAddName = null;
                 vm.userAddId = null;
