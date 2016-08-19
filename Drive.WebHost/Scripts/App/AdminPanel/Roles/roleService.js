@@ -13,7 +13,8 @@
             getAllUsers: getAllUsers,
             getAllRoles: getAllRoles,
             createRole: createRole,
-            getById: getById
+            getById: getById,
+            saveRole: saveRole
         };
 
         function getAllSpaces(callback) {
@@ -67,6 +68,15 @@
                 }, function (response) {
                     console.log('Error while pushing changes!');
                 });
+        }
+
+        function saveRole(data) {
+            $http.put('/api/roles', data)
+            .then(function (response) {
+                console.log('Success!');
+            }, function (response) {
+                console.log('Error while saving changes!');
+            });
         }
 
         return service;

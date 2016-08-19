@@ -88,10 +88,11 @@ namespace Drive.WebHost.Api
             return Ok();
         }
 
+
         [HttpPut]
-        public async Task<IHttpActionResult> UpdateRole(int id, RoleDto role)
+        public async Task<IHttpActionResult> UpdateRole(RoleDto role)
         {
-            await _rolesService.UpdateAsync(id, role);
+            await _rolesService.UpdateAsync(role.Id, role);
             return Ok();
         }
     }

@@ -10,16 +10,14 @@
         var vm = this;
         vm.createRole = createRole;
         vm.cancel = cancel;
-        vm.addSpaceUser = addSpaceUser;
-        vm.removeSpaceUser = removeSpaceUser;
+        vm.addRoleUser = addRoleUser;
+        vm.removeRoleUser = removeRoleUser;
         vm.setChoice = setChoice;
-        //vm.users = [{ id: 2, name: "Nikita Krasnov" }];
-        //vm.users = [];
+        vm.save = save;
         activate();
 
         function activate() {
             vm.title = "Admin Panel";
-            vm.space = {};
             vm.name = null;
             vm.description = null;
             if (items !== undefined) {
@@ -37,11 +35,17 @@
         }
 
         function createRole() {
-            console.log('creating role');
-            vm.space.Name = vm.name;
-            vm.space.Description = vm.description;
-            vm.space.Users = vm.users;
-            RoleService.createRole(vm.space);
+            console.log('Creating role');
+            vm.role.name = vm.name;
+            vm.role.description = vm.description;
+            vm.role.users = vm.role.users;
+            RoleService.createRole(vm.role);
+            $uibModalInstance.close();
+        }
+
+        function save() {
+            console.log('Saving role...');
+            RoleService.saveRole(vm.role);
             $uibModalInstance.close();
         }
 
@@ -49,7 +53,7 @@
             $uibModalInstance.dismiss('cancel');
         };
 
-        function addSpaceUser() {
+        function addRoleUser() {
             if (vm.userAddId != null) {
                 if (vm.role !== undefined) {
                 if (vm.role.users.find(x => x.id === vm.userAddId)) {
@@ -69,7 +73,7 @@
             }
         };
 
-        function removeSpaceUser(id) {
+        function removeRoleUser(id) {
             for (var i = 0; i < vm.role.users.length; i++) {
                 if (vm.role.users[i].id === id) { vm.role.users.splice(i, 1); break; }
             }
