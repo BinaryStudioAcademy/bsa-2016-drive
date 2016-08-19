@@ -16,7 +16,7 @@
             <form name="settingsForm" novalidate>
                 <div class="col-md-12">
                     <label>Space name:</label>
-                    <input type="text" class="form-control" name="spaceName" ng-pattern="/^[\w -]*$/" ng-model="settingsCtrl.space.name" required>
+                    <input type="text" class="form-control" name="spaceName" ng-pattern="/^[a-zA-Z0-9-]*$/" ng-model="settingsCtrl.space.name" required>
                     <div>
                         <span style="color:red" ng-show="settingsForm.spaceName.$error.pattern">Not a valid name</span>
                         <span style="color:red" ng-show="settingsForm.spaceName.$error.required">Data is required</span>
