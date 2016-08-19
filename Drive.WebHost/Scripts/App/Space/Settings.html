@@ -96,10 +96,10 @@
                         <tbody>
                             <tr ng-repeat="item in settingsCtrl.permittedUsers">
                                 <td>{{item.name}}</td>
-                                <td><input type="checkbox" ng-model="item.confirmed" ng-change="settingsCtrl.addReadUser(confirmed, item.globalId)"></td>
-                                <td><input type="checkbox" ng-checked=""></td>
+                                <td><input type="checkbox" ng-model="item.confirmedRead" ng-change="settingsCtrl.addReadUser(item.confirmedRead, item.globalId)"></td>
+                                <td><input type="checkbox" ng-model="item.confirmedWrite" ng-change="settingsCtrl.addWriteUser(item.confirmedWrite, item.globalId)"></td>
                                 <td>
-                                    <input type="button" value="Remove" class="btn btn-danger" ng-click="settingsCtrl.removeSpaceUser(item.id)" />
+                                    <input type="button" value="Remove" class="btn btn-danger" ng-click="settingsCtrl.removeSpaceUser(item.globalId); settingsCtrl.addReadUser(false, item.globalId); settingsCtrl.addWriteUser(false, item.globalId)" />
                                 </td>
                             </tr>
                         </tbody>

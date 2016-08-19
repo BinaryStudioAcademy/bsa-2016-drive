@@ -196,7 +196,7 @@ namespace Drive.WebHost.Services
 
         public async Task UpdateAsync(int id, SpaceDto dto)
         {
-            var space = await  _unitOfWork?.Spaces?.Query.Include(x => x.ReadPermittedUsers).SingleOrDefaultAsync(x => x.Id == id);
+            var space = await  _unitOfWork?.Spaces?.Query.Include(x => x.ReadPermittedUsers).Include(x => x.ModifyPermittedUsers).SingleOrDefaultAsync(x => x.Id == id);
 
             if (space == null) return;
 
