@@ -19,7 +19,7 @@
         vm.deleteElems = deleteElems;
         vm.spaceId = 0;
         vm.parentId = null;
-        vm.selectedSpace = $routeParams.id ? $routeParams.id : 1;
+        vm.selectedSpace = currentSpaceId();
 
         vm.space = {
             folders: [],
@@ -81,6 +81,21 @@
                     vm.folderList = localStorageService.get('list');
             });
             getSpace();
+        }
+
+        function currentSpaceId() {
+            if ($routeParams.type) {
+                if ($routeParams.type === "binaryspace") {
+                    return 1;
+                }
+                if ($routeParams.type === "myspace") {
+                    return 2;
+                }
+            }
+            if ($routeParams.id) {
+                return $routeParams.id;
+            }
+            return 1;
         }
 
         function getSpace() {
