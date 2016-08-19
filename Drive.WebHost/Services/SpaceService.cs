@@ -239,8 +239,8 @@ namespace Drive.WebHost.Services
                             Description = f.Description,
                             IsDeleted = f.IsDeleted,
                             CreatedAt = f.CreatedAt,
-                            LastModified = f.LastModified,
-                            Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
+                            LastModified = f.LastModified
+                            //Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
                         });
 
                     resultFiles = folder.Files
@@ -251,8 +251,8 @@ namespace Drive.WebHost.Services
                             Name = f.Name,
                             Description = f.Description,
                             FileType = f.FileType,
-                            IsDeleted = f.IsDeleted,
-                            Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
+                            IsDeleted = f.IsDeleted
+                            //Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
                         });
                 }
                 else
@@ -274,8 +274,8 @@ namespace Drive.WebHost.Services
                             Name = f.Name,
                             Description = f.Description,
                             IsDeleted = f.IsDeleted,
-                            CreatedAt = f.CreatedAt,
-                            Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
+                            CreatedAt = f.CreatedAt
+                            //Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
                         });
                     resultFiles = space.Files
                         .Where(f => f.Name.ToLower().Contains(text.ToLower()))
@@ -286,8 +286,8 @@ namespace Drive.WebHost.Services
                             Description = f.Description,
                             FileType = f.FileType,
                             IsDeleted = f.IsDeleted,
-                            CreatedAt = f.CreatedAt,
-                            Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
+                            CreatedAt = f.CreatedAt
+                            //Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
                         });
                 }
 
@@ -305,16 +305,16 @@ namespace Drive.WebHost.Services
                     resultFiles = resultFiles.Take(count);
                 }
 
-                var owners = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
+                //var owners = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
 
-                Parallel.ForEach(resultFiles, file =>
-                {
-                    file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name;
-                });
-                Parallel.ForEach(resultFolder, folder =>
-                {
-                    folder.Author.Name = owners.FirstOrDefault(o => o.Id == folder.Author.GlobalId)?.Name;
-                });
+                //Parallel.ForEach(resultFiles, file =>
+                //{
+                //    file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name;
+                //});
+                //Parallel.ForEach(resultFolder, folder =>
+                //{
+                //    folder.Author.Name = owners.FirstOrDefault(o => o.Id == folder.Author.GlobalId)?.Name;
+                //});
 
 
             }
