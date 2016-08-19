@@ -21,7 +21,7 @@
                     <span class="fa-stack fa-lg pull-left"><i class="fa fa-ellipsis-v fa-stack-1x "></i></span>Other
                 </div>
                 <ul class="nav-pills nav-stacked collapse" style="list-style-type: none;" id="other">
-                    <li ng-repeat="item in menuController.spaces">
+                    <li ng-repeat="item in menuController.spaces" ng-if="item.name != 'Binary Space' && item.name != 'My Space'">
                         <button class="btn btn-custom pull-right btn-md" title="Space Settings" ng-click="menuController.redirectToSpaceSettings(item.id)">
                             <i class="fa fa-inverse fa-wrench faa-wrench animated-hover fa-lg"></i>
                         </button>
