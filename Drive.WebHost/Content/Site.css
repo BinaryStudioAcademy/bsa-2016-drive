@@ -120,7 +120,7 @@ textarea {
 /*Modal window for creating new space*/
 .modal-body {
     position: relative;
-    max-height: 400px;
+    max-height: 700px;
     padding: 15px;
 }
 

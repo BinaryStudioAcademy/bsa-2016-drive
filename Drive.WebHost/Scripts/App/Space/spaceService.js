@@ -11,9 +11,11 @@
         var service = {
             getSpace: getSpace,
             getAllSpaces: getAllSpaces,
+
             getSpaceCreate: getSpaceCreate,
             getAllUsers: getAllUsers,
             pushData: pushData,
+
             searchFoldersAndFiles,
             getNumberOfResultSearchFoldersAndFiles,
             getSpaceTotal
