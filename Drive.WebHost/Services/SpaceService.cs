@@ -196,16 +196,55 @@ namespace Drive.WebHost.Services
 
         public async Task UpdateAsync(int id, SpaceDto dto)
         {
-            var space = await  _unitOfWork?.Spaces?.Query.Include(x => x.ReadPermittedUsers).Include(x => x.ModifyPermittedUsers).SingleOrDefaultAsync(x => x.Id == id);
+            var space = await _unitOfWork?.Spaces?.Query.Include(x => x.ReadPermittedUsers).Include(x => x.ModifyPermittedUsers).SingleOrDefaultAsync(x => x.Id == id);
 
             if (space == null) return;
-
+            List<User> ReadPermittedUsers = new List<User>();
+            foreach (var item in dto.ReadPermittedUsers)
+            {
+                var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
+                if (user == null)
+                {
+                    UserDto userdto = new UserDto();
+                    userdto.serverUserId = item.GlobalId;
+                    await _userService.CreateAsync(userdto);
+                    var suser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
+                    ReadPermittedUsers.Add(suser);
+                }
+                else
+                {
+                    ReadPermittedUsers.Add(user);
+                }
+            }
+            List<User> ModifyPermittedUsers = new List<User>();
+            foreach (var item in dto.ModifyPermittedUsers)
+            {
+                var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
+                if (user == null)
+                {
+                    UserDto userdto = new UserDto();
+                    userdto.serverUserId = item.GlobalId;
+                    await _userService.CreateAsync(userdto);
+                    var suser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
+                    ModifyPermittedUsers.Add(suser);
+                    ReadPermittedUsers.Add(suser);
+                }
+                else
+                {
+                    ModifyPermittedUsers.Add(user);
+                    var x = ReadPermittedUsers.FirstOrDefault(p => p.GlobalId == user.GlobalId);
+                    if (x == null)
+                    {
+                        ReadPermittedUsers.Add(user);
+                    }
+                }
+            }
             space.Name = dto.Name;
             space.Description = dto.Description;
             space.MaxFileSize = dto.MaxFileSize;
             space.MaxFilesQuantity = dto.MaxFilesQuantity;
-            space.ReadPermittedUsers = dto.ReadPermittedUsers;
-            space.ModifyPermittedUsers = dto.ModifyPermittedUsers;
+            space.ReadPermittedUsers = ReadPermittedUsers;
+            space.ModifyPermittedUsers = ModifyPermittedUsers;
             space.LastModified = DateTime.Now;
 
             await _unitOfWork?.SaveChangesAsync();
