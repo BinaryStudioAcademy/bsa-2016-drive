@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using Drive.WebHost.Services;
 using Driver.Shared.Dto;
+using Drive.DataAccess.Entities;
+using System;
 
 namespace Drive.WebHost.Api
 {
@@ -72,6 +74,21 @@ namespace Drive.WebHost.Api
             _service?.DeleteAsync(id);
 
             return Ok();
+        }
+
+        // GET: api/files/app/fileType
+        [HttpGet]
+        [Route("apps/{fileType:alpha}")]
+        public async Task<IHttpActionResult> FilterApp(string fileType)
+        {
+            FileType fileTypeEnum;
+            if (!Enum.TryParse(fileType, true, out fileTypeEnum))
+                return NotFound();
+            var result = await _service.FilterApp(fileTypeEnum);
+            if (result == null || result.Count == 0)
+                return NotFound();
+
+            return Ok(result);
         }
     }
 }

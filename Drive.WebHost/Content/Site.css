@@ -458,6 +458,7 @@ table {
     width: 100%;
     max-width: 960px;
     margin: 20px auto;
+    color: #666;
 }
 
 .small {
@@ -466,13 +467,18 @@ table {
     overflow: hidden;
 }
 
+small,
+.small {
+  font-size: 100%;
+}
+
 .s-block {
     float: left;
     width: 23%;
     margin: 0 2% 20px 0;
     min-height: 200px;
     border: 1px solid #222;
-    padding: 30px;
+    padding: 15px;
 }
 /*
 .s-block:nth-child(4n+4) {
@@ -505,3 +511,8 @@ table {
     }
 }
 /*end grid view*/
+.well {
+    min-height: 15px;
+    padding: 19px;
+    margin-bottom: 0px; 
+}

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Driver.Shared.Dto;
+using Drive.DataAccess.Entities;
 
 namespace Drive.WebHost.Services
 {
@@ -11,6 +12,7 @@ namespace Drive.WebHost.Services
         Task<FileUnitDto> CreateAsync(FileUnitDto dto);
         Task<FileUnitDto> UpdateAsync(int id, FileUnitDto dto);
         Task DeleteAsync(int id);
+        Task<ICollection<AppDto>> FilterApp(FileType fileType);
         void Dispose();
     }
 }
