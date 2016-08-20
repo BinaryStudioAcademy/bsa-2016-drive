@@ -11,13 +11,16 @@
         </a>
     </div>
     <div class="row" style="margin:1em 0 1em 0">
-        <div class="col-sm-1 pull-right">
+        <div class="col-lg-push-4-offset pull-right">
             <button class="btn btn-default" ng-click="spaceCtrl.changeView(spaceCtrl.view)">
                 <i class={{spaceCtrl.view}} title="view"> </i>
             </button>
+            <button type="button" class="btn btn-default btn-custom" ng-click="spaceCtrl.redirectToSpaceSettings(spaceCtrl.space.id)" title="Open Space Settings">
+                <i class="fa fa-cog fa-lg"></i>
+            </button>
         </div>
         <div class="form-inline">
-            <div class="form-group col-sm-8 pull-left nopadding">
+            <div class="form-group col-sm-7 pull-left nopadding">
                 <div class="col-sm-1">
                     <button type="button" class="btn btn-default btn-custom btn-lg" ng-click="spaceCtrl.createNewFolder()" title="Create new folder">
                         <i class="fa fa-folder-open-o fa-lg"></i>
@@ -56,7 +59,7 @@
             </div>
         </div>
         <div>
-            <div class="col-sm-3 pull-right nopadding">
+            <div class="col-sm-3 pull-right">
                 <div>
                     <form role="search">
                         <div class="input-group">

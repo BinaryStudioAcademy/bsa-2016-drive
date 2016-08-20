@@ -5,9 +5,9 @@
         .module("driveApp")
         .controller("SpaceController", SpaceController);
 
-    SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', '$uibModal', 'localStorageService'];
+    SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', '$uibModal', 'localStorageService', '$location'];
 
-    function SpaceController(spaceService, folderService, fileService, $uibModal, localStorageService) {
+    function SpaceController(spaceService, folderService, fileService, $uibModal, localStorageService, $location) {
         var vm = this;
 
         vm.view = "fa fa-th";
@@ -50,6 +50,8 @@
         vm.search = search;
         vm.cancelSearch = cancelSearch;
         vm.searchText = '';
+
+        vm.redirectToSpaceSettings = redirectToSpaceSettings;
 
         vm.paginate = {
             currentPage: 1,
@@ -296,6 +298,10 @@
             vm.file = { fileType: type, parentId: vm.parentId, spaceId: vm.spaceId };
             vm.openFileWindow();
         }
+
+        function redirectToSpaceSettings(id) {
+            $location.url("/spaces/" + id + "/settings/");
+        };
 
         function getFolder(id) {
             folderService.get(id, function (folder) {
