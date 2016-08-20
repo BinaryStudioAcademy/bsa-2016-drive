@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 using Drive.WebHost.Filters;
 
 namespace Drive.WebHost
@@ -10,6 +9,7 @@ namespace Drive.WebHost
         {
             filters.Add(new HandleErrorAttribute());
             filters.Add(new JWTAuthenticationFilter());
+            filters.Add(new JWTHttpAuthenticationFilter());
         }
     }
 }
