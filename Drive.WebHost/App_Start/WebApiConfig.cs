@@ -34,7 +34,7 @@ namespace Drive.WebHost
                 defaults: new { controller = "Home", id = RouteParameter.Optional }
             );
 
-            config.Filters.Add(new JWTAuthenticationFilter());
+            config.Filters.Add(new JWTHttpAuthenticationFilter());
         }
     }
 }

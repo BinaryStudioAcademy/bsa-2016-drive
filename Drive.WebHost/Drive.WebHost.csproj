@@ -185,6 +185,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Filters\Authenticator.cs" />
+    <Compile Include="Filters\AuthenticationFailureResult.cs" />
+    <Compile Include="Filters\JWTHttpAuthenticationFilter.cs" />
+    <Compile Include="Filters\TokenExpiredException.cs" />
     <Compile Include="Infrastructure\DependencyResolver.cs" />
     <Compile Include="Filters\JWTAuthenticationFilter.cs" />
     <Compile Include="Global.asax.cs">
