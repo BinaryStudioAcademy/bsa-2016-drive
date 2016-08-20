@@ -21,7 +21,7 @@
                     <li ng-repeat="item in menuController.spaces" ng-if="item.name != 'Binary Space' && item.name != 'My Space'">
                         <div class="d" ng-click='menuController.redirectToSpace(item.id)' title="{{item.name}}">
                             <span class="fa-stack fa-lg pull-left"><i class="fa fa-circle-o fa-stack-1x span-icon"></i></span>
-                            <span class="span-text">{{item.name | limitTo: 15 }}{{item.name.length > 15 ? '..' : ''}}</span>
+                            <span class="span-text">{{item.name | limitTo: 14 }}{{item.name.length > 14 ? '..' : ''}}</span>
                         </div>
                     </li>
                 </ul>

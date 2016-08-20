@@ -4,9 +4,9 @@
     angular.module("driveApp")
         .controller("MenuController", MenuController);
 
-    MenuController.$inject = ['MenuService', '$location', '$uibModal', '$rootScope'];
+    MenuController.$inject = ['MenuService', '$location', '$uibModal', '$rootScope', '$timeout'];
 
-    function MenuController(menuService, $location, $uibModal, $rootScope) {
+    function MenuController(menuService, $location, $uibModal, $rootScope, $timeout) {
 
         var vm = this;
 
@@ -67,8 +67,10 @@
             });
 
             modalInstance.result.then(function () {
-            }, function () {
-
+                getAllSpaces();
+            },
+            function () {
+                getAllSpaces();
             });
         };
 
