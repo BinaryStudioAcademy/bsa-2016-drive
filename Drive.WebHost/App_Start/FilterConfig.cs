@@ -9,7 +9,6 @@ namespace Drive.WebHost
         {
             filters.Add(new HandleErrorAttribute());
             filters.Add(new JWTAuthenticationFilter());
-            filters.Add(new JWTHttpAuthenticationFilter());
         }
     }
 }
