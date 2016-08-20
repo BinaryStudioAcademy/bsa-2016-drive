@@ -7,13 +7,13 @@
             <li>
                 <button class="btn btn-custom pull-right btn-md" title="Binary Space Settings" ng-click="menuController.redirectToSpaceSettings()"><i class="fa fa-inverse fa-wrench faa-wrench animated-hover fa-lg"></i></button>
                 <div class="d" ng-click="menuController.redirectToBinarySpace()">
-                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x "></i></span>Binary Space
+                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x"></i></span>Binary Space
                 </div>
             </li>
             <li class="active">
                 <button class="btn btn-custom pull-right btn-md" title="My Space Settings" ng-click="menuController.redirectToSpaceSettings()"><i class="fa fa-inverse fa-wrench faa-wrench animated-hover fa-lg"></i></button>
                 <div class="d" ng-click="menuController.redirectToMySpace()">
-                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x "></i></span>My Space
+                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x"></i></span>My Space
                 </div>
             </li>
             <li ng-show="menuController.spaces.length > 0" ng-click="menuController.getAllSpaces()">
@@ -21,7 +21,7 @@
                     <span class="fa-stack fa-lg pull-left"><i class="fa fa-ellipsis-v fa-stack-1x "></i></span>Other
                 </div>
                 <ul class="nav-pills nav-stacked collapse" style="list-style-type: none;" id="other">
-                    <li ng-repeat="item in menuController.spaces">
+                    <li ng-repeat="item in menuController.spaces" ng-if="item.name != 'Binary Space' && item.name != 'My Space'">
                         <button class="btn btn-custom pull-right btn-md" title="Space Settings" ng-click="menuController.redirectToSpaceSettings(item.id)">
                             <i class="fa fa-inverse fa-wrench faa-wrench animated-hover fa-lg"></i>
                         </button>
@@ -55,34 +55,34 @@
                     </li>
                     <li>
                         <div class="d" ng-click="menuController.redirectToApps('checklist')">
-                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-check-square-o fa-stack-1x "></i></span>Checklist
+                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-check-square-o fa-stack-1x"></i></span>Checklist
                         </div>
                     </li>
                     <li>
                         <div class="d" ng-click="menuController.redirectToApps('trello')">
-                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-trello fa-stack-1x "></i></span>Trello
+                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-trello fa-stack-1x"></i></span>Trello
                         </div>
                     </li>
                     <li>
                         <div class="d" ng-click="menuController.redirectToApps('docs')">
-                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-file-text fa-stack-1x "></i></span>Docs
+                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-file-text fa-stack-1x"></i></span>Docs
                         </div>
                     </li>
                     <li>
                         <div class="d" ng-click="menuController.redirectToApps('sheets')">
-                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-table fa-stack-1x "></i></span>Sheets
+                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-table fa-stack-1x"></i></span>Sheets
                         </div>
                     </li>
                     <li>
                         <div class="d" ng-click="menuController.redirectToApps('slides')">
-                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-slideshare fa-stack-1x "></i></span>Slides
+                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-file-powerpoint-o fa-stack-1x"></i></span>Slides
                         </div>
                     </li>
                 </ul>
             </li>
             <li>
                 <div class="d" ng-click="menuController.redirectToAdminPanel()">
-                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-sliders fa-stack-1x "></i></span>Admin Panel
+                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-sliders fa-stack-1x"></i></span>Admin Panel
                 </div>
             </li>
         </ul>

@@ -49,6 +49,7 @@
         vm.createNewFile = createNewFile;
 
         vm.search = search;
+        vm.cancelSearch = cancelSearch;
         vm.searchText = '';
 
         vm.paginate = {
@@ -394,6 +395,13 @@
         }
 
         function search() {
+            vm.paginate.getContent = getResultSearchFoldersAndFiles;
+            getResultSearchFoldersAndFiles();
+            getNumberOfResultSearch();
+        }
+
+        function cancelSearch() {
+            vm.searchText = '';
             vm.paginate.getContent = getResultSearchFoldersAndFiles;
             getResultSearchFoldersAndFiles();
             getNumberOfResultSearch();

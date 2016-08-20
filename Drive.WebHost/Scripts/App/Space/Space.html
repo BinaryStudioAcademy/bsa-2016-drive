@@ -3,7 +3,7 @@
     <br />
     <div class="btn-group btn-breadcrumb">
         <a class="btn btn-info" ng-click="spaceCtrl.getSpaceByButton()" title="{{spaceCtrl.space.name}}">
-            <i class="glyphicon glyphicon-home"></i>
+            <i class="fa fa-cloud fa-lg"></i>
             {{spaceCtrl.space.name | limitTo: 13}}{{spaceCtrl.space.name.length > 13 ? '...' : ''}}
         </a>
         <a ng-repeat="item in spaceCtrl.folderList" ng-click="spaceCtrl.getFolderContent(item.id); spaceCtrl.deleteElems(item)" title="{{item.name}}" class="btn btn-default">
@@ -35,7 +35,7 @@
                 </div>
                 <div class="col-sm-1">
                     <button type="button" class="btn btn-default btn-custom btn-lg" ng-click="spaceCtrl.createNewFile(3)" title="Create new slide">
-                        <i class="fa fa-slideshare fa-lg"></i>
+                        <i class="fa fa-file-powerpoint-o fa-lg"></i>
                     </button>
                 </div>
                 <div class="col-sm-1">
@@ -62,6 +62,7 @@
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search input" name="srch-term" id="srch-term" ng-model="spaceCtrl.searchText">
                             <div class="input-group-btn">
+                                <button type="button" class="btn btn-default" aria-label="Cancel search" ng-click="spaceCtrl.cancelSearch()" ng-show='spaceCtrl.searchText != ""' style="padding:6px 6px;"><span   style="margin-right:0" class="glyphicon glyphicon-remove-circle"></span></button>
                                 <button class="btn btn-default" type="submit" ng-click="spaceCtrl.search()">Search</button>
                             </div>
                         </div>

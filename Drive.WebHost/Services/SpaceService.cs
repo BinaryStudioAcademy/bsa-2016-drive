@@ -226,16 +226,9 @@ namespace Drive.WebHost.Services
             {
                 if (folderId != null)
                 {
-                    var folder = await _unitOfWork.Folders.Query.Where(f => f.Id == folderId)
-                        .Select(s => new
-                        {
-                            Folders = s.DataUnits.OfType<FolderUnit>(),
-                            Files = s.DataUnits.OfType<FileUnit>()
-                        }).SingleOrDefaultAsync();
-                    if (folder == null)
-                        return null;
-                    resultFolder = folder.Folders
-                        .Where(f => f.Name.ToLower().Contains(text.ToLower()))
+
+                    resultFolder = await _unitOfWork.Folders.Query.
+                        Where(f => f.Parent.Id == folderId)
                         .Select(f => new FolderUnitDto()
                         {
                             Id = f.Id,
@@ -243,46 +236,39 @@ namespace Drive.WebHost.Services
                             Description = f.Description,
                             IsDeleted = f.IsDeleted,
                             CreatedAt = f.CreatedAt,
-                            LastModified = f.LastModified
-                            //Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
-                        });
+                            LastModified = f.LastModified,
+                            Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
+                        }).ToListAsync();
 
-                    resultFiles = folder.Files
-                        .Where(f => f.Name.ToLower().Contains(text.ToLower()))
+                    resultFiles = await _unitOfWork.Files.Query.
+                        Where(f => f.Parent.Id == folderId)
                         .Select(f => new FileUnitDto
                         {
                             Id = f.Id,
                             Name = f.Name,
                             Description = f.Description,
                             FileType = f.FileType,
-                            IsDeleted = f.IsDeleted
-                            //Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
-                        });
+                            IsDeleted = f.IsDeleted,
+                            Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
+                        }).ToListAsync();
                 }
                 else
                 {
-                    var space = await _unitOfWork.Spaces.Query
-                        .Where(s => s.Id == spaceId)
-                        .Select(s => new
-                        {
-                            Folders = s.ContentList.OfType<FolderUnit>().Where(f=>f.Parent==null),
-                            Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null)
-                        }).SingleOrDefaultAsync();
-                    if (space == null)
-                        return null;
-                    resultFolder = space.Folders
-                        .Where(f => f.Name.ToLower().Contains(text.ToLower()))
+                    resultFolder = await _unitOfWork.Folders.Query.
+                        Where(f => f.Space.Id == spaceId && f.Parent == null)
                         .Select(f => new FolderUnitDto()
                         {
                             Id = f.Id,
                             Name = f.Name,
                             Description = f.Description,
                             IsDeleted = f.IsDeleted,
-                            CreatedAt = f.CreatedAt
-                            //Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
-                        });
-                    resultFiles = space.Files
-                        .Where(f => f.Name.ToLower().Contains(text.ToLower()))
+                            CreatedAt = f.CreatedAt,
+                            LastModified = f.LastModified,
+                            Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
+                        }).ToListAsync();
+
+                    resultFiles = await _unitOfWork.Files.Query.
+                        Where(f => f.Space.Id == spaceId && f.Parent == null)
                         .Select(f => new FileUnitDto
                         {
                             Id = f.Id,
@@ -290,9 +276,13 @@ namespace Drive.WebHost.Services
                             Description = f.Description,
                             FileType = f.FileType,
                             IsDeleted = f.IsDeleted,
-                            CreatedAt = f.CreatedAt
-                            //Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
-                        });
+                            Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
+                        }).ToListAsync();
+                }
+                if (!string.IsNullOrEmpty(text))
+                {
+                    resultFiles = resultFiles.Where(f => f.Name.ToLower().Contains(text.ToLower()));
+                    resultFolder = resultFolder.Where(f => f.Name.ToLower().Contains(text.ToLower()));
                 }
 
                 int skipCount = (page - 1) * count;
@@ -309,18 +299,16 @@ namespace Drive.WebHost.Services
                     resultFiles = resultFiles.Take(count);
                 }
 
-                //var owners = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
+                var owners = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
 
-                //Parallel.ForEach(resultFiles, file =>
-                //{
-                //    file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name;
-                //});
-                //Parallel.ForEach(resultFolder, folder =>
-                //{
-                //    folder.Author.Name = owners.FirstOrDefault(o => o.Id == folder.Author.GlobalId)?.Name;
-                //});
-
-
+                Parallel.ForEach(resultFiles, file =>
+                {
+                    file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name;
+                });
+                Parallel.ForEach(resultFolder, folder =>
+                {
+                    folder.Author.Name = owners.FirstOrDefault(o => o.Id == folder.Author.GlobalId)?.Name;
+                });
             }
             catch (Exception ex)
             {

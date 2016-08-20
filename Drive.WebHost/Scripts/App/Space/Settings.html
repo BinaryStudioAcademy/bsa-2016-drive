@@ -1,7 +1,8 @@
-﻿<div class="container">
+﻿
+<div class="container">
     <br />
     <div class="btn-group btn-breadcrumb">
-        <a href="#" class="btn btn-info"><i class="glyphicon glyphicon-home"></i> Space</a>
+        <a href="#" class="btn btn-info"><i class="fa fa-cloud fa-lg"></i> Space</a>
         <a class="btn btn-default">Settings</a>
     </div>
     <div class="page-header">
@@ -28,7 +29,7 @@
                 </div>
                 <div class="col-md-12">
                     <label>Maximum Files Quantity:</label>
-                    <input type="text" class="form-control" name="maxQuantity" ng-pattern="/^(1|^[1-9][0-9]*)$/" ng-model="settingsCtrl.space.maxFilesQuantity" required>
+                    <input type="number" class="form-control" name="maxQuantity" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="settingsCtrl.space.maxFilesQuantity" required>
                     <div>
                         <span style="color:red" ng-show="settingsForm.maxQuantity.$error.pattern">Not a valid quantity</span>
                         <span style="color:red" ng-show="settingsForm.maxQuantity.$error.required">Data is required</span>
@@ -36,10 +37,17 @@
                 </div>
                 <div class="col-md-12">
                     <label>Maximum file size (MB):</label>
-                    <input type="text" class="form-control" name="maxSize" ng-pattern="/^(1|^[1-9][0-9]*)$/" ng-model="settingsCtrl.space.maxFileSize" required>
+                    <input type="number" class="form-control" min="0" step="1" max="1024" name="maxSize" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="settingsCtrl.space.maxFileSize" required>
                     <div>
-                        <span style="color:red" ng-show="settingsForm.maxSize.$error.pattern">Not a valid size</span>
-                        <span style="color:red" ng-show="settingsForm.maxSize.$error.required">Data is required</span>
+                        <span class="error" ng-show="settingsForm.maxSize.$error.max" style="color: red">
+                            Max file size should be less than 1024 MB.
+                        </span>
+                        <span style="color:red" ng-show="settingsForm.maxSize.$error.required">
+                            Data is required
+                        </span>
+                        <span style="color:red" ng-show="settingsForm.maxsize.$error.pattern">
+                            Not a valid file size
+                        </span>
                     </div>
                 </div>
                 <div class="col-md-12">
@@ -96,8 +104,12 @@
                         <tbody>
                             <tr ng-repeat="item in settingsCtrl.permittedUsers">
                                 <td>{{item.name}}</td>
-                                <td><input type="checkbox" ng-model="item.confirmedRead" ng-change="settingsCtrl.addReadUser(item.confirmedRead, item.globalId)"></td>
-                                <td><input type="checkbox" ng-model="item.confirmedWrite" ng-change="settingsCtrl.addWriteUser(item.confirmedWrite, item.globalId)"></td>
+                                <td>
+                                    <input type="checkbox" ng-model="item.confirmedRead" ng-change="settingsCtrl.addReadUser(item.confirmedRead, item.globalId)">
+                                </td>
+                                <td>
+                                    <input type="checkbox" ng-model="item.confirmedWrite" ng-change="settingsCtrl.addWriteUser(item.confirmedWrite, item.globalId)">
+                                </td>
                                 <td>
                                     <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="settingsCtrl.removeSpaceUser(item.globalId); settingsCtrl.addReadUser(false, item.globalId); settingsCtrl.addWriteUser(false, item.globalId)"></i>
                                 </td>
