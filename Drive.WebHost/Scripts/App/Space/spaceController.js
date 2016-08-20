@@ -5,9 +5,9 @@
         .module("driveApp")
         .controller("SpaceController", SpaceController);
 
-    SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', '$uibModal', 'localStorageService', '$location'];
+    SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', '$uibModal', 'localStorageService', '$routeParams', '$location'];
 
-    function SpaceController(spaceService, folderService, fileService, $uibModal, localStorageService, $location) {
+    function SpaceController(spaceService, folderService, fileService, $uibModal, localStorageService, $routeParams, $location) {
         var vm = this;
 
         vm.view = "fa fa-th";
@@ -19,6 +19,7 @@
         vm.deleteElems = deleteElems;
         vm.spaceId = 0;
         vm.parentId = null;
+        vm.selectedSpace = currentSpaceId();
 
         vm.space = {
             folders: [],
@@ -69,7 +70,7 @@
         activate();
 
         function activate() {
-            spaceService.getSpace(1,vm.paginate.currentPage,vm.paginate.pageSize, function (data) {
+            spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
                 console.log(localStorageService.get('current'));
@@ -86,6 +87,21 @@
             });
         }
 
+        function currentSpaceId() {
+            if ($routeParams.type) {
+                if ($routeParams.type === "binaryspace") {
+                    return 1;
+                }
+                if ($routeParams.type === "myspace") {
+                    return 2;
+                }
+            }
+            if ($routeParams.id) {
+                return $routeParams.id;
+            }
+            return 1;
+        }
+
         function getSpace() {
             vm.searchText = '';
             getSpaceContent();
@@ -94,14 +110,14 @@
         }
 
         function getSpaceContent() {
-            spaceService.getSpace(1, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
+            spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
             });
         }
 
         function getSpaceByButton() {
-            spaceService.getSpace(1, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
+            spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
 
@@ -114,7 +130,7 @@
         }
 
         function getSpaceTotal() {
-            spaceService.getSpaceTotal(1, function (data) {
+            spaceService.getSpaceTotal(vm.selectedSpace, function (data) {
                 vm.paginate.numberOfItems = data;
             });
         }

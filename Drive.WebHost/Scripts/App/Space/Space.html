@@ -74,6 +74,7 @@
             </div>
         </div>
     </div>
+    <span us-spinner="{radius:30, width:8, length: 16}"></span>
     <div class="wrap" ng-show="spaceCtrl.showGrid">
         <div class="small">
             <div role="button" class="s-block btn-default shadow" context-menu="spaceCtrl.folderMenuOptions" dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize" total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">

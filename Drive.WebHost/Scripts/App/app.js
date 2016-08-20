@@ -1,11 +1,17 @@
 ﻿angular.module("driveApp",
-    ["ngRoute", "ui.bootstrap.contextMenu", "ui.bootstrap", "angularUtils.directives.dirPagination", "LocalStorageModule"])
+    ["ngRoute", "ui.bootstrap.contextMenu", "ui.bootstrap", "angularUtils.directives.dirPagination", "LocalStorageModule", "ngLoadingSpinner"])
     .config([
         "$routeProvider",
         function ($routeProvider) {
 
             $routeProvider
                 .when("/", // Space page
+                {
+                    templateUrl: "/Scripts/App/Space/Space.html",
+                    controller: "SpaceController",
+                    controllerAs: "spaceCtrl"
+                })
+                .when("/:type", // Space page
                 {
                     templateUrl: "/Scripts/App/Space/Space.html",
                     controller: "SpaceController",
