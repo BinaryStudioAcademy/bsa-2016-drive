@@ -1,7 +1,8 @@
-﻿<div class="container">
+﻿
+<div class="container">
     <br />
     <div class="btn-group btn-breadcrumb">
-        <a href="#" class="btn btn-info"><i class="glyphicon glyphicon-home"></i> Space</a>
+        <a href="#" class="btn btn-info"><i class="fa fa-cloud fa-lg"></i> Space</a>
         <a class="btn btn-default">Settings</a>
     </div>
     <div class="page-header">
@@ -16,7 +17,11 @@
             <form name="settingsForm" novalidate>
                 <div class="col-md-12">
                     <label>Space name:</label>
-                    <input type="text" class="form-control" ng-model="settingsCtrl.space.name">
+                    <input type="text" class="form-control" name="spaceName" ng-pattern="/^[\w -]*$/" ng-model="settingsCtrl.space.name" required>
+                    <div>
+                        <span style="color:red" ng-show="settingsForm.spaceName.$error.pattern">Not a valid name</span>
+                        <span style="color:red" ng-show="settingsForm.spaceName.$error.required">Data is required</span>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <label>Description:</label>
@@ -24,20 +29,35 @@
                 </div>
                 <div class="col-md-12">
                     <label>Maximum Files Quantity:</label>
-                    <input type="number" class="form-control" min="0" step="1" ng-model="settingsCtrl.space.maxFilesQuantity">
+                    <input type="number" class="form-control" name="maxQuantity" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="settingsCtrl.space.maxFilesQuantity" required>
+                    <div>
+                        <span style="color:red" ng-show="settingsForm.maxQuantity.$error.pattern">Not a valid quantity</span>
+                        <span style="color:red" ng-show="settingsForm.maxQuantity.$error.required">Data is required</span>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <label>Maximum file size (MB):</label>
-                    <input type="number" class="form-control" min="0" step="1" max="1024" ng-model="settingsCtrl.space.maxFileSize">
+                    <input type="number" class="form-control" min="0" step="1" max="1024" name="maxSize" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="settingsCtrl.space.maxFileSize" required>
+                    <div>
+                        <span class="error" ng-show="settingsForm.maxSize.$error.max" style="color: red">
+                            Max file size should be less than 1024 MB.
+                        </span>
+                        <span style="color:red" ng-show="settingsForm.maxSize.$error.required">
+                            Data is required
+                        </span>
+                        <span style="color:red" ng-show="settingsForm.maxsize.$error.pattern">
+                            Not a valid file size
+                        </span>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <br />
-                    <button class="btn btn-primary" ng-click="settingsCtrl.save()">Save</button>
+                    <button class="btn btn-primary" ng-click="settingsCtrl.save()" ng-disabled="settingsForm.spaceName.$invalid || settingsForm.maxQuantity.$invalid || settingsForm.maxSize.$invalid">Save</button>
                     <button class="btn btn-default" ng-click="settingsCtrl.cancel()">Cancel</button>
                 </div>
             </form>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-7">
             <h4>Settings user access to space</h4>
             <ul id="permissionsTab" class="nav nav-tabs">
                 <li class="active">
@@ -57,13 +77,13 @@
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
                                         <li ng-repeat="item in settingsCtrl.users">
-                                            <a role="button" ng-click="settingsCtrl.setChoice(item.login, item.id);">{{item.name}}</a>
+                                            <a role="button" ng-click="settingsCtrl.setChoice(item.name, item.id);">{{item.name}}</a>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <input class="form-control" ng-model="settingsCtrl.userAddName" placeholder="User name" disabled />
+                                <input class="form-control" ng-model="settingsCtrl.userAddName" placeholder="User name" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -76,16 +96,22 @@
                         <thead>
                             <tr>
                                 <th>User name</th>
-                                <th>Id</th>
+                                <th>Read</th>
+                                <th>Write</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in settingsCtrl.space.readPermittedUsers">
-                                <td>{{item.Login}}</td>
-                                <td>{{item.Id}}</td>
+                            <tr ng-repeat="item in settingsCtrl.permittedUsers">
+                                <td>{{item.name}}</td>
                                 <td>
-                                    <input type="button" value="Remove" class="btn btn-danger" ng-click="settingsCtrl.removeSpaceUser(item.id)" />
+                                    <input type="checkbox" ng-model="item.confirmedRead" ng-change="settingsCtrl.addReadUser(item.confirmedRead, item.globalId)">
+                                </td>
+                                <td>
+                                    <input type="checkbox" ng-model="item.confirmedWrite" ng-change="settingsCtrl.addWriteUser(item.confirmedWrite, item.globalId)">
+                                </td>
+                                <td>
+                                    <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="settingsCtrl.removeSpaceUser(item.globalId); settingsCtrl.addReadUser(false, item.globalId); settingsCtrl.addWriteUser(false, item.globalId)"></i>
                                 </td>
                             </tr>
                         </tbody>

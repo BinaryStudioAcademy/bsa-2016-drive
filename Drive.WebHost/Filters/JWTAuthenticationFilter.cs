@@ -22,6 +22,18 @@ namespace Drive.WebHost.Filters
         System.Web.Mvc.Filters.IAuthenticationFilter,
         System.Web.Http.Filters.IAuthenticationFilter
     {
+        //private readonly IUsersService _usersService;
+
+        //public JWTAuthenticationFilter(IUsersService usersService)
+        //{
+        //    _usersService = usersService;
+        //}
+
+        //private void CreateUser(IPrincipal principal)
+        //{
+        //    _usersService.CreateAsync(new UserDto() { id = ((BSIdentity)principal.Identity).UserId });
+        //}
+
         public void OnAuthentication(AuthenticationContext filterContext)
         {
             var mockToken = bool.Parse(ConfigurationManager.AppSettings["MockToken"]);

@@ -2,21 +2,28 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Security.Principal;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using Drive.DataAccess.Entities;
 using Drive.DataAccess.Interfaces;
+using Drive.Identity.Entities;
+using Drive.Identity.Services;
 using Driver.Shared.Dto;
+using Driver.Shared.Dto.Users;
 
 namespace Drive.WebHost.Services
 {
     public class FolderService : IFolderService
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IUsersService _usersService;
 
-        public FolderService(IUnitOfWork unitOfWork)
+        public FolderService(IUnitOfWork unitOfWork, IUsersService usersService)
         {
             _unitOfWork = unitOfWork;
+            _usersService = usersService;
         }
 
         public async Task<IEnumerable<FolderUnitDto>> GetAllAsync()
@@ -62,8 +69,11 @@ namespace Drive.WebHost.Services
 
         public async Task<FolderUnitDto> CreateAsync(FolderUnitDto dto)
         {
+            var user = await _usersService?.GetCurrentUser();
+
             var space = await _unitOfWork?.Spaces?.GetByIdAsync(dto.SpaceId);
             var parentFolder = await _unitOfWork?.Folders?.GetByIdAsync(dto.ParentId);
+
 
             if (space != null)
             {               
@@ -76,7 +86,8 @@ namespace Drive.WebHost.Services
                     LastModified = DateTime.Now,
                     IsDeleted = false,
                     Space = space,
-                    Parent = parentFolder
+                    Parent = parentFolder,
+                    Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId)
                 };
 
                 _unitOfWork?.Folders?.Create(folder);
@@ -85,6 +96,7 @@ namespace Drive.WebHost.Services
                 dto.Id = folder.Id;
                 dto.CreatedAt = folder.CreatedAt;
                 dto.LastModified = folder.LastModified;
+                dto.Author = new AuthorDto() {Id = folder.Owner.Id, Name = user.name + ' ' + user.surname };
 
                 return dto;
             }
@@ -126,7 +138,7 @@ namespace Drive.WebHost.Services
                 Id = f.Id,
                 IsDeleted = f.IsDeleted,
                 CreatedAt = f.CreatedAt,
-                LastModified = f.LastModified
+                Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
             }).ToListAsync();
             IEnumerable<FileUnitDto> files = await _unitOfWork.Files.Query.Where(x => x.Parent.Id == id)
                 .Select(f => new FileUnitDto
@@ -137,7 +149,8 @@ namespace Drive.WebHost.Services
                     IsDeleted = f.IsDeleted,
                     Link = f.Link,
                     CreatedAt = f.CreatedAt,
-                    FileType = f.FileType
+                    FileType = f.FileType,
+                    Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
                 }).ToListAsync();
 
             int skipCount = (page - 1) * count;
@@ -153,6 +166,18 @@ namespace Drive.WebHost.Services
                 count -= folders.Count();
                 files = files.Take(count);
             }
+
+            var owners = (await _usersService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
+
+            Parallel.ForEach(files, file =>
+            {
+                file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name;
+            });
+            Parallel.ForEach(folders, folder =>
+            {
+                folder.Author.Name = owners.FirstOrDefault(o => o.Id == folder.Author.GlobalId)?.Name;
+            });
+
 
             return new FolderContentDto
             {

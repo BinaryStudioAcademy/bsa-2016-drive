@@ -15,7 +15,21 @@ namespace Drive.DataAccess.Context
             User user1 = new User()
             {
                 Id = 1,
-                GlobalId = "1",
+                GlobalId = "56780659ea7a3b626282103d",
+                IsDeleted = false
+            };
+
+            User user2 = new User()
+            {
+                Id = 2,
+                GlobalId = "577a177413eb94e209af1ee4",
+                IsDeleted = false
+            };
+
+            User user3 = new User()
+            {
+                Id = 3,
+                GlobalId = "577a16659829fe050adb3f5c",
                 IsDeleted = false
             };
 
@@ -131,7 +145,7 @@ namespace Drive.DataAccess.Context
                         Description = "in process",
                         CreatedAt = new DateTime(2016, 5, 6, 18, 23, 45),
                         LastModified = new DateTime(2016, 5, 6, 18, 23, 45),
-                        Owner = user1,
+                        Owner = user2,
                         Link = "",
                         Space = space1,
                         Parent = null
@@ -143,7 +157,7 @@ namespace Drive.DataAccess.Context
                     FileType = FileType.Document,
                     CreatedAt = new DateTime(2016, 5, 13, 13, 43, 15),
                     LastModified =new DateTime(2016, 5, 13, 13, 43, 15),
-                    Owner = user1,
+                    Owner = user3,
                     Link = "",
                     Space = space1,
                     Parent = null
@@ -168,7 +182,7 @@ namespace Drive.DataAccess.Context
                 {
                     IsDeleted = false,
                     Name = "Data Model",
-                    FileType = FileType.Archive,
+                    FileType = FileType.Sheets,
                     CreatedAt = new DateTime(2016, 4, 27, 18, 21, 36),
                     LastModified = new DateTime(2016, 4, 27, 18, 21, 36),
                     Owner = user1,
@@ -197,7 +211,7 @@ namespace Drive.DataAccess.Context
                 {
                     IsDeleted = false,
                     Name = "Other Links",
-                    FileType = FileType.Archive,
+                    FileType = FileType.Link,
                     CreatedAt = new DateTime(2016, 7, 11, 8, 18, 26),
                     LastModified = new DateTime(2016, 7, 11, 8, 18, 26),
                     Owner = user1,
@@ -267,7 +281,7 @@ namespace Drive.DataAccess.Context
                 {
                     IsDeleted = false,
                     Name = "Lesson 1",
-                    FileType = FileType.Presentation,
+                    FileType = FileType.Slides,
                     Description = "presentation file",
                     CreatedAt = new DateTime(2016, 4, 11, 16, 15, 46),
                     LastModified = new DateTime(2016, 4, 11, 16, 15, 46),
@@ -280,7 +294,7 @@ namespace Drive.DataAccess.Context
                 {
                     IsDeleted = false,
                     Name = "Lesson 2",
-                    FileType = FileType.Presentation,
+                    FileType = FileType.Slides,
                     Description = "presentation file",
                     CreatedAt = new DateTime(2016, 4, 15, 11, 18, 46),
                     LastModified = new DateTime(2016, 4, 15, 11, 18, 46),
@@ -293,7 +307,7 @@ namespace Drive.DataAccess.Context
                 {
                     IsDeleted = false,
                     Name = "AngularJS",
-                    FileType = FileType.Presentation,
+                    FileType = FileType.Slides,
                     Description = "presentation file",
                     CreatedAt = new DateTime(2016, 5, 16, 11, 18, 46),
                     LastModified = new DateTime(2016, 5, 16, 11, 18, 46),
@@ -406,7 +420,7 @@ namespace Drive.DataAccess.Context
                 {
                     IsDeleted = false,
                     Name = "File 1",
-                    FileType = FileType.Archive,
+                    FileType = FileType.Document,
                     CreatedAt = new DateTime(2016, 5, 24, 8, 17, 34),
                     LastModified = new DateTime(2016, 5, 24, 8, 17, 34),
                     Owner = user1,
@@ -576,7 +590,7 @@ namespace Drive.DataAccess.Context
                 {
                     IsDeleted = false,
                     Name = "Essential Grammar in Use with Answers",
-                    FileType = FileType.Archive,
+                    FileType = FileType.Document,
                     Description = "Essential Grammar in Use with Answers and CD-ROM Pack",
                     CreatedAt = new DateTime(2016, 6, 11, 9, 22, 11),
                     LastModified = new DateTime(2016, 6, 11, 9, 22, 11),
@@ -693,7 +707,7 @@ namespace Drive.DataAccess.Context
                 {
                     IsDeleted = false,
                     Name = "British or American English?: A Handbook of Word and Grammar Patterns",
-                    FileType = FileType.Presentation,
+                    FileType = FileType.Slides,
                     Description = "Speakers of British and American English display some striking differences in their use of grammar. ",
                     CreatedAt = new DateTime(2016, 7, 11, 14, 37, 20),
                     LastModified = new DateTime(2016, 7, 11, 14, 37, 20),
@@ -895,7 +909,7 @@ namespace Drive.DataAccess.Context
                 {
                     IsDeleted = false,
                     Name = "Tests",
-                    FileType = FileType.Archive,
+                    FileType = FileType.Document,
                     CreatedAt = new DateTime(2016, 8, 15, 15, 7, 23),
                     LastModified = new DateTime(2016, 8, 15, 15, 7, 23),
                     Owner = user1,
@@ -920,7 +934,7 @@ namespace Drive.DataAccess.Context
                 {
                     IsDeleted = false,
                     Name = "Presentation C# Best Practices",
-                    FileType = FileType.Presentation,
+                    FileType = FileType.Slides,
                     Description = "Usefull presentation file",
                     CreatedAt = new DateTime(2016, 6, 21, 15, 7, 23),
                     LastModified = new DateTime(2016, 6, 21, 15, 7, 23),
@@ -937,7 +951,7 @@ namespace Drive.DataAccess.Context
                 {
                     IsDeleted = false,
                     Name = "Jay Hilyard - C# 6.0 Cookbook",
-                    FileType = FileType.Archive,
+                    FileType = FileType.Document,
                     Description = "Completely updated for C# 6.0, the new edition of this bestseller offers more than 150 code recipes to common and not-so-common problems that C# programmers face every day",
                     CreatedAt = new DateTime(2016, 5, 21, 15, 7, 23),
                     LastModified = new DateTime(2016, 5, 21, 15, 7, 23),

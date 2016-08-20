@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Driver.Shared.Dto.Users;
 
 namespace Driver.Shared.Dto
 {

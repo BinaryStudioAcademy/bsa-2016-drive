@@ -54,7 +54,10 @@ gulp.task("libs", function () {
       paths.bower + "dist/jquery.js",
       paths.bower + "bootstrap.js",
       paths.bower + "dirPagination.js",
-      paths.bower + "angular-local-storage.js"
+      paths.bower + "angular-local-storage.js",
+      paths.bower + "spin.js",
+      paths.bower + "angular-spinner.js",
+      paths.bower + "angular-loading-spinner.js"
     ])
 
         .pipe(concat("libs.js"))
