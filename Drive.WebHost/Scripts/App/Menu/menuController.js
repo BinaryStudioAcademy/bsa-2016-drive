@@ -4,9 +4,9 @@
     angular.module("driveApp")
         .controller("MenuController", MenuController);
 
-    MenuController.$inject = ['MenuService', '$location', '$uibModal'];
+    MenuController.$inject = ['MenuService', '$location', '$uibModal', '$rootScope'];
 
-    function MenuController(menuService, $location, $uibModal) {
+    function MenuController(menuService, $location, $uibModal, $rootScope) {
 
         var vm = this;
 
@@ -75,5 +75,9 @@
         function activate() {
             return getAllSpaces();
         }
+
+        $rootScope.$on("getSpacesInMenu", function () {
+            getAllSpaces();
+        });
     }
 }());

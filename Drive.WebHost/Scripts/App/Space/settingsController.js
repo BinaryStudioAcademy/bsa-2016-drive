@@ -4,9 +4,9 @@
     angular.module("driveApp")
         .controller("SettingsController", SettingsController);
 
-    SettingsController.$inject = ['SettingsService', '$routeParams', '$location'];
+    SettingsController.$inject = ['SettingsService', '$routeParams', '$location', '$rootScope'];
 
-    function SettingsController(settingsService, $routeParams, $location) {
+    function SettingsController(settingsService, $routeParams, $location, $rootScope) {
         var vm = this;
         vm.save = save;
         vm.cancel = cancel;
@@ -81,7 +81,10 @@
         }
 
         function save() {
-            settingsService.pushChanges(vm.space);
+            settingsService.pushChanges(vm.space, function() {
+                $rootScope.$emit("getSpacesInMenu", {});
+            });
+            
             vm.redirectToSpace();
         };
 
