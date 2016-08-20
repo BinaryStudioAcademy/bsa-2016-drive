@@ -25,26 +25,20 @@ namespace Drive.WebHost.Services
 
         public async Task<IEnumerable<FileUnitDto>> GetAllAsync()
         {
-            var data = await _unitOfWork?.Files?.GetAllAsync();
-
-            if (data != null)
+            var files = await _unitOfWork?.Files?.Query.Select(f => new FileUnitDto()
             {
-                var dto = from d in data
-                    select new FileUnitDto()
-                    {
-                        Id = d.Id,
-                        IsDeleted = d.IsDeleted,
-                        FileType = d.FileType,
-                        Name = d.Name,
-                        Description = d.Description,
-                        SpaceId = d.Space.Id,
-                        Link = d.Link,
-                        CreatedAt = d.CreatedAt
-                    };
+                Id = f.Id,
+                Description = f.Description,
+                Name = f.Name,
+                IsDeleted = f.IsDeleted,
+                CreatedAt = f.CreatedAt,
+                LastModified = f.LastModified,
+                SpaceId = f.Space.Id,
+                FileType = f.FileType,
+                Link = f.Link
+            }).ToListAsync();
 
-                return dto;
-            }
-            return null;
+            return files;
         }
 
         public async Task<FileUnitDto> GetAsync(int id)
@@ -80,7 +74,7 @@ namespace Drive.WebHost.Services
                 var file = new FileUnit()
                 {
                     Name = dto.Name,
-                    FileType =  dto.FileType,
+                    FileType = dto.FileType,
                     Link = dto.Link,
                     Description = dto.Description,
                     CreatedAt = DateTime.Now,
@@ -98,7 +92,7 @@ namespace Drive.WebHost.Services
                 dto.Id = file.Id;
                 dto.CreatedAt = file.CreatedAt;
                 dto.LastModified = file.LastModified;
-                dto.Author = new AuthorDto() { Id = file.Owner.Id, Name = user.name +' '+ user.surname };
+                dto.Author = new AuthorDto() { Id = file.Owner.Id, Name = user.name + ' ' + user.surname };
                 dto.FileType = file.FileType;
 
                 return dto;
