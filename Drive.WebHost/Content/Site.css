@@ -117,13 +117,6 @@ textarea {
     overflow: hidden;
 }
 
-/*Modal window for creating new space*/
-.modal-body {
-    position: relative;
-    max-height: 700px;
-    padding: 15px;
-}
-
 /*Breadcrumbs paths*/
 .btn-breadcrumb .btn:not(:last-child):after {
     content: " ";
@@ -505,3 +498,41 @@ table {
     }
 }
 /*end grid view*/
+
+/*Table for editting space users*/
+.users table {
+    width: 100%;
+}
+
+.users thead, .users tbody, .users tr, .users td, .users th {
+    display: block;
+}
+
+    .users tr:after {
+        content: ' ';
+        display: block;
+        visibility: hidden;
+        clear: both;
+    }
+
+    .users thead th {
+        height: 30px;
+        /*text-align: left;*/
+    }
+
+.users tbody {
+    height: 150px;
+    overflow-y: auto;
+}
+
+    .users tbody td, .users thead th {
+        width: 25%;
+        float: left;
+    }
+
+/*Modal window for creating new space*/
+.modal-body {
+    position: relative;
+    max-height: 400px;
+    padding: 15px;
+}
