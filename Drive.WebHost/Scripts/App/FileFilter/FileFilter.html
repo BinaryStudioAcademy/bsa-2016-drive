@@ -1,0 +1,51 @@
+﻿
+<div class="container col-md-12">
+    <br />
+    <div class="btn-group btn-breadcrumb">
+        <a class="btn btn-info"><i class={{fileFilterCtrl.icon}}></i> {{fileFilterCtrl.filesType}}</a>
+    </div>
+
+    <div class="row" style="margin: 0;">
+        <div class="col-lg-push-4-offset pull-right">
+            <button class="btn btn-default" ng-click="fileFilterCtrl.changeView(fileFilterCtrl.view)">
+                <i class={{fileFilterCtrl.view}} title="view"> </i>
+            </button>
+        </div>
+    </div>
+
+    <div class="wrap" style="margin: 0;" ng-show="fileFilterCtrl.showGrid">
+        <div class="small" ng-repeat="space in fileFilterCtrl.spaces">
+            <div class="well" style="margin-bottom: 10px;" >{{ space.name }}</div>
+            <div role="button" class="s-block btn-default shadow" ng-repeat="file in space.files" title="Created {{ file.createdAt | date : 'short' }}">
+                <i class="fa fa-file-o fa-5x"></i>
+                <br>
+                <span class="bold">Name: </span>
+                <span>{{ file.name }}</span>
+                <br>
+                <span class="bold">Author: </span>
+                <span>{{ file.author.name }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive" ng-show="fileFilterCtrl.showTable">
+        <table class="table table-hover" ng-repeat="space in fileFilterCtrl.spaces">
+            <caption> <div class="well">{{ space.name }}</div></caption>
+            <thead>
+                <tr>
+                    <th class="name" style="width: 20%">Name</th>
+                    <th>Description</th>
+                    <th style="width: 15%">Author</th>
+                    <th style="width: 15%">Created</th>
+                    <th class="type" style="width: 10%">Type</th>
+                </tr>
+            </thead>
+            <tr class="shadow" role="button" ng-repeat="file in space.files">
+                <td> <i class="fa fa-file-o">&nbsp;</i>{{ file.name }}</td>
+                <td>{{ file.description }}</td>
+                <td>{{ file.author.name }}</td>
+                <td>{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
+                <td>{{ file.fileType | typeOfFile }}</td>
+            </tr>
+        </table>
+    </div>
+</div>

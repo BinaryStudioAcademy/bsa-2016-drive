@@ -1,4 +1,5 @@
-﻿(function() {
+﻿/// <reference path="fileService.js" />
+(function() {
     'use strict';
 
     angular
@@ -14,7 +15,8 @@
             updateFile: updateFile,
             deleteFile: deleteFile,
             getFile: getFile,
-            getAllFiles: getAllFiles
+            getAllFiles: getAllFiles,
+            getFilesApp: getFilesApp
         };
 
         function getAllFiles(callBack) {
@@ -24,6 +26,15 @@
                         callBack(response);
                     }
                 });
+        }
+
+        function getFilesApp(fileType, callBack) {
+            $http.get('api/files/apps/' + fileType)
+                .then(function (response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                })
         }
 
         function getFile(id, callBack) {

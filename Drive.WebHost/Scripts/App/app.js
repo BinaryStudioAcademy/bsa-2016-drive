@@ -59,6 +59,13 @@
                     controller: "FolderController",
                     controllerAs: "folderCtrl"
                 })
+                .when("/apps/:appName", // Apps
+                {
+                    templateUrl: "/Scripts/App/FileFilter/FileFilter.html",
+                    controller: "FileFilterController",
+                    controllerAs: "fileFilterCtrl"
+                })
+                /*
                 .when("/apps/academy", // Academy Pro Page
                 {
                     templateUrl: "/Scripts/App/Academy/Academy.html",
@@ -107,6 +114,7 @@
                     controller: "SlidesController",
                     controllerAs: "slidesCtrl"
                 })
+                */
                 .when("/Error",
                 {
                     templateUrl: "/Scripts/App/Error404/404.html",

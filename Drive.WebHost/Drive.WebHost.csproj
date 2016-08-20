@@ -248,6 +248,8 @@
     <Content Include="Scripts\App\Employees\employeesController.js" />
     <Content Include="Scripts\App\Events\Events.html" />
     <Content Include="Scripts\App\Events\eventsController.js" />
+    <Content Include="Scripts\App\FileFilter\fileFilterController.js" />
+    <Content Include="Scripts\App\FileFilter\FileFilter.html" />
     <Content Include="Scripts\App\File\FileForm.html" />
     <Content Include="Scripts\App\File\fileService.js" />
     <Content Include="Scripts\App\File\fileModalController.js" />
