@@ -10,6 +10,7 @@
     function FolderService($http) {
         var service = {
             getAll: getAll,
+            getAllByParentId: getAllByParentId,
             get: get,
             create: create,
             updateFolder: updateFolder,
@@ -26,6 +27,18 @@
                         }
                     },
                     function() {
+                        console.log('Error while getting folder!');
+                    });
+        }
+
+        function getAllByParentId(spaceId, parentId, callBack) {
+            $http.get('api/folders/parent?spaceId=' + spaceId + '&parentId=' + parentId)
+                .then(function (response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                },
+                    function () {
                         console.log('Error while getting folder!');
                     });
         }

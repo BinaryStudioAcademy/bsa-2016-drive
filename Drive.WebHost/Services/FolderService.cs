@@ -42,6 +42,24 @@ namespace Drive.WebHost.Services
             return folders;
         }
 
+        public async Task<IEnumerable<FolderUnitDto>> GetAllByParentIdAsync(int spaceId, int? parentId)
+        {
+            var folders = await _unitOfWork?.Folders?.Query.Where(f => f.Space.Id == spaceId)
+                                                           .Where(f => f.Parent.Id == parentId)
+                                                           .Select(f => new FolderUnitDto
+            {
+                Id = f.Id,
+                Description = f.Description,
+                Name = f.Name,
+                IsDeleted = f.IsDeleted,
+                CreatedAt = f.CreatedAt,
+                LastModified = f.LastModified,
+                SpaceId = f.Space.Id
+            }).ToListAsync();
+
+            return folders;
+        }
+
         public async Task<FolderUnitDto> GetAsync(int id)
         {
             var folder = await _unitOfWork?.Folders?.GetByIdAsync(id);

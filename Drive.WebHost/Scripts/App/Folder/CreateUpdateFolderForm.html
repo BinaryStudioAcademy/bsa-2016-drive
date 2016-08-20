@@ -13,7 +13,7 @@
                         <div class="form-group">
                             <label for="folderName" class="col-md-3">Name: </label>
                             <input class="form-control col-md-9" name="folderName" type="text" placeholder="Enter title" ng-model="folderModalCtrl.folder.name" required />
-                            <span ng-show="createFolderForm.folderName.$touched && createFolderForm.folderName.$invalid" style="color: red" class="col-md-offset-3">
+                            <span ng-show="createFolderForm.folderName.$touched && createFolderForm.folderName.$invalid && folderModalCtrl.bool" style="color: red" class="col-md-offset-3">
                                 The name is required
                             </span>
                         </div>

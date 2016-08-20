@@ -12,6 +12,8 @@ namespace Drive.WebHost.Services
     {
         Task<IEnumerable<FolderUnitDto>> GetAllAsync();
 
+        Task<IEnumerable<FolderUnitDto>> GetAllByParentIdAsync(int spaceId, int? parentId);
+
         Task<FolderUnitDto> GetAsync(int id);
 
         Task<FolderUnitDto> CreateAsync(FolderUnitDto folder);
