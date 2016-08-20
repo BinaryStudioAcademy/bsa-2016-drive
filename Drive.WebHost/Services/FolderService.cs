@@ -28,24 +28,18 @@ namespace Drive.WebHost.Services
 
         public async Task<IEnumerable<FolderUnitDto>> GetAllAsync()
         {
-            var folders = await _unitOfWork?.Folders?.GetAllAsync();
+            var folders = await _unitOfWork?.Folders?.Query.Select(f => new FolderUnitDto
+            {
+                Id = f.Id,
+                Description = f.Description,
+                Name = f.Name,
+                IsDeleted = f.IsDeleted,
+                CreatedAt = f.CreatedAt,
+                LastModified = f.LastModified,
+                SpaceId = f.Space.Id
+            }).ToListAsync();
 
-            if (folders == null)
-                return null;
-
-            var dto = from folder in folders
-                      select new FolderUnitDto
-                      {
-                          Id = folder.Id,
-                          Description = folder.Description,
-                          Name = folder.Name,
-                          IsDeleted = folder.IsDeleted,
-                          CreatedAt = folder.CreatedAt,
-                          LastModified = folder.LastModified,
-                          SpaceId = folder.Space.Id
-                      };
-
-            return dto;
+            return folders;
         }
 
         public async Task<FolderUnitDto> GetAsync(int id)
@@ -76,7 +70,7 @@ namespace Drive.WebHost.Services
 
 
             if (space != null)
-            {               
+            {
                 var folder = new FolderUnit
                 {
                     Description = dto.Description,
@@ -96,7 +90,7 @@ namespace Drive.WebHost.Services
                 dto.Id = folder.Id;
                 dto.CreatedAt = folder.CreatedAt;
                 dto.LastModified = folder.LastModified;
-                dto.Author = new AuthorDto() {Id = folder.Owner.Id, Name = user.name + ' ' + user.surname };
+                dto.Author = new AuthorDto() { Id = folder.Owner.Id, Name = user.name + ' ' + user.surname };
 
                 return dto;
             }
