@@ -124,6 +124,45 @@ textarea {
     padding: 15px;
 }
 
+/*Table for editting space users*/
+.users table {
+    width: 100%;
+}
+
+.users thead, .users tbody, .users tr, .users td, .users th {
+    display: block;
+}
+
+    .users tr:after {
+        content: ' ';
+        display: block;
+        visibility: hidden;
+        clear: both;
+    }
+
+    .users thead th {
+        height: 30px;
+        /*text-align: left;*/
+    }
+
+.users tbody {
+    height: 150px;
+    overflow-y: auto;
+}
+
+    .users tbody td, .users thead th {
+        width: 25%;
+        float: left;
+    }
+
+/*Scrollable dropdown*/
+.scrollable-dropdown {
+    height: auto;
+    max-height: 450px;
+    overflow-x: hidden;
+}
+
+
 /*Breadcrumbs paths*/
 .btn-breadcrumb .btn:not(:last-child):after {
     content: " ";

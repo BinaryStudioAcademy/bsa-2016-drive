@@ -1,5 +1,4 @@
-﻿
-<div>
+﻿<div>
     <div class="modal-header">
         <h3 class="modal-title">Add new Space</h3>
     </div>
@@ -85,37 +84,46 @@
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                                         Users<span class="caret"></span>
                                     </button>
-                                    <ul class="dropdown-menu" role="menu">
+                                    <ul class="dropdown-menu scrollable-dropdown" role="menu">
                                         <li ng-repeat="item in createCtrl.users">
-                                            <a ng-click="createCtrl.setChoice(item.Login, item.Id);">{{item.Login}}</a>
+                                            <a ng-click="createCtrl.setChoice(item.name, item.id);">{{item.name}}</a>
                                         </li>
                                     </ul>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <input class="form-control" ng-model="createCtrl.userAddName" placeholder="User name" disabled />
+                                <input class="form-control" ng-model="createCtrl.userAddName" placeholder="User name" />
                             </div>
                         </div>
                         <div class="form-group">
                             <div class="col-md-5">
-                                <button class="btn btn-primary" ng-click="createCtrl.addSpaceUser()">Add</button>
+                                <button class="btn btn-primary" ng-click="createCtrl.addSpaceUser()">
+                                    Add
+                                </button>
                             </div>
                         </div>
                     </div>
-                    <table class="table table-striped table-hover">
+                    <br />
+                    <table class="table users table-striped table-hover">
                         <thead>
                             <tr>
                                 <th>User name</th>
-                                <th>Id</th>
+                                <th>Read</th>
+                                <th>Write</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="item in createCtrl.space.ReadPermittedUsers">
-                                <td>{{item.Login}}</td>
-                                <td>{{item.Id}}</td>
+                            <tr ng-repeat="item in createCtrl.permittedUsers">
+                                <td>{{item.name}}</td>
                                 <td>
-                                    <input type="button" value="Remove" class="btn btn-danger" ng-click="createCtrl.removeSpaceUser(item.Id)" />
+                                    <input type="checkbox" ng-model="item.confirmedRead" ng-change="createCtrl.addReadUser(item.confirmedRead, item.globalId)">
+                                </td>
+                                <td>
+                                    <input type="checkbox" ng-model="item.confirmedWrite" ng-change="createCtrl.addWriteUser(item.confirmedWrite, item.globalId)">
+                                </td>
+                                <td>
+                                    <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="createCtrl.removeSpaceUser(item.globalId); createCtrl.addReadUser(false, item.globalId); createCtrl.addWriteUser(false, item.globalId)"></i>
                                 </td>
                             </tr>
                         </tbody>
@@ -126,11 +134,13 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="createCtrl.save()"
+    <button class="btn btn-primary" type="button" ng-click="createCtrl.save()" title="Create new Space"
             ng-disabled="createForm.title.$invalid || createForm.maxfile.$invalid || createForm.maxsize.$invalid">
         Save
     </button>
-    <button class="btn btn-default" type="button" ng-click="createCtrl.cancel()">Cancel</button>
+    <button class="btn btn-default" type="button" ng-click="createCtrl.cancel()">
+        Close
+    </button>
 </div>
 
 <!--For changing tabs-->

@@ -11,7 +11,6 @@
         var service = {
             getSpace: getSpace,
             getAllSpaces: getAllSpaces,
-            getSpaceCreate: getSpaceCreate,
             getAllUsers: getAllUsers,
             pushData: pushData,
             searchFoldersAndFiles,
@@ -66,17 +65,6 @@
             }, function () {
                 console.log('Error while getting all spaces!');
             });
-        }
-
-        function getSpaceCreate(id, callback) {
-            $http.get('/api/spaces/' + id)
-                .then(function (response) {
-                    if (callback) {
-                        callback(response.data);
-                    }
-                }, function () {
-                    console.log('Error while getting space!');
-                });
         }
 
         function getAllUsers(callback) {
@@ -141,5 +129,4 @@
 
         return service;
     }
-
 })();
