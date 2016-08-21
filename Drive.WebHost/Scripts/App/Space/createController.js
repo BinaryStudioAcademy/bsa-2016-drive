@@ -9,14 +9,15 @@
 
     function CreateController(spaceService, $uibModalInstance) {
         var vm = this;
-        vm.save = save;
-        vm.cancel = cancel;
+        
         vm.addNewSpace = addNewSpace;
         vm.addSpaceUser = addSpaceUser;
         vm.addReadUser = addReadUser;
         vm.addWriteUser = addWriteUser;
         vm.removeSpaceUser = removeSpaceUser;
         vm.setChoice = setChoice;
+        vm.save = save;
+        vm.cancel = cancel;
 
         vm.space = {
             readPermittedUsers: [],
@@ -29,9 +30,11 @@
         function activate() {
                 spaceService.getAllUsers(function (data) {
                     vm.users = data;
+                    var i;
+                    var j;
                     if (vm.space.readPermittedUsers !== undefined) {
-                        for (var i = 0; i < vm.space.readPermittedUsers.length; i++) {
-                            for (var j = 0; j < vm.users.length; j++) {
+                        for (i = 0; i < vm.space.readPermittedUsers.length; i++) {
+                            for (j = 0; j < vm.users.length; j++) {
                                 if (vm.space.readPermittedUsers[i].globalId === vm.users[j].id) {
                                     vm.permittedUsers.push({
                                         name: vm.users[j].name,
@@ -46,16 +49,16 @@
 
                     vm.bool = true;
                     if (vm.space.modifyPermittedUsers !== null) {
-                        for (var i = 0; i < vm.space.modifyPermittedUsers.length; i++) {
+                        for (i = 0; i < vm.space.modifyPermittedUsers.length; i++) {
                             vm.bool = true;
-                            for (var j = 0; j < vm.permittedUsers.length; j++) {
+                            for (j = 0; j < vm.permittedUsers.length; j++) {
                                 if (vm.space.modifyPermittedUsers[i].globalId === vm.permittedUsers[j].globalId) {
                                     vm.permittedUsers[j].confirmedWrite = true;
                                     vm.bool = false;
                                 }
                             }
                             if (vm.bool) {
-                                for (var j = 0; j < vm.users.length; j++) {
+                                for (j = 0; j < vm.users.length; j++) {
                                     if (vm.space.modifyPermittedUsers[i].globalId === vm.users[j].id) {
                                         vm.permittedUsers.push({
                                             name: vm.users[j].name,
@@ -102,8 +105,9 @@
         };
 
         function addReadUser(bool, id) {
+            var i;
             if (bool === true) {
-                for (var i = 0; i < vm.permittedUsers.length; i++) {
+                for (i = 0; i < vm.permittedUsers.length; i++) {
                     if (vm.permittedUsers[i].globalId === id) {
                         vm.space.readPermittedUsers.push({
                             name: vm.permittedUsers[i].name,
@@ -113,7 +117,7 @@
                     }
                 }
             } else {
-                for (var i = 0; i < vm.space.readPermittedUsers.length; i++) {
+                for (i = 0; i < vm.space.readPermittedUsers.length; i++) {
                     if (vm.space.readPermittedUsers[i].globalId === id) {
                         vm.space.readPermittedUsers.splice(i, 1);
                         break;
@@ -123,8 +127,9 @@
         }
 
         function addWriteUser(bool, id) {
+            var i;
             if (bool === true) {
-                for (var i = 0; i < vm.permittedUsers.length; i++) {
+                for (i = 0; i < vm.permittedUsers.length; i++) {
                     if (vm.permittedUsers[i].globalId === id) {
                         vm.space.modifyPermittedUsers.push({
                             name: vm.permittedUsers[i].name,
@@ -134,7 +139,7 @@
                     }
                 }
             } else {
-                for (var i = 0; i < vm.space.modifyPermittedUsers.length; i++) {
+                for (i = 0; i < vm.space.modifyPermittedUsers.length; i++) {
                     if (vm.space.modifyPermittedUsers[i].globalId === id) {
                         vm.space.modifyPermittedUsers.splice(i, 1);
                         break;
@@ -156,10 +161,6 @@
 
         function save() {
             vm.addNewSpace();
-
-            //$timeout(function () {
-            //    $uibModalInstance.close();
-            //}, 2500);
         };
 
         function cancel() {

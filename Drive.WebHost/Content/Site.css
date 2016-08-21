@@ -536,3 +536,10 @@ table {
     max-height: 400px;
     padding: 15px;
 }
+
+/*Scrollable dropdown*/
+.scrollable-dropdown {
+    height: auto;
+    max-height: 450px;
+    overflow-x: hidden;
+}
