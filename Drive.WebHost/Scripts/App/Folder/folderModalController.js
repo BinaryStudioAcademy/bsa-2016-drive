@@ -35,15 +35,22 @@
                 if (vm.folder.id === undefined) {
                     folderService.create(vm.folder,
                         function (response) {
-                            if (response)
-                                $uibModalInstance.close(response);
+                            if (response) {
+                                var data = {operation: 'create',
+                                        item : response}
+                                $uibModalInstance.close(data);
+                            }
                         });
 
                 } else {
                     folderService.updateFolder(vm.folder,
                         function (response) {
-                            if (response)
-                                $uibModalInstance.close(response);
+                            if (response) {
+                                var data = {
+                                    operation: 'update',
+                                    item: response}
+                                $uibModalInstance.close(data);
+                            }
                         });
                 }
             }

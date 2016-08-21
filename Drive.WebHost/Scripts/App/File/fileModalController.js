@@ -83,14 +83,24 @@
                 if (vm.file.id === undefined) {
                     fileService.createFile(vm.file,
                         function (response) {
-                            if (response)
-                                $uibModalInstance.close(response);
+                            if (response) {
+                                var data = {
+                                    operation: 'create',
+                                    item: response
+                                }
+                                $uibModalInstance.close(data);
+                            }
                         });
                 } else {
                     fileService.updateFile(vm.file.id, vm.file,
                         function (response) {
-                            if (response)
-                                $uibModalInstance.close(response);
+                            if (response) {
+                                var data = {
+                                    operation: 'update',
+                                    item: response
+                                }
+                                $uibModalInstance.close(data);
+                            }
                         });
                 }
             }
