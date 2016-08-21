@@ -162,6 +162,8 @@
             [
                 'Edit', function ($itemScope) {
                     vm.folder = $itemScope.folder;
+                    vm.folder.parentId = vm.parentId;
+                    vm.folder.spaceId = vm.spaceId;
                     vm.openFolderWindow();
                 }
             ],
@@ -181,6 +183,8 @@
             [
                 'Edit', function ($itemScope) {
                     vm.file = $itemScope.file;
+                    vm.file.parentId = vm.parentId;
+                    vm.file.spaceId = vm.spaceId;
                     vm.openFileWindow();
                 }
             ],
