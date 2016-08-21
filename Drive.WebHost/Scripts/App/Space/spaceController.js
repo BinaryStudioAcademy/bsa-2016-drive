@@ -104,6 +104,7 @@
 
         function getSpace() {
             vm.searchText = '';
+            vm.paginate.currentPage = 1;
             getSpaceContent();
             getSpaceTotal();
             vm.paginate.getContent = getSpaceContent;
@@ -117,14 +118,9 @@
         }
 
         function getSpaceByButton() {
-            spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
-                vm.space = data;
-                vm.spaceId = data.id;
-
-
-                localStorageService.set('list', []);
-                vm.folderList = localStorageService.get('list');
-            });
+            getSpace();
+            localStorageService.set('list', []);
+            vm.folderList = localStorageService.get('list');
             vm.parentId = null;
             localStorageService.set('current', null);
         }
@@ -350,6 +346,7 @@
         function getFolderContent(id) {
             vm.paginate.getContent = getFolderContentFromApi;
             vm.searchText = '';
+            vm.paginate.currentPage = 1;
             vm.parentId = id;
             getFolderContentFromApi();
             getFolderContentTotal(id);
@@ -401,6 +398,7 @@
         }
 
         function search() {
+            vm.paginate.currentPage = 1;
             vm.paginate.getContent = getResultSearchFoldersAndFiles;
             getResultSearchFoldersAndFiles();
             getNumberOfResultSearch();
@@ -408,6 +406,7 @@
 
         function cancelSearch() {
             vm.searchText = '';
+            vm.paginate.currentPage = 1;
             vm.paginate.getContent = getResultSearchFoldersAndFiles;
             getResultSearchFoldersAndFiles();
             getNumberOfResultSearch();
