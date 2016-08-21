@@ -255,6 +255,7 @@
     <Content Include="Scripts\App\File\fileModalController.js" />
     <Content Include="Scripts\App\File\fileType.filter.js" />
     <Content Include="Scripts\App\File\Modal.html" />
+    <Content Include="Scripts\App\Folder\folderNameDirective.js" />
     <Content Include="Scripts\App\Folder\folderService.js" />
     <Content Include="Scripts\App\Folder\CreateUpdateFolderForm.html" />
     <Content Include="Scripts\App\Folder\Modal.html" />

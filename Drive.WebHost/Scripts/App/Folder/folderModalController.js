@@ -68,7 +68,6 @@
                                     $uibModalInstance.close(response);
                             });
                 }
-                vm.folder.name = vm.name;
             }
         }
 
