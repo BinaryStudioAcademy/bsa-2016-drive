@@ -10,6 +10,7 @@
     function CreateController(spaceService, $uibModalInstance, $timeout) {
         var vm = this;
         vm.save = save;
+        vm.saveUser = saveUser;
         vm.cancel = cancel;
         vm.addNewSpace = addNewSpace;
         vm.addSpaceUser = addSpaceUser;
@@ -161,9 +162,13 @@
         function save() {
             vm.addNewSpace();
 
-            $timeout(function () {
-                $uibModalInstance.close();
-            }, 2500);
+            //$timeout(function () {
+            //    $uibModalInstance.close();
+            //}, 2500);
+        };
+
+        function saveUser() {
+            spaceService.pushUsers(vm.space);
         };
 
         function cancel() {

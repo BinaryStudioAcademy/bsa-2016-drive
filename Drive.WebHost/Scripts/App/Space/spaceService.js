@@ -15,6 +15,7 @@
             getSpaceCreate: getSpaceCreate,
             getAllUsers: getAllUsers,
             pushData: pushData,
+            pushUsers: pushUsers,
 
             searchFoldersAndFiles,
             getNumberOfResultSearchFoldersAndFiles,
@@ -88,6 +89,16 @@
                     console.log('Success!');
                 }, function () {
                     console.log('Error while pushing data!');
+                });
+        }
+
+        function pushUsers(data, callback) {
+            $http.put('/api/spaces/' + data.id, data)
+                .then(function () {
+                    if (callback)
+                        callback();
+                }, function () {
+                    console.log('Error while pushing new users!');
                 });
         }
 
