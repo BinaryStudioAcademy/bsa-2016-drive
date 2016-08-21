@@ -25,6 +25,7 @@
                 vm.title = 'Create Folder';
             } else {
                 vm.name = items.name;
+                vm.description = items.description;
             }
             if (vm.folder.parentId === 0) vm.folder.parentId = null;
 
@@ -72,6 +73,8 @@
         }
 
         function cancel() {
+            items.name = vm.name;
+            items.description = vm.description;
             $uibModalInstance.dismiss('cancel');
         };
     }
