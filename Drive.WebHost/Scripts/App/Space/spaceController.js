@@ -10,10 +10,6 @@
     function SpaceController(spaceService, folderService, fileService, $uibModal, localStorageService, $routeParams, $location) {
         var vm = this;
 
-        vm.view = "fa fa-th";
-        vm.showTable = true;
-        vm.showGrid = false;
-
         vm.folderList = [];
         vm.addElem = addElem;
         vm.deleteElems = deleteElems;
@@ -25,10 +21,6 @@
             folders: [],
             files: []
         }
-
-        vm.changeView = changeView;
-        vm.activateTableView = activateTableView;
-        vm.activateGridView = activateGridView;
 
         // vm.getAllFolders = getAllFolders;
         vm.getFolder = getFolder;
@@ -70,6 +62,11 @@
         activate();
 
         function activate() {
+            vm.view = "fa fa-th";
+            vm.showTable = true;
+            vm.showGrid = false;
+            vm.changeView = changeView;
+
             spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
