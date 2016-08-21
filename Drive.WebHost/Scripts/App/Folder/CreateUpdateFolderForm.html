@@ -12,8 +12,10 @@
                     <div class="form-horizontal">
                         <div class="form-group">
                             <label for="folderName" class="col-md-3">Name: </label>
-                            <input class="form-control col-md-9" name="folderName" type="text" placeholder="Enter title" ng-model="folderModalCtrl.folder.name" required folderName space-id="{{folderModalCtrl.folder.spaceId}}" parent-id="{{folderModalCtrl.folder.parenteId}}" folder-name="{{folderModalCtrl.name}}" />
-                            <span style="color: red" class="col-md-offset-3" ng-show="createFolderForm.folderName.$error.folderName">This username is already taken!</span>
+                            <input class="form-control col-md-9" name="folderName" type="text" placeholder="Enter title" ng-model="folderModalCtrl.folder.name" required folderName space-id="{{folderModalCtrl.folder.spaceId}}" parent-id="{{folderModalCtrl.folder.parentId}}" folder-name="{{folderModalCtrl.name}}" />
+                            <span style="color: red" class="col-md-offset-3" ng-show="createFolderForm.folderName.$error.folderName">
+                                Folder with this name already exists
+                            </span>
                             <span ng-show="createFolderForm.folderName.$touched && createFolderForm.folderName.$error.required" style="color: red" class="col-md-offset-3">
                                 The name is required
                             </span>

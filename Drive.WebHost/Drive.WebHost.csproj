@@ -251,6 +251,7 @@
     <Content Include="Scripts\App\FileFilter\fileFilterController.js" />
     <Content Include="Scripts\App\FileFilter\FileFilter.html" />
     <Content Include="Scripts\App\File\FileForm.html" />
+    <Content Include="Scripts\App\File\fileNameDirective.js" />
     <Content Include="Scripts\App\File\fileService.js" />
     <Content Include="Scripts\App\File\fileModalController.js" />
     <Content Include="Scripts\App\File\fileType.filter.js" />

@@ -30,7 +30,6 @@
         }
 
         function save() {
-            vm.bool = false;
             vm.submitted = true;
             if (vm.folder.name !== undefined) {
                 if (vm.folder.id === undefined) {

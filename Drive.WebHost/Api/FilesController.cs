@@ -90,5 +90,15 @@ namespace Drive.WebHost.Api
 
             return Ok(result);
         }
+
+        // GET: api/files?spaceId=(int)&parentId=(int)
+        [Route("~/api/files/parent")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetAllByParentIdAsync(int spaceId, int? parentId)
+        {
+            var result = await _service.GetAllByParentIdAsync(spaceId, parentId);
+
+            return Ok(result);
+        }
     }
 }

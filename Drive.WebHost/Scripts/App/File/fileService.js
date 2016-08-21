@@ -16,7 +16,8 @@
             deleteFile: deleteFile,
             getFile: getFile,
             getAllFiles: getAllFiles,
-            getFilesApp: getFilesApp
+            getFilesApp: getFilesApp,
+            getAllByParentId: getAllByParentId
         };
 
         function getAllFiles(callBack) {
@@ -26,6 +27,18 @@
                         callBack(response);
                     }
                 });
+        }
+
+        function getAllByParentId(spaceId, parentId, callBack) {
+            $http.get('api/files/parent?spaceId=' + spaceId + '&parentId=' + parentId)
+                .then(function (response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                },
+                    function () {
+                        console.log('Error while getting files!');
+                    });
         }
 
         function getFilesApp(fileType, callBack) {
