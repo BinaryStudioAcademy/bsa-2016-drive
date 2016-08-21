@@ -11,12 +11,8 @@
         var service = {
             getSpace: getSpace,
             getAllSpaces: getAllSpaces,
-
-            getSpaceCreate: getSpaceCreate,
             getAllUsers: getAllUsers,
             pushData: pushData,
-            pushUsers: pushUsers,
-
             searchFoldersAndFiles,
             getNumberOfResultSearchFoldersAndFiles,
             getSpaceTotal
@@ -61,17 +57,6 @@
             });
         }
 
-        function getSpaceCreate(id, callback) {
-            $http.get('/api/spaces/' + id)
-                .then(function (response) {
-                    if (callback) {
-                        callback(response.data);
-                    }
-                }, function () {
-                    console.log('Error while getting space!');
-                });
-        }
-
         function getAllUsers(callback) {
             $http.get('/api/users')
             .then(function (response) {
@@ -89,16 +74,6 @@
                     console.log('Success!');
                 }, function () {
                     console.log('Error while pushing data!');
-                });
-        }
-
-        function pushUsers(data, callback) {
-            $http.put('/api/spaces/' + data.id, data)
-                .then(function () {
-                    if (callback)
-                        callback();
-                }, function () {
-                    console.log('Error while pushing new users!');
                 });
         }
 
@@ -138,5 +113,4 @@
 
         return service;
     }
-
 })();
