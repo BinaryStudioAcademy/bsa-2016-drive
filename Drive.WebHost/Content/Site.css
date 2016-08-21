@@ -117,6 +117,13 @@ textarea {
     overflow: hidden;
 }
 
+/*Modal window for creating new space*/
+.modal-body {
+    position: relative;
+    max-height: 400px;
+    padding: 15px;
+}
+
 /*Breadcrumbs paths*/
 .btn-breadcrumb .btn:not(:last-child):after {
     content: " ";
@@ -529,13 +536,6 @@ table {
         width: 25%;
         float: left;
     }
-
-/*Modal window for creating new space*/
-.modal-body {
-    position: relative;
-    max-height: 400px;
-    padding: 15px;
-}
 
 /*Scrollable dropdown*/
 .scrollable-dropdown {
