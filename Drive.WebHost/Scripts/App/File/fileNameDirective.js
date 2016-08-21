@@ -9,12 +9,11 @@
                 link: function (scope, elm, attrs, ctrl) {
 
                     var files = [];
-                    console.log("data");
+
                     fileService.getAllByParentId(attrs.spaceId, attrs.parentId, function (data) {
                         for (var i = 0; i < data.length; i++) {
                             files.push(data[i].name);
-                        }
-                        console.log(data);                        
+                        }              
                     });
 
                     ctrl.$asyncValidators.fileName = function (modelValue) {
