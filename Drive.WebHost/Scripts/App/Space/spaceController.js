@@ -74,7 +74,13 @@
             spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate, function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
-                console.log(localStorageService.get('current'));
+
+                if (localStorageService.get('spaceId') !== vm.spaceId) {
+                    localStorageService.set('spaceId', vm.spaceId);
+                    localStorageService.set('current', null);
+                    localStorageService.set('list', null)
+                }
+
                 if (localStorageService.get('list') != null)
                     vm.folderList = localStorageService.get('list');
 
