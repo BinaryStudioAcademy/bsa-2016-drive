@@ -25,9 +25,10 @@
             //adminPanelService.getAllUsers(function (data) {
             //    vm.users = data;
             //});
-            adminPanelService.getAllRoles(function (data) {
+            adminPanelService.getAllRoles(function(data) {
                 vm.roles = data;
-            })
+            });
+            vm.states = ["asd", "qwe", "zxc", "zwdasda", "zxcxcvxvxcv"];
         }
 
         function suggest_role(term) {

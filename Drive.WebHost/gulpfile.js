@@ -51,6 +51,7 @@ gulp.task("libs", function () {
       paths.bower + "contextMenu.js",
       paths.bower + "massautocomplete.js",
       paths.bower + "ui-bootstrap.js",
+      paths.bower + "ui-bootstrap-tpls.js",
       paths.bower + "dist/jquery.js",
       paths.bower + "bootstrap.js"
     ])
