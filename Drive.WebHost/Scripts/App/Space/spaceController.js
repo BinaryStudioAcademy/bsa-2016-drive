@@ -46,6 +46,8 @@
 
         vm.redirectToSpaceSettings = redirectToSpaceSettings;
 
+        vm.changeOrder = changeOrder;
+
         vm.paginate = {
             currentPage: 1,
             pageSize: 20,
@@ -66,8 +68,10 @@
             vm.showTable = true;
             vm.showGrid = false;
             vm.changeView = changeView;
+            vm.sortByDate = null;
+            vm.reverse = false;
 
-            spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
+            spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate, function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
                 console.log(localStorageService.get('current'));
@@ -109,7 +113,7 @@
         }
 
         function getSpaceContent() {
-            spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
+            spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate, function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
             });
@@ -455,6 +459,17 @@
 
         function openDocument(url) {
             window.open(url, '_blank');
+        }
+
+        function changeOrder() {
+            vm.reverse = !vm.reverse;
+            if (vm.reverse) {
+                vm.sortByDate = "desc";
+            } else {
+                vm.sortByDate = "asc";
+            }
+
+            getSpaceContent();
         }
     }
 }());

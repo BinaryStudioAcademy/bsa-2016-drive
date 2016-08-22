@@ -111,7 +111,7 @@ namespace Drive.WebHost.Services
             if (space == null)
                 return null;
 
-            if (sort.Equals("asc"))
+            if (sort != null && sort.Equals("asc"))
             {
                 var folders = space.Folders.OrderBy(f => f.CreatedAt);
                 var files = space.Files.OrderBy(f => f.CreatedAt);
@@ -119,7 +119,7 @@ namespace Drive.WebHost.Services
                 space.Folders = folders;
                 space.Files = files;
             }
-            else if(sort.Equals("desc"))
+            else if(sort != null && sort.Equals("desc"))
             {
                 var folders = space.Folders.OrderByDescending(f => f.CreatedAt);
                 var files = space.Files.OrderByDescending(f => f.CreatedAt);

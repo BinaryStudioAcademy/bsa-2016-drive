@@ -18,12 +18,12 @@
             getSpaceTotal
         };
 
-        function getSpace(id, currentPage, pageSize, callback) {
+        function getSpace(id, currentPage, pageSize, sort, callback) {
             $http.get(baseUrl + '/api/spaces/' + id, {
                 params: {
                     page: currentPage,
                     count: pageSize,
-                    sort: 'desc'
+                    sort: sort
                 }
             })
                 .then(function (response) {
