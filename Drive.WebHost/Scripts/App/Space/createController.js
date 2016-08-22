@@ -138,6 +138,15 @@
                         break;
                     }
                 }
+                for (i = 0; i < vm.permittedUsers.length; i++) {
+                    if (vm.permittedUsers[i].globalId === id) {
+                        vm.space.readPermittedUsers.push({
+                            name: vm.permittedUsers[i].name,
+                            globalId: vm.permittedUsers[i].globalId
+                        });
+                        break;
+                    }
+                }
             } else {
                 for (i = 0; i < vm.space.modifyPermittedUsers.length; i++) {
                     if (vm.space.modifyPermittedUsers[i].globalId === id) {
