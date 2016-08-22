@@ -86,6 +86,10 @@
       <HintPath>..\packages\Ninject.Web.WebApi.WebHost.3.2.4.0\lib\net45-full\Ninject.Web.WebApi.WebHost.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NLog.4.3.7\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -165,8 +169,17 @@
   <ItemGroup>
     <Compile Include="Api\FilesController.cs" />
     <Compile Include="Api\FoldersController.cs" />
+    <Compile Include="Api\GlobalExceptionLogger.cs" />
     <Compile Include="Api\LogsController.cs" />
+<<<<<<< HEAD
     <Compile Include="Api\RolesController.cs" />
+=======
+    <Compile Include="Api\Pro\AcademyProController.cs" />
+    <Compile Include="Api\Pro\CodeSamplesController.cs" />
+    <Compile Include="Api\Pro\ContentLinksController.cs" />
+    <Compile Include="Api\Pro\LecturesController.cs" />
+    <Compile Include="Api\Pro\TagsController.cs" />
+>>>>>>> refs/remotes/origin/develop
     <Compile Include="Api\SpacesController.cs" />
     <Compile Include="Api\UsersController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -174,7 +187,12 @@
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Filters\Authenticator.cs" />
+    <Compile Include="Filters\AuthenticationFailureResult.cs" />
+    <Compile Include="Filters\JWTHttpAuthenticationFilter.cs" />
+    <Compile Include="Filters\TokenExpiredException.cs" />
     <Compile Include="Infrastructure\DependencyResolver.cs" />
     <Compile Include="Filters\JWTAuthenticationFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -191,28 +209,54 @@
     <Compile Include="Providers\IUsersProvider.cs" />
     <Compile Include="Services\IUsersService.cs" />
     <Compile Include="Services\LogsService.cs" />
+<<<<<<< HEAD
     <Compile Include="Services\RolesService.cs" />
+=======
+    <Compile Include="Services\Pro\Abstract\IAcademyProCourseService.cs" />
+    <Compile Include="Services\Pro\Abstract\IBasicService.cs" />
+    <Compile Include="Services\Pro\Abstract\ICodeSamplesService.cs" />
+    <Compile Include="Services\Pro\Abstract\IContentLinkService.cs" />
+    <Compile Include="Services\Pro\Abstract\ILectureService.cs" />
+    <Compile Include="Services\Pro\Abstract\ITagsService.cs" />
+    <Compile Include="Services\Pro\AcademyProCourseService.cs" />
+    <Compile Include="Services\Pro\CodeSamplesService.cs" />
+    <Compile Include="Services\Pro\ContentLinkService.cs" />
+    <Compile Include="Services\Pro\LectureService.cs" />
+    <Compile Include="Services\Pro\TagsService.cs" />
+>>>>>>> refs/remotes/origin/develop
     <Compile Include="Services\SpaceService.cs" />
     <Compile Include="Providers\UsersProvider.cs" />
     <Compile Include="Services\UsersService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Bundles\styles.css" />
+    <Content Include="Content\Fonts\fontawesome-webfont.eot" />
     <Content Include="Content\Fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\Fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\Fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\Fonts\FontAwesome.otf" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\Fonts\glyphicons-halflings-regular.svg" />
-    <Content Include="favicon.ico" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="gulpfile.js" />
+    <Content Include="icon.png" />
     <Content Include="Scripts\App\Academy\Academy.html" />
     <Content Include="Scripts\App\Academy\academyController.js" />
     <Content Include="Scripts\App\AdminPanel\AdminPanel.html" />
     <Content Include="Scripts\App\AdminPanel\adminPanelController.js" />
+<<<<<<< HEAD
     <Content Include="Scripts\App\AdminPanel\adminPanelService.js" />
     <Content Include="Scripts\App\AdminPanel\Roles\CreateRole.html" />
     <Content Include="Scripts\App\AdminPanel\Roles\EditRole.html" />
     <Content Include="Scripts\App\AdminPanel\Roles\roleController.js" />
     <Content Include="Scripts\App\AdminPanel\Roles\roleService.js" />
+=======
+>>>>>>> refs/remotes/origin/develop
     <Content Include="Scripts\App\Checklist\Checklist.html" />
     <Content Include="Scripts\App\Checklist\checklistController.js" />
     <Content Include="Scripts\App\Docs\Docs.html" />
@@ -221,35 +265,39 @@
     <Content Include="Scripts\App\Employees\employeesController.js" />
     <Content Include="Scripts\App\Events\Events.html" />
     <Content Include="Scripts\App\Events\eventsController.js" />
-    <Content Include="Scripts\App\Folder\Folder.html" />
-    <Content Include="Scripts\App\Folder\folderController.js" />
+    <Content Include="Scripts\App\FileFilter\fileFilterController.js" />
+    <Content Include="Scripts\App\FileFilter\FileFilter.html" />
+    <Content Include="Scripts\App\File\FileForm.html" />
+    <Content Include="Scripts\App\File\fileNameDirective.js" />
+    <Content Include="Scripts\App\File\fileService.js" />
+    <Content Include="Scripts\App\File\fileModalController.js" />
+    <Content Include="Scripts\App\File\fileType.filter.js" />
+    <Content Include="Scripts\App\File\Modal.html" />
+    <Content Include="Scripts\App\Folder\folderNameDirective.js" />
     <Content Include="Scripts\App\Folder\folderService.js" />
     <Content Include="Scripts\App\Folder\CreateUpdateFolderForm.html" />
     <Content Include="Scripts\App\Folder\Modal.html" />
-    <Content Include="Scripts\App\Folder\modalController.js" />
     <Content Include="Scripts\App\Error404\404.html" />
     <Content Include="Scripts\App\Error404\ErrorController.js" />
-    <Content Include="Scripts\App\Home\homeService.js" />
+    <Content Include="Scripts\App\Folder\folderModalController.js" />
     <Content Include="Scripts\App\Logs\Logs.html" />
     <Content Include="Scripts\App\Logs\logsController.js" />
     <Content Include="Scripts\App\Logs\logsService.js" />
     <Content Include="Scripts\App\Menu\Menu.html" />
     <Content Include="Scripts\App\Menu\menuController.js" />
+    <Content Include="Scripts\App\Menu\menuService.js" />
     <Content Include="Scripts\App\Sheets\Sheets.html" />
     <Content Include="Scripts\App\Sheets\sheetsController.js" />
     <Content Include="Scripts\App\Slides\Slides.html" />
     <Content Include="Scripts\App\Slides\slidesController.js" />
     <Content Include="Scripts\App\Space\Create.html" />
     <Content Include="Scripts\App\Space\createController.js" />
-    <Content Include="Scripts\App\Space\createService.js" />
     <Content Include="Scripts\App\Space\Modal.html" />
     <Content Include="Scripts\App\Space\Settings.html" />
     <Content Include="Scripts\App\Space\settingsController.js" />
     <Content Include="Scripts\App\Space\settingsService.js" />
     <Content Include="Scripts\App\Space\Space.html" />
     <Content Include="Scripts\App\app.js" />
-    <Content Include="Scripts\App\Home\Home.html" />
-    <Content Include="Scripts\App\Home\homeController.js" />
     <Content Include="bower.json" />
     <Content Include="package.json" />
     <Content Include="Scripts\App\Space\spaceController.js" />
@@ -259,13 +307,6 @@
     <Content Include="Scripts\Bundles\libs.js" />
     <Content Include="Scripts\Bundles\main.js" />
     <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
-    </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
@@ -279,16 +320,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-    <Content Include="Content\Fonts\fontawesome-webfont.eot" />
-    <Content Include="Content\Fonts\fontawesome-webfont.ttf" />
-    <Content Include="Content\Fonts\fontawesome-webfont.woff" />
-    <Content Include="Content\Fonts\fontawesome-webfont.woff2" />
-    <Content Include="Content\Fonts\FontAwesome.otf" />
-    <Content Include="Content\Fonts\glyphicons-halflings-regular.eot" />
-    <Content Include="Content\Fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="Content\Fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="Content\Fonts\glyphicons-halflings-regular.woff2" />
     <None Include="Project_Readme.html" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Drive.Core\Drive.Core.csproj">

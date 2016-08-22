@@ -63,7 +63,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Context\DriveContext.cs" />
+    <Compile Include="Context\DriveDBInitializer.cs" />
     <Compile Include="Entities\Log.cs" />
+    <Compile Include="Entities\Pro\AcademyProCourse.cs" />
+    <Compile Include="Entities\Pro\CodeSample.cs" />
+    <Compile Include="Entities\Pro\Lecture.cs" />
+    <Compile Include="Entities\Pro\ContentLink.cs" />
+    <Compile Include="Entities\Pro\Tag.cs" />
     <Compile Include="Infrastructure\DataAccessModule.cs" />
     <Compile Include="Entities\ApplicationUnit.cs" />
     <Compile Include="Entities\DataUnit.cs" />
@@ -86,7 +92,6 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,25 +1,37 @@
 ﻿<div>
     <form name="createFolderForm" novalidate>
-            <div class="modal-header">
-                <h3 class="modal-title">{{modalCtrl.title}}</h3>
-            </div>
-            <div class="modal-body">
-                <div class="form-horizontal">
-                    <div class="form-group">
-                        <label class="col-md-3">Name: </label>
-                        <input class="col-md-9" name="folderName" type="text" ng-model="modalCtrl.folder.name" required/>
-                        <span ng-show="modalCtrl.submitted && createFolderForm.folderName.$invalid">
-                            <label class="label-danger">The name is required.</label>
-                        </span>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-3">Description: </label>
-                        <input class="col-md-9" name="Description" type="text" ng-model="modalCtrl.folder.description"/>
+        <div class="modal-header">
+            <h3 class="modal-title">{{folderModalCtrl.title}}</h3>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-2">
+                    <span style="font-size: 70px; color: darkgray;"><i class="fa fa-folder-open-o"></i></span>
+                </div>
+                <div class="col-md-10">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label for="folderName" class="col-md-3">Name: </label>
+                            <input class="form-control col-md-9" name="folderName" type="text" placeholder="Enter title" ng-model="folderModalCtrl.folder.name" required folderName space-id="{{folderModalCtrl.folder.spaceId}}" parent-id="{{folderModalCtrl.folder.parentId}}" folder-name="{{folderModalCtrl.name}}" />
+                            <span style="color: red" class="col-md-offset-3" ng-show="createFolderForm.folderName.$error.folderName">
+                                Folder with this name already exists
+                            </span>
+                            <span ng-show="createFolderForm.folderName.$touched && createFolderForm.folderName.$error.required" style="color: red" class="col-md-offset-3">
+                                The name is required
+                            </span>
+                        </div>
+                        <div class="form-group">
+                            <label for="Description" class="col-md-3">Description: </label>
+                            <input class="form-control col-md-9" name="Description" type="text" placeholder="Description" ng-model="folderModalCtrl.folder.description" />
+                        </div>
                     </div>
                 </div>
+            </div>
             <div class="modal-footer">
-                <button name="FolderFormSaveButton" class="btn btn-success" type="submit" ng-click="modalCtrl.save()">Save</button>
-                <button class="btn btn-warning" type="submit" ng-click="modalCtrl.cancel()">Cancel</button>
+                <div class="col-md-offset-3 col-md-8">
+                    <button name="FolderFormSaveButton" class="btn btn-primary" type="submit" ng-click="folderModalCtrl.save()" ng-disabled="createFolderForm.folderName.$invalid">Save</button>
+                    <button class="btn btn-default" type="submit" ng-click="folderModalCtrl.cancel()">Cancel</button>
+                </div>
             </div>
         </div>
     </form>

@@ -1,32 +1,37 @@
-﻿using Driver.Shared.Dto;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using Drive.Core.HttpClient;
-using System.Net.Http;
-using Newtonsoft.Json;
+using Drive.Identity.Services;
+using Driver.Shared.Dto.Users;
 
 namespace Drive.WebHost.Services
 {
     public class UsersProvider : IUsersProvider
     {
         private readonly IAsyncHttpClient _client;
-
-        public UsersProvider(IAsyncHttpClient client)
+        private readonly BSIdentityManager _bsIdentityManager;
+        public UsersProvider(IAsyncHttpClient client, BSIdentityManager bsIdentityManager)
         {
             _client = client;
+            _bsIdentityManager = bsIdentityManager;
         }
 
         public async Task<UserDto> GetByIdAsync(string id)
         {
-            return await _client.GetAsync<UserDto>("profile/api /user/public/" + id);
+            return (await _client.GetAsync<IEnumerable<UserDto>>("profile/user/getByCentralId/" + id)).FirstOrDefault();
         }
 
-        public async Task<IEnumerable<UserDto>> GetAsync()
+        public async Task<IEnumerable<UsersDto>> GetAsync()
         {
-            return await _client.GetAsync<List<UserDto>>("profile/user/filter");
+            return await _client.GetAsync<List<UsersDto>>("profile/user/filter");
+        }
+
+        public async Task<UserDto> GetCurrentUser()
+        {
+            var userId = _bsIdentityManager.UserId;
+
+            return await GetByIdAsync(userId);
         }
     }
 }

@@ -36,10 +36,11 @@
             });
         }
 
-        function pushChanges(data) {
-            $http.put('/api/spaces', data)
+        function pushChanges(data, callback) {
+            $http.put('/api/spaces/' + data.id, data)
                 .then(function (response) {
-                    console.log('Success!');
+                    if (callback)
+                        callback();
                 }, function (response) {
                     console.log('Error while pushing changes!');
                 });

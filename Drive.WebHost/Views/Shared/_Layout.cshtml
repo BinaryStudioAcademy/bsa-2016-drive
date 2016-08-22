@@ -3,7 +3,14 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link rel="shortcut icon" href="~/icon.png">
+    <link type="text/css" rel="stylesheet" href="@ViewBag.BasePath/Content/Bundles/styles.css"/>
+    <script src='@ViewBag.BasePath/Scripts/bundles/libs.js'></script>
+    <script src='@ViewBag.BasePath/Scripts/bundles/main.js'></script>
+    <script type="text/javascript">
+        window.globalVars = { baseUrl: '@ViewBag.BasePath' };
+    </script>
+    <title>Drive</title>
 </head>
 <body ng-app="driveApp">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -25,14 +32,7 @@
     </div>
 <div class="container body-content" >
     @RenderBody()
-    <hr class="footer-margin"/>
-    <footer class="footer-margin">
-        <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-    </footer>
 </div>
-    @Styles.Render("~/bundles/styles")
-    @Scripts.Render("~/bundles/libs")
-    @Scripts.Render("~/bundles/main")
     @RenderSection("scripts", required: false)
 </body>
 </html>

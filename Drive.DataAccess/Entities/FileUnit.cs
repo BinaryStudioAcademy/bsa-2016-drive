@@ -9,14 +9,17 @@ namespace Drive.DataAccess.Entities
     public class FileUnit : DataUnit
     {
         public FileType FileType { get; set; }
+        public string Link { get; set; }
     }
 
     public enum FileType
     {
-        None,
+        Undefined,
         Document,
-        Archive,
-        Presentation,
-        WebPage
+        Sheets,
+        Slides,
+        Trello,
+        Link,
+        Physical
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,6 @@ namespace Drive.DataAccess.Entities
 {
     public class Log : IEntity
     {
-        public bool IsDeleted { get; set; }
 
         public int Id { get; set; }
 
@@ -20,5 +20,9 @@ namespace Drive.DataAccess.Entities
         public string Message { get; set; }
         public string Exception { get; set; }
         public string CallerName { get; set; }
+
+        [NotMapped]
+        public bool IsDeleted { get; set; }
+
     }
 }

@@ -1,34 +1,77 @@
 ﻿angular.module("driveApp",
+<<<<<<< HEAD
     ["ngRoute", "ui.bootstrap.contextMenu", "ui.bootstrap", "MassAutoComplete"])
+=======
+    ["ngRoute", "ui.bootstrap.contextMenu", "ui.bootstrap", "angularUtils.directives.dirPagination", "LocalStorageModule", "ngLoadingSpinner"])
+>>>>>>> refs/remotes/origin/develop
     .config([
         "$routeProvider",
-        function($routeProvider) {
+        function ($routeProvider) {
+
+            var baseUrl = window.globalVars.baseUrl;
 
             $routeProvider
                 .when("/", // Space page
                 {
-                    templateUrl: "/Scripts/App/Space/Space.html",
+                    templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
                     controller: "SpaceController",
                     controllerAs: "spaceCtrl"
                 })
-                .when("/settings/", // Space settings Page
+                .when("/:type", // Space page
                 {
-                    templateUrl: "/Scripts/App/Space/Settings.html",
+                    templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
+                    controller: "SpaceController",
+                    controllerAs: "spaceCtrl"
+                })
+                .when("/spaces/:id", // Space page
+                {
+                    templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
+                    controller: "SpaceController",
+                    controllerAs: "spaceCtrl"
+                })
+                .when("/binaryspace", // Binary Space page
+                {
+                    templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
+                    controller: "SpaceController",
+                    controllerAs: "spaceCtrl"
+                })
+                .when("/myspace", // My Space page
+                {
+                    templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
+                    controller: "SpaceController",
+                    controllerAs: "spaceCtrl"
+                })
+                 .when("/spaces/:id/settings/", // Space settings Page
+                {
+                    templateUrl: baseUrl + "/Scripts/App/Space/Settings.html",
                     controller: "SettingsController",
                     controllerAs: "settingsCtrl"
                 })
-                .when("/Logs", // Logs page
+                .when("/AdminPanel", // Admin Panel
                 {
-                    templateUrl: "/Scripts/App/Logs/Logs.html",
+                    templateUrl: baseUrl + "/Scripts/App/AdminPanel/AdminPanel.html",
+                    controller: "adminPanelController",
+                    controllerAs: "adminCtrl"
+                })
+                .when("/AdminPanel/Logs", // Logs page
+                {
+                    templateUrl: baseUrl + "/Scripts/App/Logs/Logs.html",
                     controller: "LogsController",
                     controllerAs: "logsCtrl"
                 })
-                .when("/Folders", // Folders page
+                .when("/folders", // Folders page
                 {
-                    templateUrl: "/Scripts/App/Folder/Folder.html",
+                    templateUrl: baseUrl + "/Scripts/App/Folder/Folder.html",
                     controller: "FolderController",
                     controllerAs: "folderCtrl"
                 })
+                .when("/apps/:appName", // Apps
+                {
+                    templateUrl: baseUrl + "/Scripts/App/FileFilter/FileFilter.html",
+                    controller: "FileFilterController",
+                    controllerAs: "fileFilterCtrl"
+                })
+                /*
                 .when("/apps/academy", // Academy Pro Page
                 {
                     templateUrl: "/Scripts/App/Academy/Academy.html",
@@ -77,9 +120,10 @@
                     controller: "SlidesController",
                     controllerAs: "slidesCtrl"
                 })
+                */
                 .when("/Error",
                 {
-                    templateUrl: "/Scripts/App/Error404/404.html",
+                    templateUrl: baseUrl + "/Scripts/App/Error404/404.html",
                     controller: "ErrorController",
                     controllerAs: "errorCtrl"
                 })

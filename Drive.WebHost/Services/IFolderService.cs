@@ -12,6 +12,8 @@ namespace Drive.WebHost.Services
     {
         Task<IEnumerable<FolderUnitDto>> GetAllAsync();
 
+        Task<IEnumerable<FolderUnitDto>> GetAllByParentIdAsync(int spaceId, int? parentId);
+
         Task<FolderUnitDto> GetAsync(int id);
 
         Task<FolderUnitDto> CreateAsync(FolderUnitDto folder);
@@ -19,6 +21,9 @@ namespace Drive.WebHost.Services
         Task<FolderUnitDto> UpdateAsync(int id, FolderUnitDto folder);
 
         Task DeleteAsync(int id);
+
+        Task<FolderContentDto> GetContentAsync(int id, int page, int count);
+        Task<int> GetContentTotalAsync(int id);
 
         void Dispose();
     }

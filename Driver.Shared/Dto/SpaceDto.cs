@@ -9,6 +9,7 @@ namespace Driver.Shared.Dto
 {
     public class SpaceDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
 
         public string Description { get; set; }
@@ -19,6 +20,8 @@ namespace Driver.Shared.Dto
 
         //public IEnumerable<UserDto> ReadPermittedUsers { get; set; }
         public IList<User> ReadPermittedUsers { get; set; }
+
+        public IList<User> ModifyPermittedUsers { get; set; }
 
         public IEnumerable<FileUnitDto> Files { get; set; }
 

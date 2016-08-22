@@ -2,6 +2,7 @@
     "use strict";
 
     angular.module("driveApp")
+<<<<<<< HEAD
         .controller("adminPanelController", AdminPanelController);
 
     AdminPanelController.$inject = ['AdminPanelService', '$uibModal'];
@@ -15,10 +16,18 @@
         vm.autocomplete_options = {
             suggest: vm.suggest_role,
         };
+=======
+        .controller("adminPanelController", adminPanelController);
+
+    function adminPanelController() {
+        var vm = this;
+
+>>>>>>> refs/remotes/origin/develop
         activate();
 
         function activate() {
             vm.title = "Admin Panel";
+<<<<<<< HEAD
             //adminPanelService.getAllSpaces(function (data) {
             //    vm.spaces = data;
             //});
@@ -83,5 +92,8 @@
             });
         }
 
+=======
+        }
+>>>>>>> refs/remotes/origin/develop
     }
 }());

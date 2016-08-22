@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Driver.Shared.Dto.Users;
 
 namespace Driver.Shared.Dto
 {
@@ -16,5 +13,8 @@ namespace Driver.Shared.Dto
 
         public DateTime CreatedAt { get; set; }
         public DateTime LastModified { get; set; }
+        public AuthorDto Author { get; set; }
+        public int SpaceId { get; set; }
+        public int ParentId { get; set; }
     }
 }

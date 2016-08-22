@@ -25,12 +25,10 @@ namespace Drive.WebHost.Api
         // GET api/folders
         public async Task<IHttpActionResult> GetAllAsync()
         {
-            var data = await _service.GetAllAsync();
+            var data = await _service?.GetAllAsync();
 
-            if (data == null)
-            {
+            if (data == null || !data.Any())
                 return NotFound();
-            }
 
             return Ok(data);
         }
@@ -38,12 +36,10 @@ namespace Drive.WebHost.Api
         // GET api/folders/1
         public async Task<IHttpActionResult> GetAsync(int id)
         {
-            var folder = await _service.GetAsync(id);
+            var folder = await _service?.GetAsync(id);
 
             if (folder == null)
-            {
                 return NotFound();
-            }
 
             return Ok(folder);
         }
@@ -52,8 +48,12 @@ namespace Drive.WebHost.Api
         [HttpPost]
         public async Task<IHttpActionResult> CreateAsync(FolderUnitDto folder)
         {
-            var dto = await _service.CreateAsync(folder);
+            var dto = await _service?.CreateAsync(folder);
 
+            if (dto == null)
+            {
+                return BadRequest();
+            }
             return Ok(dto);
         }
 
@@ -61,9 +61,9 @@ namespace Drive.WebHost.Api
         [HttpPut]
         public async Task<IHttpActionResult> UpdateAsync(int id, FolderUnitDto folder)
         {
-            var dto = await _service.UpdateAsync(id, folder);
+            var dto = await _service?.UpdateAsync(id, folder);
 
-            if (id != folder.Id)
+            if (id != folder?.Id)
             {
                 return BadRequest();
             }
@@ -75,9 +75,41 @@ namespace Drive.WebHost.Api
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteAsync(int id)
         {
-            await _service.DeleteAsync(id);
+            await _service?.DeleteAsync(id);
 
             return Ok();
+        }
+
+        // GET: api/content/(int)?page=(int)&count=(int)
+        [Route("~/api/content/{id:int}")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetContentAsync(int id, int page = 1, int count = 100)
+        {
+            var result = await _service.GetContentAsync(id, page, count);
+
+            return Ok(result);
+        }
+
+        // GET: api/content/(int)/total
+        [Route("~/api/content/{id:int}/total")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetContentTotalAsync(int id)
+        {
+            var result = await _service.GetContentTotalAsync(id);
+            //if (result == 0)
+            //    return NotFound();
+
+            return Ok(result);
+        }
+
+        // GET: api/folders?spaceId=(int)&parentId=(int)
+        [Route("~/api/folders/parent")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetAllByParentIdAsync(int spaceId, int? parentId)
+        {
+            var result = await _service.GetAllByParentIdAsync(spaceId, parentId);
+
+            return Ok(result);
         }
     }
 }

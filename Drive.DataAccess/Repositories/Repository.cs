@@ -19,11 +19,11 @@ namespace Drive.DataAccess.Repositories
 
         public T GetById(int id)
         {
-            return Entities.Find(id);
+            return Query.First(x => x.Id == id);
         }
         public async Task<T> GetByIdAsync(int id)
         {
-            return await Entities.SingleOrDefaultAsync(i => i.Id == id);
+            return await Query.SingleOrDefaultAsync(i => i.Id == id);
         }
 
         public void Create(T entity)
@@ -116,17 +116,18 @@ namespace Drive.DataAccess.Repositories
 
         public IEnumerable<T> GetAll()
         {
-            return Entities.ToList();
+            return Query.ToList();
         }
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await Entities.ToListAsync();
+            return await Query.ToListAsync();
         }
 
         protected IDbSet<T> Entities => _entities ?? (_entities = _context.Set<T>());
 
-        public IQueryable<T> Query => Entities;
+        public IQueryable<T> Query => Entities.Where(x => !x.IsDeleted);
+        public IQueryable<T> Deleted => Entities.Where(x => x.IsDeleted);
 
     }
 

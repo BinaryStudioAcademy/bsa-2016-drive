@@ -1,44 +1,145 @@
-﻿<div class="container col-md-12">
+﻿
+<div class="container-fluid" style="overflow: hidden; height: 100%" context-menu="spaceCtrl.createOption">
     <br />
-    <ol class="breadcrumb breadcrumb-arrow">
-        <li class="active"><a><i class="glyphicon glyphicon-home"></i>Space</a></li>
-    </ol>
-    <div class="row">
-        <div class="btn-group" role="group" aria-label="...">
-            <button type="button" class="btn btn-default">Create</button>
+    <div class="btn-group btn-breadcrumb">
+        <a class="btn btn-info" ng-click="spaceCtrl.getSpaceByButton()" title="{{spaceCtrl.space.name}}">
+            <i class="fa fa-cloud fa-lg"></i>
+            {{spaceCtrl.space.name | limitTo: 13}}{{spaceCtrl.space.name.length > 13 ? '...' : ''}}
+        </a>
+        <a ng-repeat="item in spaceCtrl.folderList" ng-click="spaceCtrl.getFolderContent(item.id); spaceCtrl.deleteElems(item)" title="{{item.name}}" class="btn btn-default">
+            {{item.name | limitTo: 10}}{{item.name.length > 10 ? '...' : ''}}
+        </a>
+    </div>
+    <div class="row" style="margin:1em 0 1em 0">
+        <div class="col-lg-push-4-offset pull-right">
+            <button class="btn btn-default" ng-click="spaceCtrl.changeView(spaceCtrl.view)">
+                <i class={{spaceCtrl.view}} title="view"> </i>
+            </button>
+            <button type="button" class="btn btn-default btn-custom" ng-click="spaceCtrl.redirectToSpaceSettings(spaceCtrl.space.id)" title="Open Space Settings">
+                <i class="fa fa-cog fa-lg"></i>
+            </button>
         </div>
-        <div class="col-sm-3 pull-right nopadding">
-            <div>
-                <form class="navbar-form" role="search">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Search input" name="srch-term" id="srch-term">
-                        <div class="input-group-btn">
-                            <button class="btn btn-default" type="submit">Search</button>
+        <div class="form-inline">
+            <div class="form-group col-sm-7 pull-left nopadding">
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-default btn-custom btn-lg" ng-click="spaceCtrl.createNewFolder()" title="Create new folder">
+                        <i class="fa fa-folder-open-o fa-lg"></i>
+                    </button>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-default btn-custom btn-lg" ng-click="spaceCtrl.createNewFile(1)" title="Create new document">
+                        <i class="fa fa-file-text-o fa-lg"></i>
+                    </button>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-default btn-custom btn-lg" ng-click="spaceCtrl.createNewFile(2)" title="Create new sheet">
+                        <i class="fa fa-table fa-lg"></i>
+                    </button>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-default btn-custom btn-lg" ng-click="spaceCtrl.createNewFile(3)" title="Create new slide">
+                        <i class="fa fa-file-powerpoint-o fa-lg"></i>
+                    </button>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-default btn-custom btn-lg" ng-click="spaceCtrl.createNewFile(4)" title="Create new Trello">
+                        <i class="fa fa-trello fa-lg"></i>
+                    </button>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-default btn-custom btn-lg" ng-click="spaceCtrl.createNewFile(5)" title="Create new link">
+                        <i class="fa fa-link fa-lg"></i>
+                    </button>
+                </div>
+                <div class="col-sm-1">
+                    <button type="button" class="btn btn-default btn-custom btn-lg" ng-click="spaceCtrl.createNewFile(6)" title="Upload new file">
+                        <i class="fa fa-upload fa-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="col-sm-3 pull-right">
+                <div>
+                    <form role="search">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search input" name="srch-term" id="srch-term" ng-model="spaceCtrl.searchText">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default" aria-label="Cancel search" ng-click="spaceCtrl.cancelSearch()" ng-show='spaceCtrl.searchText != ""' style="padding:6px 6px;"><span style="margin-right:0" class="glyphicon glyphicon-remove-circle"></span></button>
+                                <button class="btn btn-default" type="submit" ng-click="spaceCtrl.search()">Search</button>
+                            </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    <div class="table-responsive">
-        <table class="table table-striped table-condensed">
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Type</th>
-                </tr>
-            </thead>
-            <tr ng-repeat="folder in spaceCtrl.space.Folders | orderBy:'Name'">
-                <td><a href="#ItemContent">{{ folder.Name }}</a></td>
-                <td>{{ folder.Description}}</td>
-                <td>Folder</td>
-            </tr>
-            <tr ng-repeat="file in spaceCtrl.space.Files | orderBy:'Name'">
-                <td>{{ file.Name }}</td>
-                <td>{{ file.Description}}</td>
-                <td>{{ file.Type }}</td>
-            </tr>
-        </table>
+    <span us-spinner="{radius:30, width:8, length: 16}"></span>
+    <div class="scroll-hide">
+        <div class="scrollable-row">
+            <div class="wrap" ng-show="spaceCtrl.showGrid">
+                <div class="small">
+                    <div role="button" class="s-block btn-default shadow" context-menu="spaceCtrl.folderMenuOptions" dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize" total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
+                        <i class="fa fa-folder-o fa-5x"></i>
+                        <br>
+                        <span class="bold">Name: </span>
+                        <span>{{ folder.name }}</span>
+                        <br>
+                        <span class="bold">Description: </span>
+                        <span>{{ folder.description }}</span>
+                        <br>
+                        <span class="bold">Author: </span>
+                        <span>{{ folder.author.name }}</span>
+                    </div>
+                </div>
+                <div class="small">
+                    <div role="button" class="s-block btn-default shadow" context-menu="spaceCtrl.folderMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}">
+                        <i class="fa fa-file-o fa-5x"></i>
+                        <br>
+                        <span class="bold">File type: </span>
+                        <span>{{ file.fyleType | typeOfFile }}</span>
+                        <br>
+                        <span class="bold">Name: </span>
+                        <span>{{ file.name }}</span>
+                        <br>
+                        <span class="bold">Description: </span>
+                        <span>{{ file.description }}</span>
+                        <br>
+                        <span class="bold">Author: </span>
+                        <span>{{ file.author.name }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive" context-menu="spaceCtrl.createOption" ng-show="spaceCtrl.showTable">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th class="name" style="width: 20%">Name</th>
+                        <th>Description</th>
+                        <th style="width: 15%">Author</th>
+                        <th style="width: 15%">Created</th>
+                        <th class="type" style="width: 10%">Type</th>
+                    </tr>
+                    </thead>
+                    <tr class="shadow" role="button" ng-repeat="folder in spaceCtrl.space.folders" context-menu="spaceCtrl.folderMenuOptions" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
+                        <td><i class="fa fa-folder-o">&nbsp;</i>{{ folder.name }}</td>
+                        <td>{{ folder.description }}</td>
+                        <td>{{ folder.author.name }}</td>
+                        <td>{{ folder.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
+                        <td>Folder</td>
+                    </tr>
+                    <tr class="shadow" role="button" ng-repeat="file in spaceCtrl.space.files" context-menu="spaceCtrl.fileMenuOptions" ng-dblclick="spaceCtrl.openDocument(file.link)">
+                        <td> <i class="fa fa-file-o">&nbsp;</i>{{ file.name }}</td>
+                        <td>{{ file.description }}</td>
+                        <td>{{ file.author.name }}</td>
+                        <td>{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
+                        <td>{{ file.fileType | typeOfFile }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        </div>
+    <div class="row text-center" style="height : 6em">
+        <dir-pagination-controls class="page-footer" on-page-change="spaceCtrl.paginate.getContent(newPageNumber)"></dir-pagination-controls>
     </div>
 </div>

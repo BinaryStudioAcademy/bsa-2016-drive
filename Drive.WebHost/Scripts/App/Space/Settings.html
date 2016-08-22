@@ -1,12 +1,13 @@
-﻿<div class="container">
+﻿
+<div class="container">
     <br />
-    <ol class="breadcrumb breadcrumb-arrow">
-        <li><a href="#"><i class="glyphicon glyphicon-home"></i>Space</a></li>
-        <li class="active"><span>Settings</span></li>
-    </ol>
+    <div class="btn-group btn-breadcrumb">
+        <a ng-click="settingsCtrl.redirectToSpace()" class="btn btn-info"><i class="fa fa-cloud fa-lg"></i>{{settingsCtrl.space.name}}</a>
+        <a class="btn btn-default">Settings</a>
+    </div>
     <div class="page-header">
         <h2>
-            Space settings <small>{{settingsCtrl.space.Name}}</small>
+            Space settings
         </h2>
     </div>
     <div class="row">
@@ -15,74 +16,94 @@
             <form name="settingsForm" novalidate>
                 <div class="col-md-12">
                     <label>Space name:</label>
-                    <input type="text" class="form-control" ng-model="settingsCtrl.space.Name">
+                    <input type="text" class="form-control" name="spaceName" ng-pattern="/^[\w -]*$/" ng-model="settingsCtrl.space.name" required>
+                    <div>
+                        <span style="color:red" ng-show="settingsForm.spaceName.$error.pattern">Not a valid name</span>
+                        <span style="color:red" ng-show="settingsForm.spaceName.$error.required">Data is required</span>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <label>Description:</label>
-                    <input type="text" class="form-control" ng-model="settingsCtrl.space.Description">
+                    <input type="text" class="form-control" ng-model="settingsCtrl.space.description">
                 </div>
                 <div class="col-md-12">
                     <label>Maximum Files Quantity:</label>
-                    <input type="number" class="form-control" min="0" step="1" ng-model="settingsCtrl.space.MaxFilesQuantity">
+                    <input type="number" class="form-control" name="maxQuantity" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="settingsCtrl.space.maxFilesQuantity" required>
+                    <div>
+                        <span style="color:red" ng-show="settingsForm.maxQuantity.$error.pattern">Not a valid quantity</span>
+                        <span style="color:red" ng-show="settingsForm.maxQuantity.$error.required">Data is required</span>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <label>Maximum file size (MB):</label>
-                    <input type="number" class="form-control" min="0" step="1" max="1024" ng-model="settingsCtrl.space.MaxFileSize">
+                    <input type="number" class="form-control" min="0" step="1" max="1024" name="maxSize" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="settingsCtrl.space.maxFileSize" required>
+                    <div>
+                        <span class="error" ng-show="settingsForm.maxSize.$error.max" style="color: red">
+                            Max file size should be less than 1024 MB.
+                        </span>
+                        <span style="color:red" ng-show="settingsForm.maxSize.$error.required">
+                            Data is required
+                        </span>
+                        <span style="color:red" ng-show="settingsForm.maxsize.$error.pattern">
+                            Not a valid file size
+                        </span>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <br />
-                    <button class="btn btn-primary" ng-click="settingsCtrl.save()">Save</button>
+                    <button class="btn btn-primary" ng-click="settingsCtrl.save()" ng-disabled="settingsForm.spaceName.$invalid || settingsForm.maxQuantity.$invalid || settingsForm.maxSize.$invalid">Save</button>
                     <button class="btn btn-default" ng-click="settingsCtrl.cancel()">Cancel</button>
                 </div>
             </form>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-7">
             <h4>Settings user access to space</h4>
-            <ul id="permissionsTab" class="nav nav-tabs">
-                <li class="active"><a href="#panel1">Users permission</a></li>
-            </ul>
-            <div class="tab-content">
-                <br />
-                <div id="panel1" class="tab-pane fade in active">
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <div class="col-md-3">
-                                <div class="dropdown" data-toggle="tooltip" data-placement="top" title="Select user">
-                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        Users<span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li ng-repeat="item in settingsCtrl.users">
-                                            <a ng-click="settingsCtrl.setChoice(item.Login, item.Id);">{{item.Login}}</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-control" ng-model="settingsCtrl.userAddName" placeholder="User name" disabled />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-5">
-                                <button class="btn btn-primary" ng-click="settingsCtrl.addSpaceUser()">Add</button>
-                            </div>
+            <div class="form-inline">
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <div class="dropdown" data-toggle="tooltip" data-placement="top" title="Select user">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Users<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu scrollable-dropdown" style="max-height: 250px;" role="menu">
+                                <li ng-repeat="item in settingsCtrl.users">
+                                    <a role="button" ng-click="settingsCtrl.setChoice(item.name, item.id);">{{item.name}}</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <table class="table table-striped table-hover">
+                    <div class="col-md-4">
+                        <input class="form-control" ng-model="settingsCtrl.userAddName" placeholder="User name" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-5">
+                        <button class="btn btn-primary" ng-click="settingsCtrl.addSpaceUser()">Add</button>
+                    </div>
+                </div>
+            </div>
+            <br/>
+                    <table class="table users table-striped table-hover">
                         <thead>
                             <tr>
                                 <th>User name</th>
-                                <th>Id</th>
+                                <th>Read</th>
+                                <th>Write</th>
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr ng-repeat="item in settingsCtrl.space.ReadPermittedUsers">
-                                <td>{{item.Login}}</td>
-                                <td>{{item.Id}}</td>
+                        <tbody style="height: 200px;">
+                            <tr ng-repeat="item in settingsCtrl.permittedUsers">
+                                <td>{{item.name}}</td>
                                 <td>
-                                    <input type="button" value="Remove" class="btn btn-danger" ng-click="settingsCtrl.removeSpaceUser(item.Id)" />
+                                    <input type="checkbox" ng-model="item.confirmedRead" ng-change="settingsCtrl.addReadUser(item.confirmedRead, item.globalId)">
+                                </td>
+                                <td>
+                                    <input type="checkbox" ng-model="item.confirmedWrite" ng-change="settingsCtrl.addWriteUser(item.confirmedWrite, item.globalId)">
+                                </td>
+                                <td>
+                                    <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="settingsCtrl.removeSpaceUser(item.globalId); settingsCtrl.addReadUser(false, item.globalId); settingsCtrl.addWriteUser(false, item.globalId)"></i>
                                 </td>
                             </tr>
                         </tbody>
@@ -90,8 +111,7 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    
 <!--For Tooltip-->
 <script type="text/javascript">
     $(document).ready(function () {

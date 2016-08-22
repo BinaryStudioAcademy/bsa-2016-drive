@@ -1,7 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Drive.WebHost.Services;
 using Driver.Shared.Dto;
+using Drive.DataAccess.Entities;
+using System;
 
 namespace Drive.WebHost.Api
 {
@@ -19,12 +22,10 @@ namespace Drive.WebHost.Api
         [HttpGet]
         public async Task<IHttpActionResult> GetAllAsync()
         {
-            var file = await _service.GetAllAsync();
+            var file = await _service?.GetAllAsync();
 
-            if (file == null)
-            {
+            if (file == null || !file.Any())
                 return NotFound();
-            }
 
             return Ok(file);
         }
@@ -33,12 +34,10 @@ namespace Drive.WebHost.Api
         [HttpGet]
         public async Task<IHttpActionResult> GetFileAsync(int id)
         {
-            var file = await _service.GetAsync(id);
+            var file = await _service?.GetAsync(id);
 
             if (file == null)
-            {
                 return NotFound();
-            }
 
             return Ok(file);
         }
@@ -47,32 +46,59 @@ namespace Drive.WebHost.Api
         [HttpPost]
         public async Task<IHttpActionResult> CreateFileAsync(FileUnitDto file)
         {
-            int id = await _service.CreateAsync(file);
-
-            return Ok(id);
+            var dto = await _service?.CreateAsync(file);
+            if (dto == null)
+            {
+                return BadRequest();
+            }
+            return Ok(dto);
         }
 
         // PUT: api/files/5
         [HttpPut]
         public async Task<IHttpActionResult> UpdateFileAsync(int id, FileUnitDto file)
         {
-            await _service.UpdateAsync(id, file);
+            var dto = await _service?.UpdateAsync(id, file);
 
             if (id != file.Id)
-            {
                 return BadRequest();
-            }
 
-            return Ok();
+            return Ok(dto);
+
         }
 
         // DELETE: api/files/5
         [HttpDelete]
         public IHttpActionResult DeleteFileAsync(int id)
         {
-            _service.DeleteAsync(id);
+            _service?.DeleteAsync(id);
 
             return Ok();
+        }
+
+        // GET: api/files/app/fileType
+        [HttpGet]
+        [Route("apps/{fileType:alpha}")]
+        public async Task<IHttpActionResult> FilterApp(string fileType)
+        {
+            FileType fileTypeEnum;
+            if (!Enum.TryParse(fileType, true, out fileTypeEnum))
+                return NotFound();
+            var result = await _service.FilterApp(fileTypeEnum);
+            if (result == null || result.Count == 0)
+                return NotFound();
+
+            return Ok(result);
+        }
+
+        // GET: api/files?spaceId=(int)&parentId=(int)
+        [Route("~/api/files/parent")]
+        [HttpGet]
+        public async Task<IHttpActionResult> GetAllByParentIdAsync(int spaceId, int? parentId)
+        {
+            var result = await _service.GetAllByParentIdAsync(spaceId, parentId);
+
+            return Ok(result);
         }
     }
 }

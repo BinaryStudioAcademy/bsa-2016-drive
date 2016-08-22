@@ -5,44 +5,82 @@
         .module("driveApp")
         .controller("CreateController", CreateController);
 
-    CreateController.$inject = ['CreateService', '$uibModalInstance'];
+    CreateController.$inject = ['SpaceService', '$uibModalInstance', '$timeout'];
 
-    function CreateController(createService, $uibModalInstance) {
+    function CreateController(spaceService, $uibModalInstance, $timeout) {
         var vm = this;
-        vm.save = save;
-        vm.cancel = cancel;
+        
         vm.addNewSpace = addNewSpace;
         vm.addSpaceUser = addSpaceUser;
+        vm.addReadUser = addReadUser;
+        vm.addWriteUser = addWriteUser;
         vm.removeSpaceUser = removeSpaceUser;
         vm.setChoice = setChoice;
+        vm.save = save;
+        vm.cancel = cancel;
+
+        vm.space = {
+            readPermittedUsers: [],
+            modifyPermittedUsers: []
+        }
+        vm.permittedUsers = [];
 
         activate();
 
         function activate() {
-            createService.getSpace(1, function (data) {
-                vm.space = data;
-            });
-            createService.getAllUsers(function (data) {
-                vm.users = data;
-            });
-            
-            vm.Name = null;
-            vm.Description = null;
-            vm.MaxFilesQuantity = null;
-            vm.MaxFileSize = null;
+                spaceService.getAllUsers(function (data) {
+                    vm.users = data;
+                    var i;
+                    var j;
+                    if (vm.space.readPermittedUsers !== undefined) {
+                        for (i = 0; i < vm.space.readPermittedUsers.length; i++) {
+                            for (j = 0; j < vm.users.length; j++) {
+                                if (vm.space.readPermittedUsers[i].globalId === vm.users[j].id) {
+                                    vm.permittedUsers.push({
+                                        name: vm.users[j].name,
+                                        globalId: vm.space.readPermittedUsers[i].globalId,
+                                        confirmedRead: true
+                                    });
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    vm.bool = true;
+                    if (vm.space.modifyPermittedUsers !== null) {
+                        for (i = 0; i < vm.space.modifyPermittedUsers.length; i++) {
+                            vm.bool = true;
+                            for (j = 0; j < vm.permittedUsers.length; j++) {
+                                if (vm.space.modifyPermittedUsers[i].globalId === vm.permittedUsers[j].globalId) {
+                                    vm.permittedUsers[j].confirmedWrite = true;
+                                    vm.bool = false;
+                                }
+                            }
+                            if (vm.bool) {
+                                for (j = 0; j < vm.users.length; j++) {
+                                    if (vm.space.modifyPermittedUsers[i].globalId === vm.users[j].id) {
+                                        vm.permittedUsers.push({
+                                            name: vm.users[j].name,
+                                            globalId: vm.space.modifyPermittedUsers[i].globalId,
+                                            confirmedWrite: true
+                                        });
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
             vm.userAddName = null;
             vm.userAddId = null;
         }
 
         function addNewSpace() {
-            if (vm.Name != null) {
-                vm.space.push({
-                    Name: vm.Name,
-                    Description: vm.Description,
-                    MaxFilesQuantity: vm.MaxFilesQuantity,
-                    MaxFileSize: vm.MaxFileSize
-                });
-                vm.Name = null;
+            if (vm.space.Name !== null) {
+                spaceService.pushData(vm.space);
+                vm.spaceName = null;
                 vm.Description = null;
                 vm.MaxFilesQuantity = null;
                 vm.MaxFileSize = null;
@@ -50,29 +88,78 @@
         };
 
         function addSpaceUser() {
-            if (vm.userAddId != null) {
-                if (vm.space.ReadPermittedUsers.find(x => x.Id === vm.userAddId)) {
-                    vm.userAddId = null;
+            if (vm.userAddId !== null) {
+                if (vm.permittedUsers.find(x => x.globalId === vm.userAddId)) {
                     vm.userAddName = null;
+                    vm.userAddId = null;
                     console.log('User already exist in this space!');
                     return;
                 };
-                vm.space.ReadPermittedUsers.push({
-                    Id: vm.userAddId,
-                    Login: vm.userAddName
+                vm.permittedUsers.push({
+                    name: vm.userAddName,
+                    globalId: vm.userAddId
                 });
                 vm.userAddName = null;
                 vm.userAddId = null;
             }
         };
 
-        function removeSpaceUser(id) {
-            for (var i = 0; i < vm.space.ReadPermittedUsers.length; i++) {
-                if (vm.space.ReadPermittedUsers[i].Id === id)
-                {
-                    vm.space.ReadPermittedUsers.splice(i, 1);
-                    break;
+        function addReadUser(bool, id) {
+            var i;
+            if (bool === true) {
+                for (i = 0; i < vm.permittedUsers.length; i++) {
+                    if (vm.permittedUsers[i].globalId === id) {
+                        vm.space.readPermittedUsers.push({
+                            name: vm.permittedUsers[i].name,
+                            globalId: vm.permittedUsers[i].globalId
+                        });
+                        break;
+                    }
                 }
+            } else {
+                for (i = 0; i < vm.space.readPermittedUsers.length; i++) {
+                    if (vm.space.readPermittedUsers[i].globalId === id) {
+                        vm.space.readPermittedUsers.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+        }
+
+        function addWriteUser(bool, id) {
+            var i;
+            if (bool === true) {
+                for (i = 0; i < vm.permittedUsers.length; i++) {
+                    if (vm.permittedUsers[i].globalId === id) {
+                        vm.space.modifyPermittedUsers.push({
+                            name: vm.permittedUsers[i].name,
+                            globalId: vm.permittedUsers[i].globalId
+                        });
+                        break;
+                    }
+                }
+                for (i = 0; i < vm.permittedUsers.length; i++) {
+                    if (vm.permittedUsers[i].globalId === id) {
+                        vm.space.readPermittedUsers.push({
+                            name: vm.permittedUsers[i].name,
+                            globalId: vm.permittedUsers[i].globalId
+                        });
+                        break;
+                    }
+                }
+            } else {
+                for (i = 0; i < vm.space.modifyPermittedUsers.length; i++) {
+                    if (vm.space.modifyPermittedUsers[i].globalId === id) {
+                        vm.space.modifyPermittedUsers.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+        }
+
+        function removeSpaceUser(id) {
+            for (var i = 0; i < vm.permittedUsers.length; i++) {
+                if (vm.permittedUsers[i].globalId === id) { vm.permittedUsers.splice(i, 1); break; }
             }
         };
 
@@ -82,8 +169,11 @@
         };
 
         function save() {
-            createService.pushData(vm.space);
-            $uibModalInstance.close();
+            vm.addNewSpace();
+
+            $timeout(function () {
+                $uibModalInstance.close();
+            }, 3000);
         };
 
         function cancel() {

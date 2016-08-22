@@ -265,5 +265,4 @@ Dependencies/
 **/Bundles/main.js
 **/Bundles/main.min.js
 
-#Exclude fonts
-**/Content/Fonts/
+Drive.WebHost/Logs/fulllog.txt

@@ -10,6 +10,13 @@
     "angular-bootstrap": "~2.0.1",
     "angular-bootstrap-contextmenu": "~0.9.7",
     "font-awesome-animation": "0.0.9",
+<<<<<<< HEAD
     "angular-mass-autocomplete": "0.4.0"
+=======
+    "angular-mass-autocomplete": "0.4.0",
+    "angularUtils-pagination": "angular-utils-pagination#^0.11.1",
+    "angular-local-storage": "0.3.0",
+    "angular-loading-spinner": "^0.0.3"
+>>>>>>> refs/remotes/origin/develop
   }
 }
