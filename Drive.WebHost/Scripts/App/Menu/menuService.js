@@ -5,15 +5,15 @@
         .module('driveApp')
         .factory('MenuService', MenuService);
 
-    MenuService.$inject = ['$http'];
+    MenuService.$inject = ['$http', 'BaseUrl'];
 
-    function MenuService($http) {
+    function MenuService($http, baseUrl) {
         var service = {
             getAllSpaces: getAllSpaces
         };
 
         function getAllSpaces(callBack) {
-            $http.get('api/spaces/').success(function (response) {
+            $http.get(baseUrl + '/api/spaces/').success(function (response) {
                 if (callBack)
                     callBack(response);
             });

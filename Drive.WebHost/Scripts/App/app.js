@@ -1,9 +1,8 @@
 ﻿angular.module("driveApp",
-<<<<<<< HEAD
-    ["ngRoute", "ui.bootstrap.contextMenu", "ui.bootstrap", "MassAutoComplete"])
-=======
     ["ngRoute", "ui.bootstrap.contextMenu", "ui.bootstrap", "angularUtils.directives.dirPagination", "LocalStorageModule", "ngLoadingSpinner"])
->>>>>>> refs/remotes/origin/develop
+    .factory('BaseUrl', function () {
+        return window.globalVars.baseUrl;
+    })
     .config([
         "$routeProvider",
         function ($routeProvider) {

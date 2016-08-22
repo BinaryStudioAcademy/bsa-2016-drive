@@ -2,6 +2,7 @@
 using Drive.DataAccess.Entities;
 using Drive.DataAccess.Interfaces;
 using Driver.Shared.Dto;
+using Driver.Shared.Dto.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,10 +32,9 @@ namespace Drive.WebHost.Services
                 Description = data.Description,
                 Id = data.Id,
                 Users = from d in data.Users
-                        select new UserDto
+                        select new UsersDto
                         {
-                            LocalId = d.Id,
-                            id = d.GlobalId,
+                            id = d.GlobalId
                         }
             };
         }
@@ -50,10 +50,9 @@ namespace Drive.WebHost.Services
                           Description = d.Description,
                           Id = d.Id,
                           Users = from user in d.Users
-                                  select new UserDto
+                                  select new UsersDto
                                   {
-                                      LocalId = user.Id,
-                                      id = user.GlobalId,
+                                      id = user.GlobalId
                                   }
                       };
             return dto;

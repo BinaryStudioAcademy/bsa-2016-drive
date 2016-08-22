@@ -49,31 +49,7 @@
         };
 
         function redirectToAdminPanel() {
-<<<<<<< HEAD
-            $location.url('/AdminPanel');
-        };
-
-        function redirectToEmployees() {
-            $location.url('/apps/employees');
-        };
-
-        function redirectToChecklist() {
-            $location.url('/apps/checklist');
-        };
-
-        function redirectToTrello() {
-            $location.url('/apps/trello');
-        };
-
-        function redirectToSheets() {
-            $location.url('/apps/sheets');
-        };
-
-        function redirectToSlides() {
-            $location.url('/apps/slides');
-=======
             $location.url("/AdminPanel");
->>>>>>> refs/remotes/origin/develop
         };
 
         //Open modal window for creating new space

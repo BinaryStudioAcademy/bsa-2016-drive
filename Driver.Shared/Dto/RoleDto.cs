@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Driver.Shared.Dto.Users;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,6 @@ namespace Driver.Shared.Dto
         public int Id { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        public IEnumerable<UserDto> Users { get; set; }
+        public IEnumerable<UsersDto> Users { get; set; }
     }
 }

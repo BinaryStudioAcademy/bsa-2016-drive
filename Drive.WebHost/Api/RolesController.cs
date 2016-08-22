@@ -1,5 +1,6 @@
 ﻿using Drive.WebHost.Services;
 using Driver.Shared.Dto;
+using Driver.Shared.Dto.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +24,10 @@ namespace Drive.WebHost.Api
         public async Task<IHttpActionResult> GetAllAsync()
         {
             //var result = await _rolesService.GetAllAsync();
-            List<UserDto> users = new List<UserDto>();
-            UserDto user1 = new UserDto { id = "23kh25", name = "Nikita Krasnov", department = "Backend Developer"};
-            UserDto user2 = new UserDto { id = "235nk5", name = "Anton Kumpan", department = "Frontend Developer" };
-            UserDto user3 = new UserDto { id = "2n2kk2", name = "Irina Antonenko", department = "HR" };
+            List<UsersDto> users = new List<UsersDto>();
+            UsersDto user1 = new UsersDto { id = "23kh25", name = "Nikita Krasnov", department = "Backend Developer"};
+            UsersDto user2 = new UsersDto { id = "235nk5", name = "Anton Kumpan", department = "Frontend Developer" };
+            UsersDto user3 = new UsersDto { id = "2n2kk2", name = "Irina Antonenko", department = "HR" };
             users.Add(user1);
             users.Add(user2);
             List<RoleDto> roles = new List<RoleDto>();
@@ -46,10 +47,10 @@ namespace Drive.WebHost.Api
         public async Task<IHttpActionResult> GetRole(int id)
         {
             //var result = await _rolesService.GetAsync(id);
-            List<UserDto> users = new List<UserDto>();
-            UserDto user1 = new UserDto { id = "23kh25", name = "Nikita Krasnov", department = "Backend Developer" };
-            UserDto user2 = new UserDto { id = "235nk5", name = "Anton Kumpan", department = "Frontend Developer" };
-            UserDto user3 = new UserDto { id = "2n2kk2", name = "Irina Antonenko", department = "HR" };
+            List<UsersDto> users = new List<UsersDto>();
+            UsersDto user1 = new UsersDto { id = "23kh25", name = "Nikita Krasnov", department = "Backend Developer" };
+            UsersDto user2 = new UsersDto { id = "235nk5", name = "Anton Kumpan", department = "Frontend Developer" };
+            UsersDto user3 = new UsersDto { id = "2n2kk2", name = "Irina Antonenko", department = "HR" };
             users.Add(user1);
             users.Add(user2);
             RoleDto role = new RoleDto();
