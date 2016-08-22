@@ -11,7 +11,8 @@
         var service = {
             getSpace: getSpace,
             getAllUsers: getAllUsers,
-            pushChanges: pushChanges
+            pushChanges: pushChanges,
+            deleteSpace: deleteSpace
         };
 
         function getSpace(id, callback) {
@@ -43,6 +44,14 @@
                         callback();
                 }, function (response) {
                     console.log('Error while pushing changes!');
+                });
+        }
+
+        function deleteSpace(id, callback) {
+            $http.delete(baseUrl + '/api/spaces/' + id)
+                .then(function (response) {
+                    if (callback)
+                        callback(response);
                 });
         }
 

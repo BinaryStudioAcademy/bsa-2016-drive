@@ -9,7 +9,7 @@
     function SettingsController(settingsService, $routeParams, $location, $rootScope) {
         var vm = this;
         vm.save = save;
-        vm.cancel = cancel;
+        vm.cancel = cancel;     
         vm.addSpaceUser = addSpaceUser;
         vm.addReadUser = addReadUser;
         vm.addWriteUser = addWriteUser;
@@ -24,6 +24,10 @@
             modifyPermittedUsers: []
         }
         vm.permittedUsers = [];
+
+        vm.deleteSpace = deleteSpace;
+        vm.showDeleteBtn = showDeleteBtn;
+
         activate();
 
         function activate() {
@@ -168,5 +172,33 @@
         function redirectToSpace() {
             $location.url("/spaces/" + vm.space.id);
         };
+
+        function showDeleteBtn()
+        {
+            if (vm.space.name == 'Binary Space' || vm.space.name == 'My Space') {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+
+        function deleteSpace()
+        {
+            if (confirm('Are you really want to delete space and all inside folders and files?') == true)
+            {
+                settingsService.deleteSpace(vm.selectedSpace, function (response) {
+                    if (response) {
+                        var data = {
+                            operation: 'delete',
+                            item: response
+                        }
+                    }
+                });
+                $location.url("/");
+            } else {
+
+            }
+        }
     }
 }());
