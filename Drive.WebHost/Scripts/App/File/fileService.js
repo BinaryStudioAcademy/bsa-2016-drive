@@ -6,9 +6,9 @@
         .module('driveApp')
         .factory('FileService', FileService);
 
-    FileService.$inject = ['$http'];
+    FileService.$inject = ['$http', 'BaseUrl'];
 
-    function FileService($http) {
+    function FileService($http, baseUrl) {
 
         var service = {
             createFile: createFile,
@@ -21,7 +21,7 @@
         };
 
         function getAllFiles(callBack) {
-            $http.get('api/files')
+            $http.get(baseUrl + '/api/files')
                 .success(function(response) {
                     if (callBack) {
                         callBack(response);
@@ -30,7 +30,7 @@
         }
 
         function getAllByParentId(spaceId, parentId, callBack) {
-            $http.get('api/files/parent?spaceId=' + spaceId + '&parentId=' + parentId)
+            $http.get(baseUrl + '/api/files/parent?spaceId=' + spaceId + '&parentId=' + parentId)
                 .then(function (response) {
                     if (callBack) {
                         callBack(response.data);
@@ -42,7 +42,7 @@
         }
 
         function getFilesApp(fileType, callBack) {
-            $http.get('api/files/apps/' + fileType)
+            $http.get(baseUrl + '/api/files/apps/' + fileType)
                 .then(function (response) {
                     if (callBack) {
                         callBack(response.data);
@@ -51,7 +51,7 @@
         }
 
         function getFile(id, callBack) {
-            $http.get('api/files/' + id)
+            $http.get(baseUrl + '/api/files/' + id)
                 .then(function(response) {
                         if (callBack) {
                             callBack(response.data);
@@ -63,7 +63,7 @@
         }
 
         function createFile(file, callBack) {
-            $http.post('api/files', file)
+            $http.post(baseUrl + '/api/files', file)
                 .then(function(response) {
                         if (callBack) {
                             callBack(response.data);
@@ -75,7 +75,7 @@
         }
 
         function updateFile(id, file, callBack) {
-            $http.put('api/files/' + id, file)
+            $http.put(baseUrl + '/api/files/' + id, file)
                 .then(function(response) {
                         if (callBack) {
                             callBack(response.data);
@@ -87,7 +87,7 @@
         }
 
         function deleteFile(id, callBack) {
-            $http.delete('api/files/' + id)
+            $http.delete(baseUrl + '/api/files/' + id)
                 .then(function(response) {
                         if (callBack) {
                             callBack(response.data);

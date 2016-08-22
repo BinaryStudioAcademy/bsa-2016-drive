@@ -5,9 +5,9 @@
         .module('driveApp')
         .factory('FolderService', FolderService);
 
-    FolderService.$inject = ['$http'];
+    FolderService.$inject = ['$http', 'BaseUrl'];
 
-    function FolderService($http) {
+    function FolderService($http, baseUrl) {
         var service = {
             getAll: getAll,
             getAllByParentId: getAllByParentId,
@@ -20,7 +20,7 @@
         };
 
         function getAll(callBack) {
-            $http.get('api/folders')
+            $http.get(baseUrl + '/api/folders')
                 .then(function(response) {
                         if (callBack) {
                             callBack(response.data);
@@ -32,7 +32,7 @@
         }
 
         function getAllByParentId(spaceId, parentId, callBack) {
-            $http.get('api/folders/parent?spaceId=' + spaceId + '&parentId=' + parentId)
+            $http.get(baseUrl + '/api/folders/parent?spaceId=' + spaceId + '&parentId=' + parentId)
                 .then(function (response) {
                     if (callBack) {
                         callBack(response.data);
@@ -44,7 +44,7 @@
         }
 
         function get(id, currentPage, pageSize, callBack) {
-            $http.get('api/folders/' + id)
+            $http.get(baseUrl + '/api/folders/' + id)
                 .then(function(response) {
                         if (callBack) {
                             callBack(response.data);
@@ -56,7 +56,7 @@
         }
 
         function create(data, callBack) {
-            $http.post('api/folders', data)
+            $http.post(baseUrl + '/api/folders', data)
                 .then(function(response) {
                         if (callBack) {
                             callBack(response.data);
@@ -68,7 +68,7 @@
         }
 
         function updateFolder(data, callback) {
-            $http.put('api/folders/' + data.id, data)
+            $http.put(baseUrl + '/api/folders/' + data.id, data)
                 .then(function(response) {
                         if (callback) {
                             callback(response.data);
@@ -80,7 +80,7 @@
         }
 
         function deleteFolder(id, callback) {
-            $http.delete('api/folders/' + id)
+            $http.delete(baseUrl + '/api/folders/' + id)
                 .then(function(response) {
                     if (callback)
                         callback(response);
@@ -88,7 +88,7 @@
         }
 
         function getContent(id, currentPage, pageSize, callback) {
-            $http.get('api/content/' + id, {
+            $http.get(baseUrl + '/api/content/' + id, {
                 params: {
                     page: currentPage,
                     count: pageSize
@@ -103,7 +103,7 @@
         }
 
         function getFolderContentTotal(id, callback) {
-            $http.get('api/content/' + id + '/total')
+            $http.get(baseUrl + '/api/content/' + id + '/total')
                 .then(function (response) {
                     if (callback) {
                         callback(response.data);

@@ -5,9 +5,9 @@
         .module('driveApp')
         .factory('SpaceService', SpaceService);
 
-    SpaceService.$inject = ['$http'];
+    SpaceService.$inject = ['$http', "BaseUrl"];
 
-    function SpaceService($http) {
+    function SpaceService($http, baseUrl) {
         var service = {
             getSpace: getSpace,
             getAllSpaces: getAllSpaces,
@@ -19,7 +19,7 @@
         };
 
         function getSpace(id, currentPage, pageSize, callback) {
-            $http.get('/api/spaces/' + id, {
+            $http.get(baseUrl + '/api/spaces/' + id, {
                 params: {
                     page: currentPage,
                     count: pageSize
@@ -40,7 +40,7 @@
         }
 
         function getSpaceTotal(id, callback) {
-            $http.get('/api/spaces/' + id + '/sptotal')
+            $http.get(baseUrl + '/api/spaces/' + id + '/sptotal')
                .then(function (response) {
                    if (callback) {
                        callback(response.data);
@@ -57,7 +57,7 @@
         }
 
         function getAllSpaces(callback) {
-            $http.get('/api/spaces')
+            $http.get(baseUrl + '/api/spaces')
             .then(function (response) {
                 if (callback) {
                     callback(response.data);
@@ -68,7 +68,7 @@
         }
 
         function getAllUsers(callback) {
-            $http.get('/api/users')
+            $http.get(baseUrl + '/api/users')
             .then(function (response) {
                 if (callback) {
                     callback(response.data);
@@ -79,7 +79,7 @@
         }
 
         function pushData(data) {
-            $http.post('/api/spaces', data)
+            $http.post(baseUrl + '/api/spaces', data)
                 .then(function () {
                     console.log('Success!');
                 }, function () {
@@ -88,7 +88,7 @@
         }
 
         function searchFoldersAndFiles(spaceId, folderId, text, currentPage, pageSize, callback) {
-            $http.get('/api/spaces/' + spaceId + '/search', {
+            $http.get(baseUrl + '/api/spaces/' + spaceId + '/search', {
                 params: {
                     folderId: folderId,
                     text: text,
@@ -109,7 +109,7 @@
         }
 
         function getNumberOfResultSearchFoldersAndFiles(spaceId, folderId, text, callback) {
-            $http.get('/api/spaces/' + spaceId + '/total', {
+            $http.get(baseUrl + '/api/spaces/' + spaceId + '/total', {
                 params: {
                     folderId: folderId,
                     text: text
