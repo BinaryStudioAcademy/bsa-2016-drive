@@ -1,10 +1,10 @@
 ﻿(function () {
     "use strict";
 
-    angular.module("driveApp")
-        .controller("AcademyController", AcademyController);
+    angular.module('driveApp.academyPro')
+        .controller('LectureController', LectureController);
 
-    function AcademyController() {
+    function LectureController() {
         var vm = this;
 
         activate();

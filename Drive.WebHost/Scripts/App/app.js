@@ -1,5 +1,5 @@
 ﻿angular.module("driveApp",
-    ["ngRoute", "ui.bootstrap.contextMenu", "ui.bootstrap", "angularUtils.directives.dirPagination", "LocalStorageModule", "ngLoadingSpinner"])
+    ["ngRoute", "ui.bootstrap.contextMenu", "ui.bootstrap", "angularUtils.directives.dirPagination", "LocalStorageModule", "ngLoadingSpinner", "driveApp.academyPro"])
     .config([
         "$routeProvider",
         function ($routeProvider) {
@@ -11,12 +11,12 @@
                     controller: "SpaceController",
                     controllerAs: "spaceCtrl"
                 })
-                .when("/:type", // Space page
-                {
-                    templateUrl: "/Scripts/App/Space/Space.html",
-                    controller: "SpaceController",
-                    controllerAs: "spaceCtrl"
-                })
+                //.when("/:type", // Space page
+                //{
+                //    templateUrl: "/Scripts/App/Space/Space.html",
+                //    controller: "SpaceController",
+                //    controllerAs: "spaceCtrl"
+                //})
                 .when("/spaces/:id", // Space page
                 {
                     templateUrl: "/Scripts/App/Space/Space.html",
@@ -66,12 +66,6 @@
                     controllerAs: "fileFilterCtrl"
                 })
                 /*
-                .when("/apps/academy", // Academy Pro Page
-                {
-                    templateUrl: "/Scripts/App/Academy/Academy.html",
-                    controller: "AcademyController",
-                    controllerAs: "academyCtrl"
-                })
                 .when("/apps/events", // Events Page
                 {
                     templateUrl: "/Scripts/App/Events/Events.html",
