@@ -382,7 +382,7 @@
 
         function getFolderContentFromApi() {
             vm.searchText = '';
-             folderService.getContent(vm.parentId, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
+            folderService.getContent(vm.parentId, vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate, function (data) {
                 vm.space.folders = data.folders;
                 vm.space.files = data.files;
             });
@@ -463,13 +463,17 @@
 
         function changeOrder() {
             vm.reverse = !vm.reverse;
+            vm.paginate.currentPage = 1;
             if (vm.reverse) {
                 vm.sortByDate = "desc";
             } else {
                 vm.sortByDate = "asc";
             }
-
-            getSpaceContent();
+            if (vm.parentId !== null) {
+                getFolderContent(vm.parentId);
+            } else {
+                getSpaceContent();
+            }
         }
     }
 }());
