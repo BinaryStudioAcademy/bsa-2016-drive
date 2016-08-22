@@ -75,7 +75,6 @@
         </div>
     </div>
     <span us-spinner="{radius:30, width:8, length: 16}"></span>
-    <div class="scroll-hide">
         <div class="scrollable-row">
             <div class="wrap" ng-show="spaceCtrl.showGrid">
                 <div class="small">
@@ -110,7 +109,7 @@
                     </div>
                 </div>
             </div>
-            <div class="table-responsive" context-menu="spaceCtrl.createOption" ng-show="spaceCtrl.showTable">
+            <div class="table" context-menu="spaceCtrl.createOption" ng-show="spaceCtrl.showTable">
                 <table class="table table-hover">
                     <thead>
                     <tr>
@@ -138,8 +137,7 @@
                 </table>
             </div>
         </div>
-        </div>
-    <div class="row text-center" style="height : 6em">
+    <div class="row text-center" style="height : 4em">
         <dir-pagination-controls class="page-footer" on-page-change="spaceCtrl.paginate.getContent(newPageNumber)"></dir-pagination-controls>
     </div>
 </div>

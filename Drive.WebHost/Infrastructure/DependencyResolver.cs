@@ -21,7 +21,7 @@ namespace Drive.WebHost.Infrastructure
 
             Kernel.Bind<IFileService>().To<FileService>();
 
-            //Kernel.BindFilter<JWTAuthenticationFilter>(FilterScope.Global, 0);
+            Kernel.BindFilter<JWTAuthenticationFilter>(FilterScope.Global, 0);
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Drive.WebHost.Services
         public async Task<SpaceDto> GetAsync(int id)
         {
 
-           var space = await _unitOfWork.Spaces.Query.Where(s=>s.Id == id).Select(s => new SpaceDto
+            var space = await _unitOfWork.Spaces.Query.Where(s => s.Id == id).Select(s => new SpaceDto
             {
                 Id = s.Id,
                 Name = s.Name,
@@ -47,7 +47,7 @@ namespace Drive.WebHost.Services
                     Name = f.Name,
                     Link = f.Link,
                     CreatedAt = f.CreatedAt,
-                    Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId}
+                    Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
                 }),
                 Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.Parent == null).Select(f => new FolderUnitDto
                 {
@@ -153,10 +153,6 @@ namespace Drive.WebHost.Services
             counter += space.Folders;
             return counter;
         }
-
-
-
-
 
         public async Task<IList<SpaceDto>> GetAllAsync()
         {
@@ -404,6 +400,46 @@ namespace Drive.WebHost.Services
         public void Dispose()
         {
             _unitOfWork?.Dispose();
+        }
+
+        public async Task CreateUserAndFirstSpaceAsync(string globalId)
+        {
+            if (globalId != string.Empty)
+            {
+                try
+                {
+                    var user = await _unitOfWork.Users.Query.SingleOrDefaultAsync<User>(u => u.GlobalId == globalId);
+
+                    if (user == null)
+                    {
+                        user = new User() { GlobalId = globalId, IsDeleted = false };
+                        _unitOfWork.Users.Create(user);
+
+                        var users = new List<User>();
+                        users.Add(user);
+                        _unitOfWork.Spaces.Create(new Space()
+                        {
+                            Name = "My Space",
+                            Description = "My Space",
+                            MaxFileSize = 1024,
+                            MaxFilesQuantity = 100,
+                            ModifyPermittedUsers = users,
+                            ReadPermittedUsers = users,
+                            IsDeleted = false,
+                            CreatedAt = DateTime.Now,
+                            LastModified = DateTime.Now,
+                            Owner = user
+                        });
+
+                        await _unitOfWork.SaveChangesAsync();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.WriteError(ex, ex.Message);
+                }
+
+            }
         }
     }
 }

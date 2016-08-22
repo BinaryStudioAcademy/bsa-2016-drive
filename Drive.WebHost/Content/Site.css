@@ -569,21 +569,22 @@ small,
 
 .page-footer {
     bottom: 0;
-    height: 6em;
+    height: 4em;
     position: absolute;
 }
 
-.scrollable-row {
-    overflow-y: auto;
-    height: 100%;
+div.scrollable-row {
+    overflow-y: hidden;
+    height: 75%;
+    width: 100%;
     position: relative;
-    margin-right: -20px;
-    padding-right: 20px;
+    margin-right: -15px;
+    padding-right: 15px;
+    padding-bottom: 4em;
 }
 
-.scroll-hide {
-    overflow: hidden;
-    padding-bottom: 6em;
-    height: 85%;
-    position: relative;
+div.scrollable-row:hover {
+    overflow: auto;
+    padding-bottom: 4em;
+    width:100%;
 }

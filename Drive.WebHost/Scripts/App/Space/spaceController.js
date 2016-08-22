@@ -48,7 +48,7 @@
 
         vm.paginate = {
             currentPage: 1,
-            pageSize: 20,
+            pageSize: 15,
             numberOfItems: 0,
             getContent: null
         }
