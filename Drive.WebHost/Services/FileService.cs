@@ -102,7 +102,7 @@ namespace Drive.WebHost.Services
                     IsDeleted = false,
                     Space = space,
                     Parent = parentFolder,
-                    Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == "1")
+                    Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId)
                 };
 
 

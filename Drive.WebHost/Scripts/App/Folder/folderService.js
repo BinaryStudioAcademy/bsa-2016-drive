@@ -87,11 +87,12 @@
                 });
         }
 
-        function getContent(id, currentPage, pageSize, callback) {
+        function getContent(id, currentPage, pageSize, sort, callback) {
             $http.get(baseUrl + '/api/content/' + id, {
                 params: {
                     page: currentPage,
-                    count: pageSize
+                    count: pageSize,
+                    sort: sort
                 }
             }).then(function (response) {
                 if (callback) {
