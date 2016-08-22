@@ -10,10 +10,6 @@
     function SpaceController(spaceService, folderService, fileService, $uibModal, localStorageService, $routeParams, $location) {
         var vm = this;
 
-        vm.view = "fa fa-th";
-        vm.showTable = true;
-        vm.showGrid = false;
-
         vm.folderList = [];
         vm.addElem = addElem;
         vm.deleteElems = deleteElems;
@@ -23,12 +19,8 @@
 
         vm.space = {
             folders: [],
-            fildes: []
+            files: []
         }
-
-        vm.changeView = changeView;
-        vm.activateTableView = activateTableView;
-        vm.activateGridView = activateGridView;
 
         // vm.getAllFolders = getAllFolders;
         vm.getFolder = getFolder;
@@ -56,7 +48,7 @@
 
         vm.paginate = {
             currentPage: 1,
-            pageSize: 2,
+            pageSize: 20,
             numberOfItems: 0,
             getContent: null
         }
@@ -70,6 +62,11 @@
         activate();
 
         function activate() {
+            vm.view = "fa fa-th";
+            vm.showTable = true;
+            vm.showGrid = false;
+            vm.changeView = changeView;
+
             spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
@@ -104,6 +101,8 @@
 
         function getSpace() {
             vm.searchText = '';
+            vm.parentId = null;
+            vm.paginate.currentPage = 1;
             getSpaceContent();
             getSpaceTotal();
             vm.paginate.getContent = getSpaceContent;
@@ -117,14 +116,9 @@
         }
 
         function getSpaceByButton() {
-            spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
-                vm.space = data;
-                vm.spaceId = data.id;
-
-
-                localStorageService.set('list', []);
-                vm.folderList = localStorageService.get('list');
-            });
+            getSpace();
+            localStorageService.set('list', []);
+            vm.folderList = localStorageService.get('list');
             vm.parentId = null;
             localStorageService.set('current', null);
         }
@@ -166,6 +160,8 @@
             [
                 'Edit', function ($itemScope) {
                     vm.folder = $itemScope.folder;
+                    vm.folder.parentId = vm.parentId;
+                    vm.folder.spaceId = vm.spaceId;
                     vm.openFolderWindow();
                 }
             ],
@@ -185,6 +181,8 @@
             [
                 'Edit', function ($itemScope) {
                     vm.file = $itemScope.file;
+                    vm.file.parentId = vm.parentId;
+                    vm.file.spaceId = vm.spaceId;
                     vm.openFileWindow();
                 }
             ],
@@ -263,13 +261,21 @@
                 }
             });
 
-            folderModalInstance.result.then(function (folder) {
-                console.log(folder);
-                var index = findById(vm.space.folders, folder.id);
-                if (index == -1) {
-                    vm.space.folders.push(folder);
-                } else {
-                    vm.space.folders[index] = folder;
+            folderModalInstance.result.then(function (response) {
+                console.log(response);
+                if (response.operation == 'create') {
+                    if (vm.parentId == null) {
+                        vm.getSpace();
+                    }
+                    else {
+                        vm.getFolderContent(vm.parentId)
+                    }
+                }
+                if (response.operation == 'update') {
+                    var index = findById(vm.space.folders, response.item.id);
+                    if (index != -1) {
+                        vm.space.folders[index] = response.item;
+                    } 
                 }
             }, function () {
                 console.log('Modal dismissed');
@@ -292,13 +298,21 @@
                 }
             });
 
-            fileModalInstance.result.then(function (file) {
-                console.log(file);
-                var index = findById(vm.space.files, file.id);
-                if (index == -1) {
-                    vm.space.files.push(file);
-                } else {
-                    vm.space.files[index] = file;
+            fileModalInstance.result.then(function (response) {
+                console.log(response);
+                if (response.operation == 'create') {
+                    if (vm.parentId == null) {
+                        vm.getSpace();
+                    }
+                    else {
+                        vm.getFolderContent(vm.parentId)
+                    }
+                }
+                if (response.operation == 'update') {
+                    var index = findById(vm.space.files, response.item.id);
+                    if (index != -1) {
+                        vm.space.files[index] = response.item;
+                    }
                 }
             }, function () {
                 console.log('Modal dismissed');
@@ -342,14 +356,20 @@
 
         function deleteFolder(id) {
             folderService.deleteFolder(id, function () {
-                var index = findById(vm.space.folders, id);
-                vm.space.folders.splice(index, 1);                
+                vm.paginate.getContent();
+                if (vm.parentId == null) {
+                    getSpaceTotal();
+                }
+                else {
+                    getFolderContentTotal(vm.parentId);
+                }
             });
         }
 
         function getFolderContent(id) {
             vm.paginate.getContent = getFolderContentFromApi;
             vm.searchText = '';
+            vm.paginate.currentPage = 1;
             vm.parentId = id;
             getFolderContentFromApi();
             getFolderContentTotal(id);
@@ -378,8 +398,13 @@
 
         function deleteFile(id) {
             fileService.deleteFile(id, function () {
-                var index = findById(vm.space.files, id);
-                vm.space.files.splice(index, 1);
+                vm.paginate.getContent();
+                if (vm.parentId == null) {
+                    getSpaceTotal();
+                }
+                else {
+                    getFolderContentTotal(vm.parentId);
+                }
             });
             localStorageService.set('files', vm.space.files);
         }
@@ -401,6 +426,7 @@
         }
 
         function search() {
+            vm.paginate.currentPage = 1;
             vm.paginate.getContent = getResultSearchFoldersAndFiles;
             getResultSearchFoldersAndFiles();
             getNumberOfResultSearch();
@@ -408,6 +434,7 @@
 
         function cancelSearch() {
             vm.searchText = '';
+            vm.paginate.currentPage = 1;
             vm.paginate.getContent = getResultSearchFoldersAndFiles;
             getResultSearchFoldersAndFiles();
             getNumberOfResultSearch();

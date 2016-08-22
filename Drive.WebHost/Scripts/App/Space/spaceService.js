@@ -11,7 +11,6 @@
         var service = {
             getSpace: getSpace,
             getAllSpaces: getAllSpaces,
-            getSpaceCreate: getSpaceCreate,
             getAllUsers: getAllUsers,
             pushData: pushData,
             searchFoldersAndFiles,
@@ -30,8 +29,13 @@
                     if (callback) {
                         callback(response.data);
                     }
-                }, function () {
-                    console.log('Error getSpace spaceService!');
+                },
+                function errorCallback(response) {
+                    console.log('Error getSpace spaceService!' + response.status);
+                    if (response.status == 404 && callback) {
+                        console.log(response.status + ' ' + response.data);
+                        callback(response.data)
+                    }
                 });
         }
 
@@ -41,8 +45,13 @@
                    if (callback) {
                        callback(response.data);
                    }
-               }, function () {
-                   console.log('Error getSpaceTotal spaceService!');
+               },
+               function errorCallback(response) {
+                   console.log('Error getSpaceTotal spaceService!' + response.status);
+                   if (response.status == 404 && callback) {
+                       console.log(response.status + ' ' + response.data);
+                       callback(response.data)
+                   }
                });
 
         }
@@ -56,17 +65,6 @@
             }, function () {
                 console.log('Error while getting all spaces!');
             });
-        }
-
-        function getSpaceCreate(id, callback) {
-            $http.get('/api/spaces/' + id)
-                .then(function (response) {
-                    if (callback) {
-                        callback(response.data);
-                    }
-                }, function () {
-                    console.log('Error while getting space!');
-                });
         }
 
         function getAllUsers(callback) {
@@ -102,8 +100,11 @@
                 if (callback) {
                     callback(response.data);
                 }
-            }, function () {
-                console.log('Error in searchFoldersAndFiles Method!');
+            }, function errorCallback(response) {
+                console.log('Error in searchFoldersAndFiles Method! Code:' + response.status);
+                if (response.status == 404 && callback) {
+                    callback(response.data)
+                }
             });
         }
 
@@ -118,12 +119,14 @@
                 if (callback) {
                     callback(response.data);
                 }
-            }, function () {
-                console.log('Error in getNumberOfResultSearchFoldersAndFiles Method!');
+            }, function errorCallback(response) {
+                console.log('Error in getNumberOfResultSearchFoldersAndFiles Method! Code:' + response.status);
+                if (response.status == 404 && callback) {
+                    callback(response.data)
+                }
             });
         }
 
         return service;
     }
-
 })();

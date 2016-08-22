@@ -48,8 +48,8 @@ namespace Drive.WebHost.Api
         {
             var result = await _spaceService?.GetTotalAsync(id);
 
-            //if (result == 0)
-            //    return NotFound();
+            if (result == 0)
+                return NotFound();
 
             return Ok(result);
         }

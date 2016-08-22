@@ -25,7 +25,11 @@
         function activate() {
             vm.file = items;
             vm.urlIsValid = false;
-            console.log(vm.file);
+            vm.name = items.name;
+            vm.description = items.description;
+            vm.link = items.link;
+
+            if (vm.file.parentId === 0) vm.file.parentId = null;
 
             switch(vm.file.fileType) {
                 case 0:
@@ -79,20 +83,34 @@
                 if (vm.file.id === undefined) {
                     fileService.createFile(vm.file,
                         function (response) {
-                            if (response)
-                                $uibModalInstance.close(response);
+                            if (response) {
+                                var data = {
+                                    operation: 'create',
+                                    item: response
+                                }
+                                $uibModalInstance.close(data);
+                            }
                         });
                 } else {
                     fileService.updateFile(vm.file.id, vm.file,
                         function (response) {
-                            if (response)
-                                $uibModalInstance.close(response);
+                            if (response) {
+                                var data = {
+                                    operation: 'update',
+                                    item: response
+                                }
+                                $uibModalInstance.close(data);
+                            }
                         });
                 }
             }
         }
 
         function cancel() {
+            items.name = vm.name;
+            items.description = vm.description;
+            items.link = vm.link;
+
             $uibModalInstance.dismiss('cancel');
         };
 

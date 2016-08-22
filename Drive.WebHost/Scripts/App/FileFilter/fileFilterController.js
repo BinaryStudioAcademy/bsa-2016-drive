@@ -60,7 +60,7 @@
                     break;
                 case 'slides':
                     vm.filesType = 'Slides';
-                    vm.icon = 'fa fa-sliders fa-lg';
+                    vm.icon = 'fa fa-file-powerpoint-o fa-lg';
                     break;
             }
         }
