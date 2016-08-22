@@ -29,11 +29,11 @@ namespace Drive.WebHost.Api
             return Ok(result);
         }
 
-        // GET: api/spaces/(int)/?id=(int)&page=(int)&count=(int)
+        // GET: api/spaces/(int)/?id=(int)&page=(int)&count=(int)&sort=(string)
         [HttpGet]
-        public async Task<IHttpActionResult> GetSpace(int id, int page = 1, int count = 100)
+        public async Task<IHttpActionResult> GetSpace(int id, int page = 1, int count = 100, string sort = null)
         {
-            var result = await _spaceService?.GetAsync(id, page, count);
+            var result = await _spaceService?.GetAsync(id, page, count, sort);
 
             if (result == null)
                 return NotFound();
