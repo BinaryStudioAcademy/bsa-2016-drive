@@ -74,7 +74,7 @@ namespace Drive.WebHost.Services
             return space;
         }
 
-        public async Task<SpaceDto> GetAsync(int id, int page, int count)
+        public async Task<SpaceDto> GetAsync(int id, int page, int count, string sort)
         {
             var space = await _unitOfWork.Spaces.Query.Where(s => s.Id == id).Select(s => new SpaceDto
             {
@@ -110,6 +110,24 @@ namespace Drive.WebHost.Services
 
             if (space == null)
                 return null;
+
+            if (sort.Equals("asc"))
+            {
+                var folders = space.Folders.OrderBy(f => f.CreatedAt);
+                var files = space.Files.OrderBy(f => f.CreatedAt);
+
+                space.Folders = folders;
+                space.Files = files;
+            }
+            else if(sort.Equals("desc"))
+            {
+                var folders = space.Folders.OrderByDescending(f => f.CreatedAt);
+                var files = space.Files.OrderByDescending(f => f.CreatedAt);
+
+                space.Folders = folders;
+                space.Files = files;
+            }
+
             int skipCount = (page - 1) * count;
             if (space.Folders.Count() <= skipCount)
             {

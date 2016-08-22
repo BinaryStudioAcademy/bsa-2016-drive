@@ -22,7 +22,8 @@
             $http.get(baseUrl + '/api/spaces/' + id, {
                 params: {
                     page: currentPage,
-                    count: pageSize
+                    count: pageSize,
+                    sort: 'desc'
                 }
             })
                 .then(function (response) {
