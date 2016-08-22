@@ -11,8 +11,21 @@
         var service = {
             getSpace: getSpace,
             getAllUsers: getAllUsers,
-            pushChanges: pushChanges
+            pushChanges: pushChanges,
+            getAllRoles: getAllRoles
         };
+
+        function getAllRoles(callback) {
+            $http.get('/api/roles')
+            .then(function (response) {
+                if (callback) {
+                    callback(response.data);
+                }
+            }, function () {
+                console.log('Error while getting roles!');
+            })
+        }
+
 
         function getSpace(id, callback) {
             $http.get('/api/spaces/' + id)
