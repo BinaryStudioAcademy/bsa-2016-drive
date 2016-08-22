@@ -18,6 +18,10 @@ body {
     height: 100%;
 }
 
+.navbar-inverse {
+    height: 60px
+}
+
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */

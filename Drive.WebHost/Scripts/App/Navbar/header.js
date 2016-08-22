@@ -5,7 +5,7 @@
     request.onreadystatechange = function () {
         if (request.readyState != 4) return;
         if (request.status != 200) {
-            alert(request.status + ': ' + request.statusText);
+            console.log(request.status + ': ' + request.statusText);
         } else {
             var headerHtml = request.responseText;
             var headerContainer = document.getElementById('header');
