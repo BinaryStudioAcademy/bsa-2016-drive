@@ -44,11 +44,13 @@
         vm.cancelSearch = cancelSearch;
         vm.searchText = '';
 
+        vm.orderByColumn = orderByColumn;
+
         vm.redirectToSpaceSettings = redirectToSpaceSettings;
 
         vm.paginate = {
             currentPage: 1,
-            pageSize: 2,
+            pageSize: 10,
             numberOfItems: 0,
             getContent: null
         }
@@ -66,6 +68,7 @@
             vm.showTable = true;
             vm.showGrid = false;
             vm.changeView = changeView;
+            vm.columnForOrder = 'name';
 
             spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
                 vm.space = data;
@@ -398,6 +401,13 @@
 
         function openDocument(url) {
             window.open(url, '_blank');
+        }
+
+        function orderByColumn(column) {
+            var pos = vm.columnForOrder.indexOf(column);
+            if (pos == 0) { return vm.columnForOrder = '-' + column; }
+            if (pos == 1) { return vm.columnForOrder = column; }
+            vm.columnForOrder = column;
         }
     }
 }());

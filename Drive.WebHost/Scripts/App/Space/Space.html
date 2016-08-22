@@ -87,21 +87,21 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th class="name" style="width: 20%">Name</th>
-                    <th>Description</th>
-                    <th style="width: 15%">Author</th>
-                    <th style="width: 15%">Created</th>
-                    <th class="type" style="width: 10%">Type</th>
+                    <th class="name" style="width: 20%" ng-click="spaceCtrl.orderByColumn('name')">Name</th>
+                    <th ng-click="spaceCtrl.orderByColumn('description')">Description</th>
+                    <th style="width: 15%" ng-click="spaceCtrl.orderByColumn('author.name')">Author</th>
+                    <th style="width: 15%" ng-click="spaceCtrl.orderByColumn('createdAt')">Created</th>
+                    <th class="type" style="width: 10%" ng-click="spaceCtrl.orderByColumn('fileType')">Type</th>
                 </tr>
             </thead>
-            <tr class="shadow" role="button" ng-repeat="folder in spaceCtrl.space.folders" context-menu="spaceCtrl.folderMenuOptions" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
+            <tr class="shadow" role="button" ng-repeat="folder in spaceCtrl.space.folders | orderBy: spaceCtrl.columnForOrder" context-menu="spaceCtrl.folderMenuOptions" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
                 <td><i class="fa fa-folder-o">&nbsp;</i>{{ folder.name }}</td>
                 <td>{{ folder.description }}</td>
                 <td>{{ folder.author.name }}</td>
                 <td>{{ folder.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
                 <td>Folder</td>
             </tr>
-            <tr class="shadow" role="button" ng-repeat="file in spaceCtrl.space.files" context-menu="spaceCtrl.fileMenuOptions" ng-dblclick="spaceCtrl.openDocument(file.link)">
+            <tr class="shadow" role="button" ng-repeat="file in spaceCtrl.space.files | orderBy: spaceCtrl.columnForOrder" context-menu="spaceCtrl.fileMenuOptions" ng-dblclick="spaceCtrl.openDocument(file.link)">
                 <td> <i class="fa fa-file-o">&nbsp;</i>{{ file.name }}</td>
                 <td>{{ file.description }}</td>
                 <td>{{ file.author.name }}</td>
