@@ -58,40 +58,33 @@
         </div>
         <div class="col-md-7">
             <h4>Settings user access to space</h4>
-            <ul id="permissionsTab" class="nav nav-tabs">
-                <li class="active">
-                    <a href="#panel1">Users permission</a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <br />
-                <div id="panel1" class="tab-pane fade in active">
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <div class="col-md-3">
-                                <div class="dropdown" data-toggle="tooltip" data-placement="top" title="Select user">
-                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        Users<span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li ng-repeat="item in settingsCtrl.users">
-                                            <a role="button" ng-click="settingsCtrl.setChoice(item.name, item.id);">{{item.name}}</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <input class="form-control" ng-model="settingsCtrl.userAddName" placeholder="User name" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-5">
-                                <button class="btn btn-primary" ng-click="settingsCtrl.addSpaceUser()">Add</button>
-                            </div>
+            <div class="form-inline">
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <div class="dropdown" data-toggle="tooltip" data-placement="top" title="Select user">
+                            <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                Users<span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu scrollable-dropdown" style="max-height: 250px;" role="menu">
+                                <li ng-repeat="item in settingsCtrl.users">
+                                    <a role="button" ng-click="settingsCtrl.setChoice(item.name, item.id);">{{item.name}}</a>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                    <table class="table table-striped table-hover">
+                    <div class="col-md-4">
+                        <input class="form-control" ng-model="settingsCtrl.userAddName" placeholder="User name" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-5">
+                        <button class="btn btn-primary" ng-click="settingsCtrl.addSpaceUser()">Add</button>
+                    </div>
+                </div>
+            </div>
+            <br/>
+                    <table class="table users table-striped table-hover">
                         <thead>
                             <tr>
                                 <th>User name</th>
@@ -100,7 +93,7 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody style="height: 200px;">
                             <tr ng-repeat="item in settingsCtrl.permittedUsers">
                                 <td>{{item.name}}</td>
                                 <td>
@@ -118,8 +111,7 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
+    
 <!--For Tooltip-->
 <script type="text/javascript">
     $(document).ready(function () {

@@ -148,6 +148,7 @@ textarea {
 .users tbody {
     height: 150px;
     overflow-y: auto;
+    background: white;
 }
 
     .users tbody td, .users thead th {
