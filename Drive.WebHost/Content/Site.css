@@ -1,12 +1,21 @@
-﻿body {
+﻿html {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
     padding-top: 50px;
     padding-bottom: 20px;
+    overflow: hidden;
+    height: 100%
 }
 
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    overflow: hidden;
+    height: 100%;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -115,6 +124,7 @@ textarea {
     margin-right: 0%;
     align-content: center;
     overflow: hidden;
+    height: 100%
 }
 
 /*Modal window for creating new space*/
@@ -554,4 +564,25 @@ small,
     min-height: 15px;
     padding: 19px;
     margin-bottom: 0px; 
+}
+
+.page-footer {
+    bottom: 0;
+    height: 6em;
+    position: absolute;
+}
+
+.scrollable-row {
+    overflow-y: auto;
+    height: 100%;
+    position: relative;
+    margin-right: -20px;
+    padding-right: 20px;
+}
+
+.scroll-hide {
+    overflow: hidden;
+    padding-bottom: 6em;
+    height: 85%;
+    position: relative;
 }
