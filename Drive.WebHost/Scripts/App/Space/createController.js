@@ -5,9 +5,9 @@
         .module("driveApp")
         .controller("CreateController", CreateController);
 
-    CreateController.$inject = ['SpaceService', '$uibModalInstance'];
+    CreateController.$inject = ['SpaceService', '$uibModalInstance', '$timeout'];
 
-    function CreateController(spaceService, $uibModalInstance) {
+    function CreateController(spaceService, $uibModalInstance, $timeout) {
         var vm = this;
         
         vm.addNewSpace = addNewSpace;
@@ -161,6 +161,10 @@
 
         function save() {
             vm.addNewSpace();
+
+            $timeout(function () {
+                $uibModalInstance.close();
+            }, 3000);
         };
 
         function cancel() {
