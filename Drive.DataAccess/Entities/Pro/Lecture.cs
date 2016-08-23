@@ -17,7 +17,6 @@ namespace Drive.DataAccess.Entities.Pro
         public User Author { get; set; }
         public IList<ContentLink> ContentList { get; set; }
 
-        public IList<Tag> Tags { get; set; }
         public IList<CodeSample> CodeSamples { get; set; }
 
         public DateTime CreatedAt { get; set; }
