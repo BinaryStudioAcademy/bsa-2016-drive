@@ -3,4 +3,30 @@
     <div class="btn-group btn-breadcrumb">
         <a class="btn btn-info"><i class="fa fa-graduation-cap fa-lg"></i> Academy Pro</a>
     </div>
+
+    <div>
+        <span us-spinner="{radius:30, width:8, length: 16}"></span>
+        <div class="scroll-hide">
+            <div class="scrollable-row">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th class="name" style="width: 20%">Name</th>
+                                <th>Description</th>
+                                <th style="width: 15%">Author</th>
+                                <th style="width: 15%">Created</th>
+                            </tr>
+                        </thead>
+                        <tr class="shadow" role="button" ng-repeat="lecture in academyCtrl.academy.lectures" ng-dblclick="academyCtrl.openLecture(lecture.id)">
+                            <td>{{ lecture.name }}</td>
+                            <td>{{ lecture.description }}</td>
+                            <td>{{ lecture.author.name }}</td>
+                            <td>{{ lecture.startDate | date:'dd-MM-yyyy HH:mm' }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
