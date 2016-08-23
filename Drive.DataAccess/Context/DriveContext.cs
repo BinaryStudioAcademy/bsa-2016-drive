@@ -11,7 +11,7 @@ namespace Drive.DataAccess.Context
         public DriveContext() : base()
         {
             //to change when DB structure is stable!!!
-            Database.SetInitializer<DriveContext>(new DropCreateDatabaseIfModelChanges<DriveContext>());
+            //Database.SetInitializer<DriveContext>(new DropCreateDatabaseIfModelChanges<DriveContext>());
             Database.SetInitializer<DriveContext>(new DriveDBInitializer());
         }
 
