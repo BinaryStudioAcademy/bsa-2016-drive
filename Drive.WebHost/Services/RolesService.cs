@@ -41,20 +41,27 @@ namespace Drive.WebHost.Services
 
         public async Task<IEnumerable<RoleDto>> GetAllAsync()
         {
-            var data = await _unitOfWork.Roles.GetAllAsync();
+            //var data = await _unitOfWork?.Roles?.GetAllAsync();
 
-            var dto = from d in data
-                      select new RoleDto
-                      {
-                          Name = d.Name,
-                          Description = d.Description,
-                          Id = d.Id,
-                          Users = from user in d.Users
-                                  select new UsersDto
-                                  {
-                                      id = user.GlobalId
-                                  }
-                      };
+            //var dto = from d in data
+            //          select new RoleDto
+            //          {
+            //              Name = d.Name,
+            //              Description = d.Description,
+            //              Id = d.Id,
+            //              Users = from user in d.Users
+            //                      select new UsersDto
+            //                      {
+            //                          id = user.GlobalId
+            //                      }
+            //          };
+
+            var dto = _unitOfWork.Roles.Query.Select(s => new RoleDto
+            {
+                Id = s.Id,
+                Name = s.Name,
+                Description = s.Description
+            }).ToList();
             return dto;
         }
 

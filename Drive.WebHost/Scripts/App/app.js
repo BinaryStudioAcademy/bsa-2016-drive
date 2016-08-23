@@ -14,12 +14,12 @@
                     controller: "SpaceController",
                     controllerAs: "spaceCtrl"
                 })
-                .when("/:type", // Space page
-                {
-                    templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
-                    controller: "SpaceController",
-                    controllerAs: "spaceCtrl"
-                })
+                //.when("/:type", // Space page
+                //{
+                //    templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
+                //    controller: "SpaceController",
+                //    controllerAs: "spaceCtrl"
+                //})
                 .when("/spaces/:id", // Space page
                 {
                     templateUrl: baseUrl + "/Scripts/App/Space/Space.html",

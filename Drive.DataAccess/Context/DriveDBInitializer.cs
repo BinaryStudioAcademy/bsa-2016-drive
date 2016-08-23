@@ -29,7 +29,7 @@ namespace Drive.DataAccess.Context
             User user3 = new User()
             {
                 Id = 3,
-                GlobalId = "577a16659829fe050adb3f5c",
+                GlobalId = "567921371560298f766909a7",
                 IsDeleted = false
             };
 

@@ -23,20 +23,7 @@ namespace Drive.WebHost.Api
         [HttpGet]
         public async Task<IHttpActionResult> GetAllAsync()
         {
-            //var result = await _rolesService.GetAllAsync();
-            List<UsersDto> users = new List<UsersDto>();
-            UsersDto user1 = new UsersDto { id = "23kh25", name = "Nikita Krasnov", department = "Backend Developer"};
-            UsersDto user2 = new UsersDto { id = "235nk5", name = "Anton Kumpan", department = "Frontend Developer" };
-            UsersDto user3 = new UsersDto { id = "2n2kk2", name = "Irina Antonenko", department = "HR" };
-            users.Add(user1);
-            users.Add(user2);
-            List<RoleDto> roles = new List<RoleDto>();
-            RoleDto role1 = new RoleDto { Id = 1, Name = "HR", Description = "Hi! We are HRs.", Users = users };
-            users.Add(user3);
-            RoleDto role2 = new RoleDto { Id = 2, Name = "Developers", Description = "Hi! We are developers.", Users = users };
-            roles.Add(role1);
-            roles.Add(role2);
-            var result = roles;
+            var result = await _rolesService.GetAllAsync();
             if (result == null)
                 return NotFound();
 
@@ -46,24 +33,7 @@ namespace Drive.WebHost.Api
         [HttpGet]
         public async Task<IHttpActionResult> GetRole(int id)
         {
-            //var result = await _rolesService.GetAsync(id);
-            List<UsersDto> users = new List<UsersDto>();
-            UsersDto user1 = new UsersDto { id = "23kh25", name = "Nikita Krasnov", department = "Backend Developer" };
-            UsersDto user2 = new UsersDto { id = "235nk5", name = "Anton Kumpan", department = "Frontend Developer" };
-            UsersDto user3 = new UsersDto { id = "2n2kk2", name = "Irina Antonenko", department = "HR" };
-            users.Add(user1);
-            users.Add(user2);
-            RoleDto role = new RoleDto();
-            if (id == 1)
-            {
-               role = new RoleDto { Id = 1, Name = "HR", Description = "Hi! We are HRs.", Users = users };
-            }
-            else
-            {
-                users.Add(user3);
-                role = new RoleDto { Id = 2, Name = "Developers", Description = "Hi! We are developers.", Users = users };
-            }
-            var result = role;
+            var result = await _rolesService.GetAsync(id);
             if (result == null)
                 return NotFound();
 

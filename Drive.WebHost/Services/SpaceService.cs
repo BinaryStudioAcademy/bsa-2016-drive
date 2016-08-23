@@ -87,6 +87,8 @@ namespace Drive.WebHost.Services
                 MaxFilesQuantity = s.MaxFilesQuantity,
                 ReadPermittedUsers = s.ReadPermittedUsers,
                 ModifyPermittedUsers = s.ModifyPermittedUsers,
+                ReadPermittedRoles = s.ReadPermittedRoles,
+                ModifyPermittedRoles = s.ModifyPermittedRoles,
                 Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null && !f.IsDeleted).Select(f => new FileUnitDto
                 {
                     Description = f.Description,
@@ -174,10 +176,6 @@ namespace Drive.WebHost.Services
             return counter;
         }
 
-
-
-
-
         public async Task<IList<SpaceDto>> GetAllAsync()
         {
 
@@ -204,6 +202,8 @@ namespace Drive.WebHost.Services
                 MaxFileSize = dto.MaxFileSize,
                 ReadPermittedUsers = dto.ReadPermittedUsers,
                 ModifyPermittedUsers = dto.ModifyPermittedUsers,
+                ReadPermittedRoles = dto.ReadPermittedRoles,
+                ModifyPermittedRoles = dto.ModifyPermittedRoles,
                 CreatedAt = DateTime.Now,
                 LastModified = DateTime.Now,
                 IsDeleted = false,
@@ -216,7 +216,7 @@ namespace Drive.WebHost.Services
 
         public async Task UpdateAsync(int id, SpaceDto dto)
         {
-            var space = await _unitOfWork?.Spaces?.Query.Include(x => x.ReadPermittedUsers).Include(x => x.ModifyPermittedUsers).SingleOrDefaultAsync(x => x.Id == id);
+            var space = await _unitOfWork?.Spaces?.Query.Include(x => x.ReadPermittedUsers).Include(x => x.ModifyPermittedUsers).Include(x => x.ReadPermittedRoles).Include(x => x.ModifyPermittedRoles).SingleOrDefaultAsync(x => x.Id == id);
 
             if (space == null) return;
             List<User> ReadPermittedUsers = new List<User>();
@@ -260,22 +260,50 @@ namespace Drive.WebHost.Services
                 }
             }
             List<Role> ReadPermittedRoles = new List<Role>();
+
+
             foreach (var item in dto.ReadPermittedRoles)
             {
-                var role = await _unitOfWork?.Roles?.Query.FirstOrDefaultAsync(x => x.Id == item.Id);
+                var role = await _unitOfWork?.Roles?.Query.Include(x => x.Users).FirstOrDefaultAsync(x => x.Id == item.Id);
                 ReadPermittedRoles.Add(role);
+
+                foreach (var x in role.Users)
+                {
+                    var temp = ReadPermittedUsers.Find(p => p.GlobalId == x.GlobalId);
+                    if (temp == null)
+                    {
+                        ReadPermittedUsers.Add(x);
+                    }
+                }
             }
 
             List<Role> ModifyPermittedRoles = new List<Role>();
-            foreach (var item in dto.ModifyPermittedUsers)
+            foreach (var item in dto.ModifyPermittedRoles)
             {
-                var role = await _unitOfWork?.Roles?.Query.FirstOrDefaultAsync(p => p.Id == item.Id);
+                var role = await _unitOfWork?.Roles?.Query.Include(p => p.Users).FirstOrDefaultAsync(p => p.Id == item.Id);
                 ModifyPermittedRoles.Add(role);
-                    var x = ReadPermittedRoles.FirstOrDefault(p => p.Id == role.Id);
-                    if (x == null)
+
+                foreach (var t in role.Users)
+                {
+                    var temp = ModifyPermittedUsers.Find(p => p.GlobalId == t.GlobalId);
+                    if (temp == null)
                     {
-                        ReadPermittedRoles.Add(role);
+                        ModifyPermittedUsers.Add(t);
                     }
+                }
+                var x = ReadPermittedRoles.FirstOrDefault(p => p.Id == role.Id);
+                if (x == null)
+                {
+                    ReadPermittedRoles.Add(role);
+                    foreach (var t in role.Users)
+                    {
+                        var temp = ReadPermittedUsers.Find(p => p.GlobalId == t.GlobalId);
+                        if (temp == null)
+                        {
+                            ReadPermittedUsers.Add(t);
+                        }
+                    }
+                }
             }
             space.Name = dto.Name;
             space.Description = dto.Description;

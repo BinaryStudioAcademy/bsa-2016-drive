@@ -23,9 +23,9 @@ namespace Driver.Shared.Dto
 
         public IList<User> ModifyPermittedUsers { get; set; }
 
-        public IEnumerable<RoleDto> ReadPermittedRoles { get; set; }
+        public IList<Role> ReadPermittedRoles { get; set; }
 
-        public IEnumerable<RoleDto> ModifyPermittedRoles { get; set; }
+        public IList<Role> ModifyPermittedRoles { get; set; }
 
         public IEnumerable<FileUnitDto> Files { get; set; }
 
