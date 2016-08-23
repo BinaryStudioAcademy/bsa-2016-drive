@@ -7,11 +7,43 @@
     <div>
         <span us-spinner="{radius:30, width:8, length: 16}"></span>
         <h2>{{lectureCtrl.lecture.name}}</h2>
-        <div class="centered-video">
+        <div class="centered-flex-content">
             <div ng-repeat="video in lectureCtrl.lecture.videoLinks">
                 <h3>{{video.name}}</h3>
                 <youtube-video video-url="video.link"></youtube-video>
                 <p>{{video.description}}</p>
+            </div>
+        </div>
+        <div class="centered-flex-content">
+            <div ng-repeat="slide in lectureCtrl.lecture.slidesLinks">
+                <h3>{{slide.name}}</h3>
+                <iframe ng-src="{{lectureCtrl.trustSrc(slide.link)}}" frameborder="0" width="640" height="390" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
+                <p>{{slide.description}}</p>
+            </div>
+        </div>
+        <h3>About</h3>
+        <p>{{lectureCtrl.lecture.description}}</p>
+        <div class="code-samples centered-flex-content" ng-show="{{lectureCtrl.lecture.codeSamples >=0}}">
+            <h3>Code samples</h3>
+            <div ng-repeat="sample in lectureCtrl.lecture.codeSamples">
+                <h3>{{sample.name}}</h3>
+                <pre class="language-markup"><code>{{sample.code}}</code></pre>
+            </div>
+        </div>
+        <div class="repositories" ng-show="{{lectureCtrl.lecture.repositoryLinks >=0}}">
+            <h3>Repositories</h3>
+            <div ng-repeat="repo in lectureCtrl.lecture.repositoryLinks">
+                <h4>{{repo.name}}</h4>
+                <a ng-href="{{repo.link}}">{{repo.link}}</a>
+                <p>{{repo.description}}</p>
+            </div>
+        </div>
+        <div class="useful-links" ng-show="{{lectureCtrl.lecture.usefulLinks >=0}}">
+            <h4>Useful links</h4>
+            <div ng-repeat="link in lectureCtrl.lecture.usefulLinks">
+                <h3>{{link.name}}</h3>
+                <a ng-href="{{link.link}}">{{link.link}}</a>
+                <p>{{link.description}}</p>
             </div>
         </div>
     </div>

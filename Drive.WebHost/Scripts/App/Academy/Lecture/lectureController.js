@@ -4,12 +4,13 @@
     angular.module('driveApp.academyPro')
         .controller('LectureController', LectureController);
 
-    LectureController.$inject = ['LectureService', '$routeParams'];
+    LectureController.$inject = ['LectureService', '$routeParams', '$sce'];
 
-    function LectureController(lectureService, $routeParams) {
+    function LectureController(lectureService, $routeParams, $sce) {
         var vm = this;
         vm.currentLectureId = $routeParams.lectureId;
         vm.lecture = null;
+        vm.trustSrc = trustSrc;
 
         activate();
 
@@ -23,6 +24,10 @@
                     vm.lecture = data;
                     return vm.lecture;
                 });
+        }
+
+        function trustSrc(src) {
+            return $sce.trustAsResourceUrl(src);
         }
     }
 }());

@@ -590,7 +590,7 @@ small,
     position: relative;
 }
 
-.centered-video {
+.centered-flex-content {
     display: flex;
     align-items: center;
     flex-direction: column;
