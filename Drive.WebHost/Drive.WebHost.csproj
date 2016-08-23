@@ -277,6 +277,7 @@
     <Content Include="Scripts\App\Menu\Menu.html" />
     <Content Include="Scripts\App\Menu\menuController.js" />
     <Content Include="Scripts\App\Menu\menuService.js" />
+    <Content Include="Scripts\App\Navbar\header.js" />
     <Content Include="Scripts\App\Sheets\Sheets.html" />
     <Content Include="Scripts\App\Sheets\sheetsController.js" />
     <Content Include="Scripts\App\Slides\Slides.html" />

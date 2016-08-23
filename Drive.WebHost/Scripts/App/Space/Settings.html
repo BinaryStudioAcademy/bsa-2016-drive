@@ -2,12 +2,13 @@
     <br />
     <div class="btn-group btn-breadcrumb">
         <a ng-click="settingsCtrl.redirectToSpace()" class="btn btn-info"><i class="fa fa-cloud fa-lg"></i>{{settingsCtrl.space.name}}</a>
-        <a class="btn btn-default">Settings</a>
+        <a class="btn btn-default">Settings</a> 
     </div>
     <div class="page-header">
         <h2>
             Space settings
-        </h2>
+            <button class="btn btn-danger" ng-show="settingsCtrl.showDeleteBtn()" ng-click="settingsCtrl.deleteSpace()">Delete space</button>
+        </h2>  
     </div>
     <div class="row">
         <div class="col-md-3" style="padding-right: 20px; border-right: 1px solid #ccc;">

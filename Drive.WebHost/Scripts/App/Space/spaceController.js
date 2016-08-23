@@ -44,6 +44,8 @@
         vm.cancelSearch = cancelSearch;
         vm.searchText = '';
 
+        vm.orderByColumn = orderByColumn;
+
         vm.redirectToSpaceSettings = redirectToSpaceSettings;
 
         vm.paginate = {
@@ -66,11 +68,18 @@
             vm.showTable = true;
             vm.showGrid = false;
             vm.changeView = changeView;
+            vm.columnForOrder = 'name';
 
-            spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
+            spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate, function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
-                console.log(localStorageService.get('current'));
+
+                if (localStorageService.get('spaceId') !== vm.spaceId) {
+                    localStorageService.set('spaceId', vm.spaceId);
+                    localStorageService.set('current', null);
+                    localStorageService.set('list', null)
+                }
+
                 if (localStorageService.get('list') != null)
                     vm.folderList = localStorageService.get('list');
 
@@ -109,7 +118,7 @@
         }
 
         function getSpaceContent() {
-            spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
+            spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate, function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
             });
@@ -152,97 +161,40 @@
 
 
         vm.folderMenuOptions = [
-            [
-                'Share', function ($itemScope) {
+            ['Share', function ($itemScope) {
                     console.log($itemScope.folder.id);
-                }
-            ],
-            [
-                'Edit', function ($itemScope) {
+                }],
+            ['Edit', function ($itemScope) {
                     vm.folder = $itemScope.folder;
                     vm.folder.parentId = vm.parentId;
                     vm.folder.spaceId = vm.spaceId;
                     vm.openFolderWindow();
-                }
-            ],
-            [
-                'Delete', function ($itemScope) {
+                }],
+            ['Delete', function ($itemScope) {
                     return deleteFolder($itemScope.folder.id);
-                }
-            ]
+                }]
         ];
 
         vm.fileMenuOptions = [
-            [
-                'Share', function ($itemScope) {
+            ['Share', function ($itemScope) {
                     console.log($itemScope.file.id);
-                }
-            ],
-            [
-                'Edit', function ($itemScope) {
+                }],
+            ['Edit', function ($itemScope) {
                     vm.file = $itemScope.file;
                     vm.file.parentId = vm.parentId;
                     vm.file.spaceId = vm.spaceId;
                     vm.openFileWindow();
-                }
-            ],
-            [
-                'Delete', function ($itemScope) {
+                }],
+            ['Delete', function ($itemScope) {
                     return deleteFile($itemScope.file.id);
-                }
-            ]
+                }]
         ];
 
         vm.createOption = [
-            [
-                'Create folder', function () {
-                    vm.folder = { parentId: vm.parentId, spaceId: vm.spaceId };
-                    vm.openFolderWindow();
-                }
-            ],
-            [
-                'Create file', function ($itemScope) {
-                },
-                [
-                    [
-                        'Document', function () {
-                            vm.file = { fileType: 1, parentId: vm.parentId, spaceId: vm.spaceId };
-                            vm.openFileWindow();
-                        }
-                    ],
-                    [
-                        'Sheets', function ($itemScope) {
-                            vm.file = { fileType: 2, parentId: vm.parentId, spaceId: vm.spaceId };
-                            vm.openFileWindow();
-                        }
-                    ],
-                    [
-                        'Slides', function ($itemScope) {
-                            vm.file = { fileType: 3, parentId: vm.parentId, spaceId: vm.spaceId };
-                            vm.openFileWindow();
-                        }
-                    ],
-                    [
-                        'Trello', function ($itemScope) {
-                            vm.file = { fileType: 4, parentId: vm.parentId, spaceId: vm.spaceId };
-                            vm.openFileWindow();
-                        }
-                    ],
-                    [
-                        'Link', function ($itemScope) {
-                            vm.file = { fileType: 5, parentId: vm.parentId, spaceId: vm.spaceId };
-                            vm.openFileWindow();
-                        }
-                    ],
-                    null,
-                    [
-                        'Upload file', function ($itemScope) {
-                            vm.file = { fileType: 6, parentId: vm.parentId, spaceId: vm.spaceId };
-                            vm.openFileWindow();
-                        }
-                    ]
-                ]
-            ]
+            ['Create folder', function () { vm.createNewFolder(); }],
+            ['Create file', function () { vm.createNewFile(); }],
+            null,
+            ['Upload file', function(){}]
         ];
 
         function openFolderWindow(size) {
@@ -324,8 +276,8 @@
             vm.openFolderWindow();
         }
 
-        function createNewFile(type) {
-            vm.file = { fileType: type, parentId: vm.parentId, spaceId: vm.spaceId };
+        function createNewFile() {
+            vm.file = {parentId: vm.parentId, spaceId: vm.spaceId };
             vm.openFileWindow();
         }
 
@@ -378,7 +330,7 @@
 
         function getFolderContentFromApi() {
             vm.searchText = '';
-             folderService.getContent(vm.parentId, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
+            folderService.getContent(vm.parentId, vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate, function (data) {
                 vm.space.folders = data.folders;
                 vm.space.files = data.files;
             });
@@ -455,6 +407,10 @@
 
         function openDocument(url) {
             window.open(url, '_blank');
+        }
+
+        function orderByColumn(column) {
+            vm.columnForOrder = fileService.orderByColumn(column, vm.columnForOrder);
         }
     }
 }());

@@ -1,14 +1,18 @@
 ﻿angular.module("driveApp",
     ["ngRoute", "ui.bootstrap.contextMenu", "ui.bootstrap", "angularUtils.directives.dirPagination", "LocalStorageModule", "ngLoadingSpinner"])
+<<<<<<< HEAD
     .factory('BaseUrl', function () {
         return window.globalVars.baseUrl;
     })
+=======
+     .factory('BaseUrl', function () {
+         return window.globalVars.baseUrl;
+     })
+>>>>>>> refs/remotes/origin/develop
     .config([
         "$routeProvider",
         function ($routeProvider) {
-
             var baseUrl = window.globalVars.baseUrl;
-
             $routeProvider
                 .when("/", // Space page
                 {

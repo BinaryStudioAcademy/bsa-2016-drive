@@ -9,13 +9,16 @@
     function FileFilterController(fileService, $routeParams) {
         var vm = this;
 
+        vm.changeView = changeView;
+        vm.orderByColumn = orderByColumn;
+
         activate();
 
         function activate() {
             vm.view = "fa fa-th";
             vm.showTable = true;
             vm.showGrid = false;
-            vm.changeView = changeView;
+            vm.columnForOrder = 'name';
 
             vm.spaces = [];
 
@@ -81,6 +84,10 @@
             vm.view = "fa fa-list";
             vm.showTable = false;
             vm.showGrid = true;
+        }
+
+        function orderByColumn(column) {
+            vm.columnForOrder = fileService.orderByColumn(column, vm.columnForOrder);
         }
     }
 }());

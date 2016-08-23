@@ -22,7 +22,7 @@ namespace Drive.WebHost.Services
 
         Task DeleteAsync(int id);
 
-        Task<FolderContentDto> GetContentAsync(int id, int page, int count);
+        Task<FolderContentDto> GetContentAsync(int id, int page, int count, string sort);
         Task<int> GetContentTotalAsync(int id);
 
         void Dispose();

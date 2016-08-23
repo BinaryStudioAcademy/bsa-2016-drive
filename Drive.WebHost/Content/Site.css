@@ -4,10 +4,10 @@
 }
 
 body {
-    padding-top: 50px;
+    padding-top: 60px;
     padding-bottom: 20px;
     overflow: hidden;
-    height: 100%
+    height: 100%;
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -16,6 +16,10 @@ body {
     padding-right: 15px;
     overflow: hidden;
     height: 100%;
+}
+
+.navbar-inverse {
+    height: 60px;
 }
 
 /* Override the default bootstrap behavior where horizontal description lists 
@@ -94,38 +98,23 @@ textarea {
         clear: both;
     }
 
-/*Side menu on Index page*/
-#wrapper {
-    margin-left: 200px;
-}
-
-#content {
-    float: right;
-    width: 100%;
-}
-
-#sidebar {
-    float: left;
-    width: 200px;
-}
-
 /*Ng-include on Index page*/
-.include-index {
+/*.include-index {
     float: left;
     max-width: 190px;
     margin: 0;
     overflow: hidden;
-}
+}*/
 
 /*Ng-view on Index page*/
-.view-index {
+/*.view-index {
     margin-left: 120px;
     padding-left: 4%;
     margin-right: 0%;
     align-content: center;
     overflow: hidden;
     height: 100%
-}
+}*/
 
 /*Modal window for creating new space*/
 .modal-body {
@@ -172,7 +161,6 @@ textarea {
     max-height: 450px;
     overflow-x: hidden;
 }
-
 
 /*Breadcrumbs paths*/
 .btn-breadcrumb .btn:not(:last-child):after {
@@ -288,15 +276,13 @@ textarea {
 }
 
 #page-content-wrapper {
-    position: absolute;
-    padding: 15px;
     width: 100%;
-    overflow-x: hidden;
+    position: absolute;
 }
 
 #wrapper.toggled #page-content-wrapper {
-    position: relative;
-    margin-right: 0px;
+    position: absolute;
+    margin-right: -150px;
 }
 
 .fixed-brand {
@@ -311,7 +297,7 @@ textarea {
     margin: 0;
     padding: 0;
     list-style: none;
-    margin-top: 2px;
+    /*margin-top: 2px;*/
 }
 
     .sidebar-nav li {
@@ -360,57 +346,45 @@ textarea {
 
 @media(min-width:768px) {
     #wrapper {
-        padding-left: 205px;
+        padding-left: 150px;
+        align-content: center;
+        overflow: hidden;
+        height: 100%;
     }
 
-    .fixed-brand {
-        width: 205px;
-    }
-
-    #wrapper.toggled {
-        padding-left: 0;
-    }
+        #wrapper.toggled {
+            padding-left: 20px;
+            padding-right: 0;
+            margin-left: -14px;
+            overflow: hidden;
+            align-content: center;
+        }
 
     #sidebar-wrapper {
         width: 205px;
     }
 
     #wrapper.toggled #sidebar-wrapper {
-        width: 205px;
+        width: 47px;
     }
-
-    #wrapper.toggled-2 #sidebar-wrapper {
-        width: 50px;
-    }
-
-        #wrapper.toggled-2 #sidebar-wrapper:hover {
-            width: 205px;
-        }
 
     #page-content-wrapper {
-        padding: 20px;
         position: relative;
-        -webkit-transition: all 0.5s ease;
-        -moz-transition: all 0.5s ease;
-        -o-transition: all 0.5s ease;
-        transition: all 0.5s ease;
+        overflow: hidden;
+        margin-top: -40px;
     }
 
     #wrapper.toggled #page-content-wrapper {
+        padding-bottom: 0px;
         position: relative;
         margin-right: 0;
-        padding-left: 205px;
+        overflow: hidden;
+        overflow-y: hidden;
+        overflow-x: hidden;
     }
 
-    #wrapper.toggled-2 #page-content-wrapper {
-        position: relative;
-        margin-right: 0;
-        margin-left: -205px;
-        -webkit-transition: all 0.5s ease;
-        -moz-transition: all 0.5s ease;
-        -o-transition: all 0.5s ease;
-        transition: all 0.5s ease;
-        width: auto;
+    #wrapper.toggled #sidebar-wrapper:hover {
+        width: 205px;
     }
 }
 
@@ -423,13 +397,17 @@ textarea {
     margin-left: -18px;
 }
 
-/*Menu buttons style*/
+/*Toolbar buttons style*/
 .btn-custom {
     -webkit-appearance: none;
     outline: none;
     border: 0;
     background: transparent;
     vertical-align: middle;
+}
+
+.toolbar-div {
+     padding-left: 0px;
 }
 
 /*Remove button focus after click*/
@@ -450,8 +428,16 @@ hr.style {
     background-image: -o-linear-gradient(left, #333, #ccc, #333);
 }
 
-/*Icon on createSpace button*/
-.iconCustom {
+/*Create new space button in menu*/
+.create-space {
+    width: 100%;
+    height: 40px;
+    /*margin-top: -2px;*/
+    border-radius: 0 !important;
+}
+
+/*Icon on create new Space button in menu*/
+.icon-custom {
     margin-left: -52px;
     width: 2.7em;
 }
@@ -519,7 +505,7 @@ table {
 
 small,
 .small {
-  font-size: 100%;
+    font-size: 100%;
 }
 
 .s-block {
@@ -601,7 +587,7 @@ small,
 .well {
     min-height: 15px;
     padding: 19px;
-    margin-bottom: 0px; 
+    margin-bottom: 0px;
 }
 
 .page-footer {
@@ -623,5 +609,16 @@ small,
     padding-bottom: 6em;
     height: 85%;
     position: relative;
+}
+<<<<<<< HEAD
+>>>>>>> refs/remotes/origin/develop
+=======
+
+.sortorder:after {
+    content: '\25b2';
+}
+
+.sortorder.reverse:after {
+    content: '\25bc';
 }
 >>>>>>> refs/remotes/origin/develop
