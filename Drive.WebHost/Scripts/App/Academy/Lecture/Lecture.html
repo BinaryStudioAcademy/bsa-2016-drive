@@ -23,14 +23,14 @@
         </div>
         <h3>About</h3>
         <p>{{lectureCtrl.lecture.description}}</p>
-        <div class="code-samples centered-flex-content" ng-show="{{lectureCtrl.lecture.codeSamples >=0}}">
+        <div class="code-samples centered-flex-content" ng-show="lectureCtrl.lecture.codeSamples.length">
             <h3>Code samples</h3>
             <div ng-repeat="sample in lectureCtrl.lecture.codeSamples">
                 <h3>{{sample.name}}</h3>
                 <pre class="language-markup"><code>{{sample.code}}</code></pre>
             </div>
         </div>
-        <div class="repositories" ng-show="{{lectureCtrl.lecture.repositoryLinks >=0}}">
+        <div class="repositories" ng-show="lectureCtrl.lecture.repositoryLinks.length">
             <h3>Repositories</h3>
             <div ng-repeat="repo in lectureCtrl.lecture.repositoryLinks">
                 <h4>{{repo.name}}</h4>
@@ -38,7 +38,7 @@
                 <p>{{repo.description}}</p>
             </div>
         </div>
-        <div class="useful-links" ng-show="{{lectureCtrl.lecture.usefulLinks >=0}}">
+        <div class="useful-links" ng-show="lectureCtrl.lecture.usefulLinks.length">
             <h4>Useful links</h4>
             <div ng-repeat="link in lectureCtrl.lecture.usefulLinks">
                 <h3>{{link.name}}</h3>
