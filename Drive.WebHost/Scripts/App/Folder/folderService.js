@@ -12,8 +12,10 @@
             getAll: getAll,
             getAllByParentId: getAllByParentId,
             get: get,
+            getDeleted: getDeleted,
             create: create,
             updateFolder: updateFolder,
+            updateDeleted: updateDeleted,
             deleteFolder: deleteFolder,
             getContent: getContent,
             getFolderContentTotal: getFolderContentTotal
@@ -55,6 +57,18 @@
                     });
         }
 
+        function getDeleted(id, callBack) {
+            $http.get(baseUrl + '/api/folders/deleted/' + id)
+                .then(function (response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                },
+                    function () {
+                        console.log('Error while getting folder!');
+                    });
+        }
+
         function create(data, callBack) {
             $http.post(baseUrl + '/api/folders', data)
                 .then(function(response) {
@@ -76,6 +90,18 @@
                     },
                     function() {
                         console.log('Error while getting folder!');
+                    });
+        }
+
+        function updateDeleted(id, oldParentId, folder, callBack) {
+            $http.put(baseUrl + '/api/folders/deleted/' + id + '?oldParentId=' + oldParentId, folder)
+                .then(function (response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                },
+                    function () {
+                        console.log('Error while getting file!');
                     });
         }
 

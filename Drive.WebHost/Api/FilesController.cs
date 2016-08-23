@@ -80,7 +80,7 @@ namespace Drive.WebHost.Api
 
         }
 
-        // PUT: api/files/deleted/5
+        // PUT: api/files/deleted/5?oldParentId=(int)
         [HttpPut]
         [Route("deleted/{id:int}")]
         public async Task<IHttpActionResult> UpdateDeletedFileAsync(int id, int? oldParentId, FileUnitDto file)
