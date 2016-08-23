@@ -5,15 +5,15 @@
         .module('driveApp')
         .factory('LogsService', LogsService);
 
-    LogsService.$inject = ['$http'];
+    LogsService.$inject = ['$http', 'BaseUrl'];
 
-    function LogsService($http) {
+    function LogsService($http, baseUrl) {
         var service = {
             getAllLogs: getAllLogs
         };
 
         function getAllLogs() {
-            return $http.get('/api/logs')
+            return $http.get(baseUrl + '/api/logs')
                 .then(getLogsComplete)
                 .catch(getLogsFailed);
 

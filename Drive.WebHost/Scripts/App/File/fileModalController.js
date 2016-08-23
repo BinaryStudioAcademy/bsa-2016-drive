@@ -1,4 +1,4 @@
-﻿(function() {
+﻿(function () {
     "use strict";
 
     angular
@@ -9,14 +9,9 @@
 
     function FileModalCtrl(fileService, $uibModalInstance, items) {
         var vm = this;
+
         vm.save = save;
         vm.cancel = cancel;
-        vm.submitted = false;
-        vm.file = {};
-
-        vm.title = 'Edit';
-        vm.icon = "";
-        vm.linkTemplate = "";
         vm.isValidUrl = isValidUrl;
         vm.checkUrl = checkUrl;
 
@@ -24,52 +19,21 @@
 
         function activate() {
             vm.file = items;
+            vm.title = 'Create file';
+            vm.icon = "fa fa-file-o";
             vm.urlIsValid = false;
-            vm.name = items.name;
-            vm.description = items.description;
-            vm.link = items.link;
+            vm.submitted = false;
+            vm.types = {
+                1: ["docs.google.com/document/"],
+                2: ["docs.google.com/spreadsheets/"],
+                3: ["docs.google.com/presentation/"],
+                4: ["trello.com"],
+                5: ["."] // link
+            };
 
             if (vm.file.parentId === 0) vm.file.parentId = null;
 
-            switch(vm.file.fileType) {
-                case 0:
-                    vm.icon = "fa fa-file-o"; // Simple file
-                    vm.title = 'Create file';
-                    break;
-                case 1:
-                    vm.icon = "fa fa-file-word-o"; // Docs
-                    vm.title = 'Add document';
-                    vm.linkTemplate = 'docs.google.com/document/';
-                    break;
-                case 2:
-                    vm.icon = "fa fa-file-excel-o"; // Sheets
-                    vm.title = 'Add sheets';
-                    vm.linkTemplate = 'docs.google.com/spreadsheets/';
-                    break;
-                case 3:
-                    vm.icon = "fa fa-file-powerpoint-o"; // Slides
-                    vm.title = 'Add slides';
-                    vm.linkTemplate = 'docs.google.com/presentation/';
-                    break;
-                case 4:
-                    vm.icon = "fa fa-trello"; // Trello
-                    vm.title = 'Add Trello';
-                    vm.linkTemplate = 'trello.com';
-                    break;
-                case 5:
-                    vm.icon = "fa fa-link"; // Link
-                    vm.title = 'Add link';
-                    vm.linkTemplate = '.';
-                    break;
-                case 6:
-                    vm.icon = "fa fa-upload"; // Upload file
-                    vm.title = 'Upload file';
-                    break;
-                default:
-                    vm.icon = "fa fa-file"; // Simple file
-            }
-
-            if (typeof vm.file.id == "number") {
+            if (vm.file.name) {
                 vm.title = 'Edit';
                 vm.urlIsValid = true;
             }
@@ -115,17 +79,31 @@
         };
 
         function checkUrl() {
+            vm.file.fileType = null;
             var reg = new RegExp("^https?://");
+
             if (!reg.test(vm.file.link)) {
                 vm.file.link = "http://" + vm.file.link;
             }
+
+            for (var t in vm.types) {
+                for (var i = 0; i < vm.types[t].length; i++) {
+                    if (vm.file.link.includes(vm.types[t][i])) {
+                        vm.file.fileType = Number(t);
+                        break;
+                    }
+                }
+                if (vm.file.fileType) {
+                    break;
+                }
+            }
+
         }
 
         function isValidUrl() {
-            //var expression = "^(?:(?:ht|f)tps?://)?(?:[\\-\\w]+:[\\-\\w]+@)?(?:[0-9a-z][\\-0-9a-z]*[0-9a-z]\\.)+[a-z]{2,6}(?::\\d{1,5})?(?:[?/\\\\#][?!^$.(){}:|=[\\]+\\-/\\\\*;&~#@,%\\wА-Яа-я]*)?$";
-            var expression = /[-a-zA-Z0-9@:%_\+.~#?&//=]{2,256}\.[a-z]{2,4}\b(\/[-a-zA-Z0-9@:%_\+.~#?&//=]*)?/gi;
+            var expression = "^(?:(?:ht|f)tps?://)?(?:[\\-\\w]+@)?(?:[\\-0-9a-z]*[0-9a-z]\\.)+[a-z]{2,6}(?::\\d{1,5})?(?:[?/\\\\#][?!^$.(){}:|=[\\]+\\-/\\\\*;&~#@,%\\wА-Яа-я]*)?$";
             var reg = new RegExp(expression);
-            vm.urlIsValid = reg.test(vm.file.link) && vm.file.link.includes(vm.linkTemplate);
+            vm.urlIsValid = reg.test(vm.file.link);
         }
     }
 }());
