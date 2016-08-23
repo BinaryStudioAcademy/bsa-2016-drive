@@ -87,11 +87,31 @@
         <table class="table table-hover">
             <thead>
                 <tr>
-                    <th class="name" style="width: 20%" ng-click="spaceCtrl.orderByColumn('name')">Name</th>
-                    <th ng-click="spaceCtrl.orderByColumn('description')">Description</th>
-                    <th style="width: 15%" ng-click="spaceCtrl.orderByColumn('author.name')">Author</th>
-                    <th style="width: 15%" ng-click="spaceCtrl.orderByColumn('createdAt')">Created</th>
-                    <th class="type" style="width: 10%" ng-click="spaceCtrl.orderByColumn('fileType')">Type</th>
+                    <th class="name" style="width: 20%" ng-click="spaceCtrl.orderByColumn('name')">
+                        Name
+                        <span ng-show="spaceCtrl.columnForOrder == 'name'"><i class="fa fa-sort-asc"></i></span>
+                        <span ng-show="spaceCtrl.columnForOrder == '-name'"><i class="fa fa-sort-desc"></i></span>
+                    </th>
+                    <th ng-click="spaceCtrl.orderByColumn('description')">
+                        Description
+                        <span ng-show="spaceCtrl.columnForOrder == 'description'"><i class="fa fa-sort-asc"></i></span>
+                        <span ng-show="spaceCtrl.columnForOrder == '-description'"><i class="fa fa-sort-desc"></i></span>
+                    </th>
+                    <th style="width: 15%" ng-click="spaceCtrl.orderByColumn('author.name')">
+                        Author
+                        <span ng-show="spaceCtrl.columnForOrder == 'author.name'"><i class="fa fa-sort-asc"></i></span>
+                        <span ng-show="spaceCtrl.columnForOrder == '-author.name'"><i class="fa fa-sort-desc"></i></span>
+                    </th>
+                    <th style="width: 15%" ng-click="spaceCtrl.orderByColumn('createdAt')">
+                        Created
+                        <span ng-show="spaceCtrl.columnForOrder == 'createdAt'"><i class="fa fa-sort-asc"></i></span>
+                        <span ng-show="spaceCtrl.columnForOrder == '-createdAt'"><i class="fa fa-sort-desc"></i></span>
+                    </th>
+                    <th class="type" style="width: 10%" ng-click="spaceCtrl.orderByColumn('fileType')">
+                        Type
+                        <span ng-show="spaceCtrl.columnForOrder == 'fileType'"><i class="fa fa-sort-asc"></i></span>
+                        <span ng-show="spaceCtrl.columnForOrder == '-fileType'"><i class="fa fa-sort-desc"></i></span>
+                    </th>
                 </tr>
             </thead>
             <tr class="shadow" role="button" ng-repeat="folder in spaceCtrl.space.folders | orderBy: spaceCtrl.columnForOrder" context-menu="spaceCtrl.folderMenuOptions" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
