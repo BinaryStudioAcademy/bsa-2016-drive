@@ -1,5 +1,5 @@
 ﻿(function () {
-    angular.module('driveApp.academyPro', [])
+    angular.module('driveApp.academyPro', ['youtube-embed'])
         .config([
             '$routeProvider', function config($routeProvider) {
                 $routeProvider
@@ -17,7 +17,7 @@
                     })
                     .when('/apps/academy/:id/lecture/:lectureId',
                     {
-                        templateUrl: '/Scripts/App/Academy/Lecture/Academy.html',
+                        templateUrl: '/Scripts/App/Academy/Lecture/Lecture.html',
                         controller: 'LectureController',
                         controllerAs: 'lectureCtrl'
                     });
