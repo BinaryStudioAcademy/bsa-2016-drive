@@ -4,9 +4,9 @@
     angular.module("driveApp")
         .controller("SettingsController", SettingsController);
 
-    SettingsController.$inject = ['SettingsService', '$routeParams', '$location', '$rootScope'];
+    SettingsController.$inject = ['SettingsService', 'SpaceService', 'FolderService', 'FileService', '$routeParams', '$location', '$rootScope', '$window'];
 
-    function SettingsController(settingsService, $routeParams, $location, $rootScope) {
+    function SettingsController(settingsService, spaceService, folderService, fileService, $routeParams, $location, $rootScope, $window) {
         var vm = this;
         vm.save = save;
         vm.cancel = cancel;     
@@ -26,13 +26,19 @@
         vm.permittedUsers = [];
 
         vm.deleteSpace = deleteSpace;
-        vm.showDeleteBtn = showDeleteBtn;
 
         activate();
 
         function activate() {
             settingsService.getSpace(vm.selectedSpace, function (data) {
                 vm.space = data;
+                // Hide delete space btn for Binary and My spaces
+                if (vm.space.name === 'Binary Space' || vm.space.name === 'My Space') {
+                    vm.showDeleteBtn = false;
+                }
+                else {
+                    vm.showDeleteBtn = true;
+                }
                 console.log(vm.space);
 
                 settingsService.getAllUsers(function (data) {
@@ -77,8 +83,7 @@
                         }
                     }
                 });
-            });
-            
+            });  
 
             vm.userAddName = null;
             vm.userAddId = null;
@@ -173,19 +178,9 @@
             $location.url("/spaces/" + vm.space.id);
         };
 
-        function showDeleteBtn()
-        {
-            if (vm.space.name == 'Binary Space' || vm.space.name == 'My Space') {
-                return false;
-            }
-            else {
-                return true;
-            }
-        }
-
         function deleteSpace()
         {
-            if (confirm('Are you really want to delete space and all inside folders and files?') == true)
+            if (confirm('Do you really want to delete space and all inside folders and files?') == true)
             {
                 settingsService.deleteSpace(vm.selectedSpace, function (response) {
                     if (response) {
@@ -195,7 +190,9 @@
                         }
                     }
                 });
-                $location.url("/");
+                // Reload page
+                $window.location.reload();
+                $location.url("/");            
             } else {
 
             }
