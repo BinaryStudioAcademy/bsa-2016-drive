@@ -48,8 +48,6 @@
 
         vm.redirectToSpaceSettings = redirectToSpaceSettings;
 
-        vm.changeOrder = changeOrder;
-
         vm.paginate = {
             currentPage: 1,
             pageSize: 20,
