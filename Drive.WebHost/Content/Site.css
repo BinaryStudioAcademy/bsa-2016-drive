@@ -539,7 +539,6 @@ small,
         .s-block:nth-child(odd) {
             margin: 0 2% 0 0;
         }
-<<<<<<< HEAD
 
 /*Table for editting space users*/
 .users table {
@@ -575,7 +574,6 @@ small,
         width: 30%;
         float: left;
     }
-=======
 }
 
 @media screen and (max-width: 400px) {
@@ -610,9 +608,6 @@ small,
     height: 85%;
     position: relative;
 }
-<<<<<<< HEAD
->>>>>>> refs/remotes/origin/develop
-=======
 
 .sortorder:after {
     content: '\25b2';
@@ -621,4 +616,3 @@ small,
 .sortorder.reverse:after {
     content: '\25bc';
 }
->>>>>>> refs/remotes/origin/develop

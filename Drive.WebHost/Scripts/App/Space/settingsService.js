@@ -12,11 +12,8 @@
             getSpace: getSpace,
             getAllUsers: getAllUsers,
             pushChanges: pushChanges,
-<<<<<<< HEAD
-            getAllRoles: getAllRoles
-=======
+            getAllRoles: getAllRoles,
             deleteSpace: deleteSpace
->>>>>>> refs/remotes/origin/develop
         };
 
         function getAllRoles(callback) {

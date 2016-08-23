@@ -34,18 +34,7 @@ namespace Drive.WebHost.Api
         [HttpGet]
         public async Task<IHttpActionResult> GetSpace(int id, int page = 1, int count = 100, string sort = null)
         {
-<<<<<<< HEAD
-            var result = await _spaceService?.GetAsync(id, page, count);
-            //List<RoleDto> roles = new List<RoleDto>();
-            //RoleDto role = new RoleDto();
-            //role.Id = 500;
-            //role.Name = "Test";
-            //roles.Add(role);
-            //result.ReadPermittedRoles = roles;
-=======
             var result = await _spaceService?.GetAsync(id, page, count, sort);
-
->>>>>>> refs/remotes/origin/develop
             if (result == null)
                 return NotFound();
 
