@@ -26,6 +26,11 @@ namespace Drive.DataAccess.Repositories
             return await Query.SingleOrDefaultAsync(i => i.Id == id);
         }
 
+        public async Task<T> GetByIdDeletedAsync(int id)
+        {
+            return await Deleted.SingleOrDefaultAsync(i => i.Id == id);
+        }
+
         public void Create(T entity)
         {
             try

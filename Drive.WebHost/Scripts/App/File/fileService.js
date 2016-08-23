@@ -13,8 +13,10 @@
         var service = {
             createFile: createFile,
             updateFile: updateFile,
+            updateDeletedFile: updateDeletedFile,
             deleteFile: deleteFile,
             getFile: getFile,
+            getDeletedFile: getDeletedFile,
             getAllFiles: getAllFiles,
             getFilesApp: getFilesApp,
             getAllByParentId: getAllByParentId
@@ -62,6 +64,18 @@
                     });
         }
 
+        function getDeletedFile(id, callBack) {
+            $http.get(baseUrl + '/api/files/deleted/' + id)
+                .then(function (response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                },
+                    function () {
+                        console.log('Error while getting file!');
+                    });
+        }
+
         function createFile(file, callBack) {
             $http.post(baseUrl + '/api/files', file)
                 .then(function(response) {
@@ -82,6 +96,18 @@
                         }
                     },
                     function() {
+                        console.log('Error while getting file!');
+                    });
+        }
+
+        function updateDeletedFile(id, oldParentId, file, callBack) {
+            $http.put(baseUrl + '/api/files/deleted/' + id + '?oldParentId=' + oldParentId, file)
+                .then(function (response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                },
+                    function () {
                         console.log('Error while getting file!');
                     });
         }

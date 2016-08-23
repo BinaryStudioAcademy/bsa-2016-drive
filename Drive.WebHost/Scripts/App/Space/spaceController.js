@@ -78,6 +78,7 @@
                 if (localStorageService.get('spaceId') !== vm.spaceId) {
                     localStorageService.set('spaceId', vm.spaceId);
                     localStorageService.set('current', null);
+                    vm.parentId = null;
                     localStorageService.set('list', null)
                 }
 
@@ -185,9 +186,10 @@
         vm.fileMenuOptions = [
             [
                 'Share', function ($itemScope) {
-                    console.log($itemScope.file.id);
+                    console.log($itemScope.file.id);                    
                 }
             ],
+            null,
             [
                 'Edit', function ($itemScope) {
                     vm.file = $itemScope.file;
@@ -197,6 +199,15 @@
                 }
             ],
             [
+                'Cut', function($itemScope) {
+                    localStorageService.set('cut-out', $itemScope.file.id);
+                    localStorageService.set('oldParentId', vm.parentId);
+                    console.log(vm.parentId);
+                    deleteFile($itemScope.file.id);
+                }
+            ],
+            null,
+            [
                 'Delete', function ($itemScope) {
                     return deleteFile($itemScope.file.id);
                 }
@@ -204,6 +215,30 @@
         ];
 
         vm.createOption = [
+            [
+                'Paste', function () {
+                    if (localStorageService.get('cut-out') != null) {
+                        fileService.getDeletedFile(localStorageService.get('cut-out'), function (data) {
+                            var folder = data;
+                            folder.isDeleted = false;
+                            folder.spaceId = vm.spaceId;
+                            folder.parentId = vm.parentId;
+
+                            console.log(localStorageService.get('oldParentId'));
+
+                            fileService.updateDeletedFile(folder.id, localStorageService.get('oldParentId'), folder, function() {
+                                if (vm.parentId == null) {
+                                    vm.getSpace();
+                                }
+                                else {
+                                    vm.getFolderContent(vm.parentId);
+                                }
+                            });
+                        });
+                    }
+                }
+            ],
+            null,
             [
                 'Create folder', function () {
                     vm.folder = { parentId: vm.parentId, spaceId: vm.spaceId };
@@ -252,7 +287,7 @@
                         }
                     ]
                 ]
-            ]
+            ]            
         ];
 
         function openFolderWindow(size) {
