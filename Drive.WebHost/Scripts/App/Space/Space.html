@@ -68,7 +68,7 @@
             </div>
         </div>
         <div class="small">
-            <div role="button" class="s-block btn-default shadow" context-menu="spaceCtrl.folderMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}">
+            <div role="button" class="s-block btn-default shadow" context-menu="spaceCtrl.folderMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}"  ng-dblclick="spaceCtrl.openDocument(file.link)">
                 <i class="fa fa-file-o fa-5x"></i>
                 <br>
                 <span class="bold">File type: </span>
