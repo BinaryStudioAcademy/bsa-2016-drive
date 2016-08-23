@@ -98,21 +98,6 @@ textarea {
         clear: both;
     }
 
-/*Side menu on Index page*/
-#wrapper {
-    margin-left: 200px;
-}
-
-#content {
-    float: right;
-    width: 100%;
-}
-
-#sidebar {
-    float: left;
-    width: 200px;
-}
-
 /*Ng-include on Index page*/
 .include-index {
     float: left;
@@ -176,7 +161,6 @@ textarea {
     max-height: 450px;
     overflow-x: hidden;
 }
-
 
 /*Breadcrumbs paths*/
 .btn-breadcrumb .btn:not(:last-child):after {
@@ -427,13 +411,17 @@ textarea {
     margin-left: -18px;
 }
 
-/*Menu buttons style*/
+/*Toolbar buttons style*/
 .btn-custom {
     -webkit-appearance: none;
     outline: none;
     border: 0;
     background: transparent;
     vertical-align: middle;
+}
+
+.toolbar-div {
+    margin-right: 18px;
 }
 
 /*Remove button focus after click*/
@@ -454,8 +442,16 @@ hr.style {
     background-image: -o-linear-gradient(left, #333, #ccc, #333);
 }
 
-/*Icon on createSpace button*/
-.iconCustom {
+/*Create new space button in menu*/
+.create-space {
+    width: 100%; 
+    height: 40px;
+    margin-top: -2px;
+    border-radius: 0 !important;
+}
+
+/*Icon on create new Space button in menu*/
+.icon-custom {
     margin-left: -52px;
     width: 2.7em;
 }
