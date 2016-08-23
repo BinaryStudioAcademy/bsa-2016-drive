@@ -171,7 +171,7 @@
     <Compile Include="Api\FoldersController.cs" />
     <Compile Include="Api\GlobalExceptionLogger.cs" />
     <Compile Include="Api\LogsController.cs" />
-    <Compile Include="Api\Pro\AcademyProController.cs" />
+    <Compile Include="Api\Pro\AcademiesController.cs" />
     <Compile Include="Api\Pro\CodeSamplesController.cs" />
     <Compile Include="Api\Pro\ContentLinksController.cs" />
     <Compile Include="Api\Pro\LecturesController.cs" />

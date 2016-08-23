@@ -5,16 +5,18 @@ using Driver.Shared.Dto.Pro;
 
 namespace Drive.WebHost.Api.Pro
 {
-    [RoutePrefix("api/academypro")]
-    public class AcademyProController : ApiController
+    [RoutePrefix("api/academies")]
+    public class AcademiesController : ApiController
     {
         private readonly IAcademyProCourseService _academyProCourseService;
 
-        public AcademyProController(IAcademyProCourseService academyProCourseService)
+        public AcademiesController(IAcademyProCourseService academyProCourseService)
         {
             _academyProCourseService = academyProCourseService;
         }
 
+        [HttpGet]
+        [Route("")]
         public async Task<IHttpActionResult> GetAllAsync()
         {
             var courses =  await _academyProCourseService.GetAllAsync();
@@ -37,7 +39,7 @@ namespace Drive.WebHost.Api.Pro
             return Ok(result);
         }
 
-        // POST: api/academypro
+        // POST: api/academies
         [HttpPost]
         public async Task<IHttpActionResult> CreateFileAsync(AcademyProCourseDto data)
         {
@@ -50,7 +52,7 @@ namespace Drive.WebHost.Api.Pro
 
         }
 
-        // PUT: api/academypro/5
+        // PUT: api/academies/5
         [HttpPut]
         public async Task<IHttpActionResult> UpdateFileAsync(int id, AcademyProCourseDto data)
         {
@@ -65,7 +67,7 @@ namespace Drive.WebHost.Api.Pro
             return Ok(result);
         }
 
-        // DELETE: api/academypro/5
+        // DELETE: api/academies/5
         [HttpDelete]
         public IHttpActionResult DeleteFileAsync(int id)
         {
