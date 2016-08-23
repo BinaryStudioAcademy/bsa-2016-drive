@@ -3,4 +3,16 @@
     <div class="btn-group btn-breadcrumb">
         <a class="btn btn-info"><i class="fa fa-graduation-cap fa-lg"></i> Academy Pro</a>
     </div>
+
+    <div>
+        <span us-spinner="{radius:30, width:8, length: 16}"></span>
+        <h2>{{lectureCtrl.lecture.name}}</h2>
+        <div class="centered-video">
+            <div ng-repeat="video in lectureCtrl.lecture.videoLinks">
+                <h3>{{video.name}}</h3>
+                <youtube-video video-url="video.link"></youtube-video>
+                <p>{{video.description}}</p>
+            </div>
+        </div>
+    </div>
 </div>
