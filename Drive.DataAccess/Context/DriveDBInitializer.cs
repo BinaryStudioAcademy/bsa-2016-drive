@@ -1188,6 +1188,14 @@ namespace Drive.DataAccess.Context
                                 Description = "Repository sample description",
                                 IsDeleted = false,
                                 Link = "https://github.com/BinaryStudioAcademy/bsa-2016-drive"
+                            },
+                            new ContentLink
+                            {
+                                LinkType = LinkType.Slide,
+                                Name = "Slide sample 1",
+                                Description = "Slide sample description",
+                                IsDeleted = false,
+                                Link = "https://docs.google.com/presentation/d/1ViNfYiQCHhJvX5O0SvZ9EJgjI9FqjHZ7OQwFCE4KGlA/embed?start=false&loop=false&delayms=3000"
                             }
                         }
                     },
@@ -1224,6 +1232,14 @@ namespace Drive.DataAccess.Context
                                 Description = "Repository sample description",
                                 IsDeleted = false,
                                 Link = "https://github.com/BinaryStudioAcademy/bsa-2016-drive"
+                            },
+                            new ContentLink
+                            {
+                                LinkType = LinkType.Slide,
+                                Name = "Slide sample 1",
+                                Description = "Slide sample description",
+                                IsDeleted = false,
+                                Link = "https://docs.google.com/presentation/d/1ViNfYiQCHhJvX5O0SvZ9EJgjI9FqjHZ7OQwFCE4KGlA/embed?start=false&loop=false&delayms=3000"
                             }
                         }
                     }
@@ -1285,6 +1301,14 @@ namespace Drive.DataAccess.Context
                                 Description = "Repository sample description",
                                 IsDeleted = false,
                                 Link = "https://github.com/BinaryStudioAcademy/bsa-2016-drive"
+                            },
+                            new ContentLink
+                            {
+                                LinkType = LinkType.Slide,
+                                Name = "Slide sample 1",
+                                Description = "Slide sample description",
+                                IsDeleted = false,
+                                Link = "https://docs.google.com/presentation/d/1ViNfYiQCHhJvX5O0SvZ9EJgjI9FqjHZ7OQwFCE4KGlA/embed?start=false&loop=false&delayms=3000"
                             }
                         }
                     },
@@ -1321,6 +1345,14 @@ namespace Drive.DataAccess.Context
                                 Description = "Repository sample description",
                                 IsDeleted = false,
                                 Link = "https://github.com/BinaryStudioAcademy/bsa-2016-drive"
+                            },
+                            new ContentLink
+                            {
+                                LinkType = LinkType.Slide,
+                                Name = "Slide sample 1",
+                                Description = "Slide sample description",
+                                IsDeleted = false,
+                                Link = "https://docs.google.com/presentation/d/1ViNfYiQCHhJvX5O0SvZ9EJgjI9FqjHZ7OQwFCE4KGlA/embed?start=false&loop=false&delayms=3000"
                             }
                         }
                     }
