@@ -34,12 +34,6 @@ namespace Drive.WebHost.Services.Pro
                 ModifiedAt = lecture.ModifiedAt,
                 IsDeleted = lecture.IsDeleted,
                 StartDate = lecture.StartDate,
-                Tags = lecture.Tags.Select(tag => new TagDto
-                {
-                    Id = tag.Id,
-                    Name = tag.Name,
-                    IsDeleted = tag.IsDeleted
-                })
             }).ToListAsync();
 
             return result;
@@ -97,12 +91,6 @@ namespace Drive.WebHost.Services.Pro
                    Name = sample.Name,
                    IsDeleted = sample.IsDeleted,
                    Code = sample.Code
-                }),
-                Tags = lecture.Tags.Select(tag => new TagDto
-                {
-                    Id = tag.Id,
-                    Name = tag.Name,
-                    IsDeleted = tag.IsDeleted
                 })
             }).SingleOrDefaultAsync();
 
@@ -118,12 +106,7 @@ namespace Drive.WebHost.Services.Pro
                 StartDate = dto.StartDate,
                 IsDeleted = false,
                 CreatedAt = DateTime.Now,
-                ModifiedAt = DateTime.Now,
-                Tags = new List<Tag>(dto.Tags.Select(tag => new Tag
-                {
-                    Name = tag.Name,
-                    IsDeleted = false
-                }))
+                ModifiedAt = DateTime.Now
             };
 
             _unitOfWork.Lectures.Create(lecture);
