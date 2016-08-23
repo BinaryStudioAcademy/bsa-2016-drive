@@ -5,9 +5,42 @@
         .module('driveApp.academyPro')
         .factory('AcademyService', AcademyService);
 
-    AcademyService.$inject = [];
+    AcademyService.$inject = ['$http'];
 
-    function AcademyService() {
+    function AcademyService($http) {
+        var service = {
+            getAcademy: getAcademy,
+            pushData: pushData
+        }
 
+        return service;
+
+        function getAcademy(id) {
+            return $http.get('/api/academies/' + id)
+                .then(getAcademyCompleted)
+                .catch(getAcademyFailed);
+
+            function getAcademyCompleted(response) {
+                return response.data;
+            }
+
+            function getAcademyFailed(error) {
+                console.log('XHR Failed for getAcademy.' + error.data);
+            }
+        }
+
+        function pushData(data) {
+            return $http.post('/api/academies', data)
+                .then(pushDataCompleted)
+                .catch(pushDataFailed);
+
+            function pushDataCompleted(response) {
+                return response.data;
+            }
+
+            function pushDataFailed(error) {
+                console.log('XHR Failed for pushData.' + error.data);
+            }
+        }
     }
 })();
