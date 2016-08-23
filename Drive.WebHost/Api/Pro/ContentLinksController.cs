@@ -15,6 +15,7 @@ namespace Drive.WebHost.Api.Pro
             _contentLinkService = contentLinkService;
         }
 
+        [HttpGet]
         public async Task<IHttpActionResult> GetAllAsync()
         {
             var courses = await _contentLinkService.GetAllAsync();
@@ -25,7 +26,7 @@ namespace Drive.WebHost.Api.Pro
         }
 
         [HttpGet]
-        public async Task<IHttpActionResult> GetCourceAsync(int id)
+        public async Task<IHttpActionResult> GetAsync(int id)
         {
             var result = await _contentLinkService.GetAsync(id);
 
@@ -39,7 +40,7 @@ namespace Drive.WebHost.Api.Pro
 
         // POST: api/contentlinks
         [HttpPost]
-        public async Task<IHttpActionResult> CreateFileAsync(ContentLinkDto data)
+        public async Task<IHttpActionResult> CreateAsync(ContentLinkDto data)
         {
             var result = await _contentLinkService.CreateAsync(data);
             if (result == null)
@@ -52,7 +53,7 @@ namespace Drive.WebHost.Api.Pro
 
         // PUT: api/contentlinks/5
         [HttpPut]
-        public async Task<IHttpActionResult> UpdateFileAsync(int id, ContentLinkDto data)
+        public async Task<IHttpActionResult> UpdateAsync(int id, ContentLinkDto data)
         {
 
             var result = await _contentLinkService.UpdateAsync(id, data);
@@ -67,7 +68,7 @@ namespace Drive.WebHost.Api.Pro
 
         // DELETE: api/contentlinks/5
         [HttpDelete]
-        public IHttpActionResult DeleteFileAsync(int id)
+        public IHttpActionResult DeleteAsync(int id)
         {
             _contentLinkService.DeleteAsync(id);
 

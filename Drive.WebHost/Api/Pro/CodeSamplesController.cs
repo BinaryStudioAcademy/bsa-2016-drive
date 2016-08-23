@@ -15,6 +15,7 @@ namespace Drive.WebHost.Api.Pro
             _codeSamplesService = codeSamplesService;
         }
 
+        [HttpGet]
         public async Task<IHttpActionResult> GetAllAsync()
         {
             var courses = await _codeSamplesService.GetAllAsync();
@@ -25,7 +26,7 @@ namespace Drive.WebHost.Api.Pro
         }
 
         [HttpGet]
-        public async Task<IHttpActionResult> GetCourceAsync(int id)
+        public async Task<IHttpActionResult> GetAsync(int id)
         {
             var result = await _codeSamplesService.GetAsync(id);
 
@@ -39,7 +40,7 @@ namespace Drive.WebHost.Api.Pro
 
         // POST: api/codesamples
         [HttpPost]
-        public async Task<IHttpActionResult> CreateFileAsync(CodeSampleDto data)
+        public async Task<IHttpActionResult> CreateAsync(CodeSampleDto data)
         {
             var result = await _codeSamplesService.CreateAsync(data);
             if (result == null)
@@ -52,7 +53,7 @@ namespace Drive.WebHost.Api.Pro
 
         // PUT: api/codesamples/5
         [HttpPut]
-        public async Task<IHttpActionResult> UpdateFileAsync(int id, CodeSampleDto data)
+        public async Task<IHttpActionResult> UpdateAsync(int id, CodeSampleDto data)
         {
 
             var result = await _codeSamplesService.UpdateAsync(id, data);
@@ -67,7 +68,7 @@ namespace Drive.WebHost.Api.Pro
 
         // DELETE: api/codesamples/5
         [HttpDelete]
-        public IHttpActionResult DeleteFileAsync(int id)
+        public IHttpActionResult DeleteAsync(int id)
         {
             _codeSamplesService.DeleteAsync(id);
 
