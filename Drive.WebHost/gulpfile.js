@@ -57,7 +57,9 @@ gulp.task("libs", function () {
       paths.bower + "angular-local-storage.js",
       paths.bower + "spin.js",
       paths.bower + "angular-spinner.js",
-      paths.bower + "angular-loading-spinner.js"
+      paths.bower + "angular-loading-spinner.js",
+      paths.bower + "angular-youtube-embed.js",
+      paths.bower + "youtube.iframe-api.js"
     ])
 
         .pipe(concat("libs.js"))
