@@ -10,14 +10,12 @@
                 </div>
                 <div class="col-md-10">
                     <div class="form">
-                        <div class="form-group">       
+                        <div class="form-group">
                             <label for="fileName" class="col-md-3">Name: </label>
                             <input class="form-control col-md-9" name="fileName" type="text" placeholder="Enter title" ng-model="fileModalCtrl.file.name" required fileName space-id="{{fileModalCtrl.file.spaceId}}" parent-id="{{fileModalCtrl.file.parentId}}" file-name="{{fileModalCtrl.name}}" />
-                            <span style="color: red" class="col-md-offset-3" ng-show="fileForm.fileName.$error.fileName">
-                                File with this name already exists
-                            </span>
-                            <span ng-show="fileForm.fileName.$touched && fileForm.fileName.$error.required" style="color: red" class="col-md-offset-3">
-                                Name is required
+                            <span style="color: red" class="col-md-offset-3">
+                                <span ng-show="fileForm.fileName.$error.fileName"> File with this name already exists </span>
+                                <span ng-show="fileForm.fileName.$touched && fileForm.fileName.$error.required"> Name is required</span>
                             </span>
                         </div>
                         <div class="form-group">
