@@ -350,12 +350,12 @@ textarea {
         align-content: center;
         overflow: hidden;
         height: 100%;
-        
     }
+
         #wrapper.toggled {
-            padding-left: 0;
+            padding-left: 20px;
             padding-right: 0;
-            margin-right: 0%;
+            margin-left: -14px;
             overflow: hidden;
             align-content: center;
         }
@@ -365,12 +365,13 @@ textarea {
     }
 
     #wrapper.toggled #sidebar-wrapper {
-        width: 48px;
+        width: 47px;
     }
 
     #page-content-wrapper {
         position: relative;
         overflow: hidden;
+        margin-top: -40px;
     }
 
     #wrapper.toggled #page-content-wrapper {
@@ -381,6 +382,7 @@ textarea {
         overflow-y: hidden;
         overflow-x: hidden;
     }
+
     #wrapper.toggled #sidebar-wrapper:hover {
         width: 205px;
     }
