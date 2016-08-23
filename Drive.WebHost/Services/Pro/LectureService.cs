@@ -41,7 +41,7 @@ namespace Drive.WebHost.Services.Pro
 
         public async Task<LectureDto> GetAsync(int id)
         {
-            var result = await _unitOfWork.Lectures.Query.Select(lecture => new LectureDto
+            var result = await _unitOfWork.Lectures.Query.Where(x => x.Id == id).Select(lecture => new LectureDto
             {
                 Id = lecture.Id,
                 Name = lecture.Name,
@@ -55,35 +55,40 @@ namespace Drive.WebHost.Services.Pro
                    Id = link.Id,
                    Name = link.Name,
                    Description = link.Description,
-                   Link = link.Link
+                   Link = link.Link,
+                   LinkType = link.LinkType
                 }),
                 SlidesLinks = lecture.ContentList.Where(links => links.LinkType == LinkType.Slide).Select(link => new ContentLinkDto
                 {
                     Id = link.Id,
                     Name = link.Name,
                     Description = link.Description,
-                    Link = link.Link
+                    Link = link.Link,
+                    LinkType = link.LinkType
                 }),
                 SampleLinks = lecture.ContentList.Where(links => links.LinkType == LinkType.Sample).Select(link => new ContentLinkDto
                 {
                     Id = link.Id,
                     Name = link.Name,
                     Description = link.Description,
-                    Link = link.Link
+                    Link = link.Link,
+                    LinkType = link.LinkType
                 }),
                 UsefulLinks = lecture.ContentList.Where(links => links.LinkType == LinkType.Useful).Select(link => new ContentLinkDto
                 {
                     Id = link.Id,
                     Name = link.Name,
                     Description = link.Description,
-                    Link = link.Link
+                    Link = link.Link,
+                    LinkType = link.LinkType
                 }),
                 RepositoryLinks = lecture.ContentList.Where(links => links.LinkType == LinkType.Repository).Select(link => new ContentLinkDto
                 {
                     Id = link.Id,
                     Name = link.Name,
                     Description = link.Description,
-                    Link = link.Link
+                    Link = link.Link,
+                    LinkType = link.LinkType
                 }),
                 CodeSamples = lecture.CodeSamples.Select(sample => new CodeSampleDto
                 {
