@@ -14,6 +14,7 @@ namespace Drive.WebHost.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.BasePath = System.Configuration.ConfigurationManager.AppSettings["basePath"];
             return View();
         }
     }

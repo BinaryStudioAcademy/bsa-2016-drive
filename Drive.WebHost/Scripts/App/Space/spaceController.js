@@ -48,9 +48,11 @@
 
         vm.redirectToSpaceSettings = redirectToSpaceSettings;
 
+        vm.changeOrder = changeOrder;
+
         vm.paginate = {
             currentPage: 1,
-            pageSize: 10,
+            pageSize: 20,
             numberOfItems: 0,
             getContent: null
         }
@@ -70,10 +72,16 @@
             vm.changeView = changeView;
             vm.columnForOrder = 'name';
 
-            spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
+            spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate, function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
-                console.log(localStorageService.get('current'));
+
+                if (localStorageService.get('spaceId') !== vm.spaceId) {
+                    localStorageService.set('spaceId', vm.spaceId);
+                    localStorageService.set('current', null);
+                    localStorageService.set('list', null)
+                }
+
                 if (localStorageService.get('list') != null)
                     vm.folderList = localStorageService.get('list');
 
@@ -112,7 +120,7 @@
         }
 
         function getSpaceContent() {
-            spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
+            spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate, function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
             });
@@ -324,7 +332,7 @@
 
         function getFolderContentFromApi() {
             vm.searchText = '';
-             folderService.getContent(vm.parentId, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
+            folderService.getContent(vm.parentId, vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate, function (data) {
                 vm.space.folders = data.folders;
                 vm.space.files = data.files;
             });

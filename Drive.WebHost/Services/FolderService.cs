@@ -140,7 +140,7 @@ namespace Drive.WebHost.Services
             await _unitOfWork?.SaveChangesAsync();
         }
 
-        public async Task<FolderContentDto> GetContentAsync(int id, int page, int count)
+        public async Task<FolderContentDto> GetContentAsync(int id, int page, int count, string sort)
         {
             IEnumerable<FolderUnitDto> folders = await _unitOfWork.Folders.Query.Where(x => x.Parent.Id == id)
             .Select(f => new FolderUnitDto
@@ -164,6 +164,23 @@ namespace Drive.WebHost.Services
                     FileType = f.FileType,
                     Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
                 }).ToListAsync();
+
+            if (sort != null && sort.Equals("asc"))
+            {
+                var foldersOrdered = folders.OrderBy(f => f.CreatedAt);
+                var filesOrdered = files.OrderBy(f => f.CreatedAt);
+
+                folders = foldersOrdered;
+                files = filesOrdered;
+            }
+            else if (sort != null && sort.Equals("desc"))
+            {
+                var foldersOrdered = folders.OrderByDescending(f => f.CreatedAt);
+                var filesOrdered = files.OrderByDescending(f => f.CreatedAt);
+
+                folders = foldersOrdered;
+                files = filesOrdered;
+            }
 
             int skipCount = (page - 1) * count;
             if (folders.Count() <= skipCount)

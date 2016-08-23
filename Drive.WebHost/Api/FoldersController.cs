@@ -80,12 +80,12 @@ namespace Drive.WebHost.Api
             return Ok();
         }
 
-        // GET: api/content/(int)?page=(int)&count=(int)
+        // GET: api/content/(int)?page=(int)&count=(int)&sort=(string)
         [Route("~/api/content/{id:int}")]
         [HttpGet]
-        public async Task<IHttpActionResult> GetContentAsync(int id, int page = 1, int count = 100)
+        public async Task<IHttpActionResult> GetContentAsync(int id, int page = 1, int count = 100, string sort = null)
         {
-            var result = await _service.GetContentAsync(id, page, count);
+            var result = await _service.GetContentAsync(id, page, count, sort);
 
             return Ok(result);
         }
