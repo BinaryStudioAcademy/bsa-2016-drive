@@ -197,6 +197,7 @@ namespace Drive.WebHost.Services
             var space = new Space
             {
                 Name = dto.Name,
+                Type = SpaceType.OtherSpace,
                 Description = dto.Description,
                 MaxFilesQuantity = dto.MaxFilesQuantity,
                 MaxFileSize = dto.MaxFileSize,
