@@ -1,154 +1,4 @@
-﻿<!--<div class="container">
-    <br />-->
-<!--<div class="btn-group btn-breadcrumb">
-    <a ng-click="settingsCtrl.redirectToSpace()" class="btn btn-info"><i class="fa fa-cloud fa-lg"></i>{{settingsCtrl.space.name}}</a>
-    <a class="btn btn-default">Settings</a>
-</div>
-<div class="page-header">
-    <h2>
-        Space settings
-    </h2>
-</div>
-<div class="row">
-    <div class="col-md-3" style="padding-right: 20px; border-right: 1px solid #ccc;">
-        <h4>General settings</h4>
-        <form name="settingsForm" novalidate>
-            <div class="col-md-12">
-                <label>Space name:</label>
-                <input type="text" class="form-control" name="spaceName" ng-pattern="/^[\w -]*$/" ng-model="settingsCtrl.space.name" required>
-                <div>
-                    <span style="color:red" ng-show="settingsForm.spaceName.$error.pattern">Not a valid name</span>
-                    <span style="color:red" ng-show="settingsForm.spaceName.$error.required">Data is required</span>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <label>Description:</label>
-                <input type="text" class="form-control" ng-model="settingsCtrl.space.description">
-            </div>
-            <div class="col-md-12">
-                <label>Maximum Files Quantity:</label>
-                <input type="number" class="form-control" name="maxQuantity" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="settingsCtrl.space.maxFilesQuantity" required>
-                <div>
-                    <span style="color:red" ng-show="settingsForm.maxQuantity.$error.pattern">Not a valid quantity</span>
-                    <span style="color:red" ng-show="settingsForm.maxQuantity.$error.required">Data is required</span>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <label>Maximum file size (MB):</label>
-                <input type="number" class="form-control" min="0" step="1" max="1024" name="maxSize" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="settingsCtrl.space.maxFileSize" required>
-                <div>
-                    <span class="error" ng-show="settingsForm.maxSize.$error.max" style="color: red">
-                        Max file size should be less than 1024 MB.
-                    </span>
-                    <span style="color:red" ng-show="settingsForm.maxSize.$error.required">
-                        Data is required
-                    </span>
-                    <span style="color:red" ng-show="settingsForm.maxsize.$error.pattern">
-                        Not a valid file size
-                    </span>
-                </div>
-            </div>
-            <div class="col-md-12">
-                <br />
-                <button class="btn btn-primary" ng-click="settingsCtrl.save()" ng-disabled="settingsForm.spaceName.$invalid || settingsForm.maxQuantity.$invalid || settingsForm.maxSize.$invalid">Save</button>
-                <button class="btn btn-default" ng-click="settingsCtrl.cancel()">Cancel</button>
-            </div>
-        </form>
-    </div>-->
-<!--<div class="col-md-7">
-    <h4>Settings role access to space</h4>
-    <div class="form-inline">
-        <div class="form-group">
-            <div class="col-md-3">
-                <input type="text" placeholder="Enter a role name" ng-model="settingsCtrl.selectedRole" uib-typeahead="role as role.name for role in settingsCtrl.roles | filter:{name:$viewValue} | limitTo:10" class="form-control">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-7">
-                <button class="btn btn-primary" ng-click="settingsCtrl.addSpaceRole()">Add</button>
-            </div>
-        </div>
-    </div>
-    <br />
-    <table class="table users table-striped table-hover">
-        <thead>
-            <tr>
-                <th>Role name</th>
-                <th>Read</th>
-                <th>Write</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody style="height: 200px;">
-            <tr ng-repeat="item in settingsCtrl.permittedRoles">
-                <td>{{item.name}}</td>
-                <td>
-                    <input type="checkbox" ng-model="item.confirmedRead" ng-change="settingsCtrl.addReadRole(item.confirmedRead, item.id)">
-                </td>
-                <td>
-                    <input type="checkbox" ng-model="item.confirmedWrite" ng-change="settingsCtrl.addWriteRole(item.confirmedWrite, item.id)">
-                </td>
-                <td>
-                    <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="settingsCtrl.removeSpaceRole(item.id); settingsCtrl.addReadRole(false, item.id); settingsCtrl.addWriteRole(false, item.id)"></i>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-<div class="col-md-3"></div>
-<div class="col-md-7">
-    <h4>Settings user access to space</h4>
-    <div class="form-inline">
-        <div class="form-group">
-            <div class="col-md-3">
-                <input type="text" placeholder="Enter a username" ng-model="settingsCtrl.selected" uib-typeahead="user as user.name for user in settingsCtrl.users | filter:{name:$viewValue} | limitTo:10" class="form-control">
-            </div>
-        </div>
-        <div class="form-group">
-            <div class="col-md-5">
-                <button class="btn btn-primary" ng-click="settingsCtrl.addSpaceUser()">Add</button>
-            </div>
-        </div>
-    </div>
-    <br />
-    <table class="table users table-striped table-hover">
-        <thead>
-            <tr>
-                <th>User name</th>
-                <th>Read</th>
-                <th>Write</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody style="height: 200px;">
-            <tr ng-repeat="item in settingsCtrl.permittedUsers">
-                <td>{{item.name}}</td>
-                <td>
-                    <input type="checkbox" ng-model="item.confirmedRead" ng-change="settingsCtrl.addReadUser(item.confirmedRead, item.globalId)">
-                </td>
-                <td>
-                    <input type="checkbox" ng-model="item.confirmedWrite" ng-change="settingsCtrl.addWriteUser(item.confirmedWrite, item.globalId)">
-                </td>
-                <td>
-                    <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="settingsCtrl.removeSpaceUser(item.globalId); settingsCtrl.addReadUser(false, item.globalId); settingsCtrl.addWriteUser(false, item.globalId)"></i>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>-->
-    </div>
-</div>
-            </div>
-        </div>
-<!--For Tooltip-->
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
-</script>
-
-
-<div class="container">
+﻿<div class="container">
     <br />
     <div class="btn-group btn-breadcrumb">
         <a ng-click="settingsCtrl.redirectToSpace()" class="btn btn-info"><i class="fa fa-cloud fa-lg"></i>{{settingsCtrl.space.name}}</a>
@@ -156,7 +6,7 @@
     </div>
     <div class="page-header">
         <h2>
-            Space settings <small>{{settingsCtrl.space.Name}}</small>
+            Space settings
         </h2>
     </div>
     <div class="row">
@@ -165,120 +15,140 @@
             <form name="settingsForm" novalidate>
                 <div class="col-md-12">
                     <label>Space name:</label>
-                    <input type="text" class="form-control" ng-model="settingsCtrl.space.Name">
+                    <input type="text" class="form-control" name="spaceName" ng-pattern="/^[\w -]*$/" ng-model="settingsCtrl.space.name" required>
+                    <div>
+                        <span style="color:red" ng-show="settingsForm.spaceName.$error.pattern">Not a valid name</span>
+                        <span style="color:red" ng-show="settingsForm.spaceName.$error.required">Data is required</span>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <label>Description:</label>
-                    <input type="text" class="form-control" ng-model="settingsCtrl.space.Description">
+                    <input type="text" class="form-control" ng-model="settingsCtrl.space.description">
                 </div>
                 <div class="col-md-12">
                     <label>Maximum Files Quantity:</label>
-                    <input type="number" class="form-control" min="0" step="1" ng-model="settingsCtrl.space.MaxFilesQuantity">
+                    <input type="number" class="form-control" name="maxQuantity" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="settingsCtrl.space.maxFilesQuantity" required>
+                    <div>
+                        <span style="color:red" ng-show="settingsForm.maxQuantity.$error.pattern">Not a valid quantity</span>
+                        <span style="color:red" ng-show="settingsForm.maxQuantity.$error.required">Data is required</span>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <label>Maximum file size (MB):</label>
-                    <input type="number" class="form-control" min="0" step="1" max="1024" ng-model="settingsCtrl.space.MaxFileSize">
+                    <input type="number" class="form-control" min="0" step="1" max="1024" name="maxSize" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="settingsCtrl.space.maxFileSize" required>
+                    <div>
+                        <span class="error" ng-show="settingsForm.maxSize.$error.max" style="color: red">
+                            Max file size should be less than 1024 MB.
+                        </span>
+                        <span style="color:red" ng-show="settingsForm.maxSize.$error.required">
+                            Data is required
+                        </span>
+                        <span style="color:red" ng-show="settingsForm.maxsize.$error.pattern">
+                            Not a valid file size
+                        </span>
+                    </div>
                 </div>
                 <div class="col-md-12">
                     <br />
-                    <button class="btn btn-primary" ng-click="settingsCtrl.save()">Save</button>
+                    <button class="btn btn-primary" ng-click="settingsCtrl.save()" ng-disabled="settingsForm.spaceName.$invalid || settingsForm.maxQuantity.$invalid || settingsForm.maxSize.$invalid">Save</button>
                     <button class="btn btn-default" ng-click="settingsCtrl.cancel()">Cancel</button>
                 </div>
             </form>
         </div>
-        <div class="col-md-9">
-            <h4>Settings access to space</h4>
-            <ul id="permissionsTab" class="nav nav-tabs">
-                <li class="active"><a href="#panel1">Users permission</a></li>
-                <li class=""><a href="#panel2">Roles permission</a></li>
+        <div class="col-md-2">
+            <ul class="nav nav-pills nav-stacked">
+                <li ng-class="{ active: settingsCtrl.isSet(1) }">
+                    <a href ng-click="settingsCtrl.setTab(1)">Users</a>
+                </li>
+                <li ng-class="{ active: settingsCtrl.isSet(2) }">
+                    <a href ng-click="settingsCtrl.setTab(2)">Roles</a>
+                </li>
             </ul>
-            <div class="tab-content">
-                <br />
-                <div id="panel1" class="tab-pane fade in active">
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <div class="col-md-3">
-                                <input type="text" placeholder="Enter a username" ng-model="settingsCtrl.selected" uib-typeahead="user as user.name for user in settingsCtrl.users | filter:{name:$viewValue} | limitTo:10" class="form-control">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-5">
-                                <button class="btn btn-primary" ng-click="settingsCtrl.addSpaceUser()">Add</button>
-                            </div>
-                        </div>
-                    </div><br />
-                    <table class="table users table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>User name</th>
-                                <th>Read</th>
-                                <th>Write</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody style="height: 200px;">
-                            <tr ng-repeat="item in settingsCtrl.permittedUsers">
-                                <td>{{item.name}}</td>
-                                <td>
-                                    <input type="checkbox" ng-model="item.confirmedRead" ng-change="settingsCtrl.addReadUser(item.confirmedRead, item.globalId)">
-                                </td>
-                                <td>
-                                    <input type="checkbox" ng-model="item.confirmedWrite" ng-change="settingsCtrl.addWriteUser(item.confirmedWrite, item.globalId)">
-                                </td>
-                                <td>
-                                    <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="settingsCtrl.removeSpaceUser(item.globalId); settingsCtrl.addReadUser(false, item.globalId); settingsCtrl.addWriteUser(false, item.globalId)"></i>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div id="panel2" class="tab-pane fade in active">
-                        <div class="form-inline">
-                            <div class="form-group">
-                                <div class="col-md-3">
-                                    <input type="text" placeholder="Enter a role name" ng-model="settingsCtrl.selectedRole" uib-typeahead="role as role.name for role in settingsCtrl.roles | filter:{name:$viewValue} | limitTo:10" class="form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-7">
-                                    <button class="btn btn-primary" ng-click="settingsCtrl.addSpaceRole()">Add</button>
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-                        <table class="table users table-striped table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Role name</th>
-                                    <th>Read</th>
-                                    <th>Write</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody style="height: 200px;">
-                                <tr ng-repeat="item in settingsCtrl.permittedRoles">
-                                    <td>{{item.name}}</td>
-                                    <td>
-                                        <input type="checkbox" ng-model="item.confirmedRead" ng-change="settingsCtrl.addReadRole(item.confirmedRead, item.id)">
-                                    </td>
-                                    <td>
-                                        <input type="checkbox" ng-model="item.confirmedWrite" ng-change="settingsCtrl.addWriteRole(item.confirmedWrite, item.id)">
-                                    </td>
-                                    <td>
-                                        <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="settingsCtrl.removeSpaceRole(item.id); settingsCtrl.addReadRole(false, item.id); settingsCtrl.addWriteRole(false, item.id)"></i>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+        </div>
+        <div class="col-md-7">
+            <div ng-show="settingsCtrl.isSet(1)">
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <input type="text" placeholder="Enter a username" ng-model="settingsCtrl.selected" uib-typeahead="user as user.name for user in settingsCtrl.users | filter:{name:$viewValue} | limitTo:10" class="form-control">
                     </div>
                 </div>
+                <div class="form-group">
+                    <div class="col-md-5">
+                        <button class="btn btn-primary" ng-click="settingsCtrl.addSpaceUser()">Add</button>
+                    </div>
+                </div>
+                <br /><br />
+                <table class="table users table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width:30%">User name</th>
+                            <th style="width:15%">Read</th>
+                            <th style="width:15%">Write</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody style="height: 200px;">
+                        <tr ng-repeat="item in settingsCtrl.permittedUsers">
+                            <td style="width:30%">{{item.name}}</td>
+                            <td style="width:15%">
+                                <input type="checkbox" ng-model="item.confirmedRead" ng-change="settingsCtrl.addReadUser(item.confirmedRead, item.globalId)">
+                            </td>
+                            <td style="width:15%">
+                                <input type="checkbox" ng-model="item.confirmedWrite" ng-change="settingsCtrl.addWriteUser(item.confirmedWrite, item.globalId)">
+                            </td>
+                            <td>
+                                <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="settingsCtrl.removeSpaceUser(item.globalId); settingsCtrl.addReadUser(false, item.globalId); settingsCtrl.addWriteUser(false, item.globalId)"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div ng-show="settingsCtrl.isSet(2)">
+                <div class="form-group">
+                    <div class="col-md-3">
+                        <input type="text" placeholder="Enter a role name" ng-model="settingsCtrl.selectedRole" uib-typeahead="role as role.name for role in settingsCtrl.roles | filter:{name:$viewValue} | limitTo:10" class="form-control">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-7">
+                        <button class="btn btn-primary" ng-click="settingsCtrl.addSpaceRole()">Add</button>
+                    </div>
+                </div>
+                <br /> <br/>
+                <table class="table users table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width:30%">Role name</th>
+                            <th style="width:15%">Read</th>
+                            <th style="width:15%">Write</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody style="height: 200px;">
+                        <tr ng-repeat="item in settingsCtrl.permittedRoles">
+                            <td style="width:30%">{{item.name}}</td>
+                            <td style="width:15%">
+                                <input type="checkbox" ng-model="item.confirmedRead" ng-change="settingsCtrl.addReadRole(item.confirmedRead, item.id)">
+                            </td>
+                            <td style="width:15%">
+                                <input type="checkbox" ng-model="item.confirmedWrite" ng-change="settingsCtrl.addWriteRole(item.confirmedWrite, item.id)">
+                            </td>
+                            <td>
+                                <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="settingsCtrl.removeSpaceRole(item.id); settingsCtrl.addReadRole(false, item.id); settingsCtrl.addWriteRole(false, item.id)"></i>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 </div>
-<!--For Tooltip-->
+
+<!--For tabs-->
 <script type="text/javascript">
-    $(document).ready(function () {
-        $('[data-toggle="tooltip"]').tooltip();
-    });
+    $('#myTabs a')
+       .click(function (e) {
+           e.preventDefault();
+           $(this).tab('show');
+       });
 </script>

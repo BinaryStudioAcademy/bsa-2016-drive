@@ -19,9 +19,7 @@
         vm.removeSpaceUser = removeSpaceUser;
         vm.removeSpaceRole = removeSpaceRole;
         vm.selectedSpace = $routeParams.id ? $routeParams.id : 1;
-
         vm.redirectToSpace = redirectToSpace;
-
         vm.space = {
             readPermittedUsers: [],
             modifyPermittedUsers: [],
@@ -30,95 +28,97 @@
         }
         vm.permittedUsers = [];
         vm.permittedRoles = [];
+        vm.tab = 1;
+        vm.setTab = setTab;
+        vm.isSet = isSet;
         activate();
 
         function activate() {
             settingsService.getSpace(vm.selectedSpace, function (data) {
                 vm.space = data;
                 console.log(vm.space);
-            });
-
-            settingsService.getAllUsers(function (data) {
-                vm.users = data;
-                if (vm.space.readPermittedUsers != undefined) {
-                    for (var i = 0; i < vm.space.readPermittedUsers.length; i++) {
-                        for (var j = 0; j < vm.users.length; j++) {
-                            if (vm.space.readPermittedUsers[i].globalId === vm.users[j].id) {
-                                vm.permittedUsers.push({
-                                    name: vm.users[j].name,
-                                    globalId: vm.space.readPermittedUsers[i].globalId,
-                                    confirmedRead: true
-                                });
-                                break;
-                            }
-                        }
-                    }
-                }
-                vm.bool = true;
-                if (vm.space.modifyPermittedUsers != null) {
-                    for (var i = 0; i < vm.space.modifyPermittedUsers.length; i++) {
-                        vm.bool = true;
-                        for (var j = 0; j < vm.permittedUsers.length; j++) {
-                            if (vm.space.modifyPermittedUsers[i].globalId === vm.permittedUsers[j].globalId) {
-                                vm.permittedUsers[j].confirmedWrite = true;
-                                vm.bool = false;
-                            }
-                        }
-                        if (vm.bool) {
+                settingsService.getAllUsers(function (data) {
+                    vm.users = data;
+                    if (vm.space.readPermittedUsers != undefined) {
+                        for (var i = 0; i < vm.space.readPermittedUsers.length; i++) {
                             for (var j = 0; j < vm.users.length; j++) {
-                                if (vm.space.modifyPermittedUsers[i].globalId === vm.users[j].id) {
+                                if (vm.space.readPermittedUsers[i].globalId === vm.users[j].id) {
                                     vm.permittedUsers.push({
                                         name: vm.users[j].name,
-                                        globalId: vm.space.modifyPermittedUsers[i].globalId,
-                                        confirmedWrite: true
+                                        globalId: vm.space.readPermittedUsers[i].globalId,
+                                        confirmedRead: true
                                     });
                                     break;
                                 }
                             }
                         }
                     }
-                }
-            });
-            settingsService.getAllRoles(function (data) {
-                vm.roles = data;
-                if (vm.space.readPermittedRoles != undefined) {
-                    for (var i = 0; i < vm.space.readPermittedRoles.length; i++) {
-                        for (var j = 0; j < vm.roles.length; j++) {
-                            if (vm.space.readPermittedRoles[i].id === vm.roles[j].id) {
-                                vm.permittedRoles.push({
-                                    name: vm.roles[j].name,
-                                    id: vm.space.readPermittedRoles[i].id,
-                                    confirmedRead: true
-                                });
-                                break;
+                    vm.bool = true;
+                    if (vm.space.modifyPermittedUsers != null) {
+                        for (var i = 0; i < vm.space.modifyPermittedUsers.length; i++) {
+                            vm.bool = true;
+                            for (var j = 0; j < vm.permittedUsers.length; j++) {
+                                if (vm.space.modifyPermittedUsers[i].globalId === vm.permittedUsers[j].globalId) {
+                                    vm.permittedUsers[j].confirmedWrite = true;
+                                    vm.bool = false;
+                                }
+                            }
+                            if (vm.bool) {
+                                for (var j = 0; j < vm.users.length; j++) {
+                                    if (vm.space.modifyPermittedUsers[i].globalId === vm.users[j].id) {
+                                        vm.permittedUsers.push({
+                                            name: vm.users[j].name,
+                                            globalId: vm.space.modifyPermittedUsers[i].globalId,
+                                            confirmedWrite: true
+                                        });
+                                        break;
+                                    }
+                                }
                             }
                         }
                     }
-                }
-                vm.bool = true;
-                if (vm.space.modifyPermittedRoles != null) {
-                    for (var i = 0; i < vm.space.modifyPermittedRoles.length; i++) {
-                        vm.bool = true;
-                        for (var j = 0; j < vm.permittedRoles.length; j++) {
-                            if (vm.space.modifyPermittedRoles[i].id === vm.permittedRoles[j].id) {
-                                vm.permittedRoles[j].confirmedWrite = true;
-                                vm.bool = false;
-                            }
-                        }
-                        if (vm.bool) {
+                });
+                settingsService.getAllRoles(function (data) {
+                    vm.roles = data;
+                    if (vm.space.readPermittedRoles != undefined) {
+                        for (var i = 0; i < vm.space.readPermittedRoles.length; i++) {
                             for (var j = 0; j < vm.roles.length; j++) {
-                                if (vm.space.modifyPermittedRoles[i].id === vm.roles[j].id) {
+                                if (vm.space.readPermittedRoles[i].id === vm.roles[j].id) {
                                     vm.permittedRoles.push({
                                         name: vm.roles[j].name,
-                                        id: vm.space.modifyPermittedRoles[i].id,
-                                        confirmedWrite: true
+                                        id: vm.space.readPermittedRoles[i].id,
+                                        confirmedRead: true
                                     });
                                     break;
                                 }
                             }
                         }
                     }
-                }
+                    vm.bool = true;
+                    if (vm.space.modifyPermittedRoles != null) {
+                        for (var i = 0; i < vm.space.modifyPermittedRoles.length; i++) {
+                            vm.bool = true;
+                            for (var j = 0; j < vm.permittedRoles.length; j++) {
+                                if (vm.space.modifyPermittedRoles[i].id === vm.permittedRoles[j].id) {
+                                    vm.permittedRoles[j].confirmedWrite = true;
+                                    vm.bool = false;
+                                }
+                            }
+                            if (vm.bool) {
+                                for (var j = 0; j < vm.roles.length; j++) {
+                                    if (vm.space.modifyPermittedRoles[i].id === vm.roles[j].id) {
+                                        vm.permittedRoles.push({
+                                            name: vm.roles[j].name,
+                                            id: vm.space.modifyPermittedRoles[i].id,
+                                            confirmedWrite: true
+                                        });
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
             });
         };
 
@@ -164,6 +164,7 @@
         }
 
         function addReadUser(bool, id) {
+            vm.space.readPermittedUsers = vm.space.readPermittedUsers || [];
             if (bool === true) {
                 for (var i = 0; i < vm.permittedUsers.length; i++) {
                     if (vm.permittedUsers[i].globalId === id) {
@@ -185,6 +186,7 @@
         }
 
         function addReadRole(bool, id) {
+            vm.space.readPermittedRoles = vm.space.readPermittedRoles || [];
             if (bool === true) {
                 for (var i = 0; i < vm.permittedRoles.length; i++) {
                     if (vm.permittedRoles[i].id === id) {
@@ -206,6 +208,7 @@
         }
 
         function addWriteUser(bool, id) {
+            vm.space.modifyPermittedUsers = vm.space.modifyPermittedUsers || [];
             if (bool === true) {
                 for (var i = 0; i < vm.permittedUsers.length; i++) {
                     if (vm.permittedUsers[i].globalId === id) {
@@ -227,6 +230,7 @@
         }
 
         function addWriteRole(bool, id) {
+            vm.space.modifyPermittedRoles = vm.space.modifyPermittedRoles || [];
             if (bool === true) {
                 for (var i = 0; i < vm.permittedRoles.length; i++) {
                     if (vm.permittedRoles[i].id === id) {
@@ -261,6 +265,14 @@
 
         function redirectToSpace() {
             $location.url("/spaces/" + vm.space.id);
+        };
+
+        function setTab(newTab) {
+            vm.tab = newTab;
+        };
+
+        function isSet(tabNum) {
+            return vm.tab === tabNum;
         };
     }
     }());

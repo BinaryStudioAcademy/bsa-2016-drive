@@ -17,12 +17,14 @@ namespace Drive.WebHost.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger _logger;
         private readonly IUsersService _userService;
+        private readonly IRolesService _roleService;
 
-        public SpaceService(IUnitOfWork unitOfWork, ILogger logger, IUsersService userService)
+        public SpaceService(IUnitOfWork unitOfWork, ILogger logger, IUsersService userService, IRolesService roleService)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _userService = userService;
+            _roleService = roleService;
         }
 
 
@@ -239,12 +241,32 @@ namespace Drive.WebHost.Services
                     }
                 }
             }
+            List<Role> ReadPermittedRoles = new List<Role>();
+            foreach (var item in dto.ReadPermittedRoles)
+            {
+                var role = await _unitOfWork?.Roles?.Query.FirstOrDefaultAsync(x => x.Id == item.Id);
+                ReadPermittedRoles.Add(role);
+            }
+
+            List<Role> ModifyPermittedRoles = new List<Role>();
+            foreach (var item in dto.ModifyPermittedUsers)
+            {
+                var role = await _unitOfWork?.Roles?.Query.FirstOrDefaultAsync(p => p.Id == item.Id);
+                ModifyPermittedRoles.Add(role);
+                    var x = ReadPermittedRoles.FirstOrDefault(p => p.Id == role.Id);
+                    if (x == null)
+                    {
+                        ReadPermittedRoles.Add(role);
+                    }
+            }
             space.Name = dto.Name;
             space.Description = dto.Description;
             space.MaxFileSize = dto.MaxFileSize;
             space.MaxFilesQuantity = dto.MaxFilesQuantity;
             space.ReadPermittedUsers = ReadPermittedUsers;
             space.ModifyPermittedUsers = ModifyPermittedUsers;
+            space.ReadPermittedRoles = ReadPermittedRoles;
+            space.ModifyPermittedRoles = ModifyPermittedRoles;
             space.LastModified = DateTime.Now;
 
             await _unitOfWork?.SaveChangesAsync();
