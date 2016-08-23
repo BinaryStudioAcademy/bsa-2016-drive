@@ -404,10 +404,7 @@
         }
 
         function orderByColumn(column) {
-            var pos = vm.columnForOrder.indexOf(column);
-            if (pos == 0) { return vm.columnForOrder = '-' + column; }
-            if (pos == 1) { return vm.columnForOrder = column; }
-            vm.columnForOrder = column;
+            vm.columnForOrder = fileService.orderByColumn(column, vm.columnForOrder);
         }
     }
 }());

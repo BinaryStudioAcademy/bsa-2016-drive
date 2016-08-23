@@ -17,7 +17,8 @@
             getFile: getFile,
             getAllFiles: getAllFiles,
             getFilesApp: getFilesApp,
-            getAllByParentId: getAllByParentId
+            getAllByParentId: getAllByParentId,
+            orderByColumn: orderByColumn
         };
 
         function getAllFiles(callBack) {
@@ -96,6 +97,12 @@
                     function() {
                         console.log('Error while getting file!');
                     });
+        }
+
+        function orderByColumn(columnClicked, columnCurrent) {
+            var pos = columnCurrent.indexOf(columnClicked);
+            if (pos == 0) { return '-' + columnClicked; }
+            return columnClicked;
         }
 
         return service;
