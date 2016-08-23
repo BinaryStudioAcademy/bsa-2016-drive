@@ -1162,7 +1162,34 @@ namespace Drive.DataAccess.Context
                         CreatedAt = DateTime.Now,
                         ModifiedAt = DateTime.Now,
                         StartDate = DateTime.Now.AddDays(5),
-                        Description = "Lecture desc"
+                        Description = "Lecture desc",
+                        ContentList = new List<ContentLink>
+                        {
+                            new ContentLink
+                            {
+                                LinkType = LinkType.Video,
+                                Name = "Video sample 1",
+                                Description = "Video sample description",
+                                IsDeleted = false,
+                                Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4"
+                            },
+                            new ContentLink
+                            {
+                                LinkType = LinkType.Video,
+                                Name = "Video sample 2",
+                                Description = "Video sample description",
+                                IsDeleted = false,
+                                Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4"
+                            },
+                            new ContentLink
+                            {
+                                LinkType = LinkType.Repository,
+                                Name = "Repository sample 1",
+                                Description = "Repository sample description",
+                                IsDeleted = false,
+                                Link = "https://github.com/BinaryStudioAcademy/bsa-2016-drive"
+                            }
+                        }
                     },
                     new Lecture
                     {
@@ -1171,7 +1198,34 @@ namespace Drive.DataAccess.Context
                         CreatedAt = DateTime.Now,
                         ModifiedAt = DateTime.Now,
                         StartDate = DateTime.Now.AddDays(10),
-                        Description = "Lecture desc"
+                        Description = "Lecture desc",
+                        ContentList = new List<ContentLink>
+                        {
+                            new ContentLink
+                            {
+                                LinkType = LinkType.Video,
+                                Name = "Video sample 1",
+                                Description = "Video sample description",
+                                IsDeleted = false,
+                                Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4"
+                            },
+                            new ContentLink
+                            {
+                                LinkType = LinkType.Video,
+                                Name = "Video sample 2",
+                                Description = "Video sample description",
+                                IsDeleted = false,
+                                Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4"
+                            },
+                            new ContentLink
+                            {
+                                LinkType = LinkType.Repository,
+                                Name = "Repository sample 1",
+                                Description = "Repository sample description",
+                                IsDeleted = false,
+                                Link = "https://github.com/BinaryStudioAcademy/bsa-2016-drive"
+                            }
+                        }
                     }
                 },
                 IsDeleted = false,
@@ -1205,7 +1259,34 @@ namespace Drive.DataAccess.Context
                         CreatedAt = DateTime.Now,
                         ModifiedAt = DateTime.Now,
                         StartDate = DateTime.Now.AddDays(5),
-                        Description = "Lecture desc"
+                        Description = "Lecture desc",
+                        ContentList = new List<ContentLink>
+                        {
+                            new ContentLink
+                            {
+                                LinkType = LinkType.Video,
+                                Name = "Video sample 1",
+                                Description = "Video sample description",
+                                IsDeleted = false,
+                                Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4"
+                            },
+                            new ContentLink
+                            {
+                                LinkType = LinkType.Video,
+                                Name = "Video sample 2",
+                                Description = "Video sample description",
+                                IsDeleted = false,
+                                Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4"
+                            },
+                            new ContentLink
+                            {
+                                LinkType = LinkType.Repository,
+                                Name = "Repository sample 1",
+                                Description = "Repository sample description",
+                                IsDeleted = false,
+                                Link = "https://github.com/BinaryStudioAcademy/bsa-2016-drive"
+                            }
+                        }
                     },
                     new Lecture
                     {
@@ -1214,7 +1295,34 @@ namespace Drive.DataAccess.Context
                         CreatedAt = DateTime.Now,
                         ModifiedAt = DateTime.Now,
                         StartDate = DateTime.Now.AddDays(10),
-                        Description = "Lecture desc"
+                        Description = "Lecture desc",
+                        ContentList = new List<ContentLink>
+                        {
+                            new ContentLink
+                            {
+                                LinkType = LinkType.Video,
+                                Name = "Video sample 1",
+                                Description = "Repository sample description",
+                                IsDeleted = false,
+                                Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4"
+                            },
+                            new ContentLink
+                            {
+                                LinkType = LinkType.Video,
+                                Name = "Video sample 2",
+                                Description = "Video sample description",
+                                IsDeleted = false,
+                                Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4"
+                            },
+                            new ContentLink
+                            {
+                                LinkType = LinkType.Repository,
+                                Name = "Repository sample 1",
+                                Description = "Repository sample description",
+                                IsDeleted = false,
+                                Link = "https://github.com/BinaryStudioAcademy/bsa-2016-drive"
+                            }
+                        }
                     }
                 },
                 IsDeleted = false,
