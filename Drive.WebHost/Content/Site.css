@@ -124,7 +124,9 @@ textarea {
     margin-right: 0%;
     align-content: center;
     overflow: hidden;
-    height: 100%
+    height: 100%;
+    overflow-y: scroll;
+    width: 100%;
 }
 
 /*Modal window for creating new space*/
@@ -586,4 +588,10 @@ small,
     padding-bottom: 6em;
     height: 85%;
     position: relative;
+}
+
+.centered-video {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
 }
