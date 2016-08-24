@@ -406,7 +406,7 @@
         }
 
         function openDocument(url) {
-            window.open(url, '_blank');
+            fileService.openFile(url);
         }
 
         function orderByColumn(column) {

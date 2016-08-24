@@ -16,7 +16,7 @@
     <div class="wrap" style="margin: 0;" ng-show="fileFilterCtrl.showGrid">
         <div class="small" ng-repeat="space in fileFilterCtrl.spaces">
             <div class="well" style="margin-bottom: 10px;" >{{ space.name }}</div>
-            <div role="button" class="s-block btn-default shadow" ng-repeat="file in space.files" title="Created {{ file.createdAt | date : 'short' }}">
+            <div role="button" class="s-block btn-default shadow" ng-repeat="file in space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="fileFilterCtrl.openDocument(file.link)">
                 <i class="fa fa-file-o fa-5x"></i>
                 <br>
                 <span class="bold">Name: </span>
@@ -57,7 +57,7 @@
                     </th>
                 </tr>
             </thead>
-            <tr class="shadow" role="button" ng-repeat="file in space.files | orderBy: fileFilterCtrl.columnForOrder">
+            <tr class="shadow" role="button" ng-repeat="file in space.files | orderBy: fileFilterCtrl.columnForOrder" ng-dblclick="fileFilterCtrl.openDocument(file.link)">
                 <td> <i class="fa fa-file-o">&nbsp;</i>{{ file.name }}</td>
                 <td>{{ file.description }}</td>
                 <td>{{ file.author.name }}</td>

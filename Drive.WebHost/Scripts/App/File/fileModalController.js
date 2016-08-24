@@ -36,6 +36,9 @@
             if (vm.file.name) {
                 vm.title = 'Edit';
                 vm.urlIsValid = true;
+                vm.name = items.name;
+                vm.description = items.description;
+                vm.link = items.link;
             }
 
         }

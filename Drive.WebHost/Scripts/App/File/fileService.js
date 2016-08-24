@@ -18,7 +18,8 @@
             getAllFiles: getAllFiles,
             getFilesApp: getFilesApp,
             getAllByParentId: getAllByParentId,
-            orderByColumn: orderByColumn
+            orderByColumn: orderByColumn,
+            openFile: openFile
         };
 
         function getAllFiles(callBack) {
@@ -103,6 +104,10 @@
             var pos = columnCurrent.indexOf(columnClicked);
             if (pos == 0) { return '-' + columnClicked; }
             return columnClicked;
+        }
+
+        function openFile(url) {
+            window.open(url, '_blank');
         }
 
         return service;
