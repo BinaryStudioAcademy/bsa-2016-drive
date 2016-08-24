@@ -12,7 +12,8 @@
             getSpace: getSpace,
             getAllUsers: getAllUsers,
             pushChanges: pushChanges,
-            deleteSpace: deleteSpace
+            deleteSpace: deleteSpace,
+            deleteSpaceWithStaff: deleteSpaceWithStaff
         };
 
         function getSpace(id, callback) {
@@ -49,6 +50,14 @@
 
         function deleteSpace(id, callback) {
             $http.delete(baseUrl + '/api/spaces/' + id)
+                .then(function (response) {
+                    if (callback)
+                        callback(response);
+                });
+        }
+
+        function deleteSpaceWithStaff(id, callback) {
+            $http.delete(baseUrl + '/api/spaces/' + id + '/staff')
                 .then(function (response) {
                     if (callback)
                         callback(response);

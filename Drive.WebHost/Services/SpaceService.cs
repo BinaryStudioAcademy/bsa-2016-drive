@@ -17,12 +17,16 @@ namespace Drive.WebHost.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger _logger;
         private readonly IUsersService _userService;
+        private readonly IFolderService _folderService;
+        private readonly IFileService _fileService;
 
-        public SpaceService(IUnitOfWork unitOfWork, ILogger logger, IUsersService userService)
+        public SpaceService(IUnitOfWork unitOfWork, ILogger logger, IUsersService userService, IFolderService folderService, IFileService fileService)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _userService = userService;
+            _folderService = folderService;
+            _fileService = fileService;
         }
 
 
@@ -275,6 +279,22 @@ namespace Drive.WebHost.Services
             await _unitOfWork?.SaveChangesAsync();
         }
 
+        public async Task DeleteWithStaff(int id)
+        {
+            SpaceDto spaceToDelete = await GetAsync(id);
+
+            foreach (var folder in spaceToDelete.Folders)
+            {
+                await _folderService.DeleteFolderWithStaff(folder.Id);      
+            }
+            foreach (var file in spaceToDelete.Files)
+            {
+                await _fileService.DeleteAsync(file.Id);
+            }
+
+            _unitOfWork?.Spaces?.Delete(id);
+            await _unitOfWork?.SaveChangesAsync();
+        }
 
         public async Task<SearchResultDto> SearchFoldersAndFilesAsync(int spaceId, int? folderId, string text, int page, int count)
         {

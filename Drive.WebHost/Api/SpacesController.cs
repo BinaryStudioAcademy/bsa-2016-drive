@@ -61,6 +61,20 @@ namespace Drive.WebHost.Api
             return Ok(id);
         }
 
+        // Delete Space with staff
+        [HttpDelete]
+        [Route("{id:int}/staff")]
+        public async Task<IHttpActionResult> DeleteSpaceWithStaff(int id)
+        {
+            var result = await _spaceService?.GetAsync(id);
+
+            if (result == null)
+                return NotFound();
+
+            await _spaceService?.DeleteWithStaff(id);
+            return Ok();
+        }
+
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteSpace(int id)
         {
