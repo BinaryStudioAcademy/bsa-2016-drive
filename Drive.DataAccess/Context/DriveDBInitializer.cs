@@ -8,7 +8,7 @@ using Drive.DataAccess.Entities;
 
 namespace Drive.DataAccess.Context
 {
-    public class DriveDBInitializer : DropCreateDatabaseAlways<DriveContext>
+    public class DriveDBInitializer : DropCreateDatabaseIfModelChanges<DriveContext>
     {
         protected override void Seed(DriveContext context)
         {

@@ -27,7 +27,6 @@ namespace Drive.WebHost.Services
             _roleService = roleService;
         }
 
-
         public async Task<SpaceDto> GetAsync(int id)
         {
 
@@ -192,7 +191,94 @@ namespace Drive.WebHost.Services
 
         public async Task<int> CreateAsync(SpaceDto dto)
         {
-            var user = await _userService.GetCurrentUser();
+            var currentUser = await _userService.GetCurrentUser();
+
+            List<User> ReadPermittedUsers = new List<User>();
+            foreach (var item in dto.ReadPermittedUsers)
+            {
+                var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
+                if (user == null)
+                {
+                    UserDto userdto = new UserDto();
+                    userdto.serverUserId = item.GlobalId;
+                    await _userService.CreateAsync(userdto);
+                    var suser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
+                    ReadPermittedUsers.Add(suser);
+                }
+                else
+                {
+                    ReadPermittedUsers.Add(user);
+                }
+            }
+            List<User> ModifyPermittedUsers = new List<User>();
+            foreach (var item in dto.ModifyPermittedUsers)
+            {
+                var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
+                if (user == null)
+                {
+                    UserDto userdto = new UserDto();
+                    userdto.serverUserId = item.GlobalId;
+                    await _userService.CreateAsync(userdto);
+                    var suser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
+                    ModifyPermittedUsers.Add(suser);
+                    ReadPermittedUsers.Add(suser);
+                }
+                else
+                {
+                    ModifyPermittedUsers.Add(user);
+                    var x = ReadPermittedUsers.FirstOrDefault(p => p.GlobalId == user.GlobalId);
+                    if (x == null)
+                    {
+                        ReadPermittedUsers.Add(user);
+                    }
+                }
+            }
+            List<Role> ReadPermittedRoles = new List<Role>();
+
+
+            foreach (var item in dto.ReadPermittedRoles)
+            {
+                var role = await _unitOfWork?.Roles?.Query.Include(x => x.Users).FirstOrDefaultAsync(x => x.Id == item.Id);
+                ReadPermittedRoles.Add(role);
+
+                foreach (var x in role.Users)
+                {
+                    var temp = ReadPermittedUsers.Find(p => p.GlobalId == x.GlobalId);
+                    if (temp == null)
+                    {
+                        ReadPermittedUsers.Add(x);
+                    }
+                }
+            }
+
+            List<Role> ModifyPermittedRoles = new List<Role>();
+            foreach (var item in dto.ModifyPermittedRoles)
+            {
+                var role = await _unitOfWork?.Roles?.Query.Include(p => p.Users).FirstOrDefaultAsync(p => p.Id == item.Id);
+                ModifyPermittedRoles.Add(role);
+
+                foreach (var t in role.Users)
+                {
+                    var temp = ModifyPermittedUsers.Find(p => p.GlobalId == t.GlobalId);
+                    if (temp == null)
+                    {
+                        ModifyPermittedUsers.Add(t);
+                    }
+                }
+                var x = ReadPermittedRoles.FirstOrDefault(p => p.Id == role.Id);
+                if (x == null)
+                {
+                    ReadPermittedRoles.Add(role);
+                    foreach (var t in role.Users)
+                    {
+                        var temp = ReadPermittedUsers.Find(p => p.GlobalId == t.GlobalId);
+                        if (temp == null)
+                        {
+                            ReadPermittedUsers.Add(t);
+                        }
+                    }
+                }
+            }
 
             var space = new Space
             {
@@ -200,14 +286,14 @@ namespace Drive.WebHost.Services
                 Description = dto.Description,
                 MaxFilesQuantity = dto.MaxFilesQuantity,
                 MaxFileSize = dto.MaxFileSize,
-                ReadPermittedUsers = dto.ReadPermittedUsers,
-                ModifyPermittedUsers = dto.ModifyPermittedUsers,
-                ReadPermittedRoles = dto.ReadPermittedRoles,
-                ModifyPermittedRoles = dto.ModifyPermittedRoles,
+                ReadPermittedUsers = ReadPermittedUsers,
+                ModifyPermittedUsers = ModifyPermittedUsers,
+                ReadPermittedRoles = ReadPermittedRoles,
+                ModifyPermittedRoles = ModifyPermittedRoles,
                 CreatedAt = DateTime.Now,
                 LastModified = DateTime.Now,
                 IsDeleted = false,
-                Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId)
+                Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == currentUser.serverUserId)
             };
             _unitOfWork?.Spaces?.Create(space);
             await _unitOfWork?.SaveChangesAsync();
@@ -323,7 +409,6 @@ namespace Drive.WebHost.Services
             _unitOfWork?.Spaces?.Delete(id);
             await _unitOfWork?.SaveChangesAsync();
         }
-
 
         public async Task<SearchResultDto> SearchFoldersAndFilesAsync(int spaceId, int? folderId, string text, int page, int count)
         {
