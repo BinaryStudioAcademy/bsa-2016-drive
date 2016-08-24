@@ -11,6 +11,7 @@
 
         vm.changeView = changeView;
         vm.orderByColumn = orderByColumn;
+        vm.openDocument = openDocument;
 
         activate();
 
@@ -88,6 +89,10 @@
 
         function orderByColumn(column) {
             vm.columnForOrder = fileService.orderByColumn(column, vm.columnForOrder);
+        }
+
+        function openDocument(url) {
+            fileService.openFile(url);
         }
     }
 }());
