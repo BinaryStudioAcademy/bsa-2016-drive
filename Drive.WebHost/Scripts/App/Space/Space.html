@@ -22,12 +22,12 @@
         <div class="form-inline">
             <div class="form-group col-sm-7 pull-left nopadding">
                 <div class="col-sm-1 toolbar-div">
-                    <button type="button" class="btn btn-custom btn-lg" ng-click="spaceCtrl.createNewFolder()" title="Add new folder">
+                    <button type="button" class="btn btn-default btn-custom btn-lg" ng-click="spaceCtrl.createNewFolder()" title="Add new folder">
                         <i class="fa fa-folder-open-o fa-lg" style="margin-right: 0px;"></i>
                     </button>
                 </div>
                 <div class="col-sm-1 toolbar-div">
-                    <button type="button" class="btn btn-custom btn-lg" ng-click="spaceCtrl.createNewFile()" title="Add new link">
+                    <button type="button" class="btn btn-default btn-custom btn-lg" ng-click="spaceCtrl.createNewFile()" title="Add new link">
                         <i class="fa fa-file-text-o fa-lg"></i>
                     </button>
                 </div>
@@ -85,7 +85,7 @@
             </div>
         </div>
     </div>
-    <div class="table-responsive" ng-show="spaceCtrl.showTable">
+    <div class="table-responsive" context-menu="spaceCtrl.createOption" ng-show="spaceCtrl.showTable">
         <table class="table table-hover">
             <thead>
                 <tr style="cursor: pointer">
