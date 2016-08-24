@@ -79,6 +79,22 @@ namespace Drive.WebHost.Services
             };
         }
 
+        public async Task<FolderUnitDto> GetDeletedAsync(int id)
+        {
+            var folder = await _unitOfWork.Folders.Deleted.Where(f => f.Id == id).Select(f => new FolderUnitDto()
+            {
+                Id = f.Id,
+                Description = f.Description,
+                Name = f.Name,
+                IsDeleted = f.IsDeleted,
+                CreatedAt = f.CreatedAt,
+                LastModified = f.LastModified,
+                SpaceId = f.Space.Id
+            }).SingleOrDefaultAsync();
+
+            return folder;
+        }
+
         public async Task<FolderUnitDto> CreateAsync(FolderUnitDto dto)
         {
             var user = await _usersService?.GetCurrentUser();
@@ -130,6 +146,55 @@ namespace Drive.WebHost.Services
             await _unitOfWork?.SaveChangesAsync();
 
             dto.LastModified = DateTime.Now;
+
+            return dto;
+        }
+
+        public async Task<FolderUnitDto> UpdateDeletedAsync(int id, int? oldParentId, FolderUnitDto dto)
+        {
+            var folder = await _unitOfWork?.Folders?.Deleted.Include(f => f.DataUnits).SingleOrDefaultAsync(f => f.Id == id);
+            if (folder == null)
+                return null;
+
+            folder.Name = dto.Name;
+            folder.Description = dto.Description;
+            folder.IsDeleted = dto.IsDeleted;
+            folder.LastModified = DateTime.Now;
+
+            var space = await _unitOfWork.Spaces.GetByIdAsync(dto.SpaceId);
+
+            if (oldParentId != null)
+            {
+                var oldParentFolder =  await _unitOfWork.Folders.Query.Include(f => f.DataUnits).SingleOrDefaultAsync(f => f.Id == oldParentId);
+
+                var list = new List<DataUnit>();
+                foreach (var item in oldParentFolder.DataUnits)
+                {
+                    if (item.Id != folder.Id)
+                    {
+                        list.Add(item);
+                    }
+                }
+
+                oldParentFolder.DataUnits = list;
+            }
+
+            var parentFolder = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
+
+            folder.Space = space;
+            folder.Parent = parentFolder ?? null;
+
+            foreach (var item in folder.DataUnits)
+            {
+                item.Space = await _unitOfWork.Spaces.GetByIdAsync(folder.Space.Id);
+
+                if (item is FolderUnit)
+                {
+                    ChangeSpaceId(item.Id, folder.Space.Id);
+                }
+            }
+
+            await _unitOfWork?.SaveChangesAsync();
 
             return dto;
         }
@@ -228,6 +293,22 @@ namespace Drive.WebHost.Services
         public void Dispose()
         {
             _unitOfWork?.Dispose();
+        }
+
+        private async void ChangeSpaceId(int id, int spaceId)
+        {
+            var folder =
+                await _unitOfWork?.Folders?.Query.Include(f => f.DataUnits).SingleOrDefaultAsync(f => f.Id == id);
+
+            foreach (var item in folder.DataUnits)
+            {
+                item.Space = await _unitOfWork.Spaces.GetByIdAsync(spaceId);
+
+                if (item is FolderUnit)
+                {
+                    ChangeSpaceId(item.Id, spaceId);
+                }
+            }
         }
     }
 }

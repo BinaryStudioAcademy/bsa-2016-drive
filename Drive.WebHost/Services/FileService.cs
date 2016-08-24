@@ -46,41 +46,53 @@ namespace Drive.WebHost.Services
             var files = await _unitOfWork.Files.Query.Where(f => f.Space.Id == spaceId)
                                                      .Where(f => f.Parent.Id == parentId)
                                                      .Select(f => new FileUnitDto()
-            {
-                Id = f.Id,
-                Description = f.Description,
-                Name = f.Name,
-                IsDeleted = f.IsDeleted,
-                CreatedAt = f.CreatedAt,
-                LastModified = f.LastModified,
-                SpaceId = f.Space.Id,
-                FileType = f.FileType,
-                Link = f.Link
-            }).ToListAsync();
+                                                     {
+                                                         Id = f.Id,
+                                                         Description = f.Description,
+                                                         Name = f.Name,
+                                                         IsDeleted = f.IsDeleted,
+                                                         CreatedAt = f.CreatedAt,
+                                                         LastModified = f.LastModified,
+                                                         SpaceId = f.Space.Id,
+                                                         FileType = f.FileType,
+                                                         Link = f.Link
+                                                     }).ToListAsync();
 
             return files;
         }
 
         public async Task<FileUnitDto> GetAsync(int id)
         {
-            var file = await _unitOfWork?.Files?.GetByIdAsync(id);
-
-            if (file != null)
+            var file = await _unitOfWork.Files.Query.Where(f => f.Id == id).Select(f => new FileUnitDto()
             {
-                return new FileUnitDto
-                {
-                    Id = file.Id,
-                    IsDeleted = file.IsDeleted,
-                    FileType = file.FileType,
-                    Name = file.Name,
-                    Description = file.Description,
-                    SpaceId = file.Space.Id,
-                    Link = file.Link,
-                    CreatedAt = file.CreatedAt
+                Id = f.Id,
+                IsDeleted = f.IsDeleted,
+                FileType = f.FileType,
+                Name = f.Name,
+                Description = f.Description,
+                SpaceId = f.Space.Id,
+                Link = f.Link,
+                CreatedAt = f.CreatedAt
+            }).SingleOrDefaultAsync();
 
-                };
-            }
-            return null;
+            return file;
+        }
+
+        public async Task<FileUnitDto> GetDeletedAsync(int id)
+        {
+            var file = await _unitOfWork.Files.Deleted.Where(f => f.Id == id).Select(f => new FileUnitDto()
+            {
+                Id = f.Id,
+                IsDeleted = f.IsDeleted,
+                FileType = f.FileType,
+                Name = f.Name,
+                Description = f.Description,
+                SpaceId = f.Space.Id,
+                Link = f.Link,
+                CreatedAt = f.CreatedAt
+            }).SingleOrDefaultAsync();
+
+            return file;
         }
 
         public async Task<FileUnitDto> CreateAsync(FileUnitDto dto)
@@ -133,6 +145,51 @@ namespace Drive.WebHost.Services
             file.IsDeleted = dto.IsDeleted;
             file.LastModified = DateTime.Now;
             file.Link = dto.Link;
+
+            await _unitOfWork?.SaveChangesAsync();
+
+            return dto;
+        }
+
+        public async Task<FileUnitDto> UpdateDeletedAsync(int id, int? oldParentId, FileUnitDto dto)
+        {
+            var file = await _unitOfWork?.Files?.GetByIdDeletedAsync(id);
+
+            if (file == null)
+                return null;
+
+            file.Name = dto.Name;
+            file.FileType = dto.FileType;
+            file.Description = dto.Description;
+            file.IsDeleted = dto.IsDeleted;
+            file.LastModified = DateTime.Now;
+            file.Link = dto.Link;
+
+            var space = await _unitOfWork.Spaces.GetByIdAsync(dto.SpaceId);
+
+            if (oldParentId != null)
+            {
+                var oldParentFolder =
+                    await
+                        _unitOfWork.Folders.Query.Include(f => f.DataUnits)
+                            .SingleOrDefaultAsync(f => f.Id == oldParentId);
+
+                var list = new List<DataUnit>();
+                foreach (var item in oldParentFolder.DataUnits)
+                {
+                    if (item.Id != file.Id)
+                    {
+                        list.Add(item);
+                    }
+                }
+
+                oldParentFolder.DataUnits = list;
+            }
+
+            var parentFolder = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
+
+            file.Space = space;
+            file.Parent = parentFolder ?? null;
 
             await _unitOfWork?.SaveChangesAsync();
 
