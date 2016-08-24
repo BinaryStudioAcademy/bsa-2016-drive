@@ -41,33 +41,28 @@ namespace Drive.WebHost.Services
                 MaxFilesQuantity = s.MaxFilesQuantity,
                 ReadPermittedUsers = s.ReadPermittedUsers,
                 ModifyPermittedUsers = s.ModifyPermittedUsers,
-                Files =
-                    s.ContentList.OfType<FileUnit>()
-                        .Where(f => f.Parent == null && !f.IsDeleted)
-                        .Select(f => new FileUnitDto
-                        {
-                            Description = f.Description,
-                            FileType = f.FileType,
-                            Id = f.Id,
-                            IsDeleted = f.IsDeleted,
-                            Name = f.Name,
-                            Link = f.Link,
-                            CreatedAt = f.CreatedAt,
-                            Author = new AuthorDto() {Id = f.Owner.Id, GlobalId = f.Owner.GlobalId}
-                        }),
-                Folders =
-                    s.ContentList.OfType<FolderUnit>()
-                        .Where(f => f.Parent == null && !f.IsDeleted)
-                        .Select(f => new FolderUnitDto
-                        {
-                            Id = f.Id,
-                            Name = f.Name,
-                            Description = f.Description,
-                            CreatedAt = f.CreatedAt,
-                            IsDeleted = f.IsDeleted,
-                            SpaceId = f.Space.Id,
-                            Author = new AuthorDto() {Id = f.Owner.Id, GlobalId = f.Owner.GlobalId}
-                        })
+
+                Files = s.ContentList.OfType<FileUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted).Select(f => new FileUnitDto
+                {
+                    Description = f.Description,
+                    FileType = f.FileType,
+                    Id = f.Id,
+                    IsDeleted = f.IsDeleted,
+                    Name = f.Name,
+                    Link = f.Link,
+                    CreatedAt = f.CreatedAt,
+                    Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId}
+                }),
+                Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted).Select(f => new FolderUnitDto
+                {
+                    Id = f.Id,
+                    Name = f.Name,
+                    Description = f.Description,
+                    CreatedAt = f.CreatedAt,
+                    IsDeleted = f.IsDeleted,
+                    SpaceId = f.Space.Id,
+                    Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
+                })
             }).SingleOrDefaultAsync();
 
             var owners = (await _userService.GetAllAsync()).Select(f => new {Id = f.id, Name = f.name});
@@ -90,33 +85,28 @@ namespace Drive.WebHost.Services
                 MaxFilesQuantity = s.MaxFilesQuantity,
                 ReadPermittedUsers = s.ReadPermittedUsers,
                 ModifyPermittedUsers = s.ModifyPermittedUsers,
-                Files =
-                    s.ContentList.OfType<FileUnit>()
-                        .Where(f => f.Parent == null && !f.IsDeleted)
-                        .Select(f => new FileUnitDto
-                        {
-                            Description = f.Description,
-                            FileType = f.FileType,
-                            Id = f.Id,
-                            IsDeleted = f.IsDeleted,
-                            Name = f.Name,
-                            CreatedAt = f.CreatedAt,
-                            Link = f.Link,
-                            Author = new AuthorDto() {Id = f.Owner.Id, GlobalId = f.Owner.GlobalId}
-                        }),
-                Folders =
-                    s.ContentList.OfType<FolderUnit>()
-                        .Where(f => f.Parent == null && !f.IsDeleted)
-                        .Select(f => new FolderUnitDto
-                        {
-                            Id = f.Id,
-                            Name = f.Name,
-                            Description = f.Description,
-                            CreatedAt = f.CreatedAt,
-                            IsDeleted = f.IsDeleted,
-                            SpaceId = f.Space.Id,
-                            Author = new AuthorDto() {Id = f.Owner.Id, GlobalId = f.Owner.GlobalId}
-                        })
+
+                Files = s.ContentList.OfType<FileUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted).Select(f => new FileUnitDto
+                {
+                    Description = f.Description,
+                    FileType = f.FileType,
+                    Id = f.Id,
+                    IsDeleted = f.IsDeleted,
+                    Name = f.Name,
+                    CreatedAt = f.CreatedAt,
+                    Link = f.Link,
+                    Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
+                }),
+                Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted).Select(f => new FolderUnitDto
+                {
+                    Id = f.Id,
+                    Name = f.Name,
+                    Description = f.Description,
+                    CreatedAt = f.CreatedAt,
+                    IsDeleted = f.IsDeleted,
+                    SpaceId = f.Space.Id,
+                    Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
+                })
             }).SingleOrDefaultAsync();
 
             if (space == null)
@@ -169,8 +159,8 @@ namespace Drive.WebHost.Services
             int counter = 0;
             var space = await _unitOfWork.Spaces.Query.Where(s => s.Id == id).Select(s => new
             {
-                Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null && !f.IsDeleted).Count(),
-                Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.Parent == null && !f.IsDeleted).Count()
+                Files = s.ContentList.OfType<FileUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted).Count(),
+                Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted).Count()
             }).SingleOrDefaultAsync();
             if (space == null)
                 return 0;
@@ -309,7 +299,7 @@ namespace Drive.WebHost.Services
                 if (folderId != null)
                 {
                     resultFolder = await _unitOfWork.Folders.Query.
-                        Where(f => f.Parent.Id == folderId)
+                        Where(f => f.FolderUnit.Id == folderId)
                         .Select(f => new FolderUnitDto()
                         {
                             Id = f.Id,
@@ -322,7 +312,7 @@ namespace Drive.WebHost.Services
                         }).ToListAsync();
 
                     resultFiles = await _unitOfWork.Files.Query.
-                        Where(f => f.Parent.Id == folderId)
+                        Where(f => f.FolderUnit.Id == folderId)
                         .Select(f => new FileUnitDto
                         {
                             Id = f.Id,
@@ -336,7 +326,7 @@ namespace Drive.WebHost.Services
                 else
                 {
                     resultFolder = await _unitOfWork.Folders.Query.
-                        Where(f => f.Space.Id == spaceId && f.Parent == null)
+                        Where(f => f.Space.Id == spaceId && f.FolderUnit == null)
                         .Select(f => new FolderUnitDto()
                         {
                             Id = f.Id,
@@ -349,7 +339,7 @@ namespace Drive.WebHost.Services
                         }).ToListAsync();
 
                     resultFiles = await _unitOfWork.Files.Query.
-                        Where(f => f.Space.Id == spaceId && f.Parent == null)
+                        Where(f => f.Space.Id == spaceId && f.FolderUnit == null)
                         .Select(f => new FileUnitDto
                         {
                             Id = f.Id,
@@ -421,8 +411,8 @@ namespace Drive.WebHost.Services
                         .Where(s => s.Id == spaceId)
                         .Select(s => new
                         {
-                            Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.Parent == null && !f.IsDeleted),
-                            Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null && !f.IsDeleted)
+                            Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted),
+                            Files = s.ContentList.OfType<FileUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted)
                         }).SingleOrDefaultAsync();
                     if (space == null)
                         return 0;

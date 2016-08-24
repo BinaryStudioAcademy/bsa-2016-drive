@@ -1,4 +1,4 @@
-Ôªø(function () {
+(function () {
     "use strict";
 
     angular
@@ -104,7 +104,7 @@
         }
 
         function isValidUrl() {
-            var expression = "^(?:(?:ht|f)tps?://)?(?:[\\-\\w]+@)?(?:[\\-0-9a-z]*[0-9a-z]\\.)+[a-z]{2,6}(?::\\d{1,5})?(?:[?/\\\\#][?!^$.(){}:|=[\\]+\\-/\\\\*;&~#@,%\\w–ê-–Ø–∞-—è]*)?$";
+            var expression = "^(?:(?:ht|f)tps?://)?(?:[\\-\\w]+@)?(?:[\\-0-9a-z]*[0-9a-z]\\.)+[a-z]{2,6}(?::\\d{1,5})?(?:[?/\\\\#][?!^$.(){}:|=[\\]+\\-/\\\\*;&~#@,%\\w¿-ﬂ‡-ˇ]*)?$";
             var reg = new RegExp(expression);
             vm.urlIsValid = reg.test(vm.file.link);
         }

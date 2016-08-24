@@ -47,17 +47,17 @@ namespace Drive.WebHost.Services
         public async Task<IEnumerable<FolderUnitDto>> GetAllByParentIdAsync(int spaceId, int? parentId)
         {
             var folders = await _unitOfWork?.Folders?.Query.Where(f => f.Space.Id == spaceId)
-                                                           .Where(f => f.Parent.Id == parentId)
+                                                           .Where(f => f.FolderUnit.Id == parentId)
                                                            .Select(f => new FolderUnitDto
-                                                           {
-                                                               Id = f.Id,
-                                                               Description = f.Description,
-                                                               Name = f.Name,
-                                                               IsDeleted = f.IsDeleted,
-                                                               CreatedAt = f.CreatedAt,
-                                                               LastModified = f.LastModified,
-                                                               SpaceId = f.Space.Id
-                                                           }).ToListAsync();
+            {
+                Id = f.Id,
+                Description = f.Description,
+                Name = f.Name,
+                IsDeleted = f.IsDeleted,
+                CreatedAt = f.CreatedAt,
+                LastModified = f.LastModified,
+                SpaceId = f.Space.Id
+            }).ToListAsync();
 
             return folders;
         }
@@ -102,6 +102,8 @@ namespace Drive.WebHost.Services
             var user = await _usersService?.GetCurrentUser();
 
             var space = await _unitOfWork?.Spaces?.GetByIdAsync(dto.SpaceId);
+            var parentFolder = await _unitOfWork?.Folders?.GetByIdAsync(dto.ParentId);
+
 
             if (space != null)
             {
@@ -114,16 +116,9 @@ namespace Drive.WebHost.Services
                     LastModified = DateTime.Now,
                     IsDeleted = false,
                     Space = space,
+                    FolderUnit = parentFolder,
                     Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId)
                 };
-
-                if (dto.ParentId != 0)
-                {
-                    var parentFolder = await _unitOfWork?.Folders.Query.Include(f => f.DataUnits).SingleOrDefaultAsync(f => f.Id == dto.ParentId);
-
-                    folder.Parent = parentFolder;
-                    parentFolder.DataUnits.Add(folder);
-                }
 
                 _unitOfWork?.Folders?.Create(folder);
                 await _unitOfWork?.SaveChangesAsync();
@@ -191,7 +186,7 @@ namespace Drive.WebHost.Services
             var parentFolder = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
 
             folder.Space = space;
-            folder.Parent = parentFolder ?? null;
+            folder.FolderUnit = parentFolder ?? null;
 
             foreach (var item in folder.DataUnits)
             {
@@ -239,7 +234,7 @@ namespace Drive.WebHost.Services
 
         public async Task<FolderContentDto> GetContentAsync(int id, int page, int count, string sort)
         {
-            IEnumerable<FolderUnitDto> folders = await _unitOfWork.Folders.Query.Where(x => x.Parent.Id == id)
+            IEnumerable<FolderUnitDto> folders = await _unitOfWork.Folders.Query.Where(x => x.FolderUnit.Id == id)
             .Select(f => new FolderUnitDto
             {
                 Name = f.Name,
@@ -249,7 +244,7 @@ namespace Drive.WebHost.Services
                 CreatedAt = f.CreatedAt,
                 Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
             }).ToListAsync();
-            IEnumerable<FileUnitDto> files = await _unitOfWork.Files.Query.Where(x => x.Parent.Id == id)
+            IEnumerable<FileUnitDto> files = await _unitOfWork.Files.Query.Where(x => x.FolderUnit.Id == id)
                 .Select(f => new FileUnitDto
                 {
                     Name = f.Name,
@@ -313,12 +308,12 @@ namespace Drive.WebHost.Services
         }
         public async Task<FolderContentDto> GetContentAsync(int id)
         {
-            IEnumerable<FolderUnitDto> folders = await _unitOfWork.Folders.Query.Where(x => x.Parent.Id == id)
+            IEnumerable<FolderUnitDto> folders = await _unitOfWork.Folders.Query.Where(x => x.FolderUnit.Id == id)
                 .Select(f => new FolderUnitDto
                 {
                     Id = f.Id,
                 }).ToListAsync();
-            IEnumerable<FileUnitDto> files = await _unitOfWork.Files.Query.Where(x => x.Parent.Id == id)
+            IEnumerable<FileUnitDto> files = await _unitOfWork.Files.Query.Where(x => x.FolderUnit.Id == id)
                 .Select(f => new FileUnitDto
                 {
                     Id = f.Id,
@@ -335,8 +330,8 @@ namespace Drive.WebHost.Services
         public async Task<int> GetContentTotalAsync(int id)
         {
             int counter = 0;
-            var folders = await _unitOfWork.Folders.Query.Where(x => x.Parent.Id == id).ToListAsync();
-            var files = await _unitOfWork.Files.Query.Where(x => x.Parent.Id == id).ToListAsync();
+            var folders = await _unitOfWork.Folders.Query.Where(x => x.FolderUnit.Id == id).ToListAsync();
+            var files = await _unitOfWork.Files.Query.Where(x => x.FolderUnit.Id == id).ToListAsync();
             counter += folders.Count();
             counter += files.Count();
             return counter;

@@ -44,7 +44,7 @@ namespace Drive.WebHost.Services
         public async Task<IEnumerable<FileUnitDto>> GetAllByParentIdAsync(int spaceId, int? parentId)
         {
             var files = await _unitOfWork.Files.Query.Where(f => f.Space.Id == spaceId)
-                                                     .Where(f => f.Parent.Id == parentId)
+                                                     .Where(f => f.FolderUnit.Id == parentId)
                                                      .Select(f => new FileUnitDto()
                                                      {
                                                          Id = f.Id,
@@ -99,7 +99,7 @@ namespace Drive.WebHost.Services
         {
             var user = await _usersService.GetCurrentUser();
             var space = await _unitOfWork?.Spaces?.GetByIdAsync(dto.SpaceId);
-            
+            var parentFolder = await _unitOfWork?.Folders.GetByIdAsync(dto.ParentId);
 
             if (space != null)
             {
@@ -113,19 +113,12 @@ namespace Drive.WebHost.Services
                     LastModified = DateTime.Now,
                     IsDeleted = false,
                     Space = space,
+                    FolderUnit = parentFolder,
                     Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId)
                 };
 
-                if (dto.ParentId != 0)
-                {
-                    var parentFolder = await _unitOfWork?.Folders.Query.Include(f => f.DataUnits).SingleOrDefaultAsync(f => f.Id == dto.ParentId);
-
-                    file.Parent = parentFolder;
-                    parentFolder.DataUnits.Add(file);
-                }
 
                 _unitOfWork?.Files?.Create(file);
-
                 await _unitOfWork?.SaveChangesAsync();
 
                 dto.Id = file.Id;
@@ -196,7 +189,7 @@ namespace Drive.WebHost.Services
             var parentFolder = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
 
             file.Space = space;
-            file.Parent = parentFolder ?? null;
+            file.FolderUnit = parentFolder ?? null;
 
             await _unitOfWork?.SaveChangesAsync();
 
