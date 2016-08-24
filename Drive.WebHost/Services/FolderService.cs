@@ -19,11 +19,13 @@ namespace Drive.WebHost.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUsersService _usersService;
+        private readonly IFileService _fileService;
 
-        public FolderService(IUnitOfWork unitOfWork, IUsersService usersService)
+        public FolderService(IUnitOfWork unitOfWork, IUsersService usersService, IFileService fileService)
         {
             _unitOfWork = unitOfWork;
             _usersService = usersService;
+            _fileService = fileService;
         }
 
         public async Task<IEnumerable<FolderUnitDto>> GetAllAsync()
@@ -205,6 +207,21 @@ namespace Drive.WebHost.Services
             await _unitOfWork?.SaveChangesAsync();
         }
 
+        public async Task DeleteFolderWithStaff(int id)
+        {
+            FolderContentDto folderStaff = await GetContentAsync(id);
+
+            foreach (var folder in folderStaff.Folders)
+            {
+                await DeleteFolderWithStaff(folder.Id);
+            }
+            foreach (var file in folderStaff.Files)
+            {
+                await _fileService.DeleteAsync(file.Id);
+            }
+            await DeleteAsync(id);
+        }
+
         public async Task<FolderContentDto> GetContentAsync(int id, int page, int count, string sort)
         {
             IEnumerable<FolderUnitDto> folders = await _unitOfWork.Folders.Query.Where(x => x.Parent.Id == id)
@@ -279,6 +296,26 @@ namespace Drive.WebHost.Services
                 Folders = folders
             };
         }
+        public async Task<FolderContentDto> GetContentAsync(int id)
+        {
+            IEnumerable<FolderUnitDto> folders = await _unitOfWork.Folders.Query.Where(x => x.Parent.Id == id)
+                .Select(f => new FolderUnitDto
+                {
+                    Id = f.Id,
+                }).ToListAsync();
+            IEnumerable<FileUnitDto> files = await _unitOfWork.Files.Query.Where(x => x.Parent.Id == id)
+                .Select(f => new FileUnitDto
+                {
+                    Id = f.Id,
+                }).ToListAsync();
+
+            return new FolderContentDto
+            {
+                Files = files,
+                Folders = folders
+            };
+        }
+
 
         public async Task<int> GetContentTotalAsync(int id)
         {

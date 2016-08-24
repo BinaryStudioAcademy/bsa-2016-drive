@@ -182,7 +182,7 @@
         {
             if (confirm('Do you really want to delete space and all inside folders and files?') == true)
             {
-                settingsService.deleteSpace(vm.selectedSpace, function (response) {
+                settingsService.deleteSpaceWithStaff(vm.selectedSpace, function (response) {
                     if (response) {
                         var data = {
                             operation: 'delete',
@@ -191,7 +191,7 @@
                     }
                 });
                 // Reload page
-                $window.location.reload();
+                $window.location.reload(true);
                 $location.url("/");            
             } else {
 
