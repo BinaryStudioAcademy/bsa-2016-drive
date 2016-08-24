@@ -33,10 +33,22 @@ namespace Drive.WebHost.Api
             return Ok(data);
         }
 
-        // GET api/folders/1
+        // GET api/folders/deleted/1
         public async Task<IHttpActionResult> GetAsync(int id)
         {
             var folder = await _service?.GetAsync(id);
+
+            if (folder == null)
+                return NotFound();
+
+            return Ok(folder);
+        }
+
+        // GET api/folders/deleted/1
+        [Route("deleted/{id:int}")]
+        public async Task<IHttpActionResult> GetDeletedAsync(int id)
+        {
+            var folder = await _service?.GetDeletedAsync(id);
 
             if (folder == null)
                 return NotFound();
@@ -62,6 +74,21 @@ namespace Drive.WebHost.Api
         public async Task<IHttpActionResult> UpdateAsync(int id, FolderUnitDto folder)
         {
             var dto = await _service?.UpdateAsync(id, folder);
+
+            if (id != folder?.Id)
+            {
+                return BadRequest();
+            }
+
+            return Ok(dto);
+        }
+
+        //PUT api/folders/deleted/1?oldParentId=(int)
+        [HttpPut]
+        [Route("deleted/{id:int}")]
+        public async Task<IHttpActionResult> UpdateDeletedAsync(int id, int? oldParentId, FolderUnitDto folder)
+        {
+            var dto = await _service?.UpdateDeletedAsync(id, oldParentId, folder);
 
             if (id != folder?.Id)
             {
