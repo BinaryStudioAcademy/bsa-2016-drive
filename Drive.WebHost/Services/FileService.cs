@@ -101,7 +101,7 @@ namespace Drive.WebHost.Services
             var space = await _unitOfWork?.Spaces?.GetByIdAsync(dto.SpaceId);
             var parentFolder =
                 await
-                    _unitOfWork?.Folders.Query.Include(f => f.DataUnits).SingleOrDefaultAsync(f => f.Id == dto.ParentId); //.GetByIdAsync(dto.ParentId);
+                    _unitOfWork?.Folders.Query.Include(f => f.DataUnits).SingleOrDefaultAsync(f => f.Id == dto.ParentId);
 
             if (space != null)
             {
