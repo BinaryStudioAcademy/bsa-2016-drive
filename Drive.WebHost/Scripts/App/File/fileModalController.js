@@ -19,7 +19,7 @@
 
         function activate() {
             vm.file = items;
-            vm.title = 'Create file';
+            vm.title = 'New link';
             vm.icon = "fa fa-file-o";
             vm.urlIsValid = false;
             vm.submitted = false;

@@ -191,8 +191,8 @@
         ];
 
         vm.createOption = [
-            ['Create folder', function () { vm.createNewFolder(); }],
-            ['Create file', function () { vm.createNewFile(); }],
+            ['New folder', function () { vm.createNewFolder(); }],
+            ['New link', function () { vm.createNewFile(); }],
             null,
             ['Upload file', function(){}]
         ];
