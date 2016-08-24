@@ -99,9 +99,7 @@ namespace Drive.WebHost.Services
         {
             var user = await _usersService.GetCurrentUser();
             var space = await _unitOfWork?.Spaces?.GetByIdAsync(dto.SpaceId);
-            var parentFolder =
-                await
-                    _unitOfWork?.Folders.Query.Include(f => f.DataUnits).SingleOrDefaultAsync(f => f.Id == dto.ParentId);
+            
 
             if (space != null)
             {
@@ -115,13 +113,19 @@ namespace Drive.WebHost.Services
                     LastModified = DateTime.Now,
                     IsDeleted = false,
                     Space = space,
-                    Parent = parentFolder,
                     Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId)
                 };
 
-                parentFolder.DataUnits.Add(file);
+                if (dto.ParentId != 0)
+                {
+                    var parentFolder = await _unitOfWork?.Folders.Query.Include(f => f.DataUnits).SingleOrDefaultAsync(f => f.Id == dto.ParentId);
+
+                    file.Parent = parentFolder;
+                    parentFolder.DataUnits.Add(file);
+                }
 
                 _unitOfWork?.Files?.Create(file);
+
                 await _unitOfWork?.SaveChangesAsync();
 
                 dto.Id = file.Id;

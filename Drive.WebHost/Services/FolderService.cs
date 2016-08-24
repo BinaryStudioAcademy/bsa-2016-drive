@@ -49,15 +49,15 @@ namespace Drive.WebHost.Services
             var folders = await _unitOfWork?.Folders?.Query.Where(f => f.Space.Id == spaceId)
                                                            .Where(f => f.Parent.Id == parentId)
                                                            .Select(f => new FolderUnitDto
-            {
-                Id = f.Id,
-                Description = f.Description,
-                Name = f.Name,
-                IsDeleted = f.IsDeleted,
-                CreatedAt = f.CreatedAt,
-                LastModified = f.LastModified,
-                SpaceId = f.Space.Id
-            }).ToListAsync();
+                                                           {
+                                                               Id = f.Id,
+                                                               Description = f.Description,
+                                                               Name = f.Name,
+                                                               IsDeleted = f.IsDeleted,
+                                                               CreatedAt = f.CreatedAt,
+                                                               LastModified = f.LastModified,
+                                                               SpaceId = f.Space.Id
+                                                           }).ToListAsync();
 
             return folders;
         }
@@ -102,10 +102,6 @@ namespace Drive.WebHost.Services
             var user = await _usersService?.GetCurrentUser();
 
             var space = await _unitOfWork?.Spaces?.GetByIdAsync(dto.SpaceId);
-            var parentFolder =
-                await
-                    _unitOfWork?.Folders.Query.Include(f => f.DataUnits).SingleOrDefaultAsync(f => f.Id == dto.ParentId);
-
 
             if (space != null)
             {
@@ -118,11 +114,16 @@ namespace Drive.WebHost.Services
                     LastModified = DateTime.Now,
                     IsDeleted = false,
                     Space = space,
-                    Parent = parentFolder,
                     Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId)
                 };
 
-                parentFolder.DataUnits.Add(folder);
+                if (dto.ParentId != 0)
+                {
+                    var parentFolder = await _unitOfWork?.Folders.Query.Include(f => f.DataUnits).SingleOrDefaultAsync(f => f.Id == dto.ParentId);
+
+                    folder.Parent = parentFolder;
+                    parentFolder.DataUnits.Add(folder);
+                }
 
                 _unitOfWork?.Folders?.Create(folder);
                 await _unitOfWork?.SaveChangesAsync();
@@ -173,7 +174,7 @@ namespace Drive.WebHost.Services
 
             if (oldParentId != null)
             {
-                var oldParentFolder =  await _unitOfWork.Folders.Query.Include(f => f.DataUnits).SingleOrDefaultAsync(f => f.Id == oldParentId);
+                var oldParentFolder = await _unitOfWork.Folders.Query.Include(f => f.DataUnits).SingleOrDefaultAsync(f => f.Id == oldParentId);
 
                 var list = new List<DataUnit>();
                 foreach (var item in oldParentFolder.DataUnits)
@@ -359,7 +360,7 @@ namespace Drive.WebHost.Services
 
                 if (item is FolderUnit)
                 {
-                     await ChangeSpaceId(item.Id, spaceId);
+                    await ChangeSpaceId(item.Id, spaceId);
                 }
             }
         }
