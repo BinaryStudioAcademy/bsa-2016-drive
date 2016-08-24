@@ -1,89 +1,41 @@
-<<<<<<< HEAD
-﻿<style>
-    .highlight {
-        background-color: #FFFF00;
-    }
-
-    .ac-container {
-        -webkit-backface-visibility: hidden;
-        -moz-backface-visibility: hidden;
-        -ms-backface-visibility: hidden;
-        -o-backface-visibility: hidden;
-        backface-visibility: hidden;
-        -webkit-transform: translate3d(0, 0, 0);
-        -moz-transform: translate3d(0, 0, 0);
-        -ms-transform: translate3d(0, 0, 0);
-        -o-transform: translate3d(0, 0, 0);
-        transform: translate3d(0, 0, 0);
-        z-index: 999;
-    }
-
-        .ac-container .ac-menu {
-            border: 1px solid #ccc;
-            list-style: none;
-            padding: 0;
-            background-color: white;
-            box-shadow: 0 3px 7px 0px rgba(0, 0, 0, 0.15);
-            margin: 0;
-        }
-
-            .ac-container .ac-menu .ac-menu-item {
-                border-bottom: 1px dotted #ccc;
-                line-height: 35px;
-                margin: 0;
-                height: 20px;
-            }
-
-                .ac-container .ac-menu .ac-menu-item:last-child {
-                    border-bottom: 0;
-                }
-
-                .ac-container .ac-menu .ac-menu-item:hover {
-                    background-color: #e0eaff;
-                }
-
-            .ac-container .ac-menu a {
-                padding-left: 5px;
-                display: block;
-                color: inherit;
-                text-decoration: none;
-            }
-
-            .ac-container .ac-menu .ac-state-focus {
-                outline: none;
-                background-color: #e0eaff;
-            }
-</style>
-<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular-sanitize.js"></script>
 <div class="container">
     <br />
     <div class="btn-group btn-breadcrumb">
         <a class="btn btn-info"><i class="glyphicon glyphicon-home"></i> Admin Panel</a>
     </div>
-    <h1>{{adminCtrl.title}}</h1>
-    <h2>Roles</h2>
-    <button class="btn btn-info btn-md" style="width: 15%; height: 40px;" ng-click="adminCtrl.createRole('lg')"><i class="fa iconCustom fa-plus-circle fa-cog fa-lg"></i>New role</button>
-    <br />
-    <br />
-    <div class="list-group" ng-repeat="role in adminCtrl.roles">
-        <a ng-click="adminCtrl.editRole('lg', role.id)" class="list-group-item" style="width: 20%">{{role.name}}</a>
+<br/><br/>
+    <div class="col-md-2">
+        <ul class="nav nav-pills nav-stacked">
+            <li ng-class="{ active: adminCtrl.isSet(1) }">
+                <a href ng-click="adminCtrl.setTab(1)">Roles</a>
+            </li>
+            <li ng-class="{ active: adminCtrl.isSet(2) }">
+                <a href ng-click="adminCtrl.setTab(2)">Users</a>
+            </li>
+        </ul>
     </div>
-    <input type="text" placeholder="enter a state" ng-model="adminCtrl.selected" uib-typeahead="state for state in adminCtrl.states | filter:$viewValue | limitTo:8" class="form-control">
-    <div ng-repeat="state in adminCtrl.states">
-        {{state}}
+    <div class="col-md-7">
+        <div ng-show="adminCtrl.isSet(1)">
+            <button class="btn btn-info btn-md" style="width: 25%; height: 40px;" ng-click="adminCtrl.createRole('lg')"><i class="fa iconCustom fa-plus-circle fa-cog fa-lg"></i> Create role</button>
+            <br />
+            <br />
+            <table class="table users table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th style="width:70%">Role name</th>
+                        <th style="width:29%">Actions</th>
+                    </tr>
+                </thead>
+                <tbody style="height: 200px;">
+                    <tr ng-repeat="item in adminCtrl.roles">
+                        <td style="width:70%">{{item.name}}</td>
+                        <td style="width:5%"><i role="button" class="fa fa-wrench fa-lg" aria-hidden="true" ng-click="adminCtrl.editRole('lg', item.id);"></i></td>
+                        <td style="width:25%"><i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="adminCtrl.removeRole(item.id);" ></i></td>
+                    </tr>
+                </tbody>
+                </table>
+        </div>
     </div>
 </div>
-=======
-﻿<br />
-<div class="btn-group btn-breadcrumb">
-    <a class="btn btn-info"><i class="fa fa-sliders fa-lg"></i> Admin Panel</a>
-</div>
-<div class="jumbotron">
-    <h1>{{adminCtrl.title}}</h1>
-    <div>
-        <br />
-        <a class="btn btn-lg btn-success" href="#/" role="button">To main page</a>
-    </div>
-</div>
+        ﻿<br />
 <a class="btn btn-lg btn-default" href="#/AdminPanel/Logs" role="button">Open Logs</a>
->>>>>>> refs/remotes/origin/develop

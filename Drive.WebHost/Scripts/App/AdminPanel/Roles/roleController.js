@@ -4,16 +4,20 @@
     angular.module("driveApp")
         .controller("RoleController", RoleController);
 
-    RoleController.$inject = ['$uibModalInstance', 'RoleService', 'items'];
+    RoleController.$inject = ['$uibModalInstance', 'RoleService', 'items', '$window'];
 
-    function RoleController($uibModalInstance, RoleService, items) {
+    function RoleController($uibModalInstance, RoleService, items, $window) {
         var vm = this;
         vm.createRole = createRole;
         vm.cancel = cancel;
         vm.addRoleUser = addRoleUser;
         vm.removeRoleUser = removeRoleUser;
-        vm.setChoice = setChoice;
         vm.save = save;
+        vm.tab = 1;
+        vm.setTab = setTab;
+        vm.isSet = isSet;
+        vm.permittedUsers = [];
+
         activate();
 
         function activate() {
@@ -23,6 +27,21 @@
             if (items !== undefined) {
                 RoleService.getById(items, function (data) {
                     vm.role = data;
+                    RoleService.getAllUsers(function (data) {
+                        vm.users = data;
+                        for (var i = 0; i < vm.role.users.length; i++) {
+                            for (var j = 0; j < vm.users.length; j++) {
+                                if (vm.role.users[i].globalId === vm.users[j].id) {
+                                    vm.permittedUsers.push({
+                                        name: vm.users[j].name,
+                                        globalId: vm.role.users[i].globalId,
+                                        confirmedRead: true
+                                    });
+                                    break;
+                                }
+                            }
+                        }
+                    })
                 })
             }
             else {       
@@ -36,17 +55,20 @@
 
         function createRole() {
             console.log('Creating role');
-            vm.role.name = vm.name;
-            vm.role.description = vm.description;
-            vm.role.users = vm.role.users;
+            vm.role.users = vm.role.users || [];
+            vm.role.users = vm.permittedUsers;
             RoleService.createRole(vm.role);
             $uibModalInstance.close();
+            $window.location.reload();
         }
 
         function save() {
             console.log('Saving role...');
+            vm.role.users = vm.role.users || [];
+            vm.role.users = vm.permittedUsers;
             RoleService.saveRole(vm.role);
             $uibModalInstance.close();
+            $window.location.reload();
         }
 
         function cancel() {
@@ -54,34 +76,31 @@
         };
 
         function addRoleUser() {
-            if (vm.userAddId != null) {
-                if (vm.role !== undefined) {
-                if (vm.role.users.find(x => x.id === vm.userAddId)) {
-                        vm.userAddName = null;
-                        vm.userAddId = null;
-                        console.log('The user already exist in this space!');
-                        return;
-                    }
+            if (vm.selected.id != null) {
+                if (vm.permittedUsers.find(x => x.globalId === vm.selected.id)) {
+                    console.log('The user already exist in this role!');
+                    return;
                 };
-
-                vm.role.users.push({
-                    name: vm.userAddName,
-                    id: vm.userAddId
+                vm.permittedUsers.push({
+                    name: vm.selected.name,
+                    globalId: vm.selected.id
                 });
-                vm.userAddName = null;
-                vm.userAddId = null;
             }
         };
 
         function removeRoleUser(id) {
-            for (var i = 0; i < vm.role.users.length; i++) {
-                if (vm.role.users[i].id === id) { vm.role.users.splice(i, 1); break; }
+            for (var i = 0; i < vm.permittedUsers.length; i++) {
+                if (vm.permittedUsers[i].globalId === id) { vm.permittedUsers.splice(i, 1); break; }
             }
         };
 
-        function setChoice(name, id) {
-            vm.userAddName = name;
-            vm.userAddId = id;
+        function setTab(newTab) {
+            vm.tab = newTab;
         };
+
+        function isSet(tabNum) {
+            return vm.tab === tabNum;
+        };
+
     }
 }());

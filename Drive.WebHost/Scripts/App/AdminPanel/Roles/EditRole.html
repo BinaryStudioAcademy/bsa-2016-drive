@@ -5,72 +5,94 @@
     <div class="modal-body">
         <div class="bs-example">
             <div class="container">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="control-label col-sm-1" for="name">Role name:</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="name" ng-model="roleCtrl.role.name" placeholder="Enter role name">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label col-sm-1" for="description">Description:</label>
-                        <div class="col-sm-10">
-                            <input type="text" class="form-control" id="description" ng-model="roleCtrl.role.description" placeholder="Enter description">
-                        </div>
-                    </div>
-                </form>
-                <br />
-                <div class="col-md-9">
-                    <h4>Settings user access to space</h4>
-                    <div class="form-inline">
-                        <div class="form-group">
-                            <div class="col-md-3">
-                                <div class="dropdown" data-toggle="tooltip" data-placement="top" title="Select user">
-                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                                        Users<span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li ng-repeat="item in roleCtrl.users">
-                                            <a ng-click="roleCtrl.setChoice(item.name, item.id);">{{item.name}}</a>
-                                        </li>
-                                    </ul>
+                <div class="col-md-2">
+                    <ul class="nav nav-pills nav-stacked">
+                        <li ng-class="{ active: roleCtrl.isSet(1) }">
+                            <a href ng-click="roleCtrl.setTab(1)">General</a>
+                        </li>
+                        <li ng-class="{ active: roleCtrl.isSet(2) }">
+                            <a href ng-click="roleCtrl.setTab(2)">Users</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-10">
+                    <div ng-show="roleCtrl.isSet(1)">
+                        <form class="form-horizontal" role="form" name="createForm" novalidate>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form">
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-6" for="name">Role name:</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" id="name" name="title" ng-pattern="/^[\w -]*$/" ng-model="roleCtrl.role.name" placeholder="Enter role name" required>
+                                            </div>
+                                            <span ng-show="createForm.title.$error.required && createForm.title.$touched" style="color: red" class="col-sm-offset-2">
+                                                Name is required.
+                                            </span>
+                                            <span style="color:red" ng-show="createForm.title.$error.pattern" class="col-sm-offset-2">
+                                                Not a valid name.
+                                            </span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-6" for="description">Description:</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control" id="description" ng-model="roleCtrl.role.description" placeholder="Enter description">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <input class="form-control" ng-model="roleCtrl.userAddName" placeholder="User name" disabled />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col-md-5">
-                                <button class="btn btn-primary" ng-click="roleCtrl.addRoleUser()">Add</button>
-                            </div>
-                        </div>
+                        </form>
                     </div>
-                    <table class="table users table-striped table-hover">
-                        <thead>
-                            <tr>
-                                <th>User name</th>
-                                <th>Id</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="item in roleCtrl.role.users">
-                                <td>{{item.name}}</td>
-                                <td>{{item.id}}</td>
-                                <td>
-                                    <input type="button" value="Remove" class="btn btn-danger" ng-click="roleCtrl.removeRoleUser(item.id)" />
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+                    <div ng-show="roleCtrl.isSet(2)">
+                        <form class="form-horizontal" role="form" name="createForm" novalidate>
+                            <div class="col-md-7">
+                                <div class="form">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <input type="text" placeholder="Enter a user name" ng-model="roleCtrl.selected" uib-typeahead="user as user.name for user in roleCtrl.users | filter:{name:$viewValue} | limitTo:10" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <button class="btn btn-primary" ng-click="roleCtrl.addRoleUser()">Add</button>
+                                        </div>
+                                    </div>
+                                    <br /><br />
+                                    <table class="table users table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:80%">User name</th>
+                                                <th style="width:20%"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="height: 200px;">
+                                            <tr ng-repeat="item in roleCtrl.permittedUsers">
+                                                <td style="width:80%">{{item.name}}</td>
+                                                <td style="width:20%">
+                                                    <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="roleCtrl.removeRoleUser(item.globalId);"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="roleCtrl.save()">Save</button>
-    <button class="btn btn-default" type="button" ng-click="roleCtrl.cancel()">Cancel</button>
+    <button class="btn btn-primary" type="button" ng-click="roleCtrl.save()" title="Save changes"
+            ng-disabled="createForm.title.$invalid || createForm.maxfile.$invalid || createForm.maxsize.$invalid">
+        Save
+    </button>
+    <button class="btn btn-default" type="button" ng-click="roleCtrl.cancel()">
+        Cancel
+    </button>
 </div>

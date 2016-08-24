@@ -4,45 +4,24 @@
     angular.module("driveApp")
         .controller("adminPanelController", AdminPanelController);
 
-    AdminPanelController.$inject = ['AdminPanelService', '$uibModal'];
+    AdminPanelController.$inject = ['AdminPanelService', '$uibModal', '$window'];
 
-    function AdminPanelController(adminPanelService, $uibModal) {
+    function AdminPanelController(adminPanelService, $uibModal, $window) {
         var vm = this;
         vm.dirty = {};
-        vm.suggest_role = suggest_role;
         vm.createRole = createRole;
         vm.editRole = editRole;
-        vm.autocomplete_options = {
-            suggest: vm.suggest_role,
-        };
-
+        vm.removeRole = removeRole;
+        vm.tab = 1;
+        vm.setTab = setTab;
+        vm.isSet = isSet;
         activate();
 
         function activate() {
             vm.title = "Admin Panel";
-            //adminPanelService.getAllSpaces(function (data) {
-            //    vm.spaces = data;
-            //});
-            //adminPanelService.getAllUsers(function (data) {
-            //    vm.users = data;
-            //});
             adminPanelService.getAllRoles(function(data) {
                 vm.roles = data;
             });
-            vm.states = ["asd", "qwe", "zxc", "zwdasda", "zxcxcvxvxcv"];
-        }
-
-        function suggest_role(term) {
-            var q = term.toLowerCase().trim();
-            var results = [];
-            for (var i = 0; i < vm.roles.length && results.length < 10; i++) {
-                var role = vm.roles[i].name;
-                if (role.toLowerCase().indexOf(q) === 0) {
-                    results.push({  value: role, label: role });
-
-                }
-            }
-            return results;
         }
 
         function createRole(size) {
@@ -83,5 +62,30 @@
             }, function () {
             });
         }
+
+        function setTab(newTab) {
+            vm.tab = newTab;
+        };
+
+        function isSet(tabNum) {
+            return vm.tab === tabNum;
+        };
+
+        function removeRole(id) {
+            if (confirm('Are you really want to delete the role?') == true) {
+                adminPanelService.deleteRole(id, function (response) {
+                    if (response) {
+                        var data = {
+                            operation: 'delete',
+                            item: response
+                        }
+                    }
+                });
+                $window.location.reload();
+            } else {
+
+            }
+        }
+
     }
 }());

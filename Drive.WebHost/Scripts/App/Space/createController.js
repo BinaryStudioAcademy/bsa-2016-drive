@@ -19,7 +19,6 @@
         vm.addWriteRole = addWriteRole;
         vm.removeSpaceUser = removeSpaceUser;
         vm.removeSpaceRole = removeSpaceRole;
-        vm.setChoice = setChoice;
         vm.create = create;
         vm.cancel = cancel;
 
@@ -255,11 +254,6 @@
             for (var i = 0; i < vm.permittedRoles.length; i++) {
                 if (vm.permittedRoles[i].id === id) { vm.permittedRoles.splice(i, 1); break; }
             }
-        };
-
-        function setChoice(name, id) {
-            vm.userAddName = name;
-            vm.userAddId = id;
         };
 
         function create() {

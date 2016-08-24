@@ -5,6 +5,7 @@ using Driver.Shared.Dto;
 using Driver.Shared.Dto.Users;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -15,63 +16,67 @@ namespace Drive.WebHost.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IAsyncHttpClient _httpClient;
+        private readonly IUsersService _userService;
 
-        public RolesService(IUnitOfWork unitOfWork, IAsyncHttpClient httpClient)
+        public RolesService(IUnitOfWork unitOfWork, IAsyncHttpClient httpClient, IUsersService userService)
         {
             _unitOfWork = unitOfWork;
             _httpClient = httpClient;
+            _userService = userService;
         }
 
         public async Task<RoleDto> GetAsync(int id)
         {
-            var data = await _unitOfWork.Roles.GetByIdAsync(id);
-
-            return new RoleDto
+            var users = await _userService.GetAllAsync();
+            var data = await _unitOfWork?.Roles?.Query.Include(x => x.Users).Where(x => x.Id == id).Select(s => new RoleDto
             {
-                Name = data.Name,
-                Description = data.Description,
-                Id = data.Id,
-                Users = from d in data.Users
-                        select new UsersDto
-                        {
-                            id = d.GlobalId
-                        }
-            };
+                Id = s.Id,
+                Description = s.Description,
+                Name = s.Name,
+                Users = s.Users
+            }).SingleOrDefaultAsync();
+            return data;
         }
 
         public async Task<IEnumerable<RoleDto>> GetAllAsync()
         {
-            //var data = await _unitOfWork?.Roles?.GetAllAsync();
-
-            //var dto = from d in data
-            //          select new RoleDto
-            //          {
-            //              Name = d.Name,
-            //              Description = d.Description,
-            //              Id = d.Id,
-            //              Users = from user in d.Users
-            //                      select new UsersDto
-            //                      {
-            //                          id = user.GlobalId
-            //                      }
-            //          };
-
-            var dto = _unitOfWork.Roles.Query.Select(s => new RoleDto
+            var users = await _userService.GetAllAsync();
+            var dto = await _unitOfWork.Roles.Query.Include(x => x.Users).Select(s => new RoleDto
             {
                 Id = s.Id,
                 Name = s.Name,
-                Description = s.Description
-            }).ToList();
+                Description = s.Description,
+                Users = s.Users
+            }).ToListAsync();
             return dto;
         }
 
         public async Task<int> CreateAsync(RoleDto dto)
         {
+            List<User> permittedUsers = new List<User>();
+            foreach (var item in dto.Users)
+            {
+                var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
+                if (user == null)
+                {
+                    UserDto userdto = new UserDto();
+                    userdto.serverUserId = item.GlobalId;
+                    await _userService.CreateAsync(userdto);
+                    var suser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
+                    permittedUsers.Add(suser);
+                }
+                else
+                {
+                    permittedUsers.Add(user);
+                }
+            }
+
             var role = new Role
             {
                 Name = dto.Name,
                 Description = dto.Description,
-                IsDeleted = false
+                IsDeleted = false,
+                Users = permittedUsers
             };
             _unitOfWork.Roles.Create(role);
             await _unitOfWork.SaveChangesAsync();
@@ -80,11 +85,28 @@ namespace Drive.WebHost.Services
 
         public async Task UpdateAsync(int id, RoleDto dto)
         {
-            var role = await _unitOfWork.Roles.GetByIdAsync(id);
-
+            List<User> permittedUsers = new List<User>();
+            foreach (var item in dto.Users)
+            {
+                var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
+                if (user == null)
+                {
+                    UserDto userdto = new UserDto();
+                    userdto.serverUserId = item.GlobalId;
+                    await _userService.CreateAsync(userdto);
+                    var suser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
+                    permittedUsers.Add(suser);
+                }
+                else
+                {
+                    permittedUsers.Add(user);
+                }
+            }
+            var role = await _unitOfWork?.Roles?.Query.Include(x => x.Users).SingleOrDefaultAsync(x => x.Id == id);
             role.Name = dto.Name;
             role.Description = dto.Description;
-            await _unitOfWork.SaveChangesAsync();
+            role.Users = permittedUsers;
+            await _unitOfWork?.SaveChangesAsync();
         }
 
         public async Task Delete(int id)

@@ -5,13 +5,14 @@
         .module('driveApp')
         .factory('AdminPanelService', AdminPanelService);
 
-    AdminPanelService.$inject = ['$http'];
+    AdminPanelService.$inject = ['$http', 'BaseUrl'];
 
-    function AdminPanelService($http) {
+    function AdminPanelService($http, baseUrl) {
         var service = {
             getAllSpaces: getAllSpaces,
             getAllUsers: getAllUsers,
-            getAllRoles: getAllRoles
+            getAllRoles: getAllRoles,
+            deleteRole: deleteRole
         };
 
         function getAllSpaces(callback) {
@@ -45,6 +46,14 @@
             }, function () {
                 console.log('Error while getting roles!');
             });
+        }
+
+        function deleteRole(id, callback) {
+            $http.delete(baseUrl + '/api/roles/' + id)
+                .then(function (response) {
+                    if (callback)
+                        callback(response);
+                });
         }
 
         return service;
