@@ -162,6 +162,8 @@ namespace Drive.WebHost.Services
             if (folder == null)
                 return null;
 
+            folder.IsDeleted = false;
+
             folder.Name = dto.Name;
             folder.Description = dto.Description;
             folder.IsDeleted = dto.IsDeleted;
@@ -192,6 +194,8 @@ namespace Drive.WebHost.Services
 
             foreach (var item in folder.DataUnits)
             {
+                item.IsDeleted = false;
+
                 item.Space = await _unitOfWork.Spaces.GetByIdAsync(folder.Space.Id);
 
                 if (item is FolderUnit)
@@ -207,23 +211,29 @@ namespace Drive.WebHost.Services
 
         public async Task DeleteAsync(int id)
         {
-            _unitOfWork?.Folders?.Delete(id);
+            var rootFolder = await _unitOfWork.Folders.Query.Include(f => f.DataUnits).SingleOrDefaultAsync(f => f.Id == id);
+
+            rootFolder.IsDeleted = true;
+
+            foreach (var item in rootFolder.DataUnits)
+            {
+                if (item is FolderUnit)
+                {
+                    var folder = await _unitOfWork.Folders.GetByIdAsync(item.Id);
+
+                    folder.IsDeleted = true;
+
+                    await DeleteAsync(folder.Id);
+                }
+                else
+                {
+                    var file = await _unitOfWork.Files.GetByIdAsync(item.Id);
+
+                    file.IsDeleted = true;
+                }
+            }
+
             await _unitOfWork?.SaveChangesAsync();
-        }
-
-        public async Task DeleteFolderWithStaff(int id)
-        {
-            FolderContentDto folderStaff = await GetContentAsync(id);
-
-            foreach (var folder in folderStaff.Folders)
-            {
-                await DeleteFolderWithStaff(folder.Id);
-            }
-            foreach (var file in folderStaff.Files)
-            {
-                await _fileService.DeleteAsync(file.Id);
-            }
-            await DeleteAsync(id);
         }
 
         public async Task<FolderContentDto> GetContentAsync(int id, int page, int count, string sort)

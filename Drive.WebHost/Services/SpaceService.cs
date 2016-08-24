@@ -285,7 +285,7 @@ namespace Drive.WebHost.Services
 
             foreach (var folder in spaceToDelete.Folders)
             {
-                await _folderService.DeleteFolderWithStaff(folder.Id);      
+                await _folderService.DeleteAsync(folder.Id);      
             }
             foreach (var file in spaceToDelete.Files)
             {
