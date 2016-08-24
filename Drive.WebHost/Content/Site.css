@@ -497,7 +497,7 @@ table {
     width: 100%;
     max-width: 960px;
     margin: 20px auto;
-    color: #666;
+    color: #333;
 }
 
 .small {
@@ -551,9 +551,10 @@ small,
 }
 /*end grid view*/
 .well {
-    min-height: 15px;
-    padding: 19px;
+    min-height: 10px;
+    padding: 10px;
     margin-bottom: 0px;
+    color:#333;
 }
 
 .page-footer {
