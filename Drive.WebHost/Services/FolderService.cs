@@ -190,7 +190,7 @@ namespace Drive.WebHost.Services
 
                 if (item is FolderUnit)
                 {
-                    ChangeSpaceId(item.Id, folder.Space.Id);
+                    await ChangeSpaceId(item.Id, folder.Space.Id);
                 }
             }
 
@@ -295,7 +295,7 @@ namespace Drive.WebHost.Services
             _unitOfWork?.Dispose();
         }
 
-        private async void ChangeSpaceId(int id, int spaceId)
+        private async Task ChangeSpaceId(int id, int spaceId)
         {
             var folder =
                 await _unitOfWork?.Folders?.Query.Include(f => f.DataUnits).SingleOrDefaultAsync(f => f.Id == id);
@@ -306,7 +306,7 @@ namespace Drive.WebHost.Services
 
                 if (item is FolderUnit)
                 {
-                    ChangeSpaceId(item.Id, spaceId);
+                     await ChangeSpaceId(item.Id, spaceId);
                 }
             }
         }
