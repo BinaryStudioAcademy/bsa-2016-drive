@@ -349,10 +349,12 @@ namespace Drive.WebHost.Services
         private async Task ChangeSpaceId(int id, int spaceId)
         {
             var folder =
-                await _unitOfWork?.Folders?.Query.Include(f => f.DataUnits).SingleOrDefaultAsync(f => f.Id == id);
+                await _unitOfWork?.Folders?.Deleted.Include(f => f.DataUnits).SingleOrDefaultAsync(f => f.Id == id);
 
             foreach (var item in folder.DataUnits)
             {
+                item.IsDeleted = false;
+
                 item.Space = await _unitOfWork.Spaces.GetByIdAsync(spaceId);
 
                 if (item is FolderUnit)
