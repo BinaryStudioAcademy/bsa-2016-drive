@@ -30,6 +30,7 @@ namespace Drive.DataAccess.Repositories
         private IRepository<ContentLink> _contentLinksRepository;
         private IRepository<Tag> _tagsRepository;
         private IRepository<Lecture> _lecturesRepository;
+        private IRepository<Shared> _sharedSpaceRepository;
 
         public IRepository<FolderUnit> Folders
         {
@@ -115,6 +116,14 @@ namespace Drive.DataAccess.Repositories
             get
             {
                 return _lecturesRepository ?? (_lecturesRepository = _repositoryFactory.CreateRepository<Lecture>(_context));
+            }
+        }
+
+        public IRepository<Shared> SharedSpace
+        {
+            get
+            {
+                return _sharedSpaceRepository ?? (_sharedSpaceRepository = _repositoryFactory.CreateRepository<Shared>(_context));
             }
         }
 

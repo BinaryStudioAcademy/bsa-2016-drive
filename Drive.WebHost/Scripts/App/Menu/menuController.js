@@ -13,6 +13,7 @@
         vm.redirectToBinarySpace = redirectToBinarySpace;
         vm.redirectToMySpace = redirectToMySpace;
         vm.redirectToSpace = redirectToSpace;
+        vm.redirectToSharedSpace = redirectToSharedSpace;
         vm.redirectToAddFile = redirectToAddFile;
         vm.redirectToAdminPanel = redirectToAdminPanel;
         vm.redirectToApps = redirectToApps;
@@ -34,6 +35,10 @@
 
         function redirectToMySpace() {
             $location.url("/myspace");
+        };
+
+        function redirectToSharedSpace() {
+            $location.url("/sharedspace");
         };
 
         function redirectToSpace(id) {

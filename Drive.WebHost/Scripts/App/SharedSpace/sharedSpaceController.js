@@ -3,11 +3,11 @@
 
     angular
         .module("driveApp")
-        .controller("SpaceController", SpaceController);
+        .controller("SharedSpaceController", SharedSpaceController);
 
-    SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', '$uibModal', 'localStorageService', '$routeParams', '$location'];
+    SharedSpaceController.$inject = ['SharedSpaceService', 'FolderService', 'FileService', '$uibModal', 'localStorageService', '$routeParams', '$location'];
 
-    function SpaceController(sharedSpaceService, folderService, fileService, $uibModal, localStorageService, $routeParams, $location) {
+    function SharedSpaceController(sharedSpaceService, folderService, fileService, $uibModal, localStorageService, $routeParams, $location) {
         var vm = this;
 
         vm.folderList = [];

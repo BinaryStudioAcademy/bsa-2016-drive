@@ -14,12 +14,12 @@
                     controller: "SpaceController",
                     controllerAs: "spaceCtrl"
                 })
-                .when("/:type", // Space page
-                {
-                    templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
-                    controller: "SpaceController",
-                    controllerAs: "spaceCtrl"
-                })
+                //.when("/:type", // Space page
+                //{
+                //    templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
+                //    controller: "SpaceController",
+                //    controllerAs: "spaceCtrl"
+                //})
                 .when("/spaces/:id", // Space page
                 {
                     templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
@@ -37,6 +37,12 @@
                     templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
                     controller: "SpaceController",
                     controllerAs: "spaceCtrl"
+                })
+                .when("/sharedspace", // Shared Space page
+                {
+                    templateUrl: baseUrl + "/Scripts/App/SharedSpace/SharedSpace.html",
+                    controller: "SharedSpaceController",
+                    controllerAs: "sharedSpaceCtrl"
                 })
                  .when("/spaces/:id/settings/", // Space settings Page
                 {

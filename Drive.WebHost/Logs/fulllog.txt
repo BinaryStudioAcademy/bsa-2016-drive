@@ -228,3 +228,460 @@
    at System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
    at System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
    at System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext() GlobalExceptionLogger
+16:23:42.8413 Error [7] Internal server error: System.Data.SqlClient.SqlException (0x80131904): Cannot drop database "DriveDB" because it is currently in use.
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   в System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   в System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   в System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite)
+   в System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   в System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.<NonQuery>b__0(DbCommand t, DbCommandInterceptionContext`1 c)
+   в System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   в System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.NonQuery(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   в System.Data.Entity.SqlServer.SqlProviderServices.<>c__DisplayClass30.<DropDatabase>b__2e(DbConnection conn)
+   в System.Data.Entity.SqlServer.SqlProviderServices.<>c__DisplayClass33.<UsingConnection>b__32()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.<>c__DisplayClass1.<Execute>b__0()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute(Action operation)
+   в System.Data.Entity.SqlServer.SqlProviderServices.UsingConnection(DbConnection sqlConnection, Action`1 act)
+   в System.Data.Entity.SqlServer.SqlProviderServices.UsingMasterConnection(DbConnection sqlConnection, Action`1 act)
+   в System.Data.Entity.SqlServer.SqlProviderServices.DropDatabase(SqlConnection sqlConnection, Nullable`1 commandTimeout, String databaseName)
+   в System.Data.Entity.SqlServer.SqlProviderServices.DbDeleteDatabase(DbConnection connection, Nullable`1 commandTimeout, StoreItemCollection storeItemCollection)
+   в System.Data.Entity.Core.Common.DbProviderServices.DeleteDatabase(DbConnection connection, Nullable`1 commandTimeout, StoreItemCollection storeItemCollection)
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteDatabase()
+   в System.Data.Entity.Internal.DatabaseOperations.Delete(ObjectContext objectContext)
+   в System.Data.Entity.Database.Delete()
+   в System.Data.Entity.DropCreateDatabaseIfModelChanges`1.InitializeDatabase(TContext context)
+   в System.Data.Entity.Internal.InternalContext.<>c__DisplayClassf`1.<CreateInitializationAction>b__e()
+   в System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   в System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   в System.Data.Entity.Internal.LazyInternalContext.<InitializeDatabase>b__4(InternalContext c)
+   в System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeDatabase()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Drive.DataAccess.Repositories.Repository`1.get_Query() в H:\Rostislav\2016\BSA\Project\Drive.DataAccess\Repositories\Repository.cs:строка 129
+   в Drive.WebHost.Services.SpaceService.<GetAsync>d__5.MoveNext() в H:\Rostislav\2016\BSA\Project\Drive.WebHost\Services\SpaceService.cs:строка 79
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Api.SpacesController.<GetSpace>d__3.MoveNext() в H:\Rostislav\2016\BSA\Project\Drive.WebHost\Api\SpacesController.cs:строка 36
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Threading.Tasks.TaskHelpersExtensions.<CastToObject>d__3`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.AuthenticationFilterResult.<ExecuteAsync>d__0.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+ClientConnectionId:9f8fc8b1-7d36-40ec-830f-c4219dc5f3f0
+Error Number: 3702, State: 4, Class: 16 GlobalExceptionLogger
+16:24:03.7455 Error [8] Internal server error: System.Data.SqlClient.SqlException (0x80131904): Cannot drop database "DriveDB" because it is currently in use.
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   в System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   в System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   в System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite)
+   в System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   в System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.<NonQuery>b__0(DbCommand t, DbCommandInterceptionContext`1 c)
+   в System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   в System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.NonQuery(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   в System.Data.Entity.SqlServer.SqlProviderServices.<>c__DisplayClass30.<DropDatabase>b__2e(DbConnection conn)
+   в System.Data.Entity.SqlServer.SqlProviderServices.<>c__DisplayClass33.<UsingConnection>b__32()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.<>c__DisplayClass1.<Execute>b__0()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute(Action operation)
+   в System.Data.Entity.SqlServer.SqlProviderServices.UsingConnection(DbConnection sqlConnection, Action`1 act)
+   в System.Data.Entity.SqlServer.SqlProviderServices.UsingMasterConnection(DbConnection sqlConnection, Action`1 act)
+   в System.Data.Entity.SqlServer.SqlProviderServices.DropDatabase(SqlConnection sqlConnection, Nullable`1 commandTimeout, String databaseName)
+   в System.Data.Entity.SqlServer.SqlProviderServices.DbDeleteDatabase(DbConnection connection, Nullable`1 commandTimeout, StoreItemCollection storeItemCollection)
+   в System.Data.Entity.Core.Common.DbProviderServices.DeleteDatabase(DbConnection connection, Nullable`1 commandTimeout, StoreItemCollection storeItemCollection)
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteDatabase()
+   в System.Data.Entity.Internal.DatabaseOperations.Delete(ObjectContext objectContext)
+   в System.Data.Entity.Database.Delete()
+   в System.Data.Entity.DropCreateDatabaseIfModelChanges`1.InitializeDatabase(TContext context)
+   в System.Data.Entity.Internal.InternalContext.<>c__DisplayClassf`1.<CreateInitializationAction>b__e()
+   в System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   в System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   в System.Data.Entity.Internal.LazyInternalContext.<InitializeDatabase>b__4(InternalContext c)
+   в System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeDatabase()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Drive.DataAccess.Repositories.Repository`1.get_Query() в H:\Rostislav\2016\BSA\Project\Drive.DataAccess\Repositories\Repository.cs:строка 129
+   в Drive.WebHost.Services.SpaceService.<GetAllAsync>d__7.MoveNext() в H:\Rostislav\2016\BSA\Project\Drive.WebHost\Services\SpaceService.cs:строка 182
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Api.SpacesController.<GetAllAsync>d__2.MoveNext() в H:\Rostislav\2016\BSA\Project\Drive.WebHost\Api\SpacesController.cs:строка 24
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Threading.Tasks.TaskHelpersExtensions.<CastToObject>d__3`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.AuthenticationFilterResult.<ExecuteAsync>d__0.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+ClientConnectionId:ac4a0163-ae36-4522-bbe7-e87d2d917f4d
+Error Number: 3702, State: 4, Class: 16 GlobalExceptionLogger
+16:24:29.4706 Error [12] Internal server error: System.Data.SqlClient.SqlException (0x80131904): Cannot drop database "DriveDB" because it is currently in use.
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   в System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   в System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   в System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite)
+   в System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   в System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.<NonQuery>b__0(DbCommand t, DbCommandInterceptionContext`1 c)
+   в System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   в System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.NonQuery(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   в System.Data.Entity.SqlServer.SqlProviderServices.<>c__DisplayClass30.<DropDatabase>b__2e(DbConnection conn)
+   в System.Data.Entity.SqlServer.SqlProviderServices.<>c__DisplayClass33.<UsingConnection>b__32()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.<>c__DisplayClass1.<Execute>b__0()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute(Action operation)
+   в System.Data.Entity.SqlServer.SqlProviderServices.UsingConnection(DbConnection sqlConnection, Action`1 act)
+   в System.Data.Entity.SqlServer.SqlProviderServices.UsingMasterConnection(DbConnection sqlConnection, Action`1 act)
+   в System.Data.Entity.SqlServer.SqlProviderServices.DropDatabase(SqlConnection sqlConnection, Nullable`1 commandTimeout, String databaseName)
+   в System.Data.Entity.SqlServer.SqlProviderServices.DbDeleteDatabase(DbConnection connection, Nullable`1 commandTimeout, StoreItemCollection storeItemCollection)
+   в System.Data.Entity.Core.Common.DbProviderServices.DeleteDatabase(DbConnection connection, Nullable`1 commandTimeout, StoreItemCollection storeItemCollection)
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteDatabase()
+   в System.Data.Entity.Internal.DatabaseOperations.Delete(ObjectContext objectContext)
+   в System.Data.Entity.Database.Delete()
+   в System.Data.Entity.DropCreateDatabaseIfModelChanges`1.InitializeDatabase(TContext context)
+   в System.Data.Entity.Internal.InternalContext.<>c__DisplayClassf`1.<CreateInitializationAction>b__e()
+   в System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   в System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   в System.Data.Entity.Internal.LazyInternalContext.<InitializeDatabase>b__4(InternalContext c)
+   в System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeDatabase()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Drive.DataAccess.Repositories.Repository`1.get_Query() в H:\Rostislav\2016\BSA\Project\Drive.DataAccess\Repositories\Repository.cs:строка 129
+   в Drive.WebHost.Services.SpaceService.<GetAsync>d__5.MoveNext() в H:\Rostislav\2016\BSA\Project\Drive.WebHost\Services\SpaceService.cs:строка 79
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Api.SpacesController.<GetSpace>d__3.MoveNext() в H:\Rostislav\2016\BSA\Project\Drive.WebHost\Api\SpacesController.cs:строка 36
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Threading.Tasks.TaskHelpersExtensions.<CastToObject>d__3`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.AuthenticationFilterResult.<ExecuteAsync>d__0.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+ClientConnectionId:a625f23d-77a2-4415-947e-74c41da40595
+Error Number: 3702, State: 4, Class: 16 GlobalExceptionLogger
+16:25:01.7140 Error [13] Internal server error: System.Data.SqlClient.SqlException (0x80131904): Cannot drop database "DriveDB" because it is currently in use.
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   в System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   в System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   в System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite)
+   в System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   в System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.<NonQuery>b__0(DbCommand t, DbCommandInterceptionContext`1 c)
+   в System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   в System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.NonQuery(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   в System.Data.Entity.SqlServer.SqlProviderServices.<>c__DisplayClass30.<DropDatabase>b__2e(DbConnection conn)
+   в System.Data.Entity.SqlServer.SqlProviderServices.<>c__DisplayClass33.<UsingConnection>b__32()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.<>c__DisplayClass1.<Execute>b__0()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute(Action operation)
+   в System.Data.Entity.SqlServer.SqlProviderServices.UsingConnection(DbConnection sqlConnection, Action`1 act)
+   в System.Data.Entity.SqlServer.SqlProviderServices.UsingMasterConnection(DbConnection sqlConnection, Action`1 act)
+   в System.Data.Entity.SqlServer.SqlProviderServices.DropDatabase(SqlConnection sqlConnection, Nullable`1 commandTimeout, String databaseName)
+   в System.Data.Entity.SqlServer.SqlProviderServices.DbDeleteDatabase(DbConnection connection, Nullable`1 commandTimeout, StoreItemCollection storeItemCollection)
+   в System.Data.Entity.Core.Common.DbProviderServices.DeleteDatabase(DbConnection connection, Nullable`1 commandTimeout, StoreItemCollection storeItemCollection)
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteDatabase()
+   в System.Data.Entity.Internal.DatabaseOperations.Delete(ObjectContext objectContext)
+   в System.Data.Entity.Database.Delete()
+   в System.Data.Entity.DropCreateDatabaseIfModelChanges`1.InitializeDatabase(TContext context)
+   в System.Data.Entity.Internal.InternalContext.<>c__DisplayClassf`1.<CreateInitializationAction>b__e()
+   в System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   в System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   в System.Data.Entity.Internal.LazyInternalContext.<InitializeDatabase>b__4(InternalContext c)
+   в System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeDatabase()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Drive.DataAccess.Repositories.Repository`1.get_Query() в H:\Rostislav\2016\BSA\Project\Drive.DataAccess\Repositories\Repository.cs:строка 129
+   в Drive.WebHost.Services.SpaceService.<GetAsync>d__5.MoveNext() в H:\Rostislav\2016\BSA\Project\Drive.WebHost\Services\SpaceService.cs:строка 79
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Api.SpacesController.<GetSpace>d__3.MoveNext() в H:\Rostislav\2016\BSA\Project\Drive.WebHost\Api\SpacesController.cs:строка 36
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Threading.Tasks.TaskHelpersExtensions.<CastToObject>d__3`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.AuthenticationFilterResult.<ExecuteAsync>d__0.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+ClientConnectionId:55cb45ad-129e-4351-a925-e8d1130ba532
+Error Number: 3702, State: 4, Class: 16 GlobalExceptionLogger
+00:16:45.7538 Error [6] Internal server error: System.Data.SqlClient.SqlException (0x80131904): Cannot drop database "DriveDB" because it is currently in use.
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   в System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   в System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   в System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite)
+   в System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   в System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.<NonQuery>b__0(DbCommand t, DbCommandInterceptionContext`1 c)
+   в System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   в System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.NonQuery(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   в System.Data.Entity.SqlServer.SqlProviderServices.<>c__DisplayClass30.<DropDatabase>b__2e(DbConnection conn)
+   в System.Data.Entity.SqlServer.SqlProviderServices.<>c__DisplayClass33.<UsingConnection>b__32()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.<>c__DisplayClass1.<Execute>b__0()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute(Action operation)
+   в System.Data.Entity.SqlServer.SqlProviderServices.UsingConnection(DbConnection sqlConnection, Action`1 act)
+   в System.Data.Entity.SqlServer.SqlProviderServices.UsingMasterConnection(DbConnection sqlConnection, Action`1 act)
+   в System.Data.Entity.SqlServer.SqlProviderServices.DropDatabase(SqlConnection sqlConnection, Nullable`1 commandTimeout, String databaseName)
+   в System.Data.Entity.SqlServer.SqlProviderServices.DbDeleteDatabase(DbConnection connection, Nullable`1 commandTimeout, StoreItemCollection storeItemCollection)
+   в System.Data.Entity.Core.Common.DbProviderServices.DeleteDatabase(DbConnection connection, Nullable`1 commandTimeout, StoreItemCollection storeItemCollection)
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteDatabase()
+   в System.Data.Entity.Internal.DatabaseOperations.Delete(ObjectContext objectContext)
+   в System.Data.Entity.Database.Delete()
+   в System.Data.Entity.DropCreateDatabaseIfModelChanges`1.InitializeDatabase(TContext context)
+   в System.Data.Entity.Internal.InternalContext.<>c__DisplayClassf`1.<CreateInitializationAction>b__e()
+   в System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   в System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   в System.Data.Entity.Internal.LazyInternalContext.<InitializeDatabase>b__4(InternalContext c)
+   в System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeDatabase()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Drive.DataAccess.Repositories.Repository`1.get_Query() в H:\Rostislav\2016\BSA\Project\Drive.DataAccess\Repositories\Repository.cs:строка 129
+   в Drive.WebHost.Services.SpaceService.<GetAsync>d__5.MoveNext() в H:\Rostislav\2016\BSA\Project\Drive.WebHost\Services\SpaceService.cs:строка 79
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Api.SpacesController.<GetSpace>d__3.MoveNext() в H:\Rostislav\2016\BSA\Project\Drive.WebHost\Api\SpacesController.cs:строка 36
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Threading.Tasks.TaskHelpersExtensions.<CastToObject>d__3`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.AuthenticationFilterResult.<ExecuteAsync>d__0.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+ClientConnectionId:268c57ba-010e-4f95-bae1-de59d769eb41
+Error Number: 3702, State: 4, Class: 16 GlobalExceptionLogger
+00:17:05.8624 Error [9] Internal server error: System.Data.SqlClient.SqlException (0x80131904): Cannot drop database "DriveDB" because it is currently in use.
+   в System.Data.SqlClient.SqlConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.SqlInternalConnection.OnError(SqlException exception, Boolean breakConnection, Action`1 wrapCloseInAction)
+   в System.Data.SqlClient.TdsParser.ThrowExceptionAndWarning(TdsParserStateObject stateObj, Boolean callerHasConnectionLock, Boolean asyncClose)
+   в System.Data.SqlClient.TdsParser.TryRun(RunBehavior runBehavior, SqlCommand cmdHandler, SqlDataReader dataStream, BulkCopySimpleResultSet bulkCopyHandler, TdsParserStateObject stateObj, Boolean& dataReady)
+   в System.Data.SqlClient.SqlCommand.RunExecuteNonQueryTds(String methodName, Boolean async, Int32 timeout, Boolean asyncWrite)
+   в System.Data.SqlClient.SqlCommand.InternalExecuteNonQuery(TaskCompletionSource`1 completion, String methodName, Boolean sendToPipe, Int32 timeout, Boolean asyncWrite)
+   в System.Data.SqlClient.SqlCommand.ExecuteNonQuery()
+   в System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.<NonQuery>b__0(DbCommand t, DbCommandInterceptionContext`1 c)
+   в System.Data.Entity.Infrastructure.Interception.InternalDispatcher`1.Dispatch[TTarget,TInterceptionContext,TResult](TTarget target, Func`3 operation, TInterceptionContext interceptionContext, Action`3 executing, Action`3 executed)
+   в System.Data.Entity.Infrastructure.Interception.DbCommandDispatcher.NonQuery(DbCommand command, DbCommandInterceptionContext interceptionContext)
+   в System.Data.Entity.SqlServer.SqlProviderServices.<>c__DisplayClass30.<DropDatabase>b__2e(DbConnection conn)
+   в System.Data.Entity.SqlServer.SqlProviderServices.<>c__DisplayClass33.<UsingConnection>b__32()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.<>c__DisplayClass1.<Execute>b__0()
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute[TResult](Func`1 operation)
+   в System.Data.Entity.SqlServer.DefaultSqlExecutionStrategy.Execute(Action operation)
+   в System.Data.Entity.SqlServer.SqlProviderServices.UsingConnection(DbConnection sqlConnection, Action`1 act)
+   в System.Data.Entity.SqlServer.SqlProviderServices.UsingMasterConnection(DbConnection sqlConnection, Action`1 act)
+   в System.Data.Entity.SqlServer.SqlProviderServices.DropDatabase(SqlConnection sqlConnection, Nullable`1 commandTimeout, String databaseName)
+   в System.Data.Entity.SqlServer.SqlProviderServices.DbDeleteDatabase(DbConnection connection, Nullable`1 commandTimeout, StoreItemCollection storeItemCollection)
+   в System.Data.Entity.Core.Common.DbProviderServices.DeleteDatabase(DbConnection connection, Nullable`1 commandTimeout, StoreItemCollection storeItemCollection)
+   в System.Data.Entity.Core.Objects.ObjectContext.DeleteDatabase()
+   в System.Data.Entity.Internal.DatabaseOperations.Delete(ObjectContext objectContext)
+   в System.Data.Entity.Database.Delete()
+   в System.Data.Entity.DropCreateDatabaseIfModelChanges`1.InitializeDatabase(TContext context)
+   в System.Data.Entity.Internal.InternalContext.<>c__DisplayClassf`1.<CreateInitializationAction>b__e()
+   в System.Data.Entity.Internal.InternalContext.PerformInitializationAction(Action action)
+   в System.Data.Entity.Internal.InternalContext.PerformDatabaseInitialization()
+   в System.Data.Entity.Internal.LazyInternalContext.<InitializeDatabase>b__4(InternalContext c)
+   в System.Data.Entity.Internal.RetryAction`1.PerformAction(TInput input)
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeDatabaseAction(Action`1 action)
+   в System.Data.Entity.Internal.LazyInternalContext.InitializeDatabase()
+   в System.Data.Entity.Internal.InternalContext.GetEntitySetAndBaseTypeForType(Type entityType)
+   в System.Data.Entity.Internal.Linq.InternalSet`1.Initialize()
+   в System.Data.Entity.Internal.Linq.InternalSet`1.get_InternalContext()
+   в System.Data.Entity.Infrastructure.DbQuery`1.System.Linq.IQueryable.get_Provider()
+   в System.Linq.Queryable.Where[TSource](IQueryable`1 source, Expression`1 predicate)
+   в Drive.DataAccess.Repositories.Repository`1.get_Query() в H:\Rostislav\2016\BSA\Project\Drive.DataAccess\Repositories\Repository.cs:строка 129
+   в Drive.WebHost.Services.SpaceService.<GetAllAsync>d__7.MoveNext() в H:\Rostislav\2016\BSA\Project\Drive.WebHost\Services\SpaceService.cs:строка 182
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Api.SpacesController.<GetAllAsync>d__2.MoveNext() в H:\Rostislav\2016\BSA\Project\Drive.WebHost\Api\SpacesController.cs:строка 24
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Threading.Tasks.TaskHelpersExtensions.<CastToObject>d__3`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.AuthenticationFilterResult.<ExecuteAsync>d__0.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+ClientConnectionId:f3555094-336a-458d-b612-7aefe69fa430
+Error Number: 3702, State: 4, Class: 16 GlobalExceptionLogger
+15:29:58.9952 Error [30] Internal server error: System.ArgumentNullException: Значение не может быть неопределенным.
+Имя параметра: source
+   в System.Linq.Enumerable.Select[TSource,TResult](IEnumerable`1 source, Func`2 selector)
+   в Drive.WebHost.Services.SharedSpaceService.<GetAsync>d__5.MoveNext() в H:\Rostislav\2016\BSA\Project\Drive.WebHost\Services\SharedSpaceService.cs:строка 98
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Api.SharedSpaceController.<GetSharedData>d__2.MoveNext() в H:\Rostislav\2016\BSA\Project\Drive.WebHost\Api\SharedSpaceController.cs:строка 27
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Threading.Tasks.TaskHelpersExtensions.<CastToObject>d__3`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.AuthenticationFilterResult.<ExecuteAsync>d__0.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext() GlobalExceptionLogger
+17:18:02.7912 Error [12] Internal server error: System.InvalidOperationException: Multiple actions were found that match the request: 
+GetSharedData on type Drive.WebHost.Api.SharedSpaceController
+SearchInSharedSpace on type Drive.WebHost.Api.SharedSpaceController
+SearchTotalInSharedSpace on type Drive.WebHost.Api.SharedSpaceController
+   в System.Web.Http.Controllers.ApiControllerActionSelector.ActionSelectorCacheItem.SelectAction(HttpControllerContext controllerContext)
+   в System.Web.Http.Controllers.ApiControllerActionSelector.SelectAction(HttpControllerContext controllerContext)
+   в System.Web.Http.ApiController.ExecuteAsync(HttpControllerContext controllerContext, CancellationToken cancellationToken)
+   в System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext() GlobalExceptionLogger
+17:18:45.3808 Error [23] Internal server error: System.InvalidOperationException: Multiple actions were found that match the request: 
+GetSharedData on type Drive.WebHost.Api.SharedSpaceController
+SearchInSharedSpace on type Drive.WebHost.Api.SharedSpaceController
+SearchTotalInSharedSpace on type Drive.WebHost.Api.SharedSpaceController
+   в System.Web.Http.Controllers.ApiControllerActionSelector.ActionSelectorCacheItem.SelectAction(HttpControllerContext controllerContext)
+   в System.Web.Http.Controllers.ApiControllerActionSelector.SelectAction(HttpControllerContext controllerContext)
+   в System.Web.Http.ApiController.ExecuteAsync(HttpControllerContext controllerContext, CancellationToken cancellationToken)
+   в System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext() GlobalExceptionLogger
+17:19:06.1331 Error [28] Internal server error: System.InvalidOperationException: Multiple actions were found that match the request: 
+GetSharedData on type Drive.WebHost.Api.SharedSpaceController
+SearchInSharedSpace on type Drive.WebHost.Api.SharedSpaceController
+SearchTotalInSharedSpace on type Drive.WebHost.Api.SharedSpaceController
+   в System.Web.Http.Controllers.ApiControllerActionSelector.ActionSelectorCacheItem.SelectAction(HttpControllerContext controllerContext)
+   в System.Web.Http.Controllers.ApiControllerActionSelector.SelectAction(HttpControllerContext controllerContext)
+   в System.Web.Http.ApiController.ExecuteAsync(HttpControllerContext controllerContext, CancellationToken cancellationToken)
+   в System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext() GlobalExceptionLogger
+17:20:09.9447 Error [6] Internal server error: System.InvalidOperationException: Multiple actions were found that match the request: 
+GetSharedData on type Drive.WebHost.Api.SharedSpaceController
+SearchInSharedSpace on type Drive.WebHost.Api.SharedSpaceController
+SearchTotalInSharedSpace on type Drive.WebHost.Api.SharedSpaceController
+   в System.Web.Http.Controllers.ApiControllerActionSelector.ActionSelectorCacheItem.SelectAction(HttpControllerContext controllerContext)
+   в System.Web.Http.Controllers.ApiControllerActionSelector.SelectAction(HttpControllerContext controllerContext)
+   в System.Web.Http.ApiController.ExecuteAsync(HttpControllerContext controllerContext, CancellationToken cancellationToken)
+   в System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext() GlobalExceptionLogger
