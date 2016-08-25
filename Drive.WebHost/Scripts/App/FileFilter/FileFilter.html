@@ -13,6 +13,17 @@
         <div>
             <div class="col-sm-3 pull-right">
                 <div>
+                    <div class="input-group">
+                        <form id="form-container">
+                            <div id="searchtext">
+                                <input type="text" size="40" class="search-input" value="" name="s" id="s" placeholder="Search..." ng-model="fileFilterCtrl.searchText">
+                                <button class="search-submit-button" type="submit" ng-click="fileFilterCtrl.search()"> <i class="fa fa-search"></i> </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                 <!--
+                <div>
                     <form role="search">
                         <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search input" name="srch-term" id="srch-term" ng-model="fileFilterCtrl.searchText">
@@ -22,14 +33,15 @@
                         </div>
                     </form>
                 </div>
+                 -->
             </div>
         </div>
     </div>
-
+    <!--| filter: {name : fileFilterCtrl.searchText}-->
     <div class="wrap" style="margin: 1em 0 1em 0;" ng-show="fileFilterCtrl.showGrid">
             <div class="small" ng-repeat="space in fileFilterCtrl.spaces">
                 <div class="well" style="margin-bottom: 10px;">{{ space.name }}</div>
-                <div role="button" class="s-block btn-default shadow" ng-repeat="file in space.files | filter: {name : fileFilterCtrl.searchText}" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="fileFilterCtrl.openDocument(file.link)" context-menu="fileFilterCtrl.fileMenuOptions">
+                <div role="button" class="s-block btn-default shadow" ng-repeat="file in space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="fileFilterCtrl.openDocument(file.link)" context-menu="fileFilterCtrl.fileMenuOptions">
                     <img ng-src="{{fileFilterCtrl.chooseIcon(file.fileType)}}" height="{{fileFilterCtrl.iconHeight * 2}}" />
                     <br>
                     <span class="bold">Name: </span>
@@ -73,7 +85,7 @@
                 <tr style="min-height: 50px;">
                     <td  class="well">{{ space.name }}</td>
                  </tr>
-                <tr class="shadow" role="button" ng-repeat="file in space.files | orderBy: fileFilterCtrl.columnForOrder | filter: {name : fileFilterCtrl.searchText}" ng-dblclick="fileFilterCtrl.openDocument(file.link)" context-menu="fileFilterCtrl.fileMenuOptions">
+                <tr class="shadow" role="button" ng-repeat="file in space.files | orderBy: fileFilterCtrl.columnForOrder" ng-dblclick="fileFilterCtrl.openDocument(file.link)" context-menu="fileFilterCtrl.fileMenuOptions">
                     <td style="width: 20%"> 
                         <img ng-src="{{fileFilterCtrl.chooseIcon(file.fileType)}}" height="{{fileFilterCtrl.iconHeight}}" />
                         {{ file.name }}

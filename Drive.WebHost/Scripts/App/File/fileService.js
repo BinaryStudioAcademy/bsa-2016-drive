@@ -21,6 +21,7 @@
             getFilesApp: getFilesApp,
             getAllByParentId: getAllByParentId,
             orderByColumn: orderByColumn,
+            searchFiles: searchFiles,
             openFile: openFile,
             chooseIcon: chooseIcon
         };
@@ -53,6 +54,25 @@
                         callBack(response.data);
                     }
                 })
+        }
+
+        function searchFiles(fileType, text, callback) {
+            $http.get(baseUrl + '/api/files/apps/' + fileType + '/search', {
+                params: {
+                    fileType: fileType,
+                    text: text
+                }
+            })
+            .then(function (response) {
+                if (callback) {
+                    callback(response.data);
+                }
+            }, function errorCallback(response) {
+                console.log('Error in searchFiles Method! Code:' + response.status);
+                if (response.status == 404 && callback) {
+                    callback(response.data)
+                }
+            });
         }
 
         function getFile(id, callBack) {

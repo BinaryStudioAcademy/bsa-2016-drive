@@ -483,18 +483,18 @@ hr.style {
     overflow: hidden;
     height: 75vh;
 }
-
+/*
     .fixed_headers thead {
         display: block;
         width: 100%;
         height:10vh;
     }
-
+*/
     .fixed_headers tbody {
         display: block;
         overflow: hidden;
         width: 100%;
-        height: 65vh;
+        height: 75vh;
         background-color: white;
     }
 
