@@ -19,7 +19,7 @@
             getAllRoles: getAllRoles
         };
         function getAllRoles(callback) {
-            $http.get('/api/roles')
+            $http.get(baseUrl + '/api/roles')
             .then(function (response) {
                 if (callback) {
                     callback(response.data);
