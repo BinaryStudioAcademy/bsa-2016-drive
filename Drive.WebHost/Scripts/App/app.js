@@ -124,12 +124,6 @@
                     controller: "ErrorController",
                     controllerAs: "errorCtrl"
                 })
-                .when("/AdminPanel",
-                {
-                    templateUrl: "/Scripts/App/AdminPanel/AdminPanel.html",
-                    controller: "adminPanelController",
-                    controllerAs: "adminCtrl"
-                })
                 .otherwise({
                     // This is when any route not matched - error
                     redirectTo: "/Error"
