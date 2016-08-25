@@ -142,19 +142,19 @@
                 case 0:
                     return 'Undefined';
                 case 1:
-                    return "/Content/Icons/doc.svg";
+                    return "./Content/Icons/doc.svg";
                 case 2:
-                    return "/Content/Icons/xls.svg";
+                    return "./Content/Icons/xls.svg";
                 case 3:
-                    return "/Content/Icons/ppt.svg";
+                    return "./Content/Icons/ppt.svg";
                 case 4:
-                    return "/Content/Icons/trello.svg";
+                    return "./Content/Icons/trello.svg";
                 case 5:
-                    return "/Content/Icons/link.svg";
+                    return "./Content/Icons/link.svg";
                 case 6:
                     return "";
                 default:
-                    return "/Content/Icons/folder.svg";
+                    return "./Content/Icons/folder.svg";
             }
         }
 
