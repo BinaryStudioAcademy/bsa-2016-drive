@@ -171,6 +171,7 @@
     <Compile Include="Api\FoldersController.cs" />
     <Compile Include="Api\GlobalExceptionLogger.cs" />
     <Compile Include="Api\LogsController.cs" />
+    <Compile Include="Api\RolesController.cs" />
     <Compile Include="Api\Pro\AcademyProController.cs" />
     <Compile Include="Api\Pro\CodeSamplesController.cs" />
     <Compile Include="Api\Pro\ContentLinksController.cs" />
@@ -200,10 +201,12 @@
     <Compile Include="Services\IFileService.cs" />
     <Compile Include="Services\IFolderService.cs" />
     <Compile Include="Services\ILogsService.cs" />
+    <Compile Include="Services\IRolesService.cs" />
     <Compile Include="Services\ISpaceService.cs" />
     <Compile Include="Providers\IUsersProvider.cs" />
     <Compile Include="Services\IUsersService.cs" />
     <Compile Include="Services\LogsService.cs" />
+    <Compile Include="Services\RolesService.cs" />
     <Compile Include="Services\Pro\Abstract\IAcademyProCourseService.cs" />
     <Compile Include="Services\Pro\Abstract\IBasicService.cs" />
     <Compile Include="Services\Pro\Abstract\ICodeSamplesService.cs" />
@@ -240,6 +243,11 @@
     <Content Include="Scripts\App\Academy\academyController.js" />
     <Content Include="Scripts\App\AdminPanel\AdminPanel.html" />
     <Content Include="Scripts\App\AdminPanel\adminPanelController.js" />
+    <Content Include="Scripts\App\AdminPanel\adminPanelService.js" />
+    <Content Include="Scripts\App\AdminPanel\Roles\CreateRole.html" />
+    <Content Include="Scripts\App\AdminPanel\Roles\EditRole.html" />
+    <Content Include="Scripts\App\AdminPanel\Roles\roleController.js" />
+    <Content Include="Scripts\App\AdminPanel\Roles\roleService.js" />
     <Content Include="Scripts\App\Checklist\Checklist.html" />
     <Content Include="Scripts\App\Checklist\checklistController.js" />
     <Content Include="Scripts\App\Docs\Docs.html" />

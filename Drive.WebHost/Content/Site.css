@@ -596,6 +596,41 @@ small,
         .s-block:nth-child(odd) {
             margin: 0 2% 0 0;
         }
+
+/*Table for editting space users*/
+.users table {
+    width: 100%;
+}
+
+.users thead, .users tbody, .users tr, .users td, .users th {
+    display: block;
+}
+
+    .users tr:after {
+        content: ' ';
+        display: block;
+        visibility: hidden;
+        clear: both;
+    }
+
+    .users thead th {
+        height: 30px;
+        /*text-align: left;*/
+    }
+
+.users tbody {
+    height: 150px;
+    overflow-y: auto;
+}
+
+.users thead {
+    /* fallback */
+}
+
+    .users tbody td, .users thead th {
+        width: 30%;
+        float: left;
+    }
 }
 
 @media screen and (max-width: 400px) {

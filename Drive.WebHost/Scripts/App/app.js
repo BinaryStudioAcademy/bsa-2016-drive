@@ -1,8 +1,8 @@
 ﻿angular.module("driveApp",
     ["ngRoute", "ui.bootstrap.contextMenu", "ui.bootstrap", "angularUtils.directives.dirPagination", "LocalStorageModule", "ngLoadingSpinner"])
-     .factory('BaseUrl', function () {
-         return window.globalVars.baseUrl;
-     })
+    .factory('BaseUrl', function () {
+        return window.globalVars.baseUrl;
+    })
     .config([
         "$routeProvider",
         function ($routeProvider) {
@@ -14,12 +14,12 @@
                     controller: "SpaceController",
                     controllerAs: "spaceCtrl"
                 })
-                .when("/:type", // Space page
-                {
-                    templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
-                    controller: "SpaceController",
-                    controllerAs: "spaceCtrl"
-                })
+                //.when("/:type", // Space page
+                //{
+                //    templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
+                //    controller: "SpaceController",
+                //    controllerAs: "spaceCtrl"
+                //})
                 .when("/spaces/:id", // Space page
                 {
                     templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
@@ -123,6 +123,12 @@
                     templateUrl: baseUrl + "/Scripts/App/Error404/404.html",
                     controller: "ErrorController",
                     controllerAs: "errorCtrl"
+                })
+                .when("/AdminPanel",
+                {
+                    templateUrl: "/Scripts/App/AdminPanel/AdminPanel.html",
+                    controller: "adminPanelController",
+                    controllerAs: "adminCtrl"
                 })
                 .otherwise({
                     // This is when any route not matched - error
