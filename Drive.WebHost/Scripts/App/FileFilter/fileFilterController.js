@@ -10,6 +10,7 @@
         var vm = this;
 
         vm.changeView = changeView;
+        vm.chooseIcon = chooseIcon;
         vm.orderByColumn = orderByColumn;
         vm.cancelSearch = cancelSearch;
 
@@ -158,6 +159,11 @@
 
         function openDocument(url) {
             fileService.openFile(url);
+        }
+
+        function chooseIcon(type) {
+            vm.icon = fileService.chooseIcon(type);
+            return vm.icon.src;
         }
     }
 }());

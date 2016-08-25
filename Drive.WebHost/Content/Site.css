@@ -304,7 +304,7 @@ textarea {
 }
 
     .sidebar-nav li {
-        text-indent: 15px;
+        text-indent: 5px;
         line-height: 40px;
     }
 
@@ -399,7 +399,7 @@ textarea {
 }
 
 .span-text {
-    margin-left: -18px;
+    margin-left: 0llpx;
 }
 
 /*Toolbar buttons style*/
@@ -711,3 +711,8 @@ small,
         -ms-transition: all 0.20s ease-in-out;
         -o-transition: all 0.20s ease-in-out;
     }
+
+.menu-icons {
+   height: 20px;
+   padding-right: 5px;
+}

@@ -51,6 +51,7 @@
         vm.searchText = '';
 
         vm.orderByColumn = orderByColumn;
+        vm.chooseIcon = chooseIcon;
 
         vm.redirectToSpaceSettings = redirectToSpaceSettings;
 
@@ -504,6 +505,14 @@
 
         function orderByColumn(column) {
             vm.columnForOrder = fileService.orderByColumn(column, vm.columnForOrder);
+        }
+
+        function chooseIcon(type) {
+            vm.icon = {
+                src: fileService.chooseIcon(type),
+                height: "32"
+            };
+            return vm.icon.src;
         }
     }
 }());

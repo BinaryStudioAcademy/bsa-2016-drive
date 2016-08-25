@@ -3,7 +3,7 @@
         <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
             <li style="padding-top: 40px;"></li>
             <button class="btn btn-info create-space menu btn-md" ng-click="menuController.open('lg')"><i class="fa icon-custom fa-plus-circle fa-cog fa-lg"></i>Add new Space</button>
-            <hr class="style"/>
+            <hr class="style" />
             <li>
                 <div class="d" ng-click="menuController.redirectToBinarySpace()">
                     <span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x"></i></span>Binary Space
@@ -27,7 +27,7 @@
                     </li>
                 </ul>
             </li>
-            <hr class="style"/>
+            <hr class="style" />
             <li>
                 <div class="d" data-toggle="collapse" data-target="#apps">
                     <span class="fa-stack fa-lg pull-left"><i class="fa fa-desktop fa-stack-1x "></i></span>Apps
@@ -35,49 +35,61 @@
                 <ul class="nav-pills nav-stacked collapse" style="list-style-type: none;" id="apps">
                     <li>
                         <div class="d" ng-click="menuController.redirectToApps('academy')">
-                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-graduation-cap fa-stack-1x span-icon"></i></span>
+                            <img src="/Content/Icons/academyPro_bw.svg" style="height: 25px;" alt="Academy Pro" />
                             <span class="span-text">Academy Pro</span>
                         </div>
                     </li>
                     <li>
                         <div class="d" ng-click="menuController.redirectToApps('events')">
-                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-calendar fa-stack-1x span-icon"></i></span>
+                            <img src="/Content/Icons/event_bw.svg" class="menu-icons" alt="Events" />
                             <span class="span-text">Events</span>
                         </div>
                     </li>
                     <li>
                         <div class="d" ng-click="menuController.redirectToApps('employees')">
-                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-users fa-stack-1x span-icon"></i></span>
+                            <span>
+                                <img src="/Content/Icons/employees_bw.svg" class="menu-icons"  alt="Employees" />
+                            </span>
                             <span class="span-text">Employees</span>
                         </div>
                     </li>
                     <li>
                         <div class="d" ng-click="menuController.redirectToApps('checklist')">
-                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-check-square-o fa-stack-1x span-icon"></i></span>
+                            <span>
+                                <img src="/Content/Icons/checklist_bw.svg" class="menu-icons" alt="Checklist" />
+                            </span>
                             <span class="span-text">Checklist</span>
                         </div>
                     </li>
                     <li>
                         <div class="d" ng-click="menuController.redirectToApps('trello')">
-                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-trello fa-stack-1x span-icon"></i></span>
+                            <span>
+                                <img src="/Content/Icons/trello_bw.svg" class="menu-icons" alt="Trello" />
+                            </span>
                             <span class="span-text">Trello</span>
                         </div>
                     </li>
                     <li>
                         <div class="d" ng-click="menuController.redirectToApps('docs')">
-                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-file-text fa-stack-1x span-icon"></i></span>
+                            <span>
+                                <img src="/Content/Icons/doc_bw.svg" class="menu-icons" alt="Docs" />
+                            </span>
                             <span class="span-text">Docs</span>
                         </div>
                     </li>
                     <li>
                         <div class="d" ng-click="menuController.redirectToApps('sheets')">
-                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-table fa-stack-1x span-icon"></i></span>
+                            <span>
+                                <img src="/Content/Icons/xls_bw.svg" class="menu-icons" alt="Sheets" />
+                            </span>
                             <span class="span-text">Sheets</span>
                         </div>
                     </li>
                     <li>
                         <div class="d" ng-click="menuController.redirectToApps('slides')">
-                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-file-powerpoint-o fa-stack-1x span-icon"></i></span>
+                            <span>
+                                <img src="/Content/Icons/ppt_bw.svg" class="menu-icons" alt="Slides" />
+                            </span>
                             <span class="span-text">Slides</span>
                         </div>
                     </li>

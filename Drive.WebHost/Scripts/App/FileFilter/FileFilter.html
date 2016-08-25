@@ -30,7 +30,7 @@
             <div class="small" ng-repeat="space in fileFilterCtrl.spaces">
                 <div class="well" style="margin-bottom: 10px;">{{ space.name }}</div>
                 <div role="button" class="s-block btn-default shadow" ng-repeat="file in space.files | filter: {name : fileFilterCtrl.searchText}" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="fileFilterCtrl.openDocument(file.link)" context-menu="fileFilterCtrl.fileMenuOptions">
-                    <i class="fa fa-file-o fa-5x"></i>
+                    <img ng-src="{{fileFilterCtrl.chooseIcon(file.fileType)}}" alt="{{fileFilterCtrl.icon.altText}}" />
                     <br>
                     <span class="bold">Name: </span>
                     <span>{{ file.name }}</span>
@@ -74,7 +74,10 @@
                     <td  class="well">{{ space.name }}</td>
                  </tr>
                 <tr class="shadow" role="button" ng-repeat="file in space.files | orderBy: fileFilterCtrl.columnForOrder | filter: {name : fileFilterCtrl.searchText}" ng-dblclick="fileFilterCtrl.openDocument(file.link)" context-menu="fileFilterCtrl.fileMenuOptions">
-                    <td style="width: 20%"> <i class="fa fa-file-o">&nbsp;</i>{{ file.name }}</td>
+                    <td style="width: 20%"> 
+                        <img ng-src="{{fileFilterCtrl.chooseIcon(file.fileType)}}" alt="{{fileFilterCtrl.icon.altText}}" />
+                        {{ file.name }}
+                    </td>
                     <td style="width: 33%">{{ file.description }}</td>
                     <td style="width: 20%">{{ file.author.name }}</td>
                     <td style="width: 15%">{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
