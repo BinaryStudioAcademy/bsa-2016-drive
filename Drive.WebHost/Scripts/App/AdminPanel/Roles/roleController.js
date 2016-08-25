@@ -59,7 +59,6 @@
             vm.role.users = vm.permittedUsers;
             RoleService.createRole(vm.role);
             $uibModalInstance.close();
-            $window.location.reload();
         }
 
         function save() {
@@ -68,7 +67,6 @@
             vm.role.users = vm.permittedUsers;
             RoleService.saveRole(vm.role);
             $uibModalInstance.close();
-            $window.location.reload();
         }
 
         function cancel() {

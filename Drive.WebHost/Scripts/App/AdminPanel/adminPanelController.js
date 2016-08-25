@@ -38,7 +38,10 @@
                     }
             }
             });
-            modalInstance.result.then(function () {
+            modalInstance.result.then(function (data) {
+                adminPanelService.getAllRoles(function (data) {
+                    vm.roles = data;
+                });
             }, function () {
             });
         };
@@ -59,6 +62,9 @@
         }
             });
             modalInstance.result.then(function () {
+                adminPanelService.getAllRoles(function (data) {
+                    vm.roles = data;
+                });
             }, function () {
             });
         }
@@ -81,11 +87,14 @@
                         }
                     }
                 });
-                $window.location.reload();
+                for (var i = 0; i < vm.roles.length; i++) {
+                    if (vm.roles[i].id === id) {
+                        vm.roles.splice(i, 1); break;
+                    }
+                }
             } else {
 
             }
         }
-
     }
 }());
