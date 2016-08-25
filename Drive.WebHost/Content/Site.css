@@ -1,6 +1,5 @@
 ﻿html {
-    height: 100%;
-    overflow: hidden;
+    overflow: auto;
 }
 
 body {
@@ -482,19 +481,20 @@ hr.style {
     -webkit-box-shadow: 0 1px 2px #d1d1d1;
     box-shadow: 0 1px 2px #d1d1d1;
     overflow: hidden;
-    height: 74vh;
+    height: 75vh;
 }
 
     .fixed_headers thead {
         display: block;
         width: 100%;
+        height:10vh;
     }
 
     .fixed_headers tbody {
         display: block;
         overflow: hidden;
         width: 100%;
-        height: 67vh;
+        height: 65vh;
         background-color: white;
     }
 
@@ -526,12 +526,8 @@ hr.style {
         line-height: 1em;
     }
 
-    .fixed_headers tbody tr:hover {
-        background: #eaebec;
-    }
-
 .blocked-table {
-    height: 74vh;
+    height: 75vh;
     overflow: hidden;
     border-style: solid;
     border-width: 1px;
