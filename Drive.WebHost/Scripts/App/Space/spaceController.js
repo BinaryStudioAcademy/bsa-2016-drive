@@ -183,6 +183,16 @@
                 }
             ],
             null,
+            ['New', function ($itemScope) {
+               
+            },  [
+            ['New folder', function () { vm.createNewFolder(); }],
+            ['New link', function () { vm.createNewFile(); }],
+            null,
+            ['Upload file', function () { }]
+            ]
+            ],
+            null,
             [
                 'Edit', function ($itemScope) {
                     vm.folder = $itemScope.folder;
@@ -191,6 +201,11 @@
                     vm.openFolderWindow();
                 }
             ],
+             [
+                'Copy', function ($itemScope) {
+                    localStorageService.set('copy', { id: $itemScope.file.id, file: true });
+                }
+             ],
             [
                 'Cut', function ($itemScope) {
                     localStorageService.set('cut-out', { id: $itemScope.folder.id, file: false });
@@ -198,46 +213,7 @@
                     deleteFolder($itemScope.folder.id);
                 }
             ],
-            null,
             [
-                'Delete', function ($itemScope) {
-                    return deleteFolder($itemScope.folder.id);
-                }
-            ]
-        ];
-
-        vm.fileMenuOptions = [
-            [
-                'Share', function ($itemScope) {
-                    console.log($itemScope.file.id);
-                }
-            ],
-            null,
-            [
-                'Edit', function ($itemScope) {
-                    vm.file = $itemScope.file;
-                    vm.file.parentId = vm.parentId;
-                    vm.file.spaceId = vm.spaceId;
-                    vm.openFileWindow();
-                }
-            ],
-            [
-                'Cut', function ($itemScope) {
-                    localStorageService.set('cut-out', { id: $itemScope.file.id, file: true });
-                    localStorageService.set('oldParentId', vm.parentId);
-                    deleteFile($itemScope.file.id);
-                }
-            ],
-            null,
-            [
-                'Delete', function ($itemScope) {
-                    return deleteFile($itemScope.file.id);
-                }
-            ]
-        ];
-
-        vm.createOption = [
-        [
             'Paste', function () {
                 if (localStorageService.get('cut-out') != null) {
                     if (localStorageService.get('cut-out').file) {
@@ -275,20 +251,97 @@
                     localStorageService.set('cut-out', null);
                 }
             }
-        ],
+            ],
+            null,
+            [
+                'Delete', function ($itemScope) {
+                    return deleteFolder($itemScope.folder.id);
+                }
+            ]
+        ];
+
+        vm.fileMenuOptions = [
+            [
+                'Share', function ($itemScope) {
+                    console.log($itemScope.file.id);
+                }
+            ],
             null,
             ['New', function ($itemScope) {
-               
-            },  [
+
+            }, [
             ['New folder', function () { vm.createNewFolder(); }],
             ['New link', function () { vm.createNewFile(); }],
             null,
             ['Upload file', function () { }]
             ]
+            ],
+            [
+                'Edit', function ($itemScope) {
+                    vm.file = $itemScope.file;
+                    vm.file.parentId = vm.parentId;
+                    vm.file.spaceId = vm.spaceId;
+                    vm.openFileWindow();
+                }
+            ],
+            [
+                'Copy', function ($itemScope) {
+                    localStorageService.set('copy', { id: $itemScope.file.id, file: true });
+                }
+            ],
+            [
+                'Cut', function ($itemScope) {
+                    localStorageService.set('cut-out', { id: $itemScope.file.id, file: true });
+                    localStorageService.set('oldParentId', vm.parentId);
+                    deleteFile($itemScope.file.id);
+                }
+            ],
+            [
+            'Paste', function () {
+                if (localStorageService.get('cut-out') != null) {
+                    if (localStorageService.get('cut-out').file) {
+                        fileService.getDeletedFile(localStorageService.get('cut-out').id, function (data) {
+                            var file = data;
+                            file.isDeleted = false;
+                            file.spaceId = vm.spaceId;
+                            file.parentId = vm.parentId;
+
+                            fileService.updateDeletedFile(file.id, localStorageService.get('oldParentId'), file, function () {
+                                if (vm.parentId == null) {
+                                    vm.getSpace();
+                                } else {
+                                    vm.getFolderContent(vm.parentId);
+                                }
+                            });
+                        });
+                    } else {
+
+                        folderService.getDeleted(localStorageService.get('cut-out').id, function (data) {
+                            var folder = data;
+                            folder.isDeleted = false;
+                            folder.spaceId = vm.spaceId;
+                            folder.parentId = vm.parentId;
+
+                            folderService.updateDeleted(folder.id, localStorageService.get('oldParentId'), folder, function () {
+                                if (vm.parentId == null) {
+                                    vm.getSpace();
+                                } else {
+                                    vm.getFolderContent(vm.parentId);
+                                }
+                            });
+                        });
+                    }
+                    localStorageService.set('cut-out', null);
+                }
+            }
+            ],
+            null,
+            [
+                'Delete', function ($itemScope) {
+                    return deleteFile($itemScope.file.id);
+                }
             ]
         ];
-           
-        
 
         function openFolderWindow(size) {
 
