@@ -9,6 +9,7 @@ using Drive.DataAccess.Interfaces;
 using Driver.Shared.Dto;
 using Drive.Logging;
 using Driver.Shared.Dto.Users;
+using Drive.Identity.Services;
 
 namespace Drive.WebHost.Services
 {
@@ -156,7 +157,6 @@ namespace Drive.WebHost.Services
                 folder.Author.Name = owners.FirstOrDefault(o => o.Id == folder.Author.GlobalId)?.Name;
             });
 
-
             return space;
         }
 
@@ -210,6 +210,7 @@ namespace Drive.WebHost.Services
                     ReadPermittedUsers.Add(user);
                 }
             }
+
             List<User> ModifyPermittedUsers = new List<User>();
             foreach (var item in dto.ModifyPermittedUsers)
             {
@@ -233,50 +234,23 @@ namespace Drive.WebHost.Services
                     }
                 }
             }
+
             List<Role> ReadPermittedRoles = new List<Role>();
-
-
             foreach (var item in dto.ReadPermittedRoles)
             {
                 var role = await _unitOfWork?.Roles?.Query.Include(x => x.Users).FirstOrDefaultAsync(x => x.Id == item.Id);
                 ReadPermittedRoles.Add(role);
-
-                foreach (var x in role.Users)
-                {
-                    var temp = ReadPermittedUsers.Find(p => p.GlobalId == x.GlobalId);
-                    if (temp == null)
-                    {
-                        ReadPermittedUsers.Add(x);
-                    }
-                }
             }
 
             List<Role> ModifyPermittedRoles = new List<Role>();
             foreach (var item in dto.ModifyPermittedRoles)
             {
                 var role = await _unitOfWork?.Roles?.Query.Include(p => p.Users).FirstOrDefaultAsync(p => p.Id == item.Id);
-                ModifyPermittedRoles.Add(role);
-
-                foreach (var t in role.Users)
-                {
-                    var temp = ModifyPermittedUsers.Find(p => p.GlobalId == t.GlobalId);
-                    if (temp == null)
-                    {
-                        ModifyPermittedUsers.Add(t);
-                    }
-                }
+                ModifyPermittedRoles.Add(role); 
                 var x = ReadPermittedRoles.FirstOrDefault(p => p.Id == role.Id);
                 if (x == null)
                 {
                     ReadPermittedRoles.Add(role);
-                    foreach (var t in role.Users)
-                    {
-                        var temp = ReadPermittedUsers.Find(p => p.GlobalId == t.GlobalId);
-                        if (temp == null)
-                        {
-                            ReadPermittedUsers.Add(t);
-                        }
-                    }
                 }
             }
 
@@ -352,15 +326,6 @@ namespace Drive.WebHost.Services
             {
                 var role = await _unitOfWork?.Roles?.Query.Include(x => x.Users).FirstOrDefaultAsync(x => x.Id == item.Id);
                 ReadPermittedRoles.Add(role);
-
-                foreach (var x in role.Users)
-                {
-                    var temp = ReadPermittedUsers.Find(p => p.GlobalId == x.GlobalId);
-                    if (temp == null)
-                    {
-                        ReadPermittedUsers.Add(x);
-                    }
-                }
             }
 
             List<Role> ModifyPermittedRoles = new List<Role>();
@@ -368,27 +333,10 @@ namespace Drive.WebHost.Services
             {
                 var role = await _unitOfWork?.Roles?.Query.Include(p => p.Users).FirstOrDefaultAsync(p => p.Id == item.Id);
                 ModifyPermittedRoles.Add(role);
-
-                foreach (var t in role.Users)
-                {
-                    var temp = ModifyPermittedUsers.Find(p => p.GlobalId == t.GlobalId);
-                    if (temp == null)
-                    {
-                        ModifyPermittedUsers.Add(t);
-                    }
-                }
                 var x = ReadPermittedRoles.FirstOrDefault(p => p.Id == role.Id);
                 if (x == null)
                 {
                     ReadPermittedRoles.Add(role);
-                    foreach (var t in role.Users)
-                    {
-                        var temp = ReadPermittedUsers.Find(p => p.GlobalId == t.GlobalId);
-                        if (temp == null)
-                        {
-                            ReadPermittedUsers.Add(t);
-                        }
-                    }
                 }
             }
             space.Name = dto.Name;
