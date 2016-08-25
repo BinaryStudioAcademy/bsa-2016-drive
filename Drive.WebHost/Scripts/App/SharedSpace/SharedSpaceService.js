@@ -120,7 +120,7 @@
                     callback(response.data);
                 }
             }, function errorCallback(response) {
-                console.log('Error in searchTotal getPermissions! Code:' + response.status);
+                console.log('Error in getPermissions sharedSpaceService! Code:' + response.status);
                 if (response.status == 404 && callback) {
                     callback(response.data)
                 }
@@ -128,18 +128,13 @@
         }
 
         function createOrUpdatePermission(users, id, callback) {
-            $http.post(baseUrl + '/api/sharedspace/permission', {
-                params: {
-                    users: users,
-                    id: id
-                }
-            })
+            $http.post(baseUrl + '/api/sharedspace/permission?id=' + id, users)
             .then(function (response) {
                 if (callback) {
                     callback(response.data)
                 }
             }, function errorCallback(response) {
-                console.log('Error in searchTotal createOrUpdatePermission! Code:' + response.status);
+                console.log('Error in createOrUpdatePermission sharedSpaceService! Code:' + response.status);
             });
         }
 

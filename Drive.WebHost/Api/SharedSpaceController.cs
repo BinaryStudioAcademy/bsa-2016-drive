@@ -49,7 +49,7 @@ namespace Drive.WebHost.Api
             return Ok(result);
         }
 
-        // POST: api/sharedspace/permission?users=(List<UserSharedSpaceDto>)&id=(int)
+        // PUT: api/sharedspace/permission?users=(List<UserSharedSpaceDto>)&id=(int)
         [HttpPost]
         [Route("permission")]
         public async Task<IHttpActionResult> CreateOrUpdatePermissionsOfSharedData(List<UserSharedSpaceDto> users, int id)// UserSharedDto user, int id

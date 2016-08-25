@@ -9,18 +9,24 @@
 
     function SharedFileModalCtrl(sharedSpaceService, $uibModalInstance, items) {
         var vm = this;
+        vm.title = 'Shared File';
 
         vm.save = save;
         vm.cancel = cancel;
         //vm.isValidUrl = isValidUrl;
         //vm.checkUrl = checkUrl;
         vm.user = null;
+        vm.usersWithPermissions = null;
+        vm.addUserPermissons = addUserPermissons;
 
         activate();
 
         function activate() {
-            vm.file = items;
+            vm.fileId = items;
+
             getAllUsers();
+            getUsersWithPermissions();
+            //updateUsersPermissions();
             //vm.title = 'New link';
             //vm.icon = "fa fa-file-o";
             //vm.urlIsValid = false;
@@ -47,45 +53,36 @@
         function save() {
             vm.submitted = true;
             vm.checkUrl();
-            if (vm.file.name !== undefined) {
-                if (vm.file.id === undefined) {
-                    fileService.createFile(vm.file,
-                        function (response) {
-                            if (response) {
-                                var data = {
-                                    operation: 'create',
-                                    item: response
-                                }
-                                $uibModalInstance.close(data);
-                            }
-                        });
-                } else {
-                    fileService.updateFile(vm.file.id, vm.file,
-                        function (response) {
-                            if (response) {
-                                var data = {
-                                    operation: 'update',
-                                    item: response
-                                }
-                                $uibModalInstance.close(data);
-                            }
-                        });
-                }
-            }
+            $uibModalInstance.close();
+            updateUsersPermissions();
         }
 
         function cancel() {
-            items.name = vm.name;
-            items.description = vm.description;
-            items.link = vm.link;
 
+            updateUsersPermissions();
             $uibModalInstance.dismiss('cancel');
         };
 
         function getAllUsers() {
             sharedSpaceService.getAllUsers(function (data) {
-                vm.user = data.files;
+                vm.users = data;
             });
+        }
+
+        function getUsersWithPermissions() {
+            sharedSpaceService.getPermissions(vm.fileId, function (data) {
+                vm.usersWithPermissions = data;
+            });
+        }
+
+        function updateUsersPermissions() {
+            sharedSpaceService.createOrUpdatePermission(vm.usersWithPermissions, vm.fileId, function (data) {
+                console.log(data);
+            });
+        }
+
+        function addUserPermissons() {
+
         }
 
 

@@ -265,7 +265,8 @@
         vm.fileMenuOptions = [
             [
                 'Share', function ($itemScope) {
-                    console.log($itemScope.file.id);
+                    vm.fileSharedId = $itemScope.file.id;
+                    console.log(vm.fileSharedId);
                     vm.sharedFile();
                 }
             ],
@@ -431,7 +432,7 @@
                 size: size,
                 resolve: {
                     items: function () {
-                        return vm.file;
+                        return vm.fileSharedId;
                     }
                 }
             });
@@ -458,7 +459,7 @@
         }
 
         function sharedFile() {
-            vm.file = { parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.fileId = { parentId: vm.parentId, spaceId: vm.spaceId };
             vm.openSharedFileWindow();
         }
 
