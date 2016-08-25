@@ -122,17 +122,7 @@ namespace Drive.WebHost.Services
             //TODO add check user.id
             var filesCount = await _unitOfWork.SharedSpace.Query
                 .Where(s => !s.IsDeleted && !s.File.IsDeleted)
-                .Select(f => new FileUnitDto()
-                {
-                    Description = f.File.Description,
-                    FileType = f.File.FileType,
-                    Id = f.Id,
-                    IsDeleted = f.File.IsDeleted,
-                    Name = f.File.Name,
-                    CreatedAt = f.File.CreatedAt,
-                    Link = f.File.Link,
-                    Author = new AuthorDto() { Id = f.File.Owner.Id, GlobalId = f.File.Owner.GlobalId }
-                }).CountAsync();
+                .CountAsync();
             return filesCount;
         }
 
@@ -145,7 +135,7 @@ namespace Drive.WebHost.Services
                 {
                     Description = f.File.Description,
                     FileType = f.File.FileType,
-                    Id = f.Id,
+                    Id = f.File.Id,
                     IsDeleted = f.File.IsDeleted,
                     Name = f.File.Name,
                     CreatedAt = f.File.CreatedAt,
@@ -180,7 +170,7 @@ namespace Drive.WebHost.Services
                 {
                     Description = f.File.Description,
                     FileType = f.File.FileType,
-                    Id = f.Id,
+                    Id = f.File.Id,
                     IsDeleted = f.File.IsDeleted,
                     Name = f.File.Name,
                     CreatedAt = f.File.CreatedAt,

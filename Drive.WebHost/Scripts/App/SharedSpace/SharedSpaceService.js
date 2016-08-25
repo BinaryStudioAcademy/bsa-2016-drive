@@ -10,16 +10,17 @@
     function SharedSpaceService($http, baseUrl) {
         var service = {
             getSpace: getSpace,
-            getAllSpaces: getAllSpaces,
+            getSpaceTotal: getSpaceTotal,
             getAllUsers: getAllUsers,
-            pushData: pushData,
-            searchFoldersAndFiles,
-            getNumberOfResultSearchFoldersAndFiles,
-            getSpaceTotal
+            deleteSharedFile: deleteSharedFile,
+            search: search,
+            searchTotal: searchTotal,
+            getPermissions: getPermissions,
+            createOrUpdatePermission: createOrUpdatePermission
         };
 
-        function getSpace(id, currentPage, pageSize, sort, callback) {
-            $http.get(baseUrl + '/api/spaces/' + id, {
+        function getSpace(currentPage, pageSize, sort, callback) {
+            $http.get(baseUrl + '/api/sharedspace', {
                 params: {
                     page: currentPage,
                     count: pageSize,
@@ -32,23 +33,23 @@
                     }
                 },
                 function errorCallback(response) {
-                    console.log('Error getSpace sharedSpaceService!' + response.status);
+                    console.log('Error in getSpace sharedSpaceService!' + response.status);
                     if (response.status == 404 && callback) {
                         console.log(response.status + ' ' + response.data);
                         callback(response.data)
                     }
                 });
         }
-
-        function getSpaceTotal(id, callback) {
-            $http.get(baseUrl + '/api/spaces/' + id + '/sptotal')
+        
+        function getSpaceTotal( callback) {
+            $http.get(baseUrl + '/api/sharedspace/total')
                .then(function (response) {
                    if (callback) {
                        callback(response.data);
                    }
                },
                function errorCallback(response) {
-                   console.log('Error getSpaceTotal sharedSpaceService!' + response.status);
+                   console.log('Error in getSpaceTotal sharedSpaceService!' + response.status);
                    if (response.status == 404 && callback) {
                        console.log(response.status + ' ' + response.data);
                        callback(response.data)
@@ -57,14 +58,88 @@
 
         }
 
-        function getAllSpaces(callback) {
-            $http.get(baseUrl + '/api/spaces')
+        function search(text, currentPage, pageSize, callback) {
+            $http.get(baseUrl + '/api/sharedspace/search', {
+                params: {
+                    text: text,
+                    page: currentPage,
+                    count: pageSize
+                }
+            })
             .then(function (response) {
                 if (callback) {
                     callback(response.data);
                 }
-            }, function () {
-                console.log('Error while getting all spaces!');
+            }, function errorCallback(response) {
+                console.log('Error in search sharedSpaceService! Code:' + response.status);
+                if (response.status == 404 && callback) {
+                    callback(response.data)
+                }
+            });
+        }
+
+        function searchTotal(text, callback) {
+            $http.get(baseUrl + '/api/sharedspace/searchtotal', {
+                params: {
+                    text: text
+                }
+            })
+            .then(function (response) {
+                if (callback) {
+                    callback(response.data);
+                }
+            }, function errorCallback(response) {
+                console.log('Error in searchTotal sharedSpaceService! Code:' + response.status);
+                if (response.status == 404 && callback) {
+                    callback(response.data)
+                }
+            });
+        }
+
+        function deleteSharedFile(id, callback) {
+            $http.delete(baseUrl + '/api/sharedspace', {
+                params: {
+                    id: id
+                }
+            })
+            .then(function (response) {
+                console.log('Deleted permissions successful. method: deleteSharedFile')
+            }, function errorCallback(response) {
+                console.log('Error in deleteSharedFile sharedSpaceService! Code: ' + response.status);
+            });
+        }
+
+        function getPermissions(id, callback) {
+            $http.get(baseUrl + '/api/sharedspace/permission', {
+                params: {
+                    id: id
+                }
+            })
+            .then(function (response) {
+                if (callback) {
+                    callback(response.data);
+                }
+            }, function errorCallback(response) {
+                console.log('Error in searchTotal getPermissions! Code:' + response.status);
+                if (response.status == 404 && callback) {
+                    callback(response.data)
+                }
+            });
+        }
+
+        function createOrUpdatePermission(users, id, callback) {
+            $http.post(baseUrl + '/api/sharedspace/permission', {
+                params: {
+                    users: users,
+                    id: id
+                }
+            })
+            .then(function (response) {
+                if (callback) {
+                    callback(response.data)
+                }
+            }, function errorCallback(response) {
+                console.log('Error in searchTotal createOrUpdatePermission! Code:' + response.status);
             });
         }
 
@@ -76,55 +151,6 @@
                 }
             }, function () {
                 console.log('Error while getting all users!');
-            });
-        }
-
-        function pushData(data) {
-            $http.post(baseUrl + '/api/spaces', data)
-                .then(function () {
-                    console.log('Success!');
-                }, function () {
-                    console.log('Error while pushing data!');
-                });
-        }
-
-        function searchFoldersAndFiles(spaceId, folderId, text, currentPage, pageSize, callback) {
-            $http.get(baseUrl + '/api/spaces/' + spaceId + '/search', {
-                params: {
-                    folderId: folderId,
-                    text: text,
-                    page: currentPage,
-                    count: pageSize
-                }
-            })
-            .then(function (response) {
-                if (callback) {
-                    callback(response.data);
-                }
-            }, function errorCallback(response) {
-                console.log('Error in searchFoldersAndFiles Method! Code:' + response.status);
-                if (response.status == 404 && callback) {
-                    callback(response.data)
-                }
-            });
-        }
-
-        function getNumberOfResultSearchFoldersAndFiles(spaceId, folderId, text, callback) {
-            $http.get(baseUrl + '/api/spaces/' + spaceId + '/total', {
-                params: {
-                    folderId: folderId,
-                    text: text
-                }
-            })
-            .then(function (response) {
-                if (callback) {
-                    callback(response.data);
-                }
-            }, function errorCallback(response) {
-                console.log('Error in getNumberOfResultSearchFoldersAndFiles Method! Code:' + response.status);
-                if (response.status == 404 && callback) {
-                    callback(response.data)
-                }
             });
         }
 

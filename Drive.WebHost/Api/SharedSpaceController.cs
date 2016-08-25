@@ -38,7 +38,7 @@ namespace Drive.WebHost.Api
             return Ok();
         }
 
-        //GET: api/sharedspace/permission
+        //GET: api/sharedspace/permission?id=(int)
         [HttpGet]
         [Route("permission")]
         public async Task<IHttpActionResult> GetPermissonsOfSharedData(int id)
@@ -49,8 +49,9 @@ namespace Drive.WebHost.Api
             return Ok(result);
         }
 
-        // POST: api/sharedspace/?users=(List<UserSharedSpaceDto>)&id=(int)
+        // POST: api/sharedspace/permission?users=(List<UserSharedSpaceDto>)&id=(int)
         [HttpPost]
+        [Route("permission")]
         public async Task<IHttpActionResult> CreateOrUpdatePermissionsOfSharedData(List<UserSharedSpaceDto> users, int id)// UserSharedDto user, int id
         {
             await _sharedSpaceService.CreateOrUpdatePermissionsOfSharedDataAsync(users, id);
@@ -79,7 +80,7 @@ namespace Drive.WebHost.Api
             return Ok(result);
         }
 
-        // GET: api/sharespace/searchtotal?text=(string)
+        // GET: api/sharedspace/searchtotal?text=(string)
         [HttpGet]
         [Route("searchtotal")]
         public async Task<IHttpActionResult> SearchTotalInSharedSpace(string text = "")
