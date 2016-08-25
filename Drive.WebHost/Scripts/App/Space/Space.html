@@ -82,8 +82,8 @@
         </div>
     </div>
     <div class="table-responsive blocked-table" ng-show="spaceCtrl.showTable">
-        <table class="fixed_headers">
-            <thead>
+        <table class="fixed_headers" >
+            <thead  context-menu="spaceCtrl.folderMenuOptions">
                 <tr style="cursor: pointer">
                     <th class="name" style="width: 20%" ng-click="spaceCtrl.orderByColumn('name')">
                         Name

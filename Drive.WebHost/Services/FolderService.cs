@@ -205,6 +205,50 @@ namespace Drive.WebHost.Services
             return dto;
         }
 
+        public async Task<FolderUnitDto> CreateCopyAsync(int id, FolderUnitDto dto)
+        {
+            var folder = await _unitOfWork?.Folders?.Query.Include(f => f.DataUnits)
+                                                          .Include(f => f.ModifyPermittedUsers)
+                                                          .Include(f => f.ReadPermittedUsers)
+                                                          .SingleOrDefaultAsync(f => f.Id == id);
+
+            if (folder == null)
+                return null;
+
+            var space = await _unitOfWork.Spaces.GetByIdAsync(dto.SpaceId);
+
+            var user = await _usersService?.GetCurrentUser();
+
+            var copy = new FolderUnit
+            {
+                Name = folder.Name,
+                Description = folder.Description,
+                IsDeleted = folder.IsDeleted,
+                CreatedAt = folder.CreatedAt,
+                LastModified = folder.LastModified,
+                Space = space,
+                Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId),
+                ModifyPermittedUsers = folder.ModifyPermittedUsers,
+                ReadPermittedUsers = folder.ReadPermittedUsers
+            };
+
+            if (dto.ParentId != null)
+            {
+                var parent = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
+                
+                copy.FolderUnit = parent;
+
+                //copy.Space = space;
+                //folder.FolderUnit = parent;
+            }
+
+            _unitOfWork.Folders.Create(copy);
+
+            await _unitOfWork?.SaveChangesAsync();
+
+            return dto;
+        }
+
         public async Task DeleteAsync(int id)
         {
             var rootFolder = await _unitOfWork.Folders.Query.Include(f => f.DataUnits).SingleOrDefaultAsync(f => f.Id == id);
