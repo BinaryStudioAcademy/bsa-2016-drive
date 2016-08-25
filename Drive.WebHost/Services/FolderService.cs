@@ -19,11 +19,13 @@ namespace Drive.WebHost.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUsersService _usersService;
+        private readonly IFileService _fileService;
 
-        public FolderService(IUnitOfWork unitOfWork, IUsersService usersService)
+        public FolderService(IUnitOfWork unitOfWork, IUsersService usersService, IFileService fileService)
         {
             _unitOfWork = unitOfWork;
             _usersService = usersService;
+            _fileService = fileService;
         }
 
         public async Task<IEnumerable<FolderUnitDto>> GetAllAsync()
@@ -45,7 +47,7 @@ namespace Drive.WebHost.Services
         public async Task<IEnumerable<FolderUnitDto>> GetAllByParentIdAsync(int spaceId, int? parentId)
         {
             var folders = await _unitOfWork?.Folders?.Query.Where(f => f.Space.Id == spaceId)
-                                                           .Where(f => f.Parent.Id == parentId)
+                                                           .Where(f => f.FolderUnit.Id == parentId)
                                                            .Select(f => new FolderUnitDto
             {
                 Id = f.Id,
@@ -79,6 +81,22 @@ namespace Drive.WebHost.Services
             };
         }
 
+        public async Task<FolderUnitDto> GetDeletedAsync(int id)
+        {
+            var folder = await _unitOfWork.Folders.Deleted.Where(f => f.Id == id).Select(f => new FolderUnitDto()
+            {
+                Id = f.Id,
+                Description = f.Description,
+                Name = f.Name,
+                IsDeleted = f.IsDeleted,
+                CreatedAt = f.CreatedAt,
+                LastModified = f.LastModified,
+                SpaceId = f.Space.Id
+            }).SingleOrDefaultAsync();
+
+            return folder;
+        }
+
         public async Task<FolderUnitDto> CreateAsync(FolderUnitDto dto)
         {
             var user = await _usersService?.GetCurrentUser();
@@ -98,7 +116,7 @@ namespace Drive.WebHost.Services
                     LastModified = DateTime.Now,
                     IsDeleted = false,
                     Space = space,
-                    Parent = parentFolder,
+                    FolderUnit = parentFolder,
                     Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId)
                 };
 
@@ -134,15 +152,89 @@ namespace Drive.WebHost.Services
             return dto;
         }
 
+        public async Task<FolderUnitDto> UpdateDeletedAsync(int id, int? oldParentId, FolderUnitDto dto)
+        {
+            var folder = await _unitOfWork?.Folders?.Deleted.Include(f => f.DataUnits).SingleOrDefaultAsync(f => f.Id == id);
+            if (folder == null)
+                return null;
+
+            folder.IsDeleted = false;
+
+            folder.Name = dto.Name;
+            folder.Description = dto.Description;
+            folder.IsDeleted = dto.IsDeleted;
+            folder.LastModified = DateTime.Now;
+
+            var space = await _unitOfWork.Spaces.GetByIdAsync(dto.SpaceId);
+
+            if (oldParentId != null)
+            {
+                var oldParentFolder = await _unitOfWork.Folders.Query.Include(f => f.DataUnits).SingleOrDefaultAsync(f => f.Id == oldParentId);
+
+                var list = new List<DataUnit>();
+                foreach (var item in oldParentFolder.DataUnits)
+                {
+                    if (item.Id != folder.Id)
+                    {
+                        list.Add(item);
+                    }
+                }
+
+                oldParentFolder.DataUnits = list;
+            }
+
+            var parentFolder = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
+
+            folder.Space = space;
+            folder.FolderUnit = parentFolder ?? null;
+
+            foreach (var item in folder.DataUnits)
+            {
+                item.IsDeleted = false;
+
+                item.Space = await _unitOfWork.Spaces.GetByIdAsync(folder.Space.Id);
+
+                if (item is FolderUnit)
+                {
+                    await ChangeSpaceId(item.Id, folder.Space.Id);
+                }
+            }
+
+            await _unitOfWork?.SaveChangesAsync();
+
+            return dto;
+        }
+
         public async Task DeleteAsync(int id)
         {
-            _unitOfWork?.Folders?.Delete(id);
+            var rootFolder = await _unitOfWork.Folders.Query.Include(f => f.DataUnits).SingleOrDefaultAsync(f => f.Id == id);
+
+            rootFolder.IsDeleted = true;
+
+            foreach (var item in rootFolder.DataUnits)
+            {
+                if (item is FolderUnit)
+                {
+                    var folder = await _unitOfWork.Folders.GetByIdAsync(item.Id);
+
+                    folder.IsDeleted = true;
+
+                    await DeleteAsync(folder.Id);
+                }
+                else
+                {
+                    var file = await _unitOfWork.Files.GetByIdAsync(item.Id);
+
+                    file.IsDeleted = true;
+                }
+            }
+
             await _unitOfWork?.SaveChangesAsync();
         }
 
         public async Task<FolderContentDto> GetContentAsync(int id, int page, int count, string sort)
         {
-            IEnumerable<FolderUnitDto> folders = await _unitOfWork.Folders.Query.Where(x => x.Parent.Id == id)
+            IEnumerable<FolderUnitDto> folders = await _unitOfWork.Folders.Query.Where(x => x.FolderUnit.Id == id)
             .Select(f => new FolderUnitDto
             {
                 Name = f.Name,
@@ -152,7 +244,7 @@ namespace Drive.WebHost.Services
                 CreatedAt = f.CreatedAt,
                 Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
             }).ToListAsync();
-            IEnumerable<FileUnitDto> files = await _unitOfWork.Files.Query.Where(x => x.Parent.Id == id)
+            IEnumerable<FileUnitDto> files = await _unitOfWork.Files.Query.Where(x => x.FolderUnit.Id == id)
                 .Select(f => new FileUnitDto
                 {
                     Name = f.Name,
@@ -214,12 +306,32 @@ namespace Drive.WebHost.Services
                 Folders = folders
             };
         }
+        public async Task<FolderContentDto> GetContentAsync(int id)
+        {
+            IEnumerable<FolderUnitDto> folders = await _unitOfWork.Folders.Query.Where(x => x.FolderUnit.Id == id)
+                .Select(f => new FolderUnitDto
+                {
+                    Id = f.Id,
+                }).ToListAsync();
+            IEnumerable<FileUnitDto> files = await _unitOfWork.Files.Query.Where(x => x.FolderUnit.Id == id)
+                .Select(f => new FileUnitDto
+                {
+                    Id = f.Id,
+                }).ToListAsync();
+
+            return new FolderContentDto
+            {
+                Files = files,
+                Folders = folders
+            };
+        }
+
 
         public async Task<int> GetContentTotalAsync(int id)
         {
             int counter = 0;
-            var folders = await _unitOfWork.Folders.Query.Where(x => x.Parent.Id == id).ToListAsync();
-            var files = await _unitOfWork.Files.Query.Where(x => x.Parent.Id == id).ToListAsync();
+            var folders = await _unitOfWork.Folders.Query.Where(x => x.FolderUnit.Id == id).ToListAsync();
+            var files = await _unitOfWork.Files.Query.Where(x => x.FolderUnit.Id == id).ToListAsync();
             counter += folders.Count();
             counter += files.Count();
             return counter;
@@ -228,6 +340,24 @@ namespace Drive.WebHost.Services
         public void Dispose()
         {
             _unitOfWork?.Dispose();
+        }
+
+        private async Task ChangeSpaceId(int id, int spaceId)
+        {
+            var folder =
+                await _unitOfWork?.Folders?.Deleted.Include(f => f.DataUnits).SingleOrDefaultAsync(f => f.Id == id);
+
+            foreach (var item in folder.DataUnits)
+            {
+                item.IsDeleted = false;
+
+                item.Space = await _unitOfWork.Spaces.GetByIdAsync(spaceId);
+
+                if (item is FolderUnit)
+                {
+                    await ChangeSpaceId(item.Id, spaceId);
+                }
+            }
         }
     }
 }

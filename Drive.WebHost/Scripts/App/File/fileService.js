@@ -13,12 +13,15 @@
         var service = {
             createFile: createFile,
             updateFile: updateFile,
+            updateDeletedFile: updateDeletedFile,
             deleteFile: deleteFile,
             getFile: getFile,
+            getDeletedFile: getDeletedFile,
             getAllFiles: getAllFiles,
             getFilesApp: getFilesApp,
             getAllByParentId: getAllByParentId,
-            orderByColumn: orderByColumn
+            orderByColumn: orderByColumn,
+            openFile: openFile
         };
 
         function getAllFiles(callBack) {
@@ -63,6 +66,18 @@
                     });
         }
 
+        function getDeletedFile(id, callBack) {
+            $http.get(baseUrl + '/api/files/deleted/' + id)
+                .then(function (response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                },
+                    function () {
+                        console.log('Error while getting file!');
+                    });
+        }
+
         function createFile(file, callBack) {
             $http.post(baseUrl + '/api/files', file)
                 .then(function(response) {
@@ -87,6 +102,18 @@
                     });
         }
 
+        function updateDeletedFile(id, oldParentId, file, callBack) {
+            $http.put(baseUrl + '/api/files/deleted/' + id + '?oldParentId=' + oldParentId, file)
+                .then(function (response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                },
+                    function () {
+                        console.log('Error while getting file!');
+                    });
+        }
+
         function deleteFile(id, callBack) {
             $http.delete(baseUrl + '/api/files/' + id)
                 .then(function(response) {
@@ -103,6 +130,10 @@
             var pos = columnCurrent.indexOf(columnClicked);
             if (pos == 0) { return '-' + columnClicked; }
             return columnClicked;
+        }
+
+        function openFile(url) {
+            window.open(url, '_blank');
         }
 
         return service;

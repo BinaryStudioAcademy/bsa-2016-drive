@@ -4,9 +4,9 @@
     angular.module("driveApp")
         .controller("SettingsController", SettingsController);
 
-    SettingsController.$inject = ['SettingsService', '$routeParams', '$location', '$rootScope'];
+    SettingsController.$inject = ['SettingsService', 'SpaceService', 'FolderService', 'FileService', '$routeParams', '$location', '$rootScope', '$window'];
 
-    function SettingsController(settingsService, $routeParams, $location, $rootScope) {
+    function SettingsController(settingsService, spaceService, folderService, fileService, $routeParams, $location, $rootScope, $window) {
         var vm = this;
         vm.save = save;
         vm.cancel = cancel;     
@@ -32,12 +32,23 @@
         vm.setTab = setTab;
         vm.isSet = isSet;
         vm.deleteSpace = deleteSpace;
+<<<<<<< HEAD
         vm.showDeleteBtn = showDeleteBtn;
+=======
+
+>>>>>>> refs/remotes/origin/develop
         activate();
 
         function activate() {
             settingsService.getSpace(vm.selectedSpace, function (data) {
                 vm.space = data;
+                // Hide delete space btn for Binary and My spaces
+                if (vm.space.name === 'Binary Space' || vm.space.name === 'My Space') {
+                    vm.showDeleteBtn = false;
+                }
+                else {
+                    vm.showDeleteBtn = true;
+                }
                 console.log(vm.space);
                 settingsService.getAllUsers(function (data) {
                     vm.users = data;
@@ -80,6 +91,7 @@
                         }
                     }
                 });
+<<<<<<< HEAD
                 settingsService.getAllRoles(function (data) {
                     vm.roles = data;
                     if (vm.space.readPermittedRoles != undefined) {
@@ -123,6 +135,13 @@
                 });
             });
         };
+=======
+            });  
+
+            vm.userAddName = null;
+            vm.userAddId = null;
+        }
+>>>>>>> refs/remotes/origin/develop
 
         function save() {
             settingsService.pushChanges(vm.space, function () {
@@ -269,6 +288,7 @@
             $location.url("/spaces/" + vm.space.id);
         };
 
+<<<<<<< HEAD
         function setTab(newTab) {
             vm.tab = newTab;
         };
@@ -287,11 +307,13 @@
             }
         }
 
+=======
+>>>>>>> refs/remotes/origin/develop
         function deleteSpace()
         {
-            if (confirm('Are you really want to delete space and all inside folders and files?') == true)
+            if (confirm('Do you really want to delete space and all inside folders and files?') == true)
             {
-                settingsService.deleteSpace(vm.selectedSpace, function (response) {
+                settingsService.deleteSpaceWithStaff(vm.selectedSpace, function (response) {
                     if (response) {
                         var data = {
                             operation: 'delete',
@@ -299,7 +321,9 @@
                         }
                     }
                 });
-                $location.url("/");
+                // Reload page
+                $window.location.reload(true);
+                $location.url("/");            
             } else {
 
             }

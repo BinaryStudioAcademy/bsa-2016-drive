@@ -42,6 +42,19 @@ namespace Drive.WebHost.Api
             return Ok(file);
         }
 
+        // GET: api/files/deleted/5
+        [HttpGet]
+        [Route("deleted/{id:int}")]
+        public async Task<IHttpActionResult> GetFileDeletedAsync(int id)
+        {
+            var file = await _service?.GetDeletedAsync(id);
+
+            if (file == null)
+                return NotFound();
+
+            return Ok(file);
+        }
+
         // POST: api/files
         [HttpPost]
         public async Task<IHttpActionResult> CreateFileAsync(FileUnitDto file)
@@ -59,6 +72,20 @@ namespace Drive.WebHost.Api
         public async Task<IHttpActionResult> UpdateFileAsync(int id, FileUnitDto file)
         {
             var dto = await _service?.UpdateAsync(id, file);
+
+            if (id != file.Id)
+                return BadRequest();
+
+            return Ok(dto);
+
+        }
+
+        // PUT: api/files/deleted/5?oldParentId=(int)
+        [HttpPut]
+        [Route("deleted/{id:int}")]
+        public async Task<IHttpActionResult> UpdateDeletedFileAsync(int id, int? oldParentId, FileUnitDto file)
+        {
+            var dto = await _service.UpdateDeletedAsync(id, oldParentId, file);
 
             if (id != file.Id)
                 return BadRequest();

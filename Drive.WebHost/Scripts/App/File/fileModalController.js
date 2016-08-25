@@ -1,4 +1,4 @@
-Ôªø(function () {
+(function () {
     "use strict";
 
     angular
@@ -19,7 +19,7 @@
 
         function activate() {
             vm.file = items;
-            vm.title = 'Create file';
+            vm.title = 'New link';
             vm.icon = "fa fa-file-o";
             vm.urlIsValid = false;
             vm.submitted = false;
@@ -36,6 +36,9 @@
             if (vm.file.name) {
                 vm.title = 'Edit';
                 vm.urlIsValid = true;
+                vm.name = items.name;
+                vm.description = items.description;
+                vm.link = items.link;
             }
 
         }
@@ -101,7 +104,7 @@
         }
 
         function isValidUrl() {
-            var expression = "^(?:(?:ht|f)tps?://)?(?:[\\-\\w]+@)?(?:[\\-0-9a-z]*[0-9a-z]\\.)+[a-z]{2,6}(?::\\d{1,5})?(?:[?/\\\\#][?!^$.(){}:|=[\\]+\\-/\\\\*;&~#@,%\\w–ê-–Ø–∞-—è]*)?$";
+            var expression = "^(?:(?:ht|f)tps?://)?(?:[\\-\\w]+@)?(?:[\\-0-9a-z]*[0-9a-z]\\.)+[a-z]{2,6}(?::\\d{1,5})?(?:[?/\\\\#][?!^$.(){}:|=[\\]+\\-/\\\\*;&~#@,%\\w¿-ﬂ‡-ˇ]*)?$";
             var reg = new RegExp(expression);
             vm.urlIsValid = reg.test(vm.file.link);
         }
