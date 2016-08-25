@@ -1,12 +1,12 @@
 ﻿<div>
-    <h2>ros</h2>
+    <h2>ros11</h2>
     <form role="form" name="fileForm" novalidate>
         <div class="modal-header">
             <h3 class="modal-title">{{sharedFileModalCtrl.title}}</h3>
         </div>
         <div class="modal-body">
             <div class="form-group">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <input type="text" placeholder="Enter a username" ng-model="sharedFileModalCtrl.selected" uib-typeahead="user as user.name for user in sharedFileModalCtrl.users | filter:{name:$viewValue} | limitTo:10" class="form-control">
                 </div>
                 <div class="col-md-5">
@@ -17,23 +17,23 @@
                 <table class="table users table-striped table-hover">
                     <thead>
                         <tr>
-                            <th style="width:30%">User name</th>
-                            <th style="width:15%">Read</th>
-                            <th style="width:15%">Write</th>
-                            <th></th>
+                            <th style="width:35%">User name</th>
+                            <th style="width:20%; text-align:center;">Read</th>
+                            <th style="width:20%; text-align:center;">Modify</th>
+                            <th style="width:25%; text-align:center;">Remove</th>
                         </tr>
                     </thead>
                     <tbody style="height: 200px;">
-                        <tr ng-repeat="item in sharedFileModalCtrl.permittedUsers">
-                            <td style="width:30%">{{item.name}}</td>
-                            <td style="width:15%">
-                                <input type="checkbox" ng-model="item.confirmedRead" ng-change="sharedFileModalCtrl.addReadUser(item.confirmedRead, item.globalId)">
+                        <tr ng-repeat="item in sharedFileModalCtrl.usersWithPermissions| filter:{isDeleted:false} ">
+                            <td style="width:35%">{{item.name}}</td>
+                            <td style="width:20%; text-align:center;">
+                                <input type="checkbox" ng-model="item.canRead ">
                             </td>
-                            <td style="width:15%">
-                                <input type="checkbox" ng-model="item.confirmedWrite" ng-change="sharedFileModalCtrl.addWriteUser(item.confirmedWrite, item.globalId)">
+                            <td style="width:20%; text-align:center;">
+                                <input type="checkbox" ng-model="item.canModify">
                             </td>
-                            <td>
-                                <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="sharedFileModalCtrl.removeSpaceUser(item.globalId); sharedFileModalCtrl.addReadUser(false, item.globalId); sharedFileModalCtrl.addWriteUser(false, item.globalId)"></i>
+                            <td style="width:25%; text-align:center;">
+                                <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="sharedFileModalCtrl.removeUsersWithPermissions(item)"></i>
                             </td>
                         </tr>
                     </tbody>
@@ -41,7 +41,7 @@
             </div>
             <div class="modal-footer">
                 <div class="col-md-offset-3 col-md-8">
-                    <button type="submit" class="btn btn-primary" ng-click="sharedFileModalCtrl.save()" ng-disabled="fileForm.fileName.$invalid || !sharedFileModalCtrl.urlIsValid">Save</button>
+                    <button type="submit" class="btn btn-primary" ng-click="sharedFileModalCtrl.save()">Save</button>
                     <button class="btn btn-default" type="submit" ng-click="sharedFileModalCtrl.cancel()">Cancel</button>
                 </div>
             </div>

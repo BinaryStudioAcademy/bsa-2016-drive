@@ -9,6 +9,7 @@ using Drive.Logging;
 using Drive.DataAccess.Entities;
 using System.Data.Entity;
 using Driver.Shared.Dto.Users;
+using Drive.Identity.Services;
 
 namespace Drive.WebHost.Services
 {
@@ -17,12 +18,14 @@ namespace Drive.WebHost.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger _logger;
         private readonly IUsersService _userService;
+        private readonly BSIdentityManager _currentUser;
 
         public SharedSpaceService(IUnitOfWork unitOfWork, ILogger logger, IUsersService userService)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _userService = userService;
+            _currentUser = new BSIdentityManager();
         }
 
         public async Task<IEnumerable<UserSharedSpaceDto>> GetPermissionsOfSharedDataAsync(int id)
@@ -43,30 +46,41 @@ namespace Drive.WebHost.Services
             foreach (var user in users)
             {
                 var fileShared = await _unitOfWork.SharedSpace.Query.SingleOrDefaultAsync(f => f.File.Id == id && f.User.GlobalId == user.GlobalId);
-                if(fileShared == null)
+                
+                if (fileShared == null)
                 {
-                    var userDb = await _unitOfWork.Users.Query.FirstOrDefaultAsync(x => x.GlobalId == user.GlobalId);
-                    if (userDb == null)
+                    //  "Deleted"??
+                    var fileSharedDeleted = await _unitOfWork.SharedSpace.Deleted.SingleOrDefaultAsync(f => f.File.Id == id && f.User.GlobalId == user.GlobalId);
+                    if (fileSharedDeleted == null)
                     {
-                        UserDto userdto = new UserDto();
-                        userdto.serverUserId = user.GlobalId;
-                        await _userService.CreateAsync(userdto);
-                        var suser = await _unitOfWork.Users.Query.FirstOrDefaultAsync(x => x.GlobalId == user.GlobalId);
-                        userDb = suser;
-                    }
-                    var file = await _unitOfWork.Files.Query.SingleOrDefaultAsync(f=>f.Id == id);
-                    if(file != null)
-                    {
-                        // add chack isDeleted UserSharedSpaceDto
-                        var newSharedFile = new Shared()
+                        var userDb = await _unitOfWork.Users.Query.FirstOrDefaultAsync(x => x.GlobalId == user.GlobalId);
+                        if (userDb == null)
                         {
-                            IsDeleted = user.IsDeleted,
-                            File = file,
-                            User = userDb,
-                            CanModify = user.CanModify,
-                            CanRead = user.CanRead,
-                        };
-                        _unitOfWork.SharedSpace.Create(newSharedFile);
+                            UserDto userdto = new UserDto();
+                            userdto.serverUserId = user.GlobalId;
+                            await _userService.CreateAsync(userdto);
+                            var suser = await _unitOfWork.Users.Query.FirstOrDefaultAsync(x => x.GlobalId == user.GlobalId);
+                            userDb = suser;
+                        }
+                        var file = await _unitOfWork.Files.Query.SingleOrDefaultAsync(f => f.Id == id);
+                        if (file != null)
+                        {
+                            var newSharedFile = new Shared()
+                            {
+                                IsDeleted = user.IsDeleted,
+                                File = file,
+                                User = userDb,
+                                CanModify = user.CanModify,
+                                CanRead = user.CanRead,
+                            };
+                            _unitOfWork.SharedSpace.Create(newSharedFile);
+                        }
+                    }
+                    else
+                    {
+                        fileSharedDeleted.CanModify = user.CanModify;
+                        fileSharedDeleted.CanRead = user.CanRead;
+                        fileSharedDeleted.IsDeleted = user.IsDeleted;
                     }
                 }
                 else
@@ -81,10 +95,9 @@ namespace Drive.WebHost.Services
 
         public async Task<SharedSpaceDto> GetAsync(int page, int count, string sort)
         {
-            var u = await _userService.GetCurrentUser();
             //TODO add check user.id
             IEnumerable<FileUnitDto> files = await _unitOfWork.SharedSpace.Query
-                .Where(s=>!s.IsDeleted && !s.File.IsDeleted)
+                .Where(s=>!s.IsDeleted && !s.File.IsDeleted && s.User.GlobalId == _currentUser.UserId)
                 .Select(f=> new FileUnitDto() {
                     Description = f.File.Description,
                     FileType = f.File.FileType,
@@ -121,7 +134,7 @@ namespace Drive.WebHost.Services
         {
             //TODO add check user.id
             var filesCount = await _unitOfWork.SharedSpace.Query
-                .Where(s => !s.IsDeleted && !s.File.IsDeleted)
+                .Where(s => !s.IsDeleted && !s.File.IsDeleted && s.User.GlobalId == _currentUser.UserId)
                 .CountAsync();
             return filesCount;
         }
@@ -130,7 +143,7 @@ namespace Drive.WebHost.Services
         {
             //TODO add check user.id
             IEnumerable<FileUnitDto> files = await _unitOfWork.SharedSpace.Query
-                .Where(s => !s.IsDeleted && !s.File.IsDeleted)
+                .Where(s => !s.IsDeleted && !s.File.IsDeleted && s.User.GlobalId == _currentUser.UserId)
                 .Select(f => new FileUnitDto()
                 {
                     Description = f.File.Description,
@@ -165,7 +178,7 @@ namespace Drive.WebHost.Services
         {
             //TODO add check user.id
             IEnumerable<FileUnitDto> files = await _unitOfWork.SharedSpace.Query
-                .Where(s => !s.IsDeleted && !s.File.IsDeleted)
+                .Where(s => !s.IsDeleted && !s.File.IsDeleted && s.User.GlobalId == _currentUser.UserId)
                 .Select(f => new FileUnitDto()
                 {
                     Description = f.File.Description,
@@ -189,7 +202,7 @@ namespace Drive.WebHost.Services
         {
             //TODO add check user.id
 
-            var file = await _unitOfWork.SharedSpace.Query.SingleOrDefaultAsync(f => f.File.Id == id);
+            var file = await _unitOfWork.SharedSpace.Query.SingleOrDefaultAsync(f => f.File.Id == id && f.User.GlobalId == _currentUser.UserId);
             if (file != null)
             {
                 file.IsDeleted = true;

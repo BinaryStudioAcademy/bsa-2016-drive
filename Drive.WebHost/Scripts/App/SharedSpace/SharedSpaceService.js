@@ -103,6 +103,8 @@
                 }
             })
             .then(function (response) {
+                if (callback)
+                    callback();
                 console.log('Deleted permissions successful. method: deleteSharedFile')
             }, function errorCallback(response) {
                 console.log('Error in deleteSharedFile sharedSpaceService! Code: ' + response.status);

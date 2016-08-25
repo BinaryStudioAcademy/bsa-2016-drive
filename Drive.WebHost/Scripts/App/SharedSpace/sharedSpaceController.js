@@ -51,7 +51,7 @@
 
         vm.paginate = {
             currentPage: 1,
-            pageSize: 2,
+            pageSize: 10,
             numberOfItems: 0,
             getContent: null
         }
@@ -199,16 +199,18 @@
             //],
             [
                 'Delete', function ($itemScope) {
-                    sharedSpaceService.deleteSharedFile($itemScope.file.id);
-                    if (vm.space.files.lenght = 1 && vm.paginate.currentPage != 1) {
-                        vm.paginate.currentPage--;
-                        vm.paginate.numberOfItems--;
-                        vm.paginate.getContent();
-                    }
-                    else {
-                        vm.paginate.numberOfItems--;
-                        vm.paginate.getContent();
-                    }
+                    sharedSpaceService.deleteSharedFile($itemScope.file.id, function () {
+                        if (vm.space.files.lenght = 1 && vm.paginate.currentPage != 1) {
+                            vm.paginate.currentPage--;
+                            vm.paginate.numberOfItems--;
+                            vm.paginate.getContent();
+                        }
+                        else {
+                            vm.paginate.numberOfItems--;
+                            vm.paginate.getContent();
+                        }
+                    });
+
                 }
             ]
         ];

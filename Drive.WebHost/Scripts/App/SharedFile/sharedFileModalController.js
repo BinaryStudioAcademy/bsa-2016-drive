@@ -13,66 +13,62 @@
 
         vm.save = save;
         vm.cancel = cancel;
-        //vm.isValidUrl = isValidUrl;
-        //vm.checkUrl = checkUrl;
-        vm.user = null;
-        vm.usersWithPermissions = null;
+        vm.users = null;
+        vm.usersWithPermissions = [];
         vm.addUserPermissons = addUserPermissons;
+        vm.removeUsersWithPermissions = removeUsersWithPermissions;
 
         activate();
 
         function activate() {
             vm.fileId = items;
 
-            getAllUsers();
             getUsersWithPermissions();
-            //updateUsersPermissions();
-            //vm.title = 'New link';
-            //vm.icon = "fa fa-file-o";
-            //vm.urlIsValid = false;
-            //vm.submitted = false;
-            //vm.types = {
-            //    1: ["docs.google.com/document/"],
-            //    2: ["docs.google.com/spreadsheets/"],
-            //    3: ["docs.google.com/presentation/"],
-            //    4: ["trello.com"],
-            //    5: ["."] // link
-            //};
-
-            //if (vm.file.parentId === 0) vm.file.parentId = null;
-
-            //if (vm.file.name) {
-            //    vm.title = 'Edit';
-            //    vm.urlIsValid = true;
-            //    vm.name = items.name;
-            //    vm.description = items.description;
-            //    vm.link = items.link;
-            //}
+            addUsersName();
         }
 
         function save() {
-            vm.submitted = true;
-            vm.checkUrl();
-            $uibModalInstance.close();
             updateUsersPermissions();
+            $uibModalInstance.close();
         }
 
         function cancel() {
-
-            updateUsersPermissions();
             $uibModalInstance.dismiss('cancel');
         };
 
-        function getAllUsers() {
-            sharedSpaceService.getAllUsers(function (data) {
-                vm.users = data;
-            });
-        }
 
         function getUsersWithPermissions() {
             sharedSpaceService.getPermissions(vm.fileId, function (data) {
-                vm.usersWithPermissions = data;
+                sharedSpaceService.getAllUsers(function (usersInfo) {
+                    vm.users = usersInfo;
+                    vm.usersWithPermissions = data;
+                    addUsersName();
+                    removeExistingUsers();
+                });
+
             });
+        }
+
+        function removeExistingUsers() {
+            for (var i = 0; i < vm.usersWithPermissions.length; i++)
+                for (var j = 0; j < vm.users.length; j++) {
+                    if (vm.usersWithPermissions[i].globalId == vm.users[j].id) {
+                        vm.users.splice(j,1);
+                        break;
+                    }
+                }
+        }
+
+        function removeUsersWithPermissions(user) {
+            for (var i = 0; i < vm.usersWithPermissions.length; i++) {
+                if (vm.usersWithPermissions[i].globalId == user.globalId) {
+                    vm.usersWithPermissions[i].isDeleted = true;
+                    vm.usersWithPermissions[i].canRead = false;
+                    vm.usersWithPermissions[i].canModify = false;
+                    vm.users.push({ name: user.name, id: user.globalId });
+                    break;
+                }
+            }
         }
 
         function updateUsersPermissions() {
@@ -82,36 +78,43 @@
         }
 
         function addUserPermissons() {
-
+            var user = {
+                globalId: vm.selected.id,
+                name: vm.selected.name,
+                isDeleted: false,
+                canRead: false,
+                canModify: false
+            }
+            var existing = -1;
+            for (var i = 0; i < vm.usersWithPermissions.length; i++) {
+                if (vm.usersWithPermissions[i].globalId == vm.selected.id) {
+                    existing = i;
+                    break;
+                }
+            }
+            if (existing == -1) {
+                if (Array.isArray(vm.usersWithPermissions)) {
+                    vm.usersWithPermissions.push(user);
+                }
+                else {
+                    vm.usersWithPermissions = [];
+                    vm.usersWithPermissions.push(user);
+                }
+            }
+            else {
+                vm.usersWithPermissions[existing].isDeleted = false;
+            }
         }
 
-
-        //function checkUrl() {
-        //    vm.file.fileType = null;
-        //    var reg = new RegExp("^https?://");
-
-        //    if (!reg.test(vm.file.link)) {
-        //        vm.file.link = "http://" + vm.file.link;
-        //    }
-
-        //    for (var t in vm.types) {
-        //        for (var i = 0; i < vm.types[t].length; i++) {
-        //            if (vm.file.link.includes(vm.types[t][i])) {
-        //                vm.file.fileType = Number(t);
-        //                break;
-        //            }
-        //        }
-        //        if (vm.file.fileType) {
-        //            break;
-        //        }
-        //    }
-
-        //}
-
-        //function isValidUrl() {
-        //    var expression = "^(?:(?:ht|f)tps?://)?(?:[\\-\\w]+@)?(?:[\\-0-9a-z]*[0-9a-z]\\.)+[a-z]{2,6}(?::\\d{1,5})?(?:[?/\\\\#][?!^$.(){}:|=[\\]+\\-/\\\\*;&~#@,%\\wР-пр-џ]*)?$";
-        //    var reg = new RegExp(expression);
-        //    vm.urlIsValid = reg.test(vm.file.link);
-        //}
-    }
+        function addUsersName() {
+            for (var i = 0; i < vm.usersWithPermissions.length; i++)
+                for (var j = 0; j < vm.users.length; j++) {
+                    if (vm.usersWithPermissions[i].globalId == vm.users[j].id) {
+                        vm.usersWithPermissions[i].name = vm.users[j].name;
+                        break;
+                    }
+                }
+            
+        }
+}
 }());
