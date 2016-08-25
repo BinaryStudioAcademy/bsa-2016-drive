@@ -251,6 +251,9 @@
     <Content Include="Scripts\App\Employees\employeesController.js" />
     <Content Include="Scripts\App\Events\Events.html" />
     <Content Include="Scripts\App\Events\eventsController.js" />
+    <Content Include="Scripts\App\SharedFile\SharedFileForm.html" />
+    <Content Include="Scripts\App\SharedFile\sharedFileModalController.js" />
+    <Content Include="Scripts\App\SharedFile\Modal.html" />
     <Content Include="Scripts\App\FileFilter\fileFilterController.js" />
     <Content Include="Scripts\App\FileFilter\FileFilter.html" />
     <Content Include="Scripts\App\File\FileForm.html" />

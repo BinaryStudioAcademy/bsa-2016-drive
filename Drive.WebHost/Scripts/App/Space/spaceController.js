@@ -38,6 +38,8 @@
         vm.deleteFile = deleteFile;
         vm.openFileWindow = openFileWindow;
         vm.openDocument = openDocument;
+        vm.openSharedFileWindow = openSharedFileWindow;
+        vm.sharedFile = sharedFile;
 
         vm.findById = findById;
         vm.getSpace = getSpace;
@@ -264,6 +266,7 @@
             [
                 'Share', function ($itemScope) {
                     console.log($itemScope.file.id);
+                    vm.sharedFile();
                 }
             ],
             null,
@@ -415,6 +418,48 @@
             }, function () {
                 console.log('Modal dismissed');
             });
+        }
+
+        function openSharedFileWindow(size) {
+
+            var fileModalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'Scripts/App/SharedFile/SharedFileForm.html',
+                windowTemplateUrl: 'Scripts/App/SharedFile/Modal.html',
+                controller: 'SharedFileModalCtrl',
+                controllerAs: 'sharedFileModalCtrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        return vm.file;
+                    }
+                }
+            });
+
+            fileModalInstance.result.then(function (response) {
+                console.log(response);
+                if (response.operation == 'create') {
+                    if (vm.parentId == null) {
+                        vm.getSpace();
+                    }
+                    else {
+                        vm.getFolderContent(vm.parentId)
+                    }
+                }
+                if (response.operation == 'update') {
+                    var index = findById(vm.space.files, response.item.id);
+                    if (index != -1) {
+                        vm.space.files[index] = response.item;
+                    }
+                }
+            }, function () {
+                console.log('Modal dismissed');
+            });
+        }
+
+        function sharedFile() {
+            vm.file = { parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.openSharedFileWindow();
         }
 
         function createNewFolder() {
