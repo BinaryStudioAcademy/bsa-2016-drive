@@ -25,10 +25,10 @@
                         <img src="/Content/Icons/add-folder_bw.svg" height="32" alt="Add folder" />
                     </button>
                     <button type="button" class="btn btn-default btn-custom" ng-click="spaceCtrl.createNewFile()" title="Add new link">
-                        <img src="/Content/Icons/add-file_bw.svg" height="30" alt="Add file" />
+                        <img src="/Content/Icons/add-file_bw.svg" height="32" alt="Add file" />
                     </button>
                 <button type="button" class="btn btn-default btn-custom" ng-click="" title="Upload file">
-                    <img src="/Content/Icons/upload-doc_bw.svg" height="28" alt="Upload file" />
+                    <img src="/Content/Icons/upload-doc_bw.svg" height="30" alt="Upload file" />
                 </button>
             </div>
         </div>
@@ -52,7 +52,7 @@
     <span us-spinner="{radius:30, width:8, length: 16}"></span>
     <div class="wrap" ng-show="spaceCtrl.showGrid">
         <div role="button" class="s-block btn-default shadow" context-menu="spaceCtrl.folderMenuOptions" dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize" total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
-            <img ng-src="/Content/Icons/folder.svg" alt="" height="50" />
+            <img ng-src="/Content/Icons/folder.svg" height="{{spaceCtrl.iconHeight * 2}}" alt=""/>
             <br>
             <span class="bold">Name: </span>
             <span>{{ folder.name }}</span>
@@ -65,7 +65,7 @@
         </div>
         <div class="clearfix"></div>
         <div role="button" class="s-block btn-default shadow" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.openDocument(file.link)">
-            <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" height="50" alt="{{spaceCtrl.icon.altText}}" />
+            <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" height="{{spaceCtrl.iconHeight * 2}}" alt="" />
             <br>
             <span class="bold">File type: </span>
             <span>{{ file.fyleType | typeOfFile }}</span>
@@ -114,7 +114,7 @@
             <tbody>
                 <tr class="shadow" role="button" ng-repeat="folder in spaceCtrl.space.folders | orderBy: spaceCtrl.columnForOrder" context-menu="spaceCtrl.folderMenuOptions" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
                     <td style="width: 20%">
-                        <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" height="{{spaceCtrl.icon.height}}" />
+                        <img src="/Content/Icons/folder.svg" height="{{spaceCtrl.iconHeight}}" />
                         &nbsp;{{ folder.name }}
                     </td>
                     <td style="width: 33%">{{ folder.description }}</td>
@@ -124,7 +124,7 @@
                 </tr>
                 <tr class="shadow" role="button" ng-repeat="file in spaceCtrl.space.files | orderBy: spaceCtrl.columnForOrder" context-menu="spaceCtrl.fileMenuOptions" ng-dblclick="spaceCtrl.openDocument(file.link)">
                     <td style="width: 20%">
-                        <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" height="{{spaceCtrl.icon.height}}" /> 
+                        <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" height="{{spaceCtrl.iconHeight}}" /> 
                         &nbsp;{{ file.name }}
                     </td>
                     <td style="width: 33%">{{ file.description }}</td>

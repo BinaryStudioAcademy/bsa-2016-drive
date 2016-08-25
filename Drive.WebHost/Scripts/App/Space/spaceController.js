@@ -76,6 +76,7 @@
             vm.showGrid = false;
             vm.changeView = changeView;
             vm.columnForOrder = 'name';
+            vm.iconHeight = 30;
 
             spaceService.getSpace(vm.selectedSpace,
                 vm.paginate.currentPage,
@@ -561,11 +562,8 @@
         }
 
         function chooseIcon(type) {
-            vm.icon = {
-                src: fileService.chooseIcon(type),
-                height: "32"
-            };
-            return vm.icon.src;
+            vm.iconSrc = fileService.chooseIcon(type);
+            return vm.iconSrc;
         }
     }
 }());

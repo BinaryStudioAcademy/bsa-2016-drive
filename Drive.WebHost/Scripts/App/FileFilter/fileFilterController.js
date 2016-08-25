@@ -26,6 +26,7 @@
             vm.showGrid = false;
             vm.columnForOrder = 'name';
             vm.searchText = '';
+            vm.iconHeight = 30;
 
             vm.spaces = [];
 
@@ -162,8 +163,8 @@
         }
 
         function chooseIcon(type) {
-            vm.icon = fileService.chooseIcon(type);
-            return vm.icon.src;
+            vm.iconSrc = fileService.chooseIcon(type);
+            return vm.iconSrc;
         }
     }
 }());
