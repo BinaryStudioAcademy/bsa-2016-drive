@@ -277,11 +277,18 @@
             }
         ],
             null,
+            ['New', function ($itemScope) {
+               
+            },  [
             ['New folder', function () { vm.createNewFolder(); }],
             ['New link', function () { vm.createNewFile(); }],
             null,
             ['Upload file', function () { }]
+            ]
+            ]
         ];
+           
+        
 
         function openFolderWindow(size) {
 
