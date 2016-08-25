@@ -254,6 +254,7 @@
     <Content Include="Content\Icons\ppt_bw.svg" />
     <Content Include="Content\Icons\trello.svg" />
     <Content Include="Content\Icons\trello_bw.svg" />
+    <Content Include="Content\Icons\upload-doc_bw.svg" />
     <Content Include="Content\Icons\xls.svg" />
     <Content Include="Content\Icons\xls_bw.svg" />
     <Content Include="Global.asax" />
