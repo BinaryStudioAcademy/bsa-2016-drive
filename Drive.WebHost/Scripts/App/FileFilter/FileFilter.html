@@ -1,51 +1,86 @@
-﻿
-<div class="container col-md-12">
+﻿<div class="container col-md-12">
     <br />
     <div class="btn-group btn-breadcrumb">
         <a class="btn btn-info"><i class={{fileFilterCtrl.icon}}></i> {{fileFilterCtrl.filesType}}</a>
     </div>
 
-    <div class="row" style="margin: 0;">
+    <div class="row" style="margin: 1em 0 1em 0;">
         <div class="col-lg-push-4-offset pull-right">
             <button class="btn btn-default" ng-click="fileFilterCtrl.changeView(fileFilterCtrl.view)">
                 <i class={{fileFilterCtrl.view}} title="view"> </i>
             </button>
         </div>
-    </div>
-
-    <div class="wrap" style="margin: 0;" ng-show="fileFilterCtrl.showGrid">
-        <div class="small" ng-repeat="space in fileFilterCtrl.spaces">
-            <div class="well" style="margin-bottom: 10px;" >{{ space.name }}</div>
-            <div role="button" class="s-block btn-default shadow" ng-repeat="file in space.files" title="Created {{ file.createdAt | date : 'short' }}">
-                <i class="fa fa-file-o fa-5x"></i>
-                <br>
-                <span class="bold">Name: </span>
-                <span>{{ file.name }}</span>
-                <br>
-                <span class="bold">Author: </span>
-                <span>{{ file.author.name }}</span>
+        <div>
+            <div class="col-sm-3 pull-right">
+                <div>
+                    <form role="search">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Search input" name="srch-term" id="srch-term" ng-model="fileFilterCtrl.searchText">
+                            <div class="input-group-btn">
+                                <button type="button" class="btn btn-default" aria-label="Cancel search" ng-click="fileFilterCtrl.cancelSearch()" ng-show='fileFilterCtrl.searchText != ""' style="padding:6px 6px;"><span style="margin-right:0" class="glyphicon glyphicon-remove-circle"></span></button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-    <div class="table-responsive" ng-show="fileFilterCtrl.showTable">
-        <table class="table table-hover" ng-repeat="space in fileFilterCtrl.spaces">
-            <caption> <div class="well">{{ space.name }}</div></caption>
-            <thead>
-                <tr>
-                    <th class="name" style="width: 20%">Name</th>
-                    <th>Description</th>
-                    <th style="width: 15%">Author</th>
-                    <th style="width: 15%">Created</th>
-                    <th class="type" style="width: 10%">Type</th>
+
+    <div class="wrap" style="margin: 1em 0 1em 0;" ng-show="fileFilterCtrl.showGrid">
+            <div class="small" ng-repeat="space in fileFilterCtrl.spaces">
+                <div class="well" style="margin-bottom: 10px;">{{ space.name }}</div>
+                <div role="button" class="s-block btn-default shadow" ng-repeat="file in space.files | filter: {name : fileFilterCtrl.searchText}" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="fileFilterCtrl.openDocument(file.link)" context-menu="fileFilterCtrl.fileMenuOptions">
+                    <i class="fa fa-file-o fa-5x"></i>
+                    <br>
+                    <span class="bold">Name: </span>
+                    <span>{{ file.name }}</span>
+                    <br>
+                    <span class="bold">Author: </span>
+                    <span>{{ file.author.name }}</span>
+                </div>
+            </div>
+        </div>
+    <div class="table-responsive blocked-table" style="overflow: auto" ng-show="fileFilterCtrl.showTable">
+            <table class="table fixed_headers" ng-repeat="space in fileFilterCtrl.spaces">
+                <thead>
+                <tr style="cursor: pointer">
+                    <th class="name" style="width: 20%" ng-click="fileFilterCtrl.orderByColumn('name')">
+                        Name
+                        <span ng-show="fileFilterCtrl.columnForOrder == 'name'"><i class="fa fa-sort-asc"></i></span>
+                        <span ng-show="fileFilterCtrl.columnForOrder == '-name'"><i class="fa fa-sort-desc"></i></span>
+                    </th>
+                    <th style="width: 33%" ng-click="fileFilterCtrl.orderByColumn('description')">
+                        Description
+                        <span ng-show="fileFilterCtrl.columnForOrder == 'description'"><i class="fa fa-sort-asc"></i></span>
+                        <span ng-show="fileFilterCtrl.columnForOrder == '-description'"><i class="fa fa-sort-desc"></i></span>
+                    </th>
+                    <th style="width: 20%" ng-click="fileFilterCtrl.orderByColumn('author.name')">
+                        Author
+                        <span ng-show="fileFilterCtrl.columnForOrder == 'author.name'"><i class="fa fa-sort-asc"></i></span>
+                        <span ng-show="fileFilterCtrl.columnForOrder == '-author.name'"><i class="fa fa-sort-desc"></i></span>
+                    </th>
+                    <th style="width: 15%" ng-click="fileFilterCtrl.orderByColumn('createdAt')">
+                        Created
+                        <span ng-show="fileFilterCtrl.columnForOrder == 'createdAt'"><i class="fa fa-sort-asc"></i></span>
+                        <span ng-show="fileFilterCtrl.columnForOrder == '-createdAt'"><i class="fa fa-sort-desc"></i></span>
+                    </th>
+                    <th class="type" style="cursor: default; width: 10%">
+                        Type
+                    </th>
                 </tr>
-            </thead>
-            <tr class="shadow" role="button" ng-repeat="file in space.files">
-                <td> <i class="fa fa-file-o">&nbsp;</i>{{ file.name }}</td>
-                <td>{{ file.description }}</td>
-                <td>{{ file.author.name }}</td>
-                <td>{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
-                <td>{{ file.fileType | typeOfFile }}</td>
-            </tr>
-        </table>
-    </div>
+                </thead>
+                <tbody style="overflow: hidden">
+                <tr style="min-height: 50px;">
+                    <td  class="well">{{ space.name }}</td>
+                 </tr>
+                <tr class="shadow" role="button" ng-repeat="file in space.files | orderBy: fileFilterCtrl.columnForOrder | filter: {name : fileFilterCtrl.searchText}" ng-dblclick="fileFilterCtrl.openDocument(file.link)" context-menu="fileFilterCtrl.fileMenuOptions">
+                    <td style="width: 20%"> <i class="fa fa-file-o">&nbsp;</i>{{ file.name }}</td>
+                    <td style="width: 33%">{{ file.description }}</td>
+                    <td style="width: 20%">{{ file.author.name }}</td>
+                    <td style="width: 15%">{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
+                    <td style="width: 10%">{{ file.fileType | typeOfFile }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
 </div>

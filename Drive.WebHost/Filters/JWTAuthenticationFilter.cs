@@ -5,22 +5,24 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Mvc.Filters;
 using Drive.Identity.Services;
+using Drive.WebHost.Services;
+using Drive.Identity.Entities;
 
 namespace Drive.WebHost.Filters
 {
     public class JWTAuthenticationFilter : FilterAttribute, IAuthenticationFilter
     {
-        //private readonly IUsersService _usersService;
+        private readonly ISpaceService _spaceService;
 
-        //public JWTAuthenticationFilter(IUsersService usersService)
-        //{
-        //    _usersService = usersService;
-        //}
+        public JWTAuthenticationFilter(ISpaceService spaceService)
+        {
+            _spaceService = spaceService;
+        }
 
-        //private void CreateUser(IPrincipal principal)
-        //{
-        //    _usersService.CreateAsync(new UserDto() { id = ((BSIdentity)principal.Identity).UserId });
-        //}
+        private void CreateUserAndFirstSpace(string globalId)
+        {
+            _spaceService.CreateUserAndFirstSpaceAsync(globalId);
+        }
 
         public void OnAuthentication(AuthenticationContext filterContext)
         {
@@ -47,6 +49,7 @@ namespace Drive.WebHost.Filters
             idManager.SetPrincipal(principal);
             filterContext.Principal = principal;
             filterContext.HttpContext.User = principal;
+            CreateUserAndFirstSpace(idManager.UserId);
         }
 
         public void OnAuthenticationChallenge(AuthenticationChallengeContext filterContext)

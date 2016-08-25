@@ -1,8 +1,9 @@
 ﻿<div id="wrapper" ng-controller="MenuController as menuController">
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+            <li style="padding-top: 40px;"></li>
             <button class="btn btn-info create-space menu btn-md" ng-click="menuController.open('lg')"><i class="fa icon-custom fa-plus-circle fa-cog fa-lg"></i>Add new Space</button>
-            <hr class="style" />
+            <hr class="style"/>
             <li>
                 <div class="d" ng-click="menuController.redirectToBinarySpace()">
                     <span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x"></i></span>Binary Space
@@ -31,7 +32,7 @@
                     </li>
                 </ul>
             </li>
-            <hr class="style" />
+            <hr class="style"/>
             <li>
                 <div class="d" data-toggle="collapse" data-target="#apps">
                     <span class="fa-stack fa-lg pull-left"><i class="fa fa-desktop fa-stack-1x "></i></span>Apps

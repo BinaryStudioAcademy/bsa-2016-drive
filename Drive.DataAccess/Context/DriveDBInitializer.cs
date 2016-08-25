@@ -39,6 +39,7 @@ namespace Drive.DataAccess.Context
                 Id = 1,
                 Owner = user1,
                 Name = "Binary Space",
+                Type = SpaceType.BinarySpace,
                 Description = "General space for folders and files",
                 MaxFileSize = 1073741824,
                 MaxFilesQuantity = 1000,
@@ -57,7 +58,6 @@ namespace Drive.DataAccess.Context
                 CreatedAt = new DateTime(2016, 1, 3, 11, 25, 33),
                 LastModified = new DateTime(2016, 1, 3, 11, 25, 33),
                 Owner = user1,
-                Parent = null,
                 Space = space1,
                 DataUnits = null
             };
@@ -69,7 +69,6 @@ namespace Drive.DataAccess.Context
                 CreatedAt = new DateTime(2016, 1, 5, 15, 23, 13),
                 LastModified = new DateTime(2016, 1, 5, 15, 23, 13),
                 Owner = user1,
-                Parent = null,
                 Space = space1,
                 DataUnits = null
             };
@@ -81,7 +80,6 @@ namespace Drive.DataAccess.Context
                 CreatedAt = new DateTime(2016, 1, 5, 17, 13, 43),
                 LastModified = new DateTime(2016, 1, 5, 17, 13, 43),
                 Owner = user1,
-                Parent = null,
                 Space = space1,
                 DataUnits = null
             };
@@ -93,7 +91,6 @@ namespace Drive.DataAccess.Context
                 CreatedAt = new DateTime(2016, 1, 6, 11, 23, 13),
                 LastModified = new DateTime(2016, 1, 6, 11, 23, 13),
                 Owner = user1,
-                Parent = folder1,
                 Space = space1,
                 DataUnits = null
             };
@@ -105,8 +102,7 @@ namespace Drive.DataAccess.Context
                 CreatedAt = new DateTime(2016, 2, 6, 10, 23, 13),
                 LastModified = new DateTime(2016, 2, 6, 10, 23, 13),
                 Owner = user1,
-                Parent = folder4,
-                Space = space1,
+                                Space = space1,
                 DataUnits = null
             };
             FolderUnit folder6 = new FolderUnit()
@@ -117,7 +113,7 @@ namespace Drive.DataAccess.Context
                 CreatedAt = new DateTime(2016, 2, 6, 13, 13, 45),
                 LastModified = new DateTime(2016, 2, 6, 13, 13, 45),
                 Owner = user1,
-                Parent = folder4,
+                
                 Space = space1,
                 DataUnits = null
             };
@@ -129,7 +125,7 @@ namespace Drive.DataAccess.Context
                 CreatedAt = new DateTime(2016, 2, 6, 15, 33, 15),
                 LastModified = new DateTime(2016, 2, 6, 15, 33, 15),
                 Owner = user1,
-                Parent = folder2,
+                
                 Space = space1,
                 DataUnits = null
             };
@@ -147,8 +143,8 @@ namespace Drive.DataAccess.Context
                         LastModified = new DateTime(2016, 5, 6, 18, 23, 45),
                         Owner = user2,
                         Link = "",
-                        Space = space1,
-                        Parent = null
+                        Space = space1
+                        
                     },
                 new FileUnit()
                 {
@@ -159,8 +155,7 @@ namespace Drive.DataAccess.Context
                     LastModified =new DateTime(2016, 5, 13, 13, 43, 15),
                     Owner = user3,
                     Link = "",
-                    Space = space1,
-                    Parent = null
+                    Space = space1
                 }
             };
             List<DataUnit> folder1Content = new List<DataUnit>()
@@ -175,8 +170,7 @@ namespace Drive.DataAccess.Context
                         LastModified = new DateTime(2016, 4, 13, 11, 43, 15),
                         Owner = user1,
                         Link = "",
-                        Space = space1,
-                        Parent = folder1
+                        Space = space1
                     },
                 new FileUnit()
                 {
@@ -187,8 +181,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 4, 27, 18, 21, 36),
                     Owner = user1,
                     Link = "",
-                    Space = space1,
-                    Parent = folder1
+                    Space = space1
                 },
                 new FileUnit()
                 {
@@ -200,8 +193,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 6, 17, 12, 47, 16),
                     Owner = user1,
                     Link = "",
-                    Space = space1,
-                    Parent = folder1
+                    Space = space1
                 }
             };
 
@@ -216,8 +208,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 7, 11, 8, 18, 26),
                     Owner = user1,
                     Link = "",
-                    Space = space1,
-                    Parent = folder2
+                    Space = space1
                 },
                 new FileUnit()
                 {
@@ -229,8 +220,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 4, 10, 9, 45, 16),
                     Owner = user1,
                     Link = "",
-                    Space = space1,
-                    Parent = folder2
+                    Space = space1
                 }
             };
             List<DataUnit> folder3Content = new List<DataUnit>()
@@ -245,8 +235,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 3, 11, 9, 45, 16),
                     Owner = user1,
                     Link = "",
-                    Space = space1,
-                    Parent = folder3
+                    Space = space1
                 },
                 new FileUnit()
                 {
@@ -258,8 +247,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 3, 14, 19, 25, 13),
                     Owner = user1,
                     Link = "",
-                    Space = space1,
-                    Parent = folder3
+                    Space = space1
                 },
                 new FileUnit()
                 {
@@ -271,8 +259,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 3, 17, 12, 45, 26),
                     Owner = user1,
                     Link = "",
-                    Space = space1,
-                    Parent = folder3
+                    Space = space1
                 }
             };
             List<DataUnit> folder4Content = new List<DataUnit>()
@@ -287,8 +274,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 4, 11, 16, 15, 46),
                     Owner = user1,
                     Link = "",
-                    Space = space1,
-                    Parent = folder4
+                    Space = space1
                 },
                 new FileUnit()
                 {
@@ -300,8 +286,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 4, 15, 11, 18, 46),
                     Owner = user1,
                     Link = "",
-                    Space = space1,
-                    Parent = folder4
+                    Space = space1
                 },
                 new FileUnit()
                 {
@@ -313,8 +298,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 5, 16, 11, 18, 46),
                     Owner = user1,
                     Link = "",
-                    Space = space1,
-                    Parent = folder4
+                    Space = space1
                 }
             };
             List<DataUnit> folder6Content = new List<DataUnit>()
@@ -329,8 +313,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 6, 12, 16, 28, 36),
                     Owner = user1,
                     Link = "",
-                    Space = space1,
-                    Parent = folder6
+                    Space = space1
                 },
                 new FileUnit()
                 {
@@ -342,8 +325,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 7, 22, 8, 18, 45),
                     Owner = user1,
                     Link = "",
-                    Space = space1,
-                    Parent = folder6
+                    Space = space1
                 },
                 new FileUnit()
                 {
@@ -355,8 +337,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 5, 12, 13, 28, 15),
                     Owner = user1,
                     Link = "",
-                    Space = space1,
-                    Parent = folder6
+                    Space = space1
                 }
             };
             List<DataUnit> folder5Content = new List<DataUnit>()
@@ -371,8 +352,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 6, 24, 11, 34, 25),
                     Owner = user1,
                     Link = "",
-                    Space = space1,
-                    Parent = folder5
+                    Space = space1
                 },
                 new FileUnit()
                 {
@@ -384,8 +364,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 6, 14, 18, 14, 45),
                     Owner = user1,
                     Link = "",
-                    Space = space1,
-                    Parent = folder5
+                    Space = space1
                 },
                 new FileUnit()
                 {
@@ -397,8 +376,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 7, 24, 19, 24, 41),
                     Owner = user1,
                     Link = "",
-                    Space = space1,
-                    Parent = folder5
+                    Space = space1
                 },
                 new FileUnit()
                 {
@@ -410,8 +388,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 4, 14, 18, 37, 21),
                     Owner = user1,
                     Link = "",
-                    Space = space1,
-                    Parent = folder5
+                    Space = space1
                 }
             };
             List<DataUnit> folder7Content = new List<DataUnit>()
@@ -425,8 +402,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 5, 24, 8, 17, 34),
                     Owner = user1,
                     Link = "",
-                    Space = space1,
-                    Parent = folder7
+                    Space = space1
                 },
                 new FileUnit()
                 {
@@ -438,8 +414,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 6, 14, 13, 57, 14),
                     Owner = user1,
                     Link = "",
-                    Space = space1,
-                    Parent = folder7
+                    Space = space1
                 }
             };
             #endregion
@@ -472,6 +447,7 @@ namespace Drive.DataAccess.Context
                 Id = 2,
                 Owner = user1,
                 Name = "My Space",
+                Type = SpaceType.MySpace,
                 Description = "Private space for folders and files",
                 MaxFileSize = 1073741824,
                 MaxFilesQuantity = 1000,
@@ -489,7 +465,6 @@ namespace Drive.DataAccess.Context
                 CreatedAt = new DateTime(2016, 1, 17, 16, 45, 33),
                 LastModified = new DateTime(2016, 1, 17, 16, 45, 33),
                 Owner = user1,
-                Parent = null,
                 Space = space2,
                 DataUnits = null
             };
@@ -501,7 +476,6 @@ namespace Drive.DataAccess.Context
                 CreatedAt = new DateTime(2016, 1, 14, 15, 25, 33),
                 LastModified = new DateTime(2016, 1, 14, 15, 25, 33),
                 Owner = user1,
-                Parent = null,
                 Space = space2,
                 DataUnits = null
             };
@@ -513,7 +487,6 @@ namespace Drive.DataAccess.Context
                 CreatedAt = new DateTime(2016, 1, 14, 11, 45, 33),
                 LastModified = new DateTime(2016, 1, 14, 11, 45, 33),
                 Owner = user1,
-                Parent = null,
                 Space = space2,
                 DataUnits = null
             };
@@ -525,7 +498,7 @@ namespace Drive.DataAccess.Context
                 CreatedAt = new DateTime(2016, 2, 11, 19, 15, 33),
                 LastModified = new DateTime(2016, 2, 11, 19, 15, 33),
                 Owner = user1,
-                Parent = folder10,
+                
                 Space = space2,
                 DataUnits = null
             };
@@ -537,7 +510,7 @@ namespace Drive.DataAccess.Context
                 CreatedAt = new DateTime(2016, 3, 18, 9, 15, 33),
                 LastModified = new DateTime(2016, 3, 18, 9, 15, 33),
                 Owner = user1,
-                Parent = folder10,
+                
                 Space = space2,
                 DataUnits = null
             };
@@ -554,8 +527,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 8, 18, 9, 15, 33),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = null
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -567,8 +539,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 8, 15, 15, 7, 23),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = null
+                    Space = space2
                 }
             };
             #region English folder
@@ -583,8 +554,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 5, 1, 8, 30, 52),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder8
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -596,8 +566,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 6, 11, 9, 22, 11),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder8
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -609,8 +578,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 4, 12, 15, 12, 10),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder8
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -622,8 +590,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 4, 10, 11, 12, 10),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder8
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -635,8 +602,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 5, 22, 16, 1, 30),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder8
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -648,8 +614,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 4, 20, 11, 33, 40),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder8
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -661,8 +626,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 6, 10, 23, 41, 10),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder8
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -674,8 +638,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 7, 11, 14, 34, 50),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder8
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -687,8 +650,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 6, 4, 9, 45, 33),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder8
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -700,8 +662,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 5, 9, 18, 11, 24),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder8
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -713,8 +674,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 7, 11, 14, 37, 20),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder8
+                    Space = space2
                 }
             };
             #endregion
@@ -731,8 +691,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 6, 21, 15, 7, 23),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder9
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -744,8 +703,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 4, 21, 11, 34, 23),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder9
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -757,8 +715,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 5, 2, 15, 24, 13),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder9
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -769,8 +726,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 7, 12, 18, 24, 13),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder9
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -782,8 +738,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 5, 2, 17, 14, 33),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder9
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -795,8 +750,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 4, 15, 18, 14, 43),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder9
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -807,8 +761,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 4, 12, 19, 14, 43),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder9
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -820,8 +773,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 5, 11, 17, 24, 13),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder9
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -832,8 +784,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 4, 12, 15, 24, 13),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder9
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -845,8 +796,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 6, 10, 18, 24, 13),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder9
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -858,8 +808,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 6, 15, 17, 24, 13),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder9
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -871,8 +820,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 6, 15, 19, 14, 13),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder9
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -884,8 +832,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 3, 10, 11, 24, 13),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder9
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -897,8 +844,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 4, 13, 13, 24, 13),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder9
+                    Space = space2
                 }
             };
             #endregion 
@@ -914,8 +860,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 8, 15, 15, 7, 23),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder10
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -927,8 +872,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 8, 18, 9, 15, 33),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder10
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -940,8 +884,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 6, 21, 15, 7, 23),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder10
+                    Space = space2
                 }
             };
 
@@ -957,8 +900,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 5, 21, 15, 7, 23),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder11
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -970,8 +912,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 5, 20, 10, 7, 23),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder11
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -983,8 +924,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 5, 10, 14, 17, 23),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder11
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -996,8 +936,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 5, 29, 18, 8, 13),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder11
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -1009,8 +948,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 5, 24, 11, 11, 23),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder11
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -1022,8 +960,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 5, 12, 16, 26, 13),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder11
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -1035,8 +972,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 5, 28, 19, 33, 45),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder11
+                    Space = space2
                 }
             };
             List<DataUnit> folder12Content = new List<DataUnit>()
@@ -1050,8 +986,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 3, 18, 12, 45, 15),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder12
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -1063,8 +998,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 7, 3, 9, 25, 55),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder12
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -1076,8 +1010,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 7, 12, 17, 26, 15),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder12
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -1089,8 +1022,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 7, 22, 7, 46, 25),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder12
+                    Space = space2
                 },
                 new FileUnit()
                 {
@@ -1101,8 +1033,7 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 4, 21, 14, 46, 25),
                     Owner = user1,
                     Link = "",
-                    Space = space2,
-                    Parent = folder12
+                    Space = space2
                 }
             };
             #endregion

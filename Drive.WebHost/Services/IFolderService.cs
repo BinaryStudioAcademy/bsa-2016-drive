@@ -16,13 +16,20 @@ namespace Drive.WebHost.Services
 
         Task<FolderUnitDto> GetAsync(int id);
 
+        Task<FolderUnitDto> GetDeletedAsync(int id);
+
         Task<FolderUnitDto> CreateAsync(FolderUnitDto folder);
 
         Task<FolderUnitDto> UpdateAsync(int id, FolderUnitDto folder);
 
+        Task<FolderUnitDto> UpdateDeletedAsync(int id, int? oldParentId, FolderUnitDto dto);
+
         Task DeleteAsync(int id);
 
         Task<FolderContentDto> GetContentAsync(int id, int page, int count, string sort);
+
+        Task<FolderContentDto> GetContentAsync(int id);
+
         Task<int> GetContentTotalAsync(int id);
 
         void Dispose();
