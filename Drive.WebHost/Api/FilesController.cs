@@ -91,6 +91,19 @@ namespace Drive.WebHost.Api
                 return BadRequest();
 
             return Ok(dto);
+        }
+
+        // PUT: api/files/copied/5
+        [HttpPut]
+        [Route("copied/{id:int}")]
+        public async Task<IHttpActionResult> CreateCopyFileAsync(int id, FileUnitDto file)
+        {
+            var dto = await _service.CreateCopyAsync(id, file);
+
+            if (id != file.Id)
+                return BadRequest();
+
+            return Ok(dto);
 
         }
 
