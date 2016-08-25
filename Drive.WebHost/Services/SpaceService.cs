@@ -18,26 +18,18 @@ namespace Drive.WebHost.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger _logger;
         private readonly IUsersService _userService;
-<<<<<<< HEAD
         private readonly IRolesService _roleService;
-
-        public SpaceService(IUnitOfWork unitOfWork, ILogger logger, IUsersService userService, IRolesService roleService)
-=======
         private readonly IFolderService _folderService;
         private readonly IFileService _fileService;
 
-        public SpaceService(IUnitOfWork unitOfWork, ILogger logger, IUsersService userService, IFolderService folderService, IFileService fileService)
->>>>>>> refs/remotes/origin/develop
+        public SpaceService(IUnitOfWork unitOfWork, ILogger logger, IUsersService userService, IFolderService folderService, IFileService fileService, IRolesService roleService)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _userService = userService;
-<<<<<<< HEAD
             _roleService = roleService;
-=======
             _folderService = folderService;
             _fileService = fileService;
->>>>>>> refs/remotes/origin/develop
         }
 
         public async Task<SpaceDto> GetAsync(int id)
@@ -95,14 +87,9 @@ namespace Drive.WebHost.Services
                 MaxFilesQuantity = s.MaxFilesQuantity,
                 ReadPermittedUsers = s.ReadPermittedUsers,
                 ModifyPermittedUsers = s.ModifyPermittedUsers,
-<<<<<<< HEAD
                 ReadPermittedRoles = s.ReadPermittedRoles,
                 ModifyPermittedRoles = s.ModifyPermittedRoles,
-                Files = s.ContentList.OfType<FileUnit>().Where(f => f.Parent == null && !f.IsDeleted).Select(f => new FileUnitDto
-=======
-
                 Files = s.ContentList.OfType<FileUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted).Select(f => new FileUnitDto
->>>>>>> refs/remotes/origin/develop
                 {
                     Description = f.Description,
                     FileType = f.FileType,
@@ -184,10 +171,6 @@ namespace Drive.WebHost.Services
             return counter;
         }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> refs/remotes/origin/develop
         public async Task<IList<SpaceDto>> GetAllAsync()
         {
             var spacesList = await _unitOfWork.Spaces.Query.Select(s => new SpaceDto
@@ -289,15 +272,11 @@ namespace Drive.WebHost.Services
 
         public async Task UpdateAsync(int id, SpaceDto dto)
         {
-<<<<<<< HEAD
-            var space = await _unitOfWork?.Spaces?.Query.Include(x => x.ReadPermittedUsers).Include(x => x.ModifyPermittedUsers).Include(x => x.ReadPermittedRoles).Include(x => x.ModifyPermittedRoles).SingleOrDefaultAsync(x => x.Id == id);
-=======
             var space =
                 await
                     _unitOfWork?.Spaces?.Query.Include(x => x.ReadPermittedUsers)
                         .Include(x => x.ModifyPermittedUsers)
                         .SingleOrDefaultAsync(x => x.Id == id);
->>>>>>> refs/remotes/origin/develop
 
             if (space == null) return;
             List<User> ReadPermittedUsers = new List<User>();
@@ -379,9 +358,6 @@ namespace Drive.WebHost.Services
             await _unitOfWork?.SaveChangesAsync();
         }
 
-<<<<<<< HEAD
-        public async Task<SearchResultDto> SearchFoldersAndFilesAsync(int spaceId, int? folderId, string text, int page, int count)
-=======
         public async Task DeleteWithStaff(int id)
         {
             SpaceDto spaceToDelete = await GetAsync(id);
@@ -401,7 +377,6 @@ namespace Drive.WebHost.Services
 
         public async Task<SearchResultDto> SearchFoldersAndFilesAsync(int spaceId, int? folderId, string text, int page,
             int count)
->>>>>>> refs/remotes/origin/develop
         {
             IEnumerable<FolderUnitDto> resultFolder = new List<FolderUnitDto>();
             IEnumerable<FileUnitDto> resultFiles = new List<FileUnitDto>();

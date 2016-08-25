@@ -12,13 +12,9 @@
             getSpace: getSpace,
             getAllUsers: getAllUsers,
             pushChanges: pushChanges,
-<<<<<<< HEAD
             getAllRoles: getAllRoles,
-            deleteSpace: deleteSpace
-=======
             deleteSpace: deleteSpace,
             deleteSpaceWithStaff: deleteSpaceWithStaff
->>>>>>> refs/remotes/origin/develop
         };
 
         function getAllRoles(callback) {
@@ -31,7 +27,6 @@
                 console.log('Error while getting roles!');
             })
         }
-
 
         function getSpace(id, callback) {
             $http.get(baseUrl + '/api/spaces/' + id)

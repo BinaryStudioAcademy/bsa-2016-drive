@@ -32,11 +32,8 @@
         vm.setTab = setTab;
         vm.isSet = isSet;
         vm.deleteSpace = deleteSpace;
-<<<<<<< HEAD
         vm.showDeleteBtn = showDeleteBtn;
-=======
 
->>>>>>> refs/remotes/origin/develop
         activate();
 
         function activate() {
@@ -91,7 +88,6 @@
                         }
                     }
                 });
-<<<<<<< HEAD
                 settingsService.getAllRoles(function (data) {
                     vm.roles = data;
                     if (vm.space.readPermittedRoles != undefined) {
@@ -135,13 +131,6 @@
                 });
             });
         };
-=======
-            });  
-
-            vm.userAddName = null;
-            vm.userAddId = null;
-        }
->>>>>>> refs/remotes/origin/develop
 
         function save() {
             settingsService.pushChanges(vm.space, function () {
@@ -288,7 +277,6 @@
             $location.url("/spaces/" + vm.space.id);
         };
 
-<<<<<<< HEAD
         function setTab(newTab) {
             vm.tab = newTab;
         };
@@ -307,8 +295,6 @@
             }
         }
 
-=======
->>>>>>> refs/remotes/origin/develop
         function deleteSpace()
         {
             if (confirm('Do you really want to delete space and all inside folders and files?') == true)
