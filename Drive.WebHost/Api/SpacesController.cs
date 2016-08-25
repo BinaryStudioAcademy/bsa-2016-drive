@@ -4,6 +4,7 @@ using System.Web.Http;
 using Drive.DataAccess.Entities;
 using Drive.WebHost.Services;
 using Driver.Shared.Dto;
+using System.Collections.Generic;
 
 namespace Drive.WebHost.Api
 {
@@ -34,7 +35,6 @@ namespace Drive.WebHost.Api
         public async Task<IHttpActionResult> GetSpace(int id, int page = 1, int count = 100, string sort = null)
         {
             var result = await _spaceService?.GetAsync(id, page, count, sort);
-
             if (result == null)
                 return NotFound();
 
@@ -80,8 +80,8 @@ namespace Drive.WebHost.Api
         {
             var result = await _spaceService?.GetAsync(id);
 
-            if(result == null)
-               return NotFound();
+            if (result == null)
+                return NotFound();
 
             await _spaceService?.Delete(id);
             return Ok();
@@ -100,7 +100,7 @@ namespace Drive.WebHost.Api
         [Route("{spaceId:int}/search")]
         public async Task<IHttpActionResult> SearchFolderAndFile(int spaceId, string text = "", int page = 1, int count = 100, int? folderId = null)
         {
-            text = text == null? string.Empty : text;
+            text = text == null ? string.Empty : text;
             var searchResultDto = await _spaceService?.SearchFoldersAndFilesAsync(spaceId, folderId, text, page, count);
 
             if (searchResultDto == null || (searchResultDto.Files.Count == 0 && searchResultDto.Folders.Count == 0))

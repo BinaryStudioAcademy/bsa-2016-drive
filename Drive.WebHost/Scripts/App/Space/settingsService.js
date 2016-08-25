@@ -12,9 +12,21 @@
             getSpace: getSpace,
             getAllUsers: getAllUsers,
             pushChanges: pushChanges,
+            getAllRoles: getAllRoles,
             deleteSpace: deleteSpace,
             deleteSpaceWithStaff: deleteSpaceWithStaff
         };
+
+        function getAllRoles(callback) {
+            $http.get('/api/roles')
+            .then(function (response) {
+                if (callback) {
+                    callback(response.data);
+                }
+            }, function () {
+                console.log('Error while getting roles!');
+            })
+        }
 
         function getSpace(id, callback) {
             $http.get(baseUrl + '/api/spaces/' + id)

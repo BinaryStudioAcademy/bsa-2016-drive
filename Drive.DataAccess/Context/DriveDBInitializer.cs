@@ -29,7 +29,7 @@ namespace Drive.DataAccess.Context
             User user3 = new User()
             {
                 Id = 3,
-                GlobalId = "577a16659829fe050adb3f5c",
+                GlobalId = "567921371560298f766909a7",
                 IsDeleted = false
             };
 
@@ -1056,6 +1056,33 @@ namespace Drive.DataAccess.Context
             #endregion
             #endregion
 
+            #region Roles
+            List<User> users1 = new List<User>();
+            users1.Add(user1);
+            users1.Add(user2);
+
+            List<User> users2 = new List<User>();
+            users2.Add(user1);
+            users2.Add(user3);
+
+            Role role1 = new Role()
+            {
+                Id = 1,
+                Name = "HR",
+                Description = "Hi! We are HRs!",
+                Users = users1
+            };
+
+            Role role2 = new Role()
+            {
+                Id = 2,
+                Name = "Backend developer",
+                Description = "Hi! We are backend developers!",
+                Users = users2
+            };
+            context.Roles.Add(role1);
+            context.Roles.Add(role2);
+            #endregion
             context.Spaces.Add(space1);
             context.Spaces.Add(space2);
             base.Seed(context);

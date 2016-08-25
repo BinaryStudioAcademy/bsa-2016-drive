@@ -48,6 +48,7 @@
     <Compile Include="Dto\FolderContentDto.cs" />
     <Compile Include="Dto\FolderUnitDto.cs" />
     <Compile Include="Dto\LogUnit.cs" />
+    <Compile Include="Dto\RoleDto.cs" />
     <Compile Include="Dto\Pro\AcademyProCourseDto.cs" />
     <Compile Include="Dto\Pro\CodeSampleDto.cs" />
     <Compile Include="Dto\Pro\ContentLinkDto.cs" />
