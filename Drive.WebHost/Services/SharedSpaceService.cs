@@ -20,12 +20,12 @@ namespace Drive.WebHost.Services
         private readonly IUsersService _userService;
         private readonly BSIdentityManager _currentUser;
 
-        public SharedSpaceService(IUnitOfWork unitOfWork, ILogger logger, IUsersService userService)
+        public SharedSpaceService(IUnitOfWork unitOfWork, ILogger logger, IUsersService userService, BSIdentityManager currentUser )
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _userService = userService;
-            _currentUser = new BSIdentityManager();
+            _currentUser = currentUser;
         }
 
         public async Task<IEnumerable<UserSharedSpaceDto>> GetPermissionsOfSharedDataAsync(int id)

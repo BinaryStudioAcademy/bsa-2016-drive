@@ -14,61 +14,20 @@
             <button class="btn btn-default" ng-click="sharedSpaceCtrl.changeView(sharedSpaceCtrl.view)">
                 <i class={{sharedSpaceCtrl.view}} title="view"> </i>
             </button>
-            <!--<button type="button" class="btn btn-default btn-custom" ng-click="sharedSpaceCtrl.redirectToSpaceSettings(sharedSpaceCtrl.space.id)" title="Open Space Settings">
-                <i class="fa fa-cog fa-lg"></i>
-            </button>-->
         </div>
-        <!--<div class="form-inline">
-            <div class="form-group col-sm-7 pull-left nopadding">
-                <div class="col-sm-1 toolbar-div">
-                    <button type="button" class="btn btn-custom btn-lg" ng-click="sharedSpaceCtrl.createNewFolder()" title="Create new folder">
-                        <i class="fa fa-folder-open-o fa-lg" style="margin-right: 0px;"></i>
-                    </button>
-                </div>
-                <div class="col-sm-1 toolbar-div">
-                    <button type="button" class="btn btn-custom btn-lg" ng-click="sharedSpaceCtrl.createNewFile(1)" title="Create new document">
-                        <i class="fa fa-file-text-o fa-lg"></i>
-                    </button>
-                </div>
-                <div class="col-sm-1 toolbar-div">
-                    <button type="button" class="btn btn-custom btn-lg" ng-click="sharedSpaceCtrl.createNewFile(2)" title="Create new sheet">
-                        <i class="fa fa-table fa-lg"></i>
-                    </button>
-                </div>
-                <div class="col-sm-1 toolbar-div">
-                    <button type="button" class="btn btn-custom btn-lg" ng-click="sharedSpaceCtrl.createNewFile(3)" title="Create new slide">
-                        <i class="fa fa-file-powerpoint-o fa-lg"></i>
-                    </button>
-                </div>
-                <div class="col-sm-1 toolbar-div">
-                    <button type="button" class="btn btn-custom btn-lg" ng-click="sharedSpaceCtrl.createNewFile(4)" title="Create new Trello">
-                        <i class="fa fa-trello fa-lg"></i>
-                    </button>
-                </div>
-                <div class="col-sm-1 toolbar-div">
-                    <button type="button" class="btn btn-custom btn-lg" ng-click="sharedSpaceCtrl.createNewFile(5)" title="Create new link">
-                        <i class="fa fa-link fa-lg"></i>
-                    </button>
-                </div>
-                <div class="col-sm-1 toolbar-div">
-                    <button type="button" class="btn btn-custom btn-lg" ng-click="sharedSpaceCtrl.createNewFile(6)" title="Upload new file">
-                        <i class="fa fa-upload fa-lg"></i>
-                    </button>
-                </div>
-            </div>
-        </div>-->
         <div>
             <div class="col-sm-3 pull-right">
                 <div>
-                    <form role="search">
-                        <div class="input-group">
-                            <input type="text" class="form-control" placeholder="Search input" name="srch-term" id="srch-term" ng-model="sharedSpaceCtrl.searchText">
-                            <div class="input-group-btn">
-                                <button type="button" class="btn btn-default" aria-label="Cancel search" ng-click="sharedSpaceCtrl.cancelSearch()" ng-show='sharedSpaceCtrl.searchText != ""' style="padding:6px 6px;"><span style="margin-right:0" class="glyphicon glyphicon-remove-circle"></span></button>
-                                <button class="btn btn-default" type="submit" ng-click="sharedSpaceCtrl.search()">Search</button>
+                    <div class="input-group">
+                        <form id="form-container">
+                            <!--<input type="submit" id="searchsubmit" value=""/>-->
+
+                            <div id="searchtext">
+                                <input type="text" size="40" class="search-input" value="" name="s" id="s" placeholder="Search..." ng-model="sharedSpaceCtrl.searchText">
+                                <button class="search-submit-button" type="submit" ng-click="sharedSpaceCtrl.search()"> <i class="fa fa-search"></i> </button>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
