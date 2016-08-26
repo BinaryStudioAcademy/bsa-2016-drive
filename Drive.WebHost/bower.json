@@ -13,6 +13,11 @@
     "angular-mass-autocomplete": "0.4.0",
     "angularUtils-pagination": "angular-utils-pagination#^0.11.1",
     "angular-local-storage": "0.3.0",
-    "angular-loading-spinner": "^0.0.3"
+    "angular-loading-spinner": "^0.0.3",
+    "angular-animate": "~v1.5.8",
+    "angular-toastr": "2.1.1"
+  },
+  "resolutions": {
+    "angular": "1.5.9-build.5006+sha.e3a378e"
   }
 }

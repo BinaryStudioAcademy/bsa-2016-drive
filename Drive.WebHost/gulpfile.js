@@ -58,7 +58,9 @@ gulp.task("libs", function () {
       paths.bower + "angular-local-storage.js",
       paths.bower + "spin.js",
       paths.bower + "angular-spinner.js",
-      paths.bower + "angular-loading-spinner.js"
+      paths.bower + "angular-loading-spinner.js",
+      paths.bower + "angular-animate.js",
+      paths.bower + "angular-toastr.tpls.js"
     ])
 
         .pipe(concat("libs.js"))
@@ -71,6 +73,7 @@ gulp.task("styles", function () {
         paths.bower + "font-awesome.css",
         paths.bower + "font-awesome-animation.css",
         paths.bower + "massautocomplete.theme.css",
+        paths.bower + "angular-toastr.css",
         "./Content/*.css"
     ])
         .pipe(concat("styles.css"))

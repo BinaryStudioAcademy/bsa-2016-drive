@@ -4,9 +4,9 @@
     angular.module("driveApp")
         .controller("SettingsController", SettingsController);
 
-    SettingsController.$inject = ['SettingsService', 'SpaceService', 'FolderService', 'FileService', '$routeParams', '$location', '$rootScope', '$window'];
+    SettingsController.$inject = ['SettingsService', 'SpaceService', 'FolderService', 'FileService', '$routeParams', '$location', '$rootScope', '$window', 'toastr'];
 
-    function SettingsController(settingsService, spaceService, folderService, fileService, $routeParams, $location, $rootScope, $window) {
+    function SettingsController(settingsService, spaceService, folderService, fileService, $routeParams, $location, $rootScope, $window, toastr) {
         var vm = this;
         vm.save = save;
         vm.cancel = cancel;     
@@ -150,7 +150,12 @@
         function addSpaceUser() {
             if (vm.selected.id != null) {
                 if (vm.permittedUsers.find(x => x.globalId === vm.selected.id)) {
-                    console.log('The user already exist in this space!');
+                    toastr.warning(
+                   'User already exist in this space!', 'Space settings',
+                   {
+                       closeButton: true, timeOut: 5000
+                   });
+                    //console.log('The user already exist in this space!');
                     return;
                 };
                 vm.permittedUsers.push({
@@ -163,7 +168,12 @@
         function addSpaceRole() {
             if (vm.selectedRole.id != null) {
                 if (vm.permittedRoles.find(x => x.id == vm.selectedRole.id)) {
-                    console.log('The role already exist in this space!');
+                    toastr.warning(
+                   'The role already exist in this space!', 'Space settings',
+                   {
+                       closeButton: true, timeOut: 5000
+                   });
+                    //console.log('The role already exist in this space!');
                     return;
                 };
                 vm.permittedRoles.push({
@@ -309,10 +319,8 @@
                 });
                 // Reload page
                 $window.location.reload(true);
-                $location.url("/");            
-            } else {
-
+                $location.url("/");
             }
         }
     }
-    }());
+}());

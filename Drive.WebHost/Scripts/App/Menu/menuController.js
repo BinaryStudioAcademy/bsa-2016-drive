@@ -4,9 +4,9 @@
     angular.module("driveApp")
         .controller("MenuController", MenuController);
 
-    MenuController.$inject = ['MenuService', '$location', '$uibModal', '$rootScope', '$timeout'];
+    MenuController.$inject = ['MenuService', '$location', '$uibModal', '$rootScope'];
 
-    function MenuController(menuService, $location, $uibModal, $rootScope, $timeout) {
+    function MenuController(menuService, $location, $uibModal, $rootScope) {
 
         var vm = this;
 
