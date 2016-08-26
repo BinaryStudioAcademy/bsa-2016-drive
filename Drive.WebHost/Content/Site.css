@@ -252,7 +252,7 @@ textarea {
 
     #wrapper.toggled {
         padding-left: 205px;
-        overflow: scroll;
+        overflow: hidden;
     }
 
 #sidebar-wrapper {
@@ -260,10 +260,28 @@ textarea {
     position: absolute;
     left: 205px;
     width: 0;
-    height: 95.5%;
-    margin-bottom: 5%;
+    height: 95%;
     margin-left: -205px;
     overflow-y: auto;
+    overflow-x: hidden;
+    padding-top: 0px;
+    margin-top: -70px;
+    top: 100px;
+    background: #000;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#sidebar-toggle {
+    z-index: 2;
+    position:absolute;
+    left: 205px;
+    width: 0;
+    height: 40px;
+    margin-left: -205px;
+    overflow-y: hidden;
     overflow-x: hidden;
     background: #000;
     -webkit-transition: all 0.5s ease;
@@ -272,7 +290,11 @@ textarea {
     transition: all 0.5s ease;
 }
 
-#wrapper.toggled #sidebar-wrapper {
+#wrapper.toggled #sidebar-wrapper #sidebar-toggle{
+    width: 205px;
+}
+
+#wrapper.toggled #sidebar-toggle{
     width: 205px;
 }
 
@@ -299,7 +321,6 @@ textarea {
     margin: 0;
     padding: 0;
     list-style: none;
-    /*margin-top: 2px;*/
 }
 
     .sidebar-nav li {
@@ -366,9 +387,16 @@ textarea {
     #sidebar-wrapper {
         width: 205px;
     }
-
+    #sidebar-toggle
+    {
+        width: 205px;
+    }
     #wrapper.toggled #sidebar-wrapper {
-        width: 47px;
+        width: 43px;
+    }
+
+    #wrapper.toggled #sidebar-toggle{
+        width: 43px;
     }
 
     #page-content-wrapper {
@@ -398,7 +426,11 @@ textarea {
 }
 
 .span-text {
-    margin-left: 0llpx;
+    margin-left: -18px;
+}
+
+.span-apps {
+    margin-left: 0;
 }
 
 /*Toolbar buttons style*/
@@ -436,14 +468,13 @@ hr.style {
 .create-space {
     width: 100%;
     height: 40px;
-    /*margin-top: -2px;*/
     border-radius: 0 !important;
 }
 
 /*Icon on create new Space button in menu*/
 .icon-custom {
-    margin-left: -52px;
-    width: 2.7em;
+    margin-left: -58px;
+    width: 2.1em;
 }
 
 /*.shadow {

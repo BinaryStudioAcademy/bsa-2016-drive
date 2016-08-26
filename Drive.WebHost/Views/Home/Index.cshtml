@@ -2,14 +2,15 @@
     ViewBag.Title = "Home Page";
 }
 <div id="wrapper">
-    <div ng-include="'Scripts/App/Menu/Menu.html'" class="include-index" id="sidebar-wrapper">
-       
-    </div>
-    <div id="btn-toggle" style="width: 50px; position: absolute; left: 0px; top:60px; z-index: 2">
-        <button href="#menu-toggle" class="btn btn-custom menu-toggle ">
+    <div id="sidebar-toggle" >
+        <button href="#menu-toggle" class="btn btn-custom menu-toggle">
             <i class="fa fa-bars fa-inverse fa-2x" aria-hidden="true"></i>
         </button>
     </div>
+    <div ng-include="'Scripts/App/Menu/Menu.html'" class="include-index" id="sidebar-wrapper">
+
+    </div>
+
     <div ng-view class="view-index" id="page-content-wrapper"></div>
 </div>
 

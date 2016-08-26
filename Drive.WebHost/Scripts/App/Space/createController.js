@@ -261,7 +261,7 @@
 
             $timeout(function () {
                 $uibModalInstance.close();
-            }, 3000);
+            }, 2500);
         };
 
         function cancel() {
