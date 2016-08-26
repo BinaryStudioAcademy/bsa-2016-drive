@@ -38,6 +38,12 @@
                     controller: "SpaceController",
                     controllerAs: "spaceCtrl"
                 })
+                .when("/sharedspace", // Shared Space page
+                {
+                    templateUrl: baseUrl + "/Scripts/App/SharedSpace/SharedSpace.html",
+                    controller: "SharedSpaceController",
+                    controllerAs: "sharedSpaceCtrl"
+                })
                  .when("/spaces/:id/settings/", // Space settings Page
                 {
                     templateUrl: baseUrl + "/Scripts/App/Space/Settings.html",

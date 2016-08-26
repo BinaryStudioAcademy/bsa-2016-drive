@@ -177,6 +177,7 @@
     <Compile Include="Api\Pro\ContentLinksController.cs" />
     <Compile Include="Api\Pro\LecturesController.cs" />
     <Compile Include="Api\Pro\TagsController.cs" />
+    <Compile Include="Api\SharedSpaceController.cs" />
     <Compile Include="Api\SpacesController.cs" />
     <Compile Include="Api\UsersController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -202,6 +203,7 @@
     <Compile Include="Services\IFolderService.cs" />
     <Compile Include="Services\ILogsService.cs" />
     <Compile Include="Services\IRolesService.cs" />
+    <Compile Include="Services\ISharedSpaceService.cs" />
     <Compile Include="Services\ISpaceService.cs" />
     <Compile Include="Providers\IUsersProvider.cs" />
     <Compile Include="Services\IUsersService.cs" />
@@ -218,6 +220,7 @@
     <Compile Include="Services\Pro\ContentLinkService.cs" />
     <Compile Include="Services\Pro\LectureService.cs" />
     <Compile Include="Services\Pro\TagsService.cs" />
+    <Compile Include="Services\SharedSpaceService.cs" />
     <Compile Include="Services\SpaceService.cs" />
     <Compile Include="Providers\UsersProvider.cs" />
     <Compile Include="Services\UsersService.cs" />
@@ -278,6 +281,9 @@
     <Content Include="Scripts\App\Employees\employeesController.js" />
     <Content Include="Scripts\App\Events\Events.html" />
     <Content Include="Scripts\App\Events\eventsController.js" />
+    <Content Include="Scripts\App\SharedFile\SharedFileForm.html" />
+    <Content Include="Scripts\App\SharedFile\sharedFileModalController.js" />
+    <Content Include="Scripts\App\SharedFile\Modal.html" />
     <Content Include="Scripts\App\FileFilter\fileFilterController.js" />
     <Content Include="Scripts\App\FileFilter\FileFilter.html" />
     <Content Include="Scripts\App\File\FileForm.html" />
@@ -304,6 +310,12 @@
     <Content Include="Scripts\App\Sheets\sheetsController.js" />
     <Content Include="Scripts\App\Slides\Slides.html" />
     <Content Include="Scripts\App\Slides\slidesController.js" />
+    <Content Include="Scripts\App\SharedSpace\Create.html" />
+    <Content Include="Scripts\App\SharedSpace\createController.js" />
+    <Content Include="Scripts\App\SharedSpace\Modal.html" />
+    <Content Include="Scripts\App\SharedSpace\SharedSpace.html" />
+    <Content Include="Scripts\App\SharedSpace\sharedSpaceController.js" />
+    <Content Include="Scripts\App\SharedSpace\sharedSpaceService.js" />
     <Content Include="Scripts\App\Space\Create.html" />
     <Content Include="Scripts\App\Space\createController.js" />
     <Content Include="Scripts\App\Space\Modal.html" />
