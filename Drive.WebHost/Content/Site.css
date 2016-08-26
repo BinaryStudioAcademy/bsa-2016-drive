@@ -260,14 +260,11 @@ textarea {
     z-index: 1;
     position: absolute;
     left: 205px;
-    width: 0;
-    height: 95%;
+    height: 100%;
     margin-left: -205px;
     overflow-y: auto;
     overflow-x: hidden;
     padding-top: 0px;
-    margin-top: -70px;
-    top: 100px;
     background: #000;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
