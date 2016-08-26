@@ -60,7 +60,7 @@
             vm.paginate.currentPage = pageNumber;
             vm.paginate.getContent();
         }
-        
+        vm.chooseIcon = chooseIcon;
 
         activate();
 
@@ -71,6 +71,7 @@
             vm.changeView = changeView;
             vm.sortByDate = null;
             vm.reverse = false;
+            vm.iconHeight = 30;
 
             sharedSpaceService.getSpace(vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate, function (data) {
                 vm.space.files = data.files;
@@ -499,6 +500,11 @@
             } else {
                 getSpaceContent();
             }
+        }
+
+        function chooseIcon(type) {
+            vm.iconSrc = fileService.chooseIcon(type);
+            return vm.iconSrc;
         }
     }
 }());

@@ -48,7 +48,7 @@
         </div>
         <div class="clearfix"></div>
         <div role="button" class="s-block btn-default shadow" context-menu="sharedSpaceCtrl.fileMenuOptions" ng-repeat="file in sharedSpaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="sharedSpaceCtrl.openDocument(file.link)">
-            <i class="fa fa-file-o fa-5x"></i>
+            <img ng-src="{{sharedSpaceCtrl.chooseIcon(file.fileType)}}" height="{{sharedSpaceCtrl.iconHeight * 2}}" alt="" />
             <br>
             <span class="bold">File type: </span>
             <span>{{ file.fyleType | typeOfFile }}</span>
@@ -103,7 +103,10 @@
                     <td style="width: 10%">Folder</td>
                 </tr>
                 <tr class="shadow" role="button" ng-repeat="file in sharedSpaceCtrl.space.files | orderBy: sharedSpaceCtrl.columnForOrder" context-menu="sharedSpaceCtrl.fileMenuOptions" ng-dblclick="sharedSpaceCtrl.openDocument(file.link)">
-                    <td style="width: 20%"> <i class="fa fa-file-o">&nbsp;</i>{{ file.name }}</td>
+                    <td style="width: 20%">
+                        <img ng-src="{{sharedSpaceCtrl.chooseIcon(file.fileType)}}" height="{{sharedSpaceCtrl.iconHeight}}" />
+                        &nbsp;{{ file.name }}
+                    </td>
                     <td style="width: 33%">{{ file.description }}</td>
                     <td style="width: 20%">{{ file.author.name }}</td>
                     <td style="width: 15%">{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
