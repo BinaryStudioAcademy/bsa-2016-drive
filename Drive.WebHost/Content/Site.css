@@ -533,6 +533,10 @@ hr.style {
             overflow: auto;
         }
 
+    .fixed_headers tbody tr:hover {
+        background: #eaebec;
+    }
+
     .fixed_headers th, td {
         display: inline-block;
         text-align: left;
