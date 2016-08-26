@@ -261,7 +261,7 @@ textarea {
     position: absolute;
     left: 205px;
     width: 0;
-    height: 96%;
+    height: 95%;
     margin-left: -205px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -389,10 +389,12 @@ textarea {
     #sidebar-wrapper {
         width: 205px;
     }
+
     #sidebar-toggle
     {
         width: 205px;
     }
+
     #wrapper.toggled #sidebar-wrapper {
         width: 43px;
     }
@@ -417,9 +419,13 @@ textarea {
         overflow-x: hidden;
     }
 
-    #wrapper.toggled #sidebar-wrapper:hover {
-        width: 205px;
-    }
+      #section-menu:hover #sidebar-toggle {
+            width: 205px;
+      }
+
+      #section-menu:hover #sidebar-wrapper {
+            width: 205px;
+      } 
 }
 
 /*Other and Apps tabs in menu*/
