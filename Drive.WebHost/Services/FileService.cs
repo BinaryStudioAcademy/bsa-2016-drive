@@ -214,6 +214,7 @@ namespace Drive.WebHost.Services
                 LastModified = DateTime.Now,
                 CreatedAt = file.CreatedAt,
                 Link = file.Link,
+                Space = space,
                 Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId),
                 ModifyPermittedUsers = file.ModifyPermittedUsers,
                 ReadPermittedUsers = file.ReadPermittedUsers
@@ -222,9 +223,7 @@ namespace Drive.WebHost.Services
             if (dto.ParentId != null)
             {
                 var parent = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
-
                 copy.FolderUnit = parent;
-                copy.Space = space;
             }
 
             _unitOfWork.Files.Create(copy);

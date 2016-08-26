@@ -235,10 +235,10 @@ namespace Drive.WebHost.Services
             if (dto.ParentId != null)
             {
                 var parent = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
-                
-                copy.FolderUnit = parent;
 
-                //copy.Space = space;
+                copy.FolderUnit = parent;
+                copy.Space = space;
+
                 //folder.FolderUnit = parent;
             }
 
