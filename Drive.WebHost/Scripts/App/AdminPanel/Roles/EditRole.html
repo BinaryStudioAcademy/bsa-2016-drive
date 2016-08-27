@@ -17,32 +17,16 @@
                 </div>
                 <div class="col-md-10">
                     <div ng-show="roleCtrl.isSet(1)">
-                        <form class="form-horizontal" role="form" name="createForm" novalidate>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form">
-                                        <div class="form-group">
-                                            <label class="control-label col-sm-6" for="name">Role name:</label>
-                                            <div class="col-sm-6">
-                                                <input type="text" class="form-control" id="name" name="title" ng-pattern="/^[\w -]*$/" ng-model="roleCtrl.role.name" placeholder="Enter role name" required>
-                                            </div>
-                                            <span ng-show="createForm.title.$error.required && createForm.title.$touched" style="color: red" class="col-sm-offset-2">
-                                                Name is required.
-                                            </span>
-                                            <span style="color:red" ng-show="createForm.title.$error.pattern" class="col-sm-offset-2">
-                                                Not a valid name.
-                                            </span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-sm-6" for="description">Description:</label>
-                                            <div class="col-sm-6">
-                                                <input type="text" class="form-control" id="description" ng-model="roleCtrl.role.description" placeholder="Enter description">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                        </div>
-                                    </div>
-                                </div>
+                        <form name="roleForm" ng-submit="submitForm()" novalidate>
+                            <div class="form-group" ng-class="{ 'has-error' : roleForm.name.$invalid && !roleForm.name.$pristine }">
+                                <label>Role name:</label>
+                                <input type="text" name="name" id="name" class="form-control" ng-pattern="/^[\w -]*$/" ng-model="roleCtrl.role.name" placeholder="Enter role name" required>
+                                <p ng-show="roleForm.name.$error.required && roleForm.name.$touched" class="help-block">Name is required.</p>
+                                <p ng-show="roleForm.name.$error.pattern" class="help-block">Not a valid name.</p>
+                            </div>
+                            <div class="form-group">
+                                <label>Description:</label>
+                                <input type="text" name="description" class="form-control" id="description" ng-model="roleCtrl.role.description" placeholder="Enter description">
                             </div>
                         </form>
                     </div>
@@ -89,7 +73,7 @@
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="roleCtrl.save()" title="Save changes"
-            ng-disabled="createForm.title.$invalid || createForm.maxfile.$invalid || createForm.maxsize.$invalid">
+            ng-disabled="roleForm.$invalid">
         Save
     </button>
     <button class="btn btn-default" type="button" ng-click="roleCtrl.cancel()">
