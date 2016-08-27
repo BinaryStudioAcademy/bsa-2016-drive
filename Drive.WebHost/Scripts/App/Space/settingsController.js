@@ -32,7 +32,6 @@
         vm.setTab = setTab;
         vm.isSet = isSet;
         vm.deleteSpace = deleteSpace;
-        vm.showDeleteBtn = showDeleteBtn;
 
         activate();
 
@@ -40,7 +39,7 @@
             settingsService.getSpace(vm.selectedSpace, function (data) {
                 vm.space = data;
                 // Hide delete space btn for Binary and My spaces
-                if (vm.space.name === 'Binary Space' || vm.space.name === 'My Space') {
+                if (vm.space.type === 0 || vm.space.type === 1) {
                     vm.showDeleteBtn = false;
                 }
                 else {
@@ -293,16 +292,6 @@
         function isSet(tabNum) {
             return vm.tab === tabNum;
         };
-
-        function showDeleteBtn()
-        {
-            if (vm.space.name == 'Binary Space' || vm.space.name == 'My Space') {
-                return false;
-            }
-            else {
-                return true;
-            }
-        }
 
         function deleteSpace()
         {
