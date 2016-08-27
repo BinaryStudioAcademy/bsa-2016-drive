@@ -78,7 +78,15 @@
         };
 
         function removeRole(id) {
-            if (confirm('Are you really want to delete the role?') == true) {
+            swal({
+                title: "Deleting role!",
+                text: "Are you really want to delete role?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            }, function () {
                 adminPanelService.deleteRole(id, function (response) {
                     if (response) {
                         var data = {
@@ -92,9 +100,14 @@
                         vm.roles.splice(i, 1); break;
                     }
                 }
-            } else {
-
-            }
+                swal({
+                    title: "Deleted!",
+                    text: "Role has been deleted.",
+                    timer: 2000,
+                    showConfirmButton: false,
+                    type: "success"
+                });
+            });
         }
     }
 }());

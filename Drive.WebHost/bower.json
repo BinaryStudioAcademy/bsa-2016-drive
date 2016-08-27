@@ -15,7 +15,8 @@
     "angular-local-storage": "0.3.0",
     "angular-loading-spinner": "^0.0.3",
     "angular-animate": "~v1.5.8",
-    "angular-toastr": "2.1.1"
+    "angular-toastr": "2.1.1",
+    "sweetalert": "latest"
   },
   "resolutions": {
     "angular": "1.5.9-build.5006+sha.e3a378e"
