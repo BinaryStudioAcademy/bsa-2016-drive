@@ -74,56 +74,6 @@
                     controller: "FileFilterController",
                     controllerAs: "fileFilterCtrl"
                 })
-                /*
-                .when("/apps/academy", // Academy Pro Page
-                {
-                    templateUrl: "/Scripts/App/Academy/Academy.html",
-                    controller: "AcademyController",
-                    controllerAs: "academyCtrl"
-                })
-                .when("/apps/events", // Events Page
-                {
-                    templateUrl: "/Scripts/App/Events/Events.html",
-                    controller: "EventsController",
-                    controllerAs: "eventsCtrl"
-                })
-                .when("/apps/employees", // Employees Page
-                {
-                    templateUrl: "/Scripts/App/Employees/Employees.html",
-                    controller: "EmployeesController",
-                    controllerAs: "employeesCtrl"
-                })
-                .when("/apps/checklist", // Checklist Page
-                {
-                    templateUrl: "/Scripts/App/Checklist/Checklist.html",
-                    controller: "ChecklistController",
-                    controllerAs: "checklistCtrl"
-                })
-                .when("/apps/trello", // Trello Page
-                {
-                    templateUrl: "/Scripts/App/Trello/Trello.html",
-                    controller: "TrelloController",
-                    controllerAs: "trelloCtrl"
-                })
-                .when("/apps/docs", // Docs Page
-                {
-                    templateUrl: "/Scripts/App/Docs/Docs.html",
-                    controller: "DocsController",
-                    controllerAs: "docsCtrl"
-                })
-                .when("/apps/sheets", // Sheets Page
-                {
-                    templateUrl: "/Scripts/App/Sheets/Sheets.html",
-                    controller: "SheetsController",
-                    controllerAs: "sheetsCtrl"
-                })
-                .when("/apps/slides", // Slides Page
-                {
-                    templateUrl: "/Scripts/App/Slides/Slides.html",
-                    controller: "SlidesController",
-                    controllerAs: "slidesCtrl"
-                })
-                */
                 .when("/Error",
                 {
                     templateUrl: baseUrl + "/Scripts/App/Error404/404.html",
