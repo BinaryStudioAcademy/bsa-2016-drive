@@ -275,7 +275,7 @@
                     {
                         closeButton: true, timeOut: 6000
                     });
-            }, 2500);
+            }, 1000);
         };
 
         function cancel() {

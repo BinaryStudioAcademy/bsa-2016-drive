@@ -1,6 +1,6 @@
 ﻿html {
     overflow: auto;
-    height:100%
+    height: 100%;
 }
 
 body {
@@ -274,7 +274,7 @@ textarea {
 
 #sidebar-toggle {
     z-index: 2;
-    position:absolute;
+    position: absolute;
     left: 205px;
     width: 0;
     height: 40px;
@@ -288,11 +288,11 @@ textarea {
     transition: all 0.5s ease;
 }
 
-#wrapper.toggled #sidebar-wrapper #sidebar-toggle{
+#wrapper.toggled #sidebar-wrapper #sidebar-toggle {
     width: 205px;
 }
 
-#wrapper.toggled #sidebar-toggle{
+#wrapper.toggled #sidebar-toggle {
     width: 205px;
 }
 
@@ -300,7 +300,7 @@ textarea {
     width: 100%;
     position: absolute;
     margin-left: 2%;
-    height:100%
+    height: 100%;
 }
 
 #wrapper.toggled #page-content-wrapper {
@@ -387,8 +387,7 @@ textarea {
         width: 205px;
     }
 
-    #sidebar-toggle
-    {
+    #sidebar-toggle {
         width: 205px;
     }
 
@@ -396,7 +395,7 @@ textarea {
         width: 43px;
     }
 
-    #wrapper.toggled #sidebar-toggle{
+    #wrapper.toggled #sidebar-toggle {
         width: 43px;
     }
 
@@ -416,13 +415,13 @@ textarea {
         overflow-x: hidden;
     }
 
-      #section-menu:hover #sidebar-toggle {
-            width: 205px;
-      }
+    #section-menu:hover #sidebar-toggle {
+        width: 205px;
+    }
 
-      #section-menu:hover #sidebar-wrapper {
-            width: 205px;
-      } 
+    #section-menu:hover #sidebar-wrapper {
+        width: 205px;
+    }
 }
 
 /*Other and Apps tabs in menu*/
@@ -519,7 +518,7 @@ hr.style {
     overflow: hidden;
     height: 71vh;
 }
-/*
+    /*
     .fixed_headers thead {
         display: block;
         width: 100%;
@@ -538,9 +537,9 @@ hr.style {
             overflow: auto;
         }
 
-    .fixed_headers tbody tr:hover {
-        background: #eaebec;
-    }
+        .fixed_headers tbody tr:hover {
+            background: #eaebec;
+        }
 
     .fixed_headers th, td {
         display: inline-block;
@@ -583,7 +582,6 @@ hr.style {
     vertical-align: center;
     padding-top: 1em;
     background: #eaebec;
-
 }
 
 .filter-table {
@@ -593,7 +591,6 @@ hr.style {
     border-width: 1px;
     border-color: #eaebec;
     padding-right: 17px;
-    
 }
 
 .filter-table-internal {
@@ -601,10 +598,10 @@ hr.style {
     overflow: hidden;
 }
 
-.filter-table-internal:hover {
-    overflow-y: auto;
-    margin-right: -17px;
-}
+    .filter-table-internal:hover {
+        overflow-y: auto;
+        margin-right: -17px;
+    }
 
 .header-wrapper {
     height: 5vh;
@@ -617,7 +614,7 @@ hr.style {
     padding-left: 1em;
     padding-top: 1em;
     height: 5vh;
-    margin-left:17px;
+    margin-left: 17px;
 }
 
 .filter-table-row {
@@ -626,9 +623,9 @@ hr.style {
     min-height: 50px;
 }
 
-.filter-table-row:hover {
-    background: #eaebec;
-}
+    .filter-table-row:hover {
+        background: #eaebec;
+    }
 
 .filter-table-cell {
     background: transparent;
@@ -647,7 +644,7 @@ hr.style {
     margin-left: 17px;
     padding-top: 1em;
     margin-bottom: 1em;
- }
+}
 
 .grid-space-label {
     width: 100%;
@@ -659,16 +656,16 @@ hr.style {
     text-align: center;
     padding-top: 1em;
     margin-bottom: 1em;
-    padding-right:0;
+    padding-right: 0;
 }
 
 .space-label:hover {
- background: #778899;
- }
+    background: #778899;
+}
 
 .filter-checkbox-hidden {
- display: none;
- }
+    display: none;
+}
 
 
 /*end table in space*/
@@ -733,40 +730,40 @@ small,
             margin: 0 2% 0 0;
         }
 
-/*Table for editting space users*/
-.users table {
-    width: 100%;
-}
+    /*Table for editting space users*/
+    .users table {
+        width: 100%;
+    }
 
-.users thead, .users tbody, .users tr, .users td, .users th {
-    display: block;
-}
-
-    .users tr:after {
-        content: ' ';
+    .users thead, .users tbody, .users tr, .users td, .users th {
         display: block;
-        visibility: hidden;
-        clear: both;
     }
 
-    .users thead th {
-        height: 30px;
-        /*text-align: left;*/
+        .users tr:after {
+            content: ' ';
+            display: block;
+            visibility: hidden;
+            clear: both;
+        }
+
+        .users thead th {
+            height: 30px;
+            /*text-align: left;*/
+        }
+
+    .users tbody {
+        height: 150px;
+        overflow-y: auto;
     }
 
-.users tbody {
-    height: 150px;
-    overflow-y: auto;
-}
-
-.users thead {
-    /* fallback */
-}
-
-    .users tbody td, .users thead th {
-        width: 30%;
-        float: left;
+    .users thead {
+        /* fallback */
     }
+
+        .users tbody td, .users thead th {
+            width: 30%;
+            float: left;
+        }
 }
 
 @media screen and (max-width: 400px) {
@@ -880,14 +877,25 @@ small,
     }
 
 .menu-icons {
-   height: 20px;
-   padding-right: 5px;
+    height: 20px;
+    padding-right: 5px;
 }
 
 /*Cancel button on search input*/
 input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: searchfield-cancel-button;
+    margin-right: -5px;
+}
 
-  -webkit-appearance: searchfield-cancel-button;
-  margin-right: -5px;
-   
+/*Styles for validation of input fields*/
+.text-valid.ng-invalid,
+.number-valid.ng-invalid,
+textarea.ng-invalid {
+    border-left: solid 3px #900;
+}
+
+.text-valid.ng-valid,
+.number-valid.ng-valid,
+textarea.ng-valid {
+    border-left: solid 3px #090;
 }

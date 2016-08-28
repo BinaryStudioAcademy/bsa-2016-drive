@@ -12,7 +12,7 @@
                     <div class="form">
                         <div class="form-group">
                             <label for="fileName" class="col-md-3">Name: </label>
-                            <input class="form-control" name="fileName" type="text" placeholder="Enter title" ng-model="fileModalCtrl.file.name" required space-id="{{fileModalCtrl.file.spaceId}}" parent-id="{{fileModalCtrl.file.parentId}}" file-name="{{fileModalCtrl.name}}">
+                            <input class="form-control text-valid" name="fileName" type="text" placeholder="Enter title" ng-model="fileModalCtrl.file.name" required space-id="{{fileModalCtrl.file.spaceId}}" parent-id="{{fileModalCtrl.file.parentId}}" file-name="{{fileModalCtrl.name}}">
                             <span style="color: red" class="col-md-offset-3">
                                 <span ng-show="fileForm.fileName.$error.fileName"> File with this name already exists </span>
                                 <span ng-show="fileForm.fileName.$touched && fileForm.fileName.$error.required"> Name is required</span>
@@ -20,7 +20,7 @@
                         </div>
                         <div class="form-group">
                             <label for="link" class="col-md-3">Link:</label>
-                            <input type="text" class="form-control" placeholder="Google Docs, Trello or other resource" name="link" ng-model="fileModalCtrl.file.link" ng-change="fileModalCtrl.isValidUrl()" required>
+                            <input type="text" class="form-control text-valid" placeholder="Google Docs, Trello or other resource" name="link" ng-model="fileModalCtrl.file.link" ng-change="fileModalCtrl.isValidUrl()" required>
                             <span style="color: red" class="col-md-offset-3">
                                 <span ng-show="fileForm.link.$error.required && fileForm.link.$touched">Link is required.</span>
                                 <span ng-show="!fileModalCtrl.urlIsValid && fileForm.link.$touched">Invalid URL.</span>
