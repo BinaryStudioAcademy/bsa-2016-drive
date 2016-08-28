@@ -8,6 +8,7 @@ using Drive.Logging;
 using Drive.WebHost.Api;
 using Drive.WebHost.Filters;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Newtonsoft.Json.Serialization;
 using Ninject.Modules;
 
@@ -21,6 +22,7 @@ namespace Drive.WebHost
 
             settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             settings.Formatting = Formatting.Indented;
+            settings.Converters.Add(new IsoDateTimeConverter());
 
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             
