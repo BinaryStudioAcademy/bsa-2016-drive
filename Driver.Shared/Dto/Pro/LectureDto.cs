@@ -26,7 +26,6 @@ namespace Driver.Shared.Dto.Pro
 
         public IEnumerable<ContentLinkDto> RepositoryLinks { get; set; }
 
-        public IEnumerable<TagDto> Tags { get; set; }
         public IEnumerable<CodeSampleDto> CodeSamples { get; set; }
 
         public DateTime CreatedAt { get; set; }

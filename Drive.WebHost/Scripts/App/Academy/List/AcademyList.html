@@ -1,0 +1,77 @@
+﻿<div class="container col-md-12">
+    <br />
+    <div class="btn-group btn-breadcrumb">
+        <a class="btn btn-info"><i class="fa fa-graduation-cap fa-lg"></i> Academy Pro</a>
+    </div>
+
+    <h2>Available courses</h2>
+
+    <div>
+        <span us-spinner="{radius:30, width:8, length: 16}"></span>
+        <div class="row" style="margin: 1em 0 1em 0;">
+            <div class="col-lg-push-4-offset pull-right">
+                <button class="btn btn-default" ng-click="academyListCtrl.changeView(academyListCtrl.view)">
+                    <i class={{academyListCtrl.view}} title="view"> </i>
+                </button>
+            </div>
+            <!--<div>
+                <div class="col-sm-3 pull-right">
+                    <div>
+                        <div class="input-group">
+                            <form id="form-container">
+                                <div id="searchtext">
+                                    <input type="search" size="40" class="search-input" value="" name="s" id="s" placeholder="Search..." ng-model="academyListCtrl.searchText">
+                                    <button class="search-submit-button" type="submit" ng-click="academyListCtrl.search()"> <i class="fa fa-search"></i> </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+            <div class="col-sm-3 pull-left">
+                <div>
+                    <button class="btn btn-default" ng-click="academyListCtrl.openNewCourseWindow('lg')">New course</button>
+                </div>
+            </div>
+        </div>
+        <div class="wrap clearfix" ng-show="!academyListCtrl.showTable">
+            <div role="button" class="s-block btn-default shadow" ng-repeat="academy in academyListCtrl.academiesList"
+                 title="Created {{ academy.createdAt | date : 'short' }}"
+                 ng-dblclick="academyListCtrl.openCourse(academy.id)"
+                 context-menu="fileFilterCtrl.fileMenuOptions">
+                <img ng-src="{{academyListCtrl.icon}}" height="{{academyListCtrl.iconHeight * 2}}" />
+                <br>
+                <span class="bold">Name: </span>
+                <span>{{ academy.fileUnit.name }}</span>
+                <br>
+                <span class="bold">Author: </span>
+                <span>{{ academy.author.name }}</span><br>
+                <span class="bold">Start date: </span>
+                <span>{{ academy.startDate | date:'dd-MM-yyyy HH:mm'}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="filter-table" ng-show="academyListCtrl.showTable">
+        <div class="header-wrapper">
+            <div class="row header-row">
+                <div class="col-md-3">Name</div>
+                <div class="col-md-3">Description</div>
+                <div class="col-md-3">Author</div>
+                <div class="col-md-3">Start date</div>
+            </div>
+        </div>
+        <div class="filter-table-internal">
+            <div class="filter-table-row">
+                <div class="row filter-table-row" role="button" ng-repeat="academy in academyListCtrl.academiesList"
+                     ng-dblclick="academyListCtrl.openCourse(academy.id)">
+                    <div class="col-md-3 filter-table-cell">
+                        <img ng-src="{{academyListCtrl.icon}}" height="{{academyListCtrl.iconHeight}}" /> {{ academy.fileUnit.name }}
+                    </div>
+                    <div class="col-md-3 filter-table-cell">{{ academy.fileUnit.description }}</div>
+                    <div class="col-md-3 filter-table-cell">{{ academy.author.name }}</div>
+                    <div class="col-md-3 filter-table-cell">{{ academy.startDate | date:'dd-MM-yyyy HH:mm' }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

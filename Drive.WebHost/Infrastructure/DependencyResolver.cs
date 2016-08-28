@@ -1,6 +1,10 @@
 ﻿using System.Web.Mvc;
+using Drive.DataAccess.Entities.Pro;
 using Drive.WebHost.Filters;
 using Drive.WebHost.Services;
+using Drive.WebHost.Services.Pro;
+using Drive.WebHost.Services.Pro.Abstract;
+using Driver.Shared.Dto.Pro;
 using Ninject.Modules;
 using Ninject.Web.Mvc.FilterBindingSyntax;
 
@@ -19,6 +23,13 @@ namespace Drive.WebHost.Infrastructure
 
             Kernel.Bind<IFileService>().To<FileService>();
 
+            Kernel.Bind<IAcademyProCourseService>().To<AcademyProCourseService>();
+            Kernel.Bind<ILectureService>().To<LectureService>();
+            Kernel.Bind<ICodeSamplesService>().To<CodeSamplesService>();
+            Kernel.Bind<IContentLinkService>().To<ContentLinkService>();
+            Kernel.Bind<ITagsService>().To<TagsService>();
+
+            //Kernel.BindFilter<JWTAuthenticationFilter>(FilterScope.Global, 0);
             Kernel.Bind<ISharedSpaceService>().To<SharedSpaceService>();
 
             Kernel.BindFilter<JWTAuthenticationFilter>(FilterScope.Global, 0);

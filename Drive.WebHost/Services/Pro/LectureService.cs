@@ -34,12 +34,6 @@ namespace Drive.WebHost.Services.Pro
                 ModifiedAt = lecture.ModifiedAt,
                 IsDeleted = lecture.IsDeleted,
                 StartDate = lecture.StartDate,
-                Tags = lecture.Tags.Select(tag => new TagDto
-                {
-                    Id = tag.Id,
-                    Name = tag.Name,
-                    IsDeleted = tag.IsDeleted
-                })
             }).ToListAsync();
 
             return result;
@@ -47,7 +41,7 @@ namespace Drive.WebHost.Services.Pro
 
         public async Task<LectureDto> GetAsync(int id)
         {
-            var result = await _unitOfWork.Lectures.Query.Select(lecture => new LectureDto
+            var result = await _unitOfWork.Lectures.Query.Where(x => x.Id == id).Select(lecture => new LectureDto
             {
                 Id = lecture.Id,
                 Name = lecture.Name,
@@ -61,35 +55,40 @@ namespace Drive.WebHost.Services.Pro
                    Id = link.Id,
                    Name = link.Name,
                    Description = link.Description,
-                   Link = link.Link
+                   Link = link.Link,
+                   LinkType = link.LinkType
                 }),
                 SlidesLinks = lecture.ContentList.Where(links => links.LinkType == LinkType.Slide).Select(link => new ContentLinkDto
                 {
                     Id = link.Id,
                     Name = link.Name,
                     Description = link.Description,
-                    Link = link.Link
+                    Link = link.Link,
+                    LinkType = link.LinkType
                 }),
                 SampleLinks = lecture.ContentList.Where(links => links.LinkType == LinkType.Sample).Select(link => new ContentLinkDto
                 {
                     Id = link.Id,
                     Name = link.Name,
                     Description = link.Description,
-                    Link = link.Link
+                    Link = link.Link,
+                    LinkType = link.LinkType
                 }),
                 UsefulLinks = lecture.ContentList.Where(links => links.LinkType == LinkType.Useful).Select(link => new ContentLinkDto
                 {
                     Id = link.Id,
                     Name = link.Name,
                     Description = link.Description,
-                    Link = link.Link
+                    Link = link.Link,
+                    LinkType = link.LinkType
                 }),
                 RepositoryLinks = lecture.ContentList.Where(links => links.LinkType == LinkType.Repository).Select(link => new ContentLinkDto
                 {
                     Id = link.Id,
                     Name = link.Name,
                     Description = link.Description,
-                    Link = link.Link
+                    Link = link.Link,
+                    LinkType = link.LinkType
                 }),
                 CodeSamples = lecture.CodeSamples.Select(sample => new CodeSampleDto
                 {
@@ -97,12 +96,6 @@ namespace Drive.WebHost.Services.Pro
                    Name = sample.Name,
                    IsDeleted = sample.IsDeleted,
                    Code = sample.Code
-                }),
-                Tags = lecture.Tags.Select(tag => new TagDto
-                {
-                    Id = tag.Id,
-                    Name = tag.Name,
-                    IsDeleted = tag.IsDeleted
                 })
             }).SingleOrDefaultAsync();
 
@@ -118,12 +111,7 @@ namespace Drive.WebHost.Services.Pro
                 StartDate = dto.StartDate,
                 IsDeleted = false,
                 CreatedAt = DateTime.Now,
-                ModifiedAt = DateTime.Now,
-                Tags = new List<Tag>(dto.Tags.Select(tag => new Tag
-                {
-                    Name = tag.Name,
-                    IsDeleted = false
-                }))
+                ModifiedAt = DateTime.Now
             };
 
             _unitOfWork.Lectures.Create(lecture);
