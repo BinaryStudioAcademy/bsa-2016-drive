@@ -53,34 +53,39 @@ namespace Drive.WebHost.Services
 
         public async Task<int> CreateAsync(RoleDto dto)
         {
-            List<User> permittedUsers = new List<User>();
-            foreach (var item in dto.Users)
+            var a = await _unitOfWork.Roles.Query.FirstOrDefaultAsync(x => x.Name.ToLower() == dto.Name.ToLower());
+            if (a == null)
             {
-                var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
-                if (user == null)
+                List<User> permittedUsers = new List<User>();
+                foreach (var item in dto.Users)
                 {
-                    UserDto userdto = new UserDto();
-                    userdto.serverUserId = item.GlobalId;
-                    await _userService.CreateAsync(userdto);
-                    var suser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
-                    permittedUsers.Add(suser);
+                    var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
+                    if (user == null)
+                    {
+                        UserDto userdto = new UserDto();
+                        userdto.serverUserId = item.GlobalId;
+                        await _userService.CreateAsync(userdto);
+                        var suser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
+                        permittedUsers.Add(suser);
+                    }
+                    else
+                    {
+                        permittedUsers.Add(user);
+                    }
                 }
-                else
-                {
-                    permittedUsers.Add(user);
-                }
-            }
 
-            var role = new Role
-            {
-                Name = dto.Name,
-                Description = dto.Description,
-                IsDeleted = false,
-                Users = permittedUsers
-            };
-            _unitOfWork.Roles.Create(role);
-            await _unitOfWork.SaveChangesAsync();
-            return role.Id;
+                var role = new Role
+                {
+                    Name = dto.Name,
+                    Description = dto.Description,
+                    IsDeleted = false,
+                    Users = permittedUsers
+                };
+                _unitOfWork.Roles.Create(role);
+                await _unitOfWork.SaveChangesAsync();
+                return role.Id;
+            }
+            return -1;
         }
 
         public async Task UpdateAsync(int id, RoleDto dto)
