@@ -93,8 +93,8 @@ namespace Drive.WebHost.Services
                 ReadPermittedRoles = s.ReadPermittedRoles,
                 ModifyPermittedRoles = s.ModifyPermittedRoles,
                 Files = s.ContentList.OfType<FileUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted)
-                .Where(f => f.ReadPermittedUsers.FirstOrDefault(x => x.GlobalId == identity) != null)
-                .Where(f => f.ReadPermittedRoles.Where(x => x.Users.FirstOrDefault(y => y.GlobalId == identity) != null) != null)
+                //.Where(f => f.ReadPermittedUsers.FirstOrDefault(x => x.GlobalId == identity) != null)
+                //.Where(f => f.ReadPermittedRoles.Where(x => x.Users.FirstOrDefault(y => y.GlobalId == identity) != null) != null)
                 .Select(f => new FileUnitDto
                 {
                     Description = f.Description,
@@ -107,8 +107,8 @@ namespace Drive.WebHost.Services
                     Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
                 }),
                 Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted)
-                .Where(f => f.ReadPermittedUsers.FirstOrDefault(x => x.GlobalId == identity) != null)
-                .Where(f => f.ReadPermittedRoles.Where(x => x.Users.FirstOrDefault(y => y.GlobalId == identity) != null) != null)
+                //.Where(f => f.ReadPermittedUsers.FirstOrDefault(x => x.GlobalId == identity) != null)
+                //.Where(f => f.ReadPermittedRoles.Where(x => x.Users.FirstOrDefault(y => y.GlobalId == identity) != null) != null)
                 .Select(f => new FolderUnitDto
                 {
                     Id = f.Id,
@@ -124,24 +124,27 @@ namespace Drive.WebHost.Services
             if (space == null)
                 return null;
 
-            if (space.ReadPermittedUsers.FirstOrDefault(x => x.GlobalId == identity) == null)
+
+            if (space.Id != 1 && space.Id != 2)
             {
-                if (space.ReadPermittedRoles.Count == 0)
+                if (space.ReadPermittedUsers.FirstOrDefault(x => x.GlobalId == identity) == null)
                 {
-                    return null;
-                }
-                else
-                {
-                    foreach (var item in space.ReadPermittedRoles)
+                    if (space.ReadPermittedRoles.Count == 0)
                     {
-                        if (item.Users.FirstOrDefault(x => x.GlobalId == identity) == null)
+                        return null;
+                    }
+                    else
+                    {
+                        foreach (var item in space.ReadPermittedRoles)
                         {
-                            return null;
+                            if (item.Users.FirstOrDefault(x => x.GlobalId == identity) == null)
+                            {
+                                return null;
+                            }
                         }
                     }
                 }
             }
-
             if (sort != null && sort.Equals("asc"))
             {
                 var folders = space.Folders.OrderBy(f => f.CreatedAt);
