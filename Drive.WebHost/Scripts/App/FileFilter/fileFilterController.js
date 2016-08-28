@@ -112,7 +112,7 @@
             switch ($routeParams.appName) {
                 // not defined types => update Enum
                 case 'academy':
-                    vm.filesType = 'Academy Pro';
+                    vm.filesType = 'AcademyPro';
                     vm.icon = 'fa fa-graduation-cap fa-lg';
                     break;
                 case 'events':
