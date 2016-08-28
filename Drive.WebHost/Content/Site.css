@@ -1,11 +1,10 @@
 ﻿html {
+    overflow: auto;
     height: 100%;
-    overflow: hidden;
 }
 
 body {
     padding-top: 60px;
-    padding-bottom: 20px;
     overflow: hidden;
     height: 100%;
     min-height: 100%;
@@ -256,18 +255,33 @@ textarea {
 
     #wrapper.toggled {
         padding-left: 205px;
-        overflow: scroll;
+        overflow: hidden;
     }
 
 #sidebar-wrapper {
-    z-index: 1000;
+    z-index: 1;
+    position: absolute;
+    left: 205px;
+    height: 100%;
+    margin-left: -205px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-top: 0px;
+    background: #000;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+#sidebar-toggle {
+    z-index: 2;
     position: absolute;
     left: 205px;
     width: 0;
-    height: 95.5%;
-    margin-bottom: 5%;
+    height: 40px;
     margin-left: -205px;
-    overflow-y: auto;
+    overflow-y: hidden;
     overflow-x: hidden;
     background: #000;
     -webkit-transition: all 0.5s ease;
@@ -276,18 +290,24 @@ textarea {
     transition: all 0.5s ease;
 }
 
-#wrapper.toggled #sidebar-wrapper {
+#wrapper.toggled #sidebar-wrapper #sidebar-toggle {
+    width: 205px;
+}
+
+#wrapper.toggled #sidebar-toggle {
     width: 205px;
 }
 
 #page-content-wrapper {
     width: 100%;
     position: absolute;
+    margin-left: 2%;
+    height: 100%;
 }
 
 #wrapper.toggled #page-content-wrapper {
     position: absolute;
-    margin-right: -150px;
+    margin-right: -80px;
 }
 
 .fixed-brand {
@@ -302,11 +322,10 @@ textarea {
     margin: 0;
     padding: 0;
     list-style: none;
-    /*margin-top: 2px;*/
 }
 
     .sidebar-nav li {
-        text-indent: 15px;
+        text-indent: 5px;
         line-height: 40px;
     }
 
@@ -351,7 +370,8 @@ textarea {
 
 @media(min-width:768px) {
     #wrapper {
-        padding-left: 150px;
+        padding-left: 100px;
+        padding-right: 1%;
         align-content: center;
         overflow: hidden;
         height: 100%;
@@ -359,8 +379,8 @@ textarea {
 
         #wrapper.toggled {
             padding-left: 20px;
-            padding-right: 0;
-            margin-left: -14px;
+            padding-right: 1%;
+            margin-left: -50px;
             overflow: hidden;
             align-content: center;
         }
@@ -369,14 +389,23 @@ textarea {
         width: 205px;
     }
 
+    #sidebar-toggle {
+        width: 205px;
+    }
+
     #wrapper.toggled #sidebar-wrapper {
-        width: 47px;
+        width: 43px;
+    }
+
+    #wrapper.toggled #sidebar-toggle {
+        width: 43px;
     }
 
     #page-content-wrapper {
         position: relative;
         overflow: hidden;
-        margin-top: -40px;
+        margin-left: 2%;
+        margin-right: 1%;
     }
 
     #wrapper.toggled #page-content-wrapper {
@@ -388,7 +417,11 @@ textarea {
         overflow-x: hidden;
     }
 
-    #wrapper.toggled #sidebar-wrapper:hover {
+    #section-menu:hover #sidebar-toggle {
+        width: 205px;
+    }
+
+    #section-menu:hover #sidebar-wrapper {
         width: 205px;
     }
 }
@@ -402,6 +435,10 @@ textarea {
     margin-left: -18px;
 }
 
+.span-apps {
+    margin-left: 0;
+}
+
 /*Toolbar buttons style*/
 .btn-custom {
     -webkit-appearance: none;
@@ -412,7 +449,7 @@ textarea {
 }
 
 .toolbar-div {
-     padding-left: 0px;
+    padding-left: 0px;
 }
 
 /*Remove button focus after click*/
@@ -437,19 +474,18 @@ hr.style {
 .create-space {
     width: 100%;
     height: 40px;
-    /*margin-top: -2px;*/
     border-radius: 0 !important;
 }
 
 /*Icon on create new Space button in menu*/
 .icon-custom {
-    margin-left: -52px;
-    width: 2.7em;
+    margin-left: -58px;
+    width: 2.1em;
 }
 
-.shadow {
+/*.shadow {
     box-shadow: 5px 5px 3px 1px rgba(0,0,0,0.7);
-}
+}*/
 
 .btn {
     box-shadow: 0 1px #999;
@@ -470,7 +506,8 @@ hr.style {
     }
 
 /*table in space*/
-table {
+.fixed_headers {
+    width: 100%;
     color: #666;
     text-shadow: 1px 1px 0px #fff;
     background: #eaebec;
@@ -480,27 +517,177 @@ table {
     -moz-box-shadow: 0 1px 2px #d1d1d1;
     -webkit-box-shadow: 0 1px 2px #d1d1d1;
     box-shadow: 0 1px 2px #d1d1d1;
+    overflow: hidden;
+    height: 71vh;
 }
+    /*
+    .fixed_headers thead {
+        display: block;
+        width: 100%;
+        height:8vh;
+    }
+*/
+    .fixed_headers tbody {
+        display: block;
+        overflow: hidden;
+        width: 100%;
+        height: 63vh;
+        background-color: white;
+    }
 
-    table th {
-        height: 50px;
+        .fixed_headers tbody:hover {
+            overflow: auto;
+        }
+
+        .fixed_headers tbody tr:hover {
+            background: #eaebec;
+        }
+
+    .fixed_headers th, td {
+        display: inline-block;
+        text-align: left;
+        padding-left: 1em;
+        padding-top: 1em;
+        min-height: 50px;
+    }
+
+    .fixed_headers th {
+        background: #eaebec;
+        line-height: 50px;
+    }
+
+    .fixed_headers td {
+        background: transparent;
+    }
+
+    .fixed_headers tr {
+        display: block;
+        position: relative;
+        width: 100%;
+        line-height: 1em;
+    }
+
+    .fixed_headers tbody tr:hover {
         background: #eaebec;
     }
 
-    table td {
-        height: 50px;
-        background: white;
+.blocked-table {
+    height: 71vh;
+    overflow: hidden;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #eaebec;
+}
+
+.row-header {
+    height: 5vh;
+    vertical-align: center;
+    padding-top: 1em;
+    background: #eaebec;
+}
+
+.filter-table {
+    height: 75vh;
+    overflow: hidden;
+    border-style: solid;
+    border-width: 1px;
+    border-color: #eaebec;
+    padding-right: 17px;
+}
+
+.filter-table-internal {
+    height: 70vh;
+    overflow: hidden;
+}
+
+    .filter-table-internal:hover {
+        overflow-y: auto;
+        margin-right: -17px;
     }
+
+.header-wrapper {
+    height: 5vh;
+    background: #eaebec;
+    margin-right: -17px;
+}
+
+.header-row {
+    padding-right: 17px;
+    padding-left: 1em;
+    padding-top: 1em;
+    height: 5vh;
+    margin-left: 17px;
+}
+
+.filter-table-row {
+    background: white;
+    padding-left: 1em;
+    min-height: 50px;
+}
+
+    .filter-table-row:hover {
+        background: #eaebec;
+    }
+
+.filter-table-cell {
+    background: transparent;
+}
+
+.space-label {
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+    height: 5vh;
+    background: #eaebec;
+    text-transform: uppercase;
+    align-content: center;
+    text-align: center;
+    margin-top: 1em;
+    margin-left: 17px;
+    padding-top: 1em;
+    margin-bottom: 1em;
+}
+
+.grid-space-label {
+    width: 100%;
+    display: block;
+    height: 5vh;
+    background: #eaebec;
+    text-transform: uppercase;
+    align-content: center;
+    text-align: center;
+    padding-top: 1em;
+    margin-bottom: 1em;
+    padding-right: 0;
+}
+
+.space-label:hover {
+    background: #778899;
+}
+
+.filter-checkbox-hidden {
+    display: none;
+}
+
+
 /*end table in space*/
 
 /*folders and files grid view*/
 .wrap {
     position: relative;
     width: 100%;
-    max-width: 960px;
-    margin: 20px auto;
-    color: #666;
+    color: #333;
+    margin-top: 20px;
+    overflow: hidden;
+    height: 73vh;
+    /*border-style: solid;
+    border-width: 1px;
+    border-color: #eaebec;*/
 }
+
+    .wrap:hover {
+        overflow: auto;
+    }
 
 .small {
     width: 100%;
@@ -544,6 +731,41 @@ small,
         .s-block:nth-child(odd) {
             margin: 0 2% 0 0;
         }
+
+    /*Table for editting space users*/
+    .users table {
+        width: 100%;
+    }
+
+    .users thead, .users tbody, .users tr, .users td, .users th {
+        display: block;
+    }
+
+        .users tr:after {
+            content: ' ';
+            display: block;
+            visibility: hidden;
+            clear: both;
+        }
+
+        .users thead th {
+            height: 30px;
+            /*text-align: left;*/
+        }
+
+    .users tbody {
+        height: 150px;
+        overflow-y: auto;
+    }
+
+    .users thead {
+        /* fallback */
+    }
+
+        .users tbody td, .users thead th {
+            width: 30%;
+            float: left;
+        }
 }
 
 @media screen and (max-width: 400px) {
@@ -553,31 +775,26 @@ small,
 }
 /*end grid view*/
 .well {
-    min-height: 15px;
-    padding: 19px;
+    min-height: 10px;
     margin-bottom: 0px;
+    color: #333;
+    width: 100%;
+    background-color: #eee;
+    border-style: hidden;
 }
 
 .page-footer {
     bottom: 0;
-    height: 6em;
+    height: 3.9em;
     position: absolute;
+    text-align: center;
 }
 
-.scrollable-row {
-    overflow-y: auto;
-    height: 100%;
-    position: relative;
-    margin-right: -20px;
-    padding-right: 20px;
+.page-footer-center {
+    height: 3.9em;
+    margin-left: 45%;
 }
 
-.scroll-hide {
-    overflow: hidden;
-    padding-bottom: 6em;
-    height: 85%;
-    position: relative;
-}
 
 .sortorder:after {
     content: '\25b2';
@@ -585,6 +802,104 @@ small,
 
 .sortorder.reverse:after {
     content: '\25bc';
+}
+
+/*Search input*/
+#form-container input, #form-container select, #form-container textarea {
+    background-color: #FEFEFE;
+    border-top: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+    border-left: 1px solid #dddddd;
+    background: whitesmoke;
+    -webkit-appearance: none;
+    border-radius: 3px 0px 0px 3px;
+    color: #5e5e5e;
+    display: block;
+    padding: 14px;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+    margin: 0px 0 0px 0;
+    height: 38px;
+}
+
+    #form-container input:focus {
+        background-color: #fff;
+        border: 1px solid #5bc0de;
+        outline: 0;
+    }
+
+        #form-container input:focus + button {
+            border-color: #5bc0de;
+            border-left-color: #ddd;
+            background: #5bc0de;
+        }
+
+#searchtext {
+    overflow: hidden;
+    position: relative;
+    padding-right: 45px;
+}
+
+#form-container button.search-submit-button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    background-color: #FEFEFE;
+    border: 1px solid #ddd;
+    -webkit-appearance: none;
+    border-radius: 0px 3px 3px 0px;
+    color: #555 !important;
+    display: block;
+    float: right;
+    font-size: 20px;
+    padding: 0px 14px;
+    line-height: 1px;
+    text-align: center;
+    width: 47px;
+    box-sizing: border-box;
+    height: 38px;
+    cursor: pointer;
+    -webkit-transition: all 0.20s ease-in-out;
+    -moz-transition: all 0.20s ease-in-out;
+    -ms-transition: all 0.20s ease-in-out;
+    -o-transition: all 0.20s ease-in-out;
+}
+
+    #form-container button.search-submit-button:hover {
+        background-color: #5bc0de;
+        border: 1px solid #5bc0de;
+        -webkit-appearance: none;
+        color: #fff !important;
+        border-radius: 0px 3px 3px 0px;
+        -webkit-transition: all 0.20s ease-in-out;
+        -moz-transition: all 0.20s ease-in-out;
+        -ms-transition: all 0.20s ease-in-out;
+        -o-transition: all 0.20s ease-in-out;
+    }
+
+.menu-icons {
+    height: 20px;
+    padding-right: 5px;
+}
+
+/*Cancel button on search input*/
+input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: searchfield-cancel-button;
+    margin-right: -5px;
+}
+
+/*Styles for validation of input fields*/
+.text-valid.ng-invalid,
+.number-valid.ng-invalid,
+textarea.ng-invalid {
+    border-left: solid 3px #900;
+}
+
+.text-valid.ng-valid,
+.number-valid.ng-valid,
+textarea.ng-valid {
+    border-left: solid 3px #090;
 }
 
 .centered-flex-content {

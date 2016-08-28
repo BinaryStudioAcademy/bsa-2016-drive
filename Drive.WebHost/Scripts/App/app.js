@@ -1,8 +1,8 @@
 ﻿angular.module("driveApp",
-    ["ngRoute", "ui.bootstrap.contextMenu", "ui.bootstrap", "angularUtils.directives.dirPagination", "LocalStorageModule", "ngLoadingSpinner", "driveApp.academyPro"])
-     .factory('BaseUrl', function () {
-         return window.globalVars.baseUrl;
-     })
+    ["ngRoute", "ui.bootstrap.contextMenu", "ui.bootstrap", "angularUtils.directives.dirPagination", "LocalStorageModule", "ngLoadingSpinner", 'ngAnimate', "toastr", "driveApp.academyPro"])
+    .factory('BaseUrl', function () {
+        return window.globalVars.baseUrl;
+    })
     .config([
         "$routeProvider",
         function ($routeProvider) {
@@ -16,7 +16,7 @@
                 })
                 //.when("/:type", // Space page
                 //{
-                //    templateUrl: "/Scripts/App/Space/Space.html",
+                //    templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
                 //    controller: "SpaceController",
                 //    controllerAs: "spaceCtrl"
                 //})
@@ -37,6 +37,12 @@
                     templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
                     controller: "SpaceController",
                     controllerAs: "spaceCtrl"
+                })
+                .when("/sharedspace", // Shared Space page
+                {
+                    templateUrl: baseUrl + "/Scripts/App/SharedSpace/SharedSpace.html",
+                    controller: "SharedSpaceController",
+                    controllerAs: "sharedSpaceCtrl"
                 })
                  .when("/spaces/:id/settings/", // Space settings Page
                 {
@@ -68,50 +74,6 @@
                     controller: "FileFilterController",
                     controllerAs: "fileFilterCtrl"
                 })
-                /*
-                .when("/apps/events", // Events Page
-                {
-                    templateUrl: "/Scripts/App/Events/Events.html",
-                    controller: "EventsController",
-                    controllerAs: "eventsCtrl"
-                })
-                .when("/apps/employees", // Employees Page
-                {
-                    templateUrl: "/Scripts/App/Employees/Employees.html",
-                    controller: "EmployeesController",
-                    controllerAs: "employeesCtrl"
-                })
-                .when("/apps/checklist", // Checklist Page
-                {
-                    templateUrl: "/Scripts/App/Checklist/Checklist.html",
-                    controller: "ChecklistController",
-                    controllerAs: "checklistCtrl"
-                })
-                .when("/apps/trello", // Trello Page
-                {
-                    templateUrl: "/Scripts/App/Trello/Trello.html",
-                    controller: "TrelloController",
-                    controllerAs: "trelloCtrl"
-                })
-                .when("/apps/docs", // Docs Page
-                {
-                    templateUrl: "/Scripts/App/Docs/Docs.html",
-                    controller: "DocsController",
-                    controllerAs: "docsCtrl"
-                })
-                .when("/apps/sheets", // Sheets Page
-                {
-                    templateUrl: "/Scripts/App/Sheets/Sheets.html",
-                    controller: "SheetsController",
-                    controllerAs: "sheetsCtrl"
-                })
-                .when("/apps/slides", // Slides Page
-                {
-                    templateUrl: "/Scripts/App/Slides/Slides.html",
-                    controller: "SlidesController",
-                    controllerAs: "slidesCtrl"
-                })
-                */
                 .when("/Error",
                 {
                     templateUrl: baseUrl + "/Scripts/App/Error404/404.html",

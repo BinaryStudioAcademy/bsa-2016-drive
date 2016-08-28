@@ -14,13 +14,11 @@ namespace Drive.WebHost.Infrastructure
     {
         public override void Load()
         {
+            Kernel.Bind<IRolesService>().To<RolesService>();
             Kernel.Bind<ISpaceService>().To<SpaceService>();
             Kernel.Bind<IFolderService>().To<FolderService>();
-
             Kernel.Bind<ILogsService>().To<LogsService>();
-
             Kernel.Bind<IUsersService>().To<UsersService>();
-
             Kernel.Bind<IUsersProvider>().To<UsersProvider>();
 
             Kernel.Bind<IFileService>().To<FileService>();
@@ -32,6 +30,9 @@ namespace Drive.WebHost.Infrastructure
             Kernel.Bind<ITagsService>().To<TagsService>();
 
             //Kernel.BindFilter<JWTAuthenticationFilter>(FilterScope.Global, 0);
+            Kernel.Bind<ISharedSpaceService>().To<SharedSpaceService>();
+
+            Kernel.BindFilter<JWTAuthenticationFilter>(FilterScope.Global, 0);
         }
     }
 }

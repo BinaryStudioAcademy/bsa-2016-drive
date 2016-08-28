@@ -4,15 +4,16 @@
     angular.module("driveApp")
         .controller("MenuController", MenuController);
 
-    MenuController.$inject = ['MenuService', '$location', '$uibModal', '$rootScope', '$timeout'];
+    MenuController.$inject = ['MenuService', '$location', '$uibModal', '$rootScope'];
 
-    function MenuController(menuService, $location, $uibModal, $rootScope, $timeout) {
+    function MenuController(menuService, $location, $uibModal, $rootScope) {
 
         var vm = this;
 
         vm.redirectToBinarySpace = redirectToBinarySpace;
         vm.redirectToMySpace = redirectToMySpace;
         vm.redirectToSpace = redirectToSpace;
+        vm.redirectToSharedSpace = redirectToSharedSpace;
         vm.redirectToAddFile = redirectToAddFile;
         vm.redirectToAdminPanel = redirectToAdminPanel;
         vm.redirectToApps = redirectToApps;
@@ -34,6 +35,10 @@
 
         function redirectToMySpace() {
             $location.url("/myspace");
+        };
+
+        function redirectToSharedSpace() {
+            $location.url("/sharedspace");
         };
 
         function redirectToSpace(id) {

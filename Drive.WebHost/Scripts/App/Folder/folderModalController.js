@@ -21,7 +21,7 @@
         function activate() {
             vm.folder = items;
             if (vm.folder.id == undefined) {
-                vm.title = 'Create Folder';
+                vm.title = 'New folder';
             } else {
                 vm.name = items.name;
                 vm.description = items.description;

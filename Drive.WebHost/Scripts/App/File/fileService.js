@@ -13,12 +13,17 @@
         var service = {
             createFile: createFile,
             updateFile: updateFile,
+            updateDeletedFile: updateDeletedFile,
             deleteFile: deleteFile,
             getFile: getFile,
+            getDeletedFile: getDeletedFile,
             getAllFiles: getAllFiles,
             getFilesApp: getFilesApp,
             getAllByParentId: getAllByParentId,
-            orderByColumn: orderByColumn
+            orderByColumn: orderByColumn,
+            searchFiles: searchFiles,
+            openFile: openFile,
+            chooseIcon: chooseIcon
         };
 
         function getAllFiles(callBack) {
@@ -51,6 +56,25 @@
                 })
         }
 
+        function searchFiles(fileType, text, callback) {
+            $http.get(baseUrl + '/api/files/apps/' + fileType + '/search', {
+                params: {
+                    fileType: fileType,
+                    text: text
+                }
+            })
+            .then(function (response) {
+                if (callback) {
+                    callback(response.data);
+                }
+            }, function errorCallback(response) {
+                console.log('Error in searchFiles Method! Code:' + response.status);
+                if (response.status == 404 && callback) {
+                    callback(response.data)
+                }
+            });
+        }
+
         function getFile(id, callBack) {
             $http.get(baseUrl + '/api/files/' + id)
                 .then(function(response) {
@@ -59,6 +83,18 @@
                         }
                     },
                     function() {
+                        console.log('Error while getting file!');
+                    });
+        }
+
+        function getDeletedFile(id, callBack) {
+            $http.get(baseUrl + '/api/files/deleted/' + id)
+                .then(function (response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                },
+                    function () {
                         console.log('Error while getting file!');
                     });
         }
@@ -87,6 +123,18 @@
                     });
         }
 
+        function updateDeletedFile(id, oldParentId, file, callBack) {
+            $http.put(baseUrl + '/api/files/deleted/' + id + '?oldParentId=' + oldParentId, file)
+                .then(function (response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                },
+                    function () {
+                        console.log('Error while getting file!');
+                    });
+        }
+
         function deleteFile(id, callBack) {
             $http.delete(baseUrl + '/api/files/' + id)
                 .then(function(response) {
@@ -103,6 +151,31 @@
             var pos = columnCurrent.indexOf(columnClicked);
             if (pos == 0) { return '-' + columnClicked; }
             return columnClicked;
+        }
+
+        function openFile(url) {
+            window.open(url, '_blank');
+        }
+
+        function chooseIcon(type) {
+            switch (type) {
+                case 0:
+                    return 'Undefined';
+                case 1:
+                    return "./Content/Icons/doc.svg";
+                case 2:
+                    return "./Content/Icons/xls.svg";
+                case 3:
+                    return "./Content/Icons/ppt.svg";
+                case 4:
+                    return "./Content/Icons/trello.svg";
+                case 5:
+                    return "./Content/Icons/link.svg";
+                case 6:
+                    return "";
+                default:
+                    return "./Content/Icons/folder.svg";
+            }
         }
 
         return service;

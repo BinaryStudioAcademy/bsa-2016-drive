@@ -42,6 +42,19 @@ namespace Drive.WebHost.Api
             return Ok(file);
         }
 
+        // GET: api/files/deleted/5
+        [HttpGet]
+        [Route("deleted/{id:int}")]
+        public async Task<IHttpActionResult> GetFileDeletedAsync(int id)
+        {
+            var file = await _service?.GetDeletedAsync(id);
+
+            if (file == null)
+                return NotFound();
+
+            return Ok(file);
+        }
+
         // POST: api/files
         [HttpPost]
         public async Task<IHttpActionResult> CreateFileAsync(FileUnitDto file)
@@ -67,6 +80,20 @@ namespace Drive.WebHost.Api
 
         }
 
+        // PUT: api/files/deleted/5?oldParentId=(int)
+        [HttpPut]
+        [Route("deleted/{id:int}")]
+        public async Task<IHttpActionResult> UpdateDeletedFileAsync(int id, int? oldParentId, FileUnitDto file)
+        {
+            var dto = await _service.UpdateDeletedAsync(id, oldParentId, file);
+
+            if (id != file.Id)
+                return BadRequest();
+
+            return Ok(dto);
+
+        }
+
         // DELETE: api/files/5
         [HttpDelete]
         public IHttpActionResult DeleteFileAsync(int id)
@@ -76,7 +103,7 @@ namespace Drive.WebHost.Api
             return Ok();
         }
 
-        // GET: api/files/app/fileType
+        // GET: api/files/apps/fileType
         [HttpGet]
         [Route("apps/{fileType:alpha}")]
         public async Task<IHttpActionResult> FilterApp(string fileType)
@@ -88,6 +115,27 @@ namespace Drive.WebHost.Api
             if (result == null || result.Count == 0)
                 return NotFound();
 
+            return Ok(result);
+        }
+
+
+        // GET: api/files/apps/fileType/search
+        [HttpGet]
+        [Route("apps/{fileType:alpha}/search")]
+        public async Task<IHttpActionResult> SearchFiles(string fileType, string text = "")
+        {
+            FileType fileTypeEnum;
+            if (!Enum.TryParse(fileType, true, out fileTypeEnum))
+            {
+                return NotFound();
+            }
+            text = text == null ? string.Empty : text;
+
+            var result = await _service.SearchFiles(fileTypeEnum, text);
+            if (result == null || result.Count == 0)
+            {
+                return NotFound();
+            }
             return Ok(result);
         }
 

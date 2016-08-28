@@ -13,13 +13,18 @@ namespace Drive.WebHost.Services
 
         Task<FileUnitDto> GetAsync(int id);
 
+        Task<FileUnitDto> GetDeletedAsync(int id);
+
         Task<FileUnitDto> CreateAsync(FileUnitDto dto);
 
         Task<FileUnitDto> UpdateAsync(int id, FileUnitDto dto);
 
+        Task<FileUnitDto> UpdateDeletedAsync(int id, int? oldParentId, FileUnitDto dto);
+
         Task DeleteAsync(int id);
 
         Task<ICollection<AppDto>> FilterApp(FileType fileType);
+        Task<ICollection<AppDto>> SearchFiles(FileType fileType, string text);
 
         void Dispose();
     }

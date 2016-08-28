@@ -13,10 +13,21 @@
             getAllSpaces: getAllSpaces,
             getAllUsers: getAllUsers,
             pushData: pushData,
-            searchFoldersAndFiles,
-            getNumberOfResultSearchFoldersAndFiles,
-            getSpaceTotal
+            searchFoldersAndFiles: searchFoldersAndFiles,
+            getNumberOfResultSearchFoldersAndFiles: getNumberOfResultSearchFoldersAndFiles,
+            getSpaceTotal: getSpaceTotal,
+            getAllRoles: getAllRoles
         };
+        function getAllRoles(callback) {
+            $http.get(baseUrl + '/api/roles')
+            .then(function (response) {
+                if (callback) {
+                    callback(response.data);
+                }
+            }, function () {
+                console.log('Error while getting roles!');
+            })
+        }
 
         function getSpace(id, currentPage, pageSize, sort, callback) {
             $http.get(baseUrl + '/api/spaces/' + id, {

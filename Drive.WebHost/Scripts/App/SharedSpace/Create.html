@@ -1,0 +1,153 @@
+﻿<div>
+    <div class="modal-header">
+        <h3 class="modal-title">Add new Space</h3>
+    </div>
+    <div class="modal-body">
+        <div class="bs-example">
+            <ul class="nav nav-tabs" id="myTab">
+                <li class="active">
+                    <a data-toggle="tab" href="#general">General settings</a>
+                </li>
+                <li>
+                    <a data-toggle="tab" href="#users">Users settings</a>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div id="general" class="tab-pane fade in active">
+                    <div class="container">
+                        <form class="form-horizontal" role="form" name="createForm" novalidate>
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-md-10">
+                                        <div class="form">
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2" for="name">Space name:</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control text-valid" id="name" name="title" ng-pattern="/^[\w -]*$/" ng-model="createCtrl.space.Name" placeholder="Enter space name" required>
+                                                </div>
+                                                <span ng-show="createForm.title.$error.required && createForm.title.$touched" style="color: red" class="col-sm-offset-2">
+                                                    Name is required.
+                                                </span>
+                                                <span style="color:red" ng-show="createForm.title.$error.pattern" class="col-sm-offset-2">
+                                                    Not a valid name.
+                                                </span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2" for="description">Description:</label>
+                                                <div class="col-sm-10">
+                                                    <input type="text" class="form-control" id="description" ng-model="createCtrl.space.Description" placeholder="Enter description">
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2" for="quantity">Maximum Files Quantity:</label>
+                                                <div class="col-sm-10">
+                                                    <input type="number" class="form-control number-valid" id="quantity" min="0" step="1" name="maxfile" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="createCtrl.space.MaxFilesQuantity" placeholder="Enter max files quantity" required>
+                                                </div>
+                                                <span style="color:red" ng-show="createForm.maxfile.$error.pattern">
+                                                    Not a valid quantity.
+                                                </span>
+                                                <span ng-show="createForm.maxfile.$invalid && createForm.maxfile.$touched" style="color: red">
+                                                    Maximum Files Quantity is required.
+                                                </span>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-2" for="size">Maximum file size (MB):</label>
+                                                <div class="col-sm-10">
+                                                    <input type="number" class="form-control number-valid" id="size" min="0" step="1" max="1024" name="maxsize" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="createCtrl.space.MaxFileSize" placeholder="Enter max file size" required>
+                                                </div>
+                                                <span style="color:red" ng-show="createForm.maxsize.$error.pattern">
+                                                    Not a valid file size.
+                                                </span>
+                                                <span ng-show="createForm.maxsize.$invalid && createForm.maxsize.$touched" style="color: red">
+                                                    Maximum file size is required.
+                                                </span>
+                                                <span class="error" ng-show="createForm.maxsize.$error.max" style="color: red">
+                                                    Max file size should be less than 1024 MB.
+                                                </span>
+                                            </div>
+                                            <div class="form-group">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div id="users" class="tab-pane fade">
+                    <br />
+                    <div class="form-inline">
+                        <div class="form-group">
+                            <div class="col-md-3">
+                                <div class="dropdown" title="Select user">
+                                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu2"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                        Users<span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu scrollable-dropdown" role="menu">
+                                        <li ng-repeat="item in createCtrl.users">
+                                            <a ng-click="createCtrl.setChoice(item.name, item.id);">{{item.name}}</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <input class="form-control" ng-model="createCtrl.userAddName" placeholder="User name" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-5">
+                                <button class="btn btn-primary" ng-click="createCtrl.addSpaceUser()">
+                                    Add
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <table class="table users table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th>User name</th>
+                                <th>Read</th>
+                                <th>Write</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="item in createCtrl.permittedUsers">
+                                <td>{{item.name}}</td>
+                                <td>
+                                    <input type="checkbox" ng-model="item.confirmedRead" ng-change="createCtrl.addReadUser(item.confirmedRead, item.globalId)">
+                                </td>
+                                <td>
+                                    <input type="checkbox" ng-model="item.confirmedWrite" ng-change="createCtrl.addWriteUser(item.confirmedWrite, item.globalId)">
+                                </td>
+                                <td>
+                                    <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="createCtrl.removeSpaceUser(item.globalId); createCtrl.addReadUser(false, item.globalId); createCtrl.addWriteUser(false, item.globalId)"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="createCtrl.save()" title="Create new Space"
+            ng-disabled="createForm.title.$invalid || createForm.maxfile.$invalid || createForm.maxsize.$invalid">
+        Save
+    </button>
+    <button class="btn btn-default" type="button" ng-click="createCtrl.cancel()">
+        Cancel
+    </button>
+</div>
+
+<!--For changing tabs-->
+<script type="text/javascript">
+    $('#myTabs a')
+        .click(function (e) {
+            e.preventDefault();
+            $(this).tab('show');
+        });
+</script>

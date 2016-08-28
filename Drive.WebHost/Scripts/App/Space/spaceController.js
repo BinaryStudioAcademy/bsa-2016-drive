@@ -7,7 +7,13 @@
 
     SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', '$uibModal', 'localStorageService', '$routeParams', '$location'];
 
-    function SpaceController(spaceService, folderService, fileService, $uibModal, localStorageService, $routeParams, $location) {
+    function SpaceController(spaceService,
+        folderService,
+        fileService,
+        $uibModal,
+        localStorageService,
+        $routeParams,
+        $location) {
         var vm = this;
 
         vm.folderList = [];
@@ -32,11 +38,13 @@
         vm.deleteFile = deleteFile;
         vm.openFileWindow = openFileWindow;
         vm.openDocument = openDocument;
+        vm.openSharedFileWindow = openSharedFileWindow;
+        vm.sharedFile = sharedFile;
 
         vm.findById = findById;
         vm.getSpace = getSpace;
         vm.getSpaceByButton = getSpaceByButton;
-        
+
         vm.createNewFolder = createNewFolder;
         vm.createNewFile = createNewFile;
 
@@ -45,12 +53,13 @@
         vm.searchText = '';
 
         vm.orderByColumn = orderByColumn;
+        vm.chooseIcon = chooseIcon;
 
         vm.redirectToSpaceSettings = redirectToSpaceSettings;
 
         vm.paginate = {
             currentPage: 1,
-            pageSize: 20,
+            pageSize: 15,
             numberOfItems: 0,
             getContent: null
         }
@@ -59,7 +68,7 @@
             vm.paginate.currentPage = pageNumber;
             vm.paginate.getContent();
         }
-        
+
 
         activate();
 
@@ -69,14 +78,20 @@
             vm.showGrid = false;
             vm.changeView = changeView;
             vm.columnForOrder = 'name';
+            vm.iconHeight = 30;
 
-            spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate, function (data) {
+            spaceService.getSpace(vm.selectedSpace,
+                vm.paginate.currentPage,
+                vm.paginate.pageSize,
+                vm.sortByDate,
+                function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
 
                 if (localStorageService.get('spaceId') !== vm.spaceId) {
                     localStorageService.set('spaceId', vm.spaceId);
                     localStorageService.set('current', null);
+                        vm.parentId = null;
                     localStorageService.set('list', null)
                 }
 
@@ -118,7 +133,11 @@
         }
 
         function getSpaceContent() {
-            spaceService.getSpace(vm.selectedSpace, vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate, function (data) {
+            spaceService.getSpace(vm.selectedSpace,
+                vm.paginate.currentPage,
+                vm.paginate.pageSize,
+                vm.sortByDate,
+                function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
             });
@@ -133,7 +152,8 @@
         }
 
         function getSpaceTotal() {
-            spaceService.getSpaceTotal(vm.selectedSpace, function (data) {
+            spaceService.getSpaceTotal(vm.selectedSpace,
+                function (data) {
                 vm.paginate.numberOfItems = data;
             });
         }
@@ -161,40 +181,172 @@
 
 
         vm.folderMenuOptions = [
-            ['Share', function ($itemScope) {
+            [
+                'Share', function ($itemScope) {
                     console.log($itemScope.folder.id);
-                }],
-            ['Edit', function ($itemScope) {
+                }
+            ],
+            null,
+            ['New', function ($itemScope) {
+               
+            },  [
+            ['New folder', function () { vm.createNewFolder(); }],
+            ['New link', function () { vm.createNewFile(); }],
+            null,
+            ['Upload file', function () { }]
+            ]
+            ],
+            null,
+            [
+                'Edit', function ($itemScope) {
                     vm.folder = $itemScope.folder;
                     vm.folder.parentId = vm.parentId;
                     vm.folder.spaceId = vm.spaceId;
                     vm.openFolderWindow();
-                }],
-            ['Delete', function ($itemScope) {
+                }
+            ],
+             [
+                'Copy', function ($itemScope) {
+                    localStorageService.set('copy', { id: $itemScope.file.id, file: true });
+                }
+             ],
+            [
+                'Cut', function ($itemScope) {
+                    localStorageService.set('cut-out', { id: $itemScope.folder.id, file: false });
+                    localStorageService.set('oldParentId', vm.parentId);
+                    deleteFolder($itemScope.folder.id);
+                }
+            ],
+            [
+            'Paste', function () {
+                if (localStorageService.get('cut-out') != null) {
+                    if (localStorageService.get('cut-out').file) {
+                        fileService.getDeletedFile(localStorageService.get('cut-out').id, function (data) {
+                            var file = data;
+                            file.isDeleted = false;
+                            file.spaceId = vm.spaceId;
+                            file.parentId = vm.parentId;
+
+                            fileService.updateDeletedFile(file.id, localStorageService.get('oldParentId'), file, function () {
+                                if (vm.parentId == null) {
+                                    vm.getSpace();
+                                } else {
+                                    vm.getFolderContent(vm.parentId);
+                                }
+                            });
+                        });
+                    } else {
+
+                        folderService.getDeleted(localStorageService.get('cut-out').id, function (data) {
+                            var folder = data;
+                            folder.isDeleted = false;
+                            folder.spaceId = vm.spaceId;
+                            folder.parentId = vm.parentId;
+
+                            folderService.updateDeleted(folder.id, localStorageService.get('oldParentId'), folder, function () {
+                                if (vm.parentId == null) {
+                                    vm.getSpace();
+                                } else {
+                                    vm.getFolderContent(vm.parentId);
+                                }
+                            });
+                        });
+                    }
+                    localStorageService.set('cut-out', null);
+                }
+            }
+            ],
+            null,
+            [
+                'Delete', function ($itemScope) {
                     return deleteFolder($itemScope.folder.id);
-                }]
+                }
+            ]
         ];
 
         vm.fileMenuOptions = [
-            ['Share', function ($itemScope) {
-                    console.log($itemScope.file.id);
-                }],
-            ['Edit', function ($itemScope) {
+            [
+                'Share', function ($itemScope) {
+                    vm.fileSharedId = $itemScope.file.id;
+                    console.log(vm.fileSharedId);
+                    vm.sharedFile();
+                }
+            ],
+            null,
+            ['New', function ($itemScope) {
+
+            }, [
+            ['New folder', function () { vm.createNewFolder(); }],
+            ['New link', function () { vm.createNewFile(); }],
+            null,
+            ['Upload file', function () { }]
+            ]
+            ],
+            [
+                'Edit', function ($itemScope) {
                     vm.file = $itemScope.file;
                     vm.file.parentId = vm.parentId;
                     vm.file.spaceId = vm.spaceId;
                     vm.openFileWindow();
-                }],
-            ['Delete', function ($itemScope) {
-                    return deleteFile($itemScope.file.id);
-                }]
-        ];
+                }
+            ],
+            [
+                'Copy', function ($itemScope) {
+                    localStorageService.set('copy', { id: $itemScope.file.id, file: true });
+                }
+            ],
+            [
+                'Cut', function ($itemScope) {
+                    localStorageService.set('cut-out', { id: $itemScope.file.id, file: true });
+                    localStorageService.set('oldParentId', vm.parentId);
+                    deleteFile($itemScope.file.id);
+                }
+            ],
+            [
+            'Paste', function () {
+                if (localStorageService.get('cut-out') != null) {
+                    if (localStorageService.get('cut-out').file) {
+                        fileService.getDeletedFile(localStorageService.get('cut-out').id, function (data) {
+                            var file = data;
+                            file.isDeleted = false;
+                            file.spaceId = vm.spaceId;
+                            file.parentId = vm.parentId;
 
-        vm.createOption = [
-            ['Create folder', function () { vm.createNewFolder(); }],
-            ['Create file', function () { vm.createNewFile(); }],
+                            fileService.updateDeletedFile(file.id, localStorageService.get('oldParentId'), file, function () {
+                                if (vm.parentId == null) {
+                                    vm.getSpace();
+                                } else {
+                                    vm.getFolderContent(vm.parentId);
+                                }
+                            });
+                        });
+                    } else {
+
+                        folderService.getDeleted(localStorageService.get('cut-out').id, function (data) {
+                            var folder = data;
+                            folder.isDeleted = false;
+                            folder.spaceId = vm.spaceId;
+                            folder.parentId = vm.parentId;
+
+                            folderService.updateDeleted(folder.id, localStorageService.get('oldParentId'), folder, function () {
+                                if (vm.parentId == null) {
+                                    vm.getSpace();
+                                } else {
+                                    vm.getFolderContent(vm.parentId);
+                                }
+                            });
+                        });
+                    }
+                    localStorageService.set('cut-out', null);
+                }
+            }
+            ],
             null,
-            ['Upload file', function(){}]
+            [
+                'Delete', function ($itemScope) {
+                    return deleteFile($itemScope.file.id);
+                }
+            ]
         ];
 
         function openFolderWindow(size) {
@@ -227,7 +379,7 @@
                     var index = findById(vm.space.folders, response.item.id);
                     if (index != -1) {
                         vm.space.folders[index] = response.item;
-                    } 
+                }
                 }
             }, function () {
                 console.log('Modal dismissed');
@@ -271,13 +423,55 @@
             });
         }
 
+        function openSharedFileWindow(size) {
+
+            var fileModalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'Scripts/App/SharedFile/SharedFileForm.html',
+                windowTemplateUrl: 'Scripts/App/SharedFile/Modal.html',
+                controller: 'SharedFileModalCtrl',
+                controllerAs: 'sharedFileModalCtrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        return vm.fileSharedId;
+                    }
+                }
+            });
+
+            fileModalInstance.result.then(function (response) {
+                console.log(response);
+                if (response.operation == 'create') {
+                    if (vm.parentId == null) {
+                        vm.getSpace();
+                    }
+                    else {
+                        vm.getFolderContent(vm.parentId)
+                    }
+                }
+                if (response.operation == 'update') {
+                    var index = findById(vm.space.files, response.item.id);
+                    if (index != -1) {
+                        vm.space.files[index] = response.item;
+                    }
+                }
+            }, function () {
+                console.log('Modal dismissed');
+            });
+        }
+
+        function sharedFile() {
+            vm.fileId = { parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.openSharedFileWindow();
+        }
+
         function createNewFolder() {
             vm.folder = { parentId: vm.parentId, spaceId: vm.spaceId };
             vm.openFolderWindow();
         }
 
         function createNewFile() {
-            vm.file = {parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.file = { parentId: vm.parentId, spaceId: vm.spaceId };
             vm.openFileWindow();
         }
 
@@ -338,7 +532,7 @@
 
         function getFolderContentTotal(id) {
             folderService.getFolderContentTotal(id, function (data) {
-                vm.paginate.numberOfItems = data;                
+                vm.paginate.numberOfItems = data;
             });
         }
 
@@ -385,32 +579,39 @@
         }
 
         function cancelSearch() {
-            vm.searchText = '';
-            vm.paginate.currentPage = 1;
-            vm.paginate.getContent = getResultSearchFoldersAndFiles;
-            getResultSearchFoldersAndFiles();
-            getNumberOfResultSearch();
+            if (vm.searchText.length > 1) {
+                vm.searchText = '';
+                vm.paginate.currentPage = 1;
+                vm.paginate.getContent = getResultSearchFoldersAndFiles;
+                getResultSearchFoldersAndFiles();
+                getNumberOfResultSearch();
+            }
         }
 
         function getResultSearchFoldersAndFiles() {
-            spaceService.searchFoldersAndFiles(vm.spaceId, vm.parentId, vm.searchText, vm.paginate.currentPage,vm.paginate.pageSize, function (data) {
+            spaceService.searchFoldersAndFiles(vm.spaceId, vm.parentId, vm.searchText, vm.paginate.currentPage, vm.paginate.pageSize, function (data) {
                 vm.space.folders = data.folders;
                 vm.space.files = data.files;
             });
         }
 
-        function getNumberOfResultSearch(){
+        function getNumberOfResultSearch() {
             spaceService.getNumberOfResultSearchFoldersAndFiles(vm.spaceId, vm.parentId, vm.searchText, function (data) {
                 vm.paginate.numberOfItems = data;
             });
         }
 
         function openDocument(url) {
-            window.open(url, '_blank');
+            fileService.openFile(url);
         }
 
         function orderByColumn(column) {
             vm.columnForOrder = fileService.orderByColumn(column, vm.columnForOrder);
+        }
+
+        function chooseIcon(type) {
+            vm.iconSrc = fileService.chooseIcon(type);
+            return vm.iconSrc;
         }
     }
 }());
