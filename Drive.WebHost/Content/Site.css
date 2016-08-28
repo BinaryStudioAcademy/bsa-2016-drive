@@ -907,3 +907,13 @@ textarea.ng-valid {
     align-items: center;
     flex-direction: column;
 }
+
+.datetimepicker th, td {
+    display: table-cell;
+    padding: 0;
+    min-height: 0;
+}
+
+.datetimepicker .input-group {
+    display: block;
+}
