@@ -53,7 +53,7 @@
     <ul class="sp-gv-flex-container wrap" ng-show="spaceCtrl.showGrid">
         <li class="sp-gv-flex-item" role="button" context-menu="spaceCtrl.folderMenuOptions" dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize" total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
             <div class="sp-gv-wrapper-flex-item">
-                <div class="sp-gv-item-content">
+                <div class="sp-gv-item-content card">
                     <div class="sp-gv-item-img-wrapper">
                         <img ng-src="./Content/Icons/folder.svg" alt="Folder" title="Folder" />
                     </div>
