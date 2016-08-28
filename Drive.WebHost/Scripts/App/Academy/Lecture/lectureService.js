@@ -5,9 +5,12 @@
         .module('driveApp.academyPro')
         .factory('LectureService', LectureService);
 
-    LectureService.$inject = ['$http'];
+    LectureService.$inject = [
+        '$http',
+        'BaseUrl'
+    ];
 
-    function LectureService($http) {
+    function LectureService($http, baseUrl) {
         var service = {
             getLecture: getLecture,
             pushData: pushData
@@ -16,7 +19,7 @@
         return service;
 
         function getLecture(id) {
-            return $http.get('/api/lectures/' + id)
+            return $http.get(baseUrl + '/api/lectures/' + id)
                 .then(getLectureCompleted)
                 .catch(getLectureFailed);
 
@@ -30,7 +33,7 @@
         }
 
         function pushData(data) {
-            return $http.post('/api/lectures', data)
+            return $http.post(baseUrl + '/api/lectures', data)
                 .then(pushDataCompleted)
                 .catch(pushDataFailed);
 

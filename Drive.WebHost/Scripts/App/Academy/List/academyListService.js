@@ -5,9 +5,12 @@
         .module('driveApp.academyPro')
         .factory('AcademyListService', AcademyListService);
 
-    AcademyListService.$inject = ['$http'];
+    AcademyListService.$inject = [
+        '$http',
+        'BaseUrl'
+    ];
 
-    function AcademyListService($http) {
+    function AcademyListService($http, baseUrl) {
         var service = {
             getAcademies: getAcademies,
             pushData: pushData
@@ -16,7 +19,7 @@
         return service;
 
         function getAcademies() {
-            return $http.get('/api/academies')
+            return $http.get(baseUrl + '/api/academies')
                 .then(getAcademiesCompleted)
                 .catch(getAcademiesFailed);
 
@@ -30,7 +33,7 @@
         }
 
         function pushData(data) {
-            return $http.post('/api/academies', data)
+            return $http.post(baseUrl + '/api/academies', data)
                 .then(pushDataCompleted)
                 .catch(pushDataFailed);
 
