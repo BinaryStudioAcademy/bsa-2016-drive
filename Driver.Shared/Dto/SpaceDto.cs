@@ -11,6 +11,7 @@ namespace Driver.Shared.Dto
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public SpaceType Type { get; set; }
 
         public string Description { get; set; }
 

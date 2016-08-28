@@ -38,6 +38,7 @@ namespace Drive.WebHost.Services
             {
                 Id = s.Id,
                 Name = s.Name,
+                Type = s.Type,
                 Description = s.Description,
                 MaxFileSize = s.MaxFileSize,
                 MaxFilesQuantity = s.MaxFilesQuantity,
@@ -82,6 +83,7 @@ namespace Drive.WebHost.Services
             {
                 Id = s.Id,
                 Name = s.Name,
+                Type = s.Type,
                 Description = s.Description,
                 MaxFileSize = s.MaxFileSize,
                 MaxFilesQuantity = s.MaxFilesQuantity,

@@ -80,7 +80,7 @@
         function removeRole(id) {
             swal({
                 title: "Deleting role!",
-                text: "Are you really want to delete role?",
+                text: "Do you really want to delete role?",
                 type: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#DD6B55",

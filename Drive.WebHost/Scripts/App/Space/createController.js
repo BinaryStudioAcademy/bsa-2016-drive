@@ -138,7 +138,6 @@
                   {
                       closeButton: true, timeOut: 5000
                   });
-                    //console.log('The user already exist in this space!');
                     return;
                 };
                 vm.permittedUsers.push({
