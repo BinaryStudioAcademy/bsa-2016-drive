@@ -579,11 +579,13 @@
         }
 
         function cancelSearch() {
-            vm.searchText = '';
-            vm.paginate.currentPage = 1;
-            vm.paginate.getContent = getResultSearchFoldersAndFiles;
-            getResultSearchFoldersAndFiles();
-            getNumberOfResultSearch();
+            if (vm.searchText.length > 1) {
+                vm.searchText = '';
+                vm.paginate.currentPage = 1;
+                vm.paginate.getContent = getResultSearchFoldersAndFiles;
+                getResultSearchFoldersAndFiles();
+                getNumberOfResultSearch();
+            }
         }
 
         function getResultSearchFoldersAndFiles() {
