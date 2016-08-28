@@ -93,8 +93,8 @@ namespace Drive.WebHost.Services
                 ReadPermittedRoles = s.ReadPermittedRoles,
                 ModifyPermittedRoles = s.ModifyPermittedRoles,
                 Files = s.ContentList.OfType<FileUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted)
-                //.Where(f => f.ReadPermittedUsers.FirstOrDefault(x => x.GlobalId == identity) != null)
-                //.Where(f => f.ReadPermittedRoles.Where(x => x.Users.FirstOrDefault(y => y.GlobalId == identity) != null) != null)
+                .Where(f => f.ReadPermittedUsers.FirstOrDefault(x => x.GlobalId == identity) != null)
+                .Where(f => f.ReadPermittedRoles.FirstOrDefault(x => x.Users.FirstOrDefault(y => y.GlobalId == identity) != null) != null)
                 .Select(f => new FileUnitDto
                 {
                     Description = f.Description,
@@ -108,7 +108,7 @@ namespace Drive.WebHost.Services
                 }),
                 Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted)
                 //.Where(f => f.ReadPermittedUsers.FirstOrDefault(x => x.GlobalId == identity) != null)
-                //.Where(f => f.ReadPermittedRoles.Where(x => x.Users.FirstOrDefault(y => y.GlobalId == identity) != null) != null)
+                //.Where(f => f.ReadPermittedRoles.FirstOrDefault(x => x.Users.FirstOrDefault(y => y.GlobalId == identity) != null) != null)
                 .Select(f => new FolderUnitDto
                 {
                     Id = f.Id,
