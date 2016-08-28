@@ -49,7 +49,7 @@
     </div>
     <span us-spinner="{radius:30, width:8, length: 16}"></span>
     <div class="wrap" ng-show="spaceCtrl.showGrid">
-        <div role="button" class="s-block btn-default shadow" context-menu="spaceCtrl.folderMenuOptions" dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize" total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
+        <div role="button" class="s-block card" context-menu="spaceCtrl.folderMenuOptions" dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize" total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
             <img ng-src="./Content/Icons/folder.svg" height="{{spaceCtrl.iconHeight * 2}}" alt=""/>
             <br>
             <span class="bold">Name: </span>
@@ -62,7 +62,7 @@
             <span>{{ folder.author.name }}</span>
         </div>
         <div class="clearfix"></div>
-        <div role="button" class="s-block btn-default shadow" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.openDocument(file.link)">
+        <div role="button" class="s-block card" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.openDocument(file.link)">
             <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" height="{{spaceCtrl.iconHeight * 2}}" alt="" />
             <br>
             <span class="bold">File type: </span>
