@@ -63,7 +63,8 @@ gulp.task("libs", function () {
       paths.bower + "angular-toastr.tpls.js",
       paths.bower + "sweetalert.min.js",
       paths.bower + "angular-youtube-embed.js",
-      paths.bower + "youtube.iframe-api.js"
+      paths.bower + "youtube.iframe-api.js",
+      paths.bower + "datetime-picker.js"
     ])
 
         .pipe(concat("libs.js"))

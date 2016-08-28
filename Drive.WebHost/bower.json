@@ -18,9 +18,11 @@
     "youtube-iframe-api": "^0.0.1",
     "angular-animate": "~v1.5.8",
     "angular-toastr": "2.1.1",
-    "sweetalert": "latest"
+    "sweetalert": "latest",
+    "bootstrap-ui-datetime-picker": "^2.4.3"
   },
   "resolutions": {
-    "angular": "1.5.9-build.5006+sha.e3a378e"
+    "angular": "1.5.9-build.5006+sha.e3a378e",
+    "angular-bootstrap": "~2.0.1"
   }
 }
