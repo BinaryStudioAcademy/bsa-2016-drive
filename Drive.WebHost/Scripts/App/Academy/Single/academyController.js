@@ -11,10 +11,21 @@
         vm.currentAcademyId = $routeParams.id;
         vm.academy = null;
         vm.openLecture = openLecture;
+        vm.changeView = changeView;
 
         activate();
 
         function activate() {
+            vm.view = "fa fa-th";
+            vm.showTable = true;
+            vm.showGrid = false;
+            vm.columnForOrder = 'name';
+            vm.searchText = '';
+            vm.iconHeight = 30;
+            vm.showTable = true;
+            vm.icon = "./Content/Icons/folder.svg";
+            vm.iconHeight = 30;
+
             return getAcademy();
         }
 
@@ -28,6 +39,22 @@
 
         function openLecture(id) {
             $location.url('/apps/academy/' + vm.currentAcademyId + '/lecture/' + id);
+        }
+
+        function changeView(view) {
+            if (view == "fa fa-th") {
+                activateGridView();
+            } else {
+                activateTableView();
+            }
+        }
+        function activateTableView() {
+            vm.view = "fa fa-th";
+            vm.showTable = true;
+        }
+        function activateGridView() {
+            vm.view = "fa fa-list";
+            vm.showTable = false;
         }
     }
 }());

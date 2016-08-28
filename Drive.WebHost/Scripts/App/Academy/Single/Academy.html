@@ -5,28 +5,76 @@
     </div>
 
     <div>
+        <br />
+        <div class="lecture-tags">
+            <ul>
+                <li class="lecture-tags-entry" ng-repeat="tag in academyCtrl.academy.tags">
+                    {{tag.name}}
+                </li>
+            </ul>
+        </div>
         <span us-spinner="{radius:30, width:8, length: 16}"></span>
         <h2>{{academyCtrl.academy.fileUnit.name}}</h2>
         <p>{{academyCtrl.academy.fileUnit.description}}</p>
-        <div class="scroll-hide">
-            <div class="scrollable-row">
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th class="name" style="width: 20%">Name</th>
-                                <th>Description</th>
-                                <th style="width: 15%">Author</th>
-                                <th style="width: 15%">Created</th>
-                            </tr>
-                        </thead>
-                        <tr class="shadow" role="button" ng-repeat="lecture in academyCtrl.academy.lectures" ng-dblclick="academyCtrl.openLecture(lecture.id)">
-                            <td>{{ lecture.name }}</td>
-                            <td>{{ lecture.description }}</td>
-                            <td>{{ lecture.author.name }}</td>
-                            <td>{{ lecture.startDate | date:'dd-MM-yyyy HH:mm' }}</td>
-                        </tr>
-                    </table>
+        <div>
+            <div class="row" style="margin: 1em 0 1em 0;">
+                <div class="col-lg-push-4-offset pull-right">
+                    <button class="btn btn-default" ng-click="academyCtrl.changeView(academyCtrl.view)">
+                        <i class={{academyCtrl.view}} title="view"> </i>
+                    </button>
+                </div>
+                <!--<div>
+                    <div class="col-sm-3 pull-right">
+                        <div>
+                            <div class="input-group">
+                                <form id="form-container">
+                                    <div id="searchtext">
+                                        <input type="search" size="40" class="search-input" value="" name="s" id="s" placeholder="Search..." ng-model="academyCtrl.searchText">
+                                        <button class="search-submit-button" type="submit" ng-click="academyCtrl.search()"> <i class="fa fa-search"></i> </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+            </div>
+            <div class="wrap clearfix" ng-show="!academyCtrl.showTable">
+                <div role="button" class="s-block btn-default shadow" ng-repeat="lecture in academyCtrl.academy.lectures"
+                     title="Created {{ academy.createdAt | date : 'short' }}"
+                     ng-dblclick="academyCtrl.openLecture(lecture.id)"
+                     context-menu="fileFilterCtrl.fileMenuOptions">
+                    <img ng-src="{{academyCtrl.icon}}" height="{{academyCtrl.iconHeight * 2}}" />
+                    <br>
+                    <span class="bold">Name: </span>
+                    <span>{{ lecture.name }}</span>
+                    <br>
+                    <span class="bold">Author: </span>
+                    <span>{{ lecture.author.name }}</span><br>
+                    <span class="bold">Start date: </span>
+                    <span>{{ lecture.startDate | date:'dd-MM-yyyy HH:mm'}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="filter-table" ng-show="academyCtrl.showTable">
+            <div class="header-wrapper">
+                <div class="row header-row">
+                    <div class="col-md-3">Name</div>
+                    <div class="col-md-3">Description</div>
+                    <div class="col-md-3">Author</div>
+                    <div class="col-md-3">Start date</div>
+                </div>
+            </div>
+            <div class="filter-table-internal">
+                <div class="filter-table-row">
+                    <div class="row filter-table-row" role="button" ng-repeat="lecture in academyCtrl.academy.lectures"
+                         ng-dblclick="academyCtrl.openLecture(lecture.id)">
+                        <div class="col-md-3 filter-table-cell">
+                            <img ng-src="{{academyCtrl.icon}}" height="{{academyCtrl.iconHeight}}" /> {{ lecture.name }}
+                        </div>
+                        <div class="col-md-3 filter-table-cell">{{ lecture.description }}</div>
+                        <div class="col-md-3 filter-table-cell">{{ lecture.author.name }}</div>
+                        <div class="col-md-3 filter-table-cell">{{ lecture.startDate | date:'dd-MM-yyyy HH:mm' }}</div>
+                    </div>
                 </div>
             </div>
         </div>
