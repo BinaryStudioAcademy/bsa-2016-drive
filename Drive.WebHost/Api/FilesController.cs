@@ -103,7 +103,7 @@ namespace Drive.WebHost.Api
             return Ok();
         }
 
-        // GET: api/files/app/fileType
+        // GET: api/files/apps/fileType
         [HttpGet]
         [Route("apps/{fileType:alpha}")]
         public async Task<IHttpActionResult> FilterApp(string fileType)
@@ -115,6 +115,27 @@ namespace Drive.WebHost.Api
             if (result == null || result.Count == 0)
                 return NotFound();
 
+            return Ok(result);
+        }
+
+
+        // GET: api/files/apps/fileType/search
+        [HttpGet]
+        [Route("apps/{fileType:alpha}/search")]
+        public async Task<IHttpActionResult> SearchFiles(string fileType, string text = "")
+        {
+            FileType fileTypeEnum;
+            if (!Enum.TryParse(fileType, true, out fileTypeEnum))
+            {
+                return NotFound();
+            }
+            text = text == null ? string.Empty : text;
+
+            var result = await _service.SearchFiles(fileTypeEnum, text);
+            if (result == null || result.Count == 0)
+            {
+                return NotFound();
+            }
             return Ok(result);
         }
 

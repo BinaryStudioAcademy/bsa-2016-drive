@@ -4,9 +4,9 @@
     angular.module("driveApp")
         .controller("RoleController", RoleController);
 
-    RoleController.$inject = ['$uibModalInstance', 'RoleService', 'items', '$window'];
+    RoleController.$inject = ['$uibModalInstance', 'RoleService', 'items', '$window', 'toastr'];
 
-    function RoleController($uibModalInstance, RoleService, items, $window) {
+    function RoleController($uibModalInstance, RoleService, items, $window, toastr) {
         var vm = this;
         vm.createRole = createRole;
         vm.cancel = cancel;
@@ -59,7 +59,6 @@
             vm.role.users = vm.permittedUsers;
             RoleService.createRole(vm.role);
             $uibModalInstance.close();
-            $window.location.reload();
         }
 
         function save() {
@@ -68,7 +67,6 @@
             vm.role.users = vm.permittedUsers;
             RoleService.saveRole(vm.role);
             $uibModalInstance.close();
-            $window.location.reload();
         }
 
         function cancel() {
@@ -78,7 +76,11 @@
         function addRoleUser() {
             if (vm.selected.id != null) {
                 if (vm.permittedUsers.find(x => x.globalId === vm.selected.id)) {
-                    console.log('The user already exist in this role!');
+                    toastr.warning(
+                   'User already exist in this role!', 'Admin panel',
+                   {
+                       closeButton: true, timeOut: 5000
+                   });
                     return;
                 };
                 vm.permittedUsers.push({

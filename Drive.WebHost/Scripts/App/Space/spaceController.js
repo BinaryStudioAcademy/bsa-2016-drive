@@ -38,6 +38,8 @@
         vm.deleteFile = deleteFile;
         vm.openFileWindow = openFileWindow;
         vm.openDocument = openDocument;
+        vm.openSharedFileWindow = openSharedFileWindow;
+        vm.sharedFile = sharedFile;
 
         vm.findById = findById;
         vm.getSpace = getSpace;
@@ -51,6 +53,7 @@
         vm.searchText = '';
 
         vm.orderByColumn = orderByColumn;
+        vm.chooseIcon = chooseIcon;
 
         vm.redirectToSpaceSettings = redirectToSpaceSettings;
 
@@ -75,6 +78,7 @@
             vm.showGrid = false;
             vm.changeView = changeView;
             vm.columnForOrder = 'name';
+            vm.iconHeight = 30;
 
             spaceService.getSpace(vm.selectedSpace,
                 vm.paginate.currentPage,
@@ -263,7 +267,9 @@
         vm.fileMenuOptions = [
             [
                 'Share', function ($itemScope) {
-                    console.log($itemScope.file.id);
+                    vm.fileSharedId = $itemScope.file.id;
+                    console.log(vm.fileSharedId);
+                    vm.sharedFile();
                 }
             ],
             null,
@@ -417,6 +423,48 @@
             });
         }
 
+        function openSharedFileWindow(size) {
+
+            var fileModalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'Scripts/App/SharedFile/SharedFileForm.html',
+                windowTemplateUrl: 'Scripts/App/SharedFile/Modal.html',
+                controller: 'SharedFileModalCtrl',
+                controllerAs: 'sharedFileModalCtrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        return vm.fileSharedId;
+                    }
+                }
+            });
+
+            fileModalInstance.result.then(function (response) {
+                console.log(response);
+                if (response.operation == 'create') {
+                    if (vm.parentId == null) {
+                        vm.getSpace();
+                    }
+                    else {
+                        vm.getFolderContent(vm.parentId)
+                    }
+                }
+                if (response.operation == 'update') {
+                    var index = findById(vm.space.files, response.item.id);
+                    if (index != -1) {
+                        vm.space.files[index] = response.item;
+                    }
+                }
+            }, function () {
+                console.log('Modal dismissed');
+            });
+        }
+
+        function sharedFile() {
+            vm.fileId = { parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.openSharedFileWindow();
+        }
+
         function createNewFolder() {
             vm.folder = { parentId: vm.parentId, spaceId: vm.spaceId };
             vm.openFolderWindow();
@@ -531,11 +579,13 @@
         }
 
         function cancelSearch() {
-            vm.searchText = '';
-            vm.paginate.currentPage = 1;
-            vm.paginate.getContent = getResultSearchFoldersAndFiles;
-            getResultSearchFoldersAndFiles();
-            getNumberOfResultSearch();
+            if (vm.searchText.length > 1) {
+                vm.searchText = '';
+                vm.paginate.currentPage = 1;
+                vm.paginate.getContent = getResultSearchFoldersAndFiles;
+                getResultSearchFoldersAndFiles();
+                getNumberOfResultSearch();
+            }
         }
 
         function getResultSearchFoldersAndFiles() {
@@ -557,6 +607,11 @@
 
         function orderByColumn(column) {
             vm.columnForOrder = fileService.orderByColumn(column, vm.columnForOrder);
+        }
+
+        function chooseIcon(type) {
+            vm.iconSrc = fileService.chooseIcon(type);
+            return vm.iconSrc;
         }
     }
 }());

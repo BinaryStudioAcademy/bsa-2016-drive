@@ -20,7 +20,7 @@
         function activate() {
             vm.file = items;
             vm.title = 'New link';
-            vm.icon = "fa fa-file-o";
+            vm.icon = "./Content/Icons/add-file_bw.svg";
             vm.urlIsValid = false;
             vm.submitted = false;
             vm.types = {
@@ -107,6 +107,14 @@
             var expression = "^(?:(?:ht|f)tps?://)?(?:[\\-\\w]+@)?(?:[\\-0-9a-z]*[0-9a-z]\\.)+[a-z]{2,6}(?::\\d{1,5})?(?:[?/\\\\#][?!^$.(){}:|=[\\]+\\-/\\\\*;&~#@,%\\wР-пр-џ]*)?$";
             var reg = new RegExp(expression);
             vm.urlIsValid = reg.test(vm.file.link);
+
+            if (vm.urlIsValid) {
+                vm.checkUrl();
+                vm.icon = fileService.chooseIcon(vm.file.fileType)
+            }
+            else {
+                vm.icon = "./Content/Icons/add-file_bw.svg";
+            }
         }
     }
 }());

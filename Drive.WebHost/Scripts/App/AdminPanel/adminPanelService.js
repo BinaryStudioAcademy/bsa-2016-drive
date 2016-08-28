@@ -16,7 +16,7 @@
         };
 
         function getAllSpaces(callback) {
-            $http.get('/api/spaces')
+            $http.get(baseUrl + '/api/spaces')
                 .then(function (response) {
                     if (callback) {
                         callback(response.data);
@@ -27,7 +27,7 @@
         }
 
         function getAllUsers(callback) {
-            $http.get('/api/users')
+            $http.get(baseUrl + '/api/users')
             .then(function (response) {
                 if (callback) {
                     callback(response.data);
@@ -38,7 +38,7 @@
         }
 
         function getAllRoles(callback) {
-            $http.get('/api/roles')
+            $http.get(baseUrl + '/api/roles')
             .then(function (response) {
                 if (callback) {
                     callback(response.data);

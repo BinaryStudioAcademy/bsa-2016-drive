@@ -21,6 +21,7 @@ namespace Drive.DataAccess.Interfaces
         IRepository<ContentLink> ContentLinks { get; }
         IRepository<Tag> Tags { get; }
         IRepository<Lecture> Lectures { get; }
+        IRepository<Shared> SharedSpace { get; }
 
         Task SaveChangesAsync();
     }

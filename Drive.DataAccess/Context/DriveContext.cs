@@ -26,6 +26,7 @@ namespace Drive.DataAccess.Context
         public DbSet<ContentLink> ContentLinks { get; set; }
         public DbSet<CodeSample> CodeSamples { get; set; }
         public DbSet<Tag> Tags { get; set; }
+        public DbSet<Shared> SharedSpaces { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

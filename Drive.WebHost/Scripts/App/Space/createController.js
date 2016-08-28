@@ -5,9 +5,9 @@
         .module("driveApp")
         .controller("CreateController", CreateController);
 
-    CreateController.$inject = ['SpaceService', '$uibModalInstance', '$timeout'];
+    CreateController.$inject = ['SpaceService', '$uibModalInstance', '$timeout', 'toastr'];
 
-    function CreateController(spaceService, $uibModalInstance, $timeout) {
+    function CreateController(spaceService, $uibModalInstance, $timeout, toastr) {
         var vm = this;
         
         vm.addNewSpace = addNewSpace;
@@ -133,7 +133,11 @@
         function addSpaceUser() {
             if (vm.selected.id != null) {
                 if (vm.permittedUsers.find(x => x.globalId === vm.selected.id)) {
-                    console.log('The user already exist in this space!');
+                    toastr.warning(
+                        'User already exist in this space!', 'Create new Space',
+                  {
+                      closeButton: true, timeOut: 5000
+                  });
                     return;
                 };
                 vm.permittedUsers.push({
@@ -146,7 +150,12 @@
         function addSpaceRole() {
             if (vm.selectedRole.id != null) {
                 if (vm.permittedRoles.find(x => x.id == vm.selectedRole.id)) {
-                    console.log('The role already exist in this space!');
+                    toastr.warning(
+                        'The role already exist in this space!', 'Create new Space',
+                  {
+                      closeButton: true, timeOut: 5000
+                  });
+                    //console.log('The role already exist in this space!');
                     return;
                 };
                 vm.permittedRoles.push({
@@ -261,7 +270,12 @@
 
             $timeout(function () {
                 $uibModalInstance.close();
-            }, 3000);
+                toastr.success(
+                    'New space was added successfully!', 'Create new Space',
+                    {
+                        closeButton: true, timeOut: 6000
+                    });
+            }, 1000);
         };
 
         function cancel() {

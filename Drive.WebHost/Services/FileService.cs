@@ -234,6 +234,45 @@ namespace Drive.WebHost.Services
             return result;
         }
 
+        public async Task<ICollection<AppDto>> SearchFiles(FileType fileType, string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return await FilterApp(fileType);
+            }
+            else
+            {
+                var result = await _unitOfWork.Files.Query
+               .Where(f => f.FileType == fileType & f.Name.ToLower().Contains(text.ToLower()))
+               .GroupBy(f => f.Space).Select(f => new AppDto()
+               {
+                   SpaceId = f.Key.Id,
+                   Name = f.Key.Name,
+                   Files = f.Select(d => new FileUnitDto
+                   {
+                       Id = d.Id,
+                       IsDeleted = d.IsDeleted,
+                       FileType = d.FileType,
+                       Name = d.Name,
+                       Link = d.Link,
+                       CreatedAt = d.CreatedAt,
+                       Author = new AuthorDto() { Id = d.Owner.Id, GlobalId = d.Owner.GlobalId },
+                       Description = d.Description
+                   }),
+               }).ToListAsync();
+
+                var owners = (await _usersService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
+                foreach (var item in result)
+                {
+                    Parallel.ForEach(item.Files, file =>
+                    {
+                        file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name;
+                    });
+                }
+                return result;
+            }
+        }
+
         public void Dispose()
         {
             _unitOfWork?.Dispose();

@@ -24,6 +24,7 @@ namespace Drive.WebHost.Services
         Task DeleteAsync(int id);
 
         Task<ICollection<AppDto>> FilterApp(FileType fileType);
+        Task<ICollection<AppDto>> SearchFiles(FileType fileType, string text);
 
         void Dispose();
     }

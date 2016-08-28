@@ -4,9 +4,9 @@
     angular.module("driveApp")
         .controller("SettingsController", SettingsController);
 
-    SettingsController.$inject = ['SettingsService', 'SpaceService', 'FolderService', 'FileService', '$routeParams', '$location', '$rootScope', '$window'];
+    SettingsController.$inject = ['SettingsService', 'SpaceService', 'FolderService', 'FileService', '$routeParams', '$location', '$rootScope', '$window', 'toastr', '$timeout'];
 
-    function SettingsController(settingsService, spaceService, folderService, fileService, $routeParams, $location, $rootScope, $window) {
+    function SettingsController(settingsService, spaceService, folderService, fileService, $routeParams, $location, $rootScope, $window, toastr, $timeout) {
         var vm = this;
         vm.save = save;
         vm.cancel = cancel;     
@@ -32,7 +32,6 @@
         vm.setTab = setTab;
         vm.isSet = isSet;
         vm.deleteSpace = deleteSpace;
-        vm.showDeleteBtn = showDeleteBtn;
 
         activate();
 
@@ -40,7 +39,7 @@
             settingsService.getSpace(vm.selectedSpace, function (data) {
                 vm.space = data;
                 // Hide delete space btn for Binary and My spaces
-                if (vm.space.name === 'Binary Space' || vm.space.name === 'My Space') {
+                if (vm.space.type === 0 || vm.space.type === 1) {
                     vm.showDeleteBtn = false;
                 }
                 else {
@@ -150,7 +149,11 @@
         function addSpaceUser() {
             if (vm.selected.id != null) {
                 if (vm.permittedUsers.find(x => x.globalId === vm.selected.id)) {
-                    console.log('The user already exist in this space!');
+                    toastr.warning(
+                   'User already exist in this space!', 'Space settings',
+                   {
+                       closeButton: true, timeOut: 5000
+                   });
                     return;
                 };
                 vm.permittedUsers.push({
@@ -163,7 +166,12 @@
         function addSpaceRole() {
             if (vm.selectedRole.id != null) {
                 if (vm.permittedRoles.find(x => x.id == vm.selectedRole.id)) {
-                    console.log('The role already exist in this space!');
+                    toastr.warning(
+                   'The role already exist in this space!', 'Space settings',
+                   {
+                       closeButton: true, timeOut: 5000
+                   });
+                    //console.log('The role already exist in this space!');
                     return;
                 };
                 vm.permittedRoles.push({
@@ -285,20 +293,17 @@
             return vm.tab === tabNum;
         };
 
-        function showDeleteBtn()
-        {
-            if (vm.space.name == 'Binary Space' || vm.space.name == 'My Space') {
-                return false;
-            }
-            else {
-                return true;
-            }
-        }
-
         function deleteSpace()
         {
-            if (confirm('Do you really want to delete space and all inside folders and files?') == true)
-            {
+            swal({
+                title: "Deleting space!",
+                text: "Are you sure that you want delete space and all folders and files in it?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            }, function () {
                 settingsService.deleteSpaceWithStaff(vm.selectedSpace, function (response) {
                     if (response) {
                         var data = {
@@ -307,12 +312,18 @@
                         }
                     }
                 });
-                // Reload page
-                $window.location.reload(true);
-                $location.url("/");            
-            } else {
-
-            }
+                swal({
+                    title: "Deleted!",
+                    text: "Your space has been deleted.",
+                    timer: 2000,
+                    showConfirmButton: false,
+                    type: "success"
+                });
+                $timeout(function () {
+                    $window.location.reload(true);
+                    $location.url("/");
+                }, 2100);
+            });
         }
     }
-    }());
+}());

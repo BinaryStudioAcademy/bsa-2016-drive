@@ -8,77 +8,46 @@
                 <div class="col-md-2">
                     <ul class="nav nav-pills nav-stacked">
                         <li ng-class="{ active: createCtrl.isSet(1) }">
-                            <a href ng-click="createCtrl.setTab(1)">General</a>
+                            <a ng-click="createCtrl.setTab(1)">General</a>
                         </li>
                         <li ng-class="{ active: createCtrl.isSet(2) }">
-                            <a href ng-click="createCtrl.setTab(2)">Users</a>
+                            <a ng-click="createCtrl.setTab(2)">Users</a>
                         </li>
                         <li ng-class="{ active: createCtrl.isSet(3) }">
-                            <a href ng-click="createCtrl.setTab(3)">Roles</a>
+                            <a ng-click="createCtrl.setTab(3)">Roles</a>
                         </li>
                     </ul>
                 </div>
                 <div class="col-md-10">
                     <div ng-show="createCtrl.isSet(1)">
-                        <form class="form-horizontal" role="form" name="createForm" novalidate>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form">
-                                        <div class="form-group">
-                                            <label class="control-label col-sm-6" for="name">Space name:</label>
-                                            <div class="col-sm-6">
-                                                <input type="text" class="form-control" id="name" name="title" ng-pattern="/^[\w -]*$/" ng-model="createCtrl.space.Name" placeholder="Enter space name" required>
-                                            </div>
-                                            <span ng-show="createForm.title.$error.required && createForm.title.$touched" style="color: red" class="col-sm-offset-2">
-                                                Name is required.
-                                            </span>
-                                            <span style="color:red" ng-show="createForm.title.$error.pattern" class="col-sm-offset-2">
-                                                Not a valid name.
-                                            </span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-sm-6" for="description">Description:</label>
-                                            <div class="col-sm-6">
-                                                <input type="text" class="form-control" id="description" ng-model="createCtrl.space.Description" placeholder="Enter description">
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-sm-6" for="quantity">Maximum Files Quantity:</label>
-                                            <div class="col-sm-6">
-                                                <input type="number" class="form-control" id="quantity" min="0" step="1" name="maxfile" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="createCtrl.space.MaxFilesQuantity" placeholder="Enter max files quantity" required>
-                                            </div>
-                                            <span style="color:red" ng-show="createForm.maxfile.$error.pattern">
-                                                Not a valid quantity.
-                                            </span>
-                                            <span ng-show="createForm.maxfile.$invalid && createForm.maxfile.$touched" style="color: red">
-                                                Maximum Files Quantity is required.
-                                            </span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="control-label col-sm-6" for="size">Maximum file size (MB):</label>
-                                            <div class="col-sm-6">
-                                                <input type="number" class="form-control" id="size" min="0" step="1" max="1024" name="maxsize" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="createCtrl.space.MaxFileSize" placeholder="Enter max file size" required>
-                                            </div>
-                                            <span style="color:red" ng-show="createForm.maxsize.$error.pattern">
-                                                Not a valid file size.
-                                            </span>
-                                            <span ng-show="createForm.maxsize.$invalid && createForm.maxsize.$touched" style="color: red">
-                                                Maximum file size is required.
-                                            </span>
-                                            <span class="error" ng-show="createForm.maxsize.$error.max" style="color: red">
-                                                Max file size should be less than 1024 MB.
-                                            </span>
-                                        </div>
-                                        <div class="form-group">
-                                        </div>
-                                    </div>
-                                </div>
+                        <form name="createForm" ng-submit="submitForm()" class="form-horizontal" novalidate>
+                            <div class="form-group" ng-class="{ 'has-error' : createForm.name.$invalid && !createForm.name.$pristine }">
+                                <label class="col-sm-2">Space name:</label>
+                                <input type="text" name="name" id="name" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="createCtrl.space.Name" placeholder="Enter space name" required>
+                                <p ng-show="createForm.name.$error.required && createForm.name.$touched" class="help-block col-sm-offset-2">Name is required.</p>
+                                <p ng-show="createForm.name.$error.pattern" class="help-block col-sm-offset-2">Not a valid name.</p>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2">Description:</label>
+                                <input type="text" name="description" class="form-control" id="description" ng-model="createCtrl.space.Description" placeholder="Enter description">
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error' : createForm.maxfile.$invalid && !createForm.maxfile.$pristine }">
+                                <label class="col-sm-2">Maximum Files Quantity:</label>
+                                <input type="number" name="maxfile" id="quantity" min="0" step="1" class="form-control number-valid" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="createCtrl.space.MaxFilesQuantity" placeholder="Enter max files quantity" required>
+                                <p ng-show="createForm.maxfile.$invalid && createForm.maxfile.$touched" class="help-block col-sm-offset-2">Maximum Files Quantity is required.</p>
+                                <p ng-show="createForm.maxfile.$error.pattern" class="help-block col-sm-offset-2">Not a valid quantity.</p>
+                            </div>
+                            <div class="form-group" ng-class="{ 'has-error' : createForm.maxsize.$invalid && !createForm.maxsize.$pristine }">
+                                <label class="col-sm-2">Maximum file size (MB):</label>
+                                <input type="number" name="maxsize" id="maxsize" min="0" step="1" max="1024" class="form-control number-valid" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="createCtrl.space.MaxFileSize" placeholder="Enter max file size" required>
+                                <p ng-show="createForm.maxsize.$error.max" class="help-block col-sm-offset-2">Max file size should be less than 1024 MB.</p>
+                                <p ng-show="createForm.maxsize.$invalid && createForm.maxsize.$touched" class="help-block col-sm-offset-2">Maximum file size is required.</p>
+                                <p ng-show="createForm.maxsize.$error.pattern" class="help-block">Not a valid file size.</p>
                             </div>
                         </form>
                     </div>
-
                     <div ng-show="createCtrl.isSet(2)">
-                        <form class="form-horizontal" role="form" name="createForm" novalidate>
+                        <form class="form-horizontal" role="form" name="usersForm" novalidate>
                             <div class="col-md-7">
                                 <div class="form">
                                     <div class="col-md-4">
@@ -122,7 +91,7 @@
                     </div>
 
                     <div ng-show="createCtrl.isSet(3)">
-                        <form class="form-horizontal" role="form" name="createForm" novalidate>
+                        <form class="form-horizontal" role="form" name="rolesForm" novalidate>
                             <div class="col-md-7">
                                 <div class="form">
                                     <div class="col-md-4">
@@ -171,7 +140,7 @@
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="createCtrl.create()" title="Create new Space"
-            ng-disabled="createForm.title.$invalid || createForm.maxfile.$invalid || createForm.maxsize.$invalid">
+            ng-disabled="createForm.name.$invalid || createForm.maxfile.$invalid || createForm.maxsize.$invalid">
         Create
     </button>
     <button class="btn btn-default" type="button" ng-click="createCtrl.cancel()">

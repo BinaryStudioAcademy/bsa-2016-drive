@@ -21,7 +21,9 @@
             getFilesApp: getFilesApp,
             getAllByParentId: getAllByParentId,
             orderByColumn: orderByColumn,
-            openFile: openFile
+            searchFiles: searchFiles,
+            openFile: openFile,
+            chooseIcon: chooseIcon
         };
 
         function getAllFiles(callBack) {
@@ -52,6 +54,25 @@
                         callBack(response.data);
                     }
                 })
+        }
+
+        function searchFiles(fileType, text, callback) {
+            $http.get(baseUrl + '/api/files/apps/' + fileType + '/search', {
+                params: {
+                    fileType: fileType,
+                    text: text
+                }
+            })
+            .then(function (response) {
+                if (callback) {
+                    callback(response.data);
+                }
+            }, function errorCallback(response) {
+                console.log('Error in searchFiles Method! Code:' + response.status);
+                if (response.status == 404 && callback) {
+                    callback(response.data)
+                }
+            });
         }
 
         function getFile(id, callBack) {
@@ -134,6 +155,27 @@
 
         function openFile(url) {
             window.open(url, '_blank');
+        }
+
+        function chooseIcon(type) {
+            switch (type) {
+                case 0:
+                    return 'Undefined';
+                case 1:
+                    return "./Content/Icons/doc.svg";
+                case 2:
+                    return "./Content/Icons/xls.svg";
+                case 3:
+                    return "./Content/Icons/ppt.svg";
+                case 4:
+                    return "./Content/Icons/trello.svg";
+                case 5:
+                    return "./Content/Icons/link.svg";
+                case 6:
+                    return "";
+                default:
+                    return "./Content/Icons/folder.svg";
+            }
         }
 
         return service;

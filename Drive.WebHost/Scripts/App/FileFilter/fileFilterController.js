@@ -10,8 +10,11 @@
         var vm = this;
 
         vm.changeView = changeView;
+        vm.chooseIcon = chooseIcon;
         vm.orderByColumn = orderByColumn;
-        vm.cancelSearch = cancelSearch;
+
+        vm.search = search;
+        //vm.cancelSearch = cancelSearch;
 
         vm.openDocument = openDocument;
         vm.openFileWindow = openFileWindow;
@@ -25,6 +28,7 @@
             vm.showGrid = false;
             vm.columnForOrder = 'name';
             vm.searchText = '';
+            vm.iconHeight = 30;
 
             vm.spaces = [];
 
@@ -90,10 +94,19 @@
             });
         }
 
-        function cancelSearch() {
+        function search() {
+            fileService.searchFiles(vm.filesType, vm.searchText, function (data) {
+                vm.spaces = data;
+            });
             vm.searchText = '';
-            getFiles();
         }
+
+        /*
+        function cancelSearch() {         
+            getFiles();
+            vm.searchText = '';
+        }
+        */
 
         function setFileData() {
             switch ($routeParams.appName) {
@@ -158,6 +171,11 @@
 
         function openDocument(url) {
             fileService.openFile(url);
+        }
+
+        function chooseIcon(type) {
+            vm.iconSrc = fileService.chooseIcon(type);
+            return vm.iconSrc;
         }
     }
 }());

@@ -5,9 +5,9 @@
         .module('driveApp')
         .factory('RoleService', RoleService);
 
-    RoleService.$inject = ['$http'];
+    RoleService.$inject = ['$http', 'BaseUrl'];
 
-    function RoleService($http) {
+    function RoleService($http, baseUrl) {
         var service = {
             getAllSpaces: getAllSpaces,
             getAllUsers: getAllUsers,
@@ -18,7 +18,7 @@
         };
 
         function getAllSpaces(callback) {
-            $http.get('/api/spaces')
+            $http.get(baseUrl + '/api/spaces')
                 .then(function (response) {
                     if (callback) {
                         callback(response.data);
@@ -29,7 +29,7 @@
         }
 
         function getAllUsers(callback) {
-            $http.get('/api/users')
+            $http.get(baseUrl + '/api/users')
             .then(function (response) {
                 if (callback) {
                     callback(response.data);
@@ -40,7 +40,7 @@
         }
 
         function getAllRoles(callback) {
-            $http.get('/api/roles')
+            $http.get(baseUrl + '/api/roles')
             .then(function (response) {
                 if (callback) {
                     callback(response.data);
@@ -51,7 +51,7 @@
         }
 
         function getById(id, callback) {
-            $http.get('/api/roles/' + id)
+            $http.get(baseUrl + '/api/roles/' + id)
             .then(function (response) {
                 if (callback) {
                     callback(response.data);
@@ -62,7 +62,7 @@
         }
 
         function createRole(data) {
-            $http.post('/api/roles', data)
+            $http.post(baseUrl + '/api/roles', data)
                 .then(function (response) {
                     console.log('Success!');
                 }, function (response) {
@@ -71,7 +71,7 @@
         }
 
         function saveRole(data) {
-            $http.put('/api/roles', data)
+            $http.put(baseUrl + '/api/roles', data)
             .then(function (response) {
                 console.log('Success!');
             }, function (response) {
