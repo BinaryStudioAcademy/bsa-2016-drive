@@ -579,7 +579,7 @@ hr.style {
 
 .row-header {
     height: 5vh;
-    vertical-align: center;
+    vertical-align: central;
     padding-top: 1em;
     background: #eaebec;
 }
@@ -615,6 +615,7 @@ hr.style {
     padding-top: 1em;
     height: 5vh;
     margin-left: 17px;
+    cursor: pointer;
 }
 
 .filter-table-row {
@@ -639,11 +640,14 @@ hr.style {
     background: #eaebec;
     text-transform: uppercase;
     align-content: center;
-    text-align: center;
+    text-align: left;
+    font-weight: bold;
     margin-top: 1em;
     margin-left: 17px;
     padding-top: 1em;
+    padding-left: 1em;
     margin-bottom: 1em;
+    cursor: pointer;
 }
 
 .grid-space-label {
@@ -653,10 +657,13 @@ hr.style {
     background: #eaebec;
     text-transform: uppercase;
     align-content: center;
-    text-align: center;
+    text-align: left;
+    font-weight: bold;
+    padding-left: 1em;
     padding-top: 1em;
     margin-bottom: 1em;
     padding-right: 0;
+    cursor: pointer;
 }
 
 .space-label:hover {

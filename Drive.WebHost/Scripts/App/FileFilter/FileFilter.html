@@ -3,7 +3,6 @@
     <div class="btn-group btn-breadcrumb">
         <a class="btn btn-info"><i class={{fileFilterCtrl.icon}}></i> {{fileFilterCtrl.filesType}}</a>
     </div>
-
     <div class="row" style="margin: 1em 0 1em 0;">
         <div class="col-lg-push-4-offset pull-right">
             <button class="btn btn-default" ng-click="fileFilterCtrl.changeView(fileFilterCtrl.view)">
@@ -25,41 +24,52 @@
             </div>
         </div>
     </div>
-
     <div class="wrap" ng-show="fileFilterCtrl.showGrid">
         <div ng-repeat="space in fileFilterCtrl.spaces">
-            <div class="clearfix"></div>
             <div class="grid-space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ space.name }}</div>
-            <div collapse="space.isCollapsed">
-                <div ng-show="!space.isCollapsed">
-                    <div role="button" class="s-block btn-default shadow" ng-repeat="file in space.files | filter: {name : fileFilterCtrl.searchText}" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="fileFilterCtrl.openDocument(file.link)" context-menu="fileFilterCtrl.fileMenuOptions">
-                        <img ng-src="{{fileFilterCtrl.chooseIcon(file.fileType)}}" height="{{fileFilterCtrl.iconHeight * 2}}" />
-                        <br>
-                        <span class="bold">Name: </span>
-                        <span>{{ file.name }}</span>
-                        <br>
-                        <span class="bold">Author: </span>
-                        <span>{{ file.author.name }}</span>
-                    </div>
-                </div>
+            <div uib-collapse="space.isCollapsed">
+                <ul class="sp-gv-flex-container">
+                    <li class="sp-gv-flex-item" role="button" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="fileFilterCtrl.openDocument(file.link)">
+                        <div class="sp-gv-wrapper-flex-item">
+                            <div class="sp-gv-item-content">
+                                <div class="sp-gv-item-img-wrapper">
+                                    <img ng-src="{{fileFilterCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}"/>
+                                </div>
+                                <div class="sp-gv-item-text">
+                                    <h4 title="{{file.name}}">{{file.name | limitTo: 15}}{{file.name.length > 15 ? '...' : ''}}</h4>
+                                    <h5 title="{{file.author.name}}">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        {{file.author.name | limitTo: 17}}{{file.author.name.length > 17 ? '...' : ''}}
+                                    </h5>
+                                    <p title="{{file.description}}">{{file.description | limitTo: 45}}{{file.description.length > 45 ? '...' : ''}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="sp-gv-flex-item"></li>
+                    <li class="sp-gv-flex-item"></li>
+                    <li class="sp-gv-flex-item"></li>
+                </ul>
+            </div>
+            <hr />
+        </div>
+    </div>
+    <div class="filter-table" ng-show="fileFilterCtrl.showTable">
+        <div class="header-wrapper">
+            <div class="row header-row">
+                <div class="col-md-3">Name</div>
+                <div class="col-md-3">Description</div>
+                <div class="col-md-2">Author</div>
+                <div class="col-md-2">Created</div>
+                <div class="col-md-2">Type</div>
             </div>
         </div>
-        </div>
-        <div class="filter-table" ng-show="fileFilterCtrl.showTable">
-            <div class="header-wrapper">
-                <div class="row header-row">
-                    <div class="col-md-3">Name</div>
-                    <div class="col-md-3">Description</div>
-                    <div class="col-md-2">Author</div>
-                    <div class="col-md-2">Created</div>
-                    <div class="col-md-2">Type</div>
-                </div>
-            </div>
-            <div class="filter-table-internal">
-                <div ng-repeat="space in fileFilterCtrl.spaces">
-                    <div class="space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ space.name }}</div>
-                    <div collapse="space.isCollapsed">
-                        <div ng-show="!space.isCollapsed" class="filter-table-row">
+        <div class="filter-table-internal">
+            <div ng-repeat="space in fileFilterCtrl.spaces">
+                <div class="space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ space.name }}</div>
+                <div uib-collapse="space.isCollapsed">
+                    <div style="transition: all 2s">
+                        <div class="filter-table-row">
                             <div class="row filter-table-row" role="button" ng-repeat="file in space.files | orderBy: fileFilterCtrl.columnForOrder | filter: {name : fileFilterCtrl.searchText}" ng-dblclick="fileFilterCtrl.openDocument(file.link)" context-menu="fileFilterCtrl.fileMenuOptions">
                                 <div class="col-md-3 filter-table-cell">
                                     <img ng-src="{{fileFilterCtrl.chooseIcon(file.fileType)}}" height="{{fileFilterCtrl.iconHeight}}" /> {{ file.name }}
@@ -75,3 +85,4 @@
             </div>
         </div>
     </div>
+</div>
