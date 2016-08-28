@@ -4,18 +4,23 @@
     angular.module('driveApp.academyPro')
         .controller('AcademyListController', AcademyListController);
 
-    AcademyListController.$inject = ['AcademyListService', '$location'];
+    AcademyListController.$inject = [
+        'AcademyListService',
+        '$location',
+        '$uibModal'
+    ];
 
-    function AcademyListController(academyListService, $location) {
+    function AcademyListController(academyListService, $location, $uibModal) {
         var vm = this;
-        vm.academiesList = [];
         vm.openCourse = openCourse;
         vm.changeView = changeView;
+        vm.openNewCourseWindow = openNewCourseWindow;
         
 
         activate();
 
         function activate() {
+            vm.academiesList = [];
             vm.view = "fa fa-th";
             vm.showTable = true;
             vm.showGrid = false;
@@ -48,13 +53,33 @@
                 activateTableView();
             }
         }
+
         function activateTableView() {
             vm.view = "fa fa-th";
             vm.showTable = true;
         }
+
         function activateGridView() {
             vm.view = "fa fa-list";
             vm.showTable = false;
         }
+
+        function openNewCourseWindow(size) {
+
+            var courseModalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'Scripts/App/Academy/List/Create.html',
+                windowTemplateUrl: 'Scripts/App/Academy/List/Modal.html',
+                controller: 'CourseCreateController',
+                controllerAs: 'courseCreateCtrl',
+                size: size
+            });
+
+            courseModalInstance.result.then(function () {
+                getAcademies();
+            }, function () {
+                console.log('Modal dismissed');
+            });
+        };
     }
 }());

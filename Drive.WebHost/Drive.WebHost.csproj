@@ -274,7 +274,9 @@
     <Content Include="Scripts\App\Academy\Lecture\Lecture.html" />
     <Content Include="Scripts\App\Academy\Lecture\lectureController.js" />
     <Content Include="Scripts\App\Academy\Lecture\lectureService.js" />
+    <Content Include="Scripts\App\Academy\List\courseCreateController.js" />
     <Content Include="Scripts\App\Academy\List\Create.html" />
+    <Content Include="Scripts\App\Academy\List\Modal.html" />
     <Content Include="Scripts\App\Academy\Single\Academy.html" />
     <Content Include="Scripts\App\Academy\Single\academyController.js" />
     <Content Include="Scripts\App\Academy\List\AcademyList.html" />

@@ -28,6 +28,11 @@
                     </div>
                 </div>
             </div>-->
+            <div class="col-sm-3 pull-left">
+                <div>
+                    <button class="btn btn-default" ng-click="academyListCtrl.openNewCourseWindow('lg')">New course</button>
+                </div>
+            </div>
         </div>
         <div class="wrap clearfix" ng-show="!academyListCtrl.showTable">
             <div role="button" class="s-block btn-default shadow" ng-repeat="academy in academyListCtrl.academiesList"
