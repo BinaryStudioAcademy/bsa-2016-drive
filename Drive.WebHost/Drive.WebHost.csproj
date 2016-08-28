@@ -253,7 +253,6 @@
     <Content Include="Content\Icons\event_bw.svg" />
     <Content Include="Content\Icons\folder.svg" />
     <Content Include="Content\Icons\folder_bw.svg" />
-    <Content Include="Content\Icons\IconsPreview.html" />
     <Content Include="Content\Icons\link.svg" />
     <Content Include="Content\Icons\menu_settings.svg" />
     <Content Include="Content\Icons\menu_shared.svg" />
