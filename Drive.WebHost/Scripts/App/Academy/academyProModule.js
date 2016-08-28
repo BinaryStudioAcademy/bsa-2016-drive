@@ -1,5 +1,7 @@
 ﻿(function () {
-    angular.module('driveApp.academyPro', ['youtube-embed'])
+    angular.module('driveApp.academyPro', [
+        'youtube-embed'
+    ])
         .config([
             '$routeProvider', function config($routeProvider) {
                 var baseUrl = window.globalVars.baseUrl;

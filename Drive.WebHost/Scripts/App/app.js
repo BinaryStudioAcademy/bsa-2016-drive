@@ -1,5 +1,14 @@
 ﻿angular.module("driveApp",
-    ["ngRoute", "ui.bootstrap.contextMenu", "ui.bootstrap", "angularUtils.directives.dirPagination", "LocalStorageModule", "ngLoadingSpinner", 'ngAnimate', "toastr", "driveApp.academyPro"])
+    [
+        "ngRoute",
+        "ui.bootstrap.contextMenu",
+        "ui.bootstrap",
+        "angularUtils.directives.dirPagination",
+        "LocalStorageModule", "ngLoadingSpinner",
+        'ngAnimate',
+        "toastr",
+        "driveApp.academyPro"
+    ])
     .factory('BaseUrl', function () {
         return window.globalVars.baseUrl;
     })
