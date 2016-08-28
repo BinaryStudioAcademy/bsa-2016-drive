@@ -6,17 +6,20 @@
             <hr class="style" />
             <li>
                 <div class="d" ng-click="menuController.redirectToBinarySpace()">
-                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x"></i></span>Binary Space
+                    <img src="./Content/Icons/menu_space-home.svg"  class="menu-icons" style="height: 28px;"  alt="Binary Space" />
+                    Binary Space
                 </div>
             </li>
             <li class="active">
                 <div class="d" ng-click="menuController.redirectToMySpace()">
-                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x"></i></span>My Space
+                    <img src="./Content/Icons/menu_space-own.svg" class="menu-icons" style="height: 28px;" alt="MySpace" />
+                    My Space
                 </div>
             </li>
             <li class="active">
                 <div class="d" ng-click="menuController.redirectToSharedSpace()">
-                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-cloud fa-stack-1x"></i></span>Shared Space
+                    <img src="./Content/Icons/menu_shared.svg" class="menu-icons" style="height: 28px;" alt="Shared" />
+                    Shared Space
                 </div>
             </li>
             <li ng-show="menuController.spaces.length > 3" ng-click="menuController.getAllSpaces()">
@@ -26,8 +29,8 @@
                 <ul class="nav-pills nav-stacked collapse" style="list-style-type: none;" id="other">
                     <li ng-repeat="item in menuController.spaces" ng-if="item.name != 'Binary Space' && item.name != 'My Space'">
                         <div class="d" ng-click='menuController.redirectToSpace(item.id)' title="{{item.name}}">
-                            <span class="fa-stack fa-lg pull-left"><i class="fa fa-circle-o fa-stack-1x span-icon"></i></span>
-                            <span class="span-text">{{item.name | limitTo: 14 }}{{item.name.length > 14 ? '..' : ''}}</span>
+                            <img src="./Content/Icons/menu_space-other.svg" class="menu-icons" alt="Alternate Text" />
+                            <span class="span-apps">{{item.name | limitTo: 14 }}{{item.name.length > 14 ? '..' : ''}}</span>
                         </div>
                     </li>
                 </ul>
