@@ -109,6 +109,13 @@ namespace Drive.WebHost.Services.Pro
                 IsDeleted = false,
                 CreatedAt = DateTime.Now,
                 ModifiedAt = DateTime.Now,
+                FileUnit = new FileUnit
+                {
+                    Name = dto.FileUnit.Name,
+                    Description = dto.FileUnit.Description,
+                    CreatedAt = DateTime.Now,
+                    LastModified = DateTime.Now
+                }
             };
 
             dto.Tags.ForEach(tag =>
