@@ -118,6 +118,18 @@ namespace Drive.DataAccess.Context
                     rs.ToTable("SpaceRoleReadPermissions");
                 });
 
+            modelBuilder.Entity<AcademyProCourse>()
+                .HasMany<Tag>(c => c.Tags)
+                .WithMany(t => t.Courses)
+                .Map(
+                    tc =>
+                    {
+                        tc.MapLeftKey("AcademyProCourseId");
+                        tc.MapRightKey("TagId");
+                        tc.ToTable("AcademiesTags");
+                    }
+                );
+
         }
 
 
