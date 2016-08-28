@@ -880,25 +880,28 @@ small,
     height: 20px;
     padding-right: 5px;
 }
+/*End Search input*/
 
 /*Cancel button on search input*/
 input[type="search"]::-webkit-search-cancel-button {
     -webkit-appearance: searchfield-cancel-button;
     margin-right: -5px;
 }
+/*End Cancel button on search input*/
 
 /*Styles for validation of input fields*/
 .text-valid.ng-invalid,
 .number-valid.ng-invalid,
 textarea.ng-invalid {
-    border-left: solid 3px #900;
+    border-left: solid 4px #900;
 }
 
 .text-valid.ng-valid,
 .number-valid.ng-valid,
 textarea.ng-valid {
-    border-left: solid 3px #090;
+    border-left: solid 4px #090;
 }
+/*End Styles for validation of input fields*/
 
 /*Shadow for cards on Gridview*/
 .card {
@@ -910,6 +913,7 @@ textarea.ng-valid {
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
     background: #FCFCFB;
 }
+/*End Shadow for cards on Gridview*/
 
 /*New GridView*/
 .sp-gv-flex-container {
@@ -1004,3 +1008,26 @@ textarea.ng-valid {
     height: 50px;
 }
 /*End New GridView*/
+
+
+/*Scrollbar style*/
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #cccccc;
+}
+/*End Scrollbar style*/
