@@ -44,7 +44,11 @@ namespace Drive.WebHost.Api
         public async Task<IHttpActionResult> CreateRole(RoleDto role)
         {
             int id = await _rolesService.CreateAsync(role);
-            return Ok(id);
+            if (id > 0)
+            {
+                return Ok(id);
+            }
+            return NotFound();
         }
 
         [HttpDelete]
