@@ -16,6 +16,8 @@ namespace Driver.Shared.Dto.Pro
 
         public DateTime StartDate { get; set; }
 
+        public int CourseId { get; set; }
+
         public IEnumerable<ContentLinkDto> VideoLinks { get; set; }
 
         public IEnumerable<ContentLinkDto> SlidesLinks { get; set; }
