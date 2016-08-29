@@ -92,7 +92,7 @@
                     localStorageService.set('spaceId', vm.spaceId);
                     localStorageService.set('current', null);
                         vm.parentId = null;
-                    localStorageService.set('list', null)
+                    localStorageService.set('list', null);
                 }
 
                 if (localStorageService.get('list') != null)
@@ -187,7 +187,7 @@
                 }
             ],
             null,
-            ['New', function ($itemScope) {
+            ['New', function () {
                
             },  [
             ['New folder', function () { vm.createNewFolder(); }],
@@ -207,7 +207,7 @@
             ],
              [
                 'Copy', function ($itemScope) {
-                    localStorageService.set('copy', { id: $itemScope.file.id, file: true });
+                    localStorageService.set('copy', { id: $itemScope.folder.id, file: false });
                 }
              ],
             [
@@ -254,6 +254,34 @@
                     }
                     localStorageService.set('cut-out', null);
                 }
+                if (localStorageService.get('copy') != null) {
+                    if (localStorageService.get('copy').file) {
+                        var file = {};
+                        file.spaceId = vm.spaceId;
+                        file.parentId = vm.parentId;
+
+                        fileService.createCopyFile(localStorageService.get('copy').id, file, function () {
+                            if (vm.parentId == null) {
+                                vm.getSpace();
+                            } else {
+                                vm.getFolderContent(vm.parentId);
+                            }
+                        });
+                    } else {
+                        var folder = {};
+                        folder.spaceId = vm.spaceId;
+                        folder.parentId = vm.parentId;
+
+                        folderService.createCopy(localStorageService.get('copy').id, folder, function () {
+                            if (vm.parentId == null) {
+                                vm.getSpace();
+                            } else {
+                                vm.getFolderContent(vm.parentId);
+                            }
+                        });
+                    }
+                    localStorageService.set('copy', null);
+                }
             }
             ],
             null,
@@ -273,7 +301,7 @@
                 }
             ],
             null,
-            ['New', function ($itemScope) {
+            ['New', function () {
 
             }, [
             ['New folder', function () { vm.createNewFolder(); }],
@@ -339,6 +367,34 @@
                     }
                     localStorageService.set('cut-out', null);
                 }
+                if (localStorageService.get('copy') != null) {
+                    if (localStorageService.get('copy').file) {
+                        var file = {};
+                        file.spaceId = vm.spaceId;
+                        file.parentId = vm.parentId;
+
+                        fileService.createCopyFile(localStorageService.get('copy').id, file, function () {
+                            if (vm.parentId == null) {
+                                vm.getSpace();
+                            } else {
+                                vm.getFolderContent(vm.parentId);
+                            }
+                        });
+                    } else {
+                        var folder = {};
+                        folder.spaceId = vm.spaceId;
+                        folder.parentId = vm.parentId;
+
+                        folderService.createCopy(localStorageService.get('copy').id, folder, function () {
+                            if (vm.parentId == null) {
+                                vm.getSpace();
+                            } else {
+                                vm.getFolderContent(vm.parentId);
+                            }
+                        });
+                    }
+                    localStorageService.set('copy', null);
+                }
             }
             ],
             null,
@@ -372,7 +428,7 @@
                         vm.getSpace();
                     }
                     else {
-                        vm.getFolderContent(vm.parentId)
+                        vm.getFolderContent(vm.parentId);
                     }
                 }
                 if (response.operation == 'update') {
@@ -409,7 +465,7 @@
                         vm.getSpace();
                     }
                     else {
-                        vm.getFolderContent(vm.parentId)
+                        vm.getFolderContent(vm.parentId);
                     }
                 }
                 if (response.operation == 'update') {
@@ -579,7 +635,7 @@
         }
 
         function cancelSearch() {
-            if (vm.searchText.length > 1) {
+            if (vm.searchText.length >= 1) {
                 vm.searchText = '';
                 vm.paginate.currentPage = 1;
                 vm.paginate.getContent = getResultSearchFoldersAndFiles;

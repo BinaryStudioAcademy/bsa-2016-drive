@@ -50,6 +50,11 @@ namespace Drive.WebHost.Services
             return await _userProvider.GetCurrentUser();
         }
 
+        public string CurrentUserId
+        {
+            get { return _userProvider.CurrentUserId; }
+        }
+
         public void Dispose()
         {
             _unitOfWork?.Dispose();

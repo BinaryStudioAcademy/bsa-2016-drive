@@ -12,5 +12,7 @@ namespace Drive.WebHost.Services
         Task<IEnumerable<UsersDto>> GetAsync();
 
         Task<UserDto> GetCurrentUser();
+
+        string CurrentUserId { get; }
     }
 }

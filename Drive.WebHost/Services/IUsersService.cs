@@ -13,5 +13,6 @@ namespace Drive.WebHost.Services
         //Task DeleteAsync(int id);
         Task<UserDto> GetCurrentUser();
         void Dispose();
+        string CurrentUserId { get; }
     }
 }

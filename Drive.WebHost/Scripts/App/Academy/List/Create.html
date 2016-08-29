@@ -9,7 +9,7 @@
                     <form name="createForm" ng-submit="submitForm()" class="form-horizontal" novalidate>
                         <div class="form-group" ng-class="{ 'has-error' : createForm.name.$invalid && !createForm.name.$pristine }">
                             <label class="col-sm-2">Course name:</label>
-                            <input type="text" name="name" id="name" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="courseCreateCtrl.course.fileUnit.name" placeholder="Enter space name" required>
+                            <input type="text" name="name" id="name" class="form-control" ng-pattern="/^[\w -]*$/" ng-model="courseCreateCtrl.course.fileUnit.name" placeholder="Enter space name" required>
                             <p ng-show="createForm.name.$error.required && createForm.name.$touched" class="help-block col-sm-offset-2">Name is required.</p>
                             <p ng-show="createForm.name.$error.pattern" class="help-block col-sm-offset-2">Not a valid name.</p>
                         </div>

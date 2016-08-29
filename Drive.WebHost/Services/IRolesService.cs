@@ -15,7 +15,7 @@ namespace Drive.WebHost.Services
 
         Task<int> CreateAsync(RoleDto role);
 
-        Task UpdateAsync(int id, RoleDto role);
+        Task<bool> UpdateAsync(int id, RoleDto role);
 
         Task Delete(int id);
 

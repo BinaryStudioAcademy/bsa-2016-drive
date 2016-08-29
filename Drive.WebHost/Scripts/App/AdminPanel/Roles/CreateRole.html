@@ -20,7 +20,7 @@
                         <form name="roleForm" ng-submit="submitForm()" novalidate>
                             <div class="form-group" ng-class="{ 'has-error' : roleForm.name.$invalid && !roleForm.name.$pristine }">
                                 <label>Role name:</label>
-                                <input type="text" name="name" id="name" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="roleCtrl.role.name" placeholder="Enter role name" required>
+                                <input type="text" name="name" id="name" class="form-control" ng-pattern="/^[\w -]*$/" ng-model="roleCtrl.role.name" placeholder="Enter role name" required>
                                 <p ng-show="roleForm.name.$error.required && roleForm.name.$touched" class="help-block">Name is required.</p>
                                 <p ng-show="roleForm.name.$error.pattern" class="help-block">Not a valid name.</p>
                             </div>

@@ -44,11 +44,7 @@ namespace Drive.WebHost.Api
         public async Task<IHttpActionResult> CreateRole(RoleDto role)
         {
             int id = await _rolesService.CreateAsync(role);
-            if (id > 0)
-            {
-                return Ok(id);
-            }
-            return NotFound();
+            return Ok(id);
         }
 
         [HttpDelete]
@@ -67,8 +63,12 @@ namespace Drive.WebHost.Api
         [HttpPut]
         public async Task<IHttpActionResult> UpdateRole(RoleDto role)
         {
-            await _rolesService.UpdateAsync(role.Id, role);
-            return Ok();
+            var result = await _rolesService.UpdateAsync(role.Id, role);
+            if (result == true)
+            {
+                return Ok(true);
+            }
+            return Ok(false);
         }
     }
 }
