@@ -896,20 +896,6 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 /*End Cancel button on search input*/
 
-/*Styles for validation of input fields*/
-.text-valid.ng-invalid,
-.number-valid.ng-invalid,
-textarea.ng-invalid {
-    border-left: solid 4px #900;
-}
-
-.text-valid.ng-valid,
-.number-valid.ng-valid,
-textarea.ng-valid {
-    border-left: solid 4px #090;
-}
-/*End Styles for validation of input fields*/
-
 /*Shadow for cards on Gridview*/
 .card {
   box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);

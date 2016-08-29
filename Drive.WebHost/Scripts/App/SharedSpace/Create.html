@@ -23,7 +23,7 @@
                                             <div class="form-group">
                                                 <label class="control-label col-sm-2" for="name">Space name:</label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control text-valid" id="name" name="title" ng-pattern="/^[\w -]*$/" ng-model="createCtrl.space.Name" placeholder="Enter space name" required>
+                                                    <input type="text" class="form-control" id="name" name="title" ng-pattern="/^[\w -]*$/" ng-model="createCtrl.space.Name" placeholder="Enter space name" required>
                                                 </div>
                                                 <span ng-show="createForm.title.$error.required && createForm.title.$touched" style="color: red" class="col-sm-offset-2">
                                                     Name is required.
@@ -41,7 +41,7 @@
                                             <div class="form-group">
                                                 <label class="control-label col-sm-2" for="quantity">Maximum Files Quantity:</label>
                                                 <div class="col-sm-10">
-                                                    <input type="number" class="form-control number-valid" id="quantity" min="0" step="1" name="maxfile" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="createCtrl.space.MaxFilesQuantity" placeholder="Enter max files quantity" required>
+                                                    <input type="number" class="form-control" id="quantity" min="0" step="1" name="maxfile" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="createCtrl.space.MaxFilesQuantity" placeholder="Enter max files quantity" required>
                                                 </div>
                                                 <span style="color:red" ng-show="createForm.maxfile.$error.pattern">
                                                     Not a valid quantity.
@@ -53,7 +53,7 @@
                                             <div class="form-group">
                                                 <label class="control-label col-sm-2" for="size">Maximum file size (MB):</label>
                                                 <div class="col-sm-10">
-                                                    <input type="number" class="form-control number-valid" id="size" min="0" step="1" max="1024" name="maxsize" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="createCtrl.space.MaxFileSize" placeholder="Enter max file size" required>
+                                                    <input type="number" class="form-control" id="size" min="0" step="1" max="1024" name="maxsize" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="createCtrl.space.MaxFileSize" placeholder="Enter max file size" required>
                                                 </div>
                                                 <span style="color:red" ng-show="createForm.maxsize.$error.pattern">
                                                     Not a valid file size.
