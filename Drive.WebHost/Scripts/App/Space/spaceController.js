@@ -579,7 +579,7 @@
         }
 
         function cancelSearch() {
-            if (vm.searchText.length > 1) {
+            if (vm.searchText.length >= 1) {
                 vm.searchText = '';
                 vm.paginate.currentPage = 1;
                 vm.paginate.getContent = getResultSearchFoldersAndFiles;
