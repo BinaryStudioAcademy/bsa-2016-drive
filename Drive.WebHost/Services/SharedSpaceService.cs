@@ -18,14 +18,12 @@ namespace Drive.WebHost.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger _logger;
         private readonly IUsersService _userService;
-        private readonly BSIdentityManager _currentUser;
 
-        public SharedSpaceService(IUnitOfWork unitOfWork, ILogger logger, IUsersService userService, BSIdentityManager currentUser )
+        public SharedSpaceService(IUnitOfWork unitOfWork, ILogger logger, IUsersService userService)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _userService = userService;
-            _currentUser = currentUser;
         }
 
         public async Task<IEnumerable<UserSharedSpaceDto>> GetPermissionsOfSharedDataAsync(int id)
@@ -97,7 +95,7 @@ namespace Drive.WebHost.Services
         {
             //TODO add check user.id
             IEnumerable<FileUnitDto> files = await _unitOfWork.SharedSpace.Query
-                .Where(s=>!s.IsDeleted && !s.File.IsDeleted && s.User.GlobalId == _currentUser.UserId)
+                .Where(s=>!s.IsDeleted && !s.File.IsDeleted && s.User.GlobalId == _userService.CurrentUserId)
                 .Select(f=> new FileUnitDto() {
                     Description = f.File.Description,
                     FileType = f.File.FileType,
@@ -134,7 +132,7 @@ namespace Drive.WebHost.Services
         {
             //TODO add check user.id
             var filesCount = await _unitOfWork.SharedSpace.Query
-                .Where(s => !s.IsDeleted && !s.File.IsDeleted && s.User.GlobalId == _currentUser.UserId)
+                .Where(s => !s.IsDeleted && !s.File.IsDeleted && s.User.GlobalId == _userService.CurrentUserId)
                 .CountAsync();
             return filesCount;
         }
@@ -143,7 +141,7 @@ namespace Drive.WebHost.Services
         {
             //TODO add check user.id
             IEnumerable<FileUnitDto> files = await _unitOfWork.SharedSpace.Query
-                .Where(s => !s.IsDeleted && !s.File.IsDeleted && s.User.GlobalId == _currentUser.UserId)
+                .Where(s => !s.IsDeleted && !s.File.IsDeleted && s.User.GlobalId == _userService.CurrentUserId)
                 .Select(f => new FileUnitDto()
                 {
                     Description = f.File.Description,
@@ -178,7 +176,7 @@ namespace Drive.WebHost.Services
         {
             //TODO add check user.id
             IEnumerable<FileUnitDto> files = await _unitOfWork.SharedSpace.Query
-                .Where(s => !s.IsDeleted && !s.File.IsDeleted && s.User.GlobalId == _currentUser.UserId)
+                .Where(s => !s.IsDeleted && !s.File.IsDeleted && s.User.GlobalId == _userService.CurrentUserId)
                 .Select(f => new FileUnitDto()
                 {
                     Description = f.File.Description,
@@ -202,7 +200,7 @@ namespace Drive.WebHost.Services
         {
             //TODO add check user.id
 
-            var file = await _unitOfWork.SharedSpace.Query.SingleOrDefaultAsync(f => f.File.Id == id && f.User.GlobalId == _currentUser.UserId);
+            var file = await _unitOfWork.SharedSpace.Query.SingleOrDefaultAsync(f => f.File.Id == id && f.User.GlobalId == _userService.CurrentUserId);
             if (file != null)
             {
                 file.IsDeleted = true;

@@ -7,6 +7,9 @@ using Drive.WebHost.Services.Pro.Abstract;
 using Driver.Shared.Dto.Pro;
 using Ninject.Modules;
 using Ninject.Web.Mvc.FilterBindingSyntax;
+using Drive.WebHost.Providers;
+using System.Configuration;
+using System;
 
 namespace Drive.WebHost.Infrastructure
 {
@@ -14,12 +17,18 @@ namespace Drive.WebHost.Infrastructure
     {
         public override void Load()
         {
+            string service = ConfigurationManager.AppSettings["UserProvider"];
+            Type serviceType = Type.GetType(service);
+
             Kernel.Bind<IRolesService>().To<RolesService>();
             Kernel.Bind<ISpaceService>().To<SpaceService>();
             Kernel.Bind<IFolderService>().To<FolderService>();
             Kernel.Bind<ILogsService>().To<LogsService>();
             Kernel.Bind<IUsersService>().To<UsersService>();
-            Kernel.Bind<IUsersProvider>().To<UsersProvider>();
+            if (serviceType != null)
+                Kernel.Bind<IUsersProvider>().To(serviceType);
+            else
+                Kernel.Bind<IUsersProvider>().To<UsersProvider>();
 
             Kernel.Bind<IFileService>().To<FileService>();
 

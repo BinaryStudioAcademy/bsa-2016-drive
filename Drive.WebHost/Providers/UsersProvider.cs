@@ -33,5 +33,10 @@ namespace Drive.WebHost.Services
 
             return await GetByIdAsync(userId);
         }
+
+        public string CurrentUserId
+        {
+            get { return _bsIdentityManager.UserId; }
+        }
     }
 }
