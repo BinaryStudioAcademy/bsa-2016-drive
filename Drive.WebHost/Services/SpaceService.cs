@@ -213,7 +213,7 @@ namespace Drive.WebHost.Services
                 ReadPermittedRoles = s.ReadPermittedRoles
             }).ToListAsync();
 
-            for (int i = 2; i < spacesList.Count; i++)
+            for (int i = 3; i < spacesList.Count; i++)
             {
                 if (spacesList[i].ReadPermittedUsers.FirstOrDefault(x => x.GlobalId == identity) == null)
                 {
