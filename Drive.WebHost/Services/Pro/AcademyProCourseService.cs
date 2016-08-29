@@ -44,7 +44,8 @@ namespace Drive.WebHost.Services.Pro
                     Id = lecture.Id,
                     Name = lecture.Name,
                     Description = lecture.Description,
-                    StartDate = lecture.StartDate
+                    StartDate = lecture.StartDate,
+                    CreatedAt = lecture.CreatedAt
                 }),
                 FileUnit = new FileUnitDto
                 {
@@ -81,6 +82,7 @@ namespace Drive.WebHost.Services.Pro
                     Name = lecture.Name,
                     Description = lecture.Description,
                     StartDate = lecture.StartDate,
+                    CreatedAt = lecture.CreatedAt
                 }),
                 FileUnit = new FileUnitDto
                 {

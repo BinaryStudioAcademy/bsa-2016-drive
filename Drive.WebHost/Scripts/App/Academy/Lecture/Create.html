@@ -1,0 +1,184 @@
+﻿<div class="container-fluid">
+    <br />
+    <div class="btn-group btn-breadcrumb">
+        <a class="btn btn-info"><i class="fa fa-graduation-cap fa-lg"></i> Academy Pro</a>
+    </div>
+    <br />
+    <h2>{{lectureCreateCtrl.lecture.name ? lectureCreateCtrl.lecture.name : 'New lecture'}}</h2>
+    <div>
+        <span us-spinner="{radius:30, width:8, length: 16}"></span>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-3 pull-right">
+                    <div>
+                        <button class="btn btn-default" ng-click="lectureCreateCtrl.create()">Create</button>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <div class="col-md-12">
+                <form name="courseForm" ng-submit="submitForm()" class="form-horizontal" novalidate>
+                    <div class="form-group" ng-class="{ 'has-error' : courseForm.name.$invalid && !courseForm.name.$pristine }">
+                        <label class="col-sm-2">Course name:</label>
+                        <input type="text" name="name" id="name" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="lectureCreateCtrl.lecture.name" placeholder="Enter course name" required>
+                        <p ng-show="courseForm.name.$error.required && courseForm.name.$touched" class="help-block col-sm-offset-2">Name is required.</p>
+                        <p ng-show="courseForm.name.$error.pattern" class="help-block col-sm-offset-2">Not a valid name.</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2">Description:</label>
+                        <textarea type="text" name="description" class="form-control" id="description" ng-model="lectureCreateCtrl.lecture.description" placeholder="Enter description"></textarea>
+                    </div>
+                    <div class="form-group datetimepicker">
+                        <label class="col-sm-2">Start date:</label>
+                        <p class="input-group">
+                            <input type="text" class="form-control" datetime-picker="yyyy-MM-ddTHH:mm:ssZ" ng-model="lectureCreateCtrl.lecture.startDate" is-open="lectureCreateCtrl.calendar.isOpen" timepicker-options="lectureCreateCtrl.calendar.timepickerOptions"/>
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="lectureCreateCtrl.calendar.openCalendar($event, prop)"><i class="fa fa-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                </form>
+                <div class="col-md-10">
+                    <div class="row">
+                        <h3>Videos</h3>
+                        <div>
+                            <ul>
+                                <li ng-repeat="video in lectureCreateCtrl.lecture.videoLinks">{{video.link}}</li>
+                            </ul>
+                        </div>
+                        <form name="videoForm" ng-submit="lectureCreateCtrl.submitVideo()" class="form-horizontal" novalidate>
+                            <div class="col-md-4">
+                                <div class="form-group" ng-class="{ 'has-error' : videoForm.videoName.$invalid && !videoForm.videoName.$pristine }">
+                                    <input type="text" name="videoName" id="videoName" class="form-control text-valid" ng-model="lectureCreateCtrl.currentVideo.name" placeholder="Name" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <input type="text" name="description" class="form-control" id="videoDescription" ng-model="lectureCreateCtrl.currentVideo.description" placeholder="Description">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group" ng-class="{ 'has-error' : videoForm.videoLink.$invalid && !videoForm.videoLink.$pristine }">
+                                    <input type="text" name="videoLink" class="form-control text-valid" id="videoLink" ng-model="lectureCreateCtrl.currentVideo.link" placeholder="Link" required>
+                                </div>
+                            </div>
+                            <input type="submit" value="Add video"/>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <h3>Slides</h3>
+                        <div>
+                            <ul>
+                                <li ng-repeat="slides in lectureCreateCtrl.lecture.slidesLinks">{{slides.link}}</li>
+                            </ul>
+                        </div>
+                        <form name="createForm" ng-submit="lectureCreateCtrl.submitSlide()" class="form-horizontal" novalidate>
+                            <div class="col-md-4">
+                                <div class="form-group" ng-class="{ 'has-error' : createForm.slideName.$invalid && !createForm.slideName.$pristine }">
+                                    <input type="text" name="slideName" id="slideName" class="form-control text-valid" ng-model="lectureCreateCtrl.currentSlide.name" placeholder="Name" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <input type="text" name="slideDescription" class="form-control" id="slideDescription" ng-model="lectureCreateCtrl.currentSlide.description" placeholder="Description">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group" ng-class="{ 'has-error' : createForm.slideLink.$invalid && !createForm.slideLink.$pristine }">
+                                    <input type="text" name="slideLink" class="form-control text-valid" id="slideLink" ng-model="lectureCreateCtrl.currentSlide.link" placeholder="Link" required>
+                                </div>
+                            </div>
+                            <input type="submit" ng-click="" value="Add slide"/>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <h3>Repositories</h3>
+                        <div>
+                            <ul>
+                                <li ng-repeat="repository in lectureCreateCtrl.lecture.repositoryLinks">{{repository.link}}</li>
+                            </ul>
+                        </div>
+                        <form name="createForm" ng-submit="lectureCreateCtrl.submitRepository()" class="form-horizontal" novalidate>
+                            <div class="col-md-4">
+                                <div class="form-group" ng-class="{ 'has-error' : createForm.repositoryName.$invalid && !createForm.repositoryName.$pristine }">
+                                    <input type="text" name="repositoryName" id="repositoryName" class="form-control text-valid" ng-model="lectureCreateCtrl.currentRepository.name" placeholder="Name" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <input type="text" name="repositoryDescription" class="form-control" id="repositoryDescription" ng-model="lectureCreateCtrl.currentRepository.description" placeholder="Description">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group" ng-class="{ 'has-error' : createForm.repositoryLink.$invalid && !createForm.repositoryLink.$pristine }">
+                                    <input type="text" name="repositoryLink" class="form-control text-valid" id="repositoryLink" ng-model="lectureCreateCtrl.currentRepository.link" placeholder="Link" required>
+                                </div>
+                            </div>
+                            <input type="submit" ng-click="" value="Add repository"/>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <h3>Samples</h3>
+                        <div>
+                            <ul>
+                                <li ng-repeat="sample in lectureCreateCtrl.lecture.sampleLinks">{{sample.link}}</li>
+                            </ul>
+                        </div>
+                        <form name="createForm" ng-submit="lectureCreateCtrl.submitSample()" class="form-horizontal" novalidate>
+                            <div class="col-md-4">
+                                <div class="form-group" ng-class="{ 'has-error' : createForm.sampleName.$invalid && !createForm.sampleName.$pristine }">
+                                    <input type="text" name="sampleName" id="sampleName" class="form-control text-valid" ng-model="lectureCreateCtrl.currentSample.name" placeholder="Name" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <input type="text" name="sampleDescription" class="form-control" id="sampleDescription" ng-model="lectureCreateCtrl.currentSample.description" placeholder="Description">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group" ng-class="{ 'has-error' : createForm.sampleLink.$invalid && !createForm.sampleLink.$pristine }">
+                                    <input type="text" name="sampleLink" class="form-control text-valid" id="sampleLink" ng-model="lectureCreateCtrl.currentSample.link" placeholder="Link" required>
+                                </div>
+                            </div>
+                            <input type="submit" ng-click="" value="Add sample"/>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="row">
+                        <h3>Useful links</h3>
+                        <div>
+                            <ul>
+                                <li ng-repeat="useful in lectureCreateCtrl.lecture.usefulLinks">{{useful.link}}</li>
+                            </ul>
+                        </div>
+                        <form name="createForm" ng-submit="lectureCreateCtrl.submitUseful()" class="form-horizontal" novalidate>
+                            <div class="col-md-4">
+                                <div class="form-group" ng-class="{ 'has-error' : createForm.usefulName.$invalid && !createForm.usefulName.$pristine }">
+                                    <input type="text" name="usefulName" id="usefulName" class="form-control text-valid" ng-model="lectureCreateCtrl.currentUseful.name" placeholder="Name" required>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <input type="text" name="description" class="form-control" id="usefulDescription" ng-model="lectureCreateCtrl.currentUseful.description" placeholder="Description">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="form-group" ng-class="{ 'has-error' : createForm.usefulLink.$invalid && !createForm.usefulLink.$pristine }">
+                                    <input type="text" name="usefulLink" class="form-control text-valid" id="usefulLink" ng-model="lectureCreateCtrl.currentUseful.link" placeholder="Link" required>
+                                </div>
+                            </div>
+                            <input type="submit" ng-click="" value="Add useful link"/>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

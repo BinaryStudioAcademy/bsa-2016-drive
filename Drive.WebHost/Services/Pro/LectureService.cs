@@ -34,6 +34,7 @@ namespace Drive.WebHost.Services.Pro
                 ModifiedAt = lecture.ModifiedAt,
                 IsDeleted = lecture.IsDeleted,
                 StartDate = lecture.StartDate,
+                CourseId = lecture.Course.Id
             }).ToListAsync();
 
             return result;
@@ -96,7 +97,8 @@ namespace Drive.WebHost.Services.Pro
                    Name = sample.Name,
                    IsDeleted = sample.IsDeleted,
                    Code = sample.Code
-                })
+                }),
+                CourseId = lecture.Course.Id
             }).SingleOrDefaultAsync();
 
             return result;
@@ -104,6 +106,14 @@ namespace Drive.WebHost.Services.Pro
 
         public async Task<LectureDto> CreateAsync(LectureDto dto)
         {
+            var linksList = new List<ContentLink>();
+
+            linksList.AddRange(ProcessList(dto.VideoLinks, LinkType.Video));
+            linksList.AddRange(ProcessList(dto.RepositoryLinks, LinkType.Repository));
+            linksList.AddRange(ProcessList(dto.SampleLinks, LinkType.Sample));
+            linksList.AddRange(ProcessList(dto.SlidesLinks, LinkType.Slide));
+            linksList.AddRange(ProcessList(dto.UsefulLinks, LinkType.Useful));
+
             var lecture = new Lecture
             {
                 Name = dto.Name,
@@ -111,7 +121,15 @@ namespace Drive.WebHost.Services.Pro
                 StartDate = dto.StartDate,
                 IsDeleted = false,
                 CreatedAt = DateTime.Now,
-                ModifiedAt = DateTime.Now
+                ModifiedAt = DateTime.Now,
+                Course = await _unitOfWork.AcademyProCourses.GetByIdAsync(dto.CourseId),
+                ContentList = linksList,
+                CodeSamples = dto.CodeSamples.Select(sample => new CodeSample()
+                {
+                    Name = sample.Name,
+                    Code = sample.Code,
+                    IsDeleted = false
+                }).ToList()
             };
 
             _unitOfWork.Lectures.Create(lecture);
@@ -127,6 +145,7 @@ namespace Drive.WebHost.Services.Pro
             lecture.StartDate = dto.StartDate;
             lecture.ModifiedAt = DateTime.Now;
             lecture.IsDeleted = dto.IsDeleted;
+            lecture.CourseId = dto.CourseId;
 
             await _unitOfWork.SaveChangesAsync();
 
@@ -142,6 +161,18 @@ namespace Drive.WebHost.Services.Pro
         public void Dispose()
         {
             _unitOfWork.Dispose();
+        }
+
+        public IList<ContentLink> ProcessList(IEnumerable<ContentLinkDto> dtoList, LinkType type)
+        {
+            return new List<ContentLink>(dtoList.Select(x => new ContentLink
+            {
+                Name = x.Name,
+                Description = x.Description,
+                IsDeleted = false,
+                Link = x.Link,
+                LinkType = type
+            }));
         }
     }
 }

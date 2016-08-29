@@ -284,6 +284,8 @@
     <Content Include="Scripts\App\Academy\List\academyListService.js" />
     <Content Include="Scripts\App\Academy\academyProModule.js" />
     <Content Include="Scripts\App\Academy\Single\academyService.js" />
+    <Content Include="Scripts\App\Academy\Lecture\lectureCreateController.js" />
+    <Content Include="Scripts\App\Academy\Lecture\Create.html" />
     <Content Include="Scripts\App\AdminPanel\AdminPanel.html" />
     <Content Include="Scripts\App\AdminPanel\adminPanelController.js" />
     <Content Include="Scripts\App\AdminPanel\adminPanelService.js" />
