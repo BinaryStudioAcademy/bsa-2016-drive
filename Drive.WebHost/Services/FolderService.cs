@@ -239,7 +239,7 @@ namespace Drive.WebHost.Services
                 copy.FolderUnit = parent;
                 copy.Space = space;
 
-                //folder.FolderUnit = parent;
+                folder.FolderUnit = parent;
             }
 
             _unitOfWork.Folders.Create(copy);

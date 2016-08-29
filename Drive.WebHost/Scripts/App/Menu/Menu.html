@@ -1,113 +1,111 @@
-﻿<div id="wrapper" ng-controller="MenuController as menuController">
-    <div id="sidebar-wrapper">
-        <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
-            <li style="padding-top: 40px;"></li>
-            <button class="btn btn-info create-space menu btn-md" ng-click="menuController.open('lg')"><i class="fa icon-custom fa-plus-circle fa-cog fa-lg"></i>Add new Space</button>
-            <hr class="style" />
-            <li>
-                <div class="d" ng-click="menuController.redirectToBinarySpace()">
-                    <img src="./Content/Icons/menu_space-home.svg"  class="menu-icons" style="height: 28px;"  alt="Binary Space" />
-                    Binary Space
-                </div>
-            </li>
-            <li class="active">
-                <div class="d" ng-click="menuController.redirectToMySpace()">
-                    <img src="./Content/Icons/menu_space-own.svg" class="menu-icons" style="height: 28px;" alt="MySpace" />
-                    My Space
-                </div>
-            </li>
-            <li class="active">
-                <div class="d" ng-click="menuController.redirectToSharedSpace()">
-                    <img src="./Content/Icons/menu_shared.svg" class="menu-icons" style="height: 28px;" alt="Shared" />
-                    Shared Space
-                </div>
-            </li>
-            <li ng-show="menuController.spaces.length > 3" ng-click="menuController.getAllSpaces()">
-                <div class="d" data-toggle="collapse" data-target="#other">
-                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-ellipsis-v fa-stack-1x "></i></span>Other
-                </div>
-                <ul class="nav-pills nav-stacked collapse" style="list-style-type: none;" id="other">
-                    <li ng-repeat="item in menuController.spaces" ng-if="item.name != 'Binary Space' && item.name != 'My Space'">
-                        <div class="d" ng-click='menuController.redirectToSpace(item.id)' title="{{item.name}}">
-                            <img src="./Content/Icons/menu_space-other.svg" class="menu-icons" alt="Alternate Text" />
-                            <span class="span-apps">{{item.name | limitTo: 14 }}{{item.name.length > 14 ? '..' : ''}}</span>
-                        </div>
-                    </li>
-                </ul>
-            </li>
-            <hr class="style" />
-            <li>
-                <div class="d" data-toggle="collapse" data-target="#apps">
-                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-desktop fa-stack-1x "></i></span>Apps
-                </div>
-                <ul class="nav-pills nav-stacked collapse" style="list-style-type: none;" id="apps">
-                    <li>
-                        <div class="d" ng-click="menuController.redirectToApps('academy')">
-                            <img src="./Content/Icons/academyPro_bw.svg" style="height: 25px;" alt="Academy Pro" />
-                            <span class="span-apps">Academy Pro</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="d" ng-click="menuController.redirectToApps('events')">
-                            <img src="./Content/Icons/event_bw.svg" class="menu-icons" alt="Events" />
-                            <span class="span-apps">Events</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="d" ng-click="menuController.redirectToApps('employees')">
-                            <span>
-                                <img src="./Content/Icons/employees_bw.svg" class="menu-icons"  alt="Employees" />
-                            </span>
-                            <span class="span-apps">Employees</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="d" ng-click="menuController.redirectToApps('checklist')">
-                            <span>
-                                <img src="./Content/Icons/checklist_bw.svg" class="menu-icons" alt="Checklist" />
-                            </span>
-                            <span class="span-apps">Checklist</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="d" ng-click="menuController.redirectToApps('trello')">
-                            <span>
-                                <img src="./Content/Icons/trello_bw.svg" class="menu-icons" alt="Trello" />
-                            </span>
-                            <span class="span-apps">Trello</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="d" ng-click="menuController.redirectToApps('docs')">
-                            <span>
-                                <img src="./Content/Icons/doc_bw.svg" class="menu-icons" alt="Docs" />
-                            </span>
-                            <span class="span-apps">Docs</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="d" ng-click="menuController.redirectToApps('sheets')">
-                            <span>
-                                <img src="./Content/Icons/xls_bw.svg" class="menu-icons" alt="Sheets" />
-                            </span>
-                            <span class="span-apps">Sheets</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="d" ng-click="menuController.redirectToApps('slides')">
-                            <span>
-                                <img src="./Content/Icons/ppt_bw.svg" class="menu-icons" alt="Slides" />
-                            </span>
-                            <span class="span-apps">Slides</span>
-                        </div>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <div class="d" ng-click="menuController.redirectToAdminPanel()">
-                    <span class="fa-stack fa-lg pull-left"><i class="fa fa-sliders fa-stack-1x"></i></span>Admin Panel
-                </div>
-            </li>
-        </ul>
-    </div>
+﻿<div ng-controller="MenuController as menuController">
+    <ul class="sidebar-nav nav-pills nav-stacked" id="menu">
+        <li style="padding-top: 40px;"></li>
+        <button class="btn btn-info create-space menu btn-md" ng-click="menuController.open('lg')"><i class="fa icon-custom fa-plus-circle fa-cog fa-lg"></i>Add new Space</button>
+        <hr class="style" />
+        <li>
+            <div class="d" ng-click="menuController.redirectToBinarySpace()">
+                <img src="./Content/Icons/menu_space-home.svg" class="menu-icons" style="height: 28px;" alt="Binary Space" />
+                Binary Space
+            </div>
+        </li>
+        <li class="active">
+            <div class="d" ng-click="menuController.redirectToMySpace()">
+                <img src="./Content/Icons/menu_space-own.svg" class="menu-icons" style="height: 28px;" alt="MySpace" />
+                My Space
+            </div>
+        </li>
+        <li class="active">
+            <div class="d" ng-click="menuController.redirectToSharedSpace()">
+                <img src="./Content/Icons/menu_shared.svg" class="menu-icons" style="height: 28px;" alt="Shared" />
+                Shared Space
+            </div>
+        </li>
+        <li ng-show="menuController.spaces.length > 3" ng-click="menuController.getAllSpaces()">
+            <div class="d" data-toggle="collapse" data-target="#other">
+                <span class="fa-stack fa-lg pull-left"><i class="fa fa-ellipsis-v fa-stack-1x "></i></span>Other
+            </div>
+            <ul class="nav-pills nav-stacked collapse" style="list-style-type: none;" id="other">
+                <li ng-repeat="item in menuController.spaces" ng-if="item.name != 'Binary Space' && item.name != 'My Space'">
+                    <div class="d" ng-click='menuController.redirectToSpace(item.id)' title="{{item.name}}">
+                        <img src="./Content/Icons/menu_space-other.svg" class="menu-icons" alt="Alternate Text" />
+                        <span class="span-apps">{{item.name | limitTo: 14 }}{{item.name.length > 14 ? '..' : ''}}</span>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <hr class="style" />
+        <li>
+            <div class="d" data-toggle="collapse" data-target="#apps">
+                <span class="fa-stack fa-lg pull-left"><i class="fa fa-desktop fa-stack-1x "></i></span>Apps
+            </div>
+            <ul class="nav-pills nav-stacked collapse" style="list-style-type: none;" id="apps">
+                <li>
+                    <div class="d" ng-click="menuController.redirectToApps('academy')">
+                        <img src="./Content/Icons/academyPro_bw.svg" style="height: 25px;" alt="Academy Pro" />
+                        <span class="span-apps">Academy Pro</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="d" ng-click="menuController.redirectToApps('events')">
+                        <img src="./Content/Icons/event_bw.svg" class="menu-icons" alt="Events" />
+                        <span class="span-apps">Events</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="d" ng-click="menuController.redirectToApps('employees')">
+                        <span>
+                            <img src="./Content/Icons/employees_bw.svg" class="menu-icons" alt="Employees" />
+                        </span>
+                        <span class="span-apps">Employees</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="d" ng-click="menuController.redirectToApps('checklist')">
+                        <span>
+                            <img src="./Content/Icons/checklist_bw.svg" class="menu-icons" alt="Checklist" />
+                        </span>
+                        <span class="span-apps">Checklist</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="d" ng-click="menuController.redirectToApps('trello')">
+                        <span>
+                            <img src="./Content/Icons/trello_bw.svg" class="menu-icons" alt="Trello" />
+                        </span>
+                        <span class="span-apps">Trello</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="d" ng-click="menuController.redirectToApps('docs')">
+                        <span>
+                            <img src="./Content/Icons/doc_bw.svg" class="menu-icons" alt="Docs" />
+                        </span>
+                        <span class="span-apps">Docs</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="d" ng-click="menuController.redirectToApps('sheets')">
+                        <span>
+                            <img src="./Content/Icons/xls_bw.svg" class="menu-icons" alt="Sheets" />
+                        </span>
+                        <span class="span-apps">Sheets</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="d" ng-click="menuController.redirectToApps('slides')">
+                        <span>
+                            <img src="./Content/Icons/ppt_bw.svg" class="menu-icons" alt="Slides" />
+                        </span>
+                        <span class="span-apps">Slides</span>
+                    </div>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <div class="d" ng-click="menuController.redirectToAdminPanel()">
+                <span class="fa-stack fa-lg pull-left"><i class="fa fa-sliders fa-stack-1x"></i></span>Admin Panel
+            </div>
+        </li>
+    </ul>
 </div>

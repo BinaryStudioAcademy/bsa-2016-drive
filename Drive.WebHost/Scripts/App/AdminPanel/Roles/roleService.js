@@ -5,9 +5,9 @@
         .module('driveApp')
         .factory('RoleService', RoleService);
 
-    RoleService.$inject = ['$http', 'BaseUrl'];
+    RoleService.$inject = ['$http', 'BaseUrl', 'toastr'];
 
-    function RoleService($http, baseUrl) {
+    function RoleService($http, baseUrl, toastr) {
         var service = {
             getAllSpaces: getAllSpaces,
             getAllUsers: getAllUsers,
@@ -65,7 +65,11 @@
             $http.post(baseUrl + '/api/roles', data)
                 .then(function (response) {
                     if (response.data == -1) {
-                        alert('A role with same name already exists!')
+                        toastr.warning(
+                            'A role with same name already exists!', 'Admin panel',
+                  {
+                      closeButton: true, timeOut: 5000
+                  });
                     }
                 }, function (response) {
                     console.log('Error while pushing changes!');
@@ -76,7 +80,11 @@
             $http.put(baseUrl + '/api/roles', data)
             .then(function (response) {
                 if (response.data == false) {
-                    alert('A role with same name already exists!');
+                    toastr.warning(
+                          'A role with same name already exists!', 'Admin panel',
+                 {
+                     closeButton: true, timeOut: 5000
+                 });
                 }
             }, function (response) {
                 console.log('Error while saving changes!');
