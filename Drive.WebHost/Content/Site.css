@@ -556,11 +556,11 @@ hr.style {
 
     .fixed_headers td {
         background: transparent;
+        padding-bottom: 4px;
+        width: 100%;
     }
 
     .fixed_headers tr {
-        display: block;
-        position: relative;
         width: 100%;
         line-height: 1em;
     }
