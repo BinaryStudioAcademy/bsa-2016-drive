@@ -37,6 +37,11 @@
                         </div>
                     </div>
                 </div>-->
+                <div class="col-sm-3 pull-left">
+                    <div>
+                        <button class="btn btn-default" ng-click="academyCtrl.createLecture()">New lecture</button>
+                    </div>
+                </div>
             </div>
             <div class="wrap clearfix" ng-show="!academyCtrl.showTable">
                 <div role="button" class="s-block btn-default shadow" ng-repeat="lecture in academyCtrl.academy.lectures"
@@ -49,7 +54,7 @@
                     <span>{{ lecture.name }}</span>
                     <br>
                     <span class="bold">Author: </span>
-                    <span>{{ lecture.author.name }}</span><br>
+                    <span>{{ lecture.author.name }}</span>
                     <span class="bold">Start date: </span>
                     <span>{{ lecture.startDate | date:'dd-MM-yyyy HH:mm'}}</span>
                 </div>
