@@ -47,7 +47,7 @@
 
         //vm.redirectToSpaceSettings = redirectToSpaceSettings;
 
-        vm.changeOrder = changeOrder;
+        vm.orderByColumn = orderByColumn;
 
         vm.paginate = {
             currentPage: 1,
@@ -72,6 +72,7 @@
             vm.sortByDate = null;
             vm.reverse = false;
             vm.iconHeight = 30;
+            vm.columnForOrder = 'name';
 
             sharedSpaceService.getSpace(vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate, function (data) {
                 vm.space.files = data.files;
@@ -487,19 +488,8 @@
             window.open(url, '_blank');
         }
 
-        function changeOrder() {
-            vm.reverse = !vm.reverse;
-            vm.paginate.currentPage = 1;
-            if (vm.reverse) {
-                vm.sortByDate = "desc";
-            } else {
-                vm.sortByDate = "asc";
-            }
-            if (vm.parentId !== null) {
-                getFolderContent(vm.parentId);
-            } else {
-                getSpaceContent();
-            }
+        function orderByColumn(column) {
+            vm.columnForOrder = fileService.orderByColumn(column, vm.columnForOrder);
         }
 
         function chooseIcon(type) {

@@ -497,20 +497,6 @@
 
             fileModalInstance.result.then(function (response) {
                 console.log(response);
-                if (response.operation == 'create') {
-                    if (vm.parentId == null) {
-                        vm.getSpace();
-                    }
-                    else {
-                        vm.getFolderContent(vm.parentId)
-                    }
-                }
-                if (response.operation == 'update') {
-                    var index = findById(vm.space.files, response.item.id);
-                    if (index != -1) {
-                        vm.space.files[index] = response.item;
-                    }
-                }
             }, function () {
                 console.log('Modal dismissed');
             });
