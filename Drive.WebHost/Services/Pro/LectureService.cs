@@ -122,7 +122,7 @@ namespace Drive.WebHost.Services.Pro
                 IsDeleted = false,
                 CreatedAt = DateTime.Now,
                 ModifiedAt = DateTime.Now,
-                CourseId = dto.CourseId,
+                Course = await _unitOfWork.AcademyProCourses.GetByIdAsync(dto.CourseId),
                 ContentList = linksList,
                 CodeSamples = dto.CodeSamples.Select(sample => new CodeSample()
                 {
