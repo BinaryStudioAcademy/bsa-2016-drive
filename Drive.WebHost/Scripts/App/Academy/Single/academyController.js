@@ -12,6 +12,7 @@
         vm.academy = null;
         vm.openLecture = openLecture;
         vm.changeView = changeView;
+        vm.createLecture = createLecture;
 
         activate();
 
@@ -39,6 +40,10 @@
 
         function openLecture(id) {
             $location.url('/apps/academy/' + vm.currentAcademyId + '/lecture/' + id);
+        }
+
+        function createLecture() {
+            $location.url('/apps/academy/' + vm.currentAcademyId + '/newlecture');
         }
 
         function changeView(view) {
