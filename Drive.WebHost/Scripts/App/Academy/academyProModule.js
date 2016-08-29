@@ -20,6 +20,12 @@
                         controller: 'AcademyController',
                         controllerAs: 'academyCtrl'
                     })
+                    .when('/apps/academy/:id/newlecture',
+                    {
+                        templateUrl: baseUrl + '/Scripts/App/Academy/Lecture/Create.html',
+                        controller: 'LectureCreateController',
+                        controllerAs: 'lectureCreateCtrl'
+                    })
                     .when('/apps/academy/:id/lecture/:lectureId',
                     {
                         templateUrl: baseUrl + '/Scripts/App/Academy/Lecture/Lecture.html',
