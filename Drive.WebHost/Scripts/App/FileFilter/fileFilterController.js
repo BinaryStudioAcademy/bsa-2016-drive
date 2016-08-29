@@ -14,7 +14,7 @@
         vm.orderByColumn = orderByColumn;
 
         vm.search = search;
-        //vm.cancelSearch = cancelSearch;
+        vm.cancelSearch = cancelSearch;
 
         vm.openDocument = openDocument;
         vm.openFileWindow = openFileWindow;
@@ -43,7 +43,7 @@
 
         vm.fileMenuOptions = [
             [
-                'Share //Add', function ($itemScope) {
+                'Share', function ($itemScope) {
 
                 }
             ],
@@ -98,15 +98,16 @@
             fileService.searchFiles(vm.filesType, vm.searchText, function (data) {
                 vm.spaces = data;
             });
-            vm.searchText = '';
         }
 
-        /*
+
         function cancelSearch() {         
-            getFiles();
-            vm.searchText = '';
+            if (vm.searchText.length >= 1) {
+                vm.searchText = '';
+                getFiles();
+            }
         }
-        */
+
 
         function setFileData() {
             switch ($routeParams.appName) {
