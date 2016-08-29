@@ -31,5 +31,7 @@ namespace Driver.Shared.Dto
         public IEnumerable<FileUnitDto> Files { get; set; }
 
         public IEnumerable<FolderUnitDto> Folders {get;set;}
+
+        public User Owner { get; set; }
     }
 }
