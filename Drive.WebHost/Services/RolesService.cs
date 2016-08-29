@@ -88,8 +88,9 @@ namespace Drive.WebHost.Services
             return -1;
         }
 
-        public async Task UpdateAsync(int id, RoleDto dto)
+        public async Task<bool> UpdateAsync(int id, RoleDto dto)
         {
+            var result = false;
             var a = await _unitOfWork.Roles.Query.FirstOrDefaultAsync(x => x.Name.ToLower() == dto.Name.ToLower());
             if (a!= null)
             {
@@ -122,7 +123,9 @@ namespace Drive.WebHost.Services
                 role.Description = dto.Description;
                 role.Users = permittedUsers;
                 await _unitOfWork?.SaveChangesAsync();
+                result = true;
             }
+            return result;
         }
 
         public async Task Delete(int id)
