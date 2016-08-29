@@ -33,7 +33,7 @@
         </div>
     </div>
     <span us-spinner="{radius:30, width:8, length: 16}"></span>
-    <div class="wrap" ng-show="sharedSpaceCtrl.showGrid">
+    <div class="wrap" ng-show="sharedSpaceCtrl.showGrid" context-menu="spaceCtrl.folderMenuOptions">
         <div role="button" class="s-block btn-default shadow" context-menu="sharedSpaceCtrl.folderMenuOptions" dir-paginate="folder in sharedSpaceCtrl.space.folders | itemsPerPage: sharedSpaceCtrl.paginate.pageSize" total-items="sharedSpaceCtrl.paginate.numberOfItems" current-page="sharedSpaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="sharedSpaceCtrl.getFolderContent(folder.id); sharedSpaceCtrl.addElem(folder)">
             <i class="fa fa-folder-o fa-5x"></i>
             <br>
@@ -64,7 +64,7 @@
         </div>
     </div>
     <div class="table-responsive blocked-table" ng-show="sharedSpaceCtrl.showTable">
-        <table class="fixed_headers">
+        <table class="fixed_headers" context-menu="spaceCtrl.folderMenuOptions">
             <thead>
                 <tr style="cursor: pointer">
                     <th class="name" style="width: 20%" ng-click="sharedSpaceCtrl.orderByColumn('name')">

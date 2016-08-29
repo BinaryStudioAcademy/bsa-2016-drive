@@ -50,7 +50,7 @@
     <span us-spinner="{radius:30, width:8, length: 16}"></span>
 
     <!--New gridview-->
-    <ul class="sp-gv-flex-container wrap" ng-show="spaceCtrl.showGrid">
+    <ul class="sp-gv-flex-container wrap" ng-show="spaceCtrl.showGrid" context-menu="spaceCtrl.folderMenuOptions">
         <li class="sp-gv-flex-item" role="button" context-menu="spaceCtrl.folderMenuOptions" dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize" total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
             <div class="sp-gv-wrapper-flex-item">
                 <div class="sp-gv-item-content card">
@@ -69,7 +69,7 @@
 
         <li class="sp-gv-flex-item" role="button" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.openDocument(file.link)">
             <div class="sp-gv-wrapper-flex-item">
-                <div class="sp-gv-item-content">
+                <div class="sp-gv-item-content card">
                     <div class="sp-gv-item-img-wrapper">
                         <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" />
                     </div>
@@ -122,7 +122,7 @@
                     </th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody context-menu="spaceCtrl.folderMenuOptions">
                 <tr class="shadow" role="button" ng-repeat="folder in spaceCtrl.space.folders | orderBy: spaceCtrl.columnForOrder" context-menu="spaceCtrl.folderMenuOptions" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
                     <td style="width: 20%" class="col-sm-3">
                         <img src="./Content/Icons/folder.svg" height="{{spaceCtrl.iconHeight}}" />
