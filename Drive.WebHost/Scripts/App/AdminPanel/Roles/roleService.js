@@ -64,7 +64,9 @@
         function createRole(data) {
             $http.post(baseUrl + '/api/roles', data)
                 .then(function (response) {
-                    console.log('Success!');
+                    if (response.data == -1) {
+                        alert('A role with same name already exists!')
+                    }
                 }, function (response) {
                     console.log('Error while pushing changes!');
                 });
@@ -73,7 +75,9 @@
         function saveRole(data) {
             $http.put(baseUrl + '/api/roles', data)
             .then(function (response) {
-                console.log('Success!');
+                if (response.data == false) {
+                    alert('A role with same name already exists!');
+                }
             }, function (response) {
                 console.log('Error while saving changes!');
             });
