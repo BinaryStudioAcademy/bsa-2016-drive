@@ -90,28 +90,39 @@ namespace Drive.WebHost.Services
 
         public async Task UpdateAsync(int id, RoleDto dto)
         {
-            List<User> permittedUsers = new List<User>();
-            foreach (var item in dto.Users)
+            var a = await _unitOfWork.Roles.Query.FirstOrDefaultAsync(x => x.Name.ToLower() == dto.Name.ToLower());
+            if (a!= null)
             {
-                var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
-                if (user == null)
+                if (a.Id == dto.Id)
                 {
-                    UserDto userdto = new UserDto();
-                    userdto.serverUserId = item.GlobalId;
-                    await _userService.CreateAsync(userdto);
-                    var suser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
-                    permittedUsers.Add(suser);
-                }
-                else
-                {
-                    permittedUsers.Add(user);
+                    a = null;
                 }
             }
-            var role = await _unitOfWork?.Roles?.Query.Include(x => x.Users).SingleOrDefaultAsync(x => x.Id == id);
-            role.Name = dto.Name;
-            role.Description = dto.Description;
-            role.Users = permittedUsers;
-            await _unitOfWork?.SaveChangesAsync();
+            if (a == null)
+            {
+                List<User> permittedUsers = new List<User>();
+                foreach (var item in dto.Users)
+                {
+                    var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
+                    if (user == null)
+                    {
+                        UserDto userdto = new UserDto();
+                        userdto.serverUserId = item.GlobalId;
+                        await _userService.CreateAsync(userdto);
+                        var suser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
+                        permittedUsers.Add(suser);
+                    }
+                    else
+                    {
+                        permittedUsers.Add(user);
+                    }
+                }
+                var role = await _unitOfWork?.Roles?.Query.Include(x => x.Users).SingleOrDefaultAsync(x => x.Id == id);
+                role.Name = dto.Name;
+                role.Description = dto.Description;
+                role.Users = permittedUsers;
+                await _unitOfWork?.SaveChangesAsync();
+            }
         }
 
         public async Task Delete(int id)
