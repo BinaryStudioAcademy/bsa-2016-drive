@@ -331,6 +331,8 @@ namespace Drive.WebHost.Services
                 await
                     _unitOfWork?.Spaces?.Query.Include(x => x.ReadPermittedUsers)
                         .Include(x => x.ModifyPermittedUsers)
+                        .Include(x => x.ReadPermittedRoles)
+                        .Include(x => x.ModifyPermittedRoles)
                         .SingleOrDefaultAsync(x => x.Id == id);
 
             if (space == null) return;
