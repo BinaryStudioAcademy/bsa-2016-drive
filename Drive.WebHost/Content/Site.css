@@ -604,7 +604,7 @@ hr.style {
     }
 
 .header-wrapper {
-    height: 5vh;
+    height: 3em;
     background: #eaebec;
     margin-right: -17px;
 }
@@ -613,7 +613,7 @@ hr.style {
     padding-right: 17px;
     padding-left: 1em;
     padding-top: 1em;
-    height: 5vh;
+    height: 3em;
     margin-left: 17px;
     cursor: pointer;
 }

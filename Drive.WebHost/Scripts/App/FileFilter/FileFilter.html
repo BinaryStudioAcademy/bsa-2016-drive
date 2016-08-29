@@ -29,7 +29,7 @@
             <div class="grid-space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ space.name }}</div>
             <div uib-collapse="space.isCollapsed">
                 <ul class="sp-gv-flex-container">
-                    <li class="sp-gv-flex-item" role="button" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="fileFilterCtrl.openDocument(file.link)">
+                    <li class="sp-gv-flex-item" role="button" context-menu="fileFilterCtrl.fileMenuOptions" ng-repeat="file in space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="fileFilterCtrl.openDocument(file.link)">
                         <div class="sp-gv-wrapper-flex-item">
                             <div class="sp-gv-item-content">
                                 <div class="sp-gv-item-img-wrapper">
