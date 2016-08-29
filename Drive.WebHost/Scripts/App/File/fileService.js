@@ -17,6 +17,7 @@
             deleteFile: deleteFile,
             getFile: getFile,
             getDeletedFile: getDeletedFile,
+            createCopyFile: createCopyFile,
             getAllFiles: getAllFiles,
             getFilesApp: getFilesApp,
             getAllByParentId: getAllByParentId,
@@ -49,11 +50,11 @@
 
         function getFilesApp(fileType, callBack) {
             $http.get(baseUrl + '/api/files/apps/' + fileType)
-                .then(function (response) {
+                .then(function(response) {
                     if (callBack) {
                         callBack(response.data);
                     }
-                })
+                });
         }
 
         function searchFiles(fileType, text, callback) {
@@ -125,6 +126,18 @@
 
         function updateDeletedFile(id, oldParentId, file, callBack) {
             $http.put(baseUrl + '/api/files/deleted/' + id + '?oldParentId=' + oldParentId, file)
+                .then(function (response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                },
+                    function () {
+                        console.log('Error while getting file!');
+                    });
+        }
+
+        function createCopyFile(id, file, callBack) {
+            $http.put(baseUrl + '/api/files/copied/' + id, file)
                 .then(function (response) {
                     if (callBack) {
                         callBack(response.data);

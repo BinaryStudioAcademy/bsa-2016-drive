@@ -2,8 +2,6 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Runtime.Remoting.Messaging;
-using System.Security.Principal;
 using System.Threading.Tasks;
 using Driver.Shared.Dto;
 using Drive.DataAccess.Entities;
@@ -190,6 +188,45 @@ namespace Drive.WebHost.Services
 
             file.Space = space;
             file.FolderUnit = parentFolder ?? null;
+
+            await _unitOfWork?.SaveChangesAsync();
+
+            return dto;
+        }
+
+        public async Task<FileUnitDto> CreateCopyAsync(int id, FileUnitDto dto)
+        {
+            var file = await _unitOfWork?.Files?.GetByIdAsync(id);
+
+            if (file == null)
+                return null;
+
+            var space = await _unitOfWork.Spaces.GetByIdAsync(dto.SpaceId);
+
+            var user = await _usersService?.GetCurrentUser();
+
+            var copy = new FileUnit
+            {
+                Name = file.Name,
+                Description = file.Description,
+                FileType = file.FileType,
+                IsDeleted = file.IsDeleted,
+                LastModified = DateTime.Now,
+                CreatedAt = file.CreatedAt,
+                Link = file.Link,
+                Space = space,
+                Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId),
+                ModifyPermittedUsers = file.ModifyPermittedUsers,
+                ReadPermittedUsers = file.ReadPermittedUsers
+            };
+
+            if (dto.ParentId != null)
+            {
+                var parent = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
+                copy.FolderUnit = parent;
+            }
+
+            _unitOfWork.Files.Create(copy);
 
             await _unitOfWork?.SaveChangesAsync();
 
