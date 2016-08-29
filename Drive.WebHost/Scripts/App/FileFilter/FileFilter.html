@@ -57,10 +57,26 @@
     <div class="filter-table container-md" ng-show="fileFilterCtrl.showTable">
         <div class="header-wrapper">
             <div class="row header-row">
-                <div class="col-md-3">Name</div>
-                <div class="col-md-3">Description</div>
-                <div class="col-md-2">Author</div>
-                <div class="col-md-2">Created</div>
+                <div class="col-md-3" ng-click="fileFilterCtrl.orderByColumn('name')">
+                    Name
+                    <span ng-show="fileFilterCtrl.columnForOrder == 'name'"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="fileFilterCtrl.columnForOrder == '-name'"><i class="fa fa-sort-desc"></i></span>
+                </div>
+                <div class="col-md-3" ng-click="fileFilterCtrl.orderByColumn('description')">
+                    Description
+                    <span ng-show="fileFilterCtrl.columnForOrder == 'description'"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="fileFilterCtrl.columnForOrder == '-description'"><i class="fa fa-sort-desc"></i></span>
+                </div>
+                <div class="col-md-2" ng-click="fileFilterCtrl.orderByColumn('author.name')">
+                    Author
+                    <span ng-show="fileFilterCtrl.columnForOrder == 'author.name'"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="fileFilterCtrl.columnForOrder == '-author.name'"><i class="fa fa-sort-desc"></i></span>
+                </div>
+                <div class="col-md-2" ng-click="fileFilterCtrl.orderByColumn('createdAt')">
+                    Created
+                    <span ng-show="fileFilterCtrl.columnForOrder == 'createdAt'"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="fileFilterCtrl.columnForOrder == '-createdAt'"><i class="fa fa-sort-desc"></i></span>
+                </div>
                 <div class="col-md-2">Type</div>
             </div>
         </div>
