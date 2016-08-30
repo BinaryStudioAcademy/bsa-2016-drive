@@ -36,12 +36,12 @@
                                     <img ng-src="{{fileFilterCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}"/>
                                 </div>
                                 <div class="sp-gv-item-text">
-                                    <h4 title="{{file.name}}">{{file.name | limitTo: 13}}{{file.name.length > 13 ? '..' : ''}}</h4>
+                                    <h4 title="{{file.name}}">{{file.name}}</h4>
                                     <h5 title="{{file.author.name}}">
                                         <i class="fa fa-user" aria-hidden="true"></i>
-                                        {{file.author.name | limitTo: 17}}{{file.author.name.length > 17 ? '...' : ''}}
+                                        {{file.author.name}}
                                     </h5>
-                                    <p title="{{file.description}}">{{file.description | limitTo: 45}}{{file.description.length > 45 ? '...' : ''}}</p>
+                                    <p title="{{file.description}}">{{file.description}}</p>
                                 </div>
                             </div>
                         </div>
