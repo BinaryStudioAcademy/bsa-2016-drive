@@ -79,7 +79,6 @@ namespace Drive.WebHost.Services
 
         public async Task<SpaceDto> GetAsync(int id, int page, int count, string sort)
         {
-            BSIdentityManager identity = new BSIdentityManager();
             var space = await _unitOfWork.Spaces.Query.Where(s => s.Id == id).Select(s => new SpaceDto
             {
                 Id = s.Id,
@@ -95,9 +94,9 @@ namespace Drive.WebHost.Services
                 ModifyPermittedRoles = s.ModifyPermittedRoles,
                 Files = s.ContentList.OfType<FileUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted)
                 .Where(f => (s.Type == SpaceType.BinarySpace) 
-                || (f.Owner.GlobalId == identity.UserId)
-                || (f.ReadPermittedUsers.FirstOrDefault(x => x.GlobalId== identity.UserId) != null 
-                || f.ReadPermittedRoles.FirstOrDefault(x => x.Users.FirstOrDefault(p => p.GlobalId == identity.UserId) != null) != null))
+                || (f.Owner.GlobalId == _userService.CurrentUserId)
+                || (f.ReadPermittedUsers.FirstOrDefault(x => x.GlobalId == _userService.CurrentUserId) != null 
+                || f.ReadPermittedRoles.FirstOrDefault(x => x.Users.FirstOrDefault(p => p.GlobalId == _userService.CurrentUserId) != null) != null))
                 .Select(f => new FileUnitDto
                 {
                     Description = f.Description,
@@ -111,9 +110,9 @@ namespace Drive.WebHost.Services
                 }),
                 Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted)
                 .Where(f => (s.Type == SpaceType.BinarySpace)
-                || (f.Owner.GlobalId == identity.UserId)
-                || (f.ReadPermittedUsers.FirstOrDefault(x => x.GlobalId == identity.UserId) != null
-                || f.ReadPermittedRoles.FirstOrDefault(x => x.Users.FirstOrDefault(p => p.GlobalId == identity.UserId) != null) != null))
+                || (f.Owner.GlobalId == _userService.CurrentUserId)
+                || (f.ReadPermittedUsers.FirstOrDefault(x => x.GlobalId == _userService.CurrentUserId) != null
+                || f.ReadPermittedRoles.FirstOrDefault(x => x.Users.FirstOrDefault(p => p.GlobalId == _userService.CurrentUserId) != null) != null))
                 .Select(f => new FolderUnitDto
                 {
                     Id = f.Id,
@@ -131,9 +130,9 @@ namespace Drive.WebHost.Services
 
 
             if (space.Type != SpaceType.BinarySpace
-                 && space.Owner.GlobalId != identity.UserId)
+                 && space.Owner.GlobalId != _userService.CurrentUserId)
             {
-                if (space.ReadPermittedUsers.FirstOrDefault(x => x.GlobalId == identity.UserId) == null)
+                if (space.ReadPermittedUsers.FirstOrDefault(x => x.GlobalId == _userService.CurrentUserId) == null)
                 {
                     if (space.ReadPermittedRoles.Count == 0)
                     {
@@ -143,7 +142,7 @@ namespace Drive.WebHost.Services
                     {
                         foreach (var item in space.ReadPermittedRoles)
                         {
-                            if (item.Users.FirstOrDefault(x => x.GlobalId == identity.UserId) == null)
+                            if (item.Users.FirstOrDefault(x => x.GlobalId == _userService.CurrentUserId) == null)
                             {
                                 return null;
                             }
@@ -209,7 +208,6 @@ namespace Drive.WebHost.Services
 
         public async Task<IList<SpaceDto>> GetAllAsync()
         {
-            BSIdentityManager identity = new BSIdentityManager();
             var spacesList = await _unitOfWork.Spaces.Query.Include(x => x.ReadPermittedUsers).Include(x => x.ReadPermittedRoles).Select(s => new SpaceDto
             {
                 Id = s.Id,
@@ -224,10 +222,10 @@ namespace Drive.WebHost.Services
             
             for (int i = 0; i < spacesList.Count; i++)
             {
-                if (spacesList[i].Owner.GlobalId != identity.UserId &&
-                    spacesList[i].Type != SpaceType.BinarySpace)
+                if (spacesList[i].Type != SpaceType.BinarySpace
+                     && spacesList[i].Owner.GlobalId != _userService.CurrentUserId)
                 {
-                    if (spacesList[i].ReadPermittedUsers.FirstOrDefault(x => x.GlobalId == identity.UserId) == null)
+                    if (spacesList[i].ReadPermittedUsers.FirstOrDefault(x => x.GlobalId == _userService.CurrentUserId) == null)
                     {
                         if (spacesList[i].ReadPermittedRoles.Count == 0)
                         {
@@ -238,7 +236,7 @@ namespace Drive.WebHost.Services
                         {
                             for (int j = 0; j < spacesList[i].ReadPermittedRoles.Count; j++)
                             {
-                                if (spacesList[i].ReadPermittedRoles[j].Users.FirstOrDefault(x => x.GlobalId == identity.UserId) == null)
+                                if (spacesList[i].ReadPermittedRoles[j].Users.FirstOrDefault(x => x.GlobalId == _userService.CurrentUserId) == null)
                                 {
                                     spacesList.RemoveAt(i);
                                     i--;
@@ -254,7 +252,6 @@ namespace Drive.WebHost.Services
 
         public async Task<int> CreateAsync(SpaceDto dto)
         {
-            BSIdentityManager identity = new BSIdentityManager();
 
             List<User> ReadPermittedUsers = new List<User>();
             foreach (var item in dto.ReadPermittedUsers)
@@ -331,7 +328,7 @@ namespace Drive.WebHost.Services
                 CreatedAt = DateTime.Now,
                 LastModified = DateTime.Now,
                 IsDeleted = false,
-                Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == identity.UserId)
+                Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == _userService.CurrentUserId)
             };
             _unitOfWork?.Spaces?.Create(space);
             await _unitOfWork?.SaveChangesAsync();

@@ -20,8 +20,6 @@ namespace Drive.DataAccess.Entities
         public string Message { get; set; }
         public string Exception { get; set; }
         public string CallerName { get; set; }
-
-        [NotMapped]
         public bool IsDeleted { get; set; }
 
     }
