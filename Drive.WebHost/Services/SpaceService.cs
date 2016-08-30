@@ -131,7 +131,7 @@ namespace Drive.WebHost.Services
 
 
             if (space.Type != SpaceType.BinarySpace
-                || (space.Type != SpaceType.MySpace && space.Owner.GlobalId == identity.UserId))
+                 && space.Owner.GlobalId != identity.UserId)
             {
                 if (space.ReadPermittedUsers.FirstOrDefault(x => x.GlobalId == identity.UserId) == null)
                 {
@@ -224,8 +224,8 @@ namespace Drive.WebHost.Services
             
             for (int i = 0; i < spacesList.Count; i++)
             {
-                if (spacesList[i].Type != SpaceType.BinarySpace
-                    || (spacesList[i].Type != SpaceType.MySpace && spacesList[i].Owner.GlobalId == identity.UserId))
+                if (spacesList[i].Owner.GlobalId != identity.UserId &&
+                    spacesList[i].Type != SpaceType.BinarySpace)
                 {
                     if (spacesList[i].ReadPermittedUsers.FirstOrDefault(x => x.GlobalId == identity.UserId) == null)
                     {

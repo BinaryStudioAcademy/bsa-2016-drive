@@ -4,13 +4,13 @@
         <button class="btn btn-info create-space menu btn-md" ng-click="menuController.open('lg')"><i class="fa icon-custom fa-plus-circle fa-cog fa-lg"></i>Add new Space</button>
         <hr class="style" />
         <li>
-            <div class="d" ng-click="menuController.redirectToBinarySpace()">
+            <div class="d" ng-click="menuController.redirectToBinarySpace(menuController.binarySpace.id)">
                 <img src="./Content/Icons/menu_space-home.svg" class="menu-icons" style="height: 28px;" alt="Binary Space" />
                 Binary Space
             </div>
         </li>
         <li class="active">
-            <div class="d" ng-click="menuController.redirectToMySpace()">
+            <div class="d" ng-click="menuController.redirectToMySpace(menuController.mySpace.id)">
                 <img src="./Content/Icons/menu_space-own.svg" class="menu-icons" style="height: 28px;" alt="MySpace" />
                 My Space
             </div>
@@ -26,7 +26,7 @@
                 <span class="fa-stack fa-lg pull-left"><i class="fa fa-ellipsis-v fa-stack-1x "></i></span>Other
             </div>
             <ul class="nav-pills nav-stacked collapse" style="list-style-type: none;" id="other">
-                <li ng-repeat="item in menuController.spaces"  >
+                <li ng-repeat="item in menuController.spaces" ng-if="item.type == 2" >
                     <div class="d" ng-click='menuController.redirectToSpace(item.id)' title="{{item.name}}">
                         <img src="./Content/Icons/menu_space-other.svg" class="menu-icons" alt="Alternate Text" />
                         <span class="span-apps">{{item.name | limitTo: 14 }}{{item.name.length > 14 ? '..' : ''}}</span>

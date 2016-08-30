@@ -109,16 +109,8 @@
         }
 
         function currentSpaceId() {
-            if ($routeParams.type) {
-                if ($routeParams.type === "binaryspace") {
-                    return 1;
-                }
-                if ($routeParams.type === "myspace") {
-                    return 2;
-                }
-            }
-            if ($routeParams.id) {
-                return $routeParams.id;
+            if ($routeParams.spaceId) {
+                return $routeParams.spaceId;
             }
             return 1;
         }

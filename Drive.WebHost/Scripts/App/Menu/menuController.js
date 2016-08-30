@@ -26,15 +26,20 @@
         function getAllSpaces() {
             menuService.getAllSpaces(function (data) {
                 vm.spaces = data;
+                for (var i = 0; i < vm.spaces.length; i++) {
+                    if (vm.spaces[i].type === 0) { vm.binarySpace = vm.spaces[i] };
+                    if (vm.spaces[i].type === 1) { vm.mySpace = vm.spaces[i] };
+                }
             });
+
         }
 
-        function redirectToBinarySpace() {
-            $location.url("/binaryspace");
+        function redirectToBinarySpace(id) {
+            $location.url("/binaryspace/" + id);
         };
 
-        function redirectToMySpace() {
-            $location.url("/myspace");
+        function redirectToMySpace(id) {
+            $location.url("/myspace/" + id);
         };
 
         function redirectToSharedSpace() {
@@ -42,7 +47,7 @@
         };
 
         function redirectToSpace(id) {
-            $location.url("/spaces/" + id);
+            $location.url("/others/" + id);
         };
 
         function redirectToAddFile() {
@@ -80,7 +85,7 @@
         };
 
         function activate() {
-            return getAllSpaces();
+            getAllSpaces();
         }
 
         $rootScope.$on("getSpacesInMenu", function () {

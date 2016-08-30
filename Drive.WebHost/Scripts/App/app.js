@@ -23,25 +23,13 @@
                     controller: "SpaceController",
                     controllerAs: "spaceCtrl"
                 })
-                //.when("/:type", // Space page
-                //{
-                //    templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
-                //    controller: "SpaceController",
-                //    controllerAs: "spaceCtrl"
-                //})
+                .when("/:type/:spaceId", // Space page
+                {
+                    templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
+                    controller: "SpaceController",
+                    controllerAs: "spaceCtrl"
+                })
                 .when("/spaces/:id", // Space page
-                {
-                    templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
-                    controller: "SpaceController",
-                    controllerAs: "spaceCtrl"
-                })
-                .when("/binaryspace", // Binary Space page
-                {
-                    templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
-                    controller: "SpaceController",
-                    controllerAs: "spaceCtrl"
-                })
-                .when("/myspace", // My Space page
                 {
                     templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
                     controller: "SpaceController",
