@@ -8,7 +8,7 @@ namespace Drive.WebHost
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
             filters.Add(new HandleErrorAttribute());
-            //filters.Add(new JWTAuthenticationFilter());
+            filters.Add(new JWTAuthenticationFilter());
         }
     }
 }

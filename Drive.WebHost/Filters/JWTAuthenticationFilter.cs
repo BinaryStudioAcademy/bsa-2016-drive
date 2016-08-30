@@ -12,17 +12,6 @@ namespace Drive.WebHost.Filters
 {
     public class JWTAuthenticationFilter : FilterAttribute, IAuthenticationFilter
     {
-        private readonly ISpaceService _spaceService;
-
-        public JWTAuthenticationFilter(ISpaceService spaceService)
-        {
-            _spaceService = spaceService;
-        }
-
-        private void CreateUserAndFirstSpace(string globalId)
-        {
-            _spaceService.CreateUserAndFirstSpaceAsync(globalId);
-        }
 
         public void OnAuthentication(AuthenticationContext filterContext)
         {
@@ -49,7 +38,7 @@ namespace Drive.WebHost.Filters
             idManager.SetPrincipal(principal);
             filterContext.Principal = principal;
             filterContext.HttpContext.User = principal;
-            CreateUserAndFirstSpace(idManager.UserId);
+
         }
 
         public void OnAuthenticationChallenge(AuthenticationChallengeContext filterContext)
