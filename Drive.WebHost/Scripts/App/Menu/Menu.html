@@ -21,12 +21,12 @@
                 Shared Space
             </div>
         </li>
-        <li ng-show="menuController.spaces.length > 3" ng-click="menuController.getAllSpaces()">
+        <li  ng-click="menuController.getAllSpaces()">
             <div class="d" data-toggle="collapse" data-target="#other">
                 <span class="fa-stack fa-lg pull-left"><i class="fa fa-ellipsis-v fa-stack-1x "></i></span>Other
             </div>
             <ul class="nav-pills nav-stacked collapse" style="list-style-type: none;" id="other">
-                <li ng-repeat="item in menuController.spaces" ng-if="item.name != 'Binary Space' && item.name != 'My Space'">
+                <li ng-repeat="item in menuController.spaces"  >
                     <div class="d" ng-click='menuController.redirectToSpace(item.id)' title="{{item.name}}">
                         <img src="./Content/Icons/menu_space-other.svg" class="menu-icons" alt="Alternate Text" />
                         <span class="span-apps">{{item.name | limitTo: 14 }}{{item.name.length > 14 ? '..' : ''}}</span>

@@ -1045,3 +1045,7 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 /* End of Academy Pro styles */
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
