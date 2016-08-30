@@ -608,7 +608,8 @@ namespace Drive.WebHost.Services
                             IsDeleted = false,
                             CreatedAt = DateTime.Now,
                             LastModified = DateTime.Now,
-                            Owner = user
+                            Owner = user,
+                            Type = SpaceType.MySpace
                         });
 
                         await _unitOfWork.SaveChangesAsync();

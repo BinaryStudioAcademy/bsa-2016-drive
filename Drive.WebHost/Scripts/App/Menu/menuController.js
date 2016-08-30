@@ -27,8 +27,20 @@
             menuService.getAllSpaces(function (data) {
                 vm.spaces = data;
                 for (var i = 0; i < vm.spaces.length; i++) {
-                    if (vm.spaces[i].type === 0) { vm.binarySpace = vm.spaces[i] };
-                    if (vm.spaces[i].type === 1) { vm.mySpace = vm.spaces[i] };
+                    switch(vm.spaces[i].type) {
+                        case 0:
+                            vm.binarySpace = vm.spaces[i];
+                            break;
+                        case 1:
+                            vm.mySpace = vm.spaces[i];
+                            break;
+                        case 2:
+                            vm.showOthers = true;
+                            break;
+                    }
+                    if (vm.showOthers) {
+                        break;
+                    }
                 }
             });
 
@@ -85,6 +97,7 @@
         };
 
         function activate() {
+            vm.showOthers = false;
             getAllSpaces();
         }
 
