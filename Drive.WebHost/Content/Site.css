@@ -979,6 +979,8 @@ input[type="search"]::-webkit-search-cancel-button {
     padding: 5px 0;
     margin: 0;
     font-weight: 300;
+    height: 26px;
+    overflow: hidden;
 }
 
 .sp-gv-item-text h5 i{
@@ -991,14 +993,16 @@ input[type="search"]::-webkit-search-cancel-button {
     padding: 5px 0;
     font-weight: 300;
     margin: 0;
+    height: 34px;
+    overflow: hidden;
 }
 
 .sp-gv-item-text p {
     line-height: 1.9;
     display: block;
-    padding: 5px 0;
     margin: 0;
     height: 50px;
+    overflow:hidden
 }
 /*End New GridView*/
 
