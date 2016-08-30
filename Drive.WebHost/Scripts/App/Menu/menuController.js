@@ -47,11 +47,11 @@
         }
 
         function redirectToBinarySpace(id) {
-            $location.url("/binaryspace/" + id);
+            $location.url("/spaces/" + id);
         };
 
         function redirectToMySpace(id) {
-            $location.url("/myspace/" + id);
+            $location.url("/spaces/" + id);
         };
 
         function redirectToSharedSpace() {
@@ -59,7 +59,7 @@
         };
 
         function redirectToSpace(id) {
-            $location.url("/others/" + id);
+            $location.url("/spaces/" + id);
         };
 
         function redirectToAddFile() {

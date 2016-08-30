@@ -109,8 +109,8 @@
         }
 
         function currentSpaceId() {
-            if ($routeParams.spaceId) {
-                return $routeParams.spaceId;
+            if ($routeParams.id) {
+                return $routeParams.id;
             }
             return 1;
         }
