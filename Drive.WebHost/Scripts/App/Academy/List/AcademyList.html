@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-        <div class="wrap clearfix" ng-show="!academyListCtrl.showTable">
+        <!--<div class="wrap clearfix" ng-show="!academyListCtrl.showTable">
             <div role="button" class="s-block btn-default shadow" ng-repeat="academy in academyListCtrl.academiesList"
                  title="Created {{ academy.createdAt | date : 'short' }}"
                  ng-dblclick="academyListCtrl.openCourse(academy.id)"
@@ -49,8 +49,36 @@
                 <span class="bold">Start date: </span>
                 <span>{{ academy.startDate | date:'dd-MM-yyyy HH:mm'}}</span>
             </div>
-        </div>
-    </div>
+        </div>-->
+        <ul class="sp-gv-flex-container wrap" ng-show="!academyListCtrl.showTable">
+            <li class="sp-gv-flex-item" role="button" ng-repeat="academy in academyListCtrl.academiesList" ng-dblclick="academyListCtrl.openCourse(academy.id)"  title="Created {{ academy.createdAt | date : 'short' }}">
+                <div class="sp-gv-wrapper-flex-item">
+                    <div class="sp-gv-item-content card">
+                        <div class="sp-gv-item-img-wrapper">
+                            <img ng-src="{{academyListCtrl.icon}}" alt="Academy" title="Course" />
+                        </div>
+                        <div class="sp-gv-item-text">
+                            <h4 title="{{ academy.fileUnit.name}}">{{ academy.fileUnit.name | limitTo: 13}}{{ academy.fileUnit.name.length > 13 ? '..' : ''}}</h4>
+                            <h5 title="Author: {{academy.author.name}}">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                {{academy.author.name | limitTo: 17}}{{academy.author.name.length > 17 ? '...' : ''}}
+                            </h5>
+                            <br/>
+                            <h5 title="Start date">
+                                <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                                {{ academy.startDate | date:'dd-MM-yyyy HH:mm'}}
+                            </h5>
+                            <p title="{{academy.fileUnit.description}}">{{academy.fileUnit.description | limitTo: 45 }}{{ academy.fileUnit.description > 45 ? '...' : ''}}</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="sp-gv-flex-item"></li>
+            <li class="sp-gv-flex-item"></li>
+            <li class="sp-gv-flex-item"></li>
+        </ul>
+
+</div>
     <div class="filter-table" ng-show="academyListCtrl.showTable">
         <div class="header-wrapper">
             <div class="row header-row">
