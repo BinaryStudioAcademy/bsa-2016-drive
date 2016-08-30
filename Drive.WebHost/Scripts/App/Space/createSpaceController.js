@@ -3,11 +3,11 @@
 
     angular
         .module("driveApp")
-        .controller("CreateController", CreateController);
+        .controller("CreateSpaceController", CreateSpaceController);
 
-    CreateController.$inject = ['SpaceService', '$uibModalInstance', '$timeout', 'toastr'];
+    CreateSpaceController.$inject = ['SpaceService', '$uibModalInstance', '$timeout', 'toastr'];
 
-    function CreateController(spaceService, $uibModalInstance, $timeout, toastr) {
+    function CreateSpaceController(spaceService, $uibModalInstance, $timeout, toastr) {
         var vm = this;
         
         vm.addNewSpace = addNewSpace;
