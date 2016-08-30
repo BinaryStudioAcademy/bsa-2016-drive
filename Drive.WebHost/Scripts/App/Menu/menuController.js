@@ -81,8 +81,8 @@
                 animation: true,
                 templateUrl: 'Scripts/App/Space/Create.html',
                 windowTemplateUrl: 'Scripts/App/Space/Modal.html',
-                controller: 'CreateController',
-                controllerAs: 'createCtrl',
+                controller: 'CreateSpaceController',
+                controllerAs: 'createSpaceCtrl',
                 keyboard: true,
                 size: size
 

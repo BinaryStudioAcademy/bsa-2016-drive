@@ -232,15 +232,6 @@ namespace Drive.WebHost.Services
                 ReadPermittedUsers = folder.ReadPermittedUsers
             };
 
-           
-
-            foreach (var item in folder.DataUnits)
-            {
-                item.Space = await _unitOfWork.Spaces.GetByIdAsync(folder.Space.Id);
-
-                await CreateCopyAsync(item.Id, new FolderUnitDto());
-            }
-
             if (dto.ParentId != null)
             {
                 var parent = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
@@ -249,6 +240,13 @@ namespace Drive.WebHost.Services
                 copy.Space = space;
 
                 folder.FolderUnit = parent;
+            }
+
+            foreach (var item in folder.DataUnits)
+            {
+                item.Space = await _unitOfWork.Spaces.GetByIdAsync(folder.Space.Id);
+
+                await CreateCopyAsync(item.Id, new FolderUnitDto());
             }
 
             _unitOfWork.Folders.Create(copy);

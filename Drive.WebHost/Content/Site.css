@@ -477,8 +477,8 @@ hr.style {
 
 /*Icon on create new Space button in menu*/
 .icon-custom {
-    margin-left: -58px;
-    width: 2.1em;
+    margin-left: -65px;
+    width: 2.3em;
 }
 
 /*.shadow {
@@ -556,7 +556,7 @@ hr.style {
 
     .fixed_headers td {
         background: transparent;
-        padding-bottom: 4px;
+        padding-bottom: 7px;
         width: 100%;
     }
 
@@ -1050,6 +1050,15 @@ input[type="search"]::-webkit-search-cancel-button {
 
 /* End of Academy Pro styles */
 
+/*ng-cloak for Create new space modal window*/
 [ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
   display: none !important;
 }
+/*End ng-cloak for Create new space modal window*/
+
+/*Overflow for description*/
+.description {
+    white-space: nowrap;
+    overflow:hidden !important;
+}
+/*End Overflow for description*/
