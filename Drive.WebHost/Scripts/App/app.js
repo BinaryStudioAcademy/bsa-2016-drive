@@ -21,7 +21,8 @@
                 {
                     templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
                     controller: "SpaceController",
-                    controllerAs: "spaceCtrl"
+                    controllerAs: "spaceCtrl",
+                    redirectTo: "/spaces/1"
                 })
                 //.when("/:type", // Space page
                 //{

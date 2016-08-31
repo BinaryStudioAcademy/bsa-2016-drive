@@ -1,0 +1,88 @@
+﻿<div class="container col-md-12">
+    <br />
+    <div class="btn-group btn-breadcrumb">
+        <a class="btn btn-info"><i class={{trashBinCtrl.icon}}></i> {{trashBinCtrl.filesType}}</a>
+    </div>
+    <div class="row" style="margin: 1em 0 1em 0;">
+        <div class="col-lg-push-4-offset pull-right">
+            <button class="btn btn-default" ng-click="trashBinCtrl.changeView(trashBinCtrl.view)">
+                <i class={{trashBinCtrl.view}} title="view"> </i>
+            </button>
+        </div>
+        <div>
+            <div class="col-sm-3 pull-right">
+                <div>
+                    <div class="input-group">
+                        <form id="form-container">
+                            <div id="searchtext">
+                                <input type="search" size="40" class="search-input" value="" name="s" id="s" placeholder="Search..." ng-model="trashBinCtrl.searchText">
+                                <button class="search-submit-button" type="submit" ng-click="trashBinCtrl.search()"> <i class="fa fa-search"></i> </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrap" ng-show="trashBinCtrl.showGrid">
+        <div ng-repeat="space in trashBinCtrl.spaces">
+            <div class="grid-space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ space.name }}</div>
+            <div uib-collapse="space.isCollapsed">
+                <ul class="sp-gv-flex-container">
+                    <li class="sp-gv-flex-item" role="button" context-menu="trashBinCtrl.fileMenuOptions" ng-repeat="file in space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="trashBinCtrl.openDocument(file.link)">
+                        <div class="sp-gv-wrapper-flex-item">
+                            <div class="sp-gv-item-content">
+                                <div class="sp-gv-item-img-wrapper">
+                                    <img ng-src="{{trashBinCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" />
+                                </div>
+                                <div class="sp-gv-item-text">
+                                    <h4 title="{{file.name}}">{{file.name | limitTo: 15}}{{file.name.length > 15 ? '...' : ''}}</h4>
+                                    <h5 title="{{file.author.name}}">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        {{file.author.name | limitTo: 17}}{{file.author.name.length > 17 ? '...' : ''}}
+                                    </h5>
+                                    <p title="{{file.description}}">{{file.description | limitTo: 45}}{{file.description.length > 45 ? '...' : ''}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="sp-gv-flex-item"></li>
+                    <li class="sp-gv-flex-item"></li>
+                    <li class="sp-gv-flex-item"></li>
+                </ul>
+            </div>
+            <hr />
+        </div>
+    </div>
+    <div class="filter-table" ng-show="trashBinCtrl.showTable">
+        <div class="header-wrapper">
+            <div class="row header-row">
+                <div class="col-md-3">Name</div>
+                <div class="col-md-3">Description</div>
+                <div class="col-md-2">Author</div>
+                <div class="col-md-2">Created</div>
+                <div class="col-md-2">Type</div>
+            </div>
+        </div>
+        <div class="filter-table-internal">
+            <div ng-repeat="space in trashBinCtrl.spaces">
+                <div class="space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ space.name }}</div>
+                <div uib-collapse="space.isCollapsed">
+                    <div style="transition: all 2s">
+                        <div class="filter-table-row">
+                            <div class="row filter-table-row" role="button" ng-repeat="file in space.files | orderBy: trashBinCtrl.columnForOrder" ng-dblclick="trashBinCtrl.openDocument(file.link)" context-menu="trashBinCtrl.fileMenuOptions">
+                                <div class="col-md-3 filter-table-cell">
+                                    <img ng-src="{{trashBinCtrl.chooseIcon(file.fileType)}}" height="{{trashBinCtrl.iconHeight}}" /> {{ file.name }}
+                                </div>
+                                <div class="col-md-3 filter-table-cell">{{ file.description }}</div>
+                                <div class="col-md-2 filter-table-cell">{{ file.author.name }}</div>
+                                <div class="col-md-2 filter-table-cell">{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</div>
+                                <div class="col-md-2 filter-table-cell">{{ file.fileType | typeOfFile }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -23,10 +23,6 @@
         vm.parentId = null;
         vm.selectedSpace = currentSpaceId();
 
-        vm.space = {
-            folders: [],
-            files: []
-        }
 
         // vm.getAllFolders = getAllFolders;
         vm.getFolder = getFolder;
@@ -80,6 +76,10 @@
             vm.columnForOrder = 'name';
             vm.iconHeight = 30;
 
+            vm.space = {
+                folders: [],
+                files: []
+            }
             spaceService.getSpace(vm.selectedSpace,
                 vm.paginate.currentPage,
                 vm.paginate.pageSize,
@@ -87,7 +87,8 @@
                 function (data) {
                 vm.space = data;
                 vm.spaceId = data.id;
-
+                if (vm.space.type == 0) { $location.hash("binaryspace"); }
+                if (vm.space.type == 1) { $location.hash("myspace"); }
                 if (localStorageService.get('spaceId') !== vm.spaceId) {
                     localStorageService.set('spaceId', vm.spaceId);
                     localStorageService.set('current', null);
@@ -104,8 +105,9 @@
                 } else {
                     getSpace();
                 }
-
-            });
+                
+                });
+            
         }
 
         function currentSpaceId() {
