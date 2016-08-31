@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-        <div class="wrap clearfix" ng-show="!academyListCtrl.showTable">
+        <!--<div class="wrap clearfix" ng-show="!academyListCtrl.showTable">
             <div role="button" class="s-block btn-default shadow" ng-repeat="academy in academyListCtrl.academiesList"
                  title="Created {{ academy.createdAt | date : 'short' }}"
                  ng-dblclick="academyListCtrl.openCourse(academy.id)"
@@ -49,8 +49,36 @@
                 <span class="bold">Start date: </span>
                 <span>{{ academy.startDate | date:'dd-MM-yyyy HH:mm'}}</span>
             </div>
-        </div>
-    </div>
+        </div>-->
+        <ul class="sp-gv-flex-container wrap" ng-show="!academyListCtrl.showTable">
+            <li class="sp-gv-flex-item" role="button" ng-repeat="academy in academyListCtrl.academiesList" ng-dblclick="academyListCtrl.openCourse(academy.id)"  title="Created {{ academy.createdAt | date : 'short' }}">
+                <div class="sp-gv-wrapper-flex-item">
+                    <div class="sp-gv-item-content card">
+                        <div class="sp-gv-item-img-wrapper">
+                            <img ng-src="{{academyListCtrl.icon}}" alt="Academy" title="Course" />
+                        </div>
+                        <div class="sp-gv-item-text">
+                            <h4 title="{{ academy.fileUnit.name}}">{{ academy.fileUnit.name}}</h4>
+                            <h5 title="Author: {{academy.author.name}}">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                {{academy.author.name}}
+                            </h5>
+                            <br/>
+                            <h5 title="Start date {{ academy.startDate | date:'dd-MM-yyyy HH:mm'}}">
+                                <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                                {{ academy.startDate | date:'dd-MM-yyyy HH:mm'}}
+                            </h5>
+                            <p title="{{academy.fileUnit.description}}">{{academy.fileUnit.description}}</p>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="sp-gv-flex-item"></li>
+            <li class="sp-gv-flex-item"></li>
+            <li class="sp-gv-flex-item"></li>
+        </ul>
+
+</div>
     <div class="filter-table" ng-show="academyListCtrl.showTable">
         <div class="header-wrapper">
             <div class="row header-row">
@@ -64,10 +92,13 @@
             <div class="filter-table-row">
                 <div class="row filter-table-row" role="button" ng-repeat="academy in academyListCtrl.academiesList"
                      ng-dblclick="academyListCtrl.openCourse(academy.id)">
-                    <div class="col-md-3 filter-table-cell">
-                        <img ng-src="{{academyListCtrl.icon}}" height="{{academyListCtrl.iconHeight}}" /> {{ academy.fileUnit.name }}
+                    <div class="col-md-2 filter-table-cell description" title="{{ academy.fileUnit.name }}">
+                        <img ng-src="{{academyListCtrl.icon}}" height="{{academyListCtrl.iconHeight}}" /> 
+                        {{academy.fileUnit.name | limitTo: 15}}{{academy.fileUnit.name.length > 15 ? '...' : ''}}
                     </div>
-                    <div class="col-md-3 filter-table-cell">{{ academy.fileUnit.description }}</div>
+                    <div class="col-md-4 filter-table-cell description" title="{{academy.fileUnit.description}}">
+                        {{academy.fileUnit.description | limitTo: 40}}{{academy.fileUnit.description.length > 40 ? '...' : ''}}
+                    </div>
                     <div class="col-md-3 filter-table-cell">{{ academy.author.name }}</div>
                     <div class="col-md-3 filter-table-cell">{{ academy.startDate | date:'dd-MM-yyyy HH:mm' }}</div>
                 </div>

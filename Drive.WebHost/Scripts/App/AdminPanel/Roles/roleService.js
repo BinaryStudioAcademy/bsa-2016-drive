@@ -61,7 +61,7 @@
             });
         }
 
-        function createRole(data) {
+        function createRole(data, callback) {
             $http.post(baseUrl + '/api/roles', data)
                 .then(function (response) {
                     if (response.data == -1) {
@@ -70,6 +70,11 @@
                   {
                       closeButton: true, timeOut: 5000
                   });
+                    }
+                    else {
+                        if (callback) {
+                            callback(response.data);
+                        }
                     }
                 }, function (response) {
                     console.log('Error while pushing changes!');

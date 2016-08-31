@@ -1,9 +1,9 @@
-﻿<div class="container-fluid">
+﻿
+<div class="container-fluid">
     <br />
     <div class="btn-group btn-breadcrumb">
         <a class="btn btn-info"><i class="fa fa-graduation-cap fa-lg"></i> Academy Pro</a>
     </div>
-
     <div>
         <br />
         <div class="lecture-tags">
@@ -43,22 +43,33 @@
                     </div>
                 </div>
             </div>
-            <div class="wrap clearfix" ng-show="!academyCtrl.showTable">
-                <div role="button" class="s-block btn-default shadow" ng-repeat="lecture in academyCtrl.academy.lectures"
-                     title="Created {{ academy.createdAt | date : 'short' }}"
-                     ng-dblclick="academyCtrl.openLecture(lecture.id)"
-                     context-menu="fileFilterCtrl.fileMenuOptions">
-                    <img ng-src="{{academyCtrl.icon}}" height="{{academyCtrl.iconHeight * 2}}" />
-                    <br>
-                    <span class="bold">Name: </span>
-                    <span>{{ lecture.name }}</span>
-                    <br>
-                    <span class="bold">Author: </span>
-                    <span>{{ lecture.author.name }}</span>
-                    <span class="bold">Start date: </span>
-                    <span>{{ lecture.startDate | date:'dd-MM-yyyy HH:mm'}}</span>
-                </div>
-            </div>
+            <ul class="sp-gv-flex-container wrap" ng-show="!academyCtrl.showTable">
+                <li class="sp-gv-flex-item" role="button" ng-repeat="lecture in academyCtrl.academy.lectures" ng-dblclick="academyCtrl.openLecture(lecture.id)">
+                    <div class="sp-gv-wrapper-flex-item">
+                        <div class="sp-gv-item-content card">
+                            <div class="sp-gv-item-img-wrapper">
+                                <img ng-src="{{academyCtrl.icon}}" alt="Academy" title="Lecture" />
+                            </div>
+                            <div class="sp-gv-item-text">
+                                <h4 title="{{lecture.name}}">{{ lecture.name | limitTo: 13}}{{lecture.name.length > 13 ? '..' : ''}}</h4>
+                                <h5 title="Author: {{lecture.author.name}}">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                    {{lecture.author.name | limitTo: 17}}{{lecture.author.name.length > 17 ? '...' : ''}}
+                                </h5>
+                                <br />
+                                <h5 title="Start date">
+                                    <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                                    {{ lecture.startDate | date:'dd-MM-yyyy HH:mm' }}
+                                </h5>
+                                <p title="{{lecture.description}}">{{lecture.description | limitTo: 45}}{{lecture.description.length > 45 ? '...' : ''}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="sp-gv-flex-item"></li>
+                <li class="sp-gv-flex-item"></li>
+                <li class="sp-gv-flex-item"></li>
+            </ul>
         </div>
         <div class="filter-table" ng-show="academyCtrl.showTable">
             <div class="header-wrapper">
@@ -73,10 +84,13 @@
                 <div class="filter-table-row">
                     <div class="row filter-table-row" role="button" ng-repeat="lecture in academyCtrl.academy.lectures"
                          ng-dblclick="academyCtrl.openLecture(lecture.id)">
-                        <div class="col-md-3 filter-table-cell">
-                            <img ng-src="{{academyCtrl.icon}}" height="{{academyCtrl.iconHeight}}" /> {{ lecture.name }}
+                        <div class="col-md-2 filter-table-cell description" title="{{ lecture.name }}">
+                            <img ng-src="{{academyCtrl.icon}}" height="{{academyCtrl.iconHeight}}" /> 
+                            {{lecture.name | limitTo: 15}}{{lecture.name.length > 15 ? '...' : ''}}
                         </div>
-                        <div class="col-md-3 filter-table-cell">{{ lecture.description }}</div>
+                        <div class="col-md-4 filter-table-cell description" title="{{ lecture.description }}">
+                            {{lecture.description | limitTo: 41}}{{lecture.description.length > 41 ? '...' : ''}}
+                        </div>
                         <div class="col-md-3 filter-table-cell">{{ lecture.author.name }}</div>
                         <div class="col-md-3 filter-table-cell">{{ lecture.startDate | date:'dd-MM-yyyy HH:mm' }}</div>
                     </div>

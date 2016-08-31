@@ -242,6 +242,13 @@ namespace Drive.WebHost.Services
                 folder.FolderUnit = parent;
             }
 
+            foreach (var item in folder.DataUnits)
+            {
+                item.Space = await _unitOfWork.Spaces.GetByIdAsync(folder.Space.Id);
+
+                await CreateCopyAsync(item.Id, new FolderUnitDto());
+            }
+
             _unitOfWork.Folders.Create(copy);
 
             await _unitOfWork?.SaveChangesAsync();

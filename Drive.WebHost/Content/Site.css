@@ -6,7 +6,7 @@
 body {
     padding-top: 60px;
     overflow: hidden;
-    height: 100%;
+    /*height: 100%;*/
     min-height: 100%;
 }
 
@@ -477,8 +477,8 @@ hr.style {
 
 /*Icon on create new Space button in menu*/
 .icon-custom {
-    margin-left: -58px;
-    width: 2.1em;
+    margin-left: -65px;
+    width: 2.3em;
 }
 
 /*.shadow {
@@ -516,7 +516,7 @@ hr.style {
     -webkit-box-shadow: 0 1px 2px #d1d1d1;
     box-shadow: 0 1px 2px #d1d1d1;
     overflow: hidden;
-    height: 71vh;
+    height: 75%;
 }
     /*
     .fixed_headers thead {
@@ -529,7 +529,7 @@ hr.style {
         display: block;
         overflow: hidden;
         width: 100%;
-        height: 63vh;
+        height: 65vh;
         background-color: white;
     }
 
@@ -556,7 +556,7 @@ hr.style {
 
     .fixed_headers td {
         background: transparent;
-        padding-bottom: 4px;
+        padding-bottom: 7px;
         width: 100%;
     }
 
@@ -570,7 +570,7 @@ hr.style {
     }
 
 .blocked-table {
-    height: 71vh;
+    height: 75%;
     overflow: hidden;
     border-style: solid;
     border-width: 1px;
@@ -653,7 +653,7 @@ hr.style {
 .grid-space-label {
     width: 100%;
     display: block;
-    height: 5vh;
+    height: 3em;
     background: #eaebec;
     text-transform: uppercase;
     align-content: center;
@@ -661,7 +661,6 @@ hr.style {
     font-weight: bold;
     padding-left: 1em;
     padding-top: 1em;
-    margin-bottom: 1em;
     padding-right: 0;
     cursor: pointer;
 }
@@ -922,12 +921,13 @@ input[type="search"]::-webkit-search-cancel-button {
     display: -ms-flexbox;
     display: flex;
     -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
     justify-content: space-around;
 }
 
 .sp-gv-flex-item {
     padding: 5px;
-    flex: 0 0 235px;
+    width: 210px;
     height: auto;
     margin-top: 10px;
   
@@ -961,12 +961,12 @@ input[type="search"]::-webkit-search-cancel-button {
     -webkit-flex-flow: row wrap;
     justify-content: space-around;
     align-content: space-around;
-    height: 135px;
+    height: 105px;
 }
 
 .sp-gv-item-img-wrapper img{
-    height: 115px;
-    margin-top: 20px;
+    height: 90px;
+    margin-top: 15px;
 }
 
 .sp-gv-item-text {
@@ -974,9 +974,12 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .sp-gv-item-text h5 {
-    font-size: 18px;
     display: inline-block;
-    padding: 5px 0;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden !important;
+    width: 160px;
+    font-size: 14px;
     margin: 0;
     font-weight: 300;
 }
@@ -986,19 +989,30 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 .sp-gv-item-text h4 {
-    font-size: 24px;
-    display: block;
-    padding: 5px 0;
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden !important;
+    width: 160px;
+    font-size: 18px;
+    padding-bottom: 2px;
     font-weight: 300;
     margin: 0;
 }
 
 .sp-gv-item-text p {
-    line-height: 1.9;
-    display: block;
-    padding: 5px 0;
+    display: -webkit-box;
+    text-overflow:ellipsis;
+    overflow:hidden !important;
+    width: 160px;
     margin: 0;
-    height: 50px;
+    height: 40px;
+    font-size: 13px;
+    line-height: 17px;
+    max-height: 34px;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    font-weight: 300;
 }
 /*End New GridView*/
 
@@ -1045,3 +1059,22 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 /* End of Academy Pro styles */
+
+/*ng-cloak for Create new space modal window*/
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+/*End ng-cloak for Create new space modal window*/
+
+/*Overflow for description*/
+.description {
+    white-space: nowrap;
+    overflow:hidden !important;
+}
+/*End Overflow for description*/
+
+/*Add new user*/
+.user-add {
+    margin-right: 15px
+}
+/*End Add new user*/

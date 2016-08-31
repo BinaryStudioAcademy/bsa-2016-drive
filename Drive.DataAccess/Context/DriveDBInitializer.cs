@@ -13,21 +13,21 @@ namespace Drive.DataAccess.Context
             User user1 = new User()
             {
                 Id = 1,
-                GlobalId = "56780659ea7a3b626282103d",
+                GlobalId = "577a16659829fe050adb3f5c",
                 IsDeleted = false
             };
 
             User user2 = new User()
             {
                 Id = 2,
-                GlobalId = "577a177413eb94e209af1ee4",
+                GlobalId = "577a171c9829fe050adb3f5d",
                 IsDeleted = false
             };
 
             User user3 = new User()
             {
                 Id = 3,
-                GlobalId = "567921371560298f766909a7",
+                GlobalId = "577a17669829fe050adb3f5e",
                 IsDeleted = false
             };
 
@@ -39,7 +39,7 @@ namespace Drive.DataAccess.Context
                 Name = "Binary Space",
                 Type = SpaceType.BinarySpace,
                 Description = "General space for folders and files",
-                MaxFileSize = 1073741824,
+                MaxFileSize = 100,
                 MaxFilesQuantity = 1000,
                 CreatedAt = new DateTime(2016, 1, 1, 8, 45, 33),
                 LastModified = new DateTime(2016, 1, 1, 8, 45, 33),
@@ -447,7 +447,7 @@ namespace Drive.DataAccess.Context
                 Name = "My Space",
                 Type = SpaceType.MySpace,
                 Description = "Private space for folders and files",
-                MaxFileSize = 1073741824,
+                MaxFileSize = 100,
                 MaxFilesQuantity = 1000,
                 CreatedAt = new DateTime(2016, 1, 1, 9, 15, 33),
                 LastModified = new DateTime(2016, 1, 1, 9, 15, 33),

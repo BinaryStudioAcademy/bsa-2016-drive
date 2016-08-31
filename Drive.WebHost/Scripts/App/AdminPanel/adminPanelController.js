@@ -19,7 +19,7 @@
 
         function activate() {
             vm.title = "Admin Panel";
-            adminPanelService.getAllRoles(function(data) {
+            adminPanelService.getAllRoles(function (data) {
                 vm.roles = data;
             });
         }
@@ -35,12 +35,14 @@
                 size: size,
                 resolve: {
                     items: function () {
-                    }
-            }
+                    },
+                    parentvm: vm
+                }
             });
             modalInstance.result.then(function (data) {
-                adminPanelService.getAllRoles(function (data) {
-                    vm.roles = data;
+                vm.roles.push({
+                    name: vm.roleName,
+                    id: vm.roleId
                 });
             }, function () {
             });
@@ -56,10 +58,11 @@
                 keyboard: true,
                 size: size,
                 resolve: {
-                items: function () {
-                    return id;
+                    items: function () {
+                        return id;
+                    },
+                    parentvm: vm
                 }
-        }
             });
             modalInstance.result.then(function () {
                 adminPanelService.getAllRoles(function (data) {

@@ -21,7 +21,7 @@
         vm.deleteElems = deleteElems;
         vm.spaceId = 0;
         vm.parentId = null;
-        vm.selectedSpace = currentSpaceId();
+        //vm.selectedSpace = currentSpaceId();
 
 
         // vm.getAllFolders = getAllFolders;
@@ -80,15 +80,25 @@
                 folders: [],
                 files: []
             }
-            spaceService.getSpace(vm.selectedSpace,
-                vm.paginate.currentPage,
-                vm.paginate.pageSize,
-                vm.sortByDate,
+            if ($routeParams.id) {
+                spaceService.getSpace($routeParams.id, vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate,
                 function (data) {
+                        pagination(data);
+                    });
+            }
+            if ($routeParams.spaceType) {
+                spaceService.getSpaceByType($routeParams.spaceType, vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate,
+                    function (data) {
+                        vm.selectedSpace = data.id;
+                        pagination(data);
+                    });
+            }
+        }
+
+        function pagination(data) {
                 vm.space = data;
+            vm.selectedSpace = data.id;
                 vm.spaceId = data.id;
-                if (vm.space.type == 0) { $location.hash("binaryspace"); }
-                if (vm.space.type == 1) { $location.hash("myspace"); }
                 if (localStorageService.get('spaceId') !== vm.spaceId) {
                     localStorageService.set('spaceId', vm.spaceId);
                     localStorageService.set('current', null);
@@ -103,26 +113,16 @@
                     vm.parentId = localStorageService.get('current');
                     getFolderContent(vm.parentId);
                 } else {
-                    getSpace();
-                }
+                // getSpace();
                 
-                });
             
+        }
         }
 
         function currentSpaceId() {
-            if ($routeParams.type) {
-                if ($routeParams.type === "binaryspace") {
-                    return 1;
-                }
-                if ($routeParams.type === "myspace") {
-                    return 2;
-                }
-            }
             if ($routeParams.id) {
                 return $routeParams.id;
             }
-            return 1;
         }
 
         function getSpace() {
@@ -499,20 +499,6 @@
 
             fileModalInstance.result.then(function (response) {
                 console.log(response);
-                if (response.operation == 'create') {
-                    if (vm.parentId == null) {
-                        vm.getSpace();
-                    }
-                    else {
-                        vm.getFolderContent(vm.parentId)
-                    }
-                }
-                if (response.operation == 'update') {
-                    var index = findById(vm.space.files, response.item.id);
-                    if (index != -1) {
-                        vm.space.files[index] = response.item;
-                    }
-                }
             }, function () {
                 console.log('Modal dismissed');
             });

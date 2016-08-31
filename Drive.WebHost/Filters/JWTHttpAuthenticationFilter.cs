@@ -6,6 +6,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.Filters;
 using Drive.Identity.Services;
+using Drive.WebHost.Services;
+using Ninject;
 
 namespace Drive.WebHost.Filters
 {
@@ -27,10 +29,13 @@ namespace Drive.WebHost.Filters
                 return Task.FromResult(0);
             }
 
-            IPrincipal principal;
+            
             try
             {
-                principal = Authenticator.CreatePrincipal(token);
+                IPrincipal principal = Authenticator.CreatePrincipal(token);
+                var idManager = new BSIdentityManager();
+                idManager.SetPrincipal(principal);
+                context.Principal = principal;
             }
 
             catch (TokenExpiredException)
@@ -43,10 +48,6 @@ namespace Drive.WebHost.Filters
                 return Task.FromResult(0);
             }
 
-
-            var idManager = new BSIdentityManager();
-            idManager.SetPrincipal(principal);
-            context.Principal = principal;
             return Task.FromResult(0);
         }
 
