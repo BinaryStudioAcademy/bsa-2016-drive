@@ -24,8 +24,8 @@
                             <div class="form-group" ng-class="{ 'has-error' : createForm.name.$invalid && !createForm.name.$pristine }">
                                 <label class="col-sm-2">Space name:</label>
                                 <input type="text" name="name" id="name" class="form-control" ng-pattern="/^[\w -]*$/" ng-model="createSpaceCtrl.space.Name" placeholder="Enter space name" required>
-                                <p ng-show="createForm.name.$error.required && createForm.name.$touched" class="help-block col-sm-offset-2" ng-cloak>Name is required.</p>
-                                <p ng-show="createForm.name.$error.pattern" class="help-block col-sm-offset-2" ng-cloak>Not a valid name.</p>
+                                <p ng-show="createForm.name.$error.required && createForm.name.$touched" class="help-block col-sm-offset-2" ng-cloak>Name is required</p>
+                                <p ng-show="createForm.name.$error.pattern" class="help-block col-sm-offset-2" ng-cloak>Not a valid name</p>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2">Description:</label>
@@ -34,15 +34,15 @@
                             <div class="form-group" ng-class="{ 'has-error' : createForm.maxfile.$invalid && !createForm.maxfile.$pristine }">
                                 <label class="col-sm-2">Maximum Files Quantity:</label>
                                 <input type="number" name="maxfile" id="quantity" min="0" step="1" class="form-control" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="createSpaceCtrl.space.MaxFilesQuantity" placeholder="Enter max files quantity" required>
-                                <p ng-show="createForm.maxfile.$invalid && createForm.maxfile.$touched" class="help-block col-sm-offset-2" ng-cloak>Maximum Files Quantity is required.</p>
-                                <p ng-show="createForm.maxfile.$error.pattern" class="help-block col-sm-offset-2" ng-cloak>Not a valid quantity.</p>
+                                <p ng-show="createForm.maxfile.$invalid && createForm.maxfile.$touched" class="help-block col-sm-offset-2" ng-cloak>Maximum Files Quantity is required</p>
+                                <p ng-show="createForm.maxfile.$error.pattern" class="help-block col-sm-offset-2" ng-cloak>Not a valid quantity</p>
                             </div>
                             <div class="form-group" ng-class="{ 'has-error' : createForm.maxsize.$invalid && !createForm.maxsize.$pristine }">
                                 <label class="col-sm-2">Maximum file size (MB):</label>
                                 <input type="number" name="maxsize" id="maxsize" min="0" step="1" max="1024" class="form-control" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="createSpaceCtrl.space.MaxFileSize" placeholder="Enter max file size" required>
-                                <p ng-show="createForm.maxsize.$error.max" class="help-block col-sm-offset-2" ng-cloak>Max file size should be less than 1024 MB.</p>
+                                <p ng-show="createForm.maxsize.$error.max" class="help-block col-sm-offset-2" ng-cloak>Max file size should be less than 1024 MB</p>
                                 <p ng-show="createForm.maxsize.$invalid && createForm.maxsize.$touched" class="help-block col-sm-offset-2" ng-cloak>Maximum file size is required.</p>
-                                <p ng-show="createForm.maxsize.$error.pattern" class="help-block" ng-cloak>Not a valid file size.</p>
+                                <p ng-show="createForm.maxsize.$error.pattern" class="help-block" ng-cloak>Not a valid file size</p>
                             </div>
                         </form>
                     </div>

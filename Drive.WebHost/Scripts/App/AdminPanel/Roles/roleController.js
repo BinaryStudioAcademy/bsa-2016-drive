@@ -92,7 +92,14 @@
 
         function removeRoleUser(id) {
             for (var i = 0; i < vm.permittedUsers.length; i++) {
-                if (vm.permittedUsers[i].globalId === id) { vm.permittedUsers.splice(i, 1); break; }
+                if (vm.permittedUsers[i].globalId === id)
+                    toastr.success(
+                      'User has been deleted!', 'Admin panel',
+                      {
+                          closeButton: true, timeOut: 5000
+                      });
+                vm.permittedUsers.splice(i, 1);
+                break;
             }
         };
 
