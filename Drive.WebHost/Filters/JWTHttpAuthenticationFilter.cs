@@ -13,19 +13,7 @@ namespace Drive.WebHost.Filters
 {
     public class JWTHttpAuthenticationFilter : FilterAttribute, IAuthenticationFilter
     {
-        [Inject]
-        public ISpaceService _spaceService { get; set; }
-
-        //public JWTHttpAuthenticationFilter(ISpaceService spaceService)
-        //{
-        //    _spaceService = spaceService;
-        //}
-
-        private async Task CreateUserAndFirstSpace(string globalId)
-        {
-            await _spaceService.CreateUserAndFirstSpaceAsync(globalId);
-        }
-        public async Task AuthenticateAsync(HttpAuthenticationContext context, CancellationToken cancellationToken)
+        public Task AuthenticateAsync(HttpAuthenticationContext context, CancellationToken cancellationToken)
         {
             var mockToken = bool.Parse(ConfigurationManager.AppSettings["MockToken"]);
             var requestCookies = context.Request.Headers.GetCookies("x-access-token").SingleOrDefault();
@@ -38,7 +26,7 @@ namespace Drive.WebHost.Filters
                     Error = true,
                     Message = "Token is not provided"
                 }, context.Request);
-                //return Task.FromResult(0);
+                return Task.FromResult(0);
             }
 
             
@@ -48,7 +36,6 @@ namespace Drive.WebHost.Filters
                 var idManager = new BSIdentityManager();
                 idManager.SetPrincipal(principal);
                 context.Principal = principal;
-                await CreateUserAndFirstSpace(idManager.UserId);
             }
 
             catch (TokenExpiredException)
@@ -58,10 +45,10 @@ namespace Drive.WebHost.Filters
                     Error = true,
                     Message = "Token is invalid"
                 }, context.Request);
-                //return Task.FromResult(0);
+                return Task.FromResult(0);
             }
 
-            //return Task.FromResult(0);
+            return Task.FromResult(0);
         }
 
         public Task ChallengeAsync(HttpAuthenticationChallengeContext context, CancellationToken cancellationToken)
