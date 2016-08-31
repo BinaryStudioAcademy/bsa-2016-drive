@@ -92,10 +92,13 @@
             <div class="filter-table-row">
                 <div class="row filter-table-row" role="button" ng-repeat="academy in academyListCtrl.academiesList"
                      ng-dblclick="academyListCtrl.openCourse(academy.id)">
-                    <div class="col-md-3 filter-table-cell">
-                        <img ng-src="{{academyListCtrl.icon}}" height="{{academyListCtrl.iconHeight}}" /> {{ academy.fileUnit.name }}
+                    <div class="col-md-2 filter-table-cell description" title="{{ academy.fileUnit.name }}">
+                        <img ng-src="{{academyListCtrl.icon}}" height="{{academyListCtrl.iconHeight}}" /> 
+                        {{academy.fileUnit.name | limitTo: 15}}{{academy.fileUnit.name.length > 15 ? '...' : ''}}
                     </div>
-                    <div class="col-md-3 filter-table-cell">{{ academy.fileUnit.description }}</div>
+                    <div class="col-md-4 filter-table-cell description" title="{{academy.fileUnit.description}}">
+                        {{academy.fileUnit.description | limitTo: 40}}{{academy.fileUnit.description.length > 40 ? '...' : ''}}
+                    </div>
                     <div class="col-md-3 filter-table-cell">{{ academy.author.name }}</div>
                     <div class="col-md-3 filter-table-cell">{{ academy.startDate | date:'dd-MM-yyyy HH:mm' }}</div>
                 </div>

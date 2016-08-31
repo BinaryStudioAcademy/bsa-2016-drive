@@ -84,10 +84,13 @@
                 <div class="filter-table-row">
                     <div class="row filter-table-row" role="button" ng-repeat="lecture in academyCtrl.academy.lectures"
                          ng-dblclick="academyCtrl.openLecture(lecture.id)">
-                        <div class="col-md-3 filter-table-cell">
-                            <img ng-src="{{academyCtrl.icon}}" height="{{academyCtrl.iconHeight}}" /> {{ lecture.name }}
+                        <div class="col-md-2 filter-table-cell description" title="{{ lecture.name }}">
+                            <img ng-src="{{academyCtrl.icon}}" height="{{academyCtrl.iconHeight}}" /> 
+                            {{lecture.name | limitTo: 15}}{{lecture.name.length > 15 ? '...' : ''}}
                         </div>
-                        <div class="col-md-3 filter-table-cell">{{ lecture.description }}</div>
+                        <div class="col-md-4 filter-table-cell description" title="{{ lecture.description }}">
+                            {{lecture.description | limitTo: 41}}{{lecture.description.length > 41 ? '...' : ''}}
+                        </div>
                         <div class="col-md-3 filter-table-cell">{{ lecture.author.name }}</div>
                         <div class="col-md-3 filter-table-cell">{{ lecture.startDate | date:'dd-MM-yyyy HH:mm' }}</div>
                     </div>
