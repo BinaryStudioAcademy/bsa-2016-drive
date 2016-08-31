@@ -158,8 +158,10 @@ namespace Drive.WebHost.Services
 
         public async Task<SpaceDto> GetSpaceByTypeAsync(SpaceType type, int page, int count, string sort)
         {
+            string userId = _userService.CurrentUserId;
+
             var space = await _unitOfWork.Spaces.Query.Where(s => s.Type == type)
-                                                      .Where(s => s.Type == SpaceType.BinarySpace || s.Owner.GlobalId == _userService.CurrentUserId)
+                                                      .Where(s => s.Type == SpaceType.BinarySpace || s.Owner.GlobalId == userId)
                                                       .Select(s => new SpaceDto
             {
                 Id = s.Id,
