@@ -10,6 +10,7 @@
     function SpaceService($http, baseUrl) {
         var service = {
             getSpace: getSpace,
+            getSpaceByType: getSpaceByType,
             getAllSpaces: getAllSpaces,
             getAllUsers: getAllUsers,
             pushData: pushData,
@@ -49,6 +50,28 @@
                         callback(response.data)
                     }
                 });
+        }
+
+        function getSpaceByType(type, currentPage, pageSize, sort, callback) {
+            $http.get(baseUrl + '/api/spaces/spacetype/' + type, {
+                params: {
+                    page: currentPage,
+                    count: pageSize,
+                    sort: sort
+                }
+            })
+            .then(function (response) {
+                if (callback) {
+                    callback(response.data);
+                }
+            },
+            function errorCallback(response) {
+                console.log('Error getSpace spaceService!' + response.status);
+                if (response.status == 404 && callback) {
+                    console.log(response.status + ' ' + response.data);
+                    callback(response.data)
+                }
+            });
         }
 
         function getSpaceTotal(id, callback) {

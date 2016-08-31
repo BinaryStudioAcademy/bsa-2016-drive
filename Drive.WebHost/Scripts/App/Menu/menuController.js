@@ -27,18 +27,8 @@
             menuService.getAllSpaces(function (data) {
                 vm.spaces = data;
                 for (var i = 0; i < vm.spaces.length; i++) {
-                    switch(vm.spaces[i].type) {
-                        case 0:
-                            vm.binarySpace = vm.spaces[i];
-                            break;
-                        case 1:
-                            vm.mySpace = vm.spaces[i];
-                            break;
-                        case 2:
-                            vm.showOthers = true;
-                            break;
-                    }
-                    if (vm.showOthers) {
+                    if (vm.spaces[i].type == 2) {
+                        vm.showOthers = true;
                         break;
                     }
                 }
@@ -46,16 +36,16 @@
 
         }
 
-        function redirectToBinarySpace(id) {
-            $location.url("/spaces/" + id);
+        function redirectToBinarySpace() {
+            $location.url("/binaryspace");
         };
 
-        function redirectToMySpace(id) {
-            $location.url("/spaces/" + id);
+        function redirectToMySpace() {
+            $location.url("/myspace");
         };
 
         function redirectToSharedSpace() {
-            $location.url("/sharedspace");
+            $location.url("sharedspace");
         };
 
         function redirectToSpace(id) {
@@ -71,7 +61,7 @@
         };
 
         function redirectToAdminPanel() {
-            $location.url("/AdminPanel");
+            $location.url("AdminPanel");
         };
 
         //Open modal window for creating new space
