@@ -4,9 +4,9 @@
     angular.module("driveApp")
         .controller("RoleController", RoleController);
 
-    RoleController.$inject = ['$uibModalInstance', 'RoleService', 'items', '$window', 'toastr'];
+    RoleController.$inject = ['$uibModalInstance', 'RoleService', 'items', '$window', 'toastr', 'parentvm'];
 
-    function RoleController($uibModalInstance, RoleService, items, $window, toastr) {
+    function RoleController($uibModalInstance, RoleService, items, $window, toastr, parentvm) {
         var vm = this;
         vm.createRole = createRole;
         vm.cancel = cancel;
@@ -55,10 +55,15 @@
 
         function createRole() {
             console.log('Creating role');
+            vm.name = vm.role.name;
             vm.role.users = vm.role.users || [];
             vm.role.users = vm.permittedUsers;
-            RoleService.createRole(vm.role);
-            $uibModalInstance.close();
+            RoleService.createRole(vm.role, function (data) {
+                vm.id = data;
+                parentvm.roleName = vm.name;
+                parentvm.roleId = vm.id;
+                $uibModalInstance.close();
+            });
         }
 
         function save() {
