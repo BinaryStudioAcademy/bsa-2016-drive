@@ -58,17 +58,17 @@
                             <img ng-src="{{academyListCtrl.icon}}" alt="Academy" title="Course" />
                         </div>
                         <div class="sp-gv-item-text">
-                            <h4 title="{{ academy.fileUnit.name}}">{{ academy.fileUnit.name | limitTo: 13}}{{ academy.fileUnit.name.length > 13 ? '..' : ''}}</h4>
+                            <h4 title="{{ academy.fileUnit.name}}">{{ academy.fileUnit.name}}</h4>
                             <h5 title="Author: {{academy.author.name}}">
                                 <i class="fa fa-user" aria-hidden="true"></i>
-                                {{academy.author.name | limitTo: 17}}{{academy.author.name.length > 17 ? '...' : ''}}
+                                {{academy.author.name}}
                             </h5>
                             <br/>
-                            <h5 title="Start date">
+                            <h5 title="Start date {{ academy.startDate | date:'dd-MM-yyyy HH:mm'}}">
                                 <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
                                 {{ academy.startDate | date:'dd-MM-yyyy HH:mm'}}
                             </h5>
-                            <p title="{{academy.fileUnit.description}}">{{academy.fileUnit.description | limitTo: 45 }}{{ academy.fileUnit.description > 45 ? '...' : ''}}</p>
+                            <p title="{{academy.fileUnit.description}}">{{academy.fileUnit.description}}</p>
                         </div>
                     </div>
                 </div>
