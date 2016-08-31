@@ -1,5 +1,6 @@
-﻿<div class="container">
-    <br/>
+﻿
+<div class="container">
+    <br />
     <div class="btn-group btn-breadcrumb">
         <a href="#/AdminPanel" class="btn btn-info"><i class="fa fa-sliders fa-lg"></i> Admin Panel</a>
         <a class="btn btn-default">Logs</a>
@@ -17,66 +18,56 @@
             </div>
         </div>
     </form>
-    <table class="table table-striped">
+    <table class="table fixed_headers">
         <thead>
-            <tr>
-                <td>
-                    <a href="" ng-click="logsCtrl.sort.sortType = 'Id'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
-                        Id
-                        <span ng-show="logsCtrl.sort.sortType == 'Id' && !logsCtrl.sort.sortReverse">&#8595</span>
-                        <span ng-show="logsCtrl.sort.sortType == 'Id' && logsCtrl.sort.sortReverse">&#8593</span>
-                    </a>
-                </td>
-                <td>
-                    <a href="" ng-click="logsCtrl.sort.sortType = 'Logged'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
-                        Logged
-                        <span ng-show="logsCtrl.sort.sortType == 'Logged' && !logsCtrl.sort.sortReverse">&#8595</span>
-                        <span ng-show="logsCtrl.sort.sortType == 'Logged' && logsCtrl.sort.sortReverse">&#8593</span>
-                    </a>
-                </td>
-                <td>
-                    <a href="" ng-click="logsCtrl.sort.sortType = 'Level'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
-                        Log level
-                        <span ng-show="logsCtrl.sort.sortType == 'Level' && !logsCtrl.sort.sortReverse">&#8595</span>
-                        <span ng-show="logsCtrl.sort.sortType == 'Level' && logsCtrl.sort.sortReverse">&#8593</span>
-                    </a>
-                </td>
-                <td>
-                    <a href="" ng-click="logsCtrl.sort.sortType = 'Message'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
-                        Log message
-                        <span ng-show="logsCtrl.sort.sortType == 'Message' && !logsCtrl.sort.sortReverse">&#8595</span>
-                        <span ng-show="logsCtrl.sort.sortType == 'Message' && logsCtrl.sort.sortReverse">&#8593</span>
-                    </a>
-                </td>
-                <td>
-                    <a href="" ng-click="logsCtrl.sort.sortType = 'Exception'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
-                        Exception
-                        <span ng-show="logsCtrl.sort.sortType == 'Exception' && !logsCtrl.sort.sortReverse">&#8595</span>
-                        <span ng-show="logsCtrl.sort.sortType == 'Exception' && logsCtrl.sort.sortReverse">&#8593</span>
-                    </a>
-                </td>
-                <td>
-                    <a href="" ng-click="logsCtrl.sort.sortType = 'CallerName'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
-                        Caller Name
-                        <span ng-show="logsCtrl.sort.sortType == 'CallerName' && !logsCtrl.sort.sortReverse">&#8595</span>
-                        <span ng-show="logsCtrl.sort.sortType == 'CallerName' && logsCtrl.sort.sortReverse">&#8593</span>
-                    </a>
-                </td>
+            <tr style="cursor: pointer">
+                <th style="width: 4%" ng-click="logsCtrl.sort.sortType = 'Id'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                    Id
+                    <span ng-show="logsCtrl.sort.sortType == 'Id' && !logsCtrl.sort.sortReverse">&#8595</span>
+                    <span ng-show="logsCtrl.sort.sortType == 'Id' && logsCtrl.sort.sortReverse">&#8593</span>
+                </th>
+                <th style="width: 8%" ng-click="logsCtrl.sort.sortType = 'Logged'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                    Logged
+                    <span ng-show="logsCtrl.sort.sortType == 'Logged' && !logsCtrl.sort.sortReverse">&#8595</span>
+                    <span ng-show="logsCtrl.sort.sortType == 'Logged' && logsCtrl.sort.sortReverse">&#8593</span>
+                </th>
+                <th style="width: 7%" ng-click="logsCtrl.sort.sortType = 'Level'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                    Log level
+                    <span ng-show="logsCtrl.sort.sortType == 'Level' && !logsCtrl.sort.sortReverse">&#8595</span>
+                    <span ng-show="logsCtrl.sort.sortType == 'Level' && logsCtrl.sort.sortReverse">&#8593</span>
+                </th>
+                <th style="width: 15%" ng-click="logsCtrl.sort.sortType = 'Message'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                    Log message
+                    <span ng-show="logsCtrl.sort.sortType == 'Message' && !logsCtrl.sort.sortReverse">&#8595</span>
+                    <span ng-show="logsCtrl.sort.sortType == 'Message' && logsCtrl.sort.sortReverse">&#8593</span>
+                </th>
+                <th style="width: 43%" ng-click="logsCtrl.sort.sortType = 'Exception'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                    Exception
+                    <span ng-show="logsCtrl.sort.sortType == 'Exception' && !logsCtrl.sort.sortReverse">&#8595</span>
+                    <span ng-show="logsCtrl.sort.sortType == 'Exception' && logsCtrl.sort.sortReverse">&#8593</span>
+                </th>
+                <th style="width: 15%" ng-click="logsCtrl.sort.sortType = 'CallerName'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                    Caller Name
+                    <span ng-show="logsCtrl.sort.sortType == 'CallerName' && !logsCtrl.sort.sortReverse">&#8595</span>
+                    <span ng-show="logsCtrl.sort.sortType == 'CallerName' && logsCtrl.sort.sortReverse">&#8593</span>
+                </th>
             </tr>
         </thead>
         <tbody>
-        <tr dir-paginate="log in logsCtrl.logs 
-            | orderBy:logsCtrl.sort.sortType:logsCtrl.sort.sortReverse 
-            | filter:logsCtrl.searchLevel 
+            <tr class="shadow" dir-paginate="log in logsCtrl.logs
+            | orderBy:logsCtrl.sort.sortType:logsCtrl.sort.sortReverse
+            | filter:logsCtrl.searchLevel
             | itemsPerPage: logsCtrl.paginate.pageSize"
-            current-page="logsCtrl.paginate.currentPage">
-            <td>{{ log.id }}</td>
-            <td>{{ log.logged }}</td>
-            <td>{{ log.level }}</td>
-            <td>{{ log.message }}</td>
-            <td>{{ log.exception }}</td>
-            <td>{{ log.callerName }}</td>
-        </tr>
+                current-page="logsCtrl.paginate.currentPage">
+                <td style="width: 3%">{{ log.id }}</td>
+                <td style="width: 10%">{{ log.logged | date:'dd-MM-yyyy HH:mm:ss' }}</td>
+                <td style="width: 6%">{{ log.level }}</td>
+                <td style="width: 15%">{{ log.message }}</td>
+                <td style="width: 43%; white-space:inherit;" title="{{log.exception}}">
+                    {{log.exception | limitTo: 400}}{{log.exception.length > 400 ? '...' : ''}}
+                </td>
+                <td style="width: 27%">{{ log.callerName }}</td>
+            </tr>
         </tbody>
         <tfoot>
             <dir-pagination-controls boundary-links="true"></dir-pagination-controls>
