@@ -90,6 +90,12 @@
                     controller: "ErrorController",
                     controllerAs: "errorCtrl"
                 })
+                .when("/trashbin",
+                {
+                    templateUrl: baseUrl + "/Scripts/App/TrashBin/TrashBin.html",
+                    controller: "TrashBinController",
+                    controllerAs: "trashBinCtrl"
+                })
                 .otherwise({
                     // This is when any route not matched - error
                     redirectTo: "/Error"
