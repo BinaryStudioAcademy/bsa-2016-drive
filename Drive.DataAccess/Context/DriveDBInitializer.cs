@@ -13,21 +13,21 @@ namespace Drive.DataAccess.Context
             User user1 = new User()
             {
                 Id = 1,
-                GlobalId = "56780659ea7a3b626282103d",
+                GlobalId = "577a16659829fe050adb3f5c",
                 IsDeleted = false
             };
 
             User user2 = new User()
             {
                 Id = 2,
-                GlobalId = "577a177413eb94e209af1ee4",
+                GlobalId = "577a171c9829fe050adb3f5d",
                 IsDeleted = false
             };
 
             User user3 = new User()
             {
                 Id = 3,
-                GlobalId = "567921371560298f766909a7",
+                GlobalId = "577a17669829fe050adb3f5e",
                 IsDeleted = false
             };
 
