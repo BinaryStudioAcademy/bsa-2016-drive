@@ -73,12 +73,12 @@
         <div class="col-md-7">
             <div ng-show="settingsCtrl.isSet(1)">
                 <div class="form-group">
-                    <div class="col-md-3">
+                    <div class="col-md-4" style="padding-right: 0px;">
                         <input type="text" placeholder="Enter a username" ng-model="settingsCtrl.selected" uib-typeahead="user as user.name for user in settingsCtrl.users | filter:{name:$viewValue} | limitTo:10" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-5">
+                    <div class="col-md-2">
                         <button class="btn btn-primary" ng-click="settingsCtrl.addSpaceUser()">Add</button>
                     </div>
                 </div>
@@ -110,12 +110,12 @@
             </div>
             <div ng-show="settingsCtrl.isSet(2)">
                 <div class="form-group">
-                    <div class="col-md-3">
+                    <div class="col-md-4" style="padding-right: 0px;">
                         <input type="text" placeholder="Enter a role name" ng-model="settingsCtrl.selectedRole" uib-typeahead="role as role.name for role in settingsCtrl.roles | filter:{name:$viewValue} | limitTo:10" class="form-control">
                     </div>
                 </div>
                 <div class="form-group">
-                    <div class="col-md-7">
+                    <div class="col-md-2">
                         <button class="btn btn-primary" ng-click="settingsCtrl.addSpaceRole()">Add</button>
                     </div>
                 </div>

@@ -50,12 +50,12 @@
                         <form class="form-horizontal" role="form" name="usersForm" novalidate>
                             <div class="col-md-7">
                                 <div class="form">
-                                    <div class="col-md-4">
+                                    <div class="col-md-5 user-add">
                                         <div class="form-group">
                                             <input type="text" placeholder="Enter a user name" ng-model="createSpaceCtrl.selected" uib-typeahead="user as user.name for user in createSpaceCtrl.users | filter:{name:$viewValue} | limitTo:10" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <button class="btn btn-primary" ng-click="createSpaceCtrl.addSpaceUser()">Add</button>
                                         </div>
@@ -94,12 +94,12 @@
                         <form class="form-horizontal" role="form" name="rolesForm" novalidate>
                             <div class="col-md-7">
                                 <div class="form">
-                                    <div class="col-md-4">
+                                    <div class="col-md-5 user-add">
                                         <div class="form-group">
                                             <input type="text" placeholder="Enter a role name" ng-model="createSpaceCtrl.selectedRole" uib-typeahead="role as role.name for role in createSpaceCtrl.roles | filter:{name:$viewValue} | limitTo:10" class="form-control">
                                         </div>
                                     </div>
-                                    <div class="col-md-8">
+                                    <div class="col-md-2">
                                         <div class="form-group">
                                             <button class="btn btn-primary" ng-click="createSpaceCtrl.addSpaceRole()">Add</button>
                                         </div>
