@@ -183,15 +183,7 @@ namespace Drive.WebHost.Services
                 space.Files = space.Files.Take(count);
             }
 
-            var owners = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name }).ToList();
-            var user = await _userService.GetCurrentUser();
-            foreach (var item in space.Files)
-            {
-                if (item.Author.GlobalId == userId)
-                {
-                    owners.Add(new { Id = user.serverUserId, Name = user.name + user.surname });
-                }
-            }
+            var owners = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
 
             Parallel.ForEach(space.Files,
                 file => { file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name; });
