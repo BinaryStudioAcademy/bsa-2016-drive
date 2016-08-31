@@ -19,6 +19,8 @@
         vm.openDocument = openDocument;
         vm.openFileWindow = openFileWindow;
         vm.deleteFile = deleteFile;
+        vm.openSharedFileWindow = openSharedFileWindow;
+        vm.sharedFile = sharedFile;
 
         activate();
 
@@ -44,7 +46,8 @@
         vm.fileMenuOptions = [
             [
                 'Share', function ($itemScope) {
-
+                    vm.fileSharedId = $itemScope.file.id;
+                    vm.sharedFile();
                 }
             ],
             null,
@@ -86,6 +89,34 @@
             }, function () {
                 console.log('Modal dismissed');
             });
+        }
+
+        function openSharedFileWindow(size) {
+
+            var fileModalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'Scripts/App/SharedFile/SharedFileForm.html',
+                windowTemplateUrl: 'Scripts/App/SharedFile/Modal.html',
+                controller: 'SharedFileModalCtrl',
+                controllerAs: 'sharedFileModalCtrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        return vm.fileSharedId;
+                    }
+                }
+            });
+
+            fileModalInstance.result.then(function (response) {
+                console.log(response);
+            }, function () {
+                console.log('Modal dismissed');
+            });
+        }
+
+        function sharedFile() {
+            vm.fileId = { parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.openSharedFileWindow();
         }
 
         function deleteFile(id) {
