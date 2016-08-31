@@ -1627,3 +1627,109 @@ Error Number: 3702, State: 4, Class: 16 SpaceService
    в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
    в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
    в System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext() GlobalExceptionLogger
+14:58:48.0463 Error [10] Internal server error: System.AggregateException: Произошла одна или несколько ошибок. ---> System.NullReferenceException: Ссылка на объект не указывает на экземпляр объекта.
+   в Drive.WebHost.Services.SharedSpaceService.<>c__DisplayClass6_1.<GetAsync>b__2(<>f__AnonymousType3`2 o) в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SharedSpaceService.cs:строка 135
+   в System.Linq.Enumerable.FirstOrDefault[TSource](IEnumerable`1 source, Func`2 predicate)
+   в Drive.WebHost.Services.SharedSpaceService.<>c__DisplayClass6_0.<GetAsync>b__1(FileUnitDto file) в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SharedSpaceService.cs:строка 135
+   в System.Threading.Tasks.Parallel.<>c__DisplayClass31_0`2.<ForEachWorker>b__0(Int32 i)
+   в System.Threading.Tasks.Parallel.<>c__DisplayClass17_0`1.<ForWorker>b__1()
+   в System.Threading.Tasks.Task.InnerInvoke()
+   в System.Threading.Tasks.Task.InnerInvokeWithArg(Task childTask)
+   в System.Threading.Tasks.Task.<>c__DisplayClass176_0.<ExecuteSelfReplicating>b__0(Object )
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)
+   в System.Threading.Tasks.Task.Wait(Int32 millisecondsTimeout, CancellationToken cancellationToken)
+   в System.Threading.Tasks.Task.Wait()
+   в System.Threading.Tasks.Parallel.ForWorker[TLocal](Int32 fromInclusive, Int32 toExclusive, ParallelOptions parallelOptions, Action`1 body, Action`2 bodyWithState, Func`4 bodyWithLocal, Func`1 localInit, Action`1 localFinally)
+   в System.Threading.Tasks.Parallel.ForEachWorker[TSource,TLocal](IList`1 list, ParallelOptions parallelOptions, Action`1 body, Action`2 bodyWithState, Action`3 bodyWithStateAndIndex, Func`4 bodyWithStateAndLocal, Func`5 bodyWithEverything, Func`1 localInit, Action`1 localFinally)
+   в System.Threading.Tasks.Parallel.ForEachWorker[TSource,TLocal](IEnumerable`1 source, ParallelOptions parallelOptions, Action`1 body, Action`2 bodyWithState, Action`3 bodyWithStateAndIndex, Func`4 bodyWithStateAndLocal, Func`5 bodyWithEverything, Func`1 localInit, Action`1 localFinally)
+   в System.Threading.Tasks.Parallel.ForEach[TSource](IEnumerable`1 source, Action`1 body)
+   в Drive.WebHost.Services.SharedSpaceService.<GetAsync>d__6.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SharedSpaceService.cs:строка 133
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Api.SharedSpaceController.<GetSharedData>d__2.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Api\SharedSpaceController.cs:строка 27
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Threading.Tasks.TaskHelpersExtensions.<CastToObject>d__3`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.AuthenticationFilterResult.<ExecuteAsync>d__0.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+---> (Внутреннее исключение #0) System.NullReferenceException: Ссылка на объект не указывает на экземпляр объекта.
+   в Drive.WebHost.Services.SharedSpaceService.<>c__DisplayClass6_1.<GetAsync>b__2(<>f__AnonymousType3`2 o) в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SharedSpaceService.cs:строка 135
+   в System.Linq.Enumerable.FirstOrDefault[TSource](IEnumerable`1 source, Func`2 predicate)
+   в Drive.WebHost.Services.SharedSpaceService.<>c__DisplayClass6_0.<GetAsync>b__1(FileUnitDto file) в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SharedSpaceService.cs:строка 135
+   в System.Threading.Tasks.Parallel.<>c__DisplayClass31_0`2.<ForEachWorker>b__0(Int32 i)
+   в System.Threading.Tasks.Parallel.<>c__DisplayClass17_0`1.<ForWorker>b__1()
+   в System.Threading.Tasks.Task.InnerInvoke()
+   в System.Threading.Tasks.Task.InnerInvokeWithArg(Task childTask)
+   в System.Threading.Tasks.Task.<>c__DisplayClass176_0.<ExecuteSelfReplicating>b__0(Object )<---
+ GlobalExceptionLogger
+14:59:36.5707 Error [12] Internal server error: System.AggregateException: Произошла одна или несколько ошибок. ---> System.NullReferenceException: Ссылка на объект не указывает на экземпляр объекта.
+   в Drive.WebHost.Services.SharedSpaceService.<>c__DisplayClass6_1.<GetAsync>b__2(<>f__AnonymousType3`2 o) в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SharedSpaceService.cs:строка 135
+   в System.Linq.Enumerable.FirstOrDefault[TSource](IEnumerable`1 source, Func`2 predicate)
+   в Drive.WebHost.Services.SharedSpaceService.<>c__DisplayClass6_0.<GetAsync>b__1(FileUnitDto file) в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SharedSpaceService.cs:строка 135
+   в System.Threading.Tasks.Parallel.<>c__DisplayClass31_0`2.<ForEachWorker>b__0(Int32 i)
+   в System.Threading.Tasks.Parallel.<>c__DisplayClass17_0`1.<ForWorker>b__1()
+   в System.Threading.Tasks.Task.InnerInvoke()
+   в System.Threading.Tasks.Task.InnerInvokeWithArg(Task childTask)
+   в System.Threading.Tasks.Task.<>c__DisplayClass176_0.<ExecuteSelfReplicating>b__0(Object )
+   --- Конец трассировки внутреннего стека исключений ---
+   в System.Threading.Tasks.Task.ThrowIfExceptional(Boolean includeTaskCanceledExceptions)
+   в System.Threading.Tasks.Task.Wait(Int32 millisecondsTimeout, CancellationToken cancellationToken)
+   в System.Threading.Tasks.Task.Wait()
+   в System.Threading.Tasks.Parallel.ForWorker[TLocal](Int32 fromInclusive, Int32 toExclusive, ParallelOptions parallelOptions, Action`1 body, Action`2 bodyWithState, Func`4 bodyWithLocal, Func`1 localInit, Action`1 localFinally)
+   в System.Threading.Tasks.Parallel.ForEachWorker[TSource,TLocal](IList`1 list, ParallelOptions parallelOptions, Action`1 body, Action`2 bodyWithState, Action`3 bodyWithStateAndIndex, Func`4 bodyWithStateAndLocal, Func`5 bodyWithEverything, Func`1 localInit, Action`1 localFinally)
+   в System.Threading.Tasks.Parallel.ForEachWorker[TSource,TLocal](IEnumerable`1 source, ParallelOptions parallelOptions, Action`1 body, Action`2 bodyWithState, Action`3 bodyWithStateAndIndex, Func`4 bodyWithStateAndLocal, Func`5 bodyWithEverything, Func`1 localInit, Action`1 localFinally)
+   в System.Threading.Tasks.Parallel.ForEach[TSource](IEnumerable`1 source, Action`1 body)
+   в Drive.WebHost.Services.SharedSpaceService.<GetAsync>d__6.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SharedSpaceService.cs:строка 133
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Api.SharedSpaceController.<GetSharedData>d__2.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Api\SharedSpaceController.cs:строка 27
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Threading.Tasks.TaskHelpersExtensions.<CastToObject>d__3`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.ApiControllerActionInvoker.<InvokeActionAsyncCore>d__0.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.ActionFilterResult.<ExecuteAsync>d__2.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Controllers.AuthenticationFilterResult.<ExecuteAsync>d__0.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Web.Http.Dispatcher.HttpControllerDispatcher.<SendAsync>d__1.MoveNext()
+---> (Внутреннее исключение #0) System.NullReferenceException: Ссылка на объект не указывает на экземпляр объекта.
+   в Drive.WebHost.Services.SharedSpaceService.<>c__DisplayClass6_1.<GetAsync>b__2(<>f__AnonymousType3`2 o) в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SharedSpaceService.cs:строка 135
+   в System.Linq.Enumerable.FirstOrDefault[TSource](IEnumerable`1 source, Func`2 predicate)
+   в Drive.WebHost.Services.SharedSpaceService.<>c__DisplayClass6_0.<GetAsync>b__1(FileUnitDto file) в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SharedSpaceService.cs:строка 135
+   в System.Threading.Tasks.Parallel.<>c__DisplayClass31_0`2.<ForEachWorker>b__0(Int32 i)
+   в System.Threading.Tasks.Parallel.<>c__DisplayClass17_0`1.<ForWorker>b__1()
+   в System.Threading.Tasks.Task.InnerInvoke()
+   в System.Threading.Tasks.Task.InnerInvokeWithArg(Task childTask)
+   в System.Threading.Tasks.Task.<>c__DisplayClass176_0.<ExecuteSelfReplicating>b__0(Object )<---
+ GlobalExceptionLogger
