@@ -4,9 +4,9 @@
     angular.module("driveApp")
         .controller("TrashBinController", TrashBinController);
 
-    TrashBinController.$inject = ['TrashBinService', 'FileService', '$routeParams'];
+    TrashBinController.$inject = ['TrashBinService', 'FileService', '$routeParams', 'toastr'];
 
-    function TrashBinController(trashBinService, fileService, $routeParams) {
+    function TrashBinController(trashBinService, fileService, $routeParams, toastr) {
         var vm = this;
 
         vm.changeView = changeView;
@@ -14,6 +14,7 @@
         vm.orderByColumn = orderByColumn;
 
         vm.search = search;
+        vm.cancelSearch = cancelSearch;
         //vm.cancelSearch = cancelSearch;
         vm.getTrashBinContent = getTrashBinContent;
         vm.deleteFilePermanently = deleteFilePermanently;
@@ -43,12 +44,22 @@
 
         function restoreFile(id) {
             trashBinService.restoreFile(id, function (data) {
+                toastr.success(
+                      'File was successfully restored!', 'Trash bin',
+                      {
+                          closeButton: true, timeOut: 5000
+                      });
                 console.log('==> file restored');
             });
         }
 
         function deleteFilePermanently(id) {
             trashBinService.deleteFilePermanently(id, function (data) {
+                toastr.success(
+                      'File was deleted!', 'Trash bin',
+                      {
+                          closeButton: true, timeOut: 5000
+                      });
                 console.log('==> file DELETED');
             });
         }
@@ -64,6 +75,29 @@
             ]
         ];
 
+        vm.folderMenuOptions = [
+           ['Restore', function ($itemScope) {
+               vm.restoreFile($itemScope.file.id);
+           }
+           ],
+           ['Delete permanently', function ($itemScope) {
+               vm.deleteFilePermanently($itemScope.file.id);
+           }
+           ]
+        ];
+
+        vm.spaceMenuOptions = [
+           [
+               'Restore all items', function ($itemScope) {
+               }
+           ],
+           [
+               'Empty Trash Bin', function ($itemScope) {
+                   return deleteFile($itemScope.file.id);
+               }
+           ]
+        ];
+
         //function deleteFilePermanently(id) {
         //    fileService.deleteFilePermanently(id, function () {
         //        getFiles();
@@ -71,18 +105,18 @@
         //}
 
         function search() {
-            fileService.searchFiles(vm.filesType, vm.searchText, function (data) {
+            trashBinService.searchData(vm.searchText, function (data) {
                 vm.spaces = data;
             });
             vm.searchText = '';
         }
 
-        /*
-        function cancelSearch() {         
-            getFiles();
-            vm.searchText = '';
+        function cancelSearch() {
+            if (vm.searchText.length >= 1) {
+                vm.searchText = '';
+                getTrashBinContent();
+            }
         }
-        */
 
         function changeView(view) {
             if (view == "fa fa-th") {
@@ -103,7 +137,7 @@
         }
 
         function orderByColumn(column) {
-            vm.columnForOrder = fileService.orderByColumn(column, vm.columnForOrder);
+            vm.columnForOrder = trashBinService.orderByColumn(column, vm.columnForOrder);
         }
 
         function chooseIcon(type) {

@@ -24,6 +24,12 @@ namespace Drive.WebHost.Api
         public async Task<IHttpActionResult> Get()
         {
             var result = await _trashBinService.GetTrashBinContentAsync();
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
             return Ok(result);
         }
 
