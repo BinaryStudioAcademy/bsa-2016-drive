@@ -55,6 +55,7 @@ namespace Drive.WebHost.Services
                         Name = f.Name,
                         CreatedAt = f.CreatedAt,
                         Link = f.Link,
+                        SpaceId = f.Space.Id,
                         Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
                     })
             }).ToListAsync();

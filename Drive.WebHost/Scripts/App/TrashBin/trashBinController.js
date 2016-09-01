@@ -18,6 +18,7 @@
         vm.getTrashBinContent = getTrashBinContent;
         vm.deleteFilePermanently = deleteFilePermanently;
         vm.restoreFile = restoreFile;
+        vm.deleteFileFromScope = deleteFileFromScope;
 
         activate();
 
@@ -41,25 +42,27 @@
             });
         }
 
-        function restoreFile(id) {
+        function restoreFile(id, spaceId) {
             trashBinService.restoreFile(id, function (data) {
+                vm.deleteFileFromScope(id, spaceId);
                 console.log('==> file restored');
             });
         }
 
-        function deleteFilePermanently(id) {
+        function deleteFilePermanently(id, spaceId) {
             trashBinService.deleteFilePermanently(id, function (data) {
+                deleteFileFromScope(id, spaceId);
                 console.log('==> file DELETED');
             });
         }
 
         vm.fileMenuOptions = [
             ['Restore', function ($itemScope) {
-                    vm.restoreFile($itemScope.file.id);
+                    vm.restoreFile($itemScope.file.id, $itemScope.file.spaceId);
                 }
             ],
             ['Delete permanently', function ($itemScope) {
-                    vm.deleteFilePermanently($itemScope.file.id);
+                    vm.deleteFilePermanently($itemScope.file.id, $itemScope.file.spaceId);
                 }
             ]
         ];
@@ -109,6 +112,20 @@
         function chooseIcon(type) {
             vm.iconSrc = fileService.chooseIcon(type);
             return vm.iconSrc;
+        }
+
+        function deleteFileFromScope(itemId, spaceId) {
+            var s = vm.spaces;
+            for (var i = 0; i < s.length; i++) {
+                if (s[i].spaceId == spaceId) {
+                    var f = s[i].files;
+                    for (var j = 0; j < f.length; j++) {
+                        if (f[j].id == itemId){
+                            vm.spaces[i].files.splice(j, 1);
+                        }
+                    }
+                }
+            }
         }
     }
 }());
