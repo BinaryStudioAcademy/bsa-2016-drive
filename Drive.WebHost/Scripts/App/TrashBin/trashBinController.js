@@ -4,9 +4,9 @@
     angular.module("driveApp")
         .controller("TrashBinController", TrashBinController);
 
-    TrashBinController.$inject = ['SpaceService', 'FileService', '$routeParams'];
+    TrashBinController.$inject = ['TrashBinService', 'FileService', '$routeParams'];
 
-    function TrashBinController(spaceService, fileService, $routeParams) {
+    function TrashBinController(trashBinService, fileService, $routeParams) {
         var vm = this;
 
         vm.changeView = changeView;
@@ -34,7 +34,7 @@
         }
 
         function getTrashBinContent() {
-            spaceService.getTrashBinContent(function (data) {
+            trashBinService.getTrashBinContent(function (data) {
                 vm.spaces = data;
                 console.log(data);
             });
@@ -53,8 +53,6 @@
                 }
             ]
         ];
-
-
 
         //function deleteFilePermanently(id) {
         //    fileService.deleteFilePermanently(id, function () {
