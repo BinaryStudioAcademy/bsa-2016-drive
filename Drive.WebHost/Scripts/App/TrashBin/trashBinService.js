@@ -9,7 +9,9 @@
 
     function TrashBinService($http, baseUrl) {
         var service = {
-            getTrashBinContent: getTrashBinContent
+            getTrashBinContent: getTrashBinContent,
+            deleteFilePermanently: deleteFilePermanently,
+            restoreFile: restoreFile
         };
 
         function getTrashBinContent(callBack) {
@@ -19,6 +21,24 @@
                         callBack(response.data);
                     }
                 });
+        }
+
+        function deleteFilePermanently(id, callBack) {
+            $http.delete(baseUrl + '/api/trashbin/' + id)
+            .then(function (response) {
+                if (callBack) {
+                    callBack(response.data);
+                }
+            });
+        }
+
+        function restoreFile(id, callBack) {
+            $http.put(baseUrl + '/api/trashbin/' + id)
+            .then(function (response) {
+                if (callBack) {
+                    callBack(response.data);
+                }
+            });
         }
 
         return service;

@@ -11,5 +11,7 @@ namespace Drive.WebHost.Services
     public interface ITrashBinService
     {
         Task<IEnumerable<TrashBinDto>> GetTrashBinContentAsync();
+        Task RestoreFileAsync(int id);
+        Task DeleteFileAsync(int id);
     }
 }

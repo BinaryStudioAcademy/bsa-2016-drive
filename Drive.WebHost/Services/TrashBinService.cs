@@ -61,6 +61,23 @@ namespace Drive.WebHost.Services
 
             return spacesList;
         }
-    
+
+        public async Task RestoreFileAsync(int id)
+        {
+            await _unitOfWork.Files.Restore(id);
+            await _unitOfWork?.SaveChangesAsync();
+        }
+
+        public async Task DeleteFileAsync(int id)
+        {
+            await _unitOfWork.Files.ForceDelete(id);
+            await _unitOfWork?.SaveChangesAsync();
+        }
+
+        public void Dispose()
+        {
+            _unitOfWork?.Dispose();
+        }
+
     }
 }
