@@ -36,12 +36,12 @@
                     <span ng-show="logsCtrl.sort.sortType == 'Level' && !logsCtrl.sort.sortReverse">&#8595</span>
                     <span ng-show="logsCtrl.sort.sortType == 'Level' && logsCtrl.sort.sortReverse">&#8593</span>
                 </th>
-                <th style="width: 15%" ng-click="logsCtrl.sort.sortType = 'Message'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                <th style="width: 13%" ng-click="logsCtrl.sort.sortType = 'Message'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
                     Log message
                     <span ng-show="logsCtrl.sort.sortType == 'Message' && !logsCtrl.sort.sortReverse">&#8595</span>
                     <span ng-show="logsCtrl.sort.sortType == 'Message' && logsCtrl.sort.sortReverse">&#8593</span>
                 </th>
-                <th style="width: 43%" ng-click="logsCtrl.sort.sortType = 'Exception'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                <th style="width: 44%" ng-click="logsCtrl.sort.sortType = 'Exception'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
                     Exception
                     <span ng-show="logsCtrl.sort.sortType == 'Exception' && !logsCtrl.sort.sortReverse">&#8595</span>
                     <span ng-show="logsCtrl.sort.sortType == 'Exception' && logsCtrl.sort.sortReverse">&#8593</span>
@@ -62,8 +62,8 @@
                 <td style="width: 3%">{{ log.id }}</td>
                 <td style="width: 10%">{{ log.logged | date:'dd-MM-yyyy HH:mm:ss' }}</td>
                 <td style="width: 6%">{{ log.level }}</td>
-                <td style="width: 15%">{{ log.message }}</td>
-                <td style="width: 43%; white-space:inherit;" title="{{log.exception}}">
+                <td style="width: 13%">{{ log.message }}</td>
+                <td style="width: 45%; white-space:inherit;" title="{{log.exception}}">
                     {{log.exception | limitTo: 400}}{{log.exception.length > 400 ? '...' : ''}}
                 </td>
                 <td style="width: 27%">{{ log.callerName }}</td>

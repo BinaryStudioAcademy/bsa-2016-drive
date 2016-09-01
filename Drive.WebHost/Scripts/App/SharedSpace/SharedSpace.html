@@ -23,7 +23,10 @@
                             <!--<input type="submit" id="searchsubmit" value=""/>-->
 
                             <div id="searchtext">
-                                <input type="search" size="40" class="search-input" value="" name="s" id="s" placeholder="Search..." ng-model="sharedSpaceCtrl.searchText">
+                                <input type="text" size="40" class="search-input" value="" name="s" id="s" placeholder="Search..." ng-model="sharedSpaceCtrl.searchText">
+                                <a id="clear_input" ng-show="sharedSpaceCtrl.searchText.length > 0" ng-click="sharedSpaceCtrl.cancelSearch()">
+                                    <i class="fa fa-times"></i>
+                                </a>
                                 <button class="search-submit-button" type="submit" ng-click="sharedSpaceCtrl.search()"> <i class="fa fa-search"></i> </button>
                             </div>
                         </form>
