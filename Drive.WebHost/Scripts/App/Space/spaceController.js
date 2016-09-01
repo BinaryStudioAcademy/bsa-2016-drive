@@ -113,7 +113,7 @@
                     vm.parentId = localStorageService.get('current');
                     getFolderContent(vm.parentId);
                 } else {
-                // getSpace();
+                 getSpace();
                 
             
         }
