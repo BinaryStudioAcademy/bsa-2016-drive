@@ -319,7 +319,7 @@ namespace Drive.WebHost.Services
         public async Task<int> CreateAsync(SpaceDto dto)
         {
             string userId = _userService.CurrentUserId;
-            //bool ownerIncluded = dto.ReadPermittedUsers.Where(x => x.GlobalId == userId).Count() > 0;
+            User localUser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == userId);
             List<User> ReadPermittedUsers = new List<User>();
             foreach (var item in dto.ReadPermittedUsers)
             {
@@ -337,10 +337,6 @@ namespace Drive.WebHost.Services
                     ReadPermittedUsers.Add(user);
                 }
             }
-            //if (!ownerIncluded)
-            //    ReadPermittedUsers.Add(new User() { GlobalId = userId, IsDeleted = false });
-
-            //ownerIncluded = dto.ModifyPermittedUsers.Where(x => x.GlobalId == userId).Count() > 0;
 
             List<User> ModifyPermittedUsers = new List<User>();
             foreach (var item in dto.ModifyPermittedUsers)
@@ -365,9 +361,6 @@ namespace Drive.WebHost.Services
                     }
                 }
             }
-
-            //if (!ownerIncluded)
-            //    ModifyPermittedUsers.Add(new User() { GlobalId = userId, IsDeleted = false });
 
             List<Role> ReadPermittedRoles = new List<Role>();
             foreach (var item in dto.ReadPermittedRoles)

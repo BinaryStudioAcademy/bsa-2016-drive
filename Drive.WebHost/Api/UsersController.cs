@@ -40,6 +40,18 @@ namespace Drive.WebHost.Api
             return Ok(user);
         }
 
+        // GET api/users/withoutcurrent
+        [HttpGet]
+        [Route("withoutcurrent")]
+        public async Task<IHttpActionResult> GetAllWithoutCurrentAsync()
+        {
+            var users = await _usersService.GetAllWithoutCurrentAsync();
+
+            if (users == null)
+                return NotFound();
+            return Ok(users);
+        }
+
         [HttpDelete]
         public void Delete(int id)
         {

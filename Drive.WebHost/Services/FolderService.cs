@@ -100,9 +100,18 @@ namespace Drive.WebHost.Services
         public async Task<FolderUnitDto> CreateAsync(FolderUnitDto dto)
         {
             var user = await _usersService?.GetCurrentUser();
+            var localUser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == user.serverUserId);
 
             var space = await _unitOfWork?.Spaces?.GetByIdAsync(dto.SpaceId);
             var parentFolder = await _unitOfWork?.Folders?.GetByIdAsync(dto.ParentId);
+
+            List<User> ReadPermittedUsers = new List<User>();
+
+            ReadPermittedUsers.Add(localUser);
+
+            List<User> ModifyPermittedUsers = new List<User>();
+           
+            ModifyPermittedUsers.Add(localUser);
 
 
             if (space != null)
@@ -117,7 +126,9 @@ namespace Drive.WebHost.Services
                     IsDeleted = false,
                     Space = space,
                     FolderUnit = parentFolder,
-                    Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId)
+                    Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId),
+                    ModifyPermittedUsers = ModifyPermittedUsers,
+                    ReadPermittedUsers = ReadPermittedUsers
                 };
 
                 _unitOfWork?.Folders?.Create(folder);
@@ -205,55 +216,92 @@ namespace Drive.WebHost.Services
             return dto;
         }
 
-        public async Task<FolderUnitDto> CreateCopyAsync(int id, FolderUnitDto dto)
+        public async Task CreateCopyAsync(int id, FolderUnitDto dto)
         {
-            var folder = await _unitOfWork?.Folders?.Query.Include(f => f.DataUnits)
-                                                          .Include(f => f.ModifyPermittedUsers)
-                                                          .Include(f => f.ReadPermittedUsers)
-                                                          .SingleOrDefaultAsync(f => f.Id == id);
-
-            if (folder == null)
-                return null;
-
+ 
             var space = await _unitOfWork.Spaces.GetByIdAsync(dto.SpaceId);
 
-            var user = await _usersService?.GetCurrentUser();
+            var user = _usersService.CurrentUserId;
+            var owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user);
+
+            var folder = await _unitOfWork.Folders.GetByIdAsync(id);
+
+            string name = folder.Name;
+
+            if (await _unitOfWork.Folders.Query.FirstOrDefaultAsync(f => f.Name == folder.Name &&
+                                        (f.FolderUnit.Id == dto.ParentId || (dto.ParentId == 0 && f.Space.Id == dto.SpaceId))) != null)
+            {
+                name = name + "-copy";
+            }
+
+            var destinationFolder = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
+
+            await CopyFolder(id, name, owner, space, destinationFolder);
+
+        }
+
+        private async Task CopyFolder(int folderToCopyId,string folderName,  User owner, Space space, FolderUnit destination)
+        {
+            var folder = await _unitOfWork?.Folders?.Query
+                                                .Include(f => f.DataUnits.Select(u => u.ReadPermittedUsers))
+                                                .Include(f => f.DataUnits.Select(u => u.ModifyPermittedUsers))
+                                                .Include(f => f.DataUnits.Select(u => u.ReadPermittedRoles))
+                                                .Include(f => f.DataUnits.Select(u => u.MorifyPermittedRoles))
+                                                .Include(f => f.ModifyPermittedUsers)
+                                                .Include(f => f.ReadPermittedUsers)
+                                                .Include(f => f.MorifyPermittedRoles)
+                                                .Include(f => f.ReadPermittedRoles)
+                                                .SingleOrDefaultAsync(f => f.Id == folderToCopyId);
+
+            if (folder == null)
+                return;
 
             var copy = new FolderUnit
             {
-                Name = folder.Name,
+                Name = folderName,
                 Description = folder.Description,
                 IsDeleted = folder.IsDeleted,
-                CreatedAt = folder.CreatedAt,
-                LastModified = folder.LastModified,
+                CreatedAt = DateTime.Now,
+                LastModified = DateTime.Now,
                 Space = space,
-                Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId),
-                ModifyPermittedUsers = folder.ModifyPermittedUsers,
-                ReadPermittedUsers = folder.ReadPermittedUsers
+                Owner = owner,
+                ModifyPermittedUsers = folder.ReadPermittedUsers,
+                ReadPermittedUsers = folder.ModifyPermittedUsers,
+                MorifyPermittedRoles = folder.MorifyPermittedRoles,
+                ReadPermittedRoles = folder.ReadPermittedRoles,
+                FolderUnit = destination
             };
-
-            if (dto.ParentId != null)
-            {
-                var parent = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
-
-                copy.FolderUnit = parent;
-                copy.Space = space;
-
-                folder.FolderUnit = parent;
-            }
-
-            foreach (var item in folder.DataUnits)
-            {
-                item.Space = await _unitOfWork.Spaces.GetByIdAsync(folder.Space.Id);
-
-                await CreateCopyAsync(item.Id, new FolderUnitDto());
-            }
 
             _unitOfWork.Folders.Create(copy);
 
-            await _unitOfWork?.SaveChangesAsync();
+            foreach (var subfolder in folder.DataUnits.OfType<FolderUnit>())
+            {
+                await CopyFolder(subfolder.Id, subfolder.Name, owner, space, copy);
+            }
+            foreach (var file in folder.DataUnits.OfType<FileUnit>().Where(x => !x.IsDeleted))
+            {
+                var newFile = new FileUnit
+                {
+                    Name = file.Name,
+                    Description = file.Description,
+                    IsDeleted = file.IsDeleted,
+                    CreatedAt = DateTime.Now,
+                    LastModified = DateTime.Now,
+                    FileType = file.FileType,
+                    Link = file.Link,
+                    Owner = owner,
+                    Space = space,
+                    FolderUnit = copy,
+                    ModifyPermittedUsers = file.ReadPermittedUsers,
+                    ReadPermittedUsers = file.ModifyPermittedUsers,
+                    MorifyPermittedRoles = file.MorifyPermittedRoles,
+                    ReadPermittedRoles = file.ReadPermittedRoles
+                };
 
-            return dto;
+                _unitOfWork.Files.Create(newFile);
+            }
+
+            await _unitOfWork?.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id)

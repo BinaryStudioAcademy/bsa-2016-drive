@@ -59,5 +59,23 @@ namespace Drive.WebHost.Services
         {
             _unitOfWork?.Dispose();
         }
+
+        public async Task<IEnumerable<UsersDto>> GetAllWithoutCurrentAsync()
+        {
+            var users = await _userProvider?.GetAsync();
+            if (users == null)
+                return null;
+            List<UsersDto> usersList = users.ToList();
+            var currentUser = _userProvider.CurrentUserId;
+            for (int i = 0; i < usersList.Count(); i++)
+            {
+                if (usersList[i].id == currentUser)
+                {
+                    usersList.RemoveAt(i);
+                    break;
+                }
+            }
+            return usersList;
+        }
     }
 }

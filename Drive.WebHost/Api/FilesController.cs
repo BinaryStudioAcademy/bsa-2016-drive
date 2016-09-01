@@ -98,12 +98,12 @@ namespace Drive.WebHost.Api
         [Route("copied/{id:int}")]
         public async Task<IHttpActionResult> CreateCopyFileAsync(int id, FileUnitDto file)
         {
-            var dto = await _service.CreateCopyAsync(id, file);
+            await _service.CreateCopyAsync(id, file);
 
-            if (id != file.Id)
-                return BadRequest();
+            //if (id != file.Id)
+            //    return BadRequest();
 
-            return Ok(dto);
+            return Ok();
 
         }
 

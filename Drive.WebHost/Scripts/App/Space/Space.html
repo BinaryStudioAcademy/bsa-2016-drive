@@ -11,11 +11,11 @@
         </a>
     </div>
     <div class="row" style="margin:1em 0 1em 0">
-        <div class="col-lg-push-4-offset pull-right">
-            <button class="btn btn-default" ng-click="spaceCtrl.changeView(spaceCtrl.view)">
+        <div class="col-lg-push-4-offset pull-right" >
+            <button class="btn btn-default"  ng-click="spaceCtrl.changeView(spaceCtrl.view)">
                 <i class={{spaceCtrl.view}} title="view"> </i>
             </button>
-            <button type="button" class="btn btn-default btn-custom" ng-click="spaceCtrl.redirectToSpaceSettings(spaceCtrl.space.id)" title="Open Space Settings">
+            <button type="button" class="btn btn-default btn-custom" ng-hide="spaceCtrl.showSettingsBtn" ng-click="spaceCtrl.redirectToSpaceSettings(spaceCtrl.space.id)" title="Open Space Settings">
                 <i class="fa fa-cog fa-lg"></i>
             </button>
         </div>

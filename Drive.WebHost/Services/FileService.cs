@@ -96,8 +96,19 @@ namespace Drive.WebHost.Services
         public async Task<FileUnitDto> CreateAsync(FileUnitDto dto)
         {
             var user = await _usersService.GetCurrentUser();
+            var localUser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == user.serverUserId);
+
             var space = await _unitOfWork?.Spaces?.GetByIdAsync(dto.SpaceId);
             var parentFolder = await _unitOfWork?.Folders.GetByIdAsync(dto.ParentId);
+
+            List<User> ReadPermittedUsers = new List<User>();
+
+            ReadPermittedUsers.Add(localUser);
+
+            List<User> ModifyPermittedUsers = new List<User>();
+
+            ModifyPermittedUsers.Add(localUser);
+
 
             if (space != null)
             {
@@ -112,7 +123,9 @@ namespace Drive.WebHost.Services
                     IsDeleted = false,
                     Space = space,
                     FolderUnit = parentFolder,
-                    Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId)
+                    Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId),
+                    ReadPermittedUsers = ReadPermittedUsers,
+                    ModifyPermittedUsers = ModifyPermittedUsers
                 };
 
 
@@ -194,33 +207,47 @@ namespace Drive.WebHost.Services
             return dto;
         }
 
-        public async Task<FileUnitDto> CreateCopyAsync(int id, FileUnitDto dto)
+        public async Task CreateCopyAsync(int id, FileUnitDto dto)
         {
-            var file = await _unitOfWork?.Files?.GetByIdAsync(id);
+            var file = await _unitOfWork?.Files.Query
+                                                .Include(f => f.ModifyPermittedUsers)
+                                                .Include(f => f.ReadPermittedUsers)
+                                                .Include(f => f.MorifyPermittedRoles)
+                                                .Include(f => f.ReadPermittedRoles)
+                                                .SingleOrDefaultAsync(f => f.Id == id); ;
 
             if (file == null)
-                return null;
+                return;
 
             var space = await _unitOfWork.Spaces.GetByIdAsync(dto.SpaceId);
 
             var user = await _usersService?.GetCurrentUser();
 
+            string name = file.Name;
+
+            if (await _unitOfWork.Files.Query.FirstOrDefaultAsync(f => f.Name == file.Name &&
+                                        (f.FolderUnit.Id == dto.ParentId || (dto.ParentId == 0 && f.Space.Id == dto.SpaceId))) != null)
+            {
+                name = name + "-copy";
+            }
             var copy = new FileUnit
             {
-                Name = file.Name,
+                Name = name,
                 Description = file.Description,
                 FileType = file.FileType,
                 IsDeleted = file.IsDeleted,
                 LastModified = DateTime.Now,
-                CreatedAt = file.CreatedAt,
+                CreatedAt = DateTime.Now,
                 Link = file.Link,
                 Space = space,
                 Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId),
                 ModifyPermittedUsers = file.ModifyPermittedUsers,
-                ReadPermittedUsers = file.ReadPermittedUsers
+                ReadPermittedUsers = file.ReadPermittedUsers,
+                MorifyPermittedRoles = file.MorifyPermittedRoles,
+                ReadPermittedRoles = file.ReadPermittedRoles
             };
 
-            if (dto.ParentId != null)
+            if (dto.ParentId != 0)
             {
                 var parent = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
                 copy.FolderUnit = parent;
@@ -229,8 +256,6 @@ namespace Drive.WebHost.Services
             _unitOfWork.Files.Create(copy);
 
             await _unitOfWork?.SaveChangesAsync();
-
-            return dto;
         }
 
         public async Task DeleteAsync(int id)
