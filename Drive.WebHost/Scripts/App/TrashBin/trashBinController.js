@@ -56,14 +56,26 @@
         }
 
         function deleteFilePermanently(id, spaceId) {
-            trashBinService.deleteFilePermanently(id, function (data) {
-                deleteFileFromScope(id, spaceId);
-                toastr.success(
-                      'File was deleted!', 'Trash bin',
-                      {
-                          closeButton: true, timeOut: 5000
-                      });
-                console.log('==> file DELETED');
+            swal({
+                title: "Deleting file!",
+                text: "Are you sure that you want to delete file?",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            }, function () {
+                trashBinService.deleteFilePermanently(id, function (data) {
+                    deleteFileFromScope(id, spaceId);
+                    console.log('==> file DELETED');
+                });
+                swal({
+                    title: "Deleted!",
+                    text: "File deleted successfully",
+                    timer: 2000,
+                    showConfirmButton: false,
+                    type: "success"
+                });
             });
         }
 
@@ -122,7 +134,7 @@
         }
 
         function changeView(view) {
-            if (view == "fa fa-th") {
+            if (view === "fa fa-th") {
                 activateGridView();
             } else {
                 activateTableView();
@@ -151,10 +163,10 @@
         function deleteFileFromScope(itemId, spaceId) {
             var s = vm.spaces;
             for (var i = 0; i < s.length; i++) {
-                if (s[i].spaceId == spaceId) {
+                if (s[i].spaceId === spaceId) {
                     var f = s[i].files;
                     for (var j = 0; j < f.length; j++) {
-                        if (f[j].id == itemId){
+                        if (f[j].id === itemId){
                             vm.spaces[i].files.splice(j, 1);
                         }
                     }

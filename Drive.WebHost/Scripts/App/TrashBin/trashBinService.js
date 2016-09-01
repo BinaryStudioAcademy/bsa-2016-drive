@@ -44,7 +44,7 @@
 
         function orderByColumn(columnClicked, columnCurrent) {
             var pos = columnCurrent.indexOf(columnClicked);
-            if (pos == 0) { return '-' + columnClicked; }
+            if (pos === 0) { return '-' + columnClicked; }
             return columnClicked;
         }
 
