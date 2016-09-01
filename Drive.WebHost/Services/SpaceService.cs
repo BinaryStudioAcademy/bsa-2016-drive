@@ -109,12 +109,8 @@ namespace Drive.WebHost.Services
                     CreatedAt = f.CreatedAt,
                     Link = f.Link,
                     Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId },
-                    CanRead = f.ReadPermittedUsers.FirstOrDefault(x => x.GlobalId == userId) != null ? true : false
-                    || f.ReadPermittedRoles.FirstOrDefault(x => x.Users.FirstOrDefault(p => p.GlobalId == userId) != null) != null ? true : false
-                    || f.Owner.GlobalId == userId,
-                    CanModify = f.ModifyPermittedUsers.FirstOrDefault(x => x.GlobalId == userId) != null ? true : false
-                    || f.MorifyPermittedRoles.FirstOrDefault(x => x.Users.FirstOrDefault(p => p.GlobalId == userId) != null) != null ? true : false
-                    || f.Owner.GlobalId == userId
+                    CanRead = s.Type == SpaceType.BinarySpace ? true : f.Owner.GlobalId == userId ? true : f.ModifyPermittedUsers.FirstOrDefault(x => x.GlobalId == userId) != null ? true : f.MorifyPermittedRoles.FirstOrDefault(x => x.Users.FirstOrDefault(p => p.GlobalId == userId) != null) != null ? true : f.Owner.GlobalId == userId,
+                    CanModify = s.Type == SpaceType.BinarySpace ? true : f.Owner.GlobalId == userId ? true : f.ModifyPermittedUsers.FirstOrDefault(x => x.GlobalId == userId) != null ? true : f.MorifyPermittedRoles.FirstOrDefault(x => x.Users.FirstOrDefault(p => p.GlobalId == userId) != null) != null ? true : f.Owner.GlobalId == userId,
                 }),
                 Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted)
                 .Where(f => (s.Type == SpaceType.BinarySpace)
@@ -130,18 +126,21 @@ namespace Drive.WebHost.Services
                     IsDeleted = f.IsDeleted,
                     SpaceId = f.Space.Id,
                     Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId },
-                    CanRead = f.ReadPermittedUsers.FirstOrDefault(x => x.GlobalId == userId) != null ? true : false
-                    || f.ReadPermittedRoles.FirstOrDefault(x => x.Users.FirstOrDefault(p => p.GlobalId == userId) != null) != null ? true : false
-                    || f.Owner.GlobalId == userId,
-                    CanModify = f.ModifyPermittedUsers.FirstOrDefault(x => x.GlobalId == userId) != null ? true : false
-                    || f.MorifyPermittedRoles.FirstOrDefault(x => x.Users.FirstOrDefault(p => p.GlobalId == userId) != null) != null ? true : false
-                    || f.Owner.GlobalId == userId
+                    CanRead = s.Type == SpaceType.BinarySpace ? true : f.Owner.GlobalId == userId ? true : f.ModifyPermittedUsers.FirstOrDefault(x => x.GlobalId == userId) != null ? true : f.MorifyPermittedRoles.FirstOrDefault(x => x.Users.FirstOrDefault(p => p.GlobalId == userId) != null) != null ? true : f.Owner.GlobalId == userId,
+                    CanModify = s.Type == SpaceType.BinarySpace ? true : f.Owner.GlobalId == userId ? true : f.ModifyPermittedUsers.FirstOrDefault(x => x.GlobalId == userId) != null ? true : f.MorifyPermittedRoles.FirstOrDefault(x => x.Users.FirstOrDefault(p => p.GlobalId == userId) != null) != null ? true : f.Owner.GlobalId == userId
                 })
             }).SingleOrDefaultAsync();
 
             if (space == null)
                 return null;
 
+            foreach (var item in space.Files)
+            {
+                if (space.Type == SpaceType.BinarySpace)
+                {
+                    item.CanRead = true;
+                }
+            }
 
             if (space.Type != SpaceType.BinarySpace
                  && space.Owner.GlobalId != userId)
@@ -242,7 +241,9 @@ namespace Drive.WebHost.Services
                     Name = f.Name,
                     CreatedAt = f.CreatedAt,
                     Link = f.Link,
-                    Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
+                    Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId },
+                    CanRead = s.Type == SpaceType.BinarySpace ? true : f.Owner.GlobalId == userId ? true : f.ModifyPermittedUsers.FirstOrDefault(x => x.GlobalId == userId) != null ? true : f.MorifyPermittedRoles.FirstOrDefault(x => x.Users.FirstOrDefault(p => p.GlobalId == userId) != null) != null ? true : f.Owner.GlobalId == userId,
+                    CanModify = s.Type == SpaceType.BinarySpace ? true : f.Owner.GlobalId == userId ? true : f.ModifyPermittedUsers.FirstOrDefault(x => x.GlobalId == userId) != null ? true : f.MorifyPermittedRoles.FirstOrDefault(x => x.Users.FirstOrDefault(p => p.GlobalId == userId) != null) != null ? true : f.Owner.GlobalId == userId
                 }),
                                                           Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted)
                 .Select(f => new FolderUnitDto
@@ -253,7 +254,9 @@ namespace Drive.WebHost.Services
                     CreatedAt = f.CreatedAt,
                     IsDeleted = f.IsDeleted,
                     SpaceId = f.Space.Id,
-                    Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
+                    Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId },
+                    CanRead = s.Type == SpaceType.BinarySpace ? true : f.Owner.GlobalId == userId ? true : f.ModifyPermittedUsers.FirstOrDefault(x => x.GlobalId == userId) != null ? true : f.MorifyPermittedRoles.FirstOrDefault(x => x.Users.FirstOrDefault(p => p.GlobalId == userId) != null) != null ? true : f.Owner.GlobalId == userId,
+                    CanModify = s.Type == SpaceType.BinarySpace ? true : f.Owner.GlobalId == userId ? true : f.ModifyPermittedUsers.FirstOrDefault(x => x.GlobalId == userId) != null ? true : f.MorifyPermittedRoles.FirstOrDefault(x => x.Users.FirstOrDefault(p => p.GlobalId == userId) != null) != null ? true : f.Owner.GlobalId == userId
                 })
                                                       }).SingleOrDefaultAsync();
 
