@@ -64,6 +64,8 @@
             vm.paginate.currentPage = pageNumber;
             vm.paginate.getContent();
         }
+        vm.folderMenuOptionShareShow = true;
+        vm.fileMenuOptionShareShow = true;
 
 
         activate();
@@ -98,6 +100,10 @@
                             vm.showSettingsBtn = false;
                         }
                     });
+                if ($routeParams.spaceType == 'binaryspace') {
+                    vm.folderMenuOptionShareShow = false;
+                    vm.fileMenuOptionShareShow = false;
+                }
             }
         }
 
@@ -192,7 +198,7 @@
             [
                 'Share', function ($itemScope) {
                     console.log($itemScope.folder.id);
-                }
+                }, function ($itemScope) { return vm.folderMenuOptionShareShow }
             ],
             null,
             ['New', function () {
@@ -306,7 +312,7 @@
                     vm.fileSharedId = $itemScope.file.id;
                     console.log(vm.fileSharedId);
                     vm.sharedFile();
-                }
+                }, function ($itemScope) { return vm.fileMenuOptionShareShow }
             ],
             null,
             ['New', function () {
