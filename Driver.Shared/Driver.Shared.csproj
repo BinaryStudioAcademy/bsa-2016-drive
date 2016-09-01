@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="Dto\AppDto.cs" />
     <Compile Include="Dto\SharedSpaceDto.cs" />
+    <Compile Include="Dto\TrashBinDto.cs" />
     <Compile Include="Dto\UserSharedSpaceDto.cs" />
     <Compile Include="Dto\Users\UsersDto.cs" />
     <Compile Include="Dto\Users\AuthorDto.cs" />

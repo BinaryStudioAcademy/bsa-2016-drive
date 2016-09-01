@@ -1,4 +1,4 @@
-﻿
+
 <div class="container-fluid" style="overflow: hidden; height: 100%">
     <br />
     <div class="btn-group btn-breadcrumb">
@@ -11,8 +11,8 @@
         </a>
     </div>
     <div class="row" style="margin:1em 0 1em 0">
-        <div class="col-lg-push-4-offset pull-right" >
-            <button class="btn btn-default"  ng-click="spaceCtrl.changeView(spaceCtrl.view)">
+        <div class="col-lg-push-4-offset pull-right">
+            <button class="btn btn-default" ng-click="spaceCtrl.changeView(spaceCtrl.view)">
                 <i class={{spaceCtrl.view}} title="view"> </i>
             </button>
             <button type="button" class="btn btn-default btn-custom" ng-show="spaceCtrl.showSettingsBtn" ng-click="spaceCtrl.redirectToSpaceSettings(spaceCtrl.space.id)" title="Open Space Settings">
@@ -22,13 +22,13 @@
         <div class="form-inline">
             <div class="form-group col-sm-7 pull-left nopadding">
                 <button type="button" class="btn btn-default btn-custom" ng-click="spaceCtrl.createNewFolder()" title="Add new folder">
-                    <img src="./Content/Icons/add-folder_bw.svg" height="32" alt="Add folder"/>
+                    <img src="./Content/Icons/add-folder_bw.svg" height="32" alt="Add folder" />
                 </button>
                 <button type="button" class="btn btn-default btn-custom" ng-click="spaceCtrl.createNewFile()" title="Add new link">
-                    <img src="./Content/Icons/add-file_bw.svg" height="32" alt="Add file"/>
+                    <img src="./Content/Icons/add-file_bw.svg" height="32" alt="Add file" />
                 </button>
                 <button type="button" class="btn btn-default btn-custom" ng-click="" title="Upload file">
-                    <img src="./Content/Icons/upload-doc_bw.svg" height="30" alt="Upload file"/>
+                    <img src="./Content/Icons/upload-doc_bw.svg" height="30" alt="Upload file" />
                 </button>
             </div>
         </div>
@@ -62,8 +62,10 @@
                     </div>
                     <div class="sp-gv-item-text">
                         <h4 title="{{folder.name}}">{{folder.name}}</h4>
-                        <h5 title="{{folder.author.name}}"><i class="fa fa-user" aria-hidden="true"></i>
-                            {{folder.author.name}}</h5>
+                        <h5 title="{{folder.author.name}}">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            {{folder.author.name}}
+                        </h5>
                         <p title="{{folder.description}}">{{folder.description}}</p>
                     </div>
                 </div>
@@ -118,7 +120,7 @@
                         <span ng-show="spaceCtrl.columnForOrder == 'createdAt'"><i class="fa fa-sort-asc"></i></span>
                         <span ng-show="spaceCtrl.columnForOrder == '-createdAt'"><i class="fa fa-sort-desc"></i></span>
                     </th>
-                    <th class="type" style="width: 10%"  ng-click="spaceCtrl.orderByColumn('fileType')">
+                    <th class="type" style="width: 10%" ng-click="spaceCtrl.orderByColumn('fileType')">
                         Type
                         <span ng-show="spaceCtrl.columnForOrder == 'fileType'"><i class="fa fa-sort-asc"></i></span>
                         <span ng-show="spaceCtrl.columnForOrder == '-fileType'"><i class="fa fa-sort-desc"></i></span>
@@ -132,7 +134,8 @@
                         &nbsp;{{ folder.name }}
                     </td>
                     <td style="width: 35%" class="col-sm-4 description"
-                        title="{{folder.description}}">{{folder.description | limitTo: 41}}{{folder.description.length > 41 ? '...' : ''}}
+                        title="{{folder.description}}">
+                        {{folder.description | limitTo: 41}}{{folder.description.length > 41 ? '...' : ''}}
                     </td>
                     <td style="width: 20%" class="col-sm-2">{{ folder.author.name }}</td>
                     <td style="width: 15%" class="col-sm-2">{{ folder.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
@@ -140,7 +143,7 @@
                 </tr>
                 <tr class="shadow" role="button" ng-repeat="file in spaceCtrl.space.files | orderBy: spaceCtrl.columnForOrder" context-menu="spaceCtrl.fileMenuOptions" ng-dblclick="spaceCtrl.openDocument(file.link)">
                     <td style="width: 20%" class="col-sm-3">
-                        <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" height="{{spaceCtrl.iconHeight}}" /> 
+                        <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" height="{{spaceCtrl.iconHeight}}" />
                         &nbsp;{{ file.name }}
                     </td>
                     <td style="width: 35%" class="col-sm-4 description" title="{{file.description}}">
@@ -157,4 +160,3 @@
         <dir-pagination-controls class="page-footer" on-page-change="spaceCtrl.paginate.getContent(newPageNumber)"></dir-pagination-controls>
     </div>
 </div>
-

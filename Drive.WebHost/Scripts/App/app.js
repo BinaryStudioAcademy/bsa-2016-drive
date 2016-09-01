@@ -42,12 +42,6 @@
                     controller: "SpaceController",
                     controllerAs: "spaceCtrl"
                 })
-                .when("/:spaceType",
-                {
-                    templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
-                    controller: "SpaceController",
-                    controllerAs: "spaceCtrl"
-                })
                  .when("/spaces/:id/settings/", // Space settings Page
                 {
                     templateUrl: baseUrl + "/Scripts/App/Space/Settings.html",
@@ -77,6 +71,18 @@
                     templateUrl: baseUrl + "/Scripts/App/Error404/404.html",
                     controller: "ErrorController",
                     controllerAs: "errorCtrl"
+                })
+                .when("/trashbin",
+                {
+                    templateUrl: baseUrl + "/Scripts/App/TrashBin/TrashBin.html",
+                    controller: "TrashBinController",
+                    controllerAs: "trashBinCtrl"
+                })
+                .when("/:spaceType",
+                {
+                    templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
+                    controller: "SpaceController",
+                    controllerAs: "spaceCtrl"
                 })
                 .otherwise({
                     // This is when any route not matched - error

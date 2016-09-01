@@ -17,6 +17,7 @@
         vm.redirectToAddFile = redirectToAddFile;
         vm.redirectToAdminPanel = redirectToAdminPanel;
         vm.redirectToApps = redirectToApps;
+        vm.redirectToTrashBin = redirectToTrashBin;
         vm.getAllSpaces = getAllSpaces;
         vm.open = open;
         vm.spaces = {};
@@ -63,6 +64,10 @@
         function redirectToAdminPanel() {
             $location.url("AdminPanel");
         };
+
+        function redirectToTrashBin() {
+            $location.url("trashbin");
+        }
 
         //Open modal window for creating new space
         function open(size) {

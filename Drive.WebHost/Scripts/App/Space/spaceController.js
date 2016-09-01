@@ -83,7 +83,7 @@
 
             if ($routeParams.id) {
                 spaceService.getSpace($routeParams.id, vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate,
-                    function (data) {
+                function (data) {
                         pagination(data);
                         vm.showSettingsBtn = true;
                     });
@@ -102,26 +102,27 @@
         }
 
         function pagination(data) {
-            vm.space = data;
+                vm.space = data;
             vm.selectedSpace = data.id;
-            vm.spaceId = data.id;
-            if (localStorageService.get('spaceId') !== vm.spaceId) {
-                localStorageService.set('spaceId', vm.spaceId);
-                localStorageService.set('current', null);
-                    vm.parentId = null;
-                localStorageService.set('list', null);
-            }
+                vm.spaceId = data.id;
+                if (localStorageService.get('spaceId') !== vm.spaceId) {
+                    localStorageService.set('spaceId', vm.spaceId);
+                    localStorageService.set('current', null);
+                        vm.parentId = null;
+                    localStorageService.set('list', null);
+                }
 
-            if (localStorageService.get('list') != null)
-                vm.folderList = localStorageService.get('list');
+                if (localStorageService.get('list') != null)
+                    vm.folderList = localStorageService.get('list');
 
-            if (localStorageService.get('current') != null) {
-                vm.parentId = localStorageService.get('current');
-                getFolderContent(vm.parentId);
-            } else {
-                // getSpace();
-
-            }
+                if (localStorageService.get('current') != null) {
+                    vm.parentId = localStorageService.get('current');
+                    getFolderContent(vm.parentId);
+                } else {
+                 getSpace();
+                
+            
+        }
         }
 
         function currentSpaceId() {
