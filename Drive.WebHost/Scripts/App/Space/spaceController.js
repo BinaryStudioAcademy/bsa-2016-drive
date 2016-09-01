@@ -21,12 +21,8 @@
         vm.deleteElems = deleteElems;
         vm.spaceId = 0;
         vm.parentId = null;
-        vm.selectedSpace = currentSpaceId();
+        //vm.selectedSpace = currentSpaceId();
 
-        vm.space = {
-            folders: [],
-            files: []
-        }
 
         // vm.getAllFolders = getAllFolders;
         vm.getFolder = getFolder;
@@ -80,39 +76,52 @@
             vm.columnForOrder = 'name';
             vm.iconHeight = 30;
 
-            spaceService.getSpace(vm.selectedSpace,
-                vm.paginate.currentPage,
-                vm.paginate.pageSize,
-                vm.sortByDate,
-                function (data) {
-                vm.space = data;
-                vm.spaceId = data.id;
+            vm.space = {
+                folders: [],
+                files: []
+            }
+            if ($routeParams.id) {
+                spaceService.getSpace($routeParams.id, vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate,
+                    function (data) {
+                        pagination(data);
+                    });
+            }
+            if ($routeParams.spaceType) {
+                spaceService.getSpaceByType($routeParams.spaceType, vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate,
+                    function (data) {
+                        vm.selectedSpace = data.id;
+                        pagination(data);
+                    });
+            }
+        }
 
-                if (localStorageService.get('spaceId') !== vm.spaceId) {
-                    localStorageService.set('spaceId', vm.spaceId);
-                    localStorageService.set('current', null);
-                        vm.parentId = null;
-                    localStorageService.set('list', null);
-                }
+        function pagination(data) {
+            vm.space = data;
+            vm.selectedSpace = data.id;
+            vm.spaceId = data.id;
+            if (localStorageService.get('spaceId') !== vm.spaceId) {
+                localStorageService.set('spaceId', vm.spaceId);
+                localStorageService.set('current', null);
+                    vm.parentId = null;
+                localStorageService.set('list', null);
+            }
 
-                if (localStorageService.get('list') != null)
-                    vm.folderList = localStorageService.get('list');
+            if (localStorageService.get('list') != null)
+                vm.folderList = localStorageService.get('list');
 
-                if (localStorageService.get('current') != null) {
-                    vm.parentId = localStorageService.get('current');
-                    getFolderContent(vm.parentId);
-                } else {
-                    getSpace();
-                }
+            if (localStorageService.get('current') != null) {
+                vm.parentId = localStorageService.get('current');
+                getFolderContent(vm.parentId);
+            } else {
+                // getSpace();
 
-            });
+            }
         }
 
         function currentSpaceId() {
             if ($routeParams.id) {
                 return $routeParams.id;
             }
-            return 1;
         }
 
         function getSpace() {

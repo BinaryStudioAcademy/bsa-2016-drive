@@ -21,13 +21,14 @@
                 {
                     templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
                     controller: "SpaceController",
-                    controllerAs: "spaceCtrl"
+                    controllerAs: "spaceCtrl",
+                    redirectTo: "/binaryspace"
                 })
-                .when("/spaces/:id", // Space page
+                .when("/AdminPanel", // Admin Panel
                 {
-                    templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
-                    controller: "SpaceController",
-                    controllerAs: "spaceCtrl"
+                    templateUrl: baseUrl + "/Scripts/App/AdminPanel/AdminPanel.html",
+                    controller: "adminPanelController",
+                    controllerAs: "adminCtrl"
                 })
                 .when("/sharedspace", // Shared Space page
                 {
@@ -35,17 +36,23 @@
                     controller: "SharedSpaceController",
                     controllerAs: "sharedSpaceCtrl"
                 })
+                .when("/spaces/:id", // Space page
+                {
+                    templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
+                    controller: "SpaceController",
+                    controllerAs: "spaceCtrl"
+                })
+                .when("/:spaceType",
+                {
+                    templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
+                    controller: "SpaceController",
+                    controllerAs: "spaceCtrl"
+                })
                  .when("/spaces/:id/settings/", // Space settings Page
                 {
                     templateUrl: baseUrl + "/Scripts/App/Space/Settings.html",
                     controller: "SettingsController",
                     controllerAs: "settingsCtrl"
-                })
-                .when("/AdminPanel", // Admin Panel
-                {
-                    templateUrl: baseUrl + "/Scripts/App/AdminPanel/AdminPanel.html",
-                    controller: "adminPanelController",
-                    controllerAs: "adminCtrl"
                 })
                 .when("/AdminPanel/Logs", // Logs page
                 {
