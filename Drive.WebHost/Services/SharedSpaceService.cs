@@ -79,6 +79,8 @@ namespace Drive.WebHost.Services
                         fileSharedDeleted.CanModify = user.CanModify;
                         fileSharedDeleted.CanRead = user.CanRead;
                         fileSharedDeleted.IsDeleted = user.IsDeleted;
+                        if (!user.CanModify && !user.CanRead)
+                            fileShared.IsDeleted = true;
                     }
                 }
                 else
@@ -86,6 +88,8 @@ namespace Drive.WebHost.Services
                     fileShared.CanModify = user.CanModify;
                     fileShared.CanRead = user.CanRead;
                     fileShared.IsDeleted = user.IsDeleted;
+                    if (!user.CanModify && !user.CanRead)
+                        fileShared.IsDeleted = true;
                 }
             }
             await _unitOfWork.SaveChangesAsync();

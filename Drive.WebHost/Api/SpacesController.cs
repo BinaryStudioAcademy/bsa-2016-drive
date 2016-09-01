@@ -131,14 +131,5 @@ namespace Drive.WebHost.Api
                 return NotFound();
             return Ok(result);
         }
-
-        // GET: api/spaces/trashbin
-        [HttpGet]
-        [Route("trashbin")]
-        public async Task<IHttpActionResult> GetTrashBinContent()
-        {
-            var result = await _spaceService.GetTrashBinContentAsync();
-            return Ok(result);
-        }
     }
 }

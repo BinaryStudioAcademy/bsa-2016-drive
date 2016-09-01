@@ -15,7 +15,6 @@
 
         vm.search = search;
         vm.cancelSearch = cancelSearch;
-        //vm.cancelSearch = cancelSearch;
         vm.getTrashBinContent = getTrashBinContent;
         vm.deleteFilePermanently = deleteFilePermanently;
         vm.restoreFile = restoreFile;
@@ -103,21 +102,15 @@
 
         vm.spaceMenuOptions = [
            [
-               'Restore all items', function ($itemScope) {
+               'Restore all items for this space', function ($itemScope) {
                }
            ],
            [
-               'Empty Trash Bin', function ($itemScope) {
+               'Clear all items for this space', function ($itemScope) {
                    return deleteFile($itemScope.file.id);
                }
            ]
         ];
-
-        //function deleteFilePermanently(id) {
-        //    fileService.deleteFilePermanently(id, function () {
-        //        getFiles();
-        //    });
-        //}
 
         function search() {
             trashBinService.searchData(vm.searchText, function (data) {

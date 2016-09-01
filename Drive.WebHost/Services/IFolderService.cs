@@ -23,7 +23,7 @@ namespace Drive.WebHost.Services
         Task<FolderUnitDto> UpdateAsync(int id, FolderUnitDto folder);
 
         Task<FolderUnitDto> UpdateDeletedAsync(int id, int? oldParentId, FolderUnitDto dto);
-        Task<FolderUnitDto> CreateCopyAsync(int id, FolderUnitDto dto);
+        Task CreateCopyAsync(int id, FolderUnitDto dto);
 
         Task DeleteAsync(int id);
 

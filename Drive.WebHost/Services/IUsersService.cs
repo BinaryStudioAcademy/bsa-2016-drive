@@ -12,6 +12,7 @@ namespace Drive.WebHost.Services
         //Task UpdateAsync(int id, UserDto dto);
         //Task DeleteAsync(int id);
         Task<UserDto> GetCurrentUser();
+        Task<IEnumerable<UsersDto>> GetAllWithoutCurrentAsync();
         void Dispose();
         string CurrentUserId { get; }
     }

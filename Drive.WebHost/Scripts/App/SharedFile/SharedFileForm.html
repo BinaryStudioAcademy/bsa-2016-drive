@@ -26,10 +26,10 @@
                         <tr ng-repeat="item in sharedFileModalCtrl.usersWithPermissions| filter:{isDeleted:false} ">
                             <td style="width:35%">{{item.name}}</td>
                             <td style="width:20%; text-align:center;">
-                                <input type="checkbox" ng-model="item.canRead ">
+                                <input type="checkbox" ng-model="item.canRead" ng-click="sharedFileModalCtrl.permissionCanReadChanged(item.globalId)">
                             </td>
                             <td style="width:20%; text-align:center;">
-                                <input type="checkbox" ng-model="item.canModify">
+                                <input type="checkbox" ng-model="item.canModify" ng-click="sharedFileModalCtrl.permissionCanModifyChanged(item.globalId)">
                             </td>
                             <td style="width:25%; text-align:center;">
                                 <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="sharedFileModalCtrl.removeUsersWithPermissions(item)"></i>

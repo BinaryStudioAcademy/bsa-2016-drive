@@ -103,14 +103,14 @@ namespace Drive.WebHost.Api
         [Route("copied/{id:int}")]
         public async Task<IHttpActionResult> CreateCopyAsync(int id, FolderUnitDto folder)
         {
-            var dto = await _service?.CreateCopyAsync(id, folder);
+            await _service?.CreateCopyAsync(id, folder);
 
-            if (id != folder?.Id)
-            {
-                return BadRequest();
-            }
+            //if (id != folder?.Id)
+            //{
+            //    return BadRequest();
+            //}
 
-            return Ok(dto);
+            return Ok();
         }
 
         // DELETE api/folders/1

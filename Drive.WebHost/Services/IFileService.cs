@@ -20,7 +20,7 @@ namespace Drive.WebHost.Services
         Task<FileUnitDto> UpdateAsync(int id, FileUnitDto dto);
 
         Task<FileUnitDto> UpdateDeletedAsync(int id, int? oldParentId, FileUnitDto dto);
-        Task<FileUnitDto> CreateCopyAsync(int id, FileUnitDto dto);
+        Task CreateCopyAsync(int id, FileUnitDto dto);
         Task DeleteAsync(int id);
 
         Task<ICollection<AppDto>> FilterApp(FileType fileType);

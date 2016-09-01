@@ -64,6 +64,8 @@
             vm.paginate.currentPage = pageNumber;
             vm.paginate.getContent();
         }
+        vm.folderMenuOptionShareShow = true;
+        vm.fileMenuOptionShareShow = true;
 
 
         activate();
@@ -85,6 +87,7 @@
                 spaceService.getSpace($routeParams.id, vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate,
                 function (data) {
                         pagination(data);
+                        vm.showSettingsBtn = true;
                     });
             }
             if ($routeParams.spaceType) {
@@ -93,13 +96,14 @@
                         vm.selectedSpace = data.id;
                         pagination(data);
                         // Hide settings space button for Binary and My space
-                        if (vm.selectedSpace.type === 0 || vm.selectedSpace.type === 1) {
+                        if (data.type === 0 || data.type === 1) {
                             vm.showSettingsBtn = false;
                         }
-                        else {
-                            vm.showSettingsBtn = true;
-                        }
                     });
+                if ($routeParams.spaceType == 'binaryspace') {
+                    vm.folderMenuOptionShareShow = false;
+                    vm.fileMenuOptionShareShow = false;
+                }
             }
         }
 
@@ -194,7 +198,7 @@
             [
                 'Share', function ($itemScope) {
                     console.log($itemScope.folder.id);
-                }
+                }, function ($itemScope) { return vm.folderMenuOptionShareShow }
             ],
             null,
             ['New', function () {
@@ -308,7 +312,7 @@
                     vm.fileSharedId = $itemScope.file.id;
                     console.log(vm.fileSharedId);
                     vm.sharedFile();
-                }
+                }, function ($itemScope) { return vm.fileMenuOptionShareShow }
             ],
             null,
             ['New', function () {
