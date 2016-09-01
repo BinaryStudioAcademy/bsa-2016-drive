@@ -114,7 +114,7 @@
             </div>
         </div>
         <div class="filter-table-internal">
-            <div ng-repeat="space in trashBinCtrl.spaces" context-menu="trashBinCtrl.spaceMenuOptions">
+            <div ng-repeat="space in trashBinCtrl.spaces" context-menu="trashBinCtrl.spaceMenuOptions" ng-if="space.folders.length > 0 || space.files.length > 0 ">
                 <div class="space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ space.name }}</div>
                 <div uib-collapse="space.isCollapsed">
                     <div style="transition: all 2s">

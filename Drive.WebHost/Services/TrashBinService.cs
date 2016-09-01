@@ -26,7 +26,10 @@ namespace Drive.WebHost.Services
         {
             string userId = _userService.CurrentUserId;
 
-            var spacesList = await _unitOfWork.Spaces.Query.Where(s => s.Owner.GlobalId == userId).Select(s => new TrashBinDto
+            var spacesList = await _unitOfWork.Spaces.Query
+                                    .Where(s => s.Owner.GlobalId == userId)
+                                    .Where(s => s.ContentList.Where(d => d.IsDeleted).Count() > 0)
+                                    .Select(s => new TrashBinDto
             {
                 SpaceId = s.Id,
                 Name = s.Name,
