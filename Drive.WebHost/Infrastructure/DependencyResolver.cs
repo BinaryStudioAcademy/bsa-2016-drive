@@ -40,6 +40,7 @@ namespace Drive.WebHost.Infrastructure
 
             //Kernel.BindFilter<JWTAuthenticationFilter>(FilterScope.Global, 0);
             Kernel.Bind<ISharedSpaceService>().To<SharedSpaceService>();
+            Kernel.Bind<ITrashBinService>().To<TrashBinService>();
         }
     }
 }

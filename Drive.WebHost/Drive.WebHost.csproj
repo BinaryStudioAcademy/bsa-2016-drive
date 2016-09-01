@@ -179,6 +179,7 @@
     <Compile Include="Api\Pro\TagsController.cs" />
     <Compile Include="Api\SharedSpaceController.cs" />
     <Compile Include="Api\SpacesController.cs" />
+    <Compile Include="Api\TrashBinController.cs" />
     <Compile Include="Api\UsersController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
