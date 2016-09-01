@@ -241,8 +241,13 @@ namespace Drive.WebHost.Services
 
         public async Task<ICollection<AppDto>> FilterApp(FileType fileType)
         {
+            string userId = _usersService.CurrentUserId;
             var result = await _unitOfWork.Files.Query
                .Where(f => f.FileType == fileType)
+               .Where(f => f.Space.Type == SpaceType.BinarySpace
+               || f.Space.Owner.GlobalId == userId
+               || f.Space.ReadPermittedUsers.Any(x => x.GlobalId == userId)
+               || f.Space.ReadPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId)))
                  .GroupBy(f => f.Space).Select(f => new AppDto()
                  {
                      SpaceId = f.Key.Id,
@@ -256,7 +261,7 @@ namespace Drive.WebHost.Services
                          Link = d.Link,
                          CreatedAt = d.CreatedAt,
                          Author = new AuthorDto() { Id = d.Owner.Id, GlobalId = d.Owner.GlobalId },
-                         Description = d.Description
+                         Description = d.Description,
                      }),
                  }).ToListAsync();
 
