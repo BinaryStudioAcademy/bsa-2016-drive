@@ -338,6 +338,7 @@
     <Content Include="Scripts\App\Space\spaceService.js" />
     <Content Include="Scripts\App\TrashBin\TrashBin.html" />
     <Content Include="Scripts\App\TrashBin\trashBinController.js" />
+    <Content Include="Scripts\App\TrashBin\trashBinService.js" />
     <Content Include="Scripts\Bundles\libs.js" />
     <Content Include="Scripts\Bundles\main.js" />
     <Content Include="Web.config">

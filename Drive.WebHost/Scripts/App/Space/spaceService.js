@@ -17,8 +17,7 @@
             searchFoldersAndFiles: searchFoldersAndFiles,
             getNumberOfResultSearchFoldersAndFiles: getNumberOfResultSearchFoldersAndFiles,
             getSpaceTotal: getSpaceTotal,
-            getAllRoles: getAllRoles,
-            getTrashBinContent: getTrashBinContent
+            getAllRoles: getAllRoles
         };
         function getAllRoles(callback) {
             $http.get(baseUrl + '/api/roles')
@@ -161,15 +160,6 @@
                     callback(response.data)
                 }
             });
-        }
-
-        function getTrashBinContent(callBack) {
-            $http.get(baseUrl + '/api/spaces/trashbin')
-                .then(function (response) {
-                    if (callBack) {
-                        callBack(response.data);
-                    }
-                });
         }
 
         return service;
