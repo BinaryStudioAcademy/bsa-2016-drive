@@ -1733,3 +1733,178 @@ Error Number: 3702, State: 4, Class: 16 SpaceService
    в System.Threading.Tasks.Task.InnerInvokeWithArg(Task childTask)
    в System.Threading.Tasks.Task.<>c__DisplayClass176_0.<ExecuteSelfReplicating>b__0(Object )<---
  GlobalExceptionLogger
+17:04:36.0244 Error [5] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 617 SpaceService
+17:06:17.1009 Error [15] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 617 SpaceService
+17:06:29.8416 Error [5] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 617 SpaceService
+17:06:44.2354 Error [12] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 617 SpaceService
+17:07:21.4751 Error [17] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 617 SpaceService
+17:07:45.8860 Error [5] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 617 SpaceService
+17:08:08.9574 Error [12] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 617 SpaceService
+17:08:38.4128 Error [12] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 617 SpaceService
+17:08:53.4283 Error [17] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 617 SpaceService
+17:09:16.5356 Error [13] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 617 SpaceService
+17:09:24.0819 Error [12] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 617 SpaceService
+17:09:31.7511 Error [15] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 617 SpaceService
+17:09:44.1188 Error [5] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 617 SpaceService
+17:09:57.2047 Error [12] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 617 SpaceService
+17:10:09.5668 Error [13] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 617 SpaceService
+17:10:35.3821 Error [21] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 617 SpaceService
+17:10:48.6072 Error [5] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 617 SpaceService
+17:11:03.4424 Error [21] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 617 SpaceService
+17:11:32.2481 Error [13] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 617 SpaceService
+17:12:08.9028 Error [5] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 617 SpaceService
+17:14:49.1318 Error [6] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 623 SpaceService
+08:46:24.0954 Error [6] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 623 SpaceService
+08:47:30.5133 Error [7] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 623 SpaceService
+08:48:04.7694 Error [11] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 623 SpaceService
+08:48:17.3459 Error [14] Sequence contains more than one element System.InvalidOperationException: Sequence contains more than one element
+   в System.Data.Entity.Infrastructure.IDbAsyncEnumerableExtensions.<SingleOrDefaultAsync>d__38`1.MoveNext()
+--- Конец трассировка стека из предыдущего расположения, где возникло исключение ---
+   в System.Runtime.CompilerServices.TaskAwaiter.ThrowForNonSuccess(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter.HandleNonSuccessAndDebuggerNotification(Task task)
+   в System.Runtime.CompilerServices.TaskAwaiter`1.GetResult()
+   в Drive.WebHost.Services.SpaceService.<CreateUserAndFirstSpaceAsync>d__17.MoveNext() в C:\Visual Studio Projects\bsa-2016-drive\Drive.WebHost\Services\SpaceService.cs:строка 623 SpaceService
