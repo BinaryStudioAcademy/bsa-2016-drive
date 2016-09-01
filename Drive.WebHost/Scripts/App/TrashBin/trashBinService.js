@@ -11,7 +11,8 @@
         var service = {
             getTrashBinContent: getTrashBinContent,
             deleteFilePermanently: deleteFilePermanently,
-            restoreFile: restoreFile
+            restoreFile: restoreFile,
+            orderByColumn: orderByColumn
         };
 
         function getTrashBinContent(callBack) {
@@ -39,6 +40,12 @@
                     callBack(response.data);
                 }
             });
+        }
+
+        function orderByColumn(columnClicked, columnCurrent) {
+            var pos = columnCurrent.indexOf(columnClicked);
+            if (pos == 0) { return '-' + columnClicked; }
+            return columnClicked;
         }
 
         return service;

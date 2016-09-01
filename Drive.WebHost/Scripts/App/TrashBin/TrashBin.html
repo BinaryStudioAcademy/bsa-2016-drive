@@ -1,7 +1,7 @@
 ﻿<div class="container col-md-12">
     <br />
     <div class="btn-group btn-breadcrumb">
-        <a class="btn btn-info"><i class="fa fa-trash"></i> Trash bin</a>
+        <a class="btn btn-info"><i class="fa fa-trash fa-lg"></i> Trash bin</a>
     </div>
     <div class="row" style="margin: 1em 0 1em 0;">
         <div class="col-lg-push-4-offset pull-right">
@@ -15,7 +15,10 @@
                     <div class="input-group">
                         <form id="form-container">
                             <div id="searchtext">
-                                <input type="search" size="40" class="search-input" value="" name="s" id="s" placeholder="Search..." ng-model="trashBinCtrl.searchText">
+                                <input type="text" size="40" class="search-input" value="" name="s" id="s" placeholder="Search..." ng-model="trashBinCtrl.searchText">
+                                <a id="clear_input" ng-show="trashBinCtrl.searchText.length > 0" ng-click="trashBinCtrl.cancelSearch()">
+                                    <i class="fa fa-times"></i>
+                                </a>
                                 <button class="search-submit-button" type="submit" ng-click="trashBinCtrl.search()"> <i class="fa fa-search"></i> </button>
                             </div>
                         </form>
@@ -25,7 +28,7 @@
         </div>
     </div>
     <div class="wrap" ng-show="trashBinCtrl.showGrid">
-        <div ng-repeat="space in trashBinCtrl.spaces">
+        <div ng-repeat="space in trashBinCtrl.spaces" context-menu="trashBinCtrl.spaceMenuOptions">
             <div class="grid-space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ space.name }}</div>
             <div uib-collapse="space.isCollapsed">
                 <ul class="sp-gv-flex-container">
@@ -96,16 +99,20 @@
                     <span ng-show="trashBinCtrl.columnForOrder == 'createdAt'"><i class="fa fa-sort-asc"></i></span>
                     <span ng-show="trashBinCtrl.columnForOrder == '-createdAt'"><i class="fa fa-sort-desc"></i></span>
                 </div>
-                <div class="col-md-2">Type</div>
+                <div class="col-md-2" ng-click="trashBinCtrl.orderByColumn('fileType')">
+                    Type
+                    <span ng-show="trashBinCtrl.columnForOrder == 'fileType'"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="trashBinCtrl.columnForOrder == '-fileType'"><i class="fa fa-sort-desc"></i></span>
+                </div>
             </div>
         </div>
         <div class="filter-table-internal">
-            <div ng-repeat="space in trashBinCtrl.spaces">
+            <div ng-repeat="space in trashBinCtrl.spaces" context-menu="trashBinCtrl.spaceMenuOptions">
                 <div class="space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ space.name }}</div>
                 <div uib-collapse="space.isCollapsed">
                     <div style="transition: all 2s">
                         <div class="filter-table-row">
-                            <div class="row filter-table-row" role="button" ng-repeat="folder in space.folders | orderBy: trashBinCtrl.columnForOrder" context-menu="trashBinCtrl.fileMenuOptions">
+                            <div class="row filter-table-row" role="button" ng-repeat="folder in space.folders | orderBy: trashBinCtrl.columnForOrder" context-menu="trashBinCtrl.folderMenuOptions">
                                 <div class="col-md-3 filter-table-cell description" title="{{ folder.name }}">
                                     <img src="./Content/Icons/folder.svg" height="{{trashBinCtrl.iconHeight}}" />
                                     {{folder.name | limitTo: 20}}{{folder.name.length > 20 ? '...' : ''}}
