@@ -16,6 +16,12 @@ namespace Drive.WebHost.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUsersService _userService;
 
+        public TrashBinService(IUnitOfWork unitOfWork, IUsersService userService)
+        {
+            _unitOfWork = unitOfWork;
+            _userService = userService;
+        }
+
         public async Task<IEnumerable<TrashBinDto>> GetTrashBinContentAsync()
         {
             string userId = _userService.CurrentUserId;

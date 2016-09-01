@@ -13,7 +13,7 @@
         };
 
         function getTrashBinContent(callBack) {
-            $http.get(baseUrl + '/api/spaces/trashbin')
+            $http.get(baseUrl + '/api/trashbin')
                 .then(function (response) {
                     if (callBack) {
                         callBack(response.data);

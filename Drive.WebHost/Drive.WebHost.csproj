@@ -208,6 +208,7 @@
     <Compile Include="Services\ISharedSpaceService.cs" />
     <Compile Include="Services\ISpaceService.cs" />
     <Compile Include="Providers\IUsersProvider.cs" />
+    <Compile Include="Services\ITrashBinService.cs" />
     <Compile Include="Services\IUsersService.cs" />
     <Compile Include="Services\LogsService.cs" />
     <Compile Include="Services\RolesService.cs" />
@@ -225,6 +226,7 @@
     <Compile Include="Services\SharedSpaceService.cs" />
     <Compile Include="Services\SpaceService.cs" />
     <Compile Include="Providers\UsersProvider.cs" />
+    <Compile Include="Services\TrashBinService.cs" />
     <Compile Include="Services\UsersService.cs" />
   </ItemGroup>
   <ItemGroup>
