@@ -85,6 +85,7 @@
                 spaceService.getSpace($routeParams.id, vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate,
                     function (data) {
                         pagination(data);
+                        vm.showSettingsBtn = true;
                     });
             }
             if ($routeParams.spaceType) {
@@ -93,11 +94,8 @@
                         vm.selectedSpace = data.id;
                         pagination(data);
                         // Hide settings space button for Binary and My space
-                        if (vm.selectedSpace.type === 0 || vm.selectedSpace.type === 1) {
+                        if (data.type === 0 || data.type === 1) {
                             vm.showSettingsBtn = false;
-                        }
-                        else {
-                            vm.showSettingsBtn = true;
                         }
                     });
             }
