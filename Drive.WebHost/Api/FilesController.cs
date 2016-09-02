@@ -165,7 +165,7 @@ namespace Drive.WebHost.Api
 
         // POST: api/files/spaceId=(int)&folderId=(int?)
         [HttpPost]
-        [Route("upload")]
+        [Route("~/api/files/upload")]
         public async Task<IHttpActionResult> UploadFile(int spaceId, int? parentId )
         {
             int parent = parentId ?? 0;
