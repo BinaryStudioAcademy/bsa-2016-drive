@@ -518,13 +518,7 @@ hr.style {
     overflow: hidden;
     height: 75%;
 }
-    /*
-    .fixed_headers thead {
-        display: block;
-        width: 100%;
-        height:8vh;
-    }
-*/
+
     .fixed_headers tbody {
         display: block;
         overflow: auto;
@@ -533,26 +527,16 @@ hr.style {
         background-color: white;
     }
 
-        /*.fixed_headers tbody:hover {
-            overflow: auto;
-        }*/
-
-        .fixed_headers tbody tr:hover {
-            background: #eaebec;
-        }
-
     .fixed_headers th, td {
         display: inline-block;
         text-align: left;
         padding-left: 1em;
         padding-top: 1em;
-        /*min-height: 50px;*/
         height: 3em;
     }
 
     .fixed_headers th {
         background: #eaebec;
-        /*line-height: 50px;*/
     }
 
     .fixed_headers td {
@@ -564,6 +548,13 @@ hr.style {
     .fixed_headers tr {
         width: 100%;
         line-height: 1em;
+    }
+
+    .fixed_headers tbody tr {
+        display:block;
+        margin-bottom:0.25em;
+        margin-top:0.25em;
+        padding-left:0.5em;
     }
 
     .fixed_headers tbody tr:hover {
@@ -624,8 +615,8 @@ hr.style {
 
 .filter-table-row {
     background: white;
-    padding-left: 1em;
-    min-height: 50px;
+    line-height: 3em;
+    padding-left:0.5em;
 }
 
     .filter-table-row:hover {

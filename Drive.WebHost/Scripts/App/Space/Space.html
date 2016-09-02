@@ -100,27 +100,27 @@
         <table class="fixed_headers">
             <thead context-menu="spaceCtrl.folderMenuOptions">
                 <tr style="cursor: pointer">
-                    <th class="name" style="width: 20%" ng-click="spaceCtrl.orderByColumn('name')">
+                    <th style="display:inline-block; width:20%" ng-click="spaceCtrl.orderByColumn('name')">
                         Name
                         <span ng-show="spaceCtrl.columnForOrder == 'name'"><i class="fa fa-sort-asc"></i></span>
                         <span ng-show="spaceCtrl.columnForOrder == '-name'"><i class="fa fa-sort-desc"></i></span>
                     </th>
-                    <th style="width: 35%" ng-click="spaceCtrl.orderByColumn('description')">
+                    <th style="display:inline-block; width:33%" ng-click="spaceCtrl.orderByColumn('description')">
                         Description
                         <span ng-show="spaceCtrl.columnForOrder == 'description'"><i class="fa fa-sort-asc"></i></span>
                         <span ng-show="spaceCtrl.columnForOrder == '-description'"><i class="fa fa-sort-desc"></i></span>
                     </th>
-                    <th style="width: 20%" ng-click="spaceCtrl.orderByColumn('author.name')">
+                    <th style="display:inline-block; width:20%" ng-click="spaceCtrl.orderByColumn('author.name')">
                         Author
                         <span ng-show="spaceCtrl.columnForOrder == 'author.name'"><i class="fa fa-sort-asc"></i></span>
                         <span ng-show="spaceCtrl.columnForOrder == '-author.name'"><i class="fa fa-sort-desc"></i></span>
                     </th>
-                    <th style="width: 15%" ng-click="spaceCtrl.orderByColumn('createdAt')">
+                    <th style="display:inline-block; width:15%" ng-click="spaceCtrl.orderByColumn('createdAt')">
                         Created
                         <span ng-show="spaceCtrl.columnForOrder == 'createdAt'"><i class="fa fa-sort-asc"></i></span>
                         <span ng-show="spaceCtrl.columnForOrder == '-createdAt'"><i class="fa fa-sort-desc"></i></span>
                     </th>
-                    <th class="type" style="width: 10%" ng-click="spaceCtrl.orderByColumn('fileType')">
+                    <th style="display:inline-block; width:10%" ng-click="spaceCtrl.orderByColumn('fileType')">
                         Type
                         <span ng-show="spaceCtrl.columnForOrder == 'fileType'"><i class="fa fa-sort-asc"></i></span>
                         <span ng-show="spaceCtrl.columnForOrder == '-fileType'"><i class="fa fa-sort-desc"></i></span>
@@ -129,29 +129,29 @@
             </thead>
             <tbody context-menu="spaceCtrl.folderMenuOptions">
                 <tr class="shadow" role="button" ng-repeat="folder in spaceCtrl.space.folders | orderBy: spaceCtrl.columnForOrder" context-menu="spaceCtrl.folderMenuOptions" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
-                    <td style="width: 20%" class="col-sm-3">
+                    <td style="display:inline-block; width:20%">
                         <img src="./Content/Icons/folder.svg" height="{{spaceCtrl.iconHeight}}" />
                         &nbsp;{{ folder.name }}
                     </td>
-                    <td style="width: 35%" class="col-sm-4 description"
+                    <td style="display:inline-block; width:33%"
                         title="{{folder.description}}">
                         {{folder.description | limitTo: 41}}{{folder.description.length > 41 ? '...' : ''}}
                     </td>
-                    <td style="width: 20%" class="col-sm-2">{{ folder.author.name }}</td>
-                    <td style="width: 15%" class="col-sm-2">{{ folder.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
-                    <td style="width: 10%" class="col-sm-1">Folder</td>
+                    <td style="display:inline-block; width:20%">{{ folder.author.name }}</td>
+                    <td style="display:inline-block; width:15%">{{ folder.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
+                    <td style="display:inline-block; width:10%">Folder</td>
                 </tr>
                 <tr class="shadow" role="button" ng-repeat="file in spaceCtrl.space.files | orderBy: spaceCtrl.columnForOrder" context-menu="spaceCtrl.fileMenuOptions" ng-dblclick="spaceCtrl.openDocument(file.link)">
-                    <td style="width: 20%" class="col-sm-3">
+                    <td style="display:inline-block; width:20%">
                         <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" height="{{spaceCtrl.iconHeight}}" />
                         &nbsp;{{ file.name }}
                     </td>
-                    <td style="width: 35%" class="col-sm-4 description" title="{{file.description}}">
+                    <td style="display:inline-block; width:33%" title="{{file.description}}">
                         {{file.description | limitTo: 41}}{{file.description.length > 41 ? '...' : ''}}
                     </td>
-                    <td style="width: 20%" class="col-sm-2">{{ file.author.name }}</td>
-                    <td style="width: 15%" class="col-sm-2">{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
-                    <td style="width: 10%" class="col-sm-1">{{ file.fileType | typeOfFile }}</td>
+                    <td style="display:inline-block; width:20%">{{ file.author.name }}</td>
+                    <td style="display:inline-block; width:15%">{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
+                    <td style="display:inline-block; width:10%">{{ file.fileType | typeOfFile }}</td>
                 </tr>
             </tbody>
         </table>
