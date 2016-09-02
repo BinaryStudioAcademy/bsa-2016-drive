@@ -118,7 +118,7 @@
             var fd = new FormData();
             fd.append('file', file);
 
-            $http.post('/api/files/upload?spaceId=' + spaceId + '&parentId=' + parentId, fd, {
+            $http.post(baseUrl + '/api/files/upload?spaceId=' + spaceId + '&parentId=' + parentId, fd, {
                 withCredentials: false,
                 headers: {
                     'Content-Type': undefined
