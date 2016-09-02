@@ -13,9 +13,9 @@
         vm.chooseIcon = chooseIcon;
         vm.orderByColumn = orderByColumn;
 
+        vm.getTrashBinContent = getTrashBinContent;
         vm.search = search;
         vm.cancelSearch = cancelSearch;
-        vm.getTrashBinContent = getTrashBinContent;
         vm.deleteFilePermanently = deleteFilePermanently;
         vm.deleteFolderPermanently = deleteFolderPermanently;
         vm.restoreFile = restoreFile;
@@ -41,31 +41,42 @@
         function getTrashBinContent() {
             trashBinService.getTrashBinContent(function (data) {
                 vm.spaces = data;
+            });
+        }
+
+        function search() {
+            trashBinService.searchTrashBin(vm.searchText, function (data) {
+                vm.spaces = data;
                 console.log(data);
             });
         }
 
+        function cancelSearch() {
+            if (vm.searchText.length >= 1) {
+                vm.searchText = '';
+                getTrashBinContent();
+            }
+        }
+
         function restoreFile(id, spaceId) {
-            trashBinService.restoreFile(id, function (data) {
+            trashBinService.restoreFile(id, function () {
                 deleteFileFromScope(id, spaceId);
                 toastr.success(
                       'File was successfully restored!', 'Trash bin',
                       {
                           closeButton: true, timeOut: 5000
                       });
-                console.log('==> file restored');
             });
         }
 
         function restoreFolder(id, spaceId) {
-            trashBinService.restoreFolder(id, function (data) {
+            trashBinService.restoreFolder(id, function () {
                 deleteFolderFromScope(id, spaceId);
                 toastr.success(
                       'Folder was successfully restored!', 'Trash bin',
                       {
                           closeButton: true, timeOut: 5000
                       });
-                console.log('==> folder restored');
             });
         }
 
@@ -79,9 +90,8 @@
                 confirmButtonText: "Yes, delete it!",
                 closeOnConfirm: false
             }, function () {
-                trashBinService.deleteFilePermanently(id, function (data) {
+                trashBinService.deleteFilePermanently(id, function () {
                     deleteFileFromScope(id, spaceId);
-                    console.log('==> file DELETED');
                 });
                 swal({
                     title: "Deleted!",
@@ -103,9 +113,8 @@
                 confirmButtonText: "Yes, delete it!",
                 closeOnConfirm: false
             }, function () {
-                trashBinService.deleteFolderPermanently(id, function (data) {
+                trashBinService.deleteFolderPermanently(id, function () {
                     deleteFolderFromScope(id, spaceId);
-                    console.log('==> folder DELETED');
                 });
                 swal({
                     title: "Deleted!",
@@ -118,25 +127,13 @@
         }
 
         vm.fileMenuOptions = [
-            ['Restore', function ($itemScope) {
-                    vm.restoreFile($itemScope.file.id, $itemScope.file.spaceId);
-                }
-            ],
-            ['Delete permanently', function ($itemScope) {
-                    vm.deleteFilePermanently($itemScope.file.id, $itemScope.file.spaceId);
-                }
-            ]
+            ['Restore', function ($itemScope) {vm.restoreFile($itemScope.file.id, $itemScope.file.spaceId);}],
+            ['Delete permanently', function ($itemScope) { vm.deleteFilePermanently($itemScope.file.id, $itemScope.file.spaceId);}]
         ];
 
         vm.folderMenuOptions = [
-           ['Restore', function ($itemScope) {
-               vm.restoreFolder($itemScope.folder.id, $itemScope.folder.spaceId);
-           }
-           ],
-           ['Delete permanently', function ($itemScope) {
-               vm.deleteFolderPermanently($itemScope.folder.id, $itemScope.folder.spaceId);
-           }
-           ]
+           ['Restore', function ($itemScope) {vm.restoreFolder($itemScope.folder.id, $itemScope.folder.spaceId);}],
+           ['Delete permanently', function ($itemScope) {vm.deleteFolderPermanently($itemScope.folder.id, $itemScope.folder.spaceId);} ]
         ];
 
         vm.spaceMenuOptions = [
@@ -150,20 +147,6 @@
                }
            ]
         ];
-
-        function search() {
-            trashBinService.searchData(vm.searchText, function (data) {
-                vm.spaces = data;
-            });
-            vm.searchText = '';
-        }
-
-        function cancelSearch() {
-            if (vm.searchText.length >= 1) {
-            vm.searchText = '';
-                getTrashBinContent();
-        }
-        }
 
         function changeView(view) {
             if (view === "fa fa-th") {
@@ -200,8 +183,11 @@
                     for (var j = 0; j < f.length; j++) {
                         if (f[j].id === itemId){
                             vm.spaces[i].files.splice(j, 1);
+                            break;
                         }
                     }
+                    deleteSpaceFromScope(i);
+                    break;
                 }
             }
         }
@@ -214,9 +200,20 @@
                     for (var j = 0; j < f.length; j++) {
                         if (f[j].id === itemId) {
                             vm.spaces[i].folders.splice(j, 1);
+                            break;
                         }
                     }
+                    deleteSpaceFromScope(i);
+                    break;
                 }
+            }
+        }
+
+        function deleteSpaceFromScope(index)
+        {
+            var s = vm.spaces;
+            if (!(s[index].folders.length) && !(s[index].files.length)) {
+                vm.spaces.splice(index, 1);
             }
         }
     }

@@ -1,9 +1,4 @@
 ﻿using Drive.WebHost.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -18,19 +13,34 @@ namespace Drive.WebHost.Api
             _trashBinService = trashBinService;
         }
 
+        //// GET: api/TrashBin
+        //[HttpGet]
+        //public async Task<IHttpActionResult> Get()
+        //{
+        //    var result = await _trashBinService.GetTrashBinContentAsync();
+
+        //    if (result == null)
+        //    {
+        //        return NotFound();
+        //    }
+
+        //    return Ok(result);
+        //}
 
         // GET: api/TrashBin
         [HttpGet]
-        public async Task<IHttpActionResult> Get()
+        public async Task<IHttpActionResult> SearchTrashBin(string text = "")
         {
-            var result = await _trashBinService.GetTrashBinContentAsync();
-
-            if (result == null)
+            if (string.IsNullOrEmpty(text))
             {
-                return NotFound();
+                var result = await _trashBinService.GetTrashBinContentAsync();
+                return Ok(result);
             }
-
-            return Ok(result);
+            else
+            {
+                var result = await _trashBinService.SearchTrashBinAsync(text);
+                return Ok(result);
+            }
         }
 
         // DELETE: api/TrashBin/File/{id}
