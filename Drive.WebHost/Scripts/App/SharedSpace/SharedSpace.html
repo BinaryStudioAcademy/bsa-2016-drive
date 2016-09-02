@@ -111,9 +111,9 @@
             </thead>
             <tbody context-menu="sharedSpaceCtrl.folderMenuOptions">
                 <tr class="shadow" role="button" ng-repeat="folder in sharedSpaceCtrl.space.folders | orderBy: sharedSpaceCtrl.columnForOrder" context-menu="sharedSpaceCtrl.folderMenuOptions" ng-dblclick="sharedSpaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
-                    <td style="width: 20%" class="col-sm-3">
+                    <td style="width: 20%" class="col-sm-3" title="{{folder.name}}">
                         <img src="./Content/Icons/folder.svg" height="{{sharedSpaceCtrl.iconHeight}}" />
-                        &nbsp;{{ folder.name }}
+                        &nbsp;{{ folder.name | limitTo: 13}}{{ folder.name.length > 13 ? '...' : ''}}
                     </td>
                     <td style="width: 35%" class="col-sm-4 description"
                         title="{{folder.description}}">
@@ -124,9 +124,9 @@
                     <td style="width: 10%" class="col-sm-1">Folder</td>
                 </tr>
                 <tr class="shadow" role="button" ng-repeat="file in sharedSpaceCtrl.space.files | orderBy: sharedSpaceCtrl.columnForOrder" context-menu="sharedSpaceCtrl.fileMenuOptions" ng-dblclick="sharedSpaceCtrl.openDocument(file.link)">
-                    <td style="width: 20%" class="col-sm-3">
+                    <td style="width: 20%" class="col-sm-3" title="{{file.name}}">
                         <img ng-src="{{sharedSpaceCtrl.chooseIcon(file.fileType)}}" height="{{sharedSpaceCtrl.iconHeight}}" />
-                        &nbsp;{{ file.name }}
+                        &nbsp;{{ file.name | limitTo: 13}}{{ file.name.length > 13 ? '...' : ''}}
                     </td>
                     <td style="width: 35%" class="col-sm-4 description" title="{{file.description}}">
                         {{file.description | limitTo: 41}}{{file.description.length > 41 ? '...' : ''}}
@@ -138,11 +138,7 @@
             </tbody>
         </table>
     </div>
-
     <!--EndTableView-->
-
-
-
 
     <div class="page-footer-center">
         <dir-pagination-controls class="page-footer" on-page-change="sharedSpaceCtrl.paginate.getContent(newPageNumber)"></dir-pagination-controls>

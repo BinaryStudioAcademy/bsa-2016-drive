@@ -11,12 +11,14 @@
         var service = {
             getTrashBinContent: getTrashBinContent,
             deleteFilePermanently: deleteFilePermanently,
+            deleteFolderPermanently: deleteFolderPermanently,
             restoreFile: restoreFile,
+            restoreFolder: restoreFolder,
             orderByColumn: orderByColumn
         };
 
         function getTrashBinContent(callBack) {
-            $http.get(baseUrl + '/api/trashbin')
+            $http.get(baseUrl + '/api/trashbin/')
                 .then(function (response) {
                     if (callBack) {
                         callBack(response.data);
@@ -25,7 +27,16 @@
         }
 
         function deleteFilePermanently(id, callBack) {
-            $http.delete(baseUrl + '/api/trashbin/' + id)
+            $http.delete(baseUrl + '/api/trashbin/file/' + id)
+            .then(function (response) {
+                if (callBack) {
+                    callBack(response.data);
+                }
+            });
+        }
+
+        function deleteFolderPermanently(id, callBack) {
+            $http.delete(baseUrl + '/api/trashbin/folder/' + id)
             .then(function (response) {
                 if (callBack) {
                     callBack(response.data);
@@ -34,7 +45,16 @@
         }
 
         function restoreFile(id, callBack) {
-            $http.put(baseUrl + '/api/trashbin/' + id)
+            $http.put(baseUrl + '/api/trashbin/file/' + id)
+            .then(function (response) {
+                if (callBack) {
+                    callBack(response.data);
+                }
+            });
+        }
+
+        function restoreFolder(id, callBack) {
+            $http.put(baseUrl + '/api/trashbin/folder/' + id)
             .then(function (response) {
                 if (callBack) {
                     callBack(response.data);
