@@ -10,6 +10,7 @@
     function TrashBinService($http, baseUrl) {
         var service = {
             getTrashBinContent: getTrashBinContent,
+            searchTrashBin: searchTrashBin,
             deleteFilePermanently: deleteFilePermanently,
             deleteFolderPermanently: deleteFolderPermanently,
             restoreFile: restoreFile,
@@ -19,6 +20,19 @@
 
         function getTrashBinContent(callBack) {
             $http.get(baseUrl + '/api/trashbin/')
+                .then(function (response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                });
+        }
+
+        function searchTrashBin(text, callBack) {
+            $http.get(baseUrl + '/api/trashbin/', {
+                params: {
+                    text: text
+                }
+            })
                 .then(function (response) {
                     if (callBack) {
                         callBack(response.data);
