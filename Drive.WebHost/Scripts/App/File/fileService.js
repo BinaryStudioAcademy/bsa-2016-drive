@@ -24,7 +24,8 @@
             orderByColumn: orderByColumn,
             searchFiles: searchFiles,
             openFile: openFile,
-            chooseIcon: chooseIcon
+            chooseIcon: chooseIcon,
+            uploadFile: uploadFile
         };
 
         function getAllFiles(callBack) {
@@ -110,6 +111,32 @@
                     function() {
                         console.log('Error while getting file!');
                     });
+        }
+
+        function uploadFile(spaceId, parentId, file, callBack) {
+
+            var fd = new FormData();
+            fd.append('file', file);
+
+            $http.post('api/files/' + spaceId, fd, {
+                params:
+                    {
+                        parentId: parentId
+                    },
+                withCredentials: false,
+                headers: {
+                    'Content-Type': undefined
+                },
+                transformRequest: angular.identity
+            })
+            .then(function (response) {
+                if (callBack) {
+                    callBack(response.data);
+                }
+            },
+            function () {
+                console.log('Error while uploading file!');
+            });
         }
 
         function updateFile(id, file, callBack) {

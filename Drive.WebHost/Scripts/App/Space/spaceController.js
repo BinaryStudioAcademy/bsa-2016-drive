@@ -33,6 +33,7 @@
         vm.getFile = getFile;
         vm.deleteFile = deleteFile;
         vm.openFileWindow = openFileWindow;
+        vm.openFileUploadWindow = openFileUploadWindow;
         vm.openDocument = openDocument;
         vm.openSharedFileWindow = openSharedFileWindow;
         vm.sharedFile = sharedFile;
@@ -43,6 +44,7 @@
 
         vm.createNewFolder = createNewFolder;
         vm.createNewFile = createNewFile;
+        vm.uploadFile = uploadFile;
 
         vm.search = search;
         vm.cancelSearch = cancelSearch;
@@ -207,7 +209,10 @@
             ['New folder', function () { vm.createNewFolder(); }],
             ['New link', function () { vm.createNewFile(); }],
             null,
-            ['Upload file', function () { }]
+            ['Upload file', function ($itemScope) {
+                vm.file = { fileType: 6, parentId: vm.parentId, spaceId: vm.spaceId };
+                vm.openFileUploadWindow('lg');
+            }]
             ]
             ],
             null,
@@ -321,7 +326,10 @@
             ['New folder', function () { vm.createNewFolder(); }],
             ['New link', function () { vm.createNewFile(); }],
             null,
-            ['Upload file', function () { }]
+            ['Upload file', function ($itemScope) {
+                vm.file = { fileType: 6, parentId: vm.parentId, spaceId: vm.spaceId };
+                vm.openFileUploadWindow('lg');
+                }]
             ]
             ],
             [
@@ -471,6 +479,7 @@
                     }
                 }
             });
+                        
 
             fileModalInstance.result.then(function (response) {
                 console.log(response);
@@ -488,6 +497,27 @@
                         vm.space.files[index] = response.item;
                     }
                 }
+            }, function () {
+                console.log('Modal dismissed');
+            });
+        }
+
+        function openFileUploadWindow(size) {
+            var fileModalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'Scripts/App/File/UploadFile.html',
+                windowTemplateUrl: 'Scripts/App/File/Modal.html',
+                controller: 'FileModalCtrl',
+                controllerAs: 'fileModalCtrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        return vm.file;
+                    }
+                }
+            });
+            fileModalInstance.result.then(function (response) {
+                console.log(response);
             }, function () {
                 console.log('Modal dismissed');
             });
@@ -529,6 +559,11 @@
         function createNewFile() {
             vm.file = { parentId: vm.parentId, spaceId: vm.spaceId };
             vm.openFileWindow();
+        }
+
+        function uploadFile() {
+            vm.file = { parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.openFileUploadWindow('lg');
         }
 
         function redirectToSpaceSettings(id) {

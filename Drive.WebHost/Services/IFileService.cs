@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Driver.Shared.Dto;
 using Drive.DataAccess.Entities;
+using System.Web;
 
 namespace Drive.WebHost.Services
 {
@@ -25,7 +26,7 @@ namespace Drive.WebHost.Services
 
         Task<ICollection<AppDto>> FilterApp(FileType fileType);
         Task<ICollection<AppDto>> SearchFiles(FileType fileType, string text);
-
+        Task<string> UploadFile(HttpPostedFile file, int spaceId, int folderId);
         void Dispose();
     }
 }
