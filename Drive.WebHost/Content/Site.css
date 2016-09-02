@@ -518,40 +518,25 @@ hr.style {
     overflow: hidden;
     height: 75%;
 }
-    /*
-    .fixed_headers thead {
-        display: block;
-        width: 100%;
-        height:8vh;
-    }
-*/
+
     .fixed_headers tbody {
         display: block;
-        overflow: hidden;
+        overflow: auto;
         width: 100%;
         height: 65vh;
         background-color: white;
     }
-
-        .fixed_headers tbody:hover {
-            overflow: auto;
-        }
-
-        .fixed_headers tbody tr:hover {
-            background: #eaebec;
-        }
 
     .fixed_headers th, td {
         display: inline-block;
         text-align: left;
         padding-left: 1em;
         padding-top: 1em;
-        min-height: 50px;
+        height: 3em;
     }
 
     .fixed_headers th {
         background: #eaebec;
-        line-height: 50px;
     }
 
     .fixed_headers td {
@@ -563,6 +548,13 @@ hr.style {
     .fixed_headers tr {
         width: 100%;
         line-height: 1em;
+    }
+
+    .fixed_headers tbody tr {
+        display:block;
+        margin-bottom:0.25em;
+        margin-top:0.25em;
+        padding-left:0.5em;
     }
 
     .fixed_headers tbody tr:hover {
@@ -590,38 +582,41 @@ hr.style {
     border-style: solid;
     border-width: 1px;
     border-color: #eaebec;
-    padding-right: 17px;
 }
 
-.filter-table-internal {
+/*.filter-internal-wrapper {
     height: 90%;
     overflow: hidden;
-}
 
-    .filter-table-internal:hover {
-        overflow-y: auto;
-        margin-right: -17px;
-    }
+}*/
+.filter-table-internal {
+    height: 90%;
+    overflow-y: auto;
+    overflow-x:hidden;
+    /*margin-right: 12px;*/
+
+}
 
 .header-wrapper {
     height: 3em;
     background: #eaebec;
-    margin-right: -17px;
 }
 
 .header-row {
-    padding-right: 17px;
     padding-left: 1em;
     padding-top: 1em;
     height: 3em;
-    margin-left: 17px;
+    /*margin-left: 12px;*/
     cursor: pointer;
+    color: #666;
+    text-shadow: 1px 1px 0px #fff;
+    font-weight: bold;
 }
 
 .filter-table-row {
     background: white;
-    padding-left: 1em;
-    min-height: 50px;
+    line-height: 3em;
+    padding-left:0.5em;
 }
 
     .filter-table-row:hover {
@@ -633,20 +628,20 @@ hr.style {
 }
 
 .space-label {
-    width: 100%;
+    /*width: 100%;*/
     margin: 0 auto;
     display: block;
     height: 3em;
     background: #eaebec;
     text-transform: uppercase;
-    align-content: center;
     text-align: left;
     font-weight: bold;
-    margin-top: 1em;
-    margin-left: 17px;
     padding-top: 1em;
-    padding-left: 1em;
-    margin-bottom: 1em;
+    margin-top: 0.25em;
+    padding-left: 0.25em;
+    margin-bottom: 0.25em;
+    margin-right: -12px;
+    padding-right: 24px;
     cursor: pointer;
 }
 
@@ -682,16 +677,16 @@ hr.style {
     width: 100%;
     color: #333;
     margin-top: 20px;
-    overflow: hidden;
+    overflow: auto;
     height: 73vh;
     /*border-style: solid;
     border-width: 1px;
     border-color: #eaebec;*/
 }
 
-    .wrap:hover {
+    /*.wrap:hover {
         overflow: auto;
-    }
+    }*/
 
 .small {
     width: 100%;
