@@ -36,7 +36,10 @@
         </div>
     </div>
     <div class="wrap" ng-show="trashBinCtrl.showGrid">
-        <div ng-repeat="space in trashBinCtrl.spaces" context-menu="trashBinCtrl.spaceMenuOptions" ng-hide="space.folders.length == 0 && space.files.length == 0">
+        <div ng-show="trashBinCtrl.spaces.length == 0">
+            <h1 class="text-muted text-center">Trash bin is empty</h1>
+        </div>
+        <div ng-repeat="space in trashBinCtrl.spaces" context-menu="trashBinCtrl.spaceMenuOptions">
             <div class="grid-space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ space.name }}</div>
             <div uib-collapse="space.isCollapsed">
                 <ul class="sp-gv-flex-container">
@@ -113,7 +116,10 @@
             </div>
         </div>
         <div class="filter-table-internal">
-            <div ng-repeat="space in trashBinCtrl.spaces" context-menu="trashBinCtrl.spaceMenuOptions" ng-hide="space.folders.length == 0 && space.files.length == 0">
+            <div ng-show="trashBinCtrl.spaces.length == 0">
+                <h1 class="text-muted text-center">Trash bin is empty</h1>
+            </div>
+            <div ng-repeat="space in trashBinCtrl.spaces" context-menu="trashBinCtrl.spaceMenuOptions">
                 <div class="space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ space.name }}</div>
                 <div uib-collapse="space.isCollapsed">
                     <div style="transition: all 2s">
