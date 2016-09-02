@@ -1,0 +1,1028 @@
+swagger: '2.0'
+info:
+  description: API for Binary Drive project
+  version: 1.2.0
+  title: Binary Drive
+host: 'team.binary-studio.com'
+basePath: /drive/api
+tags:
+  - name: Spaces
+    description: API for working with spaces
+  - name: Folders
+    description: API for working with folders
+  - name: Files
+    description: API for working with files
+  - name: AcademyPro
+    description: API for working with AcademyPro courses  
+  - name: Users
+    description: API for working with users    
+  - name: Roles
+    description: API for working with roles
+  - name: Logs
+    description: API for working with logs    
+  - name: Pagination
+    description: Routes for pagination
+  - name: Search
+    description: Routes for searching
+  - name: Definitions
+    description: Defining entities that are present in queries
+schemes:
+  - http
+paths:
+  /spaces:
+    get:
+      tags:
+        - Spaces
+      summary: Get all spaces
+      description: Allows you to obtain all available spaces
+      parameters: []
+      responses:
+        '200':
+          description: Returns all available spaces
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Space'
+        '404':
+          description: Failed to find any space
+    post:
+      tags:
+        - Spaces
+      summary: Create new space
+      description: Allows you to add new space
+      parameters:
+        - in: body
+          name: space
+          required: true
+          schema:
+            $ref: '#/definitions/Space'
+      responses:
+        '200':
+          description: Space was successfully added.  Output parameter 'id' - identifier of created space.
+          schema:
+            type: integer
+            format: int32
+  '/spaces/{id}':
+    put:
+      tags:
+        - Spaces
+      summary: Update space by Id
+      description: Allows you to update space for a given Id
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the space
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: space
+          required: true
+          schema:
+            $ref: '#/definitions/Space'
+      responses:
+        '200':
+          description: The update was successful.
+    delete:
+      tags:
+        - Spaces
+      summary: Delete space
+      description: Removes space for a given ID
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the space
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The removal was successful
+        '404':
+          description: Space with the given id was not found.
+  '/spaces/{id}?page={page}&count={count}':
+    get:
+      tags:
+        - Spaces
+        - Pagination
+      summary: Get space by Id
+      description: Allows you to obtain the space object with given ID. Retuns only root elements of the space
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the space
+          required: true
+          type: integer
+          format: int32
+        - name: page
+          in: path
+          description: Number of the current page
+          required: true
+          type: integer
+          format: int32       
+        - name: count
+          in: path
+          description: Number of elements displayed per page
+          required: true
+          type: integer
+          format: int32              
+      responses:
+        '200':
+          description: Returns the space object with given ID
+          schema:
+            $ref: '#/definitions/Space'
+        '404':
+          description: Space with the given id was not found.  
+  '/spaces/{id}/sptotal':
+    get:
+      tags:
+        - Pagination
+        - Spaces
+      summary: Get total number of elements in the root of space 
+      description: Allows you to obtain total number of items (files and folders) in the root of space with the specified ID
+      parameters:
+        - name: id
+          in: path
+          description: Identifier of the space
+          required: true
+          type: integer
+          format: int32      
+      responses:
+        '200':
+          description: The total number of items (files and folders)  in the root of space with the specified ID
+          schema:
+            type: integer
+            format: int32      
+  '/spaces/{id}/search?folderId={folderId}&text={text}&page={page}&count={count}':
+    get:
+      tags:
+        - Search
+        - Spaces
+        - Pagination
+      summary: Search
+      description: Search files and folders by name
+      parameters:
+        - name: id  
+          in: path
+          description: Identifier of the space
+          required: true
+          type: integer
+          format: int32
+        - name: folderId
+          in: path
+          description: Identifier of the folder
+          required: true
+          type: integer
+          format: int32 
+        - name: text
+          in: path
+          description: String for searching
+          required: true
+          type: string          
+        - name: page  
+          in: path
+          description: Number of the current page
+          required: true
+          type: integer
+          format: int32       
+        - name: count
+          in: path
+          description: Number of elements displayed per page
+          required: true
+          type: integer
+          format: int32      
+      responses:
+        '200':
+          description: Returns found files and folders
+          schema:
+           $ref: '#/definitions/SearchResult'               
+        '404':
+          description: Files of folder were not found.  
+  '/spaces/{id}/total?folderId={folderId}&text={text}':
+    get:
+      tags:
+        - Search
+        - Spaces
+        - Pagination
+      summary: Get number of found elements
+      description: Allows you to obtain the number of all found files and folders
+      parameters:
+        - name: id  
+          in: path
+          description: Identifier of the space
+          required: true
+          type: integer
+          format: int32
+        - name: folderId
+          in: path
+          description: Identifier of the folder
+          required: true
+          type: integer
+          format: int32 
+        - name: text
+          in: path
+          description: String for searching
+          required: true
+          type: string   
+      responses:
+        '200':
+          description: The total number of items (files and folders)  in the root of space with the specified ID
+          schema:
+           $ref: '#/definitions/SearchResult'               
+        '404':
+          description: Elements were not found.            
+  /folders:
+    get:
+      tags:
+        - Folders
+      summary: Get all folders
+      description: Allows you to obtain all available folders
+      parameters: []
+      responses:
+        '200':
+          description: Returns all available folders
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/FolderUnit'
+    post:
+      tags: 
+        - Folders
+      summary: Create folder
+      description: Allows you to add new folder
+      parameters:
+        - in: body
+          name: folder
+          required: true
+          schema:
+            $ref: '#/definitions/AcademyProCourse'
+      responses:
+        '200':
+          description: Course was successfully created. Returns created course.
+          schema:
+            $ref: '#/definitions/AcademyProCourse'
+        '400':
+          description: Failed to create the course.                        
+  '/folders/{id}':
+    get:
+      tags:
+        - Folders
+      summary: Get folder by Id
+      description: Allows you to obtain the folder with given ID
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the folder
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Returns the folder object with given ID
+          schema:
+            $ref: '#/definitions/FolderUnit'
+    put:
+      tags:
+        - Folders
+      summary: Update folder by Id
+      description: Allows you to update folder for giver Id
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the folder
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: folder
+          required: true
+          schema:
+            $ref: '#/definitions/FolderUnit'
+      responses:
+        '200':
+          description: The update was successful. Returns updated folder.
+          schema:
+            $ref: '#/definitions/FolderUnit'
+    delete:
+      tags:
+        - Folders
+      summary: Delete folder
+      description: Removes folder for given ID
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the folder
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The removal was successful
+  '/content/{id}?page={page}&count={count}':
+    get:
+      tags:
+        - Pagination
+        - Folders
+      summary: Get content
+      description: Allows you to obtain nested files/folders for the specified folder and page
+      parameters:
+        - name: id
+          in: path
+          description: Identifier of the parent folder
+          required: true
+          type: integer
+          format: int32
+        - name: page
+          in: path
+          description: Number of the current page
+          required: true
+          type: integer
+          format: int32     
+        - name: count
+          in: path
+          description: Number of elements displayed per page
+          required: true
+          type: integer
+          format: int32               
+      responses:
+        '200':
+          description: Returns content of folder
+          schema:
+           $ref: '#/definitions/FolderContent'  
+  '/content/{id}/total':
+    get:
+      tags:
+        - Pagination
+        - Folders
+      summary: Get total number of nested items
+      description: Allows you to obtain total number of nested files and folders in a folder with the specified ID
+      parameters:
+        - name: id
+          in: path
+          description: Identifier of the parent folder
+          required: true
+          type: integer
+          format: int32      
+      responses:
+        '200':
+          description: The total number of nested items (files and folders)  in a folder with the specified ID
+          schema:
+            type: integer
+            format: int32        
+  /academypro:
+    get:
+      tags:
+        - AcademyPro
+      summary: Get all courses
+      description: Allows you to obtain all available courses
+      parameters: []
+      responses:
+        '200':
+          description: Returns all available courses
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/AcademyProCourse'
+        '404':
+          description: Failed to find any course            
+    post:
+      tags:
+        - AcademyPro
+      summary: Create new course
+      description: Allows you to add new course
+      parameters:
+        - in: body
+          name: space
+          required: true
+          schema:
+            $ref: '#/definitions/AcademyProCourse'
+      responses:
+        '200':
+          description: Course was successfully added.
+          schema:
+            type: integer
+            format: int32  
+        '400':
+          description: Failed to create the course.                        
+  '/academypro/{id}':
+    get:
+      tags:
+        - AcademyPro
+      summary: Get course by Id
+      description: Allows to obtain the course with given ID
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the course
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Returns the file with given ID
+          schema:
+            $ref: '#/definitions/AcademyProCourse'
+        '404':      
+          description: Course not found        
+    put:
+      tags:
+        - AcademyPro
+      summary: Update course by Id
+      description: Allows to update course with given Id
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the course
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: file
+          required: true
+          schema:
+            $ref: '#/definitions/AcademyProCourse'
+      responses:
+        '200':
+          description: The update was successful.
+          schema:
+            $ref: '#/definitions/AcademyProCourse'     
+        '400':
+          description: Failed to update the course.                   
+    delete:
+      tags:
+        - AcademyPro
+      summary: Delete course
+      description: Removes course for a given ID
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the course
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The removal was successful            
+  /files: 
+    get:
+      tags: 
+        - Files
+      summary: Get all files
+      description: Allows you to obtain all available files
+      parameters: []
+      responses:
+        '200':
+          description: Returns all available files
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/FileUnit'
+        '404':      
+          description: Files not found
+    post:
+      tags:
+        - Files
+      summary: Add new file
+      description: Allows you to create a new file.
+      parameters:
+        - in: body
+          name: file
+          required: true
+          schema:
+            $ref: '#/definitions/FileUnit'
+      responses:
+        '200':
+          description: File was successfully created
+          schema:
+            $ref: '#/definitions/FileUnit'     
+        '400':
+          description: Failed to create the file.            
+  '/files/{id}':
+    get:
+      tags:
+        - Files
+      summary: Get file by Id
+      description: Allows to obtain the file with given ID
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the file
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Returns the file with given ID
+          schema:
+            $ref: '#/definitions/FileUnit'
+        '404':      
+          description: File not found        
+    put:
+      tags:
+        - Files
+      summary: Update file by Id
+      description: Allows to update file with given Id
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the file
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: file
+          required: true
+          schema:
+            $ref: '#/definitions/FileUnit'
+      responses:
+        '200':
+          description: The update was successful.
+          schema:
+            $ref: '#/definitions/FileUnit'     
+        '400':
+          description: Failed to update the file.         
+    delete:
+      tags:
+        - Files
+      summary: Delete file
+      description: Removes file for a given ID
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the file
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The removal was successful  
+  /users: 
+    get:
+      tags: 
+        - Users
+      summary: Get all users
+      description: Allows you to obtain all available users
+      parameters: []
+      responses:
+        '200':
+          description: Returns all available users
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+        '404':      
+          description: Users not found
+  '/users/{id}':
+    get:
+      tags:
+        - Users
+      summary: Get user by Id
+      description: Allows to obtain the user with given ID
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the user
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Returns the user with given ID
+          schema:
+            $ref: '#/definitions/User'
+        '404':      
+          description: User not found        
+  /logs:
+    get:
+      tags: 
+        - Logs
+      summary: Get all logs
+      description: Allows you to obtain all available logs
+      parameters: []
+      responses:
+        '200':
+          description: Returns all available logs
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Log'
+        '404':      
+          description: Logs not found
+  '/logs/{id}':
+    get:
+      tags:
+        - Logs
+      summary: Get log by Id
+      description: Allows to obtain the log with given ID
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the log
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Returns the log with given ID
+          schema:
+            $ref: '#/definitions/Log'
+  /roles:
+    get:
+      tags:
+        - Roles
+      summary: Get all roles
+      description: Allows you to obtain all roles
+      parameters: []
+      responses:
+        '200':
+          description: Returns all available roles
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Role'
+        '404':
+          description: Failed to find any role
+    post:
+      tags:
+        - Roles
+      summary: Create new role
+      description: Allows you to add new role
+      parameters:
+        - in: body
+          name: role
+          required: true
+          schema:
+            $ref: '#/definitions/Role'
+      responses:
+        '200':
+          description: Role was successfully added.  Output parameter 'id' - identifier of created role.
+          schema:
+            type: integer
+            format: int32
+  '/roles/{id}':
+    get:
+      tags:
+        - Roles
+      summary: Get role by Id
+      description: Allows to obtain the role with given ID
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the role
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Returns the role with given ID
+          schema:
+            $ref: '#/definitions/Role'
+        '404':      
+          description: Role not found          
+    put:
+      tags:
+        - Roles
+      summary: Update role by Id
+      description: Allows you to update role for a given Id
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the role
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: role
+          required: true
+          schema:
+            $ref: '#/definitions/Role'
+      responses:
+        '200':
+          description: The update was successful.
+    delete:
+      tags:
+        - Roles
+      summary: Delete role
+      description: Removes role for a given ID
+      parameters:
+        - name: id
+          in: path
+          description: Unique identifier of the role
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The removal was successful
+        '404':
+          description: Role with the given id was not found.            
+definitions:
+  FileUnit:
+    type: object
+    properties:
+      Id:
+        type: integer
+        format: int32
+        description: Unique identifier of the space
+      IsDeleted:
+        type: boolean
+        description: A flag that indicates whether the space is deleted
+        default: false
+      Name:
+        type: string
+        description: The name of the space
+      Description:
+        type: string
+        description: Description of the space
+      FileType:
+        type: integer
+        format: int32
+        description: Type of the file
+    description: FileUnit represents an object of file
+  FolderUnit:
+    type: object
+    properties:
+      Id:
+        type: integer
+        format: int32
+        description: Unique identifier of the space  
+      IsDeleted:
+        type: boolean
+        description: A flag that indicates whether the space is deleted
+        default: false        
+      Name:
+        type: string
+        description: The name of the space
+      Description:
+        type: string
+        description: Description of the space
+    description: FolderUnit represents an object of folder
+  Space:
+    type: object
+    properties:
+      Id:
+        type: integer
+        format: int32
+        description: Unique identifier of the space
+      IsDeleted:
+        type: boolean
+        description: A flag that indicates whether the space is deleted
+        default: false    
+      Name:
+        type: string
+        description: The name of the space
+      Description:
+        type: string
+        description: Description of the space        
+      MaxFileSize:
+        type: integer
+        format: int32
+        description: Maximum size of a file in the space
+      MaxFilesQuantity:
+        type: integer
+        format: int32
+        description: Maximum number of files in the space
+      ReadPermittedUsers:
+        type: array
+        description: The list of users who have permission to read
+        items:
+          $ref: '#/definitions/User'
+      Folders:
+        type: array
+        description: A list of folders that are in a given space
+        items:
+          $ref: '#/definitions/FolderUnit'
+      Files:
+        type: array
+        description: A list of files that are in a given space
+        items:
+          $ref: '#/definitions/FileUnit'
+    description: Space object
+  User:
+    type: object
+    properties:
+      Email:
+        type: string
+        description: Email of the user
+      GlobalId:
+        type: string
+        description: The token received from the third party authorization service
+      Id:
+        type: integer
+        format: int32
+        description: Unique identifier of the user
+      IsDeleted:
+        type: boolean
+        description: A flag that indicates whether the user is deleted
+        default: false
+      Login:
+        type: string
+        description: User login
+      Password:
+        type: string
+        description: User password
+    description: This object representing a user of the system
+  FolderContent:
+    type: object
+    properties:
+      Files:
+        type: array
+        description: A list of files that are in a given folder
+        items:
+          $ref:  '#/definitions/FileUnit'
+      Folders:
+        type: array
+        description: A list of nested folders 
+        items:
+          $ref: '#/definitions/FolderUnit' 
+    description: This object representing nested content of folder
+  SearchResult:
+    type: object
+    properties:
+      Files:
+        type: array
+        description: List of found files
+        items:
+          $ref:  '#/definitions/FileUnit'
+      Folders:
+        type: array
+        description: List of found folders 
+        items:
+          $ref: '#/definitions/FolderUnit' 
+    description: This object contain result of searching
+  Log:
+    type: object
+    properties:
+      Id:
+        type: integer
+        format: int32
+        description: Unique identifier of the log
+      Logged:
+        type: string
+        description: The date and time the record was created.
+      Level:
+        type: string
+      Message:
+        type: string
+      Exception:
+        type: string
+      CallerName:
+        type: string
+    description: This object contains information of exceptions 
+  AcademyProCourse:
+    type: object
+    properties:
+      Id:
+        type: integer
+        format: int32
+        description: Unique identifier of the course
+      IsDeleted:
+        type: boolean
+        description: A flag that indicates whether the course is deleted
+        default: false
+      Name:
+        type: string
+        description: The name of the course
+      Description:
+        type: string
+        description: Description of the course
+      StartDate:
+        type: string
+        format: date-time
+        description: Start date of the course
+      Lectures:
+        type: array
+        description: List of lectures
+        items:
+          $ref: '#/definitions/Lecture'
+      FileUnit:
+        $ref: '#/definitions/FileUnit'
+      CreatedAt:
+        type: string
+        format: date-time
+        description: Date and time of creation
+      ModifiedAt:
+        type: string
+        format: date-time
+        description: Date and time of modification
+  Lecture:
+    type: object
+    properties:
+      Id:
+        type: integer
+        format: int32
+        description: Unique identifier of the lecture
+      IsDeleted:
+        type: boolean
+        description: A flag that indicates whether the lecture is deleted
+        default: false
+      Name:
+        type: string
+        description: The name of the lecture
+      Description:
+        type: string
+        description: Description of the lecture
+      StartDate:
+        type: string
+        format: date-time
+        description: Start date of the lecture
+      Author:
+        $ref: '#/definitions/User'
+      CreatedAt:
+        type: string
+        format: date-time
+        description: Date and time of creation
+      ModifiedAt:
+        type: string
+        format: date-time
+        description: Date and time of modification      
+      ContentList:
+        type: array
+        description: List of links
+        items:
+          $ref: '#/definitions/ContentLink'
+      Tags:
+        type: array
+        description: List of tags
+        items:
+          $ref: '#/definitions/Tag'
+      CodeSamples:
+        type: array
+        description: List of samples
+        items:
+          $ref: '#/definitions/CodeSample'      
+  Tag:
+    type: object
+    properties:
+      Id:
+        type: integer
+        format: int32
+        description: Identifier of the tag
+      IsDeleted:
+        type: boolean
+        description: A flag that indicates whether the tag is deleted
+        default: false
+      Name:
+        type: string
+        description: The name of the tag
+  ContentLink:
+    type: object
+    properties:
+      Id:
+        type: integer
+        format: int32
+        description: Unique identifier
+      IsDeleted:
+        type: boolean
+        description: A flag that indicates whether the contentLink is deleted
+        default: false
+      Name:
+        type: string
+        description: The name of the ContentLink
+      Description:
+        type: string
+        description: Description of the ContentLink
+      Link:
+        type: string
+        description: Contain URL address
+  CodeSample:      
+    type: object
+    properties:
+      Id:
+        type: integer
+        format: int32
+        description: Unique identifier
+      IsDeleted:
+        type: boolean
+        description: A flag that indicates whether the contentLink is deleted
+        default: false
+      Name:
+        type: string
+        description: The name of the ContentLink        
+  Role:
+    type: object
+    properties:
+      Id:
+        type: integer
+        format: int32
+        description: Unique identifier of the role
+      IsDeleted:
+        type: boolean
+        description: A flag that indicates whether the role is deleted
+        default: false
+      Name:
+        type: string
+        description: The name of the role
+      Description:
+        type: string
+        description: Description of the role
+      Users:
+        type: array
+        description: List of users
+        items:
+         $ref: '#/definitions/User'
+
+        
+        
+        
+        

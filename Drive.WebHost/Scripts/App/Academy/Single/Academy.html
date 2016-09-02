@@ -1,0 +1,101 @@
+﻿
+<div class="container-fluid">
+    <br />
+    <div class="btn-group btn-breadcrumb">
+        <a class="btn btn-info"><i class="fa fa-graduation-cap fa-lg"></i> Academy Pro</a>
+    </div>
+    <div>
+        <br />
+        <div class="lecture-tags">
+            <ul>
+                <li class="lecture-tags-entry" ng-repeat="tag in academyCtrl.academy.tags">
+                    {{tag.name}}
+                </li>
+            </ul>
+        </div>
+        <span us-spinner="{radius:30, width:8, length: 16}"></span>
+        <h2>{{academyCtrl.academy.fileUnit.name}}</h2>
+        <p>{{academyCtrl.academy.fileUnit.description}}</p>
+        <div>
+            <div class="row" style="margin: 1em 0 1em 0;">
+                <div class="col-lg-push-4-offset pull-right">
+                    <button class="btn btn-default" ng-click="academyCtrl.changeView(academyCtrl.view)">
+                        <i class={{academyCtrl.view}} title="view"> </i>
+                    </button>
+                </div>
+                <!--<div>
+                    <div class="col-sm-3 pull-right">
+                        <div>
+                            <div class="input-group">
+                                <form id="form-container">
+                                    <div id="searchtext">
+                                        <input type="search" size="40" class="search-input" value="" name="s" id="s" placeholder="Search..." ng-model="academyCtrl.searchText">
+                                        <button class="search-submit-button" type="submit" ng-click="academyCtrl.search()"> <i class="fa fa-search"></i> </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>-->
+                <div class="col-sm-3 pull-left">
+                    <div>
+                        <button class="btn btn-default" ng-click="academyCtrl.createLecture()">New lecture</button>
+                    </div>
+                </div>
+            </div>
+            <ul class="sp-gv-flex-container wrap" ng-show="!academyCtrl.showTable">
+                <li class="sp-gv-flex-item" role="button" ng-repeat="lecture in academyCtrl.academy.lectures" ng-dblclick="academyCtrl.openLecture(lecture.id)">
+                    <div class="sp-gv-wrapper-flex-item">
+                        <div class="sp-gv-item-content card">
+                            <div class="sp-gv-item-img-wrapper">
+                                <img ng-src="{{academyCtrl.icon}}" alt="Academy" title="Lecture" />
+                            </div>
+                            <div class="sp-gv-item-text">
+                                <h4 title="{{lecture.name}}">{{ lecture.name | limitTo: 13}}{{lecture.name.length > 13 ? '..' : ''}}</h4>
+                                <h5 title="Author: {{lecture.author.name}}">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                    {{lecture.author.name | limitTo: 17}}{{lecture.author.name.length > 17 ? '...' : ''}}
+                                </h5>
+                                <br />
+                                <h5 title="Start date">
+                                    <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                                    {{ lecture.startDate | date:'dd-MM-yyyy HH:mm' }}
+                                </h5>
+                                <p title="{{lecture.description}}">{{lecture.description | limitTo: 45}}{{lecture.description.length > 45 ? '...' : ''}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                <li class="sp-gv-flex-item"></li>
+                <li class="sp-gv-flex-item"></li>
+                <li class="sp-gv-flex-item"></li>
+            </ul>
+        </div>
+        <div class="filter-table" ng-show="academyCtrl.showTable">
+            <div class="header-wrapper">
+                <div class="row header-row">
+                    <div class="col-md-3">Name</div>
+                    <div class="col-md-3">Description</div>
+                    <div class="col-md-3">Author</div>
+                    <div class="col-md-3">Start date</div>
+                </div>
+            </div>
+            <div class="filter-table-internal">
+                <div class="filter-table-row">
+                    <div class="row filter-table-row" role="button" ng-repeat="lecture in academyCtrl.academy.lectures"
+                         ng-dblclick="academyCtrl.openLecture(lecture.id)">
+                        <div class="col-md-2 filter-table-cell description" title="{{ lecture.name }}">
+                            <img ng-src="{{academyCtrl.icon}}" height="{{academyCtrl.iconHeight}}" /> 
+                            {{lecture.name | limitTo: 15}}{{lecture.name.length > 15 ? '...' : ''}}
+                        </div>
+                        <div class="col-md-4 filter-table-cell description" title="{{ lecture.description }}">
+                            {{lecture.description | limitTo: 41}}{{lecture.description.length > 41 ? '...' : ''}}
+                        </div>
+                        <div class="col-md-3 filter-table-cell">{{ lecture.author.name }}</div>
+                        <div class="col-md-3 filter-table-cell">{{ lecture.startDate | date:'dd-MM-yyyy HH:mm' }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

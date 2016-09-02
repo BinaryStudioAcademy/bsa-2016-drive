@@ -18,7 +18,7 @@
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
     <UseIISExpress>true</UseIISExpress>
-    <IISExpressSSLPort />
+    <IISExpressSSLPort>44371</IISExpressSSLPort>
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
@@ -45,11 +45,83 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.7.4137.9688, Culture=neutral, PublicKeyToken=a4292a325f69b123, processorArchitecture=MSIL">
+      <HintPath>..\packages\BouncyCastle.1.7.0\lib\Net40-Client\BouncyCastle.Crypto.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="FakeItEasy, Version=2.2.0.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
+      <HintPath>..\packages\FakeItEasy.2.2.0\lib\net40\FakeItEasy.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis, Version=1.16.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.16.0\lib\net45\Google.Apis.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Auth, Version=1.16.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.16.0\lib\net45\Google.Apis.Auth.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Auth.PlatformServices, Version=1.16.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Auth.1.16.0\lib\net45\Google.Apis.Auth.PlatformServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Core, Version=1.16.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Core.1.16.0\lib\net45\Google.Apis.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.Drive.v3, Version=1.16.0.596, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.Drive.v3.1.16.0.596\lib\netstandard1.3\Google.Apis.Drive.v3.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Google.Apis.PlatformServices, Version=1.16.0.0, Culture=neutral, PublicKeyToken=4b01fa6e34db77ab, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Apis.1.16.0\lib\net45\Google.Apis.PlatformServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="log4net, Version=1.2.13.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.2.2.0\lib\net45-full\Ninject.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.2.0.0\lib\net45-full\Ninject.Web.Common.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.MVC5.3.2.1.0\lib\net45-full\Ninject.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.WebApi, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.WebApi.3.2.4.0\lib\net45-full\Ninject.Web.WebApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Ninject.Web.WebApi.WebHost, Version=3.2.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.WebApi.WebHost.3.2.4.0\lib\net45-full\Ninject.Web.WebApi.WebHost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\NLog.4.3.7\lib\net45\NLog.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -102,6 +174,10 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WebGrease">
       <Private>True</Private>
       <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
@@ -110,11 +186,12 @@
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
     </Reference>
+    <Reference Include="Zlib.Portable, Version=1.11.0.0, Culture=neutral, PublicKeyToken=431cba815f6a8b5b, processorArchitecture=MSIL">
+      <HintPath>..\packages\Zlib.Portable.Signed.1.11.0\lib\portable-net4+sl5+wp8+win8+wpa81+MonoTouch+MonoAndroid\Zlib.Portable.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.Formatting">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -126,44 +203,188 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\FilesController.cs" />
+    <Compile Include="Api\FoldersController.cs" />
+    <Compile Include="Api\GlobalExceptionLogger.cs" />
+    <Compile Include="Api\LogsController.cs" />
+    <Compile Include="Api\RolesController.cs" />
+    <Compile Include="Api\Pro\AcademiesController.cs" />
+    <Compile Include="Api\Pro\CodeSamplesController.cs" />
+    <Compile Include="Api\Pro\ContentLinksController.cs" />
+    <Compile Include="Api\Pro\LecturesController.cs" />
+    <Compile Include="Api\Pro\TagsController.cs" />
+    <Compile Include="Api\SharedSpaceController.cs" />
+    <Compile Include="Api\SpacesController.cs" />
+    <Compile Include="Api\TrashBinController.cs" />
+    <Compile Include="Api\UsersController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Filters\Authenticator.cs" />
+    <Compile Include="Filters\AuthenticationFailureResult.cs" />
+    <Compile Include="Filters\JWTHttpAuthenticationFilter.cs" />
+    <Compile Include="Filters\TokenExpiredException.cs" />
+    <Compile Include="Infrastructure\DependencyResolver.cs" />
+    <Compile Include="Filters\JWTAuthenticationFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Providers\FakeUserProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\AuthorizationService.cs" />
+    <Compile Include="Services\FileService.cs" />
+    <Compile Include="Services\FolderService.cs" />
+    <Compile Include="Services\IFileService.cs" />
+    <Compile Include="Services\IFolderService.cs" />
+    <Compile Include="Services\ILogsService.cs" />
+    <Compile Include="Services\IRolesService.cs" />
+    <Compile Include="Services\ISharedSpaceService.cs" />
+    <Compile Include="Services\ISpaceService.cs" />
+    <Compile Include="Providers\IUsersProvider.cs" />
+    <Compile Include="Services\ITrashBinService.cs" />
+    <Compile Include="Services\IUsersService.cs" />
+    <Compile Include="Services\LogsService.cs" />
+    <Compile Include="Services\RolesService.cs" />
+    <Compile Include="Services\Pro\Abstract\IAcademyProCourseService.cs" />
+    <Compile Include="Services\Pro\Abstract\IBasicService.cs" />
+    <Compile Include="Services\Pro\Abstract\ICodeSamplesService.cs" />
+    <Compile Include="Services\Pro\Abstract\IContentLinkService.cs" />
+    <Compile Include="Services\Pro\Abstract\ILectureService.cs" />
+    <Compile Include="Services\Pro\Abstract\ITagsService.cs" />
+    <Compile Include="Services\Pro\AcademyProCourseService.cs" />
+    <Compile Include="Services\Pro\CodeSamplesService.cs" />
+    <Compile Include="Services\Pro\ContentLinkService.cs" />
+    <Compile Include="Services\Pro\LectureService.cs" />
+    <Compile Include="Services\Pro\TagsService.cs" />
+    <Compile Include="Services\SharedSpaceService.cs" />
+    <Compile Include="Services\SpaceService.cs" />
+    <Compile Include="Providers\UsersProvider.cs" />
+    <Compile Include="Services\TrashBinService.cs" />
+    <Compile Include="Services\UsersService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\bootstrap.css" />
-    <Content Include="Content\bootstrap.min.css" />
-    <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Bundles\styles.css" />
+    <Content Include="Content\Fonts\fontawesome-webfont.eot" />
+    <Content Include="Content\Fonts\fontawesome-webfont.svg" />
+    <Content Include="Content\Fonts\fontawesome-webfont.ttf" />
+    <Content Include="Content\Fonts\fontawesome-webfont.woff" />
+    <Content Include="Content\Fonts\fontawesome-webfont.woff2" />
+    <Content Include="Content\Fonts\FontAwesome.otf" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="Content\Fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="Content\Icons\academyPro.svg" />
+    <Content Include="Content\Icons\academyPro_bw.svg" />
+    <Content Include="Content\Icons\add-file_bw.svg" />
+    <Content Include="Content\Icons\add-folder_bw.svg" />
+    <Content Include="Content\Icons\checklist.svg" />
+    <Content Include="Content\Icons\checklist_bw.svg" />
+    <Content Include="Content\Icons\doc.svg" />
+    <Content Include="Content\Icons\doc_bw.svg" />
+    <Content Include="Content\Icons\employees-add.svg" />
+    <Content Include="Content\Icons\employees.svg" />
+    <Content Include="Content\Icons\employees_bw.svg" />
+    <Content Include="Content\Icons\event.svg" />
+    <Content Include="Content\Icons\event_bw.svg" />
+    <Content Include="Content\Icons\folder.svg" />
+    <Content Include="Content\Icons\folder_bw.svg" />
+    <Content Include="Content\Icons\link.svg" />
+    <Content Include="Content\Icons\menu_shared.svg" />
+    <Content Include="Content\Icons\menu_space-home.svg" />
+    <Content Include="Content\Icons\menu_space-other.svg" />
+    <Content Include="Content\Icons\menu_space-own.svg" />
+    <Content Include="Content\Icons\physical-file.svg" />
+    <Content Include="Content\Icons\ppt.svg" />
+    <Content Include="Content\Icons\ppt_bw.svg" />
+    <Content Include="Content\Icons\trello.svg" />
+    <Content Include="Content\Icons\trello_bw.svg" />
+    <Content Include="Content\Icons\upload-doc_bw.svg" />
+    <Content Include="Content\Icons\xls.svg" />
+    <Content Include="Content\Icons\xls_bw.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Scripts\Libs\bootstrap.js" />
-    <Content Include="Scripts\Libs\bootstrap.min.js" />
-    <None Include="Scripts\Libs\jquery-1.10.2.intellisense.js" />
-    <Content Include="Scripts\Libs\jquery-1.10.2.js" />
-    <Content Include="Scripts\Libs\jquery-1.10.2.min.js" />
-    <None Include="Scripts\Libs\jquery.validate-vsdoc.js" />
-    <Content Include="Scripts\Libs\jquery.validate.js" />
-    <Content Include="Scripts\Libs\jquery.validate.min.js" />
-    <Content Include="Scripts\Libs\jquery.validate.unobtrusive.js" />
-    <Content Include="Scripts\Libs\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\Libs\modernizr-2.6.2.js" />
-    <Content Include="Scripts\Libs\respond.js" />
-    <Content Include="Scripts\Libs\respond.min.js" />
-    <Content Include="Scripts\Libs\_references.js" />
-    <Content Include="Web.config" />
-    <Content Include="Web.Debug.config">
-      <DependentUpon>Web.config</DependentUpon>
+    <Content Include="gulpfile.js" />
+    <Content Include="icon.png" />
+    <Content Include="Scripts\App\Academy\Lecture\Lecture.html" />
+    <Content Include="Scripts\App\Academy\Lecture\lectureController.js" />
+    <Content Include="Scripts\App\Academy\Lecture\lectureService.js" />
+    <Content Include="Scripts\App\Academy\List\courseCreateController.js" />
+    <Content Include="Scripts\App\Academy\List\Create.html" />
+    <Content Include="Scripts\App\Academy\List\Modal.html" />
+    <Content Include="Scripts\App\Academy\Single\Academy.html" />
+    <Content Include="Scripts\App\Academy\Single\academyController.js" />
+    <Content Include="Scripts\App\Academy\List\AcademyList.html" />
+    <Content Include="Scripts\App\Academy\List\academyListController.js" />
+    <Content Include="Scripts\App\Academy\List\academyListService.js" />
+    <Content Include="Scripts\App\Academy\academyProModule.js" />
+    <Content Include="Scripts\App\Academy\Single\academyService.js" />
+    <Content Include="Scripts\App\Academy\Lecture\lectureCreateController.js" />
+    <Content Include="Scripts\App\Academy\Lecture\Create.html" />
+    <Content Include="Scripts\App\AdminPanel\AdminPanel.html" />
+    <Content Include="Scripts\App\AdminPanel\adminPanelController.js" />
+    <Content Include="Scripts\App\AdminPanel\adminPanelService.js" />
+    <Content Include="Scripts\App\AdminPanel\Roles\CreateRole.html" />
+    <Content Include="Scripts\App\AdminPanel\Roles\EditRole.html" />
+    <Content Include="Scripts\App\AdminPanel\Roles\roleController.js" />
+    <Content Include="Scripts\App\AdminPanel\Roles\roleService.js" />
+    <Content Include="Scripts\App\File\fileUpload.directive.js" />
+    <Content Include="Scripts\App\File\UploadFile.html" />
+    <Content Include="Scripts\App\SharedFile\SharedFileForm.html" />
+    <Content Include="Scripts\App\SharedFile\sharedFileModalController.js" />
+    <Content Include="Scripts\App\SharedFile\Modal.html" />
+    <Content Include="Scripts\App\FileFilter\fileFilterController.js" />
+    <Content Include="Scripts\App\FileFilter\FileFilter.html" />
+    <Content Include="Scripts\App\File\FileForm.html" />
+    <Content Include="Scripts\App\File\fileNameDirective.js" />
+    <Content Include="Scripts\App\File\fileService.js" />
+    <Content Include="Scripts\App\File\fileModalController.js" />
+    <Content Include="Scripts\App\File\fileType.filter.js" />
+    <Content Include="Scripts\App\File\Modal.html" />
+    <Content Include="Scripts\App\Folder\folderNameDirective.js" />
+    <Content Include="Scripts\App\Folder\folderService.js" />
+    <Content Include="Scripts\App\Folder\CreateUpdateFolderForm.html" />
+    <Content Include="Scripts\App\Folder\Modal.html" />
+    <Content Include="Scripts\App\Error404\404.html" />
+    <Content Include="Scripts\App\Error404\ErrorController.js" />
+    <Content Include="Scripts\App\Folder\folderModalController.js" />
+    <Content Include="Scripts\App\Logs\Logs.html" />
+    <Content Include="Scripts\App\Logs\logsController.js" />
+    <Content Include="Scripts\App\Logs\logsService.js" />
+    <Content Include="Scripts\App\Menu\Menu.html" />
+    <Content Include="Scripts\App\Menu\menuController.js" />
+    <Content Include="Scripts\App\Menu\menuService.js" />
+    <Content Include="Scripts\App\Navbar\header.js" />
+    <Content Include="Scripts\App\SharedSpace\Create.html" />
+    <Content Include="Scripts\App\SharedSpace\createController.js" />
+    <Content Include="Scripts\App\SharedSpace\Modal.html" />
+    <Content Include="Scripts\App\SharedSpace\SharedSpace.html" />
+    <Content Include="Scripts\App\SharedSpace\sharedSpaceController.js" />
+    <Content Include="Scripts\App\SharedSpace\sharedSpaceService.js" />
+    <Content Include="Scripts\App\Space\Create.html" />
+    <Content Include="Scripts\App\Space\createSpaceController.js" />
+    <Content Include="Scripts\App\Space\Modal.html" />
+    <Content Include="Scripts\App\Space\Settings.html" />
+    <Content Include="Scripts\App\Space\settingsController.js" />
+    <Content Include="Scripts\App\Space\settingsService.js" />
+    <Content Include="Scripts\App\Space\Space.html" />
+    <Content Include="Scripts\App\app.js" />
+    <Content Include="bower.json" />
+    <Content Include="package.json" />
+    <Content Include="Scripts\App\Space\spaceController.js" />
+    <Content Include="Scripts\App\Space\spaceService.js" />
+    <Content Include="Scripts\App\TrashBin\TrashBin.html" />
+    <Content Include="Scripts\App\TrashBin\trashBinController.js" />
+    <Content Include="Scripts\App\TrashBin\trashBinService.js" />
+    <Content Include="Scripts\Bundles\libs.js" />
+    <Content Include="Scripts\Bundles\main.js" />
+    <Content Include="Web.config">
       <SubType>Designer</SubType>
-    </Content>
-    <Content Include="Web.Release.config">
-      <DependentUpon>Web.config</DependentUpon>
     </Content>
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
@@ -174,15 +395,40 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
-    <Folder Include="Scripts\App\" />
+    <Folder Include="Scripts\Libs\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-    <Content Include="Scripts\Libs\jquery-1.10.2.min.map" />
+    <Content Include="Views\Error\NotFound.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Drive.Core\Drive.Core.csproj">
+      <Project>{E0489859-279E-4BFF-807B-1051FE7607DF}</Project>
+      <Name>Drive.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Drive.DataAccess\Drive.DataAccess.csproj">
+      <Project>{1FD29625-9A63-412A-9E76-006AA7C3B761}</Project>
+      <Name>Drive.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Drive.Identity\Drive.Identity.csproj">
+      <Project>{6E1728F5-E668-4FC3-8ECD-863227ED8B61}</Project>
+      <Name>Drive.Identity</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Drive.Logging\Drive.Logging.csproj">
+      <Project>{72eccfc0-457c-4741-bb40-3ec3c5015be9}</Project>
+      <Name>Drive.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Driver.Shared\Driver.Shared.csproj">
+      <Project>{6AD80389-1ECD-4223-AFFF-693FFA80958F}</Project>
+      <Name>Driver.Shared</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -198,11 +444,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>56042</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:56042/</IISUrl>
+          <IISUrl>https://localhost:44371/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

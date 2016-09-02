@@ -41,10 +41,35 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto\AppDto.cs" />
+    <Compile Include="Dto\SharedSpaceDto.cs" />
+    <Compile Include="Dto\TrashBinDto.cs" />
+    <Compile Include="Dto\UserSharedSpaceDto.cs" />
+    <Compile Include="Dto\Users\UsersDto.cs" />
+    <Compile Include="Dto\Users\AuthorDto.cs" />
+    <Compile Include="Dto\FileUnitDto.cs" />
+    <Compile Include="Dto\FolderContentDto.cs" />
+    <Compile Include="Dto\FolderUnitDto.cs" />
+    <Compile Include="Dto\LogUnit.cs" />
+    <Compile Include="Dto\RoleDto.cs" />
+    <Compile Include="Dto\Pro\AcademyProCourseDto.cs" />
+    <Compile Include="Dto\Pro\CodeSampleDto.cs" />
+    <Compile Include="Dto\Pro\ContentLinkDto.cs" />
+    <Compile Include="Dto\Pro\LectureDto.cs" />
+    <Compile Include="Dto\Pro\TagDto.cs" />
+    <Compile Include="Dto\SearchResultDto.cs" />
+    <Compile Include="Dto\SpaceDto.cs" />
+    <Compile Include="Dto\Users\UserDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Dto\" />
+    <ProjectReference Include="..\Drive.DataAccess\Drive.DataAccess.csproj">
+      <Project>{1fd29625-9a63-412a-9e76-006aa7c3b761}</Project>
+      <Name>Drive.DataAccess</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EntityDiagram\class-diagram.pdf" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

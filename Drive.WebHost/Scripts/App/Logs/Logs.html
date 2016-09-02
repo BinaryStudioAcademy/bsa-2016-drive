@@ -1,0 +1,76 @@
+﻿
+<div class="container">
+    <br />
+    <div class="btn-group btn-breadcrumb">
+        <a href="#/AdminPanel" class="btn btn-info"><i class="fa fa-sliders fa-lg"></i> Admin Panel</a>
+        <a class="btn btn-default">Logs</a>
+    </div>
+    <div class="page-header">
+        <h2>
+            Logs
+        </h2>
+    </div>
+    <form>
+        <div class="form-group">
+            <div class="input-group">
+                <div class="input-group-addon"></div>
+                <input type="text" class="form-control" placeholder="Level filter" ng-model="logsCtrl.searchLevel.level">
+            </div>
+        </div>
+    </form>
+    <table class="table fixed_headers">
+        <thead>
+            <tr style="cursor: pointer">
+                <th style="width: 4%" ng-click="logsCtrl.sort.sortType = 'Id'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                    Id
+                    <span ng-show="logsCtrl.sort.sortType == 'Id' && !logsCtrl.sort.sortReverse">&#8595</span>
+                    <span ng-show="logsCtrl.sort.sortType == 'Id' && logsCtrl.sort.sortReverse">&#8593</span>
+                </th>
+                <th style="width: 8%" ng-click="logsCtrl.sort.sortType = 'Logged'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                    Logged
+                    <span ng-show="logsCtrl.sort.sortType == 'Logged' && !logsCtrl.sort.sortReverse">&#8595</span>
+                    <span ng-show="logsCtrl.sort.sortType == 'Logged' && logsCtrl.sort.sortReverse">&#8593</span>
+                </th>
+                <th style="width: 7%" ng-click="logsCtrl.sort.sortType = 'Level'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                    Log level
+                    <span ng-show="logsCtrl.sort.sortType == 'Level' && !logsCtrl.sort.sortReverse">&#8595</span>
+                    <span ng-show="logsCtrl.sort.sortType == 'Level' && logsCtrl.sort.sortReverse">&#8593</span>
+                </th>
+                <th style="width: 13%" ng-click="logsCtrl.sort.sortType = 'Message'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                    Log message
+                    <span ng-show="logsCtrl.sort.sortType == 'Message' && !logsCtrl.sort.sortReverse">&#8595</span>
+                    <span ng-show="logsCtrl.sort.sortType == 'Message' && logsCtrl.sort.sortReverse">&#8593</span>
+                </th>
+                <th style="width: 44%" ng-click="logsCtrl.sort.sortType = 'Exception'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                    Exception
+                    <span ng-show="logsCtrl.sort.sortType == 'Exception' && !logsCtrl.sort.sortReverse">&#8595</span>
+                    <span ng-show="logsCtrl.sort.sortType == 'Exception' && logsCtrl.sort.sortReverse">&#8593</span>
+                </th>
+                <th style="width: 15%" ng-click="logsCtrl.sort.sortType = 'CallerName'; logsCtrl.sort.sortReverse = !logsCtrl.sort.sortReverse">
+                    Caller Name
+                    <span ng-show="logsCtrl.sort.sortType == 'CallerName' && !logsCtrl.sort.sortReverse">&#8595</span>
+                    <span ng-show="logsCtrl.sort.sortType == 'CallerName' && logsCtrl.sort.sortReverse">&#8593</span>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="shadow" dir-paginate="log in logsCtrl.logs
+            | orderBy:logsCtrl.sort.sortType:logsCtrl.sort.sortReverse
+            | filter:logsCtrl.searchLevel
+            | itemsPerPage: logsCtrl.paginate.pageSize"
+                current-page="logsCtrl.paginate.currentPage">
+                <td style="width: 3%">{{ log.id }}</td>
+                <td style="width: 10%">{{ log.logged | date:'dd-MM-yyyy HH:mm:ss' }}</td>
+                <td style="width: 6%">{{ log.level }}</td>
+                <td style="width: 13%">{{ log.message }}</td>
+                <td style="width: 45%; white-space:inherit;" title="{{log.exception}}">
+                    {{log.exception | limitTo: 400}}{{log.exception.length > 400 ? '...' : ''}}
+                </td>
+                <td style="width: 27%">{{ log.callerName }}</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <dir-pagination-controls boundary-links="true"></dir-pagination-controls>
+        </tfoot>
+    </table>
+</div>
