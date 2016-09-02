@@ -109,7 +109,7 @@
                 });
                 swal({
                     title: "Deleted!",
-                    text: "File deleted successfully",
+                    text: "Folder deleted successfully",
                     timer: 2000,
                     showConfirmButton: false,
                     type: "success"
