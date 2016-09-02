@@ -36,7 +36,7 @@
                         <div class="sp-gv-wrapper-flex-item ">
                             <div class="sp-gv-item-content card">
                                 <div class="sp-gv-item-img-wrapper">
-                                    <img ng-src="{{fileFilterCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}"/>
+                                    <img ng-src="{{fileFilterCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" />
                                 </div>
                                 <div class="sp-gv-item-text">
                                     <h4 title="{{file.name}}">{{file.name}}</h4>
@@ -83,7 +83,6 @@
                 <div class="col-md-2">Type</div>
             </div>
         </div>
-<div class="filter-internal-wrapper">
         <div class="filter-table-internal">
             <div ng-repeat="space in fileFilterCtrl.spaces">
                 <div class="space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ space.name }}</div>
@@ -92,7 +91,7 @@
                         <div class="filter-table-row">
                             <div class="row filter-table-row" role="button" ng-repeat="file in space.files | orderBy: fileFilterCtrl.columnForOrder" ng-dblclick="fileFilterCtrl.openDocument(file.link)" context-menu="fileFilterCtrl.fileMenuOptions">
                                 <div class="col-md-3 filter-table-cell description" title="{{ file.name }}">
-                                    <img ng-src="{{fileFilterCtrl.chooseIcon(file.fileType)}}" height="{{fileFilterCtrl.iconHeight}}"/>
+                                    <img ng-src="{{fileFilterCtrl.chooseIcon(file.fileType)}}" height="{{fileFilterCtrl.iconHeight}}" />
                                     {{file.name | limitTo: 20}}{{file.name.length > 20 ? '...' : ''}}
                                 </div>
                                 <div class="col-md-3 filter-table-cell description" title="{{ file.description }}">
@@ -107,6 +106,5 @@
                 </div>
             </div>
         </div>
-    </div>
     </div>
 </div>
