@@ -7,6 +7,9 @@ using Driver.Shared.Dto;
 using Drive.DataAccess.Entities;
 using Drive.DataAccess.Interfaces;
 using Driver.Shared.Dto.Users;
+using System.IO;
+using System.Web;
+using Google.Apis.Drive.v3;
 
 namespace Drive.WebHost.Services
 {
@@ -340,6 +343,81 @@ namespace Drive.WebHost.Services
             }
         }
 
+        public async Task<string> UploadFile(HttpPostedFile file, int spaceId, int parentId)
+        {
+            var filename = file.FileName;
+            string link = "";
+            DriveService service = AuthorizationService.Authorization();
+
+            Google.Apis.Drive.v3.Data.File body = new Google.Apis.Drive.v3.Data.File();
+            body.Name = System.IO.Path.GetFileName(filename);
+            body.MimeType = GetMimeType(filename);
+            body.Parents = null;
+
+            // File's content.
+            Stream filestream = file.InputStream;
+            byte[] byteArray = ReadFully(filestream);
+
+            MemoryStream stream = new MemoryStream(byteArray);
+            try
+            {
+                FilesResource.CreateMediaUpload request = service.Files.Create(body, stream, GetMimeType(filename));
+                await request.UploadAsync();
+                link = request.ResponseBody.Id;
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+
+            var user = await _usersService.GetCurrentUser();
+            var space = await _unitOfWork?.Spaces?.GetByIdAsync(spaceId);
+            var parentFolder = await _unitOfWork?.Folders.GetByIdAsync(parentId);
+
+            if (space != null)
+            {
+                var fileDto = new FileUnit()
+                {
+                    Name = filename,
+                    FileType = FileType.Physical,
+                    Link = link,
+                    Description = "",
+                    CreatedAt = DateTime.Now,
+                    LastModified = DateTime.Now,
+                    IsDeleted = false,
+                    Space = space,
+                    FolderUnit = parentFolder,
+                    Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId)
+                };
+
+                _unitOfWork?.Files?.Create(fileDto);
+                await _unitOfWork?.SaveChangesAsync();
+            }
+            return "File uploaded successfully";
+        }
+
+        private static string GetMimeType(string fileName)
+        {
+            string mimeType = "application/unknown";
+            string ext = System.IO.Path.GetExtension(fileName).ToLower();
+            Microsoft.Win32.RegistryKey regKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(ext);
+            if (regKey != null && regKey.GetValue("Content Type") != null)
+                mimeType = regKey.GetValue("Content Type").ToString();
+            return mimeType;
+        }
+        private byte[] ReadFully(Stream input)
+        {
+            byte[] buffer = new byte[16 * 1024];
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read;
+                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, read);
+                }
+                return ms.ToArray();
+            }
+        }
         public void Dispose()
         {
             _unitOfWork?.Dispose();

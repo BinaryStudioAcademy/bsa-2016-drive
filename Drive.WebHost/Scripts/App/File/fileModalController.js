@@ -15,6 +15,10 @@
         vm.isValidUrl = isValidUrl;
         vm.checkUrl = checkUrl;
 
+        vm.inputFile = null;
+        vm.upload = upload;
+        vm.remove = remove;
+
         activate();
 
         function activate() {
@@ -115,6 +119,19 @@
             else {
                 vm.icon = "./Content/Icons/add-file_bw.svg";
             }
+        }
+
+        function upload() {
+            fileService.uploadFile(vm.file.spaceId,
+                    vm.file.parentId,
+                    vm.inputFile.file,
+                    function (response) {
+                        if (response)
+                            $uibModalInstance.close(response);
+                    });
+        }
+        function remove() {
+            vm.inputFile = null;
         }
     }
 }());

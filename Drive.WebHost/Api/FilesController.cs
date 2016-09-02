@@ -5,6 +5,7 @@ using Drive.WebHost.Services;
 using Driver.Shared.Dto;
 using Drive.DataAccess.Entities;
 using System;
+using System.Web;
 
 namespace Drive.WebHost.Api
 {
@@ -160,6 +161,32 @@ namespace Drive.WebHost.Api
             var result = await _service.GetAllByParentIdAsync(spaceId, parentId);
 
             return Ok(result);
+        }
+
+        // POST: api/files/spaceId=(int)&folderId=(int?)
+        [HttpPost]
+        [Route("{spaceId:int}")]
+        public async Task<IHttpActionResult> UploadFile(int spaceId, int? parentId = null)
+        {
+            int parent = parentId ?? 0;
+            string result = "";
+            HttpRequest request = HttpContext.Current.Request;
+            try
+            {
+                foreach (string file in request.Files)
+                {
+                    var fileContent = request.Files[file];
+                    if (fileContent != null && fileContent.ContentLength > 0)
+                    {
+                        result = await _service?.UploadFile(fileContent, spaceId, parent);
+                    }
+                }
+                return Ok(result);
+            }
+            catch (System.Exception)
+            {
+                return BadRequest();
+            }
         }
     }
 }

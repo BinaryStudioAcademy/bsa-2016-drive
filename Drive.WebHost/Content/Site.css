@@ -1090,3 +1090,60 @@ End Cancel button on search input*/
     margin-right: 15px
 }
 /*End Add new user*/
+
+/*Upload file*/
+.table-upload-file {
+    color: #666;
+    text-shadow: 1px 1px 0px #fff;
+    background: #eaebec;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    -moz-box-shadow: 0 1px 2px #d1d1d1;
+    -webkit-box-shadow: 0 1px 2px #d1d1d1;
+    box-shadow: 0 1px 2px #d1d1d1;
+}   
+.table-upload-file th {
+    height: 50px;
+    background: #eaebec;
+}
+.table-upload-file td {
+    height: 50px;
+    background: white;
+}
+
+.dropzone {
+  width: 250px;
+  height: 45px;
+  border: 1px solid #ccc;
+  text-align: center;
+  padding: 30px;
+  margin: 20px;
+  font-family: Arial;
+}
+
+.fileinput-button {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+.fileinput-button input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0;
+  opacity: 0;
+  -ms-filter: 'alpha(opacity=0)';
+  font-size: 200px !important;
+  direction: ltr;
+  cursor: pointer;
+}
+
+@media screen\9 {
+    .fileinput-button input {
+        filter: alpha(opacity=0);
+        font-size: 100%;
+        height: 100%;
+    }
+}
+/*End upload file*/
