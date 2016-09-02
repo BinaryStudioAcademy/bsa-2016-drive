@@ -13,5 +13,7 @@ namespace Drive.WebHost.Services
         Task<IEnumerable<TrashBinDto>> GetTrashBinContentAsync();
         Task RestoreFileAsync(int id);
         Task DeleteFileAsync(int id);
+        Task RestoreFolderAsync(int id);
+        Task DeleteFolderAsync(int id);
     }
 }

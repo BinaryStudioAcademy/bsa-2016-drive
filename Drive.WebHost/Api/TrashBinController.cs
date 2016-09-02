@@ -33,19 +33,39 @@ namespace Drive.WebHost.Api
             return Ok(result);
         }
 
-        // DELETE: api/TrashBin/{id}
+        // DELETE: api/TrashBin/File/{id}
         [HttpDelete]
+        [Route("file/{id}")]
         public async Task<IHttpActionResult> DeleteFile(int id)
         {
             await _trashBinService.DeleteFileAsync(id);
             return Ok();
         }
 
-        // PUT: api/TrashBin/{id}
+        // DELETE: api/TrashBin/Folder/{id}
+        [HttpDelete]
+        [Route("folder/{id}")]
+        public async Task<IHttpActionResult> DeleteFolder(int id)
+        {
+            await _trashBinService.DeleteFolderAsync(id);
+            return Ok();
+        }
+
+        // PUT: api/TrashBin/File/{id}
         [HttpPut]
+        [Route("file/{id}")]
         public async Task<IHttpActionResult> RestoreFile(int id)
         {
             await _trashBinService.RestoreFileAsync(id);
+            return Ok();
+        }
+
+        // PUT: api/TrashBin/Folder/{id}
+        [HttpPut]
+        [Route("folder/{id}")]
+        public async Task<IHttpActionResult> RestoreFolder(int id)
+        {
+            await _trashBinService.RestoreFolderAsync(id);
             return Ok();
         }
     }
