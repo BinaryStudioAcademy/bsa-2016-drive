@@ -22,6 +22,9 @@
         vm.restoreFolder = restoreFolder;
         vm.deleteFileFromScope = deleteFileFromScope;
         vm.deleteFolderFromScope = deleteFolderFromScope;
+        vm.restoreSpace = restoreSpace;
+        vm.restoreTrashBin = restoreTrashBin;
+        
 
         activate();
 
@@ -80,6 +83,29 @@
             });
         }
 
+        function restoreSpace(space, index) {
+            var spaces = [space];
+            trashBinService.restoreSpaces(spaces, function () {
+                vm.spaces.splice(index, 1);
+                toastr.success(
+                      'All content of '+ space.name +' successfully restored!', 'Trash bin',
+                      {
+                          closeButton: true, timeOut: 5000
+                      });
+            });
+        }
+
+        function restoreTrashBin() {
+            trashBinService.restoreSpaces(vm.spaces, function () {
+                vm.spaces = [];
+                toastr.success(
+                      'All contents of the trash successfully restored', 'Trash bin',
+                      {
+                          closeButton: true, timeOut: 5000
+                      });
+            });
+        }
+
         function deleteFilePermanently(id, spaceId) {
             swal({
                 title: "Deleting file!",
@@ -96,7 +122,7 @@
                 swal({
                     title: "Deleted!",
                     text: "File deleted successfully",
-                    timer: 2000,
+                    timer: 1500,
                     showConfirmButton: false,
                     type: "success"
                 });
@@ -119,7 +145,7 @@
                 swal({
                     title: "Deleted!",
                     text: "Folder deleted successfully",
-                    timer: 2000,
+                    timer: 1500,
                     showConfirmButton: false,
                     type: "success"
                 });
@@ -137,10 +163,7 @@
         ];
 
         vm.spaceMenuOptions = [
-           [
-               'Restore all items for this space', function ($itemScope) {
-               }
-           ],
+           ['Restore all items for this space', function ($itemScope) {vm.restoreSpace($itemScope.space, $itemScope.$index);}],
            [
                'Clear all items for this space', function ($itemScope) {
                    return deleteFile($itemScope.file.id);

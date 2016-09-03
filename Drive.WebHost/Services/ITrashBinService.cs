@@ -12,5 +12,6 @@ namespace Drive.WebHost.Services
         Task DeleteFileAsync(int id);
         Task RestoreFolderAsync(int id);
         Task DeleteFolderAsync(int id);
+        Task RestoreAllFromSpacesAsync(IEnumerable<TrashBinDto> spaces);
     }
 }

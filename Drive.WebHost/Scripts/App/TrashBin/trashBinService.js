@@ -15,6 +15,7 @@
             deleteFolderPermanently: deleteFolderPermanently,
             restoreFile: restoreFile,
             restoreFolder: restoreFolder,
+            restoreSpaces: restoreSpaces,
             orderByColumn: orderByColumn
         };
 
@@ -69,6 +70,15 @@
 
         function restoreFolder(id, callBack) {
             $http.put(baseUrl + '/api/trashbin/folder/' + id)
+            .then(function (response) {
+                if (callBack) {
+                    callBack(response.data);
+                }
+            });
+        }
+
+        function restoreSpaces(spaces, callBack) {
+            $http.put(baseUrl + '/api/trashbin/spaces', spaces)
             .then(function (response) {
                 if (callBack) {
                     callBack(response.data);

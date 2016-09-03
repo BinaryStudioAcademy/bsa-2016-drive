@@ -1,4 +1,6 @@
 ﻿using Drive.WebHost.Services;
+using Driver.Shared.Dto;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -76,6 +78,15 @@ namespace Drive.WebHost.Api
         public async Task<IHttpActionResult> RestoreFolder(int id)
         {
             await _trashBinService.RestoreFolderAsync(id);
+            return Ok();
+        }
+
+        // PUT: api.TrashBin/Spaces
+        [HttpPut]
+        [Route("spaces")]
+        public async Task<IHttpActionResult> RestoreSpaces(List<TrashBinDto> spaces)
+        {
+            await _trashBinService.RestoreAllFromSpacesAsync(spaces);
             return Ok();
         }
     }

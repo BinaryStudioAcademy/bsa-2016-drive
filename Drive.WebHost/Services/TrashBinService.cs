@@ -143,14 +143,28 @@ namespace Drive.WebHost.Services
 
         public async Task RestoreFileAsync(int id)
         {
-            await _unitOfWork.Files.Restore(id);
-            await _unitOfWork?.SaveChangesAsync();
+            try
+            {
+                await _unitOfWork.Files.Restore(id);
+                await _unitOfWork?.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.WriteError(ex, ex.Message);
+            }
         }
 
         public async Task DeleteFileAsync(int id)
         {
-            await _unitOfWork.Files.ForceDelete(id);
-            await _unitOfWork?.SaveChangesAsync();
+            try
+            {
+                await _unitOfWork.Files.ForceDelete(id);
+                await _unitOfWork?.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.WriteError(ex, ex.Message);
+            }
         }
 
         public async Task RestoreFolderAsync(int id)
@@ -224,6 +238,21 @@ namespace Drive.WebHost.Services
             catch (Exception ex)
             {
                 _logger.WriteError(ex, ex.Message);
+            }
+        }
+
+        public async Task RestoreAllFromSpacesAsync(IEnumerable<TrashBinDto> spaces)
+        {
+            foreach (var space in spaces)
+            {
+                foreach (var file in space.Files)
+                {
+                    await RestoreFileAsync(file.Id);
+                }
+                foreach (var folder in space.Folders)
+                {
+                    await RestoreFolderAsync(folder.Id);
+                }
             }
         }
 
