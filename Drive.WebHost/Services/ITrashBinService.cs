@@ -1,4 +1,5 @@
 ﻿using Driver.Shared.Dto;
+using Driver.Shared.Dto.TrashBin;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,6 +13,8 @@ namespace Drive.WebHost.Services
         Task DeleteFileAsync(int id);
         Task RestoreFolderAsync(int id);
         Task DeleteFolderAsync(int id);
-        Task RestoreAllFromSpacesAsync(IEnumerable<TrashBinDto> spaces);
+        Task RestoreAllFromSpacesAsync(IEnumerable<int> spaces);
+        Task ClearAllFromSpaceAsync(int spaceId);
+        Task ClearTrashBinAsync();
     }
 }

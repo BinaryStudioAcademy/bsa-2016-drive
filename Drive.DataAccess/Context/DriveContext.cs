@@ -130,15 +130,6 @@ namespace Drive.DataAccess.Context
                     }
                 );
 
-            modelBuilder.Entity<DataUnit>()
-                .HasMany<Shared>(f => f.SharedFor)
-                .WithOptional(s => s.File)
-                .WillCascadeOnDelete(true);
-
-            modelBuilder.Entity<User>()
-                .HasMany<Shared>(u => u.SharedFiles)
-                .WithRequired(s => s.User)
-                .WillCascadeOnDelete(true);
         }
 
 

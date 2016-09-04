@@ -13,6 +13,8 @@
             searchTrashBin: searchTrashBin,
             deleteFilePermanently: deleteFilePermanently,
             deleteFolderPermanently: deleteFolderPermanently,
+            clearSpace: clearSpace,
+            clearTrashBin: clearTrashBin,
             restoreFile: restoreFile,
             restoreFolder: restoreFolder,
             restoreSpaces: restoreSpaces,
@@ -52,6 +54,24 @@
 
         function deleteFolderPermanently(id, callBack) {
             $http.delete(baseUrl + '/api/trashbin/folder/' + id)
+            .then(function (response) {
+                if (callBack) {
+                    callBack(response.data);
+                }
+            });
+        }
+
+        function clearSpace(spaceId, callBack) {
+            $http.delete(baseUrl + '/api/trashbin/space/' + spaceId)
+            .then(function (response) {
+                if (callBack) {
+                    callBack(response.data);
+                }
+            });
+        }
+
+        function clearTrashBin(callBack) {
+            $http.delete(baseUrl + '/api/trashbin')
             .then(function (response) {
                 if (callBack) {
                     callBack(response.data);

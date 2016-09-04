@@ -20,6 +20,5 @@ namespace Drive.DataAccess.Entities
         public IList<Space> ReadPermissionSpaces { get; set; }
 
         public IList<Space> ModifyPermissionSpaces { get; set; }
-        public IList<Shared> SharedFiles { get; set; }
     }
 }
