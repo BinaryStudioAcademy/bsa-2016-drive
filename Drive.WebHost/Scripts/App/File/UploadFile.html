@@ -1,0 +1,58 @@
+﻿<div file-dropzone="" drop-file="fileModalCtrl.inputFile.file" >
+    <form role="form" name="uploadForm" enctype="multipart/form-data">
+        <div class="modal-header">
+            <h3 class="modal-title"><span style="font-size: 40px; color: darkgray;"><i ng-class="fileModalCtrl.icon"></i></span> Upload file</h3>
+        </div>
+        <div class="modal-body" style="padding-bottom:2em;">
+            <div class="row">
+                <div class="col-md-7">
+                    <label>Choose local files</label>
+                    <button type="button" class="btn btn-default fileinput-button">
+                        <span>
+                            <i class="glyphicon glyphicon-plus"></i>
+                            Add file...
+                            <input type="file" name="files" fileread input-file="fileModalCtrl.inputFile.file" >
+                        </span>
+                    </button>
+                </div>
+                <!--<div class="col-md-5 input-group">
+                    <input type="url" class="form-control" placeholder="Type link here">
+                    <button type="button" class="btn btn-default" ng-disabled="true">
+                        <i class="glyphicon glyphicon-plus"></i>
+                        <span>Add</span>
+                    </button>
+                </div>-->
+            </div>
+            <table class="table table-upload-file">
+                <thead>
+                    <tr>
+                        <th width="50%">Name</th>
+                        <th>Size</th>
+                        <th>Type</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>{{ fileModalCtrl.inputFile.file.name }}</strong></td>
+                        <td>{{ fileModalCtrl.inputFile.file.size/1024/1024|number:3 }} MB</td>
+                        <td>{{ fileModalCtrl.inputFile.file.type }}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="modal-footer">
+            <div class="col-md-6">
+                <button type="button" class="btn btn-default btn-s" ng-click="fileModalCtrl.upload()" ng-disabled="!fileModalCtrl.inputFile">
+                    <span class="glyphicon glyphicon-upload"></span> Upload file
+                </button>
+                <button type="button" class="btn btn-default btn-s" ng-click="fileModalCtrl.remove()" ng-disabled="!fileModalCtrl.inputFile">
+                    <span class="glyphicon glyphicon-trash"></span> Remove
+                </button>
+            </div>
+            <div class="col-md-offset-4 col-md-2">
+                <button class="btn btn-default" type="submit" ng-click="fileModalCtrl.cancel()">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>

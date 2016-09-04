@@ -17,11 +17,15 @@
             deleteFile: deleteFile,
             getFile: getFile,
             getDeletedFile: getDeletedFile,
+            createCopyFile: createCopyFile,
             getAllFiles: getAllFiles,
             getFilesApp: getFilesApp,
             getAllByParentId: getAllByParentId,
             orderByColumn: orderByColumn,
-            openFile: openFile
+            searchFiles: searchFiles,
+            openFile: openFile,
+            chooseIcon: chooseIcon,
+            uploadFile: uploadFile
         };
 
         function getAllFiles(callBack) {
@@ -47,11 +51,30 @@
 
         function getFilesApp(fileType, callBack) {
             $http.get(baseUrl + '/api/files/apps/' + fileType)
-                .then(function (response) {
+                .then(function(response) {
                     if (callBack) {
                         callBack(response.data);
                     }
-                })
+                });
+        }
+
+        function searchFiles(fileType, text, callback) {
+            $http.get(baseUrl + '/api/files/apps/' + fileType + '/search', {
+                params: {
+                    fileType: fileType,
+                    text: text
+                }
+            })
+            .then(function (response) {
+                if (callback) {
+                    callback(response.data);
+                }
+            }, function errorCallback(response) {
+                console.log('Error in searchFiles Method! Code:' + response.status);
+                if (response.status == 404 && callback) {
+                    callback(response.data)
+                }
+            });
         }
 
         function getFile(id, callBack) {
@@ -90,6 +113,28 @@
                     });
         }
 
+        function uploadFile(spaceId, parentId, file, callBack) {
+
+            var fd = new FormData();
+            fd.append('file', file);
+
+            $http.post(baseUrl + '/api/files/upload?spaceId=' + spaceId + '&parentId=' + parentId, fd, {
+                withCredentials: false,
+                headers: {
+                    'Content-Type': undefined
+                },
+                transformRequest: angular.identity
+            })
+            .then(function (response) {
+                if (callBack) {
+                    callBack(response.data);
+                }
+            },
+            function () {
+                console.log('Error while uploading file!');
+            });
+        }
+
         function updateFile(id, file, callBack) {
             $http.put(baseUrl + '/api/files/' + id, file)
                 .then(function(response) {
@@ -104,6 +149,18 @@
 
         function updateDeletedFile(id, oldParentId, file, callBack) {
             $http.put(baseUrl + '/api/files/deleted/' + id + '?oldParentId=' + oldParentId, file)
+                .then(function (response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                },
+                    function () {
+                        console.log('Error while getting file!');
+                    });
+        }
+
+        function createCopyFile(id, file, callBack) {
+            $http.put(baseUrl + '/api/files/copied/' + id, file)
                 .then(function (response) {
                     if (callBack) {
                         callBack(response.data);
@@ -134,6 +191,27 @@
 
         function openFile(url) {
             window.open(url, '_blank');
+        }
+
+        function chooseIcon(type) {
+            switch (type) {
+                case 0:
+                    return 'Undefined';
+                case 1:
+                    return "./Content/Icons/doc.svg";
+                case 2:
+                    return "./Content/Icons/xls.svg";
+                case 3:
+                    return "./Content/Icons/ppt.svg";
+                case 4:
+                    return "./Content/Icons/trello.svg";
+                case 5:
+                    return "./Content/Icons/link.svg";
+                case 6:
+                    return "";
+                default:
+                    return "./Content/Icons/folder.svg";
+            }
         }
 
         return service;

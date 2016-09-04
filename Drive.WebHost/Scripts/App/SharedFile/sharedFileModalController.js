@@ -17,6 +17,8 @@
         vm.usersWithPermissions = [];
         vm.addUserPermissons = addUserPermissons;
         vm.removeUsersWithPermissions = removeUsersWithPermissions;
+        vm.permissionCanModifyChanged = permissionCanModifyChanged;
+        vm.permissionCanReadChanged = permissionCanReadChanged;
 
         activate();
 
@@ -59,6 +61,15 @@
                 }
         }
 
+        function removeUserFromListUsers(userId) {
+            for (var j = 0; j < vm.users.length; j++) {
+                if (vm.users[j].id == userId) {
+                    vm.users.splice(j, 1);
+                    break;
+                }
+            }
+        }
+
         function removeUsersWithPermissions(user) {
             for (var i = 0; i < vm.usersWithPermissions.length; i++) {
                 if (vm.usersWithPermissions[i].globalId == user.globalId) {
@@ -78,6 +89,9 @@
         }
 
         function addUserPermissons() {
+            if (vm.selected.id == undefined || vm.selected.id == null) {
+                return;
+            }
             var user = {
                 globalId: vm.selected.id,
                 name: vm.selected.name,
@@ -95,10 +109,12 @@
             if (existing == -1) {
                 if (Array.isArray(vm.usersWithPermissions)) {
                     vm.usersWithPermissions.push(user);
+                    removeUserFromListUsers(user.globalId);
                 }
                 else {
                     vm.usersWithPermissions = [];
                     vm.usersWithPermissions.push(user);
+                    removeUserFromListUsers(user.globalId);
                 }
             }
             else {
@@ -115,6 +131,24 @@
                     }
                 }
             
+        }
+
+        function permissionCanModifyChanged(userId) {
+            for (var i = 0; i < vm.usersWithPermissions.length; i++) {
+                if (vm.usersWithPermissions[i].globalId == userId && vm.usersWithPermissions[i].canModify == true) {
+                    vm.usersWithPermissions[i].canRead = true;
+                    break;
+                }
+            }
+        }
+
+        function permissionCanReadChanged(userId) {
+            for (var i = 0; i < vm.usersWithPermissions.length; i++) {
+                if (vm.usersWithPermissions[i].globalId == userId && vm.usersWithPermissions[i].canRead == false) {
+                    vm.usersWithPermissions[i].canModify = false;
+                    break;
+                }
+            }
         }
 }
 }());

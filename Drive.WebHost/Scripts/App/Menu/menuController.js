@@ -4,9 +4,9 @@
     angular.module("driveApp")
         .controller("MenuController", MenuController);
 
-    MenuController.$inject = ['MenuService', '$location', '$uibModal', '$rootScope', '$timeout'];
+    MenuController.$inject = ['MenuService', '$location', '$uibModal', '$rootScope'];
 
-    function MenuController(menuService, $location, $uibModal, $rootScope, $timeout) {
+    function MenuController(menuService, $location, $uibModal, $rootScope) {
 
         var vm = this;
 
@@ -17,6 +17,7 @@
         vm.redirectToAddFile = redirectToAddFile;
         vm.redirectToAdminPanel = redirectToAdminPanel;
         vm.redirectToApps = redirectToApps;
+        vm.redirectToTrashBin = redirectToTrashBin;
         vm.getAllSpaces = getAllSpaces;
         vm.open = open;
         vm.spaces = {};
@@ -26,7 +27,14 @@
         function getAllSpaces() {
             menuService.getAllSpaces(function (data) {
                 vm.spaces = data;
+                for (var i = 0; i < vm.spaces.length; i++) {
+                    if (vm.spaces[i].type == 2) {
+                        vm.showOthers = true;
+                        break;
+                    }
+                }
             });
+
         }
 
         function redirectToBinarySpace() {
@@ -38,7 +46,7 @@
         };
 
         function redirectToSharedSpace() {
-            $location.url("/sharedspace");
+            $location.url("sharedspace");
         };
 
         function redirectToSpace(id) {
@@ -54,8 +62,12 @@
         };
 
         function redirectToAdminPanel() {
-            $location.url("/AdminPanel");
+            $location.url("AdminPanel");
         };
+
+        function redirectToTrashBin() {
+            $location.url("trashbin");
+        }
 
         //Open modal window for creating new space
         function open(size) {
@@ -64,8 +76,8 @@
                 animation: true,
                 templateUrl: 'Scripts/App/Space/Create.html',
                 windowTemplateUrl: 'Scripts/App/Space/Modal.html',
-                controller: 'CreateController',
-                controllerAs: 'createCtrl',
+                controller: 'CreateSpaceController',
+                controllerAs: 'createSpaceCtrl',
                 keyboard: true,
                 size: size
 
@@ -80,7 +92,8 @@
         };
 
         function activate() {
-            return getAllSpaces();
+            vm.showOthers = false;
+            getAllSpaces();
         }
 
         $rootScope.$on("getSpacesInMenu", function () {

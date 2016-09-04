@@ -1,0 +1,25 @@
+<svg width="400" height="400" xmlns="http://www.w3.org/2000/svg">
+ <!-- Generator: Sketch 3.4.3 (16044) - http://www.bohemiancoding.com/sketch -->
+ <title>trello-mark-circle</title>
+ <desc>Created with Sketch.</desc>
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="402" width="582" y="-1" x="-1"/>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <g fill-rule="evenodd" fill="none" id="Page-1">
+   <g id="Original-Assets">
+    <ellipse ry="199" rx="199" id="svg_1" cy="200.5" cx="200.5" stroke-width="1.5" stroke="null" fill="#0079bf"/>
+    <g stroke="null" id="Trello-Logo">
+     <g stroke="null" id="Trello-Mark---White">
+      <g stroke="null" fill="#FFFFFF" id="Logo">
+       <path fill="#ffffff" stroke="null" id="Board" d="m124.00138,99c-13.80788,0 -25.00138,11.19944 -25.00138,25.00138l0,149.99724c0,13.80788 11.19944,25.00138 25.00138,25.00138l149.99724,0c13.80788,0 25.00138,-11.19944 25.00138,-25.00138l0,-149.99724c0,-13.80788 -11.19944,-25.00138 -25.00138,-25.00138l-149.99724,0zm99.99566,26c-6.62578,0 -11.99704,5.3746 -11.99704,12.00591l0,63.48818c0,6.63068 5.37323,12.00591 11.99704,12.00591l37.00592,0c6.62578,0 11.99704,-5.3746 11.99704,-12.00591l0,-63.48818c0,-6.63068 -5.37323,-12.00591 -11.99704,-12.00591l-37.00592,0zm-87,0c-6.62578,0 -11.99704,5.36904 -11.99704,11.99164l0,113.51672c0,6.6228 5.37323,11.99164 11.99704,11.99164l37.00592,0c6.62578,0 11.99704,-5.36904 11.99704,-11.99164l0,-113.51672c0,-6.6228 -5.37323,-11.99164 -11.99704,-11.99164l-37.00592,0z"/>
+      </g>
+     </g>
+    </g>
+   </g>
+  </g>
+ </g>
+</svg>

@@ -14,6 +14,7 @@ namespace Drive.WebHost.Services
 
         Task<SpaceDto> GetAsync(int id);
         Task<SpaceDto> GetAsync(int id, int page, int count, string sotr);
+        Task<SpaceDto> GetSpaceByTypeAsync(SpaceType type, int page, int count, string sort);
         Task<int> GetTotalAsync(int id);
 
         Task<int> CreateAsync(SpaceDto space);

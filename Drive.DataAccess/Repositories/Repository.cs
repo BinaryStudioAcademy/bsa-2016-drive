@@ -81,18 +81,16 @@ namespace Drive.DataAccess.Repositories
             }
         }
 
-        public void ForceDelete(int id)
+        public async Task ForceDelete(int id)
         {
             try
             {
-                var entity = GetById(id);
+                var entity = await GetByIdDeletedAsync(id);
                 if (entity == null)
                 {
                     throw new ArgumentNullException(nameof(id));
                 }
-
-                if( entity.IsDeleted == true)
-                    Entities.Remove(entity);
+                Entities.Remove(entity);
             }
             catch (Exception ex)
             {
@@ -100,18 +98,16 @@ namespace Drive.DataAccess.Repositories
             }
         }
 
-        public void Restore(int id)
+        public async Task Restore(int id)
         {
             try
             {
-                var entity = GetById(id);
+                var entity = await GetByIdDeletedAsync(id);
                 if (entity == null)
                 {
                     throw new ArgumentNullException(nameof(id));
                 }
-
-                if (entity.IsDeleted == true)
-                    entity.IsDeleted = false;
+                entity.IsDeleted = false;
             }
             catch (Exception ex)
             {

@@ -34,12 +34,7 @@ namespace Drive.WebHost.Services.Pro
                 ModifiedAt = lecture.ModifiedAt,
                 IsDeleted = lecture.IsDeleted,
                 StartDate = lecture.StartDate,
-                Tags = lecture.Tags.Select(tag => new TagDto
-                {
-                    Id = tag.Id,
-                    Name = tag.Name,
-                    IsDeleted = tag.IsDeleted
-                })
+                CourseId = lecture.Course.Id
             }).ToListAsync();
 
             return result;
@@ -47,7 +42,7 @@ namespace Drive.WebHost.Services.Pro
 
         public async Task<LectureDto> GetAsync(int id)
         {
-            var result = await _unitOfWork.Lectures.Query.Select(lecture => new LectureDto
+            var result = await _unitOfWork.Lectures.Query.Where(x => x.Id == id).Select(lecture => new LectureDto
             {
                 Id = lecture.Id,
                 Name = lecture.Name,
@@ -61,35 +56,40 @@ namespace Drive.WebHost.Services.Pro
                    Id = link.Id,
                    Name = link.Name,
                    Description = link.Description,
-                   Link = link.Link
+                   Link = link.Link,
+                   LinkType = link.LinkType
                 }),
                 SlidesLinks = lecture.ContentList.Where(links => links.LinkType == LinkType.Slide).Select(link => new ContentLinkDto
                 {
                     Id = link.Id,
                     Name = link.Name,
                     Description = link.Description,
-                    Link = link.Link
+                    Link = link.Link,
+                    LinkType = link.LinkType
                 }),
                 SampleLinks = lecture.ContentList.Where(links => links.LinkType == LinkType.Sample).Select(link => new ContentLinkDto
                 {
                     Id = link.Id,
                     Name = link.Name,
                     Description = link.Description,
-                    Link = link.Link
+                    Link = link.Link,
+                    LinkType = link.LinkType
                 }),
                 UsefulLinks = lecture.ContentList.Where(links => links.LinkType == LinkType.Useful).Select(link => new ContentLinkDto
                 {
                     Id = link.Id,
                     Name = link.Name,
                     Description = link.Description,
-                    Link = link.Link
+                    Link = link.Link,
+                    LinkType = link.LinkType
                 }),
                 RepositoryLinks = lecture.ContentList.Where(links => links.LinkType == LinkType.Repository).Select(link => new ContentLinkDto
                 {
                     Id = link.Id,
                     Name = link.Name,
                     Description = link.Description,
-                    Link = link.Link
+                    Link = link.Link,
+                    LinkType = link.LinkType
                 }),
                 CodeSamples = lecture.CodeSamples.Select(sample => new CodeSampleDto
                 {
@@ -98,12 +98,7 @@ namespace Drive.WebHost.Services.Pro
                    IsDeleted = sample.IsDeleted,
                    Code = sample.Code
                 }),
-                Tags = lecture.Tags.Select(tag => new TagDto
-                {
-                    Id = tag.Id,
-                    Name = tag.Name,
-                    IsDeleted = tag.IsDeleted
-                })
+                CourseId = lecture.Course.Id
             }).SingleOrDefaultAsync();
 
             return result;
@@ -111,6 +106,14 @@ namespace Drive.WebHost.Services.Pro
 
         public async Task<LectureDto> CreateAsync(LectureDto dto)
         {
+            var linksList = new List<ContentLink>();
+
+            linksList.AddRange(ProcessList(dto.VideoLinks, LinkType.Video));
+            linksList.AddRange(ProcessList(dto.RepositoryLinks, LinkType.Repository));
+            linksList.AddRange(ProcessList(dto.SampleLinks, LinkType.Sample));
+            linksList.AddRange(ProcessList(dto.SlidesLinks, LinkType.Slide));
+            linksList.AddRange(ProcessList(dto.UsefulLinks, LinkType.Useful));
+
             var lecture = new Lecture
             {
                 Name = dto.Name,
@@ -119,11 +122,14 @@ namespace Drive.WebHost.Services.Pro
                 IsDeleted = false,
                 CreatedAt = DateTime.Now,
                 ModifiedAt = DateTime.Now,
-                Tags = new List<Tag>(dto.Tags.Select(tag => new Tag
+                Course = await _unitOfWork.AcademyProCourses.GetByIdAsync(dto.CourseId),
+                ContentList = linksList,
+                CodeSamples = dto.CodeSamples.Select(sample => new CodeSample()
                 {
-                    Name = tag.Name,
+                    Name = sample.Name,
+                    Code = sample.Code,
                     IsDeleted = false
-                }))
+                }).ToList()
             };
 
             _unitOfWork.Lectures.Create(lecture);
@@ -139,6 +145,7 @@ namespace Drive.WebHost.Services.Pro
             lecture.StartDate = dto.StartDate;
             lecture.ModifiedAt = DateTime.Now;
             lecture.IsDeleted = dto.IsDeleted;
+            lecture.CourseId = dto.CourseId;
 
             await _unitOfWork.SaveChangesAsync();
 
@@ -154,6 +161,18 @@ namespace Drive.WebHost.Services.Pro
         public void Dispose()
         {
             _unitOfWork.Dispose();
+        }
+
+        public IList<ContentLink> ProcessList(IEnumerable<ContentLinkDto> dtoList, LinkType type)
+        {
+            return new List<ContentLink>(dtoList.Select(x => new ContentLink
+            {
+                Name = x.Name,
+                Description = x.Description,
+                IsDeleted = false,
+                Link = x.Link,
+                LinkType = type
+            }));
         }
     }
 }

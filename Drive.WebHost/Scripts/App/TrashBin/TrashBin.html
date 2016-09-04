@@ -1,0 +1,157 @@
+﻿
+<div class="container col-md-12">
+    <br />
+    <div class="btn-group btn-breadcrumb">
+        <a class="btn btn-info"><i class="fa fa-trash fa-lg"></i> Trash bin</a>
+    </div>
+    <div class="row" style="margin: 1em 0 1em 0;">
+        <div class="col-lg-push-4-offset pull-right">
+            <button class="btn btn-default" ng-click="trashBinCtrl.changeView(trashBinCtrl.view)">
+                <i class={{trashBinCtrl.view}} title="view"> </i>
+            </button>
+        </div>
+        <div class="form-inline">
+            <div class="col-sm-3 pull-left nopadding">
+                <button type="button" class="btn btn-default btn-custom" ng-click="spaceCtrl.createNewFolder()" title="Clear Trash Bin">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
+        <div>
+            <div class="col-sm-3 pull-right">
+                <div>
+                    <div class="input-group">
+                        <form id="form-container">
+                            <div id="searchtext">
+                                <input type="text" size="40" class="search-input" value="" name="s" id="s" placeholder="Search..." ng-model="trashBinCtrl.searchText">
+                                <a id="clear_input" ng-show="trashBinCtrl.searchText.length > 0" ng-click="trashBinCtrl.cancelSearch()">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                                <button class="search-submit-button" type="submit" ng-click="trashBinCtrl.search()"> <i class="fa fa-search"></i> </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrap" ng-show="trashBinCtrl.showGrid">
+        <div ng-show="trashBinCtrl.spaces.length == 0">
+            <h1 class="text-muted text-center">Trash bin is empty</h1>
+        </div>
+        <div ng-repeat="space in trashBinCtrl.spaces" context-menu="trashBinCtrl.spaceMenuOptions">
+            <div class="grid-space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ space.name }}</div>
+            <div uib-collapse="space.isCollapsed">
+                <ul class="sp-gv-flex-container">
+                    <li class="sp-gv-flex-item" role="button" context-menu="trashBinCtrl.folderMenuOptions" ng-repeat="folder in space.folders" title="Created {{ folder.createdAt | date : 'short' }}">
+                        <div class="sp-gv-wrapper-flex-item">
+                            <div class="sp-gv-item-content card">
+                                <div class="sp-gv-item-img-wrapper">
+                                    <img src="./Content/Icons/folder.svg" alt="Folder" title="Folder" />
+                                </div>
+                                <div class="sp-gv-item-text">
+                                    <h4 title="{{folder.name}}">{{folder.name}}</h4>
+                                    <h5 title="{{folder.author.name}}">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        {{folder.author.name}}
+                                    </h5>
+                                    <p title="{{folder.description}}">{{folder.description}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="sp-gv-flex-item" role="button" context-menu="trashBinCtrl.fileMenuOptions" ng-repeat="file in space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="trashBinCtrl.openDocument(file.link)">
+                        <div class="sp-gv-wrapper-flex-item">
+                            <div class="sp-gv-item-content card">
+                                <div class="sp-gv-item-img-wrapper">
+                                    <img ng-src="{{trashBinCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" />
+                                </div>
+                                <div class="sp-gv-item-text">
+                                    <h4 title="{{file.name}}">{{file.name}}</h4>
+                                    <h5 title="{{file.author.name}}">
+                                        <i class="fa fa-user" aria-hidden="true"></i>
+                                        {{file.author.name}}
+                                    </h5>
+                                    <p title="{{file.description}}">{{file.description}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="sp-gv-flex-item"></li>
+                    <li class="sp-gv-flex-item"></li>
+                    <li class="sp-gv-flex-item"></li>
+                </ul>
+            </div>
+            <hr />
+        </div>
+    </div>
+    <div class="filter-table container-md" ng-show="trashBinCtrl.showTable">
+        <div class="header-wrapper">
+            <div class="row header-row">
+                <div class="col-md-3" ng-click="trashBinCtrl.orderByColumn('name')">
+                    Name
+                    <span ng-show="trashBinCtrl.columnForOrder == 'name'"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="trashBinCtrl.columnForOrder == '-name'"><i class="fa fa-sort-desc"></i></span>
+                </div>
+                <div class="col-md-3" ng-click="trashBinCtrl.orderByColumn('description')">
+                    Description
+                    <span ng-show="trashBinCtrl.columnForOrder == 'description'"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="trashBinCtrl.columnForOrder == '-description'"><i class="fa fa-sort-desc"></i></span>
+                </div>
+                <div class="col-md-2" ng-click="trashBinCtrl.orderByColumn('author.name')">
+                    Author
+                    <span ng-show="trashBinCtrl.columnForOrder == 'author.name'"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="trashBinCtrl.columnForOrder == '-author.name'"><i class="fa fa-sort-desc"></i></span>
+                </div>
+                <div class="col-md-2" ng-click="trashBinCtrl.orderByColumn('createdAt')">
+                    Created
+                    <span ng-show="trashBinCtrl.columnForOrder == 'createdAt'"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="trashBinCtrl.columnForOrder == '-createdAt'"><i class="fa fa-sort-desc"></i></span>
+                </div>
+                <div class="col-md-2" ng-click="trashBinCtrl.orderByColumn('fileType')">
+                    Type
+                    <span ng-show="trashBinCtrl.columnForOrder == 'fileType'"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="trashBinCtrl.columnForOrder == '-fileType'"><i class="fa fa-sort-desc"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="filter-table-internal">
+            <div ng-show="trashBinCtrl.spaces.length == 0">
+                <h1 class="text-muted text-center">Trash bin is empty</h1>
+            </div>
+            <div ng-repeat="space in trashBinCtrl.spaces" context-menu="trashBinCtrl.spaceMenuOptions">
+                <div class="space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ space.name }}</div>
+                <div uib-collapse="space.isCollapsed">
+                    <div style="transition: all 2s">
+                        <div class="filter-table-row">
+                            <div class="row filter-table-row" role="button" ng-repeat="folder in space.folders | orderBy: trashBinCtrl.columnForOrder" context-menu="trashBinCtrl.folderMenuOptions">
+                                <div class="col-md-3 filter-table-cell description" title="{{ folder.name }}">
+                                    <img src="./Content/Icons/folder.svg" height="{{trashBinCtrl.iconHeight}}" />
+                                    {{folder.name | limitTo: 20}}{{folder.name.length > 20 ? '...' : ''}}
+                                </div>
+                                <div class="col-md-3 filter-table-cell description" title="{{ folder.description }}">
+                                    {{folder.description | limitTo: 28}}{{folder.description.length > 28 ? '...' : ''}}
+                                </div>
+                                <div class="col-md-2 filter-table-cell">{{ folder.author.name }}</div>
+                                <div class="col-md-2 filter-table-cell">{{ folder.createdAt | date:'dd-MM-yyyy HH:mm' }}</div>
+                                <div class="col-md-2 filter-table-cell">Folder</div>
+                            </div>
+                            <div class="row filter-table-row" role="button" ng-repeat="file in space.files | orderBy: trashBinCtrl.columnForOrder" ng-dblclick="trashBinCtrl.openDocument(file.link)" context-menu="trashBinCtrl.fileMenuOptions">
+                                <div class="col-md-3 filter-table-cell description" title="{{ file.name }}">
+                                    <img ng-src="{{trashBinCtrl.chooseIcon(file.fileType)}}" height="{{trashBinCtrl.iconHeight}}" />
+                                    {{file.name | limitTo: 20}}{{file.name.length > 20 ? '...' : ''}}
+                                </div>
+                                <div class="col-md-3 filter-table-cell description" title="{{ file.description }}">
+                                    {{file.description | limitTo: 28}}{{file.description.length > 28 ? '...' : ''}}
+                                </div>
+                                <div class="col-md-2 filter-table-cell">{{ file.author.name }}</div>
+                                <div class="col-md-2 filter-table-cell">{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</div>
+                                <div class="col-md-2 filter-table-cell">{{ file.fileType | typeOfFile }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

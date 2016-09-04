@@ -16,6 +16,7 @@
             create: create,
             updateFolder: updateFolder,
             updateDeleted: updateDeleted,
+            createCopy: createCopy,
             deleteFolder: deleteFolder,
             getContent: getContent,
             getFolderContentTotal: getFolderContentTotal
@@ -102,6 +103,18 @@
                 },
                     function () {
                         console.log('Error while getting file!');
+                    });
+        }
+
+        function createCopy(id, folder, callBack) {
+            $http.put(baseUrl + '/api/folders/copied/' + id, folder)
+                .then(function (response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                },
+                    function () {
+                        console.log('Error while getting folder!');
                     });
         }
 

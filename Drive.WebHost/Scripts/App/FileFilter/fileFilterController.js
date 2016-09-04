@@ -10,12 +10,17 @@
         var vm = this;
 
         vm.changeView = changeView;
+        vm.chooseIcon = chooseIcon;
         vm.orderByColumn = orderByColumn;
+
+        vm.search = search;
         vm.cancelSearch = cancelSearch;
 
         vm.openDocument = openDocument;
         vm.openFileWindow = openFileWindow;
         vm.deleteFile = deleteFile;
+        vm.openSharedFileWindow = openSharedFileWindow;
+        vm.sharedFile = sharedFile;
 
         activate();
 
@@ -25,6 +30,7 @@
             vm.showGrid = false;
             vm.columnForOrder = 'name';
             vm.searchText = '';
+            vm.iconHeight = 30;
 
             vm.spaces = [];
 
@@ -39,8 +45,9 @@
 
         vm.fileMenuOptions = [
             [
-                'Share //Add', function ($itemScope) {
-
+                'Share', function ($itemScope) {
+                    vm.fileSharedId = $itemScope.file.id;
+                    vm.sharedFile();
                 }
             ],
             null,
@@ -84,22 +91,60 @@
             });
         }
 
+        function openSharedFileWindow(size) {
+
+            var fileModalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'Scripts/App/SharedFile/SharedFileForm.html',
+                windowTemplateUrl: 'Scripts/App/SharedFile/Modal.html',
+                controller: 'SharedFileModalCtrl',
+                controllerAs: 'sharedFileModalCtrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        return vm.fileSharedId;
+                    }
+                }
+            });
+
+            fileModalInstance.result.then(function (response) {
+                console.log(response);
+            }, function () {
+                console.log('Modal dismissed');
+            });
+        }
+
+        function sharedFile() {
+            vm.fileId = { parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.openSharedFileWindow();
+        }
+
         function deleteFile(id) {
             fileService.deleteFile(id, function () {
                 getFiles();
             });
         }
 
-        function cancelSearch() {
-            vm.searchText = '';
-            getFiles();
+        function search() {
+            fileService.searchFiles(vm.filesType, vm.searchText, function (data) {
+                vm.spaces = data;
+            });
         }
+
+
+        function cancelSearch() {         
+            if (vm.searchText.length >= 1) {
+                vm.searchText = '';
+                getFiles();
+            }
+        }
+
 
         function setFileData() {
             switch ($routeParams.appName) {
                 // not defined types => update Enum
                 case 'academy':
-                    vm.filesType = 'Academy Pro';
+                    vm.filesType = 'AcademyPro';
                     vm.icon = 'fa fa-graduation-cap fa-lg';
                     break;
                 case 'events':
@@ -158,6 +203,11 @@
 
         function openDocument(url) {
             fileService.openFile(url);
+        }
+
+        function chooseIcon(type) {
+            vm.iconSrc = fileService.chooseIcon(type);
+            return vm.iconSrc;
         }
     }
 }());

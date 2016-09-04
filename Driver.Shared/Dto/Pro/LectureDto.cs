@@ -16,6 +16,8 @@ namespace Driver.Shared.Dto.Pro
 
         public DateTime StartDate { get; set; }
 
+        public int CourseId { get; set; }
+
         public IEnumerable<ContentLinkDto> VideoLinks { get; set; }
 
         public IEnumerable<ContentLinkDto> SlidesLinks { get; set; }
@@ -26,7 +28,6 @@ namespace Driver.Shared.Dto.Pro
 
         public IEnumerable<ContentLinkDto> RepositoryLinks { get; set; }
 
-        public IEnumerable<TagDto> Tags { get; set; }
         public IEnumerable<CodeSampleDto> CodeSamples { get; set; }
 
         public DateTime CreatedAt { get; set; }

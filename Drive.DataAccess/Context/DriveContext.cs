@@ -11,7 +11,7 @@ namespace Drive.DataAccess.Context
         public DriveContext() : base()
         {
             //to change when DB structure is stable!!!
-            Database.SetInitializer<DriveContext>(new DropCreateDatabaseIfModelChanges<DriveContext>());
+            //Database.SetInitializer<DriveContext>(new DropCreateDatabaseIfModelChanges<DriveContext>());
             Database.SetInitializer<DriveContext>(new DriveDBInitializer());
         }
 
@@ -117,6 +117,18 @@ namespace Drive.DataAccess.Context
                     rs.MapRightKey("SpaceID");
                     rs.ToTable("SpaceRoleReadPermissions");
                 });
+
+            modelBuilder.Entity<AcademyProCourse>()
+                .HasMany<Tag>(c => c.Tags)
+                .WithMany(t => t.Courses)
+                .Map(
+                    tc =>
+                    {
+                        tc.MapLeftKey("AcademyProCourseId");
+                        tc.MapRightKey("TagId");
+                        tc.ToTable("AcademiesTags");
+                    }
+                );
 
         }
 
