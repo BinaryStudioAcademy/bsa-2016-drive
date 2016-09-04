@@ -27,7 +27,7 @@ namespace Drive.WebHost.Services
                               DriveService.Scope.DriveFile },
                           "user",
                           CancellationToken.None,
-                          new FileDataStore("Drive.Auth.Store")).Result;
+                          new FileDataStore(@"c:\datastore", true)).Result;
 
             var service = new DriveService(new BaseClientService.Initializer()
             {
