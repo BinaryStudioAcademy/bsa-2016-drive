@@ -216,6 +216,16 @@
         color: #2e618d;
     }
     /*End Callout for links*/
+
+    .small {
+        margin: 0;
+    }
+
+    /*Lecture header*/
+    .lecture-header {
+        margin: 0;
+    }
+    /*End Lecture header*/
 </style>
 
 <div class="container-fluid">
@@ -226,8 +236,16 @@
     <div>
         <span us-spinner="{radius:30, width:8, length: 16}"></span>
         <div class="container">
-            <div class="page-header">
+            <div class="page-header lecture-header">
                 <h1 id="timeline">{{lectureCtrl.lecture.name}}</h1>
+                <div class="small">
+                    <p>
+                        <small class="text-muted" title="Lecture author"><i class="fa fa-user" aria-hidden="true"></i> {{ lectureCtrl.lecture.author }}</small>
+                    </p>
+                    <p>
+                        <small class="text-muted" title="Lecture start date"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> {{ lectureCtrl.lecture.startDate | date:'dd-MM-yyyy HH:mm' }}</small>
+                    </p>
+                </div>
             </div>
             <ul class="timeline">
                 <li>

@@ -24,7 +24,7 @@
             vm.searchText = '';
             vm.iconHeight = 30;
             vm.showTable = true;
-            vm.icon = "./Content/Icons/folder.svg";
+            vm.icon = "./Content/Icons/presentation.svg";
             vm.iconHeight = 30;
 
             return getAcademy();
@@ -47,7 +47,7 @@
         }
 
         function changeView(view) {
-            if (view == "fa fa-th") {
+            if (view === "fa fa-th") {
                 activateGridView();
             } else {
                 activateTableView();

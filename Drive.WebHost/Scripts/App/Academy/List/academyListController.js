@@ -16,7 +16,6 @@
         vm.changeView = changeView;
         vm.openNewCourseWindow = openNewCourseWindow;
         
-
         activate();
 
         function activate() {
@@ -28,7 +27,7 @@
             vm.searchText = '';
             vm.iconHeight = 30;
             vm.showTable = true;
-            vm.icon = "./Content/Icons/folder.svg";
+            vm.icon = "./Content/Icons/academyPro.svg";
             vm.iconHeight = 30;
 
             return getAcademies();
@@ -47,7 +46,7 @@
         }
 
         function changeView(view) {
-            if (view == "fa fa-th") {
+            if (view === "fa fa-th") {
                 activateGridView();
             } else {
                 activateTableView();
@@ -67,7 +66,7 @@
         function openNewCourseWindow(size) {
 
             var courseModalInstance = $uibModal.open({
-                animation: false,
+                animation: true,
                 templateUrl: 'Scripts/App/Academy/List/Create.html',
                 windowTemplateUrl: 'Scripts/App/Academy/List/Modal.html',
                 controller: 'CourseCreateController',

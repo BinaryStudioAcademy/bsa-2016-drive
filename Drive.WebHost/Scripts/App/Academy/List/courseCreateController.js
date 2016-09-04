@@ -46,7 +46,7 @@
 
             $uibModalInstance.close();
             toastr.success(
-                'New course was added successfully!', 'Create new Course',
+                'New course was added successfully!', 'Academy Pro',
                 {
                     closeButton: true, timeOut: 6000
                 });
