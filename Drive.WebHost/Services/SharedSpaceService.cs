@@ -18,12 +18,14 @@ namespace Drive.WebHost.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger _logger;
         private readonly IUsersService _userService;
+        private readonly ISpaceService _spaceService;
 
-        public SharedSpaceService(IUnitOfWork unitOfWork, ILogger logger, IUsersService userService)
+        public SharedSpaceService(IUnitOfWork unitOfWork, ILogger logger, IUsersService userService, ISpaceService spaceService)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _userService = userService;
+            _spaceService = spaceService;
         }
 
         public async Task<IEnumerable<UserSharedSpaceDto>> GetPermissionsOfSharedDataAsync(int id)
@@ -51,15 +53,8 @@ namespace Drive.WebHost.Services
                     var fileSharedDeleted = await _unitOfWork.SharedSpace.Deleted.SingleOrDefaultAsync(f => f.File.Id == id && f.User.GlobalId == user.GlobalId);
                     if (fileSharedDeleted == null)
                     {
+                        await _spaceService.CreateUserAndFirstSpaceAsync(user.GlobalId);
                         var userDb = await _unitOfWork.Users.Query.FirstOrDefaultAsync(x => x.GlobalId == user.GlobalId);
-                        if (userDb == null)
-                        {
-                            UserDto userdto = new UserDto();
-                            userdto.serverUserId = user.GlobalId;
-                            await _userService.CreateAsync(userdto);
-                            var suser = await _unitOfWork.Users.Query.FirstOrDefaultAsync(x => x.GlobalId == user.GlobalId);
-                            userDb = suser;
-                        }
                         var file = await _unitOfWork.Files.Query.SingleOrDefaultAsync(f => f.Id == id);
                         if (file != null)
                         {
