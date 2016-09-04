@@ -52,21 +52,15 @@
                 });
         }
 
-        function getSpaceByType(type, currentPage, pageSize, sort, callback) {
-            $http.get(baseUrl + '/api/spaces/spacetype/' + type, {
-                params: {
-                    page: currentPage,
-                    count: pageSize,
-                    sort: sort
-                }
-            })
+        function getSpaceByType(type, callback) {
+            $http.get(baseUrl + '/api/spaces/spacetype/' + type)
             .then(function (response) {
                 if (callback) {
                     callback(response.data);
                 }
             },
             function errorCallback(response) {
-                console.log('Error getSpace spaceService!' + response.status);
+                console.log('Error getSpaceByType spaceService!' + response.status);
                 if (response.status == 404 && callback) {
                     console.log(response.status + ' ' + response.data);
                     callback(response.data)
