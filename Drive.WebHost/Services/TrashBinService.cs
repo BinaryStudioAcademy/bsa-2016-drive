@@ -68,6 +68,17 @@ namespace Drive.WebHost.Services
                             Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
                         })
                     }).ToListAsync();
+
+                var owners = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
+
+                foreach (var item in spacesList)
+                {
+                    Parallel.ForEach(item.Files, file =>
+                    { file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name; });
+
+                    Parallel.ForEach(item.Folders, folder =>
+                    { folder.Author.Name = owners.FirstOrDefault(o => o.Id == folder.Author.GlobalId)?.Name; });
+                }
             }
             catch (Exception ex)
             {
@@ -124,14 +135,15 @@ namespace Drive.WebHost.Services
                         })
                                         }).ToListAsync();
 
+                var owners = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
+
                 foreach (var item in searchList)
                 {
                     Parallel.ForEach(item.Files, file =>
-                    {
-                    });
+                    { file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name; });
+
                     Parallel.ForEach(item.Folders, folder =>
-                    {
-                    });
+                    { folder.Author.Name = owners.FirstOrDefault(o => o.Id == folder.Author.GlobalId)?.Name; });
                 }
             }
             catch (Exception ex)
@@ -232,6 +244,5 @@ namespace Drive.WebHost.Services
         {
             _unitOfWork?.Dispose();
         }
-
     }
 }
