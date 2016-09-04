@@ -1,4 +1,7 @@
 ﻿using Drive.WebHost.Services;
+using Driver.Shared.Dto;
+using Driver.Shared.Dto.TrashBin;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -61,6 +64,23 @@ namespace Drive.WebHost.Api
             return Ok();
         }
 
+        // DELETE: api/TrashBin/Space
+        [HttpDelete]
+        [Route("space/{spaceId}")]
+        public async Task<IHttpActionResult> ClearAllFromSpace(int spaceId)
+        {
+            await _trashBinService.ClearAllFromSpaceAsync(spaceId);
+            return Ok();
+        }
+
+        // DELETE: api/TrashBin
+        [HttpDelete]
+        public async Task<IHttpActionResult> ClearTrashBin()
+        {
+            await _trashBinService.ClearTrashBinAsync();
+            return Ok();
+        }
+
         // PUT: api/TrashBin/File/{id}
         [HttpPut]
         [Route("file/{id}")]
@@ -76,6 +96,15 @@ namespace Drive.WebHost.Api
         public async Task<IHttpActionResult> RestoreFolder(int id)
         {
             await _trashBinService.RestoreFolderAsync(id);
+            return Ok();
+        }
+
+        // PUT: api.TrashBin/Spaces
+        [HttpPut]
+        [Route("spaces")]
+        public async Task<IHttpActionResult> RestoreSpaces(List<int> spaces)
+        {
+            await _trashBinService.RestoreAllFromSpacesAsync(spaces);
             return Ok();
         }
     }
