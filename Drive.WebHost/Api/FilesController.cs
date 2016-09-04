@@ -183,9 +183,9 @@ namespace Drive.WebHost.Api
                 }
                 return Ok(result);
             }
-            catch (System.Exception)
+            catch (System.Exception e)
             {
-                return BadRequest();
+                return BadRequest(e.Message.ToString());
             }
         }
     }

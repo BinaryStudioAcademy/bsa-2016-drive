@@ -118,7 +118,8 @@
             var fd = new FormData();
             fd.append('file', file);
 
-            $http.post(baseUrl + '/api/files/upload?spaceId=' + spaceId + '&parentId=' + parentId, fd, {
+            $http.post(baseUrl + '/api/files/upload?spaceId=' + spaceId + '&parentId=' + parentId, fd,
+                {
                 withCredentials: false,
                 headers: {
                     'Content-Type': undefined
@@ -130,8 +131,10 @@
                     callBack(response.data);
                 }
             },
-            function () {
-                console.log('Error while uploading file!');
+            function (response) {
+                if (callBack) {
+                    console.log('Error while uploading file! Error: ' + response.data.message);
+                }
             });
         }
 
