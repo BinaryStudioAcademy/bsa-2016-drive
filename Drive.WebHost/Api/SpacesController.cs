@@ -41,15 +41,17 @@ namespace Drive.WebHost.Api
             return Ok(result);
         }
 
-        // GET: api/spaces/{spaceType=(string)}&page=(int)&count=(int)&sort=(string)
+        // GET: api/spaces/{spaceType=(string)}
         [HttpGet]
         [Route("spacetype/{spaceType}")]
-        public async Task<IHttpActionResult> GetSpaceByType(string spaceType, int page, int count, string sort = null)
+        public async Task<IHttpActionResult> GetSpaceByType(string spaceType)
         {
             SpaceType sType;
             if (!System.Enum.TryParse(spaceType, true, out sType))
                 return NotFound();
-            var result = await _spaceService?.GetSpaceByTypeAsync(sType, page, count, sort);
+            var result = await _spaceService?.GetSpaceByTypeAsync(sType);
+            if (result == 0)
+                return NotFound();
             return Ok(result);
         }
 

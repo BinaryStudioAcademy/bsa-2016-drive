@@ -118,7 +118,8 @@
             var fd = new FormData();
             fd.append('file', file);
 
-            $http.post(baseUrl + '/api/files/upload?spaceId=' + spaceId + '&parentId=' + parentId, fd, {
+            $http.post(baseUrl + '/api/files/upload?spaceId=' + spaceId + '&parentId=' + parentId, fd,
+                {
                 withCredentials: false,
                 headers: {
                     'Content-Type': undefined
@@ -130,8 +131,10 @@
                     callBack(response.data);
                 }
             },
-            function () {
-                console.log('Error while uploading file!');
+            function (response) {
+                if (callBack) {
+                    console.log('Error while uploading file! Error: ' + response.data.message);
+                }
             });
         }
 
@@ -208,7 +211,9 @@
                 case 5:
                     return "./Content/Icons/link.svg";
                 case 6:
-                    return "";
+                    return "./Content/Icons/physical-file.svg";
+                case 7:
+                    return "./Content/Icons/academyPro.svg";
                 default:
                     return "./Content/Icons/folder.svg";
             }

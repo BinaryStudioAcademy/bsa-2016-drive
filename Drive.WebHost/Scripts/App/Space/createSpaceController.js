@@ -255,27 +255,29 @@
 
         function removeSpaceUser(id) {
             for (var i = 0; i < vm.permittedUsers.length; i++) {
-                if (vm.permittedUsers[i].globalId === id)
+                if (vm.permittedUsers[i].globalId === id) {
                     toastr.success(
                          'User has been deleted!', 'Create new Space',
                          {
                              closeButton: true, timeOut: 5000
                          });
-                vm.permittedUsers.splice(i, 1);
-                break;
+                    vm.permittedUsers.splice(i, 1);
+                    break;
+                }
             }
         };
 
         function removeSpaceRole(id) {
             for (var i = 0; i < vm.permittedRoles.length; i++) {
-                if (vm.permittedRoles[i].id === id)
+                if (vm.permittedRoles[i].id === id) {
                     toastr.success(
                              'Role has been deleted!', 'Create new Space',
                              {
                                  closeButton: true, timeOut: 5000
                              });
-                vm.permittedRoles.splice(i, 1);
-                break;
+                    vm.permittedRoles.splice(i, 1);
+                    break;
+                }
             }
         };
 
