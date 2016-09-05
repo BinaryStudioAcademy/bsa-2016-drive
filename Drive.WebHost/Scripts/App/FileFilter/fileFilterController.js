@@ -48,6 +48,12 @@
                 'Share', function ($itemScope) {
                     vm.fileSharedId = $itemScope.file.id;
                     vm.sharedFile();
+                },
+                function ($itemScope) {
+                    if ($itemScope.file.spaceId == 1) {
+                        return false;
+                    }
+                    return true;
                 }
             ],
             null,
