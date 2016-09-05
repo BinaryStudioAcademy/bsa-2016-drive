@@ -45,12 +45,12 @@ namespace Drive.WebHost.Services
         {
             foreach (var user in users)
             {
-                var fileShared = await _unitOfWork.SharedSpace.Query.SingleOrDefaultAsync(f => f.File.Id == id && f.User.GlobalId == user.GlobalId);
+                var fileShared = await _unitOfWork.SharedSpace.Query.Include(t => t.File).Include(t => t.User).SingleOrDefaultAsync(f => f.File.Id == id && f.User.GlobalId == user.GlobalId);
                 
                 if (fileShared == null)
                 {
                     //  "Deleted"??
-                    var fileSharedDeleted = await _unitOfWork.SharedSpace.Deleted.SingleOrDefaultAsync(f => f.File.Id == id && f.User.GlobalId == user.GlobalId);
+                    var fileSharedDeleted = await _unitOfWork.SharedSpace.Deleted.Include(t => t.File).Include(t => t.User).SingleOrDefaultAsync(f => f.File.Id == id && f.User.GlobalId == user.GlobalId);
                     if (fileSharedDeleted == null)
                     {
                         await _spaceService.CreateUserAndFirstSpaceAsync(user.GlobalId);
