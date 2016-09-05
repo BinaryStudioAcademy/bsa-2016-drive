@@ -192,25 +192,6 @@
 
         vm.folderMenuOptions = [
             [
-                'Share', function ($itemScope) {
-                    console.log($itemScope.folder.id);
-                }, function ($itemScope) { return vm.folderMenuOptionShareShow }
-            ],
-            null,
-            ['New', function () {
-               
-            },  [
-            ['New folder', function () { vm.createNewFolder(); }],
-            ['New link', function () { vm.createNewFile(); }],
-            null,
-            ['Upload file', function ($itemScope) {
-                vm.file = { fileType: 6, parentId: vm.parentId, spaceId: vm.spaceId };
-                vm.openFileUploadWindow('lg');
-            }]
-            ]
-            ],
-            null,
-            [
                 'Edit', function ($itemScope) {
                     vm.folder = $itemScope.folder;
                     vm.folder.parentId = vm.parentId;
@@ -218,6 +199,7 @@
                     vm.openFolderWindow();
                 }
             ],
+            null,
              [
                 'Copy', function ($itemScope) {
                     localStorageService.set('copy', { id: $itemScope.folder.id, file: false });
@@ -230,74 +212,12 @@
                     deleteFolder($itemScope.folder.id);
                 }
             ],
-            [
-            'Paste', function () {
-                if (localStorageService.get('cut-out') != null) {
-                    if (localStorageService.get('cut-out').file) {
-                        fileService.getDeletedFile(localStorageService.get('cut-out').id, function (data) {
-                            var file = data;
-                            file.isDeleted = false;
-                            file.spaceId = vm.spaceId;
-                            file.parentId = vm.parentId;
-
-                            fileService.updateDeletedFile(file.id, localStorageService.get('oldParentId'), file, function () {
-                                if (vm.parentId == null) {
-                                    vm.getSpace();
-                                } else {
-                                    vm.getFolderContent(vm.parentId);
-                                }
-                            });
-                        });
-                    } else {
-
-                        folderService.getDeleted(localStorageService.get('cut-out').id, function (data) {
-                            var folder = data;
-                            folder.isDeleted = false;
-                            folder.spaceId = vm.spaceId;
-                            folder.parentId = vm.parentId;
-
-                            folderService.updateDeleted(folder.id, localStorageService.get('oldParentId'), folder, function () {
-                                if (vm.parentId == null) {
-                                    vm.getSpace();
-                                } else {
-                                    vm.getFolderContent(vm.parentId);
-                                }
-                            });
-                        });
-                    }
-                    localStorageService.set('cut-out', null);
-                }
-                if (localStorageService.get('copy') != null) {
-                    if (localStorageService.get('copy').file) {
-                        var file = {};
-                        file.spaceId = vm.spaceId;
-                        file.parentId = vm.parentId;
-
-                        fileService.createCopyFile(localStorageService.get('copy').id, file, function () {
-                            if (vm.parentId == null) {
-                                vm.getSpace();
-                            } else {
-                                vm.getFolderContent(vm.parentId);
-                            }
-                        });
-                    } else {
-                        var folder = {};
-                        folder.spaceId = vm.spaceId;
-                        folder.parentId = vm.parentId;
-
-                        folderService.createCopy(localStorageService.get('copy').id, folder, function () {
-                            if (vm.parentId == null) {
-                                vm.getSpace();
-                            } else {
-                                vm.getFolderContent(vm.parentId);
-                            }
-                        });
-                    }
-                    localStorageService.set('copy', null);
-                }
-            }
-            ],
             null,
+            [
+                'Share', function ($itemScope) {
+                    console.log($itemScope.folder.id);
+                }, function ($itemScope) { return vm.folderMenuOptionShareShow }
+            ],
             [
                 'Delete', function ($itemScope) {
                     return deleteFolder($itemScope.folder.id);
@@ -307,26 +227,6 @@
 
         vm.fileMenuOptions = [
             [
-                'Share', function ($itemScope) {
-                    vm.fileSharedId = $itemScope.file.id;
-                    console.log(vm.fileSharedId);
-                    vm.sharedFile();
-                }, function ($itemScope) { return vm.fileMenuOptionShareShow }
-            ],
-            null,
-            ['New', function () {
-
-            }, [
-            ['New folder', function () { vm.createNewFolder(); }],
-            ['New link', function () { vm.createNewFile(); }],
-            null,
-            ['Upload file', function ($itemScope) {
-                vm.file = { fileType: 6, parentId: vm.parentId, spaceId: vm.spaceId };
-                vm.openFileUploadWindow('lg');
-                }]
-            ]
-            ],
-            [
                 'Edit', function ($itemScope) {
                     vm.file = $itemScope.file;
                     vm.file.parentId = vm.parentId;
@@ -334,6 +234,7 @@
                     vm.openFileWindow();
                 }
             ],
+             null,
             [
                 'Copy', function ($itemScope) {
                     localStorageService.set('copy', { id: $itemScope.file.id, file: true });
@@ -346,6 +247,34 @@
                     deleteFile($itemScope.file.id);
                 }
             ],
+            null,
+            [
+                'Share', function ($itemScope) {
+                    vm.fileSharedId = $itemScope.file.id;
+                    console.log(vm.fileSharedId);
+                    vm.sharedFile();
+                }, function ($itemScope) { return vm.fileMenuOptionShareShow }
+            ],
+            [
+                'Delete', function ($itemScope) {
+                    return deleteFile($itemScope.file.id);
+                }
+            ]
+        ];
+
+        vm.containerMenuOptions = [
+            ['New', function () {
+
+            }, [
+            ['New Folder', function () { vm.createNewFolder(); }],
+            ['New File', function () { vm.createNewFile(); }],
+            ['New Academy Pro', function () {  }],
+            null,
+            ['Upload File', function ($itemScope) {
+                vm.file = { fileType: 6, parentId: vm.parentId, spaceId: vm.spaceId };
+                vm.openFileUploadWindow('lg');
+            }]
+            ]],
             [
             'Paste', function () {
                 if (localStorageService.get('cut-out') != null) {
@@ -412,14 +341,9 @@
                     localStorageService.set('copy', null);
                 }
             }
-            ],
-            null,
-            [
-                'Delete', function ($itemScope) {
-                    return deleteFile($itemScope.file.id);
-                }
             ]
         ];
+
 
         function openFolderWindow(size) {
 
