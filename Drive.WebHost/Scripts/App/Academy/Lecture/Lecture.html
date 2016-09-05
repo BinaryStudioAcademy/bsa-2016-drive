@@ -249,6 +249,19 @@
             </div>
             <ul class="timeline">
                 <li>
+                    <div class="timeline-badge info" title="Lecture description">
+                        <i class="fa fa-info fa-lg" aria-hidden="true"></i>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4 class="timeline-title">Lecture description</h4>
+                        </div>
+                        <div class="timeline-body">
+                            <p>{{lectureCtrl.lecture.description}}</p>
+                        </div>
+                    </div>
+                </li>
+                <li>
                     <div class="timeline-badge info" title="Videos">
                         <i class="fa fa-video-camera fa-lg" aria-hidden="true"></i>
                     </div>
@@ -318,28 +331,9 @@
                             <div class="bs-callout bs-callout-info" ng-repeat="repo in lectureCtrl.lecture.repositoryLinks">
                                 <h4>{{repo.name}}</h4>
                                 <p>
-                                    <a ng-href="{{repo.link}}" target="_blank">{{repo.link}}  <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                                    <a ng-href="{{repo.link}}" target="_blank">{{repo.link}} <i class="fa fa-external-link" aria-hidden="true"></i></a>
                                 </p>
                                 <p>{{repo.description}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="timeline-badge info" title="Useful links">
-                        <i class="fa fa-link fa-lg" aria-hidden="true"></i>
-                    </div>
-                    <div class="timeline-panel">
-                        <div class="timeline-heading">
-                            <h4 class="timeline-title">Useful links</h4>
-                        </div>
-                        <div class="timeline-body" ng-show="lectureCtrl.lecture.usefulLinks.length">
-                            <div class="bs-callout bs-callout-info" ng-repeat="link in lectureCtrl.lecture.usefulLinks">
-                                <h4>{{link.name}}</h4>
-                                <p>
-                                    <a ng-href="{{link.link}}" target="_blank">{{link.link}}  <i class="fa fa-external-link" aria-hidden="true"></i></a>
-                                </p>
-                                <p>{{link.description}}</p>
                             </div>
                         </div>
                     </div>
@@ -363,15 +357,21 @@
                     </div>
                 </li>
                 <li>
-                    <div class="timeline-badge info" title="Lecture description">
-                        <i class="fa fa-info fa-lg" aria-hidden="true"></i>
+                    <div class="timeline-badge info" title="Useful links">
+                        <i class="fa fa-link fa-lg" aria-hidden="true"></i>
                     </div>
                     <div class="timeline-panel">
                         <div class="timeline-heading">
-                            <h4 class="timeline-title">Lecture description</h4>
+                            <h4 class="timeline-title">Useful links</h4>
                         </div>
-                        <div class="timeline-body">
-                            <p>{{lectureCtrl.lecture.description}}</p>
+                        <div class="timeline-body" ng-show="lectureCtrl.lecture.usefulLinks.length">
+                            <div class="bs-callout bs-callout-info" ng-repeat="link in lectureCtrl.lecture.usefulLinks">
+                                <h4>{{link.name}}</h4>
+                                <p>
+                                    <a ng-href="{{link.link}}" target="_blank">{{link.link}} <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                                </p>
+                                <p>{{link.description}}</p>
+                            </div>
                         </div>
                     </div>
                 </li>
