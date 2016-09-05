@@ -310,7 +310,9 @@ namespace Drive.WebHost.Services
 
             rootFolder.IsDeleted = true;
 
-            foreach (var item in rootFolder.DataUnits)
+            var items = rootFolder.DataUnits.Where(d => !d.IsDeleted);
+
+            foreach (var item in items)
             {
                 if (item is FolderUnit)
                 {
