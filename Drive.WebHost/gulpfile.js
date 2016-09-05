@@ -49,6 +49,7 @@ gulp.task("libs", function () {
       paths.bower + "angular.js",
       paths.bower + "angular-route.js",
       paths.bower + "contextMenu.js",
+      paths.bower + "ng-tags-input.js",
       paths.bower + "massautocomplete.js",
       paths.bower + "ui-bootstrap.js",
       paths.bower + "ui-bootstrap-tpls.js",
@@ -79,6 +80,7 @@ gulp.task("styles", function () {
         paths.bower + "massautocomplete.theme.css",
         paths.bower + "angular-toastr.css",
         paths.bower + "sweetalert.css",
+        paths.bower + "ng-tags-input.css",
         "./Content/*.css"
     ])
         .pipe(concat("styles.css"))

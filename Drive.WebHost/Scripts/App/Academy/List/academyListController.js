@@ -15,6 +15,8 @@
         vm.openCourse = openCourse;
         vm.changeView = changeView;
         vm.openNewCourseWindow = openNewCourseWindow;
+        vm.deleteCourse = deleteCourse;
+        vm.createNewCourse = createNewCourse;
         
         activate();
 
@@ -29,6 +31,21 @@
             vm.showTable = true;
             vm.icon = "./Content/Icons/academyPro.svg";
             vm.iconHeight = 30;
+
+            vm.courseMenuOptions = [
+   
+         [
+             'Edit', function ($itemScope) {
+                 vm.academy = $itemScope.academy;
+                 vm.openNewCourseWindow();
+             }
+         ],
+         [
+             'Delete', function ($itemScope) {
+                 deleteCourse($itemScope.academy.id);
+             }
+         ]
+     ];
 
             return getAcademies();
         }
@@ -71,7 +88,12 @@
                 windowTemplateUrl: 'Scripts/App/Academy/List/Modal.html',
                 controller: 'CourseCreateController',
                 controllerAs: 'courseCreateCtrl',
-                size: size
+                size: size,
+                resolve: {
+                    items: function () {
+                        return vm.academy;
+                    }
+                }
             });
 
             courseModalInstance.result.then(function () {
@@ -80,5 +102,15 @@
                 console.log('Modal dismissed');
             });
         };
+
+        function createNewCourse()
+        {
+            vm.academy = {
+                fileUnit: {}
+            };
+            vm.openNewCourseWindow('lg');
+        }
+        function deleteCourse(id)
+        { }
     }
 }());

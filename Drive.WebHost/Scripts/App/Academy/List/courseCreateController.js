@@ -5,10 +5,11 @@
     CourseCreateController.$inject = [
         'AcademyListService',
         '$uibModalInstance',
-        'toastr'
+        'toastr',
+        'items'
     ];
 
-    function CourseCreateController(academyListService, $uibModalInstance, toastr) {
+    function CourseCreateController(academyListService, $uibModalInstance, toastr, items) {
         var vm = this;
         vm.addNewCourse = addNewCourse;
         vm.create = create;
@@ -17,9 +18,7 @@
         activate();
 
         function activate() {
-            vm.course = {
-                fileUnit: {}
-            };
+            vm.course = items;
 
             vm.calendar = {
                 isOpen: false,
