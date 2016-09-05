@@ -454,6 +454,38 @@ namespace Drive.DataAccess.Context
                 IsDeleted = false,
                 ContentList = null
             };
+
+            Space space3 = new Space()
+            {
+                Id = 3,
+                Owner = user2,
+                Name = "My Space",
+                Type = SpaceType.MySpace,
+                Description = "Private space for folders and files",
+                MaxFileSize = 100,
+                MaxFilesQuantity = 1000,
+                CreatedAt = new DateTime(2016, 1, 1, 9, 15, 33),
+                LastModified = new DateTime(2016, 1, 1, 9, 15, 33),
+                IsDeleted = false,
+                ContentList = null
+            };
+
+            Space space4 = new Space()
+            {
+                Id = 4,
+                Owner = user3,
+                Name = "My Space",
+                Type = SpaceType.MySpace,
+                Description = "Private space for folders and files",
+                MaxFileSize = 100,
+                MaxFilesQuantity = 1000,
+                CreatedAt = new DateTime(2016, 1, 1, 9, 15, 33),
+                LastModified = new DateTime(2016, 1, 1, 9, 15, 33),
+                IsDeleted = false,
+                ContentList = null
+            };
+
+
             #region Folder Init
             FolderUnit folder8 = new FolderUnit()
             {
@@ -1083,6 +1115,8 @@ namespace Drive.DataAccess.Context
             #endregion
             context.Spaces.Add(space1);
             context.Spaces.Add(space2);
+            context.Spaces.Add(space3);
+            context.Spaces.Add(space4);
 
             #region Academy Pro
 

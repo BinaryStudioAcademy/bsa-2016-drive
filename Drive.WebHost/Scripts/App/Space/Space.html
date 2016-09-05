@@ -133,25 +133,25 @@
                         <img src="./Content/Icons/folder.svg" height="{{spaceCtrl.iconHeight}}" />
                         &nbsp;{{ folder.name | limitTo: 13}}{{ folder.name.length > 13 ? '...' : ''}}  
                     </td>
-                    <td style="display:inline-block; width:33%"
+                    <td style="display:inline-block; width: 33%; padding-top: 7px;"
                         title="{{folder.description}}">
                         {{folder.description | limitTo: 41}}{{folder.description.length > 41 ? '...' : ''}}
                     </td>
-                    <td style="display:inline-block; width:20%">{{ folder.author.name }}</td>
-                    <td style="display:inline-block; width:15%">{{ folder.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
-                    <td style="display:inline-block; width:10%">Folder</td>
+                    <td style="display:inline-block; width:20%; padding-top: 7px;">{{ folder.author.name }}</td>
+                    <td style="display:inline-block; width:15%; padding-top: 7px;">{{ folder.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
+                    <td style="display:inline-block; width:10%; padding-top: 7px;">Folder</td>
                 </tr>
                 <tr class="shadow" role="button" ng-repeat="file in spaceCtrl.space.files | orderBy: spaceCtrl.columnForOrder" context-menu="spaceCtrl.fileMenuOptions" ng-dblclick="spaceCtrl.openDocument(file.link)">
-                    <td style="display:inline-block; width:20%">
+                    <td style="display:inline-block; width:20%; padding-top: 7px;">
                         <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" height="{{spaceCtrl.iconHeight}}" />
                         &nbsp;{{ file.name | limitTo: 13}}{{ file.name.length > 13 ? '...' : ''}} 
                     </td>
-                    <td style="display:inline-block; width:33%" title="{{file.description}}">
+                    <td style="display:inline-block; width:33%; padding-top: 7px;" title="{{file.description}}">
                         {{file.description | limitTo: 41}}{{file.description.length > 41 ? '...' : ''}}
                     </td>
-                    <td style="display:inline-block; width:20%">{{ file.author.name }}</td>
-                    <td style="display:inline-block; width:15%">{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
-                    <td style="display:inline-block; width:10%">{{ file.fileType | typeOfFile }}</td>
+                    <td style="display:inline-block; width:20%; padding-top: 7px;">{{ file.author.name }}</td>
+                    <td style="display:inline-block; width:15%; padding-top: 7px;">{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
+                    <td style="display:inline-block; width:10%; padding-top: 7px;">{{ file.fileType | typeOfFile }}</td>
                 </tr>
             </tbody>
         </table>

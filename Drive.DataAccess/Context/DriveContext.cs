@@ -130,6 +130,9 @@ namespace Drive.DataAccess.Context
                     }
                 );
 
+            modelBuilder.Entity<Lecture>()
+                .HasMany<ContentLink>(c => c.ContentList)
+                .WithRequired();
         }
 
 

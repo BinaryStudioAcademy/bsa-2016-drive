@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Drive.DataAccess.Entities;
-using Driver.Shared.Dto;
+using Driver.Shared.Dto.TrashBin;
 using Driver.Shared.Dto.Users;
 using Drive.DataAccess.Interfaces;
 using System.Data.Entity;
@@ -42,32 +42,40 @@ namespace Drive.WebHost.Services
                         Folders = s.ContentList.OfType<FolderUnit>()
                         .Where(f => f.IsDeleted)
                         .Where(f => (f.FolderUnit == null) || (!f.FolderUnit.IsDeleted))
-                        .Select(f => new FolderUnitDto
+                        .Select(f => new TrashBinFolderDto
                         {
                             Id = f.Id,
                             Name = f.Name,
                             Description = f.Description,
                             CreatedAt = f.CreatedAt,
-                            IsDeleted = f.IsDeleted,
                             SpaceId = f.Space.Id,
                             Author = new AuthorDto { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
                         }),
-                                            Files = s.ContentList.OfType<FileUnit>()
+                        Files = s.ContentList.OfType<FileUnit>()
                         .Where(f => f.IsDeleted)
                         .Where(f => (f.FolderUnit == null) || (!f.FolderUnit.IsDeleted))
-                        .Select(f => new FileUnitDto
+                        .Select(f => new TrashBinFileDto
                         {
                             Description = f.Description,
                             FileType = f.FileType,
                             Id = f.Id,
-                            IsDeleted = f.IsDeleted,
                             Name = f.Name,
                             CreatedAt = f.CreatedAt,
-                            Link = f.Link,
                             SpaceId = f.Space.Id,
                             Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
                         })
                     }).ToListAsync();
+
+                var owners = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
+
+                foreach (var item in spacesList)
+                {
+                    Parallel.ForEach(item.Files, file =>
+                    { file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name; });
+
+                    Parallel.ForEach(item.Folders, folder =>
+                    { folder.Author.Name = owners.FirstOrDefault(o => o.Id == folder.Author.GlobalId)?.Name; });
+                }
             }
             catch (Exception ex)
             {
@@ -96,42 +104,40 @@ namespace Drive.WebHost.Services
                         .Where(f => f.IsDeleted)
                         .Where(f => f.Name.ToLower().Contains(text.ToLower()))
                         .Where(f => (f.FolderUnit == null) || (!f.FolderUnit.IsDeleted))
-                        .Select(f => new FolderUnitDto
+                        .Select(f => new TrashBinFolderDto
                         {
                             Id = f.Id,
                             Name = f.Name,
                             Description = f.Description,
                             CreatedAt = f.CreatedAt,
-                            IsDeleted = f.IsDeleted,
                             SpaceId = f.Space.Id,
                             Author = new AuthorDto { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
                         }),
-                                            Files = s.ContentList.OfType<FileUnit>()
+                        Files = s.ContentList.OfType<FileUnit>()
                         .Where(f => f.IsDeleted)
                         .Where(f => f.Name.ToLower().Contains(text.ToLower()))
                         .Where(f => (f.FolderUnit == null) || (!f.FolderUnit.IsDeleted))
-                        .Select(f => new FileUnitDto
+                        .Select(f => new TrashBinFileDto
                         {
                             Description = f.Description,
                             FileType = f.FileType,
                             Id = f.Id,
-                            IsDeleted = f.IsDeleted,
                             Name = f.Name,
                             CreatedAt = f.CreatedAt,
-                            Link = f.Link,
                             SpaceId = f.Space.Id,
                             Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
                         })
-                                        }).ToListAsync();
+                        }).ToListAsync();
+
+                var owners = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
 
                 foreach (var item in searchList)
                 {
                     Parallel.ForEach(item.Files, file =>
-                    {
-                    });
+                    { file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name; });
+
                     Parallel.ForEach(item.Folders, folder =>
-                    {
-                    });
+                    { folder.Author.Name = owners.FirstOrDefault(o => o.Id == folder.Author.GlobalId)?.Name; });
                 }
             }
             catch (Exception ex)
@@ -143,14 +149,28 @@ namespace Drive.WebHost.Services
 
         public async Task RestoreFileAsync(int id)
         {
-            await _unitOfWork.Files.Restore(id);
-            await _unitOfWork?.SaveChangesAsync();
+            try
+            {
+                await _unitOfWork.Files.Restore(id);
+                await _unitOfWork?.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.WriteError(ex, ex.Message);
+            }
         }
 
         public async Task DeleteFileAsync(int id)
         {
-            await _unitOfWork.Files.ForceDelete(id);
-            await _unitOfWork?.SaveChangesAsync();
+            try
+            {
+                await _unitOfWork.Files.ForceDelete(id);
+                await _unitOfWork?.SaveChangesAsync();
+            }
+            catch (Exception ex)
+            {
+                _logger.WriteError(ex, ex.Message);
+            }
         }
 
         public async Task RestoreFolderAsync(int id)
@@ -227,11 +247,68 @@ namespace Drive.WebHost.Services
             }
         }
 
+        public async Task RestoreAllFromSpacesAsync(IEnumerable<int> spaces)
+        {
+            foreach (var spaceId in spaces)
+            {
+                var files = await _unitOfWork.Files.Deleted
+                                                .Where(f => f.Space.Id == spaceId)
+                                                .Where(f => (f.FolderUnit == null) || (!f.FolderUnit.IsDeleted))
+                                                .ToListAsync();
+                var folders = await _unitOfWork.Folders.Deleted
+                                                .Where(f => f.Space.Id == spaceId)
+                                                .Where(f => (f.FolderUnit == null) || (!f.FolderUnit.IsDeleted))
+                                                .ToListAsync();
+                foreach (var file in files)
+                {
+                    await RestoreFileAsync(file.Id);
+                }
+                foreach (var folder in folders)
+                {
+                    await RestoreFolderAsync(folder.Id);
+                }
+            }
+        }
+
+        public async Task ClearAllFromSpaceAsync(int spaceId)
+        {
+            var files = await _unitOfWork.Files.Deleted
+                                            .Where(f => f.Space.Id == spaceId)
+                                            .Where(f => (f.FolderUnit == null) || (!f.FolderUnit.IsDeleted))
+                                            .ToListAsync();
+            var folders = await _unitOfWork.Folders.Deleted
+                                            .Where(f => f.Space.Id == spaceId)
+                                            .Where(f => (f.FolderUnit == null) || (!f.FolderUnit.IsDeleted))
+                                            .ToListAsync();
+
+            foreach (var file in files) {
+                await DeleteFileAsync(file.Id);
+            }
+            foreach (var folder in folders) {
+                await DeleteFolderAsync(folder.Id);
+            }
+
+        }
+
+        public async Task ClearTrashBinAsync()
+        {
+            var trashBinContent = await GetTrashBinContentAsync();
+            foreach (var space in trashBinContent)
+            {
+                foreach (var file in space.Files)
+                {
+                    await DeleteFileAsync(file.Id);
+                }
+                foreach (var folder in space.Folders)
+                {
+                    await DeleteFolderAsync(folder.Id);
+                }
+            }
+        }
 
         public void Dispose()
         {
             _unitOfWork?.Dispose();
         }
-
     }
 }

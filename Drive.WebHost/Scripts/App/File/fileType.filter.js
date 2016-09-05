@@ -20,6 +20,8 @@
                         return 'Link';
                     case 6:
                         return 'Physical file';
+                    case 7:
+                        return "AcademyPro"
                     default:
                         return '';
                 }

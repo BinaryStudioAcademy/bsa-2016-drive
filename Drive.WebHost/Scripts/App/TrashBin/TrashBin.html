@@ -12,8 +12,11 @@
         </div>
         <div class="form-inline">
             <div class="col-sm-3 pull-left nopadding">
-                <button type="button" class="btn btn-default btn-custom" ng-click="spaceCtrl.createNewFolder()" title="Clear Trash Bin">
-                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                <button type="button" class="btn btn-default btn-custom" ng-click="trashBinCtrl.clearTrashBin()" title="Clear Trash Bin" ng-disabled="trashBinCtrl.spaces.length == 0" style="cursor: default;">
+                    <i class="fa fa-trash"></i> Clear trash              
+                </button>
+                <button type="button" class="btn btn-default btn-custom" ng-click="trashBinCtrl.restoreTrashBin()" title="Restore all" ng-disabled="trashBinCtrl.spaces.length == 0" style="cursor: default;">
+                    <i class="fa fa-reply-all"></i> Restore all
                 </button>
             </div>
         </div>
