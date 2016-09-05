@@ -30,6 +30,9 @@
                 <button type="button" class="btn btn-default btn-custom" ng-click="spaceCtrl.uploadFile()" title="Upload file">
                     <img src="./Content/Icons/upload-doc_bw.svg" height="30" alt="Upload file" />
                 </button>
+                <button type="button" class="btn btn-default btn-custom" ng-click="spaceCtrl.openNewCourseWindow('lg')" title="Add new Academy Pro course">
+                    <img src="./Content/Icons/academyPro_bw.svg" height="30" alt="Academy Pro course" />
+                </button>
             </div>
         </div>
         <div>
@@ -53,7 +56,7 @@
     <span us-spinner="{radius:30, width:8, length: 16}"></span>
 
     <!--New gridview-->
-    <ul class="sp-gv-flex-container wrap" ng-show="spaceCtrl.showGrid" context-menu="spaceCtrl.folderMenuOptions">
+    <ul class="sp-gv-flex-container wrap" ng-show="spaceCtrl.showGrid" context-menu="spaceCtrl.containerMenuOptions">
         <li class="sp-gv-flex-item" role="button" context-menu="spaceCtrl.folderMenuOptions" dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize" total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
             <div class="sp-gv-wrapper-flex-item">
                 <div class="sp-gv-item-content card">
@@ -98,7 +101,7 @@
 
     <div class="table-responsive blocked-table" ng-show="spaceCtrl.showTable">
         <table class="fixed_headers">
-            <thead context-menu="spaceCtrl.folderMenuOptions">
+            <thead context-menu="spaceCtrl.containerMenuOptions">
                 <tr style="cursor: pointer">
                     <th style="display:inline-block; width:20%" ng-click="spaceCtrl.orderByColumn('name')">
                         Name
@@ -127,7 +130,7 @@
                     </th>
                 </tr>
             </thead>
-            <tbody context-menu="spaceCtrl.folderMenuOptions">
+            <tbody context-menu="spaceCtrl.containerMenuOptions">
                 <tr class="shadow" role="button" ng-repeat="folder in spaceCtrl.space.folders | orderBy: spaceCtrl.columnForOrder" context-menu="spaceCtrl.folderMenuOptions" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
                     <td style="display:inline-block; width:20%">
                         <img src="./Content/Icons/folder.svg" height="{{spaceCtrl.iconHeight}}" />
