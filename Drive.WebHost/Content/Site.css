@@ -265,7 +265,7 @@ textarea {
     overflow-y: auto;
     overflow-x: hidden;
     padding-top: 0px;
-    background: #000;
+    background:  #545861;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -281,7 +281,7 @@ textarea {
     margin-left: -205px;
     overflow-y: hidden;
     overflow-x: hidden;
-    background: #000;
+    background:  #545861;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
@@ -330,7 +330,7 @@ textarea {
         .sidebar-nav li .d {
             display: block;
             text-decoration: none;
-            color: #999999;
+            color: white;
             cursor: pointer;
         }
 
@@ -338,7 +338,7 @@ textarea {
                 text-decoration: none;
                 color: #fff;
                 background: rgba(255,255,255,0.2);
-                border-left: green 5px solid;
+                border-left: #5bc0de 5px solid;
                 cursor: pointer;
             }
 
@@ -354,7 +354,7 @@ textarea {
     }
 
         .sidebar-nav > .sidebar-brand .d {
-            color: #999999;
+            color: white;
         }
 
             .sidebar-nav > .sidebar-brand .d:hover {
