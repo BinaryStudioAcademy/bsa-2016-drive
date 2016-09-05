@@ -290,6 +290,7 @@ namespace Drive.WebHost.Services
                          CreatedAt = d.CreatedAt,
                          Author = new AuthorDto() { Id = d.Owner.Id, GlobalId = d.Owner.GlobalId },
                          Description = d.Description,
+                         SpaceId = d.Space.Id
                      }),
                  }).ToListAsync();
 
