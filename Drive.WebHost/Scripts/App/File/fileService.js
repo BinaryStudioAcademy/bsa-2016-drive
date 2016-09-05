@@ -211,7 +211,9 @@
                 case 5:
                     return "./Content/Icons/link.svg";
                 case 6:
-                    return "";
+                    return "./Content/Icons/physical-file.svg";
+                case 7:
+                    return "./Content/Icons/academyPro.svg";
                 default:
                     return "./Content/Icons/folder.svg";
             }
