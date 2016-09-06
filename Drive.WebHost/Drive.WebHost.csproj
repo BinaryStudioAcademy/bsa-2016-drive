@@ -315,6 +315,7 @@
     <Content Include="Scripts\App\Academy\Lecture\Lecture.html" />
     <Content Include="Scripts\App\Academy\Lecture\lectureController.js" />
     <Content Include="Scripts\App\Academy\Lecture\lectureService.js" />
+    <Content Include="Scripts\App\Academy\Lecture\linkTypeService.js" />
     <Content Include="Scripts\App\Academy\List\courseCreateController.js" />
     <Content Include="Scripts\App\Academy\List\Create.html" />
     <Content Include="Scripts\App\Academy\List\Modal.html" />
@@ -402,6 +403,8 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Scripts\App\Academy\Lecture\lectureLinks.directive.html" />
+    <Content Include="Scripts\App\Academy\Lecture\lectureLinks.directive.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
