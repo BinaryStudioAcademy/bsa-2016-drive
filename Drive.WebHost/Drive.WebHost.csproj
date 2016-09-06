@@ -312,6 +312,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="gulpfile.js" />
     <Content Include="icon.png" />
+    <Content Include="Scripts\App\Academy\Lecture\createLink.directive.html" />
+    <Content Include="Scripts\App\Academy\Lecture\createLink.directive.js" />
     <Content Include="Scripts\App\Academy\Lecture\Lecture.html" />
     <Content Include="Scripts\App\Academy\Lecture\lectureController.js" />
     <Content Include="Scripts\App\Academy\Lecture\lectureService.js" />
