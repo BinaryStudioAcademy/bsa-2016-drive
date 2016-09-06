@@ -348,7 +348,15 @@ namespace Drive.WebHost.Services
         {
             var filename = file.FileName;
             string link = "";
-            DriveService service = AuthorizationService.ServiceAccountAuthorization();
+            DriveService service;
+            try
+            {
+                 service = AuthorizationService.ServiceAccountAuthorization();
+            }
+            catch(Exception e)
+            {
+                throw e;
+            }
 
             Google.Apis.Drive.v3.Data.File body = new Google.Apis.Drive.v3.Data.File();
             body.Name = System.IO.Path.GetFileName(filename);
