@@ -19,10 +19,12 @@
     "angular-animate": "~v1.5.8",
     "angular-toastr": "2.1.1",
     "sweetalert": "latest",
-    "bootstrap-ui-datetime-picker": "^2.4.3"
+    "bootstrap-ui-datetime-picker": "^2.4.3",
+    "angular-ui-sortable": "~0.14.3"
   },
   "resolutions": {
     "angular": "1.5.9-build.5006+sha.e3a378e",
-    "angular-bootstrap": "~2.0.1"
+    "angular-bootstrap": "~2.0.1",
+    "jquery": ">=1.6"
   }
 }
