@@ -6,6 +6,7 @@ using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using Google.Apis.Auth;
 using System.Configuration;
+using System;
 
 namespace Drive.WebHost.Services
 {
@@ -13,28 +14,34 @@ namespace Drive.WebHost.Services
     {
         public static DriveService Authorization()
         {
-            string[] Scopes = { DriveService.Scope.Drive };
-            string ApplicationName = "Drive";
-
-            UserCredential credential;
-            credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
-                          new ClientSecrets
-                          {
-                              ClientId = ConfigurationManager.AppSettings["CLIENT_ID"],
-                              ClientSecret = ConfigurationManager.AppSettings["CLIENT_SECRET"]
-                          },
-                          new[] { DriveService.Scope.Drive,
-                              DriveService.Scope.DriveFile },
-                          "user",
-                          CancellationToken.None,
-                          new FileDataStore(@"c:\datastore", true)).Result;
-
-            var service = new DriveService(new BaseClientService.Initializer()
+            try
             {
-                HttpClientInitializer = credential,
-                ApplicationName = ApplicationName,
-            });
-            return service;
+                string[] Scopes = { DriveService.Scope.Drive };
+                string ApplicationName = "Drive";
+                UserCredential credential;
+                credential = GoogleWebAuthorizationBroker.AuthorizeAsync(
+                              new ClientSecrets
+                              {
+                                  ClientId = ConfigurationManager.AppSettings["CLIENT_ID"],
+                                  ClientSecret = ConfigurationManager.AppSettings["CLIENT_SECRET"]
+                              },
+                              new[] { DriveService.Scope.Drive,
+                              DriveService.Scope.DriveFile },
+                              "user",
+                              CancellationToken.None,
+                              new FileDataStore(@"c:\datastore", true)).Result;
+
+                var service = new DriveService(new BaseClientService.Initializer()
+                {
+                    HttpClientInitializer = credential,
+                    ApplicationName = ApplicationName,
+                });
+                return service;
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
         }
     }
 }
