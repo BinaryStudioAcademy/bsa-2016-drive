@@ -111,6 +111,7 @@ namespace Drive.WebHost.Services.Pro
                 IsDeleted = false,
                 CreatedAt = DateTime.Now,
                 ModifiedAt = DateTime.Now,
+                Tags = new List<Tag>(),
                 FileUnit = new FileUnit
                 {
                     Name = dto.FileUnit.Name,

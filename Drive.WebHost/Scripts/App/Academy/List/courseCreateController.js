@@ -14,11 +14,14 @@
         vm.addNewCourse = addNewCourse;
         vm.create = create;
         vm.cancel = cancel;
+        vm.title = "Add new course";
 
         activate();
 
         function activate() {
             vm.course = items;
+            if (vm.course.id > 0)
+                vm.title = "Edit course";
 
             vm.calendar = {
                 isOpen: false,

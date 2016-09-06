@@ -1,6 +1,6 @@
 ﻿<div>
     <div class="modal-header">
-        <h3 class="modal-title">Add new Course</h3>
+        <h3 class="modal-title">{{courseCreateCtrl.title}}</h3>
     </div>
     <div class="modal-body">
         <div class="bs-example">
@@ -28,7 +28,7 @@
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2">Tags</label>
-                            <tags-input class="bootstrap col-sm-4" style="padding:0; border-radius: 4px" ng-model="tags"></tags-input>
+                            <tags-input class="bootstrap col-sm-4" style="padding:0; border-radius: 4px" ng-model="courseCreateCtrl.course.tags" display-property="name"></tags-input>
                         </div>
                     </form>
                 </div>
