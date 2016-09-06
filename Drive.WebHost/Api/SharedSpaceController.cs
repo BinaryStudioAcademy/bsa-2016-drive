@@ -20,12 +20,12 @@ namespace Drive.WebHost.Api
             _sharedSpaceService = sharedSpaceService;
         }
 
-        // GET: api/sharedspace/?page=(int)&count=(int)&sort=(string)
+        // GET: api/sharedspace/?page=(int)&count=(int)&sort=(string)&folderId=(int?)&rootFolderId=(int?)
         [HttpGet]
-        public async Task<IHttpActionResult> GetSharedData(int page = 1, int count = 100, string sort = null)
+        public async Task<IHttpActionResult> GetSharedData(int page = 1, int count = 100, string sort = null, int? folderId = null, int? rootFolderId = null)
         {
-            var result = await _sharedSpaceService.GetAsync(page, count, sort);
-            if (result == null || result.Files.Count == 0)
+            var result = await _sharedSpaceService.GetAsync(page, count, sort, folderId, rootFolderId);
+            if (result == null || (result.Files.Count == 0 && result.Folders.Count == 0))
                 return NotFound();
             return Ok(result);
         }

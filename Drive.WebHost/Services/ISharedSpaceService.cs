@@ -11,7 +11,7 @@ namespace Drive.WebHost.Services
     {
         Task CreateOrUpdatePermissionsOfSharedDataAsync(List<UserSharedSpaceDto> users, int id);
         Task<IEnumerable<UserSharedSpaceDto>> GetPermissionsOfSharedDataAsync(int id);
-        Task<SharedSpaceDto> GetAsync(int page, int count, string sort);
+        Task<SharedSpaceDto> GetAsync(int page, int count, string sort, int? folderId, int? parentFolderId);
         Task<int> GetTotalAsync();
         Task<SharedSpaceDto> SearchAsync(string text, int page, int count);
         Task<int> SearchTotalAsync(string text);
