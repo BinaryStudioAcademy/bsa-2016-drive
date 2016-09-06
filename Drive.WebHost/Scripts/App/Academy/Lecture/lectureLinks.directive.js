@@ -4,9 +4,9 @@
 	angular.module('driveApp.academyPro')
         .directive('lectureLinks', LectureLinks);
 
-	LectureLinks.$inject = ['BaseUrl', 'LinkTypeService', '$sce'];
+	LectureLinks.$inject = ['BaseUrl'];
 
-	function LectureLinks(baseUrl, linkTypeService, $sce) {
+	function LectureLinks(baseUrl) {
 		var directive = {
 			restrict: 'A',
 			scope: {
@@ -18,10 +18,6 @@
 				linkTrust: '&linkTrust'
 			},
 			templateUrl: baseUrl + '/Scripts/App/Academy/Lecture/lectureLinks.directive.html'
-		}
-
-		function trustSrc(src) {
-			return $sce.trustAsResourceUrl(src);
 		}
 
 		return directive;
