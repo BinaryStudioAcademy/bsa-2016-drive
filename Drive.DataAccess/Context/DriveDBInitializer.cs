@@ -1130,8 +1130,6 @@ namespace Drive.DataAccess.Context
 
             var academy1 = new AcademyProCourse
             {
-                CreatedAt = DateTime.Now,
-                ModifiedAt = DateTime.Now,
                 FileUnit = new FileUnit
                 {
                     Owner = user1,
@@ -1243,8 +1241,6 @@ namespace Drive.DataAccess.Context
 
             var academy2 = new AcademyProCourse
             {
-                CreatedAt = DateTime.Now,
-                ModifiedAt = DateTime.Now,
                 FileUnit = new FileUnit
                 {
                     Owner = user1,

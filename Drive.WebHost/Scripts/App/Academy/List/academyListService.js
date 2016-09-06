@@ -13,7 +13,8 @@
     function AcademyListService($http, baseUrl) {
         var service = {
             getAcademies: getAcademies,
-            pushData: pushData
+            pushData: pushData,
+            putData : putData
         }
 
         return service;
@@ -44,6 +45,18 @@
             function pushDataFailed(error) {
                 console.log('XHR Failed for pushData.' + error.data);
             }
+        }
+
+        function putData(data, callback) {
+            $http.put(baseUrl + '/api/academies/' + data.id, data)
+                .then(function (response) {
+                    if (callback) {
+                        callback(response.data);
+                    }
+                },
+                    function () {
+                        console.log('Error while getting folder!');
+                    });
         }
     }
 })();

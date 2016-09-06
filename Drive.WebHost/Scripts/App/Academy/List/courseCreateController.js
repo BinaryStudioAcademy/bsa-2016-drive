@@ -14,8 +14,9 @@
         var vm = this;
 
         vm.addNewCourse = addNewCourse;
-        vm.create = create;
+        vm.save = save;
         vm.cancel = cancel;
+        vm.updateCourse = updateCourse;
         vm.title = "Add new course";
 
         activate();
@@ -45,8 +46,11 @@
             }
         };
 
-        function create() {
-            vm.addNewCourse();
+        function save() {
+            if (vm.course.id !== null)
+                vm.updateCourse();
+            else
+                vm.addNewCourse();
 
             $timeout(function () {
                 $uibModalInstance.close();
@@ -57,6 +61,11 @@
                    closeButton: true, timeOut: 6000
                });
             }, 700);
+        }
+
+        function updateCourse()
+        {
+            academyListService.putData(vm.course.id, vm.course);
         }
 
         function cancel() {

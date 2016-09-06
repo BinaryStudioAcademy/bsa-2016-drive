@@ -35,8 +35,6 @@ namespace Drive.WebHost.Services.Pro
             var courses = await _unitOfWork.AcademyProCourses.Query.Select(course => new AcademyProCourseDto
             {
                 Id = course.Id,
-                CreatedAt = course.CreatedAt,
-                ModifiedAt = course.ModifiedAt,
                 IsDeleted = course.IsDeleted,
                 StartDate = course.StartDate,
                 Lectures = course.Lectures.Select(lecture => new LectureDto
@@ -72,8 +70,6 @@ namespace Drive.WebHost.Services.Pro
             var courses = await _unitOfWork.AcademyProCourses.Query.Where(c => c.Id == id).Select(course => new AcademyProCourseDto
             {
                 Id = course.Id,
-                CreatedAt = course.CreatedAt,
-                ModifiedAt = course.ModifiedAt,
                 IsDeleted = course.IsDeleted,
                 StartDate = course.StartDate,
                 Lectures = course.Lectures.Select(lecture => new LectureDto
@@ -109,8 +105,6 @@ namespace Drive.WebHost.Services.Pro
             {
                 StartDate = dto.StartDate,
                 IsDeleted = false,
-                CreatedAt = DateTime.Now,
-                ModifiedAt = DateTime.Now,
                 Tags = new List<Tag>(),
                 FileUnit = new FileUnit
                 {
@@ -135,7 +129,6 @@ namespace Drive.WebHost.Services.Pro
         {
             var course = await _unitOfWork.AcademyProCourses.GetByIdAsync(id);
             course.StartDate = dto.StartDate;
-            course.ModifiedAt = DateTime.Now;
             course.IsDeleted = dto.IsDeleted;
 
             dto.Tags.ForEach(tag =>
