@@ -49,16 +49,15 @@ namespace Drive.WebHost.Services
         public static DriveService ServiceAccountAuthorization()
         {
             string[] scopes = new string[] { DriveService.Scope.Drive };
-
+            string credPath ="";
             try
             {
-                string credPath = HttpContext.Current.Server.MapPath("~/App_Data");
+                credPath = HttpContext.Current.Server.MapPath("~/App_Data");
                 credPath = Path.Combine(credPath, "Drive-9345df2608d2.json");
                 using (var stream = new FileStream(credPath, FileMode.Open, FileAccess.Read))
                 {
                     var credential = GoogleCredential.FromStream(stream);
                     credential = credential.CreateScoped(scopes);
-
                     DriveService service = new DriveService(new BaseClientService.Initializer()
                     {
                         HttpClientInitializer = credential,
@@ -67,10 +66,9 @@ namespace Drive.WebHost.Services
                     return service;
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                Console.WriteLine(ex.InnerException);
-                return null;
+                throw new Exception("credentinal isn't readed. credPath is" + credPath);
             }
         }
     }
