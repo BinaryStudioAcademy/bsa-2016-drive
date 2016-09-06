@@ -25,6 +25,18 @@
         margin-left: 125px;
     }
     /*End Button for adding content*/
+
+    /*Create new lecture view*/
+    .create-lecture-wrap {
+        position: relative;
+        width: 100%;
+        color: #333;
+        margin-top: 20px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 73vh;
+    }
+    /*End Create new lecture view*/
 </style>
 
 <div class="container-fluid">
@@ -43,261 +55,263 @@
     <br />
     <div>
         <span us-spinner="{radius:30, width:8, length: 16}"></span>
-        <div class="container">
-            <div class="col-md-11">
-                <form name="courseForm" ng-submit="submitForm()" class="form-horizontal" novalidate>
-                    <div class="form-group" ng-class="{ 'has-error' : courseForm.name.$invalid && !courseForm.name.$pristine }">
-                        <label class="col-sm-2">Lecture name:</label>
-                        <input type="text" name="name" id="name" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="lectureCreateCtrl.lecture.name" placeholder="Lecture name" required>
-                        <p ng-show="courseForm.name.$error.required && courseForm.name.$touched" class="help-block col-sm-offset-2">Name is required.</p>
-                        <p ng-show="courseForm.name.$error.pattern" class="help-block col-sm-offset-2">Not a valid name.</p>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2">Description:</label>
-                        <textarea type="text" name="description" class="form-control" id="description" ng-model="lectureCreateCtrl.lecture.description" placeholder="Enter description"></textarea>
-                    </div>
-                    <div class="form-group datetimepicker" ng-class="{ 'has-error' : courseForm.date.$invalid && !courseForm.date.$pristine }">
-                        <label class="col-sm-2">Start date:</label>
-                        <p class="input-group">
-                            <span class="input-group-btn">
-                                <input type="datetime" name="date" id="date" class="form-control" datetime-picker="yyyy-MM-dd HH:mm:ss" ng-model="lectureCreateCtrl.lecture.startDate" is-open="lectureCreateCtrl.calendar.isOpen" placeholder="Select start date" timepicker-options="lectureCreateCtrl.calendar.timepickerOptions" required />
-                                <button type="button" class="btn btn-default" ng-click="lectureCreateCtrl.calendar.openCalendar($event, prop)"><i class="fa fa-calendar"></i></button>
-                            </span>
-                        <p ng-show="courseForm.date.$error.required && courseForm.date.$touched" class="help-block col-sm-offset-2">Date is required</p>
-                        <p ng-show="courseForm.date.$error.datetime" class="help-block col-sm-offset-2">Not a valid date</p>
-                        </p>
-                    </div>
-                </form>
+        <div class="create-lecture-wrap">
+            <div class="container">
+                <div class="col-md-11">
+                    <form name="courseForm" ng-submit="submitForm()" class="form-horizontal" novalidate>
+                        <div class="form-group" ng-class="{ 'has-error' : courseForm.name.$invalid && !courseForm.name.$pristine }">
+                            <label class="col-sm-2">Lecture name:</label>
+                            <input type="text" name="name" id="name" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="lectureCreateCtrl.lecture.name" placeholder="Lecture name" required>
+                            <p ng-show="courseForm.name.$error.required && courseForm.name.$touched" class="help-block col-sm-offset-2">Name is required.</p>
+                            <p ng-show="courseForm.name.$error.pattern" class="help-block col-sm-offset-2">Not a valid name.</p>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2">Description:</label>
+                            <textarea type="text" name="description" class="form-control" id="description" ng-model="lectureCreateCtrl.lecture.description" placeholder="Enter description"></textarea>
+                        </div>
+                        <div class="form-group datetimepicker" ng-class="{ 'has-error' : courseForm.date.$invalid && !courseForm.date.$pristine }">
+                            <label class="col-sm-2">Start date:</label>
+                            <p class="input-group">
+                                <span class="input-group-btn">
+                                    <input type="datetime" name="date" id="date" class="form-control" datetime-picker="yyyy-MM-dd HH:mm:ss" ng-model="lectureCreateCtrl.lecture.startDate" is-open="lectureCreateCtrl.calendar.isOpen" placeholder="Select start date" timepicker-options="lectureCreateCtrl.calendar.timepickerOptions" required />
+                                    <button type="button" class="btn btn-default" ng-click="lectureCreateCtrl.calendar.openCalendar($event, prop)"><i class="fa fa-calendar"></i></button>
+                                </span>
+                            <p ng-show="courseForm.date.$error.required && courseForm.date.$touched" class="help-block col-sm-offset-2">Date is required</p>
+                            <p ng-show="courseForm.date.$error.datetime" class="help-block col-sm-offset-2">Not a valid date</p>
+                            </p>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-        <div class="col-md-12" style="padding: 0;">
-            <uib-accordion close-others="true">
-                <div uib-accordion-group class="panel-default" is-open="status.open1" is-disabled="status.isFirstDisabled" title="Add videos">
-                    <uib-accordion-heading>
-                        <i class="fa fa-video-camera fa-lg" aria-hidden="true"></i> Videos <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open1, 'glyphicon-chevron-right': !status.open1}"></i>
-                    </uib-accordion-heading>
-                    <div class="col-md-10">
-                        <div class="row">
-                            <div>
-                                <ul class="ul">
-                                    <li class="list" ng-repeat="video in lectureCreateCtrl.lecture.videoLinks">{{video.name}} ({{video.link}})</li>
-                                </ul>
+            <div class="col-md-12" style="padding: 0;">
+                <uib-accordion close-others="true">
+                    <div uib-accordion-group class="panel-default" is-open="status.open1" is-disabled="status.isFirstDisabled" title="Add videos">
+                        <uib-accordion-heading>
+                            <i class="fa fa-video-camera fa-lg" aria-hidden="true"></i> Videos <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open1, 'glyphicon-chevron-right': !status.open1}"></i>
+                        </uib-accordion-heading>
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div>
+                                    <ul class="ul">
+                                        <li class="list" ng-repeat="video in lectureCreateCtrl.lecture.videoLinks">{{video.name}} ({{video.link}})</li>
+                                    </ul>
+                                </div>
+                                <form name="videoForm" ng-submit="lectureCreateCtrl.submitVideo()" class="form-horizontal" novalidate>
+                                    <div class="form-group" ng-class="{ 'has-error' : videoForm.videoName.$invalid && !videoForm.videoName.$pristine }">
+                                        <label class="col-sm-2">Video name:</label>
+                                        <input type="text" name="videoName" id="videoName" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="lectureCreateCtrl.currentVideo.name" placeholder="Name" required>
+                                        <p ng-show="videoForm.videoName.$error.required && videoForm.videoName.$touched" class="help-block col-sm-offset-2" ng-cloak>Name is required</p>
+                                        <p ng-show="videoForm.videoName.$error.pattern" class="help-block col-sm-offset-2" ng-cloak>Not a valid name</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2">Description:</label>
+                                        <input type="text" name="description" class="form-control" id="videoDescription" ng-model="lectureCreateCtrl.currentVideo.description" placeholder="Description">
+                                    </div>
+                                    <div class="form-group" ng-class="{ 'has-error' : videoForm.videoLink.$invalid && !videoForm.videoLink.$pristine }">
+                                        <label class="col-sm-2">Link:</label>
+                                        <input type="url" name="videoLink" class="form-control text-valid" id="videoLink" ng-model="lectureCreateCtrl.currentVideo.link" placeholder="Link" required>
+                                        <p ng-show="videoForm.videoLink.$error.required && videoForm.videoLink.$touched" class="help-block col-sm-offset-2" ng-cloak>Link is required</p>
+                                        <p ng-show="videoForm.videoLink.$error.url" class="help-block col-sm-offset-2" ng-cloak>Not a valid link</p>
+                                    </div>
+                                    <div class="button-add">
+                                        <button type="submit" class="btn btn-info" ng-disabled="videoForm.$invalid">
+                                            <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Add video
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
-                            <form name="videoForm" ng-submit="lectureCreateCtrl.submitVideo()" class="form-horizontal" novalidate>
-                                <div class="form-group" ng-class="{ 'has-error' : videoForm.videoName.$invalid && !videoForm.videoName.$pristine }">
-                                    <label class="col-sm-2">Video name:</label>
-                                    <input type="text" name="videoName" id="videoName" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="lectureCreateCtrl.currentVideo.name" placeholder="Name" required>
-                                    <p ng-show="videoForm.videoName.$error.required && videoForm.videoName.$touched" class="help-block col-sm-offset-2" ng-cloak>Name is required</p>
-                                    <p ng-show="videoForm.videoName.$error.pattern" class="help-block col-sm-offset-2" ng-cloak>Not a valid name</p>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2">Description:</label>
-                                    <input type="text" name="description" class="form-control" id="videoDescription" ng-model="lectureCreateCtrl.currentVideo.description" placeholder="Description">
-                                </div>
-                                <div class="form-group" ng-class="{ 'has-error' : videoForm.videoLink.$invalid && !videoForm.videoLink.$pristine }">
-                                    <label class="col-sm-2">Link:</label>
-                                    <input type="url" name="videoLink" class="form-control text-valid" id="videoLink" ng-model="lectureCreateCtrl.currentVideo.link" placeholder="Link" required>
-                                    <p ng-show="videoForm.videoLink.$error.required && videoForm.videoLink.$touched" class="help-block col-sm-offset-2" ng-cloak>Link is required</p>
-                                    <p ng-show="videoForm.videoLink.$error.url" class="help-block col-sm-offset-2" ng-cloak>Not a valid link</p>
-                                </div>
-                                <div class="button-add">
-                                    <button type="submit" class="btn btn-info" ng-disabled="videoForm.$invalid">
-                                        <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Add video
-                                    </button>
-                                </div>
-                            </form>
                         </div>
                     </div>
-                </div>
-                <div uib-accordion-group class="panel-default" is-open="status.open2" title="Add slides">
-                    <uib-accordion-heading>
-                        <i class="fa fa-file-powerpoint-o fa-lg" aria-hidden="true"></i> Slides <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open2, 'glyphicon-chevron-right': !status.open2}"></i>
-                    </uib-accordion-heading>
-                    <div class="col-md-10">
-                        <div class="row">
-                            <div>
-                                <ul class="ul">
-                                    <li class="list" ng-repeat="slides in lectureCreateCtrl.lecture.slidesLinks">{{slides.name}} ({{slides.link}})</li>
-                                </ul>
+                    <div uib-accordion-group class="panel-default" is-open="status.open2" title="Add slides">
+                        <uib-accordion-heading>
+                            <i class="fa fa-file-powerpoint-o fa-lg" aria-hidden="true"></i> Slides <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open2, 'glyphicon-chevron-right': !status.open2}"></i>
+                        </uib-accordion-heading>
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div>
+                                    <ul class="ul">
+                                        <li class="list" ng-repeat="slides in lectureCreateCtrl.lecture.slidesLinks">{{slides.name}} ({{slides.link}})</li>
+                                    </ul>
+                                </div>
+                                <form name="slideForm" ng-submit="lectureCreateCtrl.submitSlide()" class="form-horizontal" novalidate>
+                                    <div class="form-group" ng-class="{ 'has-error' : slideForm.slideName.$invalid && !slideForm.slideName.$pristine }">
+                                        <label class="col-sm-2">Slide name:</label>
+                                        <input type="text" name="slideName" id="slideName" ng-pattern="/^[\w -]*$/" class="form-control text-valid" ng-model="lectureCreateCtrl.currentSlide.name" placeholder="Name" required>
+                                        <p ng-show="slideForm.slideName.$error.required && slideForm.slideName.$touched" class="help-block col-sm-offset-2" ng-cloak>Name is required</p>
+                                        <p ng-show="slideForm.slideName.$error.pattern" class="help-block col-sm-offset-2" ng-cloak>Not a valid name</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2">Description:</label>
+                                        <input type="text" name="slideDescription" class="form-control" id="slideDescription" ng-model="lectureCreateCtrl.currentSlide.description" placeholder="Description">
+                                    </div>
+                                    <div class="form-group" ng-class="{ 'has-error' : slideForm.slideLink.$invalid && !slideForm.slideLink.$pristine }">
+                                        <label class="col-sm-2">Link:</label>
+                                        <input type="url" name="slideLink" class="form-control text-valid" id="slideLink" ng-model="lectureCreateCtrl.currentSlide.link" placeholder="Link" required>
+                                        <p ng-show="slideForm.slideLink.$error.required && slideForm.slideLink.$touched" class="help-block col-sm-offset-2" ng-cloak>Link is required</p>
+                                        <p ng-show="slideForm.slideLink.$error.url" class="help-block col-sm-offset-2" ng-cloak>Not a valid link</p>
+                                    </div>
+                                    <div class="button-add">
+                                        <button type="submit" class="btn btn-info" ng-disabled="slideForm.$invalid">
+                                            <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Add slide
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
-                            <form name="slideForm" ng-submit="lectureCreateCtrl.submitSlide()" class="form-horizontal" novalidate>
-                                <div class="form-group" ng-class="{ 'has-error' : slideForm.slideName.$invalid && !slideForm.slideName.$pristine }">
-                                    <label class="col-sm-2">Slide name:</label>
-                                    <input type="text" name="slideName" id="slideName" ng-pattern="/^[\w -]*$/" class="form-control text-valid" ng-model="lectureCreateCtrl.currentSlide.name" placeholder="Name" required>
-                                    <p ng-show="slideForm.slideName.$error.required && slideForm.slideName.$touched" class="help-block col-sm-offset-2" ng-cloak>Name is required</p>
-                                    <p ng-show="slideForm.slideName.$error.pattern" class="help-block col-sm-offset-2" ng-cloak>Not a valid name</p>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2">Description:</label>
-                                    <input type="text" name="slideDescription" class="form-control" id="slideDescription" ng-model="lectureCreateCtrl.currentSlide.description" placeholder="Description">
-                                </div>
-                                <div class="form-group" ng-class="{ 'has-error' : slideForm.slideLink.$invalid && !slideForm.slideLink.$pristine }">
-                                    <label class="col-sm-2">Link:</label>
-                                    <input type="url" name="slideLink" class="form-control text-valid" id="slideLink" ng-model="lectureCreateCtrl.currentSlide.link" placeholder="Link" required>
-                                    <p ng-show="slideForm.slideLink.$error.required && slideForm.slideLink.$touched" class="help-block col-sm-offset-2" ng-cloak>Link is required</p>
-                                    <p ng-show="slideForm.slideLink.$error.url" class="help-block col-sm-offset-2" ng-cloak>Not a valid link</p>
-                                </div>
-                                <div class="button-add">
-                                    <button type="submit" class="btn btn-info" ng-disabled="slideForm.$invalid">
-                                        <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Add slide
-                                    </button>
-                                </div>
-                            </form>
                         </div>
                     </div>
-                </div>
-                <div uib-accordion-group class="panel-default" is-open="status.open3" title="Add repositories">
-                    <uib-accordion-heading>
-                        <i class="fa fa-github fa-lg" aria-hidden="true"></i> Repositories <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open3, 'glyphicon-chevron-right': !status.open3}"></i>
-                    </uib-accordion-heading>
-                    <div class="col-md-10">
-                        <div class="row">
-                            <div>
-                                <ul class="ul">
-                                    <li class="list" ng-repeat="repository in lectureCreateCtrl.lecture.repositoryLinks">{{repository.name}} ({{repository.link}})</li>
-                                </ul>
+                    <div uib-accordion-group class="panel-default" is-open="status.open3" title="Add repositories">
+                        <uib-accordion-heading>
+                            <i class="fa fa-github fa-lg" aria-hidden="true"></i> Repositories <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open3, 'glyphicon-chevron-right': !status.open3}"></i>
+                        </uib-accordion-heading>
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div>
+                                    <ul class="ul">
+                                        <li class="list" ng-repeat="repository in lectureCreateCtrl.lecture.repositoryLinks">{{repository.name}} ({{repository.link}})</li>
+                                    </ul>
+                                </div>
+                                <form name="repositoryForm" ng-submit="lectureCreateCtrl.submitRepository()" class="form-horizontal" novalidate>
+                                    <div class="form-group" ng-class="{ 'has-error' : repositoryForm.repositoryName.$invalid && !repositoryForm.repositoryName.$pristine }">
+                                        <label class="col-sm-2">Repository name:</label>
+                                        <input type="text" name="repositoryName" id="repositoryName" ng-pattern="/^[\w -]*$/" class="form-control text-valid" ng-model="lectureCreateCtrl.currentRepository.name" placeholder="Name" required>
+                                        <p ng-show="repositoryForm.repositoryName.$error.required && repositoryForm.repositoryName.$touched" class="help-block col-sm-offset-2" ng-cloak>Name is required</p>
+                                        <p ng-show="repositoryForm.repositoryName.$error.pattern" class="help-block col-sm-offset-2" ng-cloak>Not a valid name</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2">Description:</label>
+                                        <input type="text" name="repositoryDescription" class="form-control" id="repositoryDescription" ng-model="lectureCreateCtrl.currentRepository.description" placeholder="Description">
+                                    </div>
+                                    <div class="form-group" ng-class="{ 'has-error' : repositoryForm.repositoryLink.$invalid && !repositoryForm.repositoryLink.$pristine }">
+                                        <label class="col-sm-2">Link:</label>
+                                        <input type="url" name="repositoryLink" class="form-control text-valid" id="repositoryLink" ng-model="lectureCreateCtrl.currentRepository.link" placeholder="Link" required>
+                                        <p ng-show="repositoryForm.repositoryLink.$error.required && repositoryForm.repositoryLink.$touched" class="help-block col-sm-offset-2" ng-cloak>Link is required</p>
+                                        <p ng-show="repositoryForm.repositoryLink.$error.url" class="help-block col-sm-offset-2" ng-cloak>Not a valid link</p>
+                                    </div>
+                                    <div class="button-add">
+                                        <button type="submit" class="btn btn-info" ng-disabled="repositoryForm.$invalid">
+                                            <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Add repository
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
-                            <form name="repositoryForm" ng-submit="lectureCreateCtrl.submitRepository()" class="form-horizontal" novalidate>
-                                <div class="form-group" ng-class="{ 'has-error' : repositoryForm.repositoryName.$invalid && !repositoryForm.repositoryName.$pristine }">
-                                    <label class="col-sm-2">Repository name:</label>
-                                    <input type="text" name="repositoryName" id="repositoryName" ng-pattern="/^[\w -]*$/" class="form-control text-valid" ng-model="lectureCreateCtrl.currentRepository.name" placeholder="Name" required>
-                                    <p ng-show="repositoryForm.repositoryName.$error.required && repositoryForm.repositoryName.$touched" class="help-block col-sm-offset-2" ng-cloak>Name is required</p>
-                                    <p ng-show="repositoryForm.repositoryName.$error.pattern" class="help-block col-sm-offset-2" ng-cloak>Not a valid name</p>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2">Description:</label>
-                                    <input type="text" name="repositoryDescription" class="form-control" id="repositoryDescription" ng-model="lectureCreateCtrl.currentRepository.description" placeholder="Description">
-                                </div>
-                                <div class="form-group" ng-class="{ 'has-error' : repositoryForm.repositoryLink.$invalid && !repositoryForm.repositoryLink.$pristine }">
-                                    <label class="col-sm-2">Link:</label>
-                                    <input type="url" name="repositoryLink" class="form-control text-valid" id="repositoryLink" ng-model="lectureCreateCtrl.currentRepository.link" placeholder="Link" required>
-                                    <p ng-show="repositoryForm.repositoryLink.$error.required && repositoryForm.repositoryLink.$touched" class="help-block col-sm-offset-2" ng-cloak>Link is required</p>
-                                    <p ng-show="repositoryForm.repositoryLink.$error.url" class="help-block col-sm-offset-2" ng-cloak>Not a valid link</p>
-                                </div>
-                                <div class="button-add">
-                                    <button type="submit" class="btn btn-info" ng-disabled="repositoryForm.$invalid">
-                                        <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Add repository
-                                    </button>
-                                </div>
-                            </form>
                         </div>
                     </div>
-                </div>
-                <div uib-accordion-group class="panel-default" is-open="status.open4" title="Add code samples">
-                    <uib-accordion-heading>
-                        <i class="fa fa-code fa-lg" aria-hidden="true"></i> Code samples <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open4, 'glyphicon-chevron-right': !status.open4}"></i>
-                    </uib-accordion-heading>
-                    <div class="col-md-10">
-                        <div class="row">
-                            <div>
-                                <ul class="ul">
-                                    <li class="list" ng-repeat="sample in lectureCreateCtrl.lecture.sampleLinks">{{sample.name}} ({{sample.link}})</li>
-                                </ul>
-                            </div>
-                            <form name="sampleForm" ng-submit="lectureCreateCtrl.submitSample()" class="form-horizontal" novalidate>
+                    <div uib-accordion-group class="panel-default" is-open="status.open4" title="Add code samples">
+                        <uib-accordion-heading>
+                            <i class="fa fa-code fa-lg" aria-hidden="true"></i> Code samples <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open4, 'glyphicon-chevron-right': !status.open4}"></i>
+                        </uib-accordion-heading>
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div>
+                                    <ul class="ul">
+                                        <li class="list" ng-repeat="sample in lectureCreateCtrl.lecture.sampleLinks">{{sample.name}} ({{sample.link}})</li>
+                                    </ul>
+                                </div>
+                                <form name="sampleForm" ng-submit="lectureCreateCtrl.submitSample()" class="form-horizontal" novalidate>
 
-                                <div class="form-group" ng-class="{ 'has-error' : sampleForm.sampleName.$invalid && !sampleForm.sampleName.$pristine }">
-                                    <label class="col-sm-2">Sample name:</label>
-                                    <input type="text" name="sampleName" id="sampleName" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="lectureCreateCtrl.currentSample.name" placeholder="Name" required>
-                                    <p ng-show="sampleForm.sampleName.$error.required && sampleForm.sampleName.$touched" class="help-block col-sm-offset-2" ng-cloak>Name is required</p>
-                                    <p ng-show="sampleForm.sampleName.$error.pattern" class="help-block col-sm-offset-2" ng-cloak>Not a valid name</p>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2">Description:</label>
-                                    <input type="text" name="sampleDescription" class="form-control" id="sampleDescription" ng-model="lectureCreateCtrl.currentSample.description" placeholder="Description">
-                                </div>
-                                <div class="form-group" ng-class="{ 'has-error' : sampleForm.sampleLink.$invalid && !sampleForm.sampleLink.$pristine }">
-                                    <label class="col-sm-2">Link:</label>
-                                    <input type="url" name="sampleLink" class="form-control text-valid" id="sampleLink" ng-model="lectureCreateCtrl.currentSample.link" placeholder="Link" required>
-                                    <p ng-show="sampleForm.sampleLink.$error.required && sampleForm.sampleLink.$touched" class="help-block col-sm-offset-2" ng-cloak>Link is required</p>
-                                    <p ng-show="sampleForm.sampleLink.$error.url" class="help-block col-sm-offset-2" ng-cloak>Not a valid link</p>
-                                </div>
-                                <div class="button-add">
-                                    <button type="submit" class="btn btn-info" ng-disabled="sampleForm.$invalid">
-                                        <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Add sample
-                                    </button>
-                                </div>
-                            </form>
+                                    <div class="form-group" ng-class="{ 'has-error' : sampleForm.sampleName.$invalid && !sampleForm.sampleName.$pristine }">
+                                        <label class="col-sm-2">Sample name:</label>
+                                        <input type="text" name="sampleName" id="sampleName" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="lectureCreateCtrl.currentSample.name" placeholder="Name" required>
+                                        <p ng-show="sampleForm.sampleName.$error.required && sampleForm.sampleName.$touched" class="help-block col-sm-offset-2" ng-cloak>Name is required</p>
+                                        <p ng-show="sampleForm.sampleName.$error.pattern" class="help-block col-sm-offset-2" ng-cloak>Not a valid name</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2">Description:</label>
+                                        <input type="text" name="sampleDescription" class="form-control" id="sampleDescription" ng-model="lectureCreateCtrl.currentSample.description" placeholder="Description">
+                                    </div>
+                                    <div class="form-group" ng-class="{ 'has-error' : sampleForm.sampleLink.$invalid && !sampleForm.sampleLink.$pristine }">
+                                        <label class="col-sm-2">Link:</label>
+                                        <input type="url" name="sampleLink" class="form-control text-valid" id="sampleLink" ng-model="lectureCreateCtrl.currentSample.link" placeholder="Link" required>
+                                        <p ng-show="sampleForm.sampleLink.$error.required && sampleForm.sampleLink.$touched" class="help-block col-sm-offset-2" ng-cloak>Link is required</p>
+                                        <p ng-show="sampleForm.sampleLink.$error.url" class="help-block col-sm-offset-2" ng-cloak>Not a valid link</p>
+                                    </div>
+                                    <div class="button-add">
+                                        <button type="submit" class="btn btn-info" ng-disabled="sampleForm.$invalid">
+                                            <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Add sample
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div uib-accordion-group class="panel-default" is-open="status.open5" title="Add useful links">
-                    <uib-accordion-heading>
-                        <i class="fa fa-link fa-lg" aria-hidden="true"></i> Useful links <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open5, 'glyphicon-chevron-right': !status.open5}"></i>
-                    </uib-accordion-heading>
-                    <div class="col-md-10">
-                        <div class="row">
-                            <div>
-                                <ul class="ul">
-                                    <li class="list" ng-repeat="useful in lectureCreateCtrl.lecture.usefulLinks">{{useful.name}} ({{useful.link}})</li>
-                                </ul>
+                    <div uib-accordion-group class="panel-default" is-open="status.open5" title="Add useful links">
+                        <uib-accordion-heading>
+                            <i class="fa fa-link fa-lg" aria-hidden="true"></i> Useful links <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open5, 'glyphicon-chevron-right': !status.open5}"></i>
+                        </uib-accordion-heading>
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div>
+                                    <ul class="ul">
+                                        <li class="list" ng-repeat="useful in lectureCreateCtrl.lecture.usefulLinks">{{useful.name}} ({{useful.link}})</li>
+                                    </ul>
+                                </div>
+                                <form name="linksForm" ng-submit="lectureCreateCtrl.submitUseful()" class="form-horizontal" novalidate>
+                                    <div class="form-group" ng-class="{ 'has-error' : linksForm.usefulName.$invalid && !linksForm.usefulName.$pristine }">
+                                        <label class="col-sm-2">Link name:</label>
+                                        <input type="text" name="usefulName" id="usefulName" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="lectureCreateCtrl.currentUseful.name" placeholder="Name" required>
+                                        <p ng-show="linksForm.usefulName.$error.required && linksForm.usefulName.$touched" class="help-block col-sm-offset-2" ng-cloak>Name is required</p>
+                                        <p ng-show="linksForm.usefulName.$error.pattern" class="help-block col-sm-offset-2" ng-cloak>Not a valid name</p>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2">Description:</label>
+                                        <input type="text" name="description" class="form-control" id="usefulDescription" ng-model="lectureCreateCtrl.currentUseful.description" placeholder="Description">
+                                    </div>
+                                    <div class="form-group" ng-class="{ 'has-error' : linksForm.usefulLink.$invalid && !linksForm.usefulLink.$pristine }">
+                                        <label class="col-sm-2">Link:</label>
+                                        <input type="url" name="usefulLink" class="form-control text-valid" id="usefulLink" ng-model="lectureCreateCtrl.currentUseful.link" placeholder="Link" required>
+                                        <p ng-show="linksForm.usefulLink.$error.required && linksForm.usefulLink.$touched" class="help-block col-sm-offset-2" ng-cloak>Link is required</p>
+                                        <p ng-show="linksForm.usefulLink.$error.url" class="help-block col-sm-offset-2" ng-cloak>Not a valid link</p>
+                                    </div>
+                                    <div class="button-add">
+                                        <button type="submit" class="btn btn-info" ng-disabled="linksForm.$invalid">
+                                            <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Add link
+                                        </button>
+                                    </div>
+                                </form>
                             </div>
-                            <form name="linksForm" ng-submit="lectureCreateCtrl.submitUseful()" class="form-horizontal" novalidate>
-                                <div class="form-group" ng-class="{ 'has-error' : linksForm.usefulName.$invalid && !linksForm.usefulName.$pristine }">
-                                    <label class="col-sm-2">Link name:</label>
-                                    <input type="text" name="usefulName" id="usefulName" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="lectureCreateCtrl.currentUseful.name" placeholder="Name" required>
-                                    <p ng-show="linksForm.usefulName.$error.required && linksForm.usefulName.$touched" class="help-block col-sm-offset-2" ng-cloak>Name is required</p>
-                                    <p ng-show="linksForm.usefulName.$error.pattern" class="help-block col-sm-offset-2" ng-cloak>Not a valid name</p>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-sm-2">Description:</label>
-                                    <input type="text" name="description" class="form-control" id="usefulDescription" ng-model="lectureCreateCtrl.currentUseful.description" placeholder="Description">
-                                </div>
-                                <div class="form-group" ng-class="{ 'has-error' : linksForm.usefulLink.$invalid && !linksForm.usefulLink.$pristine }">
-                                    <label class="col-sm-2">Link:</label>
-                                    <input type="url" name="usefulLink" class="form-control text-valid" id="usefulLink" ng-model="lectureCreateCtrl.currentUseful.link" placeholder="Link" required>
-                                    <p ng-show="linksForm.usefulLink.$error.required && linksForm.usefulLink.$touched" class="help-block col-sm-offset-2" ng-cloak>Link is required</p>
-                                    <p ng-show="linksForm.usefulLink.$error.url" class="help-block col-sm-offset-2" ng-cloak>Not a valid link</p>
-                                </div>
-                                <div class="button-add">
-                                    <button type="submit" class="btn btn-info" ng-disabled="linksForm.$invalid">
-                                        <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Add link
-                                    </button>
-                                </div>
-                            </form>
                         </div>
                     </div>
-                </div>
-                <div uib-accordion-group class="panel-default" is-open="status.open6" title="Home task">
-                    <uib-accordion-heading>
-                        <i class="fa fa-tasks fa-lg" aria-hidden="true"></i> Home task <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open6, 'glyphicon-chevron-right': !status.open6}"></i>
-                    </uib-accordion-heading>
-                    <div class="col-md-10">
-                        <div class="row">
-                            <div>
-                                <ul class="ul">
-                                    <li class="list" ng-repeat="useful in lectureCreateCtrl.lecture.usefulLinks">{{useful.name}} ({{useful.link}})</li>
-                                </ul>
-                            </div>
-                            <form name="taskForm" ng-submit="lectureCreateCtrl.submitUseful()" class="form-horizontal" novalidate>
-                                <div class="form-group" ng-class="{ 'has-error' : taskForm.usefulName.$invalid && !taskForm.usefulName.$pristine }">
-                                    <label class="col-sm-2">Description:</label>
-                                    <textarea type="text" name="usefulName" id="usefulName" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="lectureCreateCtrl.currentUseful.name" placeholder="Description" required></textarea>
-                                    <p ng-show="taskForm.usefulName.$error.required && taskForm.usefulName.$touched" class="help-block col-sm-offset-2" ng-cloak>Description is required</p>
-                                    <p ng-show="taskForm.usefulName.$error.pattern" class="help-block col-sm-offset-2" ng-cloak>Not a valid description</p>
+                    <div uib-accordion-group class="panel-default" is-open="status.open6" title="Home task">
+                        <uib-accordion-heading>
+                            <i class="fa fa-tasks fa-lg" aria-hidden="true"></i> Home task <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open6, 'glyphicon-chevron-right': !status.open6}"></i>
+                        </uib-accordion-heading>
+                        <div class="col-md-10">
+                            <div class="row">
+                                <div>
+                                    <ul class="ul">
+                                        <li class="list" ng-repeat="useful in lectureCreateCtrl.lecture.usefulLinks">{{useful.name}} ({{useful.link}})</li>
+                                    </ul>
                                 </div>
+                                <form name="taskForm" ng-submit="lectureCreateCtrl.submitUseful()" class="form-horizontal" novalidate>
+                                    <div class="form-group" ng-class="{ 'has-error' : taskForm.usefulName.$invalid && !taskForm.usefulName.$pristine }">
+                                        <label class="col-sm-2">Description:</label>
+                                        <textarea type="text" name="usefulName" id="usefulName" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="lectureCreateCtrl.currentUseful.name" placeholder="Description" required></textarea>
+                                        <p ng-show="taskForm.usefulName.$error.required && taskForm.usefulName.$touched" class="help-block col-sm-offset-2" ng-cloak>Description is required</p>
+                                        <p ng-show="taskForm.usefulName.$error.pattern" class="help-block col-sm-offset-2" ng-cloak>Not a valid description</p>
+                                    </div>
 
-                                <div class="form-group datetimepicker" ng-class="{ 'has-error' : taskForm.taskDate.$invalid && !taskForm.taskDate.$pristine }">
-                                    <label class="col-sm-2">Deadline:</label>
-                                    <p class="input-group">
-                                        <span class="input-group-btn">
-                                            <input type="datetime" name="taskDate" id="taskDate" class="form-control" datetime-picker="yyyy-MM-dd HH:mm:ss" ng-model="lectureCreateCtrl.hometask.startDate" is-open="lectureCreateCtrl.calendarHomeTask.isOpen" placeholder="Select deadline date" timepicker-options="lectureCreateCtrl.calendarHomeTask.timepickerOptions" required />
-                                            <button type="button" class="btn btn-default" ng-click="lectureCreateCtrl.calendarHomeTask.openCalendarHomeTask($event, prop)"><i class="fa fa-calendar"></i></button>
-                                        </span>
-                                    <p ng-show="taskForm.taskDate.$error.required && taskForm.taskDate.$touched" class="help-block col-sm-offset-2">Date is required</p>
-                                    <p ng-show="taskForm.taskDate.$error.datetime" class="help-block col-sm-offset-2">Not a valid date</p>
-                                    </p>
-                                </div>
-                                <div class="button-add">
-                                    <button type="submit" class="btn btn-info" ng-disabled="taskForm.$invalid">
-                                        <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Add task
-                                    </button>
-                                </div>
-                            </form>
+                                    <div class="form-group datetimepicker" ng-class="{ 'has-error' : taskForm.taskDate.$invalid && !taskForm.taskDate.$pristine }">
+                                        <label class="col-sm-2">Deadline:</label>
+                                        <p class="input-group">
+                                            <span class="input-group-btn">
+                                                <input type="datetime" name="taskDate" id="taskDate" class="form-control" datetime-picker="yyyy-MM-dd HH:mm:ss" ng-model="lectureCreateCtrl.hometask.startDate" is-open="lectureCreateCtrl.calendarHomeTask.isOpen" placeholder="Select deadline date" timepicker-options="lectureCreateCtrl.calendarHomeTask.timepickerOptions" required />
+                                                <button type="button" class="btn btn-default" ng-click="lectureCreateCtrl.calendarHomeTask.openCalendarHomeTask($event, prop)"><i class="fa fa-calendar"></i></button>
+                                            </span>
+                                        <p ng-show="taskForm.taskDate.$error.required && taskForm.taskDate.$touched" class="help-block col-sm-offset-2">Date is required</p>
+                                        <p ng-show="taskForm.taskDate.$error.datetime" class="help-block col-sm-offset-2">Not a valid date</p>
+                                        </p>
+                                    </div>
+                                    <div class="button-add">
+                                        <button type="submit" class="btn btn-info" ng-disabled="taskForm.$invalid">
+                                            <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Add task
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </uib-accordion>
+                </uib-accordion>
+            </div>
         </div>
     </div>
 </div>
