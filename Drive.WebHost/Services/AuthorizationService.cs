@@ -7,6 +7,8 @@ using Google.Apis.Util.Store;
 using Google.Apis.Auth;
 using System.Configuration;
 using System;
+using System.Web;
+using System.IO;
 
 namespace Drive.WebHost.Services
 {
@@ -41,6 +43,34 @@ namespace Drive.WebHost.Services
             catch (Exception e)
             {
                 throw e;
+            }
+        }
+
+        public static DriveService ServiceAccountAuthorization()
+        {
+            string[] scopes = new string[] { DriveService.Scope.Drive };
+
+            try
+            {
+                string credPath = HttpContext.Current.Server.MapPath("~/App_Data");
+                credPath = Path.Combine(credPath, "Drive-9345df2608d2.json");
+                using (var stream = new FileStream(credPath, FileMode.Open, FileAccess.Read))
+                {
+                    var credential = GoogleCredential.FromStream(stream);
+                    credential = credential.CreateScoped(scopes);
+
+                    DriveService service = new DriveService(new BaseClientService.Initializer()
+                    {
+                        HttpClientInitializer = credential,
+                        ApplicationName = "Drive",
+                    });
+                    return service;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.InnerException);
+                return null;
             }
         }
     }
