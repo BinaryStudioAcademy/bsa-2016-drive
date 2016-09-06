@@ -99,65 +99,71 @@
     <!--End New gridview-->
 
 
-    <div class="table-responsive blocked-table" ng-show="spaceCtrl.showTable">
-        <table class="fixed_headers">
-            <thead context-menu="spaceCtrl.containerMenuOptions">
-                <tr style="cursor: pointer">
-                    <th style="display:inline-block; width:20%" ng-click="spaceCtrl.orderByColumn('name')">
-                        Name
-                        <span ng-show="spaceCtrl.columnForOrder == 'name'"><i class="fa fa-sort-asc"></i></span>
-                        <span ng-show="spaceCtrl.columnForOrder == '-name'"><i class="fa fa-sort-desc"></i></span>
-                    </th>
-                    <th style="display:inline-block; width:33%" ng-click="spaceCtrl.orderByColumn('description')">
-                        Description
-                        <span ng-show="spaceCtrl.columnForOrder == 'description'"><i class="fa fa-sort-asc"></i></span>
-                        <span ng-show="spaceCtrl.columnForOrder == '-description'"><i class="fa fa-sort-desc"></i></span>
-                    </th>
-                    <th style="display:inline-block; width:20%" ng-click="spaceCtrl.orderByColumn('author.name')">
-                        Author
-                        <span ng-show="spaceCtrl.columnForOrder == 'author.name'"><i class="fa fa-sort-asc"></i></span>
-                        <span ng-show="spaceCtrl.columnForOrder == '-author.name'"><i class="fa fa-sort-desc"></i></span>
-                    </th>
-                    <th style="display:inline-block; width:15%" ng-click="spaceCtrl.orderByColumn('createdAt')">
-                        Created
-                        <span ng-show="spaceCtrl.columnForOrder == 'createdAt'"><i class="fa fa-sort-asc"></i></span>
-                        <span ng-show="spaceCtrl.columnForOrder == '-createdAt'"><i class="fa fa-sort-desc"></i></span>
-                    </th>
-                    <th style="display:inline-block; width:10%" ng-click="spaceCtrl.orderByColumn('fileType')">
-                        Type
-                        <span ng-show="spaceCtrl.columnForOrder == 'fileType'"><i class="fa fa-sort-asc"></i></span>
-                        <span ng-show="spaceCtrl.columnForOrder == '-fileType'"><i class="fa fa-sort-desc"></i></span>
-                    </th>
-                </tr>
-            </thead>
-            <tbody context-menu="spaceCtrl.containerMenuOptions">
-                <tr class="shadow" role="button" ng-repeat="folder in spaceCtrl.space.folders | orderBy: spaceCtrl.columnForOrder" context-menu="spaceCtrl.folderMenuOptions" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
-                    <td style="display:inline-block; width:20%">
-                        <img src="./Content/Icons/folder.svg" height="{{spaceCtrl.iconHeight}}" />
-                        &nbsp;{{ folder.name | limitTo: 13}}{{ folder.name.length > 13 ? '...' : ''}}  
-                    </td>
-                    <td style="display:inline-block; width: 33%; padding-top: 7px;"
-                        title="{{folder.description}}">
-                        {{folder.description | limitTo: 41}}{{folder.description.length > 41 ? '...' : ''}}
-                    </td>
-                    <td style="display:inline-block; width:20%; padding-top: 7px;">{{ folder.author.name }}</td>
-                    <td style="display:inline-block; width:15%; padding-top: 7px;">{{ folder.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
-                    <td style="display:inline-block; width:10%; padding-top: 7px;">Folder</td>
-                </tr>
-                <tr class="shadow" role="button" ng-repeat="file in spaceCtrl.space.files | orderBy: spaceCtrl.columnForOrder" context-menu="spaceCtrl.fileMenuOptions" ng-dblclick="spaceCtrl.openDocument(file.link)">
-                    <td style="display:inline-block; width:20%; padding-top: 7px;">
-                        <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" height="{{spaceCtrl.iconHeight}}" />
-                        &nbsp;{{ file.name | limitTo: 13}}{{ file.name.length > 13 ? '...' : ''}} 
-                    </td>
-                    <td style="display:inline-block; width:33%; padding-top: 7px;" title="{{file.description}}">
-                        {{file.description | limitTo: 41}}{{file.description.length > 41 ? '...' : ''}}
-                    </td>
-                    <td style="display:inline-block; width:20%; padding-top: 7px;">{{ file.author.name }}</td>
-                    <td style="display:inline-block; width:15%; padding-top: 7px;">{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</td>
-                    <td style="display:inline-block; width:10%; padding-top: 7px;">{{ file.fileType | typeOfFile }}</td>
-                </tr>
-            </tbody>
-        </table>
+    <div class="filter-table container-md" ng-show="spaceCtrl.showTable">
+        <div class="header-wrapper">
+            <div class="row header-row">
+                <div class="col-md-3" ng-click="spaceCtrl.orderByColumn('name')">
+                    Name
+                    <span ng-show="spaceCtrl.columnForOrder == 'name'"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == '-name'"><i class="fa fa-sort-desc"></i></span>
+                </div>
+                <div class="col-md-3" ng-click="spaceCtrl.orderByColumn('description')">
+                    Description
+                    <span ng-show="spaceCtrl.columnForOrder == 'description'"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == '-description'"><i class="fa fa-sort-desc"></i></span>
+                </div>
+                <div class="col-md-2" ng-click="spaceCtrl.orderByColumn('author.name')">
+                    Author
+                    <span ng-show="spaceCtrl.columnForOrder == 'author.name'"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == '-author.name'"><i class="fa fa-sort-desc"></i></span>
+                </div>
+                <div class="col-md-2" ng-click="spaceCtrl.orderByColumn('createdAt')">
+                    Created
+                    <span ng-show="spaceCtrl.columnForOrder == 'createdAt'"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == '-createdAt'"><i class="fa fa-sort-desc"></i></span>
+                </div>
+                <div class="col-md-2">
+                    Type
+                    <span ng-show="spaceCtrl.columnForOrder == 'fileType'"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == '-fileType'"><i class="fa fa-sort-desc"></i></span>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-table-internal">
+            <div style="transition: all 2s">
+                <div class="filter-table-row">
+                    <div class="row filter-table-row" role="button" ng-repeat="folder in spaceCtrl.space.folders | orderBy: spaceCtrl.columnForOrder" ng-dblclick="spaceCtrl.openDocument(folder.link)" context-menu="spaceCtrl.folderMenuOptions">
+                        <div class="col-md-3 filter-table-cell description" title="{{ folder.name }}">
+                            <img src="./Content/Icons/folder.svg" height="{{spaceCtrl.iconHeight}}" />
+                            {{folder.name | limitTo: 20}}{{folder.name.length > 20 ? '...' : ''}}
+                        </div>
+                        <div class="col-md-3 filter-table-cell description" title="{{ folder.description }}">
+                            {{folder.description | limitTo: 28}}{{folder.description.length > 28 ? '...' : ''}}
+                        </div>
+                        <div class="col-md-2 filter-table-cell">{{ folder.author.name }}</div>
+                        <div class="col-md-2 filter-table-cell">{{ folder.createdAt | date:'dd-MM-yyyy HH:mm' }}</div>
+                        <div class="col-md-2 filter-table-cell">Folder</div>
+                    </div>
+                </div>
+            </div>
+            <div style="transition: all 2s">
+                <div class="filter-table-row">
+                    <div class="row filter-table-row" role="button" ng-repeat="file in spaceCtrl.space.files | orderBy: spaceCtrl.columnForOrder" ng-dblclick="spaceCtrl.openDocument(file.link)" context-menu="spaceCtrl.fileMenuOptions">
+                        <div class="col-md-3 filter-table-cell description" title="{{ file.name }}">
+                            <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" height="{{spaceCtrl.iconHeight}}" />
+                            {{file.name | limitTo: 20}}{{file.name.length > 20 ? '...' : ''}}
+                        </div>
+                        <div class="col-md-3 filter-table-cell description" title="{{ file.description }}">
+                            {{file.description | limitTo: 28}}{{file.description.length > 28 ? '...' : ''}}
+                        </div>
+                        <div class="col-md-2 filter-table-cell">{{ file.author.name }}</div>
+                        <div class="col-md-2 filter-table-cell">{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</div>
+                        <div class="col-md-2 filter-table-cell">{{ file.fileType | typeOfFile }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="page-footer-center">
         <dir-pagination-controls class="page-footer" on-page-change="spaceCtrl.paginate.getContent(newPageNumber)"></dir-pagination-controls>
