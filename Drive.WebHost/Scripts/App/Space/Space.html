@@ -122,7 +122,7 @@
                     <span ng-show="spaceCtrl.columnForOrder == 'createdAt'"><i class="fa fa-sort-asc"></i></span>
                     <span ng-show="spaceCtrl.columnForOrder == '-createdAt'"><i class="fa fa-sort-desc"></i></span>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2" ng-click="spaceCtrl.orderByColumn('fileType')">
                     Type
                     <span ng-show="spaceCtrl.columnForOrder == 'fileType'"><i class="fa fa-sort-asc"></i></span>
                     <span ng-show="spaceCtrl.columnForOrder == '-fileType'"><i class="fa fa-sort-desc"></i></span>
