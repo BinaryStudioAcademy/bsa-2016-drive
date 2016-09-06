@@ -3,14 +3,16 @@
         .controller('CourseCreateController', CourseCreateController);
 
     CourseCreateController.$inject = [
-        'AcademyListService',
-        '$uibModalInstance',
-        'toastr',
-        'items'
+        "AcademyListService",
+        "$uibModalInstance",
+        "toastr",
+        "items",
+        "$timeout"
     ];
 
-    function CourseCreateController(academyListService, $uibModalInstance, toastr, items) {
+    function CourseCreateController(academyListService, $uibModalInstance, toastr, items, $timeout) {
         var vm = this;
+
         vm.addNewCourse = addNewCourse;
         vm.create = create;
         vm.cancel = cancel;
@@ -27,7 +29,7 @@
                 isOpen: false,
                 openCalendar: openCalendar,
                 timepickerOptions: {
-                    showMeridian: false,
+                    showMeridian: false
                 }
             }
 
@@ -46,12 +48,15 @@
         function create() {
             vm.addNewCourse();
 
-            $uibModalInstance.close();
-            toastr.success(
-                'New course was added successfully!', 'Academy Pro',
-                {
-                    closeButton: true, timeOut: 6000
-                });
+            $timeout(function () {
+                $uibModalInstance.close();
+
+                toastr.success(
+               'New course was added successfully!', 'Create new Course',
+               {
+                   closeButton: true, timeOut: 6000
+               });
+            }, 700);
         }
 
         function cancel() {

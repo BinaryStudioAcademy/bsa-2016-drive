@@ -7,6 +7,7 @@
         "LocalStorageModule", "ngLoadingSpinner",
         'ngAnimate',
         "toastr",
+        "ui.sortable",
         "driveApp.academyPro"
     ])
     .factory('BaseUrl', function () {
