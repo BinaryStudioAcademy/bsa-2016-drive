@@ -13,7 +13,8 @@
     function LectureService($http, baseUrl) {
         var service = {
             getLecture: getLecture,
-            pushData: pushData
+            pushData: pushData,
+            putData: putData
         }
 
         return service;
@@ -43,6 +44,20 @@
 
             function pushDataFailed(error) {
                 console.log('XHR Failed for pushData.' + error.data);
+            }
+        }
+
+        function putData(id, data) {
+            return $http.put(baseUrl + '/api/lectures/' + id, data)
+                .then(putDataCompleted)
+                .catch(putDataFailed);
+
+            function putDataCompleted(response) {
+                return response.data;
+            }
+
+            function putDataFailed(error) {
+                console.log('XHR Failed for putData.' + error.data);
             }
         }
     }
