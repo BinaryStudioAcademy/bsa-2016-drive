@@ -101,7 +101,7 @@
 
     <div class="filter-table container-md" ng-show="spaceCtrl.showTable">
         <div class="header-wrapper">
-            <div class="row header-row">
+            <div class="row header-row" context-menu="spaceCtrl.containerMenuOptions">
                 <div class="col-md-3" ng-click="spaceCtrl.orderByColumn('name')">
                     Name
                     <span ng-show="spaceCtrl.columnForOrder == 'name'"><i class="fa fa-sort-asc"></i></span>
@@ -130,9 +130,9 @@
             </div>
         </div>
 
-        <div class="filter-table-internal">
+        <div class="filter-table-internal" context-menu="spaceCtrl.containerMenuOptions">
             <div style="transition: all 2s">
-                <div class="filter-table-row">
+                <div class="filter-table-row" context-menu="spaceCtrl.folderMenuOptions">
                     <div class="row filter-table-row" role="button" ng-repeat="folder in spaceCtrl.space.folders | orderBy: spaceCtrl.columnForOrder" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)" context-menu="spaceCtrl.folderMenuOptions">
                         <div class="col-md-3 filter-table-cell description" title="{{ folder.name }}">
                             <img src="./Content/Icons/folder.svg" height="{{spaceCtrl.iconHeight}}" />
@@ -148,7 +148,7 @@
                 </div>
             </div>
             <div style="transition: all 2s">
-                <div class="filter-table-row">
+                <div class="filter-table-row" context-menu="spaceCtrl.fileMenuOptions">
                     <div class="row filter-table-row" role="button" ng-repeat="file in spaceCtrl.space.files | orderBy: spaceCtrl.columnForOrder" ng-dblclick="spaceCtrl.openDocument(file.link)" context-menu="spaceCtrl.fileMenuOptions">
                         <div class="col-md-3 filter-table-cell description" title="{{ file.name }}">
                             <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" height="{{spaceCtrl.iconHeight}}" />

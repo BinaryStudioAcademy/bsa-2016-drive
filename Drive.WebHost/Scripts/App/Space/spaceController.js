@@ -468,7 +468,7 @@
         function openNewCourseWindow(size) {
 
             var courseModalInstance = $uibModal.open({
-                animation: false,
+                animation: true,
                 templateUrl: 'Scripts/App/Academy/List/Create.html',
                 windowTemplateUrl: 'Scripts/App/Academy/List/Modal.html',
                 controller: 'CourseCreateController',
