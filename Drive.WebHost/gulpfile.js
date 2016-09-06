@@ -61,6 +61,7 @@ gulp.task("libs", function () {
       paths.bower + "angular-loading-spinner.js",
       paths.bower + "angular-animate.js",
       paths.bower + "angular-toastr.tpls.js",
+      paths.bower + "build/hotkeys.js",
       paths.bower + "sweetalert.min.js",
       paths.bower + "angular-youtube-embed.js",
       paths.bower + "youtube.iframe-api.js",

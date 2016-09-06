@@ -69,8 +69,105 @@
         vm.folderMenuOptionShareShow = true;
         vm.fileMenuOptionShareShow = true;
 
-
+        vm.activeRow = activeRow;
+        vm.copyByHotkeys = copyByHotkeys;
+        vm.pasteByHotkeys = pasteByHotkeys;
+        vm.cutByHotkeys = cutByHotkeys;
         activate();
+
+        function activeRow(id, data) {
+            if (id != undefined) {
+                vm.row = id;
+            }
+            if (data == 'true') {
+                vm.condition = true;
+            }
+            else
+                vm.condition = false;
+        }
+
+        function copyByHotkeys() {
+            if (vm.row != undefined) {
+                localStorageService.set('copy', { id: vm.row, file: vm.condition });
+            }
+        }
+
+        function cutByHotkeys() {
+            localStorageService.set('cut-out', { id: vm.row, file: vm.condition });
+            localStorageService.set('oldParentId', vm.parentId);
+            if (vm.condition == true) {
+                deleteFile(vm.row);
+            }
+            else {
+                deleteFolder(vm.row);
+            }
+        }
+
+        function pasteByHotkeys() {
+            if (localStorageService.get('cut-out') != null) {
+                if (localStorageService.get('cut-out').file) {
+                    fileService.getDeletedFile(localStorageService.get('cut-out').id, function (data) {
+                        var file = data;
+                        file.isDeleted = false;
+                        file.spaceId = vm.spaceId;
+                        file.parentId = vm.parentId;
+
+                        fileService.updateDeletedFile(file.id, localStorageService.get('oldParentId'), file, function () {
+                            if (vm.parentId == null) {
+                                vm.getSpace();
+                            } else {
+                                vm.getFolderContent(vm.parentId);
+                            }
+                        });
+                    });
+                } else {
+
+                    folderService.getDeleted(localStorageService.get('cut-out').id, function (data) {
+                        var folder = data;
+                        folder.isDeleted = false;
+                        folder.spaceId = vm.spaceId;
+                        folder.parentId = vm.parentId;
+
+                        folderService.updateDeleted(folder.id, localStorageService.get('oldParentId'), folder, function () {
+                            if (vm.parentId == null) {
+                                vm.getSpace();
+                            } else {
+                                vm.getFolderContent(vm.parentId);
+                            }
+                        });
+                    });
+                }
+                localStorageService.set('cut-out', null);
+            }
+            if (localStorageService.get('copy') != null) {
+                if (localStorageService.get('copy').file) {
+                    var file = {};
+                    file.spaceId = vm.spaceId;
+                    file.parentId = vm.parentId;
+
+                    fileService.createCopyFile(localStorageService.get('copy').id, file, function () {
+                        if (vm.parentId == null) {
+                            vm.getSpace();
+                        } else {
+                            vm.getFolderContent(vm.parentId);
+                        }
+                    });
+                } else {
+                    var folder = {};
+                    folder.spaceId = vm.spaceId;
+                    folder.parentId = vm.parentId;
+
+                    folderService.createCopy(localStorageService.get('copy').id, folder, function () {
+                        if (vm.parentId == null) {
+                            vm.getSpace();
+                        } else {
+                            vm.getFolderContent(vm.parentId);
+                        }
+                    });
+                }
+                localStorageService.set('copy', null);
+            }
+        }
 
         function activate() {
             vm.view = "fa fa-th";

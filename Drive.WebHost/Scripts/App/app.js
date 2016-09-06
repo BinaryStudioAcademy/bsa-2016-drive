@@ -7,7 +7,8 @@
         "LocalStorageModule", "ngLoadingSpinner",
         'ngAnimate',
         "toastr",
-        "driveApp.academyPro"
+        "driveApp.academyPro",
+        "cfp.hotkeys"
     ])
     .factory('BaseUrl', function () {
         return window.globalVars.baseUrl;
@@ -82,7 +83,12 @@
                 {
                     templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
                     controller: "SpaceController",
-                    controllerAs: "spaceCtrl"
+                    controllerAs: "spaceCtrl",
+                    hotkeys: [
+                        ['ctrl+x', 'Cut selected file', 'spaceCtrl.cutByHotkeys()'],
+      ['ctrl+c', 'Copy selected file', 'spaceCtrl.copyByHotkeys()'],
+      ['ctrl+v', 'Paste selected file', 'spaceCtrl.pasteByHotkeys()']
+                    ]
                 })
                 .otherwise({
                     // This is when any route not matched - error
