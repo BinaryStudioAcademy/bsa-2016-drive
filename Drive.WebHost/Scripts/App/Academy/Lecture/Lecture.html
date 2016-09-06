@@ -375,6 +375,25 @@
                         </div>
                     </div>
                 </li>
+                <li>
+                    <div class="timeline-badge info" title="Home task">
+                        <i class="fa fa-paper-plane-o fa-lg" aria-hidden="true"></i>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4 class="timeline-title">Home task</h4>
+                        </div>
+                        <div class="timeline-body" ng-show="lectureCtrl.lecture.homeTasks.length">
+                            <div class="bs-callout bs-callout-info" ng-repeat="task in lectureCtrl.lecture.homeTasks">
+                                <h4>{{task.description}}</h4>
+                                <p>
+                                    <a ng-href="{{link.link}}" target="_blank">{{link.link}} <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                                </p>
+                                <p>{{task.taskDate}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>
