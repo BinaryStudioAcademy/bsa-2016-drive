@@ -5,10 +5,11 @@
     CourseCreateController.$inject = [
         'AcademyListService',
         '$uibModalInstance',
-        'toastr'
+        'toastr',
+        '$timeout'
     ];
 
-    function CourseCreateController(academyListService, $uibModalInstance, toastr) {
+    function CourseCreateController(academyListService, $uibModalInstance, toastr, $timeout) {
         var vm = this;
         vm.addNewCourse = addNewCourse;
         vm.create = create;
@@ -44,12 +45,15 @@
         function create() {
             vm.addNewCourse();
 
-            $uibModalInstance.close();
-            toastr.success(
-                'New course was added successfully!', 'Create new Course',
-                {
-                    closeButton: true, timeOut: 6000
-                });
+            $timeout(function () {
+                $uibModalInstance.close();
+
+                toastr.success(
+               'New course was added successfully!', 'Create new Course',
+               {
+                   closeButton: true, timeOut: 6000
+               });
+            }, 700);
         }
 
         function cancel() {

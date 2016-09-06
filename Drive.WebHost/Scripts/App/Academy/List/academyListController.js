@@ -78,6 +78,7 @@
             courseModalInstance.result.then(function () {
                 getAcademies();
             }, function () {
+                getAcademies();
                 console.log('Modal dismissed');
             });
         };
