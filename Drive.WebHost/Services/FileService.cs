@@ -348,7 +348,7 @@ namespace Drive.WebHost.Services
         {
             var filename = file.FileName;
             string link = "";
-            DriveService service = AuthorizationService.Authorization();
+            DriveService service = AuthorizationService.ServiceAccountAuthorization();
 
             Google.Apis.Drive.v3.Data.File body = new Google.Apis.Drive.v3.Data.File();
             body.Name = System.IO.Path.GetFileName(filename);
@@ -394,7 +394,7 @@ namespace Drive.WebHost.Services
                 _unitOfWork?.Files?.Create(fileDto);
                 await _unitOfWork?.SaveChangesAsync();
             }
-            return "File uploaded successfully";
+            return "File uploaded successfully. File Id: " + link;
         }
 
         private static string GetMimeType(string fileName)

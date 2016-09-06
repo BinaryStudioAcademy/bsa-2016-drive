@@ -53,6 +53,11 @@
                     .then(function() {
                         $location.url('/apps/academy/' + vm.currentAcademyId);
                     });
+                toastr.success(
+                'New lecture was added successfully!', 'Academy Pro',
+                {
+                    closeButton: true, timeOut: 6000
+                });
             }
         }
 

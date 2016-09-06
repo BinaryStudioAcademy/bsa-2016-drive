@@ -1,6 +1,7 @@
-﻿<div>
+﻿
+<div>
     <div class="modal-header">
-        <h3 class="modal-title">Add new Course</h3>
+        <h3 class="modal-title">{{courseCreateCtrl.title}}</h3>
     </div>
     <div class="modal-body">
         <div class="bs-example">
@@ -10,21 +11,27 @@
                         <div class="form-group" ng-class="{ 'has-error' : createForm.name.$invalid && !createForm.name.$pristine }">
                             <label class="col-sm-2">Course name:</label>
                             <input type="text" name="name" id="name" class="form-control" ng-pattern="/^[\w -]*$/" ng-model="courseCreateCtrl.course.fileUnit.name" placeholder="Enter course name" required>
-                            <p ng-show="createForm.name.$error.required && createForm.name.$touched" class="help-block col-sm-offset-2">Name is required.</p>
-                            <p ng-show="createForm.name.$error.pattern" class="help-block col-sm-offset-2">Not a valid name.</p>
+                            <p ng-show="createForm.name.$error.required && createForm.name.$touched" class="help-block col-sm-offset-2">Name is required</p>
+                            <p ng-show="createForm.name.$error.pattern" class="help-block col-sm-offset-2">Not a valid name</p>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2">Description:</label>
                             <input type="text" name="description" class="form-control" id="description" ng-model="courseCreateCtrl.course.fileUnit.description" placeholder="Enter description">
                         </div>
-                        <div class="form-group datetimepicker">
+                        <div class="form-group datetimepicker" ng-class="{ 'has-error' : createForm.date.$invalid && !createForm.date.$pristine }">
                             <label class="col-sm-2">Start date:</label>
                             <p class="input-group">
-                                <input type="datetime" class="form-control" datetime-picker="yyyy-MM-ddTHH:mm:ssZ" ng-model="courseCreateCtrl.course.startDate" is-open="courseCreateCtrl.calendar.isOpen" timepicker-options="courseCreateCtrl.calendar.timepickerOptions"/>
                                 <span class="input-group-btn">
+                                    <input type="datetime" name="date" id="date" class="form-control" datetime-picker="yyyy-MM-dd HH:mm:ss" ng-model="courseCreateCtrl.course.startDate" is-open="courseCreateCtrl.calendar.isOpen" timepicker-options="courseCreateCtrl.calendar.timepickerOptions" required />
                                     <button type="button" class="btn btn-default" ng-click="courseCreateCtrl.calendar.openCalendar($event, prop)"><i class="fa fa-calendar"></i></button>
                                 </span>
+                            <p ng-show="createForm.date.$error.required && createForm.date.$touched" class="help-block col-sm-offset-2">Date is required</p>
+                            <p ng-show="createForm.date.$error.datetime" class="help-block col-sm-offset-2">Not a valid date</p>
                             </p>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2">Tags</label>
+                            <tags-input class="bootstrap col-sm-4" style="padding:0; border-radius: 4px" ng-model="courseCreateCtrl.course.tags" display-property="name"></tags-input>
                         </div>
                     </form>
                 </div>
@@ -34,7 +41,7 @@
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="courseCreateCtrl.create()" title="Create new Space"
-            ng-disabled="createForm.name.$invalid">
+            ng-disabled="createForm.$invalid">
         Create
     </button>
     <button class="btn btn-default" type="button" ng-click="courseCreateCtrl.cancel()">

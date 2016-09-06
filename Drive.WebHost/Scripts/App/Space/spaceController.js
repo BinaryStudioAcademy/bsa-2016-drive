@@ -21,8 +21,6 @@
         vm.deleteElems = deleteElems;
         vm.spaceId = 0;
         vm.parentId = null;
-       
-
 
         // vm.getAllFolders = getAllFolders;
         vm.getFolder = getFolder;
@@ -36,6 +34,7 @@
         vm.openFileUploadWindow = openFileUploadWindow;
         vm.openDocument = openDocument;
         vm.openSharedFileWindow = openSharedFileWindow;
+        vm.openNewCourseWindow = openNewCourseWindow;
         vm.sharedFile = sharedFile;
 
         vm.findById = findById;
@@ -268,7 +267,9 @@
             }, [
             ['New Folder', function () { vm.createNewFolder(); }],
             ['New File', function () { vm.createNewFile(); }],
-            ['New Academy Pro', function () {  }],
+            ['New Academy Pro', function() {
+                vm.openNewCourseWindow('lg');
+            }],
             null,
             ['Upload File', function ($itemScope) {
                 vm.file = { fileType: 6, parentId: vm.parentId, spaceId: vm.spaceId };
@@ -463,6 +464,24 @@
                 console.log('Modal dismissed');
             });
         }
+
+        function openNewCourseWindow(size) {
+
+            var courseModalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'Scripts/App/Academy/List/Create.html',
+                windowTemplateUrl: 'Scripts/App/Academy/List/Modal.html',
+                controller: 'CourseCreateController',
+                controllerAs: 'courseCreateCtrl',
+                size: size
+            });
+
+            courseModalInstance.result.then(function () {
+                $location.url('/apps/academy');
+            }, function() {
+                
+            });  
+        };
 
         function sharedFile() {
             vm.fileId = { parentId: vm.parentId, spaceId: vm.spaceId };
