@@ -65,12 +65,15 @@
 
         }
 
-        function search(text, currentPage, pageSize, callback) {
+        function search(text, currentPage, pageSize, sort, folderId, rootFolderId, callback) {
             $http.get(baseUrl + '/api/sharedspace/search', {
                 params: {
                     text: text,
                     page: currentPage,
-                    count: pageSize
+                    count: pageSize,
+                    sort: sort,
+                    folderId: folderId,
+                    rootFolderId: rootFolderId
                 }
             })
             .then(function (response) {
@@ -85,10 +88,12 @@
             });
         }
 
-        function searchTotal(text, callback) {
+        function searchTotal(text, folderId, rootFolderId, callback) {
             $http.get(baseUrl + '/api/sharedspace/searchtotal', {
                 params: {
-                    text: text
+                    text: text,
+                    folderId: folderId,
+                    rootFolderId: rootFolderId
                 }
             })
             .then(function (response) {

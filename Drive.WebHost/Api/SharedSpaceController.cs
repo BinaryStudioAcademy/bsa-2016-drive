@@ -20,16 +20,6 @@ namespace Drive.WebHost.Api
             _sharedSpaceService = sharedSpaceService;
         }
 
-        // GET: api/sharedspace/?page=(int)&count=(int)&sort=(string)&folderId=(int?)&rootFolderId=(int?)
-        [HttpGet]
-        public async Task<IHttpActionResult> GetSharedData(int page = 1, int count = 100, string sort = null, int? folderId = null, int? rootFolderId = null)
-        {
-            var result = await _sharedSpaceService.GetAsync(page, count, sort, folderId, rootFolderId);
-            if (result == null)
-                return NotFound();
-            return Ok(result);
-        }
-
         // DELETE: api/sharedspace/?id=(int)
         [HttpDelete]
         public async Task<IHttpActionResult> DeleteSharedData(int id)
@@ -52,12 +42,21 @@ namespace Drive.WebHost.Api
         // PUT: api/sharedspace/permission?users=(List<UserSharedSpaceDto>)&id=(int)
         [HttpPost]
         [Route("permission")]
-        public async Task<IHttpActionResult> CreateOrUpdatePermissionsOfSharedData(List<UserSharedSpaceDto> users, int id)// UserSharedDto user, int id
+        public async Task<IHttpActionResult> CreateOrUpdatePermissionsOfSharedData(List<UserSharedSpaceDto> users, int id)
         {
             await _sharedSpaceService.CreateOrUpdatePermissionsOfSharedDataAsync(users, id);
             return Ok();
         }
 
+        // GET: api/sharedspace/?page=(int)&count=(int)&sort=(string)&folderId=(int?)&rootFolderId=(int?)
+        [HttpGet]
+        public async Task<IHttpActionResult> GetSharedData(int page = 1, int count = 100, string sort = null, int? folderId = null, int? rootFolderId = null)
+        {
+            var result = await _sharedSpaceService.GetAsync(page, count, sort, folderId, rootFolderId);
+            if (result == null)
+                return NotFound();
+            return Ok(result);
+        }
         //GET: api/sharedspace/total?folderId=(int?)&rootFolderId=(int?)
         [HttpGet]
         [Route("total")]
@@ -69,23 +68,23 @@ namespace Drive.WebHost.Api
             return Ok(result);
         }
 
-        // GET: api/sharedspace/search?text=(string)&page=(int)&count=(int)
+        // GET: api/sharedspace/search?text=(string)&page=(int)&count=(int)&sort=(string)&folderId=(int?)&rootFolderId=(int?)
         [HttpGet]
         [Route("search")]
-        public async Task<IHttpActionResult> SearchInSharedSpace(string text = "", int page = 1, int count = 100)
+        public async Task<IHttpActionResult> SearchInSharedSpace(string text = "", int page = 1, int count = 100, string sort = null, int? folderId = null, int? rootFolderId = null)
         {
-            var result = await _sharedSpaceService.SearchAsync(text, page, count);
+            var result = await _sharedSpaceService.SearchAsync(text, page, count, sort, folderId, rootFolderId);
             if (result == null)
                 return NotFound();
             return Ok(result);
         }
 
-        // GET: api/sharedspace/searchtotal?text=(string)
+        // GET: api/sharedspace/searchtotal?text=(string)&folderId=(int?)&rootFolderId=(int?)
         [HttpGet]
         [Route("searchtotal")]
-        public async Task<IHttpActionResult> SearchTotalInSharedSpace(string text = "")
+        public async Task<IHttpActionResult> SearchTotalInSharedSpace(string text = "", int? folderId = null, int? rootFolderId = null)
         {
-            var result = await _sharedSpaceService.SearchTotalAsync(text);
+            var result = await _sharedSpaceService.SearchTotalAsync(text, folderId, rootFolderId);
             if (result == 0)
                 return NotFound();
             return Ok(result);

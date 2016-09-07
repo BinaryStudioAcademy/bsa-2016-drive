@@ -214,21 +214,15 @@
             getNumberOfResultSearch();
         }
 
-        //TODO rename method
-        // deleted param: vm.spaceId, vm.parentId
-
         function getResultSearchFoldersAndFiles() {
-            sharedSpaceService.search(vm.searchText, vm.paginate.currentPage,vm.paginate.pageSize, function (data) {
+            sharedSpaceService.search(vm.searchText, vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate, vm.space.folderId, vm.space.rootFolderId, function (data) {
                 vm.space.folders = data.folders;
                 vm.space.files = data.files;
             });
         }
 
-        //TODO rename method
-        // deleted param: vm.spaceId, vm.parentId
-
         function getNumberOfResultSearch(){
-            sharedSpaceService.searchTotal(vm.searchText, function (data) {
+            sharedSpaceService.searchTotal(vm.searchText, vm.space.folderId, vm.space.rootFolderId, function (data) {
                 vm.paginate.numberOfItems = data;
             });
         }
