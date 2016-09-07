@@ -98,6 +98,13 @@ namespace Drive.WebHost.Services.Pro
                     IsDeleted = sample.IsDeleted,
                     Code = sample.Code
                 }),
+                HomeTasks = lecture.HomeTasks.Select(task => new HomeTaskDto
+                {
+                    Id = task.Id,
+                    Description = task.Description,
+                    IsDeleted = task.IsDeleted,
+                    DeadlineDate = task.DeadlineDate
+                }),
                 CourseId = lecture.Course.Id
             }).SingleOrDefaultAsync();
 
@@ -128,6 +135,12 @@ namespace Drive.WebHost.Services.Pro
                 {
                     Name = sample.Name,
                     Code = sample.Code,
+                    IsDeleted = false
+                }).ToList(),
+                HomeTasks = dto.HomeTasks.Select(task => new HomeTask
+                {
+                    Description = task.Description,
+                    DeadlineDate = task.DeadlineDate,
                     IsDeleted = false
                 }).ToList()
             };

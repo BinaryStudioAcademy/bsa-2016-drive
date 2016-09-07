@@ -1,0 +1,13 @@
+﻿using System;
+using Drive.DataAccess.Interfaces;
+
+namespace Drive.DataAccess.Entities.Pro
+{
+    public class HomeTask : IEntity
+    {
+        public int Id { get; set; }
+        public bool IsDeleted { get; set; }
+        public string Description { get; set; }
+        public DateTime DeadlineDate { get; set; }
+    }
+}

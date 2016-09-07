@@ -29,6 +29,7 @@ namespace Drive.DataAccess.Repositories
         private IRepository<Log> _logRepository;
         private IRepository<AcademyProCourse> _academyProRepository;
         private IRepository<CodeSample> _codeSamplesRepository;
+        private IRepository<HomeTask> _homeTasksRepository;
         private IRepository<ContentLink> _contentLinksRepository;
         private IRepository<Tag> _tagsRepository;
         private IRepository<Lecture> _lecturesRepository;
@@ -94,6 +95,13 @@ namespace Drive.DataAccess.Repositories
             }
         }
 
+        public IRepository<HomeTask> HomeTasks
+        {
+            get
+            {
+                return _homeTasksRepository ?? (_homeTasksRepository = _repositoryFactory.CreateRepository<HomeTask>(_context));
+            }
+        }
 
         public IRepository<ContentLink> ContentLinks
         {

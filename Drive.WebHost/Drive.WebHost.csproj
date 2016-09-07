@@ -248,6 +248,8 @@
     <Compile Include="Services\ITrashBinService.cs" />
     <Compile Include="Services\IUsersService.cs" />
     <Compile Include="Services\LogsService.cs" />
+    <Compile Include="Services\Pro\Abstract\IHomeTasksService.cs" />
+    <Compile Include="Services\Pro\HomeTasksService.cs" />
     <Compile Include="Services\RolesService.cs" />
     <Compile Include="Services\Pro\Abstract\IAcademyProCourseService.cs" />
     <Compile Include="Services\Pro\Abstract\IBasicService.cs" />
