@@ -62,27 +62,7 @@
             vm.iconHeight = 30;
             vm.columnForOrder = 'name';
 
-            sharedSpaceService.getSharedData(vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate, vm.space.folderId, vm.space.rootFolderId, function (data) {
-                vm.space.files = data.files;
-                //vm.spaceId = data.id;
-
-                if (localStorageService.get('spaceId') !== vm.spaceId) {
-                    localStorageService.set('spaceId', vm.spaceId);
-                    localStorageService.set('current', null);
-                    localStorageService.set('list', null)
-                }
-
-                if (localStorageService.get('list') != null)
-                    vm.folderList = localStorageService.get('list');
-
-                if (localStorageService.get('current') != null) {
-                    vm.parentId = localStorageService.get('current');
-                    getFolderContent(vm.parentId);
-                } else {
-                    getSharedData();
-                }
-
-            });
+            getSharedData();
         }
 
         function getSharedData() {
