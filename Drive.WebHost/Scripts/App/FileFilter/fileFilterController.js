@@ -19,7 +19,7 @@
         vm.openDocument = openDocument;
         vm.openFileWindow = openFileWindow;
         vm.deleteFile = deleteFile;
-        vm.openSharedFileWindow = openSharedFileWindow;
+        vm.openSharedContentWindow = openSharedContentWindow;
         vm.sharedFile = sharedFile;
 
         activate();
@@ -46,7 +46,7 @@
         vm.fileMenuOptions = [
             [
                 'Share', function ($itemScope) {
-                    vm.fileSharedId = $itemScope.file.id;
+                    vm.contentSharedId = $itemScope.file.id;
                     vm.sharedFile();
                 },
                 function ($itemScope) {
@@ -97,18 +97,22 @@
             });
         }
 
-        function openSharedFileWindow(size) {
+        function openSharedContentWindow(size) {
 
             var fileModalInstance = $uibModal.open({
                 animation: false,
-                templateUrl: 'Scripts/App/SharedFile/SharedFileForm.html',
-                windowTemplateUrl: 'Scripts/App/SharedFile/Modal.html',
-                controller: 'SharedFileModalCtrl',
-                controllerAs: 'sharedFileModalCtrl',
+                templateUrl: 'Scripts/App/SharedContent/SharedContentForm.html',
+                windowTemplateUrl: 'Scripts/App/SharedContent/Modal.html',
+                controller: 'SharedContentModalCtrl',
+                controllerAs: 'sharedContentModalCtrl',
                 size: size,
                 resolve: {
                     items: function () {
-                        return vm.fileSharedId;
+                        var sharedContInfo = {
+                            contentId: vm.contentSharedId,
+                            title: 'Shared file'
+                        }
+                        return sharedContInfo;
                     }
                 }
             });
@@ -122,7 +126,7 @@
 
         function sharedFile() {
             vm.fileId = { parentId: vm.parentId, spaceId: vm.spaceId };
-            vm.openSharedFileWindow();
+            vm.openSharedContentWindow();
         }
 
         function deleteFile(id) {
