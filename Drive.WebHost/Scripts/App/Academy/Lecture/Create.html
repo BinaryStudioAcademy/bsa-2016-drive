@@ -57,7 +57,7 @@
         <span us-spinner="{radius:30, width:8, length: 16}"></span>
         <div class="create-lecture-wrap">
             <div class="container">
-                <div class="col-md-11">
+                <div class="col-md-12">
                     <form name="courseForm" ng-submit="submitForm()" class="form-horizontal" novalidate>
                         <div class="form-group" ng-class="{ 'has-error' : courseForm.name.$invalid && !courseForm.name.$pristine }">
                             <label class="col-sm-2">Lecture name:</label>
@@ -73,7 +73,7 @@
                             <label class="col-sm-2">Start date:</label>
                             <p class="input-group">
                                 <span class="input-group-btn">
-                                    <input type="datetime" name="date" id="date" class="form-control" datetime-picker="yyyy-MM-dd HH:mm:ss" ng-model="lectureCreateCtrl.lecture.startDate" is-open="lectureCreateCtrl.calendar.isOpen" placeholder="Select start date" timepicker-options="lectureCreateCtrl.calendar.timepickerOptions" required />
+                                    <input type="datetime" name="date" id="date" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="lectureCreateCtrl.lecture.startDate" is-open="lectureCreateCtrl.calendar.isOpen" placeholder="Select start date" timepicker-options="lectureCreateCtrl.calendar.timepickerOptions" required />
                                     <button type="button" class="btn btn-default" ng-click="lectureCreateCtrl.calendar.openCalendar($event, prop)"><i class="fa fa-calendar"></i></button>
                                 </span>
                             <p ng-show="courseForm.date.$error.required && courseForm.date.$touched" class="help-block col-sm-offset-2">Date is required</p>
@@ -108,7 +108,7 @@
 
                     <div uib-accordion-group class="panel-default" is-open="status.open6" title="Home task">
                         <uib-accordion-heading>
-                            <i class="fa fa-tasks fa-lg" aria-hidden="true"></i> Home task <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open6, 'glyphicon-chevron-right': !status.open6}"></i>
+                            <i class="fa fa-paper-plane-o fa-lg" aria-hidden="true"></i> Home task <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open6, 'glyphicon-chevron-right': !status.open6}"></i>
                         </uib-accordion-heading>
                         <div class="col-md-10">
                             <div class="row">
