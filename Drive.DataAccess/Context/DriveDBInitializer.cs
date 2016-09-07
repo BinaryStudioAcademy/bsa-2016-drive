@@ -1128,6 +1128,106 @@ namespace Drive.DataAccess.Context
             context.Tags.Add(tag2);
             context.Tags.Add(tag3);
 
+            var lecture1 = new Lecture
+            {
+                Name = "Lecture 1",
+                Author = user1,
+                CreatedAt = DateTime.Now,
+                ModifiedAt = DateTime.Now,
+                StartDate = DateTime.Now.AddDays(5),
+                Description = "Lecture desc"
+            };
+
+            lecture1.ContentList = new List<ContentLink>
+            {
+                new ContentLink
+                {
+                    LinkType = LinkType.Video,
+                    Name = "Video sample 1",
+                    Description = "Video sample description",
+                    IsDeleted = false,
+                    Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4",
+                    Lecture = lecture1
+                },
+                new ContentLink
+                {
+                    LinkType = LinkType.Video,
+                    Name = "Video sample 2",
+                    Description = "Video sample description",
+                    IsDeleted = false,
+                    Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4",
+                    Lecture = lecture1
+                },
+                new ContentLink
+                {
+                    LinkType = LinkType.Repository,
+                    Name = "Repository sample 1",
+                    Description = "Repository sample description",
+                    IsDeleted = false,
+                    Link = "https://github.com/BinaryStudioAcademy/bsa-2016-drive",
+                    Lecture = lecture1
+                },
+                new ContentLink
+                {
+                    LinkType = LinkType.Slide,
+                    Name = "Slide sample 1",
+                    Description = "Slide sample description",
+                    IsDeleted = false,
+                    Link = "https://docs.google.com/presentation/d/1ViNfYiQCHhJvX5O0SvZ9EJgjI9FqjHZ7OQwFCE4KGlA/embed?start=false&loop=false&delayms=3000",
+                    Lecture = lecture1
+                }
+            };
+
+            var lecture2 = new Lecture
+            {
+                Name = "Lecture 2",
+                Author = user1,
+                CreatedAt = DateTime.Now,
+                ModifiedAt = DateTime.Now,
+                StartDate = DateTime.Now.AddDays(10),
+                Description = "Lecture desc"
+            };
+
+            lecture2.ContentList = new List<ContentLink>
+            {
+                new ContentLink
+                {
+                    LinkType = LinkType.Video,
+                    Name = "Video sample 1",
+                    Description = "Video sample description",
+                    IsDeleted = false,
+                    Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4",
+                    Lecture = lecture2
+                },
+                new ContentLink
+                {
+                    LinkType = LinkType.Video,
+                    Name = "Video sample 2",
+                    Description = "Video sample description",
+                    IsDeleted = false,
+                    Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4",
+                    Lecture = lecture2
+                },
+                new ContentLink
+                {
+                    LinkType = LinkType.Repository,
+                    Name = "Repository sample 1",
+                    Description = "Repository sample description",
+                    IsDeleted = false,
+                    Link = "https://github.com/BinaryStudioAcademy/bsa-2016-drive",
+                    Lecture = lecture2
+                },
+                new ContentLink
+                {
+                    LinkType = LinkType.Slide,
+                    Name = "Slide sample 1",
+                    Description = "Slide sample description",
+                    IsDeleted = false,
+                    Link = "https://docs.google.com/presentation/d/1ViNfYiQCHhJvX5O0SvZ9EJgjI9FqjHZ7OQwFCE4KGlA/embed?start=false&loop=false&delayms=3000",
+                    Lecture = lecture2
+                }
+            };
+
             var academy1 = new AcademyProCourse
             {
                 FileUnit = new FileUnit
@@ -1145,98 +1245,112 @@ namespace Drive.DataAccess.Context
                 StartDate = DateTime.Now.AddDays(5),
                 Lectures = new List<Lecture>
                 {
-                    new Lecture
-                    {
-                        Name = "Lecture 1",
-                        Author = user1,
-                        CreatedAt = DateTime.Now,
-                        ModifiedAt = DateTime.Now,
-                        StartDate = DateTime.Now.AddDays(5),
-                        Description = "Lecture desc",
-                        ContentList = new List<ContentLink>
-                        {
-                            new ContentLink
-                            {
-                                LinkType = LinkType.Video,
-                                Name = "Video sample 1",
-                                Description = "Video sample description",
-                                IsDeleted = false,
-                                Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4"
-                            },
-                            new ContentLink
-                            {
-                                LinkType = LinkType.Video,
-                                Name = "Video sample 2",
-                                Description = "Video sample description",
-                                IsDeleted = false,
-                                Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4"
-                            },
-                            new ContentLink
-                            {
-                                LinkType = LinkType.Repository,
-                                Name = "Repository sample 1",
-                                Description = "Repository sample description",
-                                IsDeleted = false,
-                                Link = "https://github.com/BinaryStudioAcademy/bsa-2016-drive"
-                            },
-                            new ContentLink
-                            {
-                                LinkType = LinkType.Slide,
-                                Name = "Slide sample 1",
-                                Description = "Slide sample description",
-                                IsDeleted = false,
-                                Link = "https://docs.google.com/presentation/d/1ViNfYiQCHhJvX5O0SvZ9EJgjI9FqjHZ7OQwFCE4KGlA/embed?start=false&loop=false&delayms=3000"
-                            }
-                        }
-                    },
-                    new Lecture
-                    {
-                        Name = "Lecture 2",
-                        Author = user1,
-                        CreatedAt = DateTime.Now,
-                        ModifiedAt = DateTime.Now,
-                        StartDate = DateTime.Now.AddDays(10),
-                        Description = "Lecture desc",
-                        ContentList = new List<ContentLink>
-                        {
-                            new ContentLink
-                            {
-                                LinkType = LinkType.Video,
-                                Name = "Video sample 1",
-                                Description = "Video sample description",
-                                IsDeleted = false,
-                                Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4"
-                            },
-                            new ContentLink
-                            {
-                                LinkType = LinkType.Video,
-                                Name = "Video sample 2",
-                                Description = "Video sample description",
-                                IsDeleted = false,
-                                Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4"
-                            },
-                            new ContentLink
-                            {
-                                LinkType = LinkType.Repository,
-                                Name = "Repository sample 1",
-                                Description = "Repository sample description",
-                                IsDeleted = false,
-                                Link = "https://github.com/BinaryStudioAcademy/bsa-2016-drive"
-                            },
-                            new ContentLink
-                            {
-                                LinkType = LinkType.Slide,
-                                Name = "Slide sample 1",
-                                Description = "Slide sample description",
-                                IsDeleted = false,
-                                Link = "https://docs.google.com/presentation/d/1ViNfYiQCHhJvX5O0SvZ9EJgjI9FqjHZ7OQwFCE4KGlA/embed?start=false&loop=false&delayms=3000"
-                            }
-                        }
-                    }
+                    lecture1,
+                    lecture2
                 },
                 IsDeleted = false,
                 Tags = new List<Tag> { tag1, tag2 },
                 Author = user1
+            };
+
+            var lecture3 = new Lecture
+            {
+                Name = "Lecture 1",
+                Author = user1,
+                CreatedAt = DateTime.Now,
+                ModifiedAt = DateTime.Now,
+                StartDate = DateTime.Now.AddDays(5),
+                Description = "Lecture desc"
+            };
+
+            lecture3.ContentList = new List<ContentLink>
+            {
+                new ContentLink
+                {
+                    LinkType = LinkType.Video,
+                    Name = "Video sample 1",
+                    Description = "Video sample description",
+                    IsDeleted = false,
+                    Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4",
+                    Lecture = lecture3
+                },
+                new ContentLink
+                {
+                    LinkType = LinkType.Video,
+                    Name = "Video sample 2",
+                    Description = "Video sample description",
+                    IsDeleted = false,
+                    Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4",
+                    Lecture = lecture3
+                },
+                new ContentLink
+                {
+                    LinkType = LinkType.Repository,
+                    Name = "Repository sample 1",
+                    Description = "Repository sample description",
+                    IsDeleted = false,
+                    Link = "https://github.com/BinaryStudioAcademy/bsa-2016-drive",
+                    Lecture = lecture3
+                },
+                new ContentLink
+                {
+                    LinkType = LinkType.Slide,
+                    Name = "Slide sample 1",
+                    Description = "Slide sample description",
+                    IsDeleted = false,
+                    Link = "https://docs.google.com/presentation/d/1ViNfYiQCHhJvX5O0SvZ9EJgjI9FqjHZ7OQwFCE4KGlA/embed?start=false&loop=false&delayms=3000",
+                    Lecture = lecture3
+                }
+            };
+
+            var lecture4 = new Lecture
+            {
+                Name = "Lecture 2",
+                Author = user1,
+                CreatedAt = DateTime.Now,
+                ModifiedAt = DateTime.Now,
+                StartDate = DateTime.Now.AddDays(10),
+                Description = "Lecture desc"
+            };
+
+            lecture4.ContentList = new List<ContentLink>
+            {
+                new ContentLink
+                {
+                    LinkType = LinkType.Video,
+                    Name = "Video sample 1",
+                    Description = "Repository sample description",
+                    IsDeleted = false,
+                    Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4",
+                    Lecture = lecture4
+                },
+                new ContentLink
+                {
+                    LinkType = LinkType.Video,
+                    Name = "Video sample 2",
+                    Description = "Video sample description",
+                    IsDeleted = false,
+                    Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4",
+                    Lecture = lecture4
+                },
+                new ContentLink
+                {
+                    LinkType = LinkType.Repository,
+                    Name = "Repository sample 1",
+                    Description = "Repository sample description",
+                    IsDeleted = false,
+                    Link = "https://github.com/BinaryStudioAcademy/bsa-2016-drive",
+                    Lecture = lecture4
+                },
+                new ContentLink
+                {
+                    LinkType = LinkType.Slide,
+                    Name = "Slide sample 1",
+                    Description = "Slide sample description",
+                    IsDeleted = false,
+                    Link = "https://docs.google.com/presentation/d/1ViNfYiQCHhJvX5O0SvZ9EJgjI9FqjHZ7OQwFCE4KGlA/embed?start=false&loop=false&delayms=3000",
+                    Lecture = lecture4
+                }
             };
 
             var academy2 = new AcademyProCourse
@@ -1256,94 +1370,8 @@ namespace Drive.DataAccess.Context
                 StartDate = DateTime.Now.AddDays(5),
                 Lectures = new List<Lecture>
                 {
-                    new Lecture
-                    {
-                        Name = "Lecture 1",
-                        Author = user1,
-                        CreatedAt = DateTime.Now,
-                        ModifiedAt = DateTime.Now,
-                        StartDate = DateTime.Now.AddDays(5),
-                        Description = "Lecture desc",
-                        ContentList = new List<ContentLink>
-                        {
-                            new ContentLink
-                            {
-                                LinkType = LinkType.Video,
-                                Name = "Video sample 1",
-                                Description = "Video sample description",
-                                IsDeleted = false,
-                                Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4"
-                            },
-                            new ContentLink
-                            {
-                                LinkType = LinkType.Video,
-                                Name = "Video sample 2",
-                                Description = "Video sample description",
-                                IsDeleted = false,
-                                Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4"
-                            },
-                            new ContentLink
-                            {
-                                LinkType = LinkType.Repository,
-                                Name = "Repository sample 1",
-                                Description = "Repository sample description",
-                                IsDeleted = false,
-                                Link = "https://github.com/BinaryStudioAcademy/bsa-2016-drive"
-                            },
-                            new ContentLink
-                            {
-                                LinkType = LinkType.Slide,
-                                Name = "Slide sample 1",
-                                Description = "Slide sample description",
-                                IsDeleted = false,
-                                Link = "https://docs.google.com/presentation/d/1ViNfYiQCHhJvX5O0SvZ9EJgjI9FqjHZ7OQwFCE4KGlA/embed?start=false&loop=false&delayms=3000"
-                            }
-                        }
-                    },
-                    new Lecture
-                    {
-                        Name = "Lecture 2",
-                        Author = user1,
-                        CreatedAt = DateTime.Now,
-                        ModifiedAt = DateTime.Now,
-                        StartDate = DateTime.Now.AddDays(10),
-                        Description = "Lecture desc",
-                        ContentList = new List<ContentLink>
-                        {
-                            new ContentLink
-                            {
-                                LinkType = LinkType.Video,
-                                Name = "Video sample 1",
-                                Description = "Repository sample description",
-                                IsDeleted = false,
-                                Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4"
-                            },
-                            new ContentLink
-                            {
-                                LinkType = LinkType.Video,
-                                Name = "Video sample 2",
-                                Description = "Video sample description",
-                                IsDeleted = false,
-                                Link = "https://www.youtube.com/watch?v=QH2-TGUlwu4"
-                            },
-                            new ContentLink
-                            {
-                                LinkType = LinkType.Repository,
-                                Name = "Repository sample 1",
-                                Description = "Repository sample description",
-                                IsDeleted = false,
-                                Link = "https://github.com/BinaryStudioAcademy/bsa-2016-drive"
-                            },
-                            new ContentLink
-                            {
-                                LinkType = LinkType.Slide,
-                                Name = "Slide sample 1",
-                                Description = "Slide sample description",
-                                IsDeleted = false,
-                                Link = "https://docs.google.com/presentation/d/1ViNfYiQCHhJvX5O0SvZ9EJgjI9FqjHZ7OQwFCE4KGlA/embed?start=false&loop=false&delayms=3000"
-                            }
-                        }
-                    }
+                    lecture3,
+                    lecture4
                 },
                 IsDeleted = false,
                 Tags = new List<Tag> { tag2, tag3 },

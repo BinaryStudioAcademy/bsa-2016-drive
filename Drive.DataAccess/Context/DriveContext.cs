@@ -129,10 +129,6 @@ namespace Drive.DataAccess.Context
                         tc.ToTable("AcademiesTags");
                     }
                 );
-
-            modelBuilder.Entity<Lecture>()
-                .HasMany<ContentLink>(c => c.ContentList)
-                .WithRequired();
         }
 
 

@@ -246,9 +246,16 @@
     </div>
     <div>
         <span us-spinner="{radius:30, width:8, length: 16}"></span>
-        <div class="container">
+        <div class="container" ng-show="!lectureCtrl.isEditing">
             <div class="page-header lecture-header">
                 <h1 id="timeline">{{lectureCtrl.lecture.name}}</h1>
+                <div class="row" style="margin: 1em 0 1em 0;">
+                    <div class="col-sm-3">
+                        <div>
+                            <button class="btn btn-default" ng-click="lectureCtrl.edit()">Edit</button>
+                        </div>
+                    </div>
+                </div>
                 <div class="small">
                     <p>
                         <small class="text-muted" title="Lecture author"><i class="fa fa-user" aria-hidden="true"></i> {{ lectureCtrl.lecture.author }}</small>
@@ -258,155 +265,109 @@
                     </p>
                 </div>
             </div>
-            <div class="lecture-wrap">
-                <ul class="timeline">
-                    <li>
-                        <div class="timeline-badge info" title="Lecture description">
-                            <i class="fa fa-info fa-lg" aria-hidden="true"></i>
+            <ul class="timeline">
+                <li>
+                    <div class="timeline-badge info" title="Lecture description">
+                        <i class="fa fa-info fa-lg" aria-hidden="true"></i>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4 class="timeline-title">Lecture description</h4>
                         </div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4 class="timeline-title">Lecture description</h4>
-                            </div>
-                            <div class="timeline-body">
-                                <p>{{lectureCtrl.lecture.description}}</p>
-                            </div>
+                        <div class="timeline-body">
+                            <p>{{lectureCtrl.lecture.description}}</p>
                         </div>
-                    </li>
-                    <li>
-                        <div class="timeline-badge info" title="Videos">
-                            <i class="fa fa-video-camera fa-lg" aria-hidden="true"></i>
-                        </div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4 class="timeline-title">Videos</h4>
-                            </div>
-                            <div class="timeline-body">
-                                <div class="col-md-6">
-                                    <div class="card" ng-repeat="video in lectureCtrl.lecture.videoLinks">
-                                        <div class="card-image">
-                                            <div>
-                                                <div>
-                                                    <youtube-video video-url="video.link"></youtube-video>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-content">
-                                            <span class="card-title">{{video.name}}</span>
-                                        </div>
-                                        <div class="card-action">
-                                            <p>{{video.description}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="timeline-badge info" title="Slides">
-                            <i class="fa fa-file-powerpoint-o fa-lg" aria-hidden="true"></i>
-                        </div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4 class="timeline-title">Slides</h4>
-                            </div>
-                            <div class="timeline-body">
-                                <div class="col-md-6">
-                                    <div class="card" ng-repeat="slide in lectureCtrl.lecture.slidesLinks">
-                                        <div class="card-image">
-                                            <div>
-                                                <div>
-                                                    <iframe ng-src="{{lectureCtrl.trustSrc(slide.link)}}" frameborder="0" width="640" height="392" allowfullscreen="true" mozallowfullscreen="true" webkitallowfullscreen="true"></iframe>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card-content">
-                                            <span class="card-title">{{slide.name}}</span>
-                                        </div>
-                                        <div class="card-action">
-                                            <p>{{slide.description}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="timeline-badge info" title="Repositories">
-                            <i class="fa fa-github fa-lg" aria-hidden="true"></i>
-                        </div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4 class="timeline-title">Repositories</h4>
-                            </div>
-                            <div class="timeline-body" ng-show="lectureCtrl.lecture.repositoryLinks.length">
-                                <div class="bs-callout bs-callout-info" ng-repeat="repo in lectureCtrl.lecture.repositoryLinks">
-                                    <h4>{{repo.name}}</h4>
-                                    <p>
-                                        <a ng-href="{{repo.link}}" target="_blank">{{repo.link}} <i class="fa fa-external-link" aria-hidden="true"></i></a>
-                                    </p>
-                                    <p>{{repo.description}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="timeline-badge info" title="Code samples">
-                            <i class="fa fa-code fa-lg" aria-hidden="true"></i>
-                        </div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4 class="timeline-title">Code samples</h4>
-                            </div>
-                            <div class="timeline-body" ng-show="lectureCtrl.lecture.codeSamples.length">
-                                <div class="code-samples centered-flex-content" ng-repeat="sample in lectureCtrl.lecture.codeSamples">
-                                    <div>
-                                        <h3>{{sample.name}}</h3>
-                                        <pre class="language-markup"><code>{{sample.code}}</code></pre>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="timeline-badge info" title="Useful links">
-                            <i class="fa fa-link fa-lg" aria-hidden="true"></i>
-                        </div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4 class="timeline-title">Useful links</h4>
-                            </div>
-                            <div class="timeline-body" ng-show="lectureCtrl.lecture.usefulLinks.length">
-                                <div class="bs-callout bs-callout-info" ng-repeat="link in lectureCtrl.lecture.usefulLinks">
-                                    <h4>{{link.name}}</h4>
-                                    <p>
-                                        <a ng-href="{{link.link}}" target="_blank">{{link.link}} <i class="fa fa-external-link" aria-hidden="true"></i></a>
-                                    </p>
-                                    <p>{{link.description}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="timeline-badge info" title="Home task">
-                            <i class="fa fa-paper-plane-o fa-lg" aria-hidden="true"></i>
-                        </div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4 class="timeline-title">Home task</h4>
-                            </div>
-                            <div class="timeline-body" ng-show="lectureCtrl.lecture.homeTasks.length">
-                                <div class="bs-callout bs-callout-info" ng-repeat="task in lectureCtrl.lecture.homeTasks">
-                                    <h4>{{task.description}}</h4>
-                                    <p>
-                                        <a ng-href="{{link.link}}" target="_blank">{{link.link}} <i class="fa fa-external-link" aria-hidden="true"></i></a>
-                                    </p>
-                                    <p>{{task.taskDate}}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
+                    </div>
+                </li>
+                <li lecture-links
+                    links-model="lectureCtrl.lecture.videoLinks"
+                    link-type="lectureCtrl.linkTypes.video"
+                    link-types="lectureCtrl.linkTypes"
+                    icon-class="fa fa-video-camera fa-lg"
+                    block-title="Videos">
+                </li>
+                <li lecture-links
+                    links-model="lectureCtrl.lecture.slidesLinks"
+                    link-type="lectureCtrl.linkTypes.slide"
+                    link-types="lectureCtrl.linkTypes"
+                    icon-class="fa fa-file-powerpoint-o fa-lg"
+                    block-title="Slides"
+                    link-trust="lectureCtrl.trustSrc(src)">
+                </li>
+                <li lecture-links
+                    links-model="lectureCtrl.lecture.repositoryLinks"
+                    link-type="lectureCtrl.linkTypes.repository"
+                    link-types="lectureCtrl.linkTypes"
+                    icon-class="fa fa-github fa-lg"
+                    block-title="Repositories">
+                </li>
+                <li lecture-links
+                    links-model="lectureCtrl.lecture.codeSamples"
+                    link-type="lectureCtrl.linkTypes.sample"
+                    link-types="lectureCtrl.linkTypes"
+                    icon-class="fa fa-code fa-lg"
+                    block-title="Code samples">
+                </li>
+                <li lecture-links
+                    links-model="lectureCtrl.lecture.usefulLinks"
+                    link-type="lectureCtrl.linkTypes.useful"
+                    link-types="lectureCtrl.linkTypes"
+                    icon-class="fa fa-link fa-lg"
+                    block-title="Useful links">
+                </li>
+            </ul>
+        </div>
+        <div class="container" ng-show="lectureCtrl.isEditing">
+            <div class="col-md-12">
+                <div class="row" style="margin: 1em 0 1em 0;" ng-show="lectureCtrl.isEditing">
+                    <button class="btn btn-success col-md-2" ng-click="lectureCtrl.updateLecture()">Save</button>
+                    <button class="btn btn-danger col-md-2" ng-click="lectureCtrl.edit()">Cancel</button>
+                </div>
+                <form name="courseForm" ng-submit="submitForm()" class="form-horizontal" novalidate>
+                    <div class="form-group" ng-class="{ 'has-error' : courseForm.name.$invalid && !courseForm.name.$pristine }">
+                        <label class="col-sm-2">Lecture name:</label>
+                        <input type="text" name="name" id="name" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="lectureCtrl.lecture.name" placeholder="Lecture name" required>
+                        <p ng-show="courseForm.name.$error.required && courseForm.name.$touched" class="help-block col-sm-offset-2">Name is required.</p>
+                        <p ng-show="courseForm.name.$error.pattern" class="help-block col-sm-offset-2">Not a valid name.</p>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-2">Description:</label>
+                        <textarea type="text" name="description" class="form-control" id="description" ng-model="lectureCtrl.lecture.description" placeholder="Enter description"></textarea>
+                    </div>
+                    <div class="form-group datetimepicker">
+                        <label class="col-sm-2">Start date:</label>
+                        <p class="input-group">
+                            <input type="text" class="form-control" datetime-picker="yyyy-MM-dd HH:mm:ss" ng-model="lectureCtrl.lecture.startDate" is-open="lectureCtrl.calendar.isOpen" placeholder="Select start date" timepicker-options="lectureCtrl.calendar.timepickerOptions" />
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-default" ng-click="lectureCtrl.calendar.openCalendar($event, prop)"><i class="fa fa-calendar"></i></button>
+                            </span>
+                        </p>
+                    </div>
+                </form>
+                <div class="col-md-10">
+                    <uib-accordion close-others="true">
+                        <create-links links-model="lectureCtrl.lecture.videoLinks"
+                                      links-name="Videos"
+                                      image-class="fa fa-video-camera fa-lg">
+                        </create-links>
+                        <create-links links-model="lectureCtrl.lecture.slidesLinks"
+                                      links-name="Slides"
+                                      image-class="fa fa-file-powerpoint-o fa-lg">
+                        </create-links>
+                        <create-links links-model="lectureCtrl.lecture.repositoryLinks"
+                                      links-name="Repositories"
+                                      image-class="fa fa-github fa-lg">
+                        </create-links>
+                        <create-links links-model="lectureCtrl.lecture.sampleLinks"
+                                      links-name="Code samples"
+                                      image-class="fa fa-code fa-lg">
+                        </create-links>
+                        <create-links links-model="lectureCtrl.lecture.usefulLinks"
+                                      links-name="Useful links"
+                                      image-class="fa fa-link fa-lg">
+                        </create-links>
+                    </uib-accordion>
+                </div>
             </div>
         </div>
     </div>

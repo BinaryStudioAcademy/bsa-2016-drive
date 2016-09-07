@@ -54,6 +54,7 @@ gulp.task("libs", function () {
       paths.bower + "ui-bootstrap.js",
       paths.bower + "ui-bootstrap-tpls.js",
       paths.bower + "dist/jquery.js",
+      paths.bower + "jquery-ui.js",
       paths.bower + "bootstrap.js",
       paths.bower + "dirPagination.js",
       paths.bower + "angular-local-storage.js",
@@ -65,7 +66,8 @@ gulp.task("libs", function () {
       paths.bower + "sweetalert.min.js",
       paths.bower + "angular-youtube-embed.js",
       paths.bower + "youtube.iframe-api.js",
-      paths.bower + "datetime-picker.js"
+      paths.bower + "datetime-picker.js",
+      paths.bower + "sortable.js"
     ])
 
         .pipe(concat("libs.js"))

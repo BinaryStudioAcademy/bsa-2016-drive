@@ -13,6 +13,8 @@ namespace Drive.DataAccess.Entities.Pro
 
         public string Link { get; set; }
         public LinkType LinkType { get; set; }
+
+        public Lecture Lecture { get; set; }
     }
 
     public enum LinkType
