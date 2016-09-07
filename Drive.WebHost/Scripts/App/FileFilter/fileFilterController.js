@@ -20,7 +20,7 @@
         vm.openFileWindow = openFileWindow;
         vm.deleteFile = deleteFile;
         vm.openSharedContentWindow = openSharedContentWindow;
-        vm.sharedFile = sharedFile;
+        vm.sharedContent = sharedContent;
 
         activate();
 
@@ -47,7 +47,7 @@
             [
                 'Share', function ($itemScope) {
                     vm.contentSharedId = $itemScope.file.id;
-                    vm.sharedFile();
+                    vm.sharedContent();
                 },
                 function ($itemScope) {
                     if ($itemScope.file.spaceId == 1) {
@@ -124,7 +124,7 @@
             });
         }
 
-        function sharedFile() {
+        function sharedContent() {
             vm.fileId = { parentId: vm.parentId, spaceId: vm.spaceId };
             vm.openSharedContentWindow();
         }

@@ -3,11 +3,11 @@
 
     angular
         .module("driveApp")
-        .controller("SharedContentModalCtrl", SharedFileModalCtrl);
+        .controller("SharedContentModalCtrl", SharedContentModalCtrl);
 
-    SharedFileModalCtrl.$inject = ['SharedSpaceService', '$uibModalInstance', 'items'];
+    SharedContentModalCtrl.$inject = ['SharedSpaceService', '$uibModalInstance', 'items'];
 
-    function SharedFileModalCtrl(sharedSpaceService, $uibModalInstance, items) {
+    function SharedContentModalCtrl(sharedSpaceService, $uibModalInstance, items) {
         var vm = this;
         vm.title = null;
 

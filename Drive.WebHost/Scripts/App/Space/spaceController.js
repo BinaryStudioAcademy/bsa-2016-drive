@@ -38,7 +38,7 @@
         vm.createNewAP = createNewAP;
         vm.openSharedContentWindow = openSharedContentWindow;
 
-        vm.sharedFile = sharedFile;
+        vm.sharedContent = sharedContent;
 
         vm.findById = findById;
         vm.getSpace = getSpace;
@@ -353,7 +353,7 @@
                     vm.contentSharedId = $itemScope.folder.id;
                     vm.sharedModalWindowTitle = 'Shared folder';
                     console.log(vm.contentSharedId);
-                    vm.sharedFile();
+                    vm.sharedContent();
                 }, function ($itemScope) { return vm.fileMenuOptionShareShow }
             ],
             [
@@ -391,7 +391,7 @@
                     vm.sharedModalWindowTitle = 'Shared File';
                     vm.contentSharedId = $itemScope.file.id;
                     console.log(vm.contentSharedId);
-                    vm.sharedFile();
+                    vm.sharedContent();
                 }, function ($itemScope) { return vm.fileMenuOptionShareShow }
             ],
             [
@@ -629,7 +629,7 @@
             });
         };
 
-        function sharedFile() {
+        function sharedContent() {
             vm.fileId = { parentId: vm.parentId, spaceId: vm.spaceId };
             vm.openSharedContentWindow();
         }
