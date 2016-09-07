@@ -262,9 +262,6 @@
         ];
 
         vm.containerMenuOptions = [
-            ['New', function () {
-
-            }, [
             ['New Folder', function () { vm.createNewFolder(); }],
             ['New File', function () { vm.createNewFile(); }],
             ['New Academy Pro', function() {
@@ -274,8 +271,8 @@
             ['Upload File', function ($itemScope) {
                 vm.file = { fileType: 6, parentId: vm.parentId, spaceId: vm.spaceId };
                 vm.openFileUploadWindow('lg');
-            }]
-            ]],
+            }],
+             null,
             [
             'Paste', function () {
                 if (localStorageService.get('cut-out') != null) {
