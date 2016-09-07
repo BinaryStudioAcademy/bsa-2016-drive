@@ -40,6 +40,14 @@
                 timepickerOptions: {
                     showMeridian: false
                 }
+            };
+
+            vm.calendarHomeTask = {
+                isOpen: false,
+                openCalendarHomeTask: openCalendarHomeTask,
+                timepickerOptions: {
+                    showMeridian: false
+                }
             }
         }
 
@@ -70,6 +78,13 @@
             e.stopPropagation();
 
             vm.calendar.isOpen = true;
+        };
+
+        function openCalendarHomeTask(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            vm.calendarHomeTask.isOpen = true;
         };
 
         function submitVideo() {

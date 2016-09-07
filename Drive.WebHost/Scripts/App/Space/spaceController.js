@@ -36,6 +36,7 @@
         vm.openDocument = openDocument;
         vm.openSharedFileWindow = openSharedFileWindow;
         vm.openNewCourseWindow = openNewCourseWindow;
+        vm.createNewAP = createNewAP;
         vm.sharedFile = sharedFile;
 
         vm.findById = findById;
@@ -392,8 +393,8 @@
             ['Upload File', function ($itemScope) {
                 vm.file = { fileType: 6, parentId: vm.parentId, spaceId: vm.spaceId };
                 vm.openFileUploadWindow('lg');
-        }],
-    null,
+            }],
+             null,
             [
             'Paste', function () {
                 if (localStorageService.get('cut-out') != null) {
@@ -586,19 +587,24 @@
         function openNewCourseWindow(size) {
 
             var courseModalInstance = $uibModal.open({
-                animation: false,
+                animation: true,
                 templateUrl: 'Scripts/App/Academy/List/Create.html',
                 windowTemplateUrl: 'Scripts/App/Academy/List/Modal.html',
                 controller: 'CourseCreateController',
                 controllerAs: 'courseCreateCtrl',
-                size: size
+                size: size,
+                resolve: {
+                    items: function () {
+                        return vm.course;
+                    }
+                }
             });
 
-            courseModalInstance.result.then(function () {
+            courseModalInstance.result.then(function (response) {
                 $location.url('/apps/academy');
-            }, function() {
-                
-            });  
+            }, function () {
+                console.log('Modal dismissed');
+            });
         };
 
         function sharedFile() {
@@ -614,6 +620,13 @@
         function createNewFile() {
             vm.file = { parentId: vm.parentId, spaceId: vm.spaceId };
             vm.openFileWindow();
+        }
+
+        function createNewAP() {
+            vm.course = {
+                 fileUnit: {}
+            };
+            vm.openNewCourseWindow('lg');
         }
 
         function uploadFile() {

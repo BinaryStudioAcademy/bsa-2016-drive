@@ -53,11 +53,11 @@ namespace Drive.WebHost.Services.Pro
                 StartDate = lecture.StartDate,
                 VideoLinks = lecture.ContentList.Where(links => links.LinkType == LinkType.Video).Select(link => new ContentLinkDto
                 {
-                   Id = link.Id,
-                   Name = link.Name,
-                   Description = link.Description,
-                   Link = link.Link,
-                   LinkType = link.LinkType
+                    Id = link.Id,
+                    Name = link.Name,
+                    Description = link.Description,
+                    Link = link.Link,
+                    LinkType = link.LinkType
                 }),
                 SlidesLinks = lecture.ContentList.Where(links => links.LinkType == LinkType.Slide).Select(link => new ContentLinkDto
                 {
@@ -93,10 +93,10 @@ namespace Drive.WebHost.Services.Pro
                 }),
                 CodeSamples = lecture.CodeSamples.Select(sample => new CodeSampleDto
                 {
-                   Id = sample.Id,
-                   Name = sample.Name,
-                   IsDeleted = sample.IsDeleted,
-                   Code = sample.Code
+                    Id = sample.Id,
+                    Name = sample.Name,
+                    IsDeleted = sample.IsDeleted,
+                    Code = sample.Code
                 }),
                 CourseId = lecture.Course.Id
             }).SingleOrDefaultAsync();
@@ -139,13 +139,37 @@ namespace Drive.WebHost.Services.Pro
 
         public async Task<LectureDto> UpdateAsync(int id, LectureDto dto)
         {
-            var lecture = await _unitOfWork.Lectures.GetByIdAsync(id);
-            lecture.Name = dto.Name;
-            lecture.Description = dto.Description;
-            lecture.StartDate = dto.StartDate;
-            lecture.ModifiedAt = DateTime.Now;
-            lecture.IsDeleted = dto.IsDeleted;
-            lecture.CourseId = dto.CourseId;
+            var lecture = await _unitOfWork.Lectures.Query.Where(x => x.Id == id).Include(x => x.ContentList).SingleOrDefaultAsync();
+            if (lecture != null)
+            {
+                _unitOfWork.Lectures.Update(lecture);
+
+                var linksList = new List<ContentLink>();
+
+                linksList.AddRange(ProcessList(dto.VideoLinks, LinkType.Video));
+                linksList.AddRange(ProcessList(dto.RepositoryLinks, LinkType.Repository));
+                linksList.AddRange(ProcessList(dto.SampleLinks, LinkType.Sample));
+                linksList.AddRange(ProcessList(dto.SlidesLinks, LinkType.Slide));
+                linksList.AddRange(ProcessList(dto.UsefulLinks, LinkType.Useful));
+
+                lecture.Name = dto.Name;
+                lecture.Description = dto.Description;
+                lecture.StartDate = dto.StartDate;
+                lecture.ModifiedAt = DateTime.Now;
+                lecture.IsDeleted = dto.IsDeleted;
+                lecture.CourseId = dto.CourseId;
+
+                linksList.ForEach(x => x.Lecture = lecture);
+
+                var existingLinks = lecture.ContentList.ToList();
+                var addedLinks = linksList.Where(link => existingLinks.All(x => x.Id != link.Id)).ToList();
+                var deletedLinks = existingLinks.Where(link => linksList.All(x => x.Id != link.Id)).ToList();
+                var updatedLinks = existingLinks.Where(link => deletedLinks.All(x => x.Id != link.Id)).ToList();
+
+                addedLinks.ForEach(x => _unitOfWork.ContentLinks.Create(x));
+                updatedLinks.ForEach(x => _unitOfWork.ContentLinks.Update(x));
+                deletedLinks.ForEach(x => _unitOfWork.ContentLinks.ForceDelete(x.Id));
+            }
 
             await _unitOfWork.SaveChangesAsync();
 
@@ -167,6 +191,7 @@ namespace Drive.WebHost.Services.Pro
         {
             return new List<ContentLink>(dtoList.Select(x => new ContentLink
             {
+                Id = x.Id,
                 Name = x.Name,
                 Description = x.Description,
                 IsDeleted = false,

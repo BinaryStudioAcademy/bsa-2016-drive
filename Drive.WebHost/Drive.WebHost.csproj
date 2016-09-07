@@ -299,10 +299,12 @@
     <Content Include="Content\Icons\menu_space-home.svg" />
     <Content Include="Content\Icons\menu_space-other.svg" />
     <Content Include="Content\Icons\menu_space-own.svg" />
+    <Content Include="Content\Icons\pencil-striped-symbol-for-interface-edit-buttons.svg" />
     <Content Include="Content\Icons\physical-file.svg" />
     <Content Include="Content\Icons\ppt.svg" />
     <Content Include="Content\Icons\ppt_bw.svg" />
     <Content Include="Content\Icons\presentation.svg" />
+    <Content Include="Content\Icons\seo-training.svg" />
     <Content Include="Content\Icons\trello.svg" />
     <Content Include="Content\Icons\trello_bw.svg" />
     <Content Include="Content\Icons\upload-doc_bw.svg" />
@@ -312,9 +314,12 @@
     <Content Include="Content\Site.css" />
     <Content Include="gulpfile.js" />
     <Content Include="icon.png" />
+    <Content Include="Scripts\App\Academy\Lecture\createLink.directive.html" />
+    <Content Include="Scripts\App\Academy\Lecture\createLink.directive.js" />
     <Content Include="Scripts\App\Academy\Lecture\Lecture.html" />
     <Content Include="Scripts\App\Academy\Lecture\lectureController.js" />
     <Content Include="Scripts\App\Academy\Lecture\lectureService.js" />
+    <Content Include="Scripts\App\Academy\Lecture\linkTypeService.js" />
     <Content Include="Scripts\App\Academy\List\courseCreateController.js" />
     <Content Include="Scripts\App\Academy\List\Create.html" />
     <Content Include="Scripts\App\Academy\List\Modal.html" />
@@ -402,6 +407,8 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Scripts\App\Academy\Lecture\lectureLinks.directive.html" />
+    <Content Include="Scripts\App\Academy\Lecture\lectureLinks.directive.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

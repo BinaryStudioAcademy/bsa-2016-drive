@@ -392,11 +392,11 @@ textarea {
     }
 
     #wrapper.toggled #sidebar-wrapper {
-        width: 43px;
+        width: 42px;
     }
 
     #wrapper.toggled #sidebar-toggle {
-        width: 43px;
+        width: 42px;
     }
 
     #page-content-wrapper {
@@ -461,11 +461,11 @@ hr.style {
     margin: 3px;
     border: 0;
     height: 1px;
-    background: #333;
-    background-image: -webkit-linear-gradient(left, #333,#ccc, #333);
-    background-image: -moz-linear-gradient(left, #333, #ccc, #333);
-    background-image: -ms-linear-gradient(left, #333, #ccc, #333);
-    background-image: -o-linear-gradient(left, #333, #ccc, #333);
+    background: #5b5b5b;
+    background-image: -webkit-linear-gradient(left, #5b5b5b,#ccc, #5b5b5b);
+    background-image: -moz-linear-gradient(left, #5b5b5b, #ccc, #5b5b5b);
+    background-image: -ms-linear-gradient(left, #5b5b5b, #ccc, #5b5b5b);
+    background-image: -o-linear-gradient(left, #5b5b5b, #ccc, #5b5b5b);
 }
 
 /*Create new space button in menu*/
@@ -1071,7 +1071,7 @@ End Cancel button on search input*/
   cursor: pointer;
 }
 
-@media screen\9 {
+@media screen {
     .fileinput-button input {
         filter: alpha(opacity=0);
         font-size: 100%;
@@ -1133,3 +1133,9 @@ End Cancel button on search input*/
   background-color: #ffff00;
 }
 /*ent tags input*/
+
+/*Links form in Academy Pro*/
+.links-form {
+    width: 28%;
+}
+/*End Links form in Academy Pro*/

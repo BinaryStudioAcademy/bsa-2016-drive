@@ -29,7 +29,7 @@
                 <button type="button" class="btn btn-default btn-custom" ng-click="spaceCtrl.uploadFile()" title="Upload file">
                     <img src="./Content/Icons/upload-doc_bw.svg" height="30" alt="Upload file" />
                 </button>
-                <button type="button" class="btn btn-default btn-custom" ng-click="spaceCtrl.openNewCourseWindow('lg')" title="Add new Academy Pro course">
+                <button type="button" class="btn btn-default btn-custom" ng-click="spaceCtrl.createNewAP()" title="Add new Academy Pro course">
                     <img src="./Content/Icons/academyPro_bw.svg" height="30" alt="Academy Pro course" />
                 </button>
             </div>
@@ -98,7 +98,7 @@
     <!--End New gridview-->
     <div class="filter-table container-md" ng-show="spaceCtrl.showTable">
         <div class="header-wrapper">
-            <div class="row header-row">
+            <div class="row header-row" context-menu="spaceCtrl.containerMenuOptions">
                 <div class="col-md-3" ng-click="spaceCtrl.orderByColumn('name')">
                     Name
                     <span ng-show="spaceCtrl.columnForOrder == 'name'"><i class="fa fa-sort-asc"></i></span>
@@ -119,7 +119,7 @@
                     <span ng-show="spaceCtrl.columnForOrder == 'createdAt'"><i class="fa fa-sort-asc"></i></span>
                     <span ng-show="spaceCtrl.columnForOrder == '-createdAt'"><i class="fa fa-sort-desc"></i></span>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-2" ng-click="spaceCtrl.orderByColumn('fileType')">
                     Type
                     <span ng-show="spaceCtrl.columnForOrder == 'fileType'"><i class="fa fa-sort-asc"></i></span>
                     <span ng-show="spaceCtrl.columnForOrder == '-fileType'"><i class="fa fa-sort-desc"></i></span>
@@ -127,7 +127,7 @@
             </div>
         </div>
 
-        <div class="filter-table-internal">
+        <div class="filter-table-internal" context-menu="spaceCtrl.containerMenuOptions">
             <div style="transition: all 2s">
                 <div class="filter-table-row">
                     <div class="row filter-table-row" role="button" ng-repeat="folder in spaceCtrl.space.folders | orderBy: spaceCtrl.columnForOrder" ng-click="spaceCtrl.activeRow(folder.id, 'false')" ng-dblclick="spaceCtrl.openDocument(folder.link)" ng-class="{selected: folder.selected}" context-menu="spaceCtrl.folderMenuOptions">

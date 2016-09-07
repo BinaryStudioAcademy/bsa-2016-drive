@@ -13,6 +13,7 @@
         vm.openLecture = openLecture;
         vm.changeView = changeView;
         vm.createLecture = createLecture;
+        vm.getCourseList = getCourseList;
 
         activate();
 
@@ -60,6 +61,9 @@
         function activateGridView() {
             vm.view = "fa fa-list";
             vm.showTable = false;
+        }
+        function getCourseList() {
+            $location.url('/apps/academy/');
         }
     }
 }());

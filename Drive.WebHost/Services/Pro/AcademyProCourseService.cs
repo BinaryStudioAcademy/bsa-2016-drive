@@ -35,8 +35,6 @@ namespace Drive.WebHost.Services.Pro
             var courses = await _unitOfWork.AcademyProCourses.Query.Select(course => new AcademyProCourseDto
             {
                 Id = course.Id,
-                CreatedAt = course.CreatedAt,
-                ModifiedAt = course.ModifiedAt,
                 IsDeleted = course.IsDeleted,
                 StartDate = course.StartDate,
                 Lectures = course.Lectures.Select(lecture => new LectureDto
@@ -60,9 +58,13 @@ namespace Drive.WebHost.Services.Pro
                 {
                     Id = tag.Id,
                     Name = tag.Name
-                })
+                }),
+                Author = new AuthorDto() {Id = course.Author.Id, GlobalId = course.Author.GlobalId}
             }).ToListAsync();
-            
+
+            Parallel.ForEach(courses,
+                course => { course.Author.Name = authors.FirstOrDefault(o => o.Id == course.Author.GlobalId)?.Name; });
+
             return courses;
         }
 
@@ -72,8 +74,6 @@ namespace Drive.WebHost.Services.Pro
             var courses = await _unitOfWork.AcademyProCourses.Query.Where(c => c.Id == id).Select(course => new AcademyProCourseDto
             {
                 Id = course.Id,
-                CreatedAt = course.CreatedAt,
-                ModifiedAt = course.ModifiedAt,
                 IsDeleted = course.IsDeleted,
                 StartDate = course.StartDate,
                 Lectures = course.Lectures.Select(lecture => new LectureDto
@@ -105,20 +105,23 @@ namespace Drive.WebHost.Services.Pro
 
         public async Task<AcademyProCourseDto> CreateAsync(AcademyProCourseDto dto)
         {
+            var userId = _userService.CurrentUserId;
             var course = new AcademyProCourse
             {
                 StartDate = dto.StartDate,
                 IsDeleted = false,
-                CreatedAt = DateTime.Now,
-                ModifiedAt = DateTime.Now,
                 Tags = new List<Tag>(),
                 FileUnit = new FileUnit
                 {
                     Name = dto.FileUnit.Name,
                     Description = dto.FileUnit.Description,
                     CreatedAt = DateTime.Now,
-                    LastModified = DateTime.Now
-                }
+                    LastModified = DateTime.Now,
+                    Owner = await _unitOfWork.Users.Query.SingleOrDefaultAsync(u => u.GlobalId == userId),
+                    FileType = FileType.AcademyPro,
+                    IsDeleted = false
+                },
+                Author = await _unitOfWork.Users.Query.SingleOrDefaultAsync(u => u.GlobalId == dto.Author.GlobalId)
             };
 
             dto.Tags.ForEach(tag =>
@@ -133,14 +136,25 @@ namespace Drive.WebHost.Services.Pro
 
         public async Task<AcademyProCourseDto> UpdateAsync(int id, AcademyProCourseDto dto)
         {
-            var course = await _unitOfWork.AcademyProCourses.GetByIdAsync(id);
+            var course = await _unitOfWork.AcademyProCourses.Query.Include(x => x.FileUnit).Include(x => x.Tags).SingleOrDefaultAsync(c => c.Id == id);
             course.StartDate = dto.StartDate;
-            course.ModifiedAt = DateTime.Now;
             course.IsDeleted = dto.IsDeleted;
+            course.FileUnit.Name = dto.FileUnit.Name;
+            course.FileUnit.Description = dto.FileUnit.Description;
+            course.FileUnit.LastModified = DateTime.Now;
+            var user = await _unitOfWork.Users.Query.SingleOrDefaultAsync(u => u.GlobalId == dto.Author.GlobalId);
+            if (user == null)
+            {
+                user = new User() {IsDeleted = false, GlobalId = dto.Author.GlobalId};
+                _unitOfWork.Users.Create(user);
+            }
+
+            course.Author = user;
 
             dto.Tags.ForEach(tag =>
             {
-                course.Tags.Add(_unitOfWork.Tags.Query.FirstOrDefault(x => x.Name == tag.Name) ?? new Tag { Name = tag.Name, IsDeleted = false });
+                if (course.Tags?.Count(t => t.Name == tag.Name) == 0)
+                    course.Tags.Add(_unitOfWork.Tags.Query.FirstOrDefault(x => x.Name == tag.Name) ?? new Tag { Name = tag.Name, IsDeleted = false });
             });
 
             await _unitOfWork.SaveChangesAsync();
