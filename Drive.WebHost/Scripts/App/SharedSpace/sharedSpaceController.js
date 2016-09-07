@@ -26,6 +26,7 @@
         vm.getFile = getFile;
         vm.getSharedData = getSharedData;
         vm.getSpaceByButton = getSpaceByButton;
+        vm.openDocument = openDocument;
 
         vm.search = search;
         vm.cancelSearch = cancelSearch;
