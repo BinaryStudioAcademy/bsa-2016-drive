@@ -35,7 +35,7 @@
 
         vm.paginate = {
             currentPage: 1,
-            pageSize: 2,
+            pageSize: 15,
             numberOfItems: 0,
             getContent: null
         }
@@ -148,7 +148,21 @@
                         vm.paginate.numberOfItems--;
                         vm.paginate.getContent();
                     }
+                }, function ($itemScope) {
+                    if (vm.space.rootFolderId == null) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
                 });
+            }, function ($itemScope) {
+                if (vm.space.rootFolderId == null) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
             }]
         ];
 
@@ -165,6 +179,13 @@
                        vm.paginate.getContent();
                    }
                });
+           }, function ($itemScope) {
+               if (vm.space.rootFolderId == null) {
+                   return true;
+               }
+               else {
+                   return false;
+               }
            }]
         ];
 
