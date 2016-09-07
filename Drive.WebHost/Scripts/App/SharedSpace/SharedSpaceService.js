@@ -43,8 +43,13 @@
                 });
         }
         
-        function getSpaceTotal( callback) {
-            $http.get(baseUrl + '/api/sharedspace/total')
+        function getSpaceTotal(folderId, rootFolderId, callback) {
+            $http.get(baseUrl + '/api/sharedspace/total', {
+                params: {
+                    folderId: folderId,
+                    rootFolderId: rootFolderId
+                }
+            })
                .then(function (response) {
                    if (callback) {
                        callback(response.data);

@@ -25,7 +25,7 @@ namespace Drive.WebHost.Api
         public async Task<IHttpActionResult> GetSharedData(int page = 1, int count = 100, string sort = null, int? folderId = null, int? rootFolderId = null)
         {
             var result = await _sharedSpaceService.GetAsync(page, count, sort, folderId, rootFolderId);
-            if (result == null || (result.Files.Count == 0 && result.Folders.Count == 0))
+            if (result == null)
                 return NotFound();
             return Ok(result);
         }
@@ -58,12 +58,12 @@ namespace Drive.WebHost.Api
             return Ok();
         }
 
-        //GET: api/sharedspace/total
+        //GET: api/sharedspace/total?folderId=(int?)&rootFolderId=(int?)
         [HttpGet]
         [Route("total")]
-        public async Task<IHttpActionResult> GetSharedSpaceTotal()
+        public async Task<IHttpActionResult> GetSharedSpaceTotal(int? folderId = null, int? rootFolderId = null)
         {
-            var result = await _sharedSpaceService.GetTotalAsync();
+            var result = await _sharedSpaceService.GetTotalAsync(folderId, rootFolderId);
             if (result == 0)
                 return NotFound();
             return Ok(result);
@@ -75,7 +75,7 @@ namespace Drive.WebHost.Api
         public async Task<IHttpActionResult> SearchInSharedSpace(string text = "", int page = 1, int count = 100)
         {
             var result = await _sharedSpaceService.SearchAsync(text, page, count);
-            if (result == null || result.Files.Count == 0)
+            if (result == null)
                 return NotFound();
             return Ok(result);
         }

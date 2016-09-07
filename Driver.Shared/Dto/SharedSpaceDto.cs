@@ -8,7 +8,7 @@ namespace Driver.Shared.Dto
 {
     public class SharedSpaceDto
     {
-        public IList<FileUnitDto> Files { get; set; }
-        public IList<FolderUnitDto> Folders { get; set; }
+        public IEnumerable<FileUnitDto> Files { get; set; }
+        public IEnumerable<FolderUnitDto> Folders { get; set; }
     }
 }

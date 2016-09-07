@@ -35,7 +35,7 @@
 
         vm.paginate = {
             currentPage: 1,
-            pageSize: 10,
+            pageSize: 2,
             numberOfItems: 0,
             getContent: null
         }
@@ -89,12 +89,12 @@
             vm.searchText = '';
             vm.parentId = null;
             vm.paginate.currentPage = 1;
-            getSpaceContent();
+            getSharedContent();
             getSharedDataTotal();
-            vm.paginate.getContent = getSpaceContent;
+            vm.paginate.getContent = getSharedContent;
         }
 
-        function getSpaceContent() {
+        function getSharedContent() {
             sharedSpaceService.getSharedData(vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate, vm.space.folderId, vm.space.rootFolderId, function (data) {
                 vm.space.files = data.files;
                 vm.space.folders = data.folders;
@@ -111,7 +111,7 @@
         }
 
         function getSharedDataTotal() {
-            sharedSpaceService.getSharedDataTotal(function (data) {
+            sharedSpaceService.getSharedDataTotal(vm.space.folderId, vm.space.rootFolderId, function (data) {
                 vm.paginate.numberOfItems = data;
             });
         }

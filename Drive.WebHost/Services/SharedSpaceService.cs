@@ -105,11 +105,11 @@ namespace Drive.WebHost.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<SharedSpaceDto> GetAsync(int page, int count, string sort, int? folderId, int? parentFolderId)
+        private async Task<SharedSpaceDto> GetSharedContentAsync(int? folderId, int? parentFolderId)
         {
             string userId = _userService.CurrentUserId;
-            IEnumerable<FileUnitDto> files = new List<FileUnitDto>();
-            IEnumerable<FolderUnitDto> folders = new List<FolderUnitDto>();
+            IEnumerable<FileUnitDto> files = null;
+            IEnumerable<FolderUnitDto> folders = null;
             if (folderId == null && parentFolderId == null)
             {
                 files = await _unitOfWork.SharedSpace.Query
@@ -138,7 +138,7 @@ namespace Drive.WebHost.Services
                     }).ToListAsync();
             }
             else if (folderId == parentFolderId)
-                {
+            {
                 // TODO Add canModify canRead from parent permission
                 folders = await _unitOfWork.Folders.Query
                     .Where(f => f.FolderUnit.Id == folderId)
@@ -174,9 +174,9 @@ namespace Drive.WebHost.Services
                         CanRead = f.CanRead,
                         CanModify = f.CanModify
                     }).SingleOrDefaultAsync();
-                if(folder != null)
+                if (folder != null)
                 {
-                    if (await CheckExistenceFolderRecursively(folderId.Value, parentFolderId.Value))
+                    if (await CheckExistenceFolderRecursivelyAsync(folderId.Value, parentFolderId.Value))
                     {
                         // TODO Add canModify canRead from parent permission
                         folders = await _unitOfWork.Folders.Query
@@ -208,88 +208,77 @@ namespace Drive.WebHost.Services
                         return null;
                 }
             }
+            return new SharedSpaceDto() { Files = files, Folders = folders };
+        }
 
+        private async Task<SharedSpaceDto> GetSharedContentAfterPaginationAsync(SharedSpaceDto sharedContent, int page, int count, string sort)
+        {
             if (sort != null && sort.Equals("asc"))
             {
-                var resultFolders = folders.OrderBy(f => f.CreatedAt);
-                var resultFiles = files.OrderBy(f => f.CreatedAt);
+                var resultFolders = sharedContent.Folders.OrderBy(f => f.CreatedAt);
+                var resultFiles = sharedContent.Files.OrderBy(f => f.CreatedAt);
 
-                folders = resultFolders;
-                files = resultFiles;
+                sharedContent.Folders = resultFolders;
+                sharedContent.Files = resultFiles;
             }
             else if (sort != null && sort.Equals("desc"))
             {
-                var resultFolders = folders.OrderByDescending(f => f.CreatedAt);
-                var resultFiles = files.OrderByDescending(f => f.CreatedAt);
+                var resultFolders = sharedContent.Folders.OrderByDescending(f => f.CreatedAt);
+                var resultFiles = sharedContent.Files.OrderByDescending(f => f.CreatedAt);
 
-                folders = resultFolders;
-                files = resultFiles;
+                sharedContent.Folders = resultFolders;
+                sharedContent.Files = resultFiles;
             }
 
             int skipCount = (page - 1) * count;
-            if (folders.Count() <= skipCount)
+            if (sharedContent.Folders.Count() <= skipCount)
             {
-                skipCount -= folders.Count();
-                folders = new List<FolderUnitDto>();
-                files = files.Skip(skipCount).Take(count);
+                skipCount -= sharedContent.Folders.Count();
+                sharedContent.Folders = new List<FolderUnitDto>();
+                sharedContent.Files = sharedContent.Files.Skip(skipCount).Take(count);
             }
             else
             {
-                folders = folders.Skip(skipCount).Take(count);
-                count -= folders.Count();
-                files = files.Take(count);
+                sharedContent.Folders = sharedContent.Folders.Skip(skipCount).Take(count);
+                count -= sharedContent.Folders.Count();
+                sharedContent.Files = sharedContent.Files.Take(count);
             }
 
             var owners = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
-            Parallel.ForEach(files, file =>
+            Parallel.ForEach(sharedContent.Files, file =>
             {
                 file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name;
             });
-            Parallel.ForEach(folders, folder =>
+            Parallel.ForEach(sharedContent.Folders, folder =>
             {
                 folder.Author.Name = owners.FirstOrDefault(o => o.Id == folder.Author.GlobalId)?.Name;
             });
-            return new SharedSpaceDto() { Files = files.ToList(), Folders = folders.ToList()};
+            if (sharedContent.Files.Count() == 0 && sharedContent.Folders.Count() == 0)
+                return null;
+            else
+                return sharedContent;
         }
 
-        private async Task<bool> CheckExistenceFolderRecursively(int folderId, int parentFolderId)
+        public async Task<SharedSpaceDto> GetAsync(int page, int count, string sort, int? folderId, int? parentFolderId)
         {
-            var foldersId = await _unitOfWork.Folders.Query
-                .Where(f => f.FolderUnit.Id == parentFolderId)
-                .Select(f => new { Id = f.Id })
-                .ToListAsync();
-            foreach(var folder in foldersId)
-                if (folder != null && folder.Id == folderId)
-                    return true;
-            var folders = await _unitOfWork.Folders.Query
-                .Where(f => f.FolderUnit.Id == parentFolderId)
-                .Select(f => new { ContentList = f.DataUnits })
-                .ToListAsync();
-            for (int i = 0; i < folders.Count; i++)
-            {
-                for (int j = 0; j < folders[i].ContentList.Count; j++)
-                {
-                    if(folders[i].ContentList[j] is FolderUnit)
-                    {
-                        if (folders[i].ContentList[j].Id == folderId)
-                            return true;
-                        else
-                        {
-                            if (await CheckExistenceFolderRecursively(folderId, folders[i].ContentList[j].Id))
-                                return true;
-                        }
-                    }
-                }
-            }
-            return false;
+
+            var sharedContent = await GetSharedContentAsync(folderId, parentFolderId);
+            if (sharedContent == null)
+                return null;
+            
+            return await GetSharedContentAfterPaginationAsync(sharedContent, page, count, sort);
         }
 
-        public async Task<int> GetTotalAsync()
+        
+        public async Task<int> GetTotalAsync(int? folderId, int? parentFolderId)
         {
-            string userId = _userService.CurrentUserId;
-            var contentCount = await _unitOfWork.SharedSpace.Query
-                .Where(s => !s.IsDeleted && !s.Content.IsDeleted && s.User.GlobalId == userId)
-                .CountAsync();
+            var sharedContent = await GetSharedContentAsync(folderId, parentFolderId);
+            if (sharedContent == null)
+                return 0;
+            int contentCount = 0;
+            contentCount += sharedContent.Files.Count();
+            contentCount += sharedContent.Files.Count();
+
             return contentCount;
         }
 
@@ -384,6 +373,38 @@ namespace Drive.WebHost.Services
         public void Dispose()
         {
             _unitOfWork.Dispose();
+        }
+
+        private async Task<bool> CheckExistenceFolderRecursivelyAsync(int folderId, int parentFolderId)
+        {
+            var foldersId = await _unitOfWork.Folders.Query
+                .Where(f => f.FolderUnit.Id == parentFolderId)
+                .Select(f => new { Id = f.Id })
+                .ToListAsync();
+            foreach (var folder in foldersId)
+                if (folder != null && folder.Id == folderId)
+                    return true;
+            var folders = await _unitOfWork.Folders.Query
+                .Where(f => f.FolderUnit.Id == parentFolderId)
+                .Select(f => new { ContentList = f.DataUnits })
+                .ToListAsync();
+            for (int i = 0; i < folders.Count; i++)
+            {
+                for (int j = 0; j < folders[i].ContentList.Count; j++)
+                {
+                    if (folders[i].ContentList[j] is FolderUnit)
+                    {
+                        if (folders[i].ContentList[j].Id == folderId)
+                            return true;
+                        else
+                        {
+                            if (await CheckExistenceFolderRecursivelyAsync(folderId, folders[i].ContentList[j].Id))
+                                return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
     }
 }
