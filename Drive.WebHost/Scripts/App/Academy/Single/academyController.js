@@ -25,7 +25,7 @@
             vm.searchText = '';
             vm.iconHeight = 30;
             vm.showTable = true;
-            vm.icon = "./Content/Icons/presentation.svg";
+            vm.icon = "./Content/Icons/lecture.svg";
             vm.iconHeight = 30;
 
             return getAcademy();

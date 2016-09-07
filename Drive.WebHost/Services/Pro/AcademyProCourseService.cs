@@ -63,15 +63,16 @@ namespace Drive.WebHost.Services.Pro
             }).ToListAsync();
 
             Parallel.ForEach(courses,
-                course => { course.Author.Name = authors.FirstOrDefault(o => o.Id == course.Author.GlobalId)?.Name; });
+                course => { course.Author.Name = authors.FirstOrDefault(a => a.Id == course.Author.GlobalId)?.Name; });
 
             return courses;
         }
 
         public async Task<AcademyProCourseDto> GetAsync(int id)
         {
+            var authors = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
 
-            var courses = await _unitOfWork.AcademyProCourses.Query.Where(c => c.Id == id).Select(course => new AcademyProCourseDto
+            var resultCourse = await _unitOfWork.AcademyProCourses.Query.Where(c => c.Id == id).Select(course => new AcademyProCourseDto
             {
                 Id = course.Id,
                 IsDeleted = course.IsDeleted,
@@ -82,7 +83,8 @@ namespace Drive.WebHost.Services.Pro
                     Name = lecture.Name,
                     Description = lecture.Description,
                     StartDate = lecture.StartDate,
-                    CreatedAt = lecture.CreatedAt
+                    CreatedAt = lecture.CreatedAt,
+                    Author = new AuthorDto { Id = lecture.Author.Id, GlobalId = lecture.Author.GlobalId}
                 }),
                 FileUnit = new FileUnitDto
                 {
@@ -97,10 +99,17 @@ namespace Drive.WebHost.Services.Pro
                 {
                     Id = tag.Id,
                     Name = tag.Name
-                })
+                }),
+                Author = new AuthorDto { Id = course.Author.Id, GlobalId = course.Author.GlobalId }
             }).SingleOrDefaultAsync();
 
-            return courses;
+            resultCourse.Author.Name = authors.SingleOrDefault(a => a.Id == resultCourse.Author.GlobalId)?.Name;
+
+            Parallel.ForEach(resultCourse.Lectures,
+                lecture => { lecture.Author.Name = authors.FirstOrDefault(a => a.Id == lecture.Author.GlobalId)?.Name; });
+
+
+            return resultCourse;
         }
 
         public async Task<AcademyProCourseDto> CreateAsync(AcademyProCourseDto dto)
