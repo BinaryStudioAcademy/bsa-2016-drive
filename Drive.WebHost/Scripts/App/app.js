@@ -8,7 +8,8 @@
         'ngAnimate',
         "toastr",
         "driveApp.academyPro",
-        "cfp.hotkeys"
+        "cfp.hotkeys",
+        "ui.sortable"
     ])
     .factory('BaseUrl', function () {
         return window.globalVars.baseUrl;

@@ -302,6 +302,7 @@
     <Content Include="Content\Icons\physical-file.svg" />
     <Content Include="Content\Icons\ppt.svg" />
     <Content Include="Content\Icons\ppt_bw.svg" />
+    <Content Include="Content\Icons\presentation.svg" />
     <Content Include="Content\Icons\trello.svg" />
     <Content Include="Content\Icons\trello_bw.svg" />
     <Content Include="Content\Icons\upload-doc_bw.svg" />

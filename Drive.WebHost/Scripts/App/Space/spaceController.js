@@ -5,7 +5,7 @@
         .module("driveApp")
         .controller("SpaceController", SpaceController);
 
-    SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', '$uibModal', 'localStorageService', '$routeParams', '$location'];
+    SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', '$uibModal', 'localStorageService', '$routeParams', '$location', 'toastr'];
 
     function SpaceController(spaceService,
         folderService,
@@ -13,7 +13,8 @@
         $uibModal,
         localStorageService,
         $routeParams,
-        $location) {
+        $location,
+        toastr) {
         var vm = this;
 
         vm.folderList = [];
@@ -21,8 +22,6 @@
         vm.deleteElems = deleteElems;
         vm.spaceId = 0;
         vm.parentId = null;
-       
-
 
         // vm.getAllFolders = getAllFolders;
         vm.getFolder = getFolder;
@@ -36,6 +35,7 @@
         vm.openFileUploadWindow = openFileUploadWindow;
         vm.openDocument = openDocument;
         vm.openSharedFileWindow = openSharedFileWindow;
+        vm.openNewCourseWindow = openNewCourseWindow;
         vm.sharedFile = sharedFile;
 
         vm.findById = findById;
@@ -76,30 +76,53 @@
         activate();
 
         function activeRow(id, data) {
+            for (var i = 0; i < vm.space.folders.length; i++) {
+                vm.space.folders[i].selected = false;
+            }
+            for (var i = 0; i < vm.space.files.length; i++) {
+                vm.space.files[i].selected = false;
+            }
             if (id != undefined) {
                 vm.row = id;
             }
             if (data == 'true') {
                 vm.condition = true;
+                var pos = vm.space.files.map(function (e) { return e.id; }).indexOf(id);
+                vm.space.files[pos].selected = true;
             }
-            else
+            else {
                 vm.condition = false;
+                var pos = vm.space.folders.map(function (e) { return e.id; }).indexOf(id);
+                vm.space.folders[pos].selected = true;
+            }
         }
 
         function copyByHotkeys() {
             if (vm.row != undefined) {
                 localStorageService.set('copy', { id: vm.row, file: vm.condition });
+                toastr.info(
+                   'File has been copied to the clipboard.', 'Space',
+                   {
+                       closeButton: true, timeOut: 5000
+                   });
             }
         }
 
         function cutByHotkeys() {
-            localStorageService.set('cut-out', { id: vm.row, file: vm.condition });
-            localStorageService.set('oldParentId', vm.parentId);
-            if (vm.condition == true) {
-                deleteFile(vm.row);
-            }
-            else {
-                deleteFolder(vm.row);
+            if (vm.row != undefined) {
+                localStorageService.set('cut-out', { id: vm.row, file: vm.condition });
+                localStorageService.set('oldParentId', vm.parentId);
+                if (vm.condition == true) {
+                    deleteFile(vm.row);
+                }
+                else {
+                    deleteFolder(vm.row);
+                }
+                toastr.info(
+                    'File has been copied to the clipboard.', 'Space',
+                    {
+                        closeButton: true, timeOut: 5000
+                    });
             }
         }
 
@@ -245,7 +268,7 @@
                 vm.paginate.pageSize,
                 vm.sortByDate,
                 function (data) {
-                vm.space = data;
+                    vm.space = data;
                 vm.spaceId = data.id;
             });
         }
@@ -360,18 +383,17 @@
         ];
 
         vm.containerMenuOptions = [
-            ['New', function () {
-
-            }, [
             ['New Folder', function () { vm.createNewFolder(); }],
             ['New File', function () { vm.createNewFile(); }],
-            ['New Academy Pro', function () {  }],
+            ['New Academy Pro', function() {
+                vm.openNewCourseWindow('lg');
+            }],
             null,
             ['Upload File', function ($itemScope) {
                 vm.file = { fileType: 6, parentId: vm.parentId, spaceId: vm.spaceId };
                 vm.openFileUploadWindow('lg');
-            }]
-            ]],
+        }],
+    null,
             [
             'Paste', function () {
                 if (localStorageService.get('cut-out') != null) {
@@ -560,6 +582,24 @@
                 console.log('Modal dismissed');
             });
         }
+
+        function openNewCourseWindow(size) {
+
+            var courseModalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'Scripts/App/Academy/List/Create.html',
+                windowTemplateUrl: 'Scripts/App/Academy/List/Modal.html',
+                controller: 'CourseCreateController',
+                controllerAs: 'courseCreateCtrl',
+                size: size
+            });
+
+            courseModalInstance.result.then(function () {
+                $location.url('/apps/academy');
+            }, function() {
+                
+            });  
+        };
 
         function sharedFile() {
             vm.fileId = { parentId: vm.parentId, spaceId: vm.spaceId };

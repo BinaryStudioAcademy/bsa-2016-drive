@@ -1,20 +1,45 @@
 ﻿
+<style type="text/css">
+    /*Tag labels*/
+    .label {
+        border-radius: 0;
+        text-shadow: none;
+        font-size: 13px;
+        font-weight: normal;
+        padding: 3px 5px 3px;
+        background-color: #abbac3 !important;
+    }
+
+    .column-label {
+        width: 8%;
+    }
+    /*End Tag labels*/
+
+    .small {
+        margin-top: 7px;
+        margin-bottom: 0;
+    }
+</style>
 <div class="container-fluid">
     <br />
     <div class="btn-group btn-breadcrumb">
         <a class="btn btn-info"><i class="fa fa-graduation-cap fa-lg"></i> Academy Pro</a>
     </div>
     <div>
-        <br />
-        <div class="lecture-tags">
-            <ul>
-                <li class="lecture-tags-entry" ng-repeat="tag in academyCtrl.academy.tags">
-                    {{tag.name}}
-                </li>
-            </ul>
-        </div>
         <span us-spinner="{radius:30, width:8, length: 16}"></span>
         <h2>{{academyCtrl.academy.fileUnit.name}}</h2>
+        <div class="col-sm-10 row column-label" ng-repeat="tag in academyCtrl.academy.tags">
+            <span class="label">{{tag.name}}</span>
+        </div>
+        <br />
+        <div class="small">
+            <p>
+                <small class="text-muted" title="Course author"><i class="fa fa-user" aria-hidden="true"></i> {{academyCtrl.academy.fileUnit.author}}</small>
+            </p>
+            <p>
+                <small class="text-muted" title="Course start date"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> {{ academyCtrl.academy.startDate | date:'dd-MM-yyyy HH:mm'}}</small>
+            </p>
+        </div>
         <p>{{academyCtrl.academy.fileUnit.description}}</p>
         <div>
             <div class="row" style="margin: 1em 0 1em 0;">
@@ -85,7 +110,7 @@
                     <div class="row filter-table-row" role="button" ng-repeat="lecture in academyCtrl.academy.lectures"
                          ng-dblclick="academyCtrl.openLecture(lecture.id)">
                         <div class="col-md-2 filter-table-cell description" title="{{ lecture.name }}">
-                            <img ng-src="{{academyCtrl.icon}}" height="{{academyCtrl.iconHeight}}" /> 
+                            <img ng-src="{{academyCtrl.icon}}" height="{{academyCtrl.iconHeight}}" />
                             {{lecture.name | limitTo: 15}}{{lecture.name.length > 15 ? '...' : ''}}
                         </div>
                         <div class="col-md-4 filter-table-cell description" title="{{ lecture.description }}">

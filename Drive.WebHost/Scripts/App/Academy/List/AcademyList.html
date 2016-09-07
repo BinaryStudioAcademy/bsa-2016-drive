@@ -30,7 +30,7 @@
             </div>-->
             <div class="col-sm-3 pull-left">
                 <div>
-                    <button class="btn btn-default" ng-click="academyListCtrl.openNewCourseWindow('lg')">New course</button>
+                    <button class="btn btn-default" ng-click="academyListCtrl.createNewCourse()">New course</button>
                 </div>
             </div>
         </div>
@@ -77,7 +77,6 @@
             <li class="sp-gv-flex-item"></li>
             <li class="sp-gv-flex-item"></li>
         </ul>
-
 </div>
     <div class="filter-table" ng-show="academyListCtrl.showTable">
         <div class="header-wrapper">
@@ -91,7 +90,7 @@
         <div class="filter-table-internal">
             <div class="filter-table-row">
                 <div class="row filter-table-row" role="button" ng-repeat="academy in academyListCtrl.academiesList"
-                     ng-dblclick="academyListCtrl.openCourse(academy.id)">
+                     ng-dblclick="academyListCtrl.openCourse(academy.id)" context-menu="academyListCtrl.courseMenuOptions">
                     <div class="col-md-2 filter-table-cell description" title="{{ academy.fileUnit.name }}">
                         <img ng-src="{{academyListCtrl.icon}}" height="{{academyListCtrl.iconHeight}}" /> 
                         {{academy.fileUnit.name | limitTo: 15}}{{academy.fileUnit.name.length > 15 ? '...' : ''}}
