@@ -5,10 +5,10 @@
         </div>
         <div class="modal-body">
             <div class="form-group">
-                <div class="col-md-4">
+                <div class="col-xs-4" style="padding-left: 0px;">
                     <input type="text" placeholder="Enter a username" ng-model="sharedContentModalCtrl.selected" uib-typeahead="user as user.name for user in sharedContentModalCtrl.users | filter:{name:$viewValue} | limitTo:10" class="form-control">
                 </div>
-                <div class="col-md-5">
+                <div class="col-xs-2">
                     <button class="btn btn-primary" ng-click="sharedContentModalCtrl.addUserPermissons()">Add</button>
                 </div>
             </div>

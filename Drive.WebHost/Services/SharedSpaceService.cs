@@ -30,143 +30,197 @@ namespace Drive.WebHost.Services
 
         public async Task<IEnumerable<UserSharedSpaceDto>> GetPermissionsOfSharedDataAsync(int id)
         {
-            var filePermission = await _unitOfWork.SharedSpace.Query
-                .Where(f => f.Content.Id == id)
-                .Select(f => new UserSharedSpaceDto {
-                    GlobalId = f.User.GlobalId,
-                    IsDeleted = f.IsDeleted,
-                    CanModify = f.CanModify,
-                    CanRead = f.CanRead                    
-                }).ToListAsync();
-            return filePermission;
+            try
+            {
+                var filePermission = await _unitOfWork.SharedSpace.Query
+                    .Where(f => f.Content.Id == id)
+                    .Select(f => new UserSharedSpaceDto
+                    {
+                        GlobalId = f.User.GlobalId,
+                        IsDeleted = f.IsDeleted,
+                        CanModify = f.CanModify,
+                        CanRead = f.CanRead
+                    }).ToListAsync();
+                return filePermission;
+            }
+            catch (Exception ex)
+            {
+                _logger.WriteError(ex, ex.Message);
+                return null;
+            }
         }
 
         public async Task CreateOrUpdatePermissionsOfSharedDataAsync(List<UserSharedSpaceDto> users, int id)
         {
-            foreach (var user in users)
+            try
             {
-                var fileShared = await _unitOfWork.SharedSpace.Query.Include(t => t.Content).Include(t => t.User).SingleOrDefaultAsync(f => f.Content.Id == id && f.User.GlobalId == user.GlobalId);
-                
-                if (fileShared == null)
+                foreach (var user in users)
                 {
-                    var fileSharedDeleted = await _unitOfWork.SharedSpace.Deleted.Include(t => t.Content).Include(t => t.User).SingleOrDefaultAsync(f => f.Content.Id == id && f.User.GlobalId == user.GlobalId);
-                    if (fileSharedDeleted == null)
+                    var fileShared = await _unitOfWork.SharedSpace.Query.Include(t => t.Content).Include(t => t.User).SingleOrDefaultAsync(f => f.Content.Id == id && f.User.GlobalId == user.GlobalId);
+
+                    if (fileShared == null)
                     {
-                        await _spaceService.CreateUserAndFirstSpaceAsync(user.GlobalId);
-                        var userDb = await _unitOfWork.Users.Query.FirstOrDefaultAsync(x => x.GlobalId == user.GlobalId);
-                        var file = await _unitOfWork.Files.Query.SingleOrDefaultAsync(f => f.Id == id);
-                        if (file != null)
+                        var fileSharedDeleted = await _unitOfWork.SharedSpace.Deleted.Include(t => t.Content).Include(t => t.User).SingleOrDefaultAsync(f => f.Content.Id == id && f.User.GlobalId == user.GlobalId);
+                        if (fileSharedDeleted == null)
                         {
-                            var newSharedFile = new Shared()
+                            await _spaceService.CreateUserAndFirstSpaceAsync(user.GlobalId);
+                            var userDb = await _unitOfWork.Users.Query.FirstOrDefaultAsync(x => x.GlobalId == user.GlobalId);
+                            var file = await _unitOfWork.Files.Query.SingleOrDefaultAsync(f => f.Id == id);
+                            if (file != null)
                             {
-                                IsDeleted = user.IsDeleted,
-                                Content = file,
-                                User = userDb,
-                                CanModify = user.CanModify,
-                                CanRead = user.CanRead,
-                            };
-                            _unitOfWork.SharedSpace.Create(newSharedFile);
-                        }
-                        else
-                        {
-                            var folder = await _unitOfWork.Folders.Query.SingleOrDefaultAsync(f => f.Id == id);
-                            if (folder != null)
-                            {
-                                var newSharedFolder = new Shared()
+                                var newSharedFile = new Shared()
                                 {
                                     IsDeleted = user.IsDeleted,
-                                    Content = folder,
+                                    Content = file,
                                     User = userDb,
                                     CanModify = user.CanModify,
                                     CanRead = user.CanRead,
                                 };
-                                _unitOfWork.SharedSpace.Create(newSharedFolder);
+                                _unitOfWork.SharedSpace.Create(newSharedFile);
                             }
+                            else
+                            {
+                                var folder = await _unitOfWork.Folders.Query.SingleOrDefaultAsync(f => f.Id == id);
+                                if (folder != null)
+                                {
+                                    var newSharedFolder = new Shared()
+                                    {
+                                        IsDeleted = user.IsDeleted,
+                                        Content = folder,
+                                        User = userDb,
+                                        CanModify = user.CanModify,
+                                        CanRead = user.CanRead,
+                                    };
+                                    _unitOfWork.SharedSpace.Create(newSharedFolder);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            fileSharedDeleted.CanModify = user.CanModify;
+                            fileSharedDeleted.CanRead = user.CanRead;
+                            fileSharedDeleted.IsDeleted = user.IsDeleted;
+                            if (!user.CanModify && !user.CanRead)
+                                fileShared.IsDeleted = true;
                         }
                     }
                     else
                     {
-                        fileSharedDeleted.CanModify = user.CanModify;
-                        fileSharedDeleted.CanRead = user.CanRead;
-                        fileSharedDeleted.IsDeleted = user.IsDeleted;
+                        fileShared.CanModify = user.CanModify;
+                        fileShared.CanRead = user.CanRead;
+                        fileShared.IsDeleted = user.IsDeleted;
                         if (!user.CanModify && !user.CanRead)
                             fileShared.IsDeleted = true;
                     }
                 }
-                else
-                {
-                    fileShared.CanModify = user.CanModify;
-                    fileShared.CanRead = user.CanRead;
-                    fileShared.IsDeleted = user.IsDeleted;
-                    if (!user.CanModify && !user.CanRead)
-                        fileShared.IsDeleted = true;
-                }
+                await _unitOfWork.SaveChangesAsync();
             }
-            await _unitOfWork.SaveChangesAsync();
+            catch (Exception ex)
+            {
+                _logger.WriteError(ex, ex.Message);
+            }
         }
 
         public async Task<SharedSpaceDto> GetAsync(int page, int count, string sort, int? folderId, int? rootFolderId)
         {
+            try
+            {
+                var sharedContent = await GetSharedContentAsync(folderId, rootFolderId);
+                if (sharedContent == null)
+                    return null;
 
-            var sharedContent = await GetSharedContentAsync(folderId, rootFolderId);
-            if (sharedContent == null)
+                return await GetSharedContentAfterPaginationAsync(sharedContent, page, count, sort);
+            }
+            catch (Exception ex)
+            {
+                _logger.WriteError(ex, ex.Message);
                 return null;
-            
-            return await GetSharedContentAfterPaginationAsync(sharedContent, page, count, sort);
+            }
         }
 
         public async Task<int> GetTotalAsync(int? folderId, int? rootFolderId)
         {
-            var sharedContent = await GetSharedContentAsync(folderId, rootFolderId);
-            if (sharedContent == null)
-                return 0;
-            int contentCount = 0;
-            contentCount += sharedContent.Files.Count();
-            contentCount += sharedContent.Folders.Count();
+            try
+            {
+                var sharedContent = await GetSharedContentAsync(folderId, rootFolderId);
+                if (sharedContent == null)
+                    return 0;
+                int contentCount = 0;
+                contentCount += sharedContent.Files.Count();
+                contentCount += sharedContent.Folders.Count();
 
-            return contentCount;
+                return contentCount;
+            }
+            catch (Exception ex)
+            {
+                _logger.WriteError(ex, ex.Message);
+                return 0;
+            }
         }
 
         public async Task<SharedSpaceDto> SearchAsync(string text, int page, int count, string sort, int? folderId, int? rootFolderId)
         {
-            var sharedContent = await GetSharedContentAsync(folderId, rootFolderId);
-            if (sharedContent == null)
-                return null;
-
-            if (!string.IsNullOrEmpty(text))
+            try
             {
-                sharedContent.Files = sharedContent.Files.Where(f => f.Name.ToLower().Contains(text.ToLower()));
-                sharedContent.Folders = sharedContent.Folders.Where(f => f.Name.ToLower().Contains(text.ToLower()));
-            }
+                var sharedContent = await GetSharedContentAsync(folderId, rootFolderId);
+                if (sharedContent == null)
+                    return null;
 
-            return await GetSharedContentAfterPaginationAsync(sharedContent, page, count, sort);
+                if (!string.IsNullOrEmpty(text))
+                {
+                    sharedContent.Files = sharedContent.Files.Where(f => f.Name.ToLower().Contains(text.ToLower()));
+                    sharedContent.Folders = sharedContent.Folders.Where(f => f.Name.ToLower().Contains(text.ToLower()));
+                }
+
+                return await GetSharedContentAfterPaginationAsync(sharedContent, page, count, sort);
+            }
+            catch (Exception ex)
+            {
+                _logger.WriteError(ex, ex.Message);
+                return null;
+            }
         }
 
         public async Task<int> SearchTotalAsync(string text, int? folderId, int? rootFolderId)
         {
-            var sharedContent = await GetSharedContentAsync(folderId, rootFolderId);
-            if (sharedContent == null)
-                return 0;
-            int contentCount = 0;
-            if (!string.IsNullOrEmpty(text))
+            try
             {
-                contentCount += sharedContent.Files.Where(f => f.Name.ToLower().Contains(text.ToLower())).Count();
-                contentCount += sharedContent.Folders.Where(f => f.Name.ToLower().Contains(text.ToLower())).Count();
-            }
+                var sharedContent = await GetSharedContentAsync(folderId, rootFolderId);
+                if (sharedContent == null)
+                    return 0;
+                int contentCount = 0;
+                if (!string.IsNullOrEmpty(text))
+                {
+                    contentCount += sharedContent.Files.Where(f => f.Name.ToLower().Contains(text.ToLower())).Count();
+                    contentCount += sharedContent.Folders.Where(f => f.Name.ToLower().Contains(text.ToLower())).Count();
+                }
 
-            return contentCount;
+                return contentCount;
+            }
+            catch (Exception ex)
+            {
+                _logger.WriteError(ex, ex.Message);
+                return 0;
+            }
         }
 
         public async Task Delete(int id)
         {
-            string userId = _userService.CurrentUserId;
-            var file = await _unitOfWork.SharedSpace.Query.Include(t => t.Content).Include(t => t.User)
-                .SingleOrDefaultAsync(f => f.Content.Id == id && f.User.GlobalId == userId);
-            if (file != null)
+            try
             {
-                file.IsDeleted = true;
+                string userId = _userService.CurrentUserId;
+                var file = await _unitOfWork.SharedSpace.Query.Include(t => t.Content).Include(t => t.User)
+                    .SingleOrDefaultAsync(f => f.Content.Id == id && f.User.GlobalId == userId);
+                if (file != null)
+                {
+                    file.IsDeleted = true;
+                }
+                await _unitOfWork.SaveChangesAsync();
             }
-            await _unitOfWork.SaveChangesAsync();
+            catch (Exception ex)
+            {
+                _logger.WriteError(ex, ex.Message);
+            }
         }
 
         public void Dispose()
