@@ -88,7 +88,8 @@
                     hotkeys: [
                         ['ctrl+x', 'Cut selected file', 'spaceCtrl.cutByHotkeys()'],
       ['ctrl+c', 'Copy selected file', 'spaceCtrl.copyByHotkeys()'],
-      ['ctrl+v', 'Paste selected file', 'spaceCtrl.pasteByHotkeys()']
+      ['ctrl+v', 'Paste selected file', 'spaceCtrl.pasteByHotkeys()'],
+      ['del', 'Delete selected file', 'spaceCtrl.deleteByHotkeys()']
                     ]
                 })
                 .otherwise({

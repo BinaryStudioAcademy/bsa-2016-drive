@@ -74,7 +74,19 @@
         vm.copyByHotkeys = copyByHotkeys;
         vm.pasteByHotkeys = pasteByHotkeys;
         vm.cutByHotkeys = cutByHotkeys;
+        vm.deleteByHotkeys = deleteByHotkeys;
         activate();
+
+        function deleteByHotkeys() {
+            if (vm.row != undefined) {
+                if (!vm.condition) {
+                    return deleteFolder(vm.row);
+                }
+                else {
+                    return deleteFile(vm.row);
+                }
+            }
+        }
 
         function activeRow(id, data) {
             for (var i = 0; i < vm.space.folders.length; i++) {
