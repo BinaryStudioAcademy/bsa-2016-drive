@@ -110,7 +110,7 @@
                 </tr>
             </thead>
             <tbody context-menu="sharedSpaceCtrl.folderMenuOptions">
-                <tr class="shadow" role="button" ng-repeat="folder in sharedSpaceCtrl.space.folders | orderBy: sharedSpaceCtrl.columnForOrder" context-menu="sharedSpaceCtrl.folderMenuOptions" ng-dblclick="sharedSpaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
+                <tr class="shadow" role="button" ng-repeat="folder in sharedSpaceCtrl.space.folders | orderBy: sharedSpaceCtrl.columnForOrder" context-menu="sharedSpaceCtrl.folderMenuOptions" ng-dblclick="sharedSpaceCtrl.getFolderContent(folder.id); sharedSpaceCtrl.addElem(folder)">
                     <td style="display:inline-block;width: 20%"  title="{{folder.name}}">
                         <img src="./Content/Icons/folder.svg" height="{{sharedSpaceCtrl.iconHeight}}" />
                         &nbsp;{{ folder.name | limitTo: 13}}{{ folder.name.length > 13 ? '...' : ''}}

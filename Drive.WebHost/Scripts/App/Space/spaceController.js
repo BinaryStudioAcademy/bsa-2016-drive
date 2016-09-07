@@ -34,9 +34,10 @@
         vm.openFileWindow = openFileWindow;
         vm.openFileUploadWindow = openFileUploadWindow;
         vm.openDocument = openDocument;
-        vm.openSharedFileWindow = openSharedFileWindow;
         vm.openNewCourseWindow = openNewCourseWindow;
         vm.createNewAP = createNewAP;
+        vm.openSharedContentWindow = openSharedContentWindow;
+
         vm.sharedFile = sharedFile;
 
         vm.findById = findById;
@@ -69,6 +70,7 @@
         }
         vm.folderMenuOptionShareShow = true;
         vm.fileMenuOptionShareShow = true;
+        vm.sharedModalWindowTitle = null;
 
         vm.activeRow = activeRow;
         vm.copyByHotkeys = copyByHotkeys;
@@ -282,7 +284,7 @@
                 vm.sortByDate,
                 function (data) {
                     vm.space = data;
-                vm.spaceId = data.id;
+                	vm.spaceId = data.id;
             });
         }
 
@@ -348,8 +350,11 @@
             null,
             [
                 'Share', function ($itemScope) {
-                    console.log($itemScope.folder.id);
-                }, function ($itemScope) { return vm.folderMenuOptionShareShow }
+                    vm.contentSharedId = $itemScope.folder.id;
+                    vm.sharedModalWindowTitle = 'Shared folder';
+                    console.log(vm.contentSharedId);
+                    vm.sharedFile();
+                }, function ($itemScope) { return vm.fileMenuOptionShareShow }
             ],
             [
                 'Delete', function ($itemScope) {
@@ -383,8 +388,9 @@
             null,
             [
                 'Share', function ($itemScope) {
-                    vm.fileSharedId = $itemScope.file.id;
-                    console.log(vm.fileSharedId);
+                    vm.sharedModalWindowTitle = 'Shared File';
+                    vm.contentSharedId = $itemScope.file.id;
+                    console.log(vm.contentSharedId);
                     vm.sharedFile();
                 }, function ($itemScope) { return vm.fileMenuOptionShareShow }
             ],
@@ -573,18 +579,22 @@
             });
         }
 
-        function openSharedFileWindow(size) {
+        function openSharedContentWindow(size) {
 
             var fileModalInstance = $uibModal.open({
                 animation: false,
-                templateUrl: 'Scripts/App/SharedFile/SharedFileForm.html',
-                windowTemplateUrl: 'Scripts/App/SharedFile/Modal.html',
-                controller: 'SharedFileModalCtrl',
-                controllerAs: 'sharedFileModalCtrl',
+                templateUrl: 'Scripts/App/SharedContent/SharedContentForm.html',
+                windowTemplateUrl: 'Scripts/App/SharedContent/Modal.html',
+                controller: 'SharedContentModalCtrl',
+                controllerAs: 'sharedContentModalCtrl',
                 size: size,
                 resolve: {
                     items: function () {
-                        return vm.fileSharedId;
+                        var sharedContInfo = {
+                            contentId: vm.contentSharedId,
+                            title: vm.sharedModalWindowTitle
+                        }
+                        return sharedContInfo;
                     }
                 }
             });
@@ -621,7 +631,7 @@
 
         function sharedFile() {
             vm.fileId = { parentId: vm.parentId, spaceId: vm.spaceId };
-            vm.openSharedFileWindow();
+            vm.openSharedContentWindow();
         }
 
         function createNewFolder() {

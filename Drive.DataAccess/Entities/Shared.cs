@@ -12,7 +12,7 @@ namespace Drive.DataAccess.Entities
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
         [Required]
-        public FileUnit File { get; set; }
+        public DataUnit Content { get; set; }
         public User User { get; set; }
         public bool CanRead { get; set; }
         public bool CanModify { get; set; }

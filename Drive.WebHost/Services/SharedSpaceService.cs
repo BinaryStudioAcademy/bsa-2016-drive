@@ -31,7 +31,7 @@ namespace Drive.WebHost.Services
         public async Task<IEnumerable<UserSharedSpaceDto>> GetPermissionsOfSharedDataAsync(int id)
         {
             var filePermission = await _unitOfWork.SharedSpace.Query
-                .Where(f => f.File.Id == id)
+                .Where(f => f.Content.Id == id)
                 .Select(f => new UserSharedSpaceDto {
                     GlobalId = f.User.GlobalId,
                     IsDeleted = f.IsDeleted,
@@ -45,12 +45,11 @@ namespace Drive.WebHost.Services
         {
             foreach (var user in users)
             {
-                var fileShared = await _unitOfWork.SharedSpace.Query.Include(t => t.File).Include(t => t.User).SingleOrDefaultAsync(f => f.File.Id == id && f.User.GlobalId == user.GlobalId);
+                var fileShared = await _unitOfWork.SharedSpace.Query.Include(t => t.Content).Include(t => t.User).SingleOrDefaultAsync(f => f.Content.Id == id && f.User.GlobalId == user.GlobalId);
                 
                 if (fileShared == null)
                 {
-                    //  "Deleted"??
-                    var fileSharedDeleted = await _unitOfWork.SharedSpace.Deleted.Include(t => t.File).Include(t => t.User).SingleOrDefaultAsync(f => f.File.Id == id && f.User.GlobalId == user.GlobalId);
+                    var fileSharedDeleted = await _unitOfWork.SharedSpace.Deleted.Include(t => t.Content).Include(t => t.User).SingleOrDefaultAsync(f => f.Content.Id == id && f.User.GlobalId == user.GlobalId);
                     if (fileSharedDeleted == null)
                     {
                         await _spaceService.CreateUserAndFirstSpaceAsync(user.GlobalId);
@@ -61,12 +60,28 @@ namespace Drive.WebHost.Services
                             var newSharedFile = new Shared()
                             {
                                 IsDeleted = user.IsDeleted,
-                                File = file,
+                                Content = file,
                                 User = userDb,
                                 CanModify = user.CanModify,
                                 CanRead = user.CanRead,
                             };
                             _unitOfWork.SharedSpace.Create(newSharedFile);
+                        }
+                        else
+                        {
+                            var folder = await _unitOfWork.Folders.Query.SingleOrDefaultAsync(f => f.Id == id);
+                            if (folder != null)
+                            {
+                                var newSharedFolder = new Shared()
+                                {
+                                    IsDeleted = user.IsDeleted,
+                                    Content = folder,
+                                    User = userDb,
+                                    CanModify = user.CanModify,
+                                    CanRead = user.CanRead,
+                                };
+                                _unitOfWork.SharedSpace.Create(newSharedFolder);
+                            }
                         }
                     }
                     else
@@ -90,121 +105,63 @@ namespace Drive.WebHost.Services
             await _unitOfWork.SaveChangesAsync();
         }
 
-        public async Task<SharedSpaceDto> GetAsync(int page, int count, string sort)
+        public async Task<SharedSpaceDto> GetAsync(int page, int count, string sort, int? folderId, int? rootFolderId)
         {
-            string userId = _userService.CurrentUserId;
-            //TODO add check user.id
-            IEnumerable<FileUnitDto> files = await _unitOfWork.SharedSpace.Query
-                .Where(s=>!s.IsDeleted && !s.File.IsDeleted && s.User.GlobalId == userId)
-                .Select(f=> new FileUnitDto() {
-                    Description = f.File.Description,
-                    FileType = f.File.FileType,
-                    Id = f.File.Id,
-                    IsDeleted = f.File.IsDeleted,
-                    Name = f.File.Name,
-                    CreatedAt = f.File.CreatedAt,
-                    Link = f.File.Link,
-                    Author = new AuthorDto() { Id = f.File.Owner.Id, GlobalId = f.File.Owner.GlobalId }
-                }).ToListAsync();
 
-            if (sort != null && sort.Equals("asc"))
-            {
-                files = files.OrderBy(f => f.CreatedAt);
-            }
-            else if (sort != null && sort.Equals("desc"))
-            {
-                files = files.OrderByDescending(f => f.CreatedAt);
-            }
-
-            int skipCount = (page - 1) * count;
-            files = files.Skip(skipCount).Take(count).ToList();
+            var sharedContent = await GetSharedContentAsync(folderId, rootFolderId);
+            if (sharedContent == null)
+                return null;
             
-
-            var owners = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
-            Parallel.ForEach(files, file =>
-            {
-                file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name;
-            });
-            return new SharedSpaceDto() { Files = files.ToList() };
+            return await GetSharedContentAfterPaginationAsync(sharedContent, page, count, sort);
         }
 
-        public async Task<int> GetTotalAsync()
+        public async Task<int> GetTotalAsync(int? folderId, int? rootFolderId)
         {
-            string userId = _userService.CurrentUserId;
-            //TODO add check user.id
-            var filesCount = await _unitOfWork.SharedSpace.Query
-                .Where(s => !s.IsDeleted && !s.File.IsDeleted && s.User.GlobalId == userId)
-                .CountAsync();
-            return filesCount;
+            var sharedContent = await GetSharedContentAsync(folderId, rootFolderId);
+            if (sharedContent == null)
+                return 0;
+            int contentCount = 0;
+            contentCount += sharedContent.Files.Count();
+            contentCount += sharedContent.Folders.Count();
+
+            return contentCount;
         }
 
-        public async Task<SharedSpaceDto> SearchAsync(string text, int page, int count)
+        public async Task<SharedSpaceDto> SearchAsync(string text, int page, int count, string sort, int? folderId, int? rootFolderId)
         {
-            string userId = _userService.CurrentUserId;
-            //TODO add check user.id
-            IEnumerable<FileUnitDto> files = await _unitOfWork.SharedSpace.Query
-                .Where(s => !s.IsDeleted && !s.File.IsDeleted && s.User.GlobalId == userId)
-                .Select(f => new FileUnitDto()
-                {
-                    Description = f.File.Description,
-                    FileType = f.File.FileType,
-                    Id = f.File.Id,
-                    IsDeleted = f.File.IsDeleted,
-                    Name = f.File.Name,
-                    CreatedAt = f.File.CreatedAt,
-                    Link = f.File.Link,
-                    Author = new AuthorDto() { Id = f.File.Owner.Id, GlobalId = f.File.Owner.GlobalId }
-                }).ToListAsync();
+            var sharedContent = await GetSharedContentAsync(folderId, rootFolderId);
+            if (sharedContent == null)
+                return null;
 
             if (!string.IsNullOrEmpty(text))
             {
-                files = files.Where(f => f.Name.ToLower().Contains(text.ToLower()));
+                sharedContent.Files = sharedContent.Files.Where(f => f.Name.ToLower().Contains(text.ToLower()));
+                sharedContent.Folders = sharedContent.Folders.Where(f => f.Name.ToLower().Contains(text.ToLower()));
             }
 
-            int skipCount = (page - 1) * count;
-            files = files.Skip(skipCount).Take(count).ToList();
-
-
-            var owners = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
-            Parallel.ForEach(files, file =>
-            {
-                file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name;
-            });
-            return new SharedSpaceDto() { Files = files.ToList() };
-
+            return await GetSharedContentAfterPaginationAsync(sharedContent, page, count, sort);
         }
 
-        public async Task<int> SearchTotalAsync(string text)
+        public async Task<int> SearchTotalAsync(string text, int? folderId, int? rootFolderId)
         {
-            string userId = _userService.CurrentUserId;
-            //TODO add check user.id
-            IEnumerable<FileUnitDto> files = await _unitOfWork.SharedSpace.Query
-                .Where(s => !s.IsDeleted && !s.File.IsDeleted && s.User.GlobalId == userId)
-                .Select(f => new FileUnitDto()
-                {
-                    Description = f.File.Description,
-                    FileType = f.File.FileType,
-                    Id = f.File.Id,
-                    IsDeleted = f.File.IsDeleted,
-                    Name = f.File.Name,
-                    CreatedAt = f.File.CreatedAt,
-                    Link = f.File.Link,
-                    Author = new AuthorDto() { Id = f.File.Owner.Id, GlobalId = f.File.Owner.GlobalId }
-                }).ToListAsync();
-
+            var sharedContent = await GetSharedContentAsync(folderId, rootFolderId);
+            if (sharedContent == null)
+                return 0;
+            int contentCount = 0;
             if (!string.IsNullOrEmpty(text))
             {
-                files = files.Where(f => f.Name.ToLower().Contains(text.ToLower()));
+                contentCount += sharedContent.Files.Where(f => f.Name.ToLower().Contains(text.ToLower())).Count();
+                contentCount += sharedContent.Folders.Where(f => f.Name.ToLower().Contains(text.ToLower())).Count();
             }
-            return files.Count();
+
+            return contentCount;
         }
 
         public async Task Delete(int id)
         {
             string userId = _userService.CurrentUserId;
-            //TODO add check user.id
-
-            var file = await _unitOfWork.SharedSpace.Query.SingleOrDefaultAsync(f => f.File.Id == id && f.User.GlobalId == userId);
+            var file = await _unitOfWork.SharedSpace.Query.Include(t => t.Content).Include(t => t.User)
+                .SingleOrDefaultAsync(f => f.Content.Id == id && f.User.GlobalId == userId);
             if (file != null)
             {
                 file.IsDeleted = true;
@@ -215,6 +172,210 @@ namespace Drive.WebHost.Services
         public void Dispose()
         {
             _unitOfWork.Dispose();
+        }
+
+        private async Task<SharedSpaceDto> GetSharedContentAsync(int? folderId, int? rootFolderId)
+        {
+            string userId = _userService.CurrentUserId;
+            IEnumerable<FileUnitDto> files = null;
+            IEnumerable<FolderUnitDto> folders = null;
+            if (folderId == null && rootFolderId == null)
+            {
+                files = await _unitOfWork.SharedSpace.Query
+                    .Where(s => !s.IsDeleted && !s.Content.IsDeleted && s.User.GlobalId == userId && s.Content is FileUnit)
+                    .Select(f => new FileUnitDto()
+                    {
+                        Description = f.Content.Description,
+                        FileType = (f.Content as FileUnit).FileType,
+                        Id = f.Content.Id,
+                        IsDeleted = f.Content.IsDeleted,
+                        Name = f.Content.Name,
+                        CreatedAt = f.Content.CreatedAt,
+                        Link = (f.Content as FileUnit).Link,
+                        Author = new AuthorDto() { Id = f.Content.Owner.Id, GlobalId = f.Content.Owner.GlobalId },
+                        CanModify = f.CanModify,
+                        CanRead = f.CanRead
+                    }).ToListAsync();
+                folders = await _unitOfWork.SharedSpace.Query
+                    .Where(s => !s.IsDeleted && !s.Content.IsDeleted && s.User.GlobalId == userId && s.Content is FolderUnit)
+                    .Select(f => new FolderUnitDto()
+                    {
+                        Description = f.Content.Description,
+                        Id = f.Content.Id,
+                        IsDeleted = f.Content.IsDeleted,
+                        Name = f.Content.Name,
+                        CreatedAt = f.Content.CreatedAt,
+                        Author = new AuthorDto() { Id = f.Content.Owner.Id, GlobalId = f.Content.Owner.GlobalId },
+                        CanModify = f.CanModify,
+                        CanRead = f.CanRead
+                    }).ToListAsync();
+            }
+            else if (folderId == rootFolderId)
+            {
+                var rootFolder = await _unitOfWork.SharedSpace.Query
+                    .Where(s => !s.IsDeleted && s.Content.Id == rootFolderId && !s.Content.IsDeleted && s.User.GlobalId == userId && s.Content is FolderUnit)
+                    .Select(f => new {
+                        CanRead = f.CanRead,
+                        CanModify = f.CanModify
+                    }).SingleOrDefaultAsync();
+                if (rootFolder != null)
+                {
+                    folders = await _unitOfWork.Folders.Query
+                        .Where(f => f.FolderUnit.Id == folderId)
+                        .Select(f => new FolderUnitDto
+                        {
+                            Description = f.Description,
+                            Id = f.Id,
+                            IsDeleted = f.IsDeleted,
+                            Name = f.Name,
+                            CreatedAt = f.CreatedAt,
+                            Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId },
+                            CanModify = rootFolder.CanModify,
+                            CanRead = rootFolder.CanRead
+                        }).ToListAsync();
+                    files = await _unitOfWork.Files.Query
+                        .Where(f => f.FolderUnit.Id == folderId)
+                        .Select(f => new FileUnitDto()
+                        {
+                            Description = f.Description,
+                            FileType = f.FileType,
+                            Id = f.Id,
+                            IsDeleted = f.IsDeleted,
+                            Name = f.Name,
+                            CreatedAt = f.CreatedAt,
+                            Link = f.Link,
+                            Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId },
+                            CanModify = rootFolder.CanModify,
+                            CanRead = rootFolder.CanRead
+                        }).ToListAsync();
+                }
+            }
+            else
+            {
+                var rootFolder = await _unitOfWork.SharedSpace.Query
+                    .Where(s => !s.IsDeleted && s.Content.Id == rootFolderId && !s.Content.IsDeleted && s.User.GlobalId == userId && s.Content is FolderUnit)
+                    .Select(f => new {
+                        CanRead = f.CanRead,
+                        CanModify = f.CanModify
+                    }).SingleOrDefaultAsync();
+                if (rootFolder != null)
+                {
+                    if (await CheckExistenceFolderRecursivelyAsync(folderId.Value, rootFolderId.Value))
+                    {
+                        folders = await _unitOfWork.Folders.Query
+                            .Where(f => f.FolderUnit.Id == folderId)
+                            .Select(f => new FolderUnitDto
+                            {
+                                Description = f.Description,
+                                Id = f.Id,
+                                IsDeleted = f.IsDeleted,
+                                Name = f.Name,
+                                CreatedAt = f.CreatedAt,
+                                Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId },
+                                CanModify = rootFolder.CanModify,
+                                CanRead = rootFolder.CanRead
+                            }).ToListAsync();
+                        files = await _unitOfWork.Files.Query
+                            .Where(f => f.FolderUnit.Id == folderId)
+                            .Select(f => new FileUnitDto()
+                            {
+                                Description = f.Description,
+                                FileType = f.FileType,
+                                Id = f.Id,
+                                IsDeleted = f.IsDeleted,
+                                Name = f.Name,
+                                CreatedAt = f.CreatedAt,
+                                Link = f.Link,
+                                Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId },
+                                CanModify = rootFolder.CanModify,
+                                CanRead = rootFolder.CanRead
+                            }).ToListAsync();
+                    }
+                    else
+                        return null;
+                }
+            }
+            return new SharedSpaceDto() { Files = files, Folders = folders };
+        }
+
+        private async Task<SharedSpaceDto> GetSharedContentAfterPaginationAsync(SharedSpaceDto sharedContent, int page, int count, string sort)
+        {
+            if (sort != null && sort.Equals("asc"))
+            {
+                var resultFolders = sharedContent.Folders.OrderBy(f => f.CreatedAt);
+                var resultFiles = sharedContent.Files.OrderBy(f => f.CreatedAt);
+
+                sharedContent.Folders = resultFolders;
+                sharedContent.Files = resultFiles;
+            }
+            else if (sort != null && sort.Equals("desc"))
+            {
+                var resultFolders = sharedContent.Folders.OrderByDescending(f => f.CreatedAt);
+                var resultFiles = sharedContent.Files.OrderByDescending(f => f.CreatedAt);
+
+                sharedContent.Folders = resultFolders;
+                sharedContent.Files = resultFiles;
+            }
+
+            int skipCount = (page - 1) * count;
+            if (sharedContent.Folders.Count() <= skipCount)
+            {
+                skipCount -= sharedContent.Folders.Count();
+                sharedContent.Folders = new List<FolderUnitDto>();
+                sharedContent.Files = sharedContent.Files.Skip(skipCount).Take(count);
+            }
+            else
+            {
+                sharedContent.Folders = sharedContent.Folders.Skip(skipCount).Take(count);
+                count -= sharedContent.Folders.Count();
+                sharedContent.Files = sharedContent.Files.Take(count);
+            }
+
+            var owners = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
+            Parallel.ForEach(sharedContent.Files, file =>
+            {
+                file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name;
+            });
+            Parallel.ForEach(sharedContent.Folders, folder =>
+            {
+                folder.Author.Name = owners.FirstOrDefault(o => o.Id == folder.Author.GlobalId)?.Name;
+            });
+            if (sharedContent.Files.Count() == 0 && sharedContent.Folders.Count() == 0)
+                return null;
+            else
+                return sharedContent;
+        }
+
+        private async Task<bool> CheckExistenceFolderRecursivelyAsync(int folderId, int rootFolderId)
+        {
+            var foldersId = await _unitOfWork.Folders.Query
+                .Where(f => f.FolderUnit.Id == rootFolderId)
+                .Select(f => new { Id = f.Id })
+                .ToListAsync();
+            foreach (var folder in foldersId)
+                if (folder != null && folder.Id == folderId)
+                    return true;
+            var folders = await _unitOfWork.Folders.Query
+                .Where(f => f.FolderUnit.Id == rootFolderId)
+                .Select(f => new { ContentList = f.DataUnits })
+                .ToListAsync();
+            for (int i = 0; i < folders.Count; i++)
+            {
+                for (int j = 0; j < folders[i].ContentList.Count; j++)
+                {
+                    if (folders[i].ContentList[j] is FolderUnit)
+                    {
+                        if (folders[i].ContentList[j].Id == folderId)
+                            return true;
+                        else
+                        {
+                            if (await CheckExistenceFolderRecursivelyAsync(folderId, folders[i].ContentList[j].Id))
+                                return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
     }
 }
