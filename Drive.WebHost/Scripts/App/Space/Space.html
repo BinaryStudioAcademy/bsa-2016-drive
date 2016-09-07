@@ -56,7 +56,7 @@
 
     <!--New gridview-->
     <ul class="sp-gv-flex-container wrap" ng-show="spaceCtrl.showGrid" context-menu="spaceCtrl.containerMenuOptions">
-        <li class="sp-gv-flex-item" role="button" context-menu="spaceCtrl.folderMenuOptions" dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize" total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
+        <li class="sp-gv-flex-item" role="button" context-menu="spaceCtrl.folderMenuOptions" dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize" total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" ng-click="spaceCtrl.activeRow(folder.id, 'false')" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)" ng-class="{selected: folder.selected}" >
             <div class="sp-gv-wrapper-flex-item">
                 <div class="sp-gv-item-content card">
                     <div class="sp-gv-item-img-wrapper">
@@ -74,7 +74,7 @@
             </div>
         </li>
 
-        <li class="sp-gv-flex-item" role="button" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.openDocument(file.link)">
+        <li class="sp-gv-flex-item" role="button" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-click="spaceCtrl.activeRow(file.id, 'true')" ng-dblclick="spaceCtrl.openDocument(file.link)" ng-class="{selected: file.selected}" >
             <div class="sp-gv-wrapper-flex-item">
                 <div class="sp-gv-item-content card">
                     <div class="sp-gv-item-img-wrapper">
