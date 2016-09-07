@@ -335,9 +335,9 @@
     <Content Include="Scripts\App\AdminPanel\Roles\roleService.js" />
     <Content Include="Scripts\App\File\fileUpload.directive.js" />
     <Content Include="Scripts\App\File\UploadFile.html" />
-    <Content Include="Scripts\App\SharedFile\SharedFileForm.html" />
-    <Content Include="Scripts\App\SharedFile\sharedFileModalController.js" />
-    <Content Include="Scripts\App\SharedFile\Modal.html" />
+    <Content Include="Scripts\App\SharedContent\SharedContentForm.html" />
+    <Content Include="Scripts\App\SharedContent\sharedContentModalController.js" />
+    <Content Include="Scripts\App\SharedContent\Modal.html" />
     <Content Include="Scripts\App\FileFilter\fileFilterController.js" />
     <Content Include="Scripts\App\FileFilter\FileFilter.html" />
     <Content Include="Scripts\App\File\FileForm.html" />

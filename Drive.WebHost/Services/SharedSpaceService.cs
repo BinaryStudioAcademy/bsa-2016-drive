@@ -115,7 +115,6 @@ namespace Drive.WebHost.Services
             return await GetSharedContentAfterPaginationAsync(sharedContent, page, count, sort);
         }
 
-        
         public async Task<int> GetTotalAsync(int? folderId, int? rootFolderId)
         {
             var sharedContent = await GetSharedContentAsync(folderId, rootFolderId);
@@ -123,7 +122,7 @@ namespace Drive.WebHost.Services
                 return 0;
             int contentCount = 0;
             contentCount += sharedContent.Files.Count();
-            contentCount += sharedContent.Files.Count();
+            contentCount += sharedContent.Folders.Count();
 
             return contentCount;
         }
@@ -161,7 +160,6 @@ namespace Drive.WebHost.Services
         public async Task Delete(int id)
         {
             string userId = _userService.CurrentUserId;
-            //TODO add include | added
             var file = await _unitOfWork.SharedSpace.Query.Include(t => t.Content).Include(t => t.User)
                 .SingleOrDefaultAsync(f => f.Content.Id == id && f.User.GlobalId == userId);
             if (file != null)
