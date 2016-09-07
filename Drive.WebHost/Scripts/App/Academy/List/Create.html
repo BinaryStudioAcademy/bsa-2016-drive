@@ -18,11 +18,17 @@
                             <label class="col-sm-2">Description:</label>
                             <input type="text" name="description" class="form-control" id="description" ng-model="courseCreateCtrl.course.fileUnit.description" placeholder="Enter description">
                         </div>
+                        <div class="user-add">
+                            <div class="form-group">
+                                <label class="col-sm-2">Author: </label>
+                                <input type="text" placeholder="Enter a user name" ng-model="courseCreateCtrl.course.author" uib-typeahead="user as user.name for user in courseCreateCtrl.users | filter:{name:$viewValue} | limitTo:10" class="form-control">
+                            </div>
+                        </div>
                         <div class="form-group datetimepicker" ng-class="{ 'has-error' : createForm.date.$invalid && !createForm.date.$pristine }">
                             <label class="col-sm-2">Start date:</label>
                             <p class="input-group">
                                 <span class="input-group-btn">
-                                    <input type="datetime" name="date" id="date" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="courseCreateCtrl.course.startDate" is-open="courseCreateCtrl.calendar.isOpen" timepicker-options="courseCreateCtrl.calendar.timepickerOptions" required />
+                                    <input type="text" name="date" id="date" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="courseCreateCtrl.course.startDate" is-open="courseCreateCtrl.calendar.isOpen" timepicker-options="courseCreateCtrl.calendar.timepickerOptions" required />
                                     <button type="button" class="btn btn-default" ng-click="courseCreateCtrl.calendar.openCalendar($event, prop)"><i class="fa fa-calendar"></i></button>
                                 </span>
                             <p ng-show="createForm.date.$error.required && createForm.date.$touched" class="help-block col-sm-offset-2">Date is required</p>
@@ -30,8 +36,8 @@
                             </p>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2">Tags</label>
-                            <tags-input class="bootstrap col-sm-4" style="padding:0; border-radius: 4px" ng-model="courseCreateCtrl.course.tags" display-property="name"></tags-input>
+                            <label class="col-sm-2">Tags: </label>
+                            <tags-input class="bootstrap col-sm-4" style="padding: 0; border-radius: 4px" ng-model="courseCreateCtrl.course.tags" display-property="name"></tags-input>
                         </div>
                     </form>
                 </div>
@@ -40,9 +46,9 @@
     </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="courseCreateCtrl.save()" title="Create new Space"
+    <button class="btn btn-primary" type="button" ng-click="courseCreateCtrl.save()" 
             ng-disabled="createForm.$invalid">
-        Create
+        Save
     </button>
     <button class="btn btn-default" type="button" ng-click="courseCreateCtrl.cancel()">
         Cancel

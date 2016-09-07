@@ -3,7 +3,12 @@
 
     angular
         .module("driveApp")
-        .controller("CreateSpaceController", CreateSpaceController);
+        .controller("CreateSpaceController", CreateSpaceController)
+        .config(function (tagsInputConfigProvider) {
+            tagsInputConfigProvider.setDefaults('tagsInput', {
+                placeholder: ""
+            });
+        });
 
     CreateSpaceController.$inject = ['SpaceService', '$uibModalInstance', '$timeout', 'toastr'];
 

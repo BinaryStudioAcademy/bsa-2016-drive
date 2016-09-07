@@ -17,13 +17,22 @@
         vm.save = save;
         vm.cancel = cancel;
         vm.updateCourse = updateCourse;
-        vm.title = "Add new course";
+
 
         activate();
 
         function activate() {
+            vm.title = "Add new course";
             vm.course = items;
-            if (vm.course.id > 0)
+            vm.editAuthor = false;
+
+            academyListService.getAllUsers(function(data) {
+                vm.users = data.map(function(user) {
+                    return { globalid: user.id, name: user.name };
+                });
+            });
+
+            if (vm.course.id !== undefined)
                 vm.title = "Edit course";
 
             vm.calendar = {
@@ -47,16 +56,20 @@
         };
 
         function save() {
-            if (vm.course.id !== null)
+            vm.message = 'New course was added successfully!';
+            vm.operation = 'Create new Course';
+            if (vm.course.id !== undefined) {
                 vm.updateCourse();
-            else
+                vm.message = 'Course was updated successfully!';
+                vm.operation = 'Update Course';
+            } else
                 vm.addNewCourse();
 
             $timeout(function () {
                 $uibModalInstance.close();
 
                 toastr.success(
-               'New course was added successfully!', 'Create new Course',
+               vm.message, vm.operation,
                {
                    closeButton: true, timeOut: 6000
                });

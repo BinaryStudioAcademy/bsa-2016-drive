@@ -1133,7 +1133,7 @@ End Cancel button on search input*/
   cursor: pointer;
 }
 
-@media screen\9 {
+@media screen {
     .fileinput-button input {
         filter: alpha(opacity=0);
         font-size: 100%;

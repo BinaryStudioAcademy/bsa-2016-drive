@@ -35,6 +35,7 @@
         vm.openDocument = openDocument;
         vm.openSharedFileWindow = openSharedFileWindow;
         vm.openNewCourseWindow = openNewCourseWindow;
+        vm.createNewAP = createNewAP;
         vm.sharedFile = sharedFile;
 
         vm.findById = findById;
@@ -473,14 +474,19 @@
                 windowTemplateUrl: 'Scripts/App/Academy/List/Modal.html',
                 controller: 'CourseCreateController',
                 controllerAs: 'courseCreateCtrl',
-                size: size
+                size: size,
+                resolve: {
+                    items: function () {
+                        return vm.course;
+                    }
+                }
             });
 
-            courseModalInstance.result.then(function () {
-                $location.url('/apps/academy');
-            }, function() {
-                
-            });  
+            courseModalInstance.result.then(function (response) {
+                console.log(response);
+            }, function () {
+                console.log('Modal dismissed');
+            });
         };
 
         function sharedFile() {
@@ -496,6 +502,13 @@
         function createNewFile() {
             vm.file = { parentId: vm.parentId, spaceId: vm.spaceId };
             vm.openFileWindow();
+        }
+
+        function createNewAP() {
+            vm.course = {
+                 fileUnit: {}
+            };
+            vm.openNewCourseWindow('lg');
         }
 
         function uploadFile() {
