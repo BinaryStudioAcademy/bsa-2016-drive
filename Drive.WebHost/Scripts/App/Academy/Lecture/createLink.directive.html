@@ -1,56 +1,69 @@
-﻿<div>
+﻿
+<div>
     <div uib-accordion-group class="panel-default" is-open="status.open" is-disabled="status.isFirstDisabled">
         <uib-accordion-heading>
             <i ng-class="imageClass" aria-hidden="true"></i> {{linksName}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open1, 'glyphicon-chevron-right': !status.open1}"></i>
         </uib-accordion-heading>
         <div class="col-md-12">
             <div class="row">
-                <div class="col-sm-6" style="margin-right: 0; padding-right: 0; padding-top: 15px">
-                    <form name="form" ng-submit="saveLink()" class="form-horizontal" novalidate>
-                        <div class="form-group" ng-class="{ 'has-error' : form.name.$invalid && !form.name.$pristine }">
-                            <label class="col-sm-4 links-form">Name:</label>
-                            <input type="text" name="name" id="name" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="linkModel.name" placeholder="Name" required>
-                            <p ng-show="form.name.$error.required && form.name.$touched" class="help-block col-sm-offset-4 links-form" ng-cloak>Name is required</p>
-                            <p ng-show="form.name.$error.pattern" class="help-block col-sm-offset-4 links-form" ng-cloak>Not a valid name</p>
+                <form name="form" ng-submit="saveLink()" class="form-horizontal" novalidate>
+                    <div class="row links-form">
+                        <div class="col-sm-6">
+                            <div class="form-group" ng-class="{ 'has-error' : form.name.$invalid && !form.name.$pristine }">
+                                <label class="col-sm-2">Name:</label>
+                                <input type="text" name="name" id="name" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="linkModel.name" placeholder="Name" required>
+                                <p ng-show="form.name.$error.required && form.name.$touched" class="help-block col-sm-offset-2 links-form" ng-cloak>Name is required</p>
+                                <p ng-show="form.name.$error.pattern" class="help-block col-sm-offset-2 links-form" ng-cloak>Not a valid name</p>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label class="col-sm-4 links-form">Description:</label>
-                            <input type="text" name="description" class="form-control" ng-attr-id="description" ng-model="linkModel.description" placeholder="Description">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label class="col-sm-3">Description:</label>
+                                <input type="text" name="description" class="form-control" ng-attr-id="description" ng-model="linkModel.description" placeholder="Description">
+                            </div>
                         </div>
-                        <div class="form-group" ng-class="{ 'has-error' : form.link.$invalid && !form.link.$pristine }">
-                            <label class="col-sm-4 links-form">Link:</label>
-                            <input type="url" ng-attr-name="link" class="form-control text-valid" ng-attr-id="link" ng-model="linkModel.link" placeholder="Link" required>
-                            <p ng-show="form.link.$error.required && form.link.$touched" class="help-block col-sm-offset-4 links-form" ng-cloak>Link is required</p>
-                            <p ng-show="form.link.$error.url" class="help-block col-sm-offset-4 links-form" ng-cloak>Not a valid link</p>
+                    </div>
+                    <div class="row links-form">
+                        <div class="col-sm-6">
+                            <div class="form-group" ng-class="{ 'has-error' : form.link.$invalid && !form.link.$pristine }">
+                                <label class="col-sm-2">Link:</label>
+                                <input type="url" ng-attr-name="link" class="form-control text-valid" ng-attr-id="link" ng-model="linkModel.link" placeholder="Link" required>
+                                <p ng-show="form.link.$error.required && form.link.$touched" class="help-block col-sm-offset-2 links-form" ng-cloak>Link is required</p>
+                                <p ng-show="form.link.$error.url" class="help-block col-sm-offset-2 links-form" ng-cloak>Not a valid link</p>
+                            </div>
                         </div>
-                        <div class="button-add links-form">
-                            <button type="submit" class="btn btn-info" ng-disabled="form.$invalid">
-                                <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Add video
-                            </button>
+                        <div class="col-sm-6">
+                            <div class="form-group" style="margin-left: 2px;">
+                                <button type="submit" class="btn btn-info" ng-disabled="form.$invalid">
+                                    <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Add video
+                                </button>
+                            </div>
                         </div>
-                    </form>
-                </div>
-                <div class="col-sm-6" style="padding-left: 0">
-                    <table class="table users table-striped table-hover" >
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div class="col-sm-12" style="padding-left: 0">
+                    <table class="table users table-striped table-hover">
                         <thead>
-                        <tr>
-                            <th style="width:30%">Link name</th>
-                            <th style="width:60%">Link</th>
-                            <th style="width:10%"></th>
-                        </tr>
+                            <tr>
+                                <th style="width: 30%">Link name</th>
+                                <th style="width: 65%">Link</th>
+                                <th style="width: 5%"></th>
+                            </tr>
                         </thead>
                         <tbody style="height: 200px; overflow-x: hidden;">
-                        <tr ng-repeat="link in internalLinks">
-                            <td style="width: 30%" class="description" title="{{link.name}}">
-                                {{ link.name | limitTo: 16}}{{link.name.length > 16 ? '...' : '' }}
-                            </td>
-                            <td style="width: 60%" class="description" title="{{link.link}}">
-                                {{ link.link | limitTo: 36 }}{{link.link.length > 36 ? '...' : '' }}
-                            </td>
-                            <td style="width:10%">
-                                <i role="button" class="fa fa-trash fa-lg" title="Delete link" aria-hidden="true"></i>
-                            </td>
-                        </tr>
+                            <tr ng-repeat="link in internalLinks">
+                                <td style="width: 30%" class="description" title="{{link.name}}">
+                                    {{ link.name | limitTo: 37}}{{link.name.length > 37 ? '...' : '' }}
+                                </td>
+                                <td style="width: 65%" class="description" title="{{link.link}}">
+                                    {{ link.link | limitTo: 85 }}{{link.link.length > 85 ? '...' : '' }}
+                                </td>
+                                <td style="width: 5%">
+                                    <i role="button" class="fa fa-trash fa-lg" title="Delete link" aria-hidden="true"></i>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
