@@ -49,9 +49,9 @@
             };
         }
 
-        function addNewCourse() {
+        function addNewCourse(callback) {
             if (vm.course.name !== null) {
-                academyListService.pushData(vm.course);
+                academyListService.pushData(vm.course, callback);
             }
         };
 
@@ -59,26 +59,34 @@
             vm.message = 'New course was added successfully!';
             vm.operation = 'Create new Course';
             if (vm.course.id !== undefined) {
-                vm.updateCourse();
+                vm.updateCourse(notifyAboutSuccess);
                 vm.message = 'Course was updated successfully!';
                 vm.operation = 'Update Course';
             } else
-                vm.addNewCourse();
+                vm.addNewCourse(notifyAboutSuccess);
 
-            $timeout(function () {
-                $uibModalInstance.close();
 
-                toastr.success(
-               vm.message, vm.operation,
-               {
-                   closeButton: true, timeOut: 6000
-               });
-            }, 700);
         }
 
-        function updateCourse()
-        {
-            academyListService.putData(vm.course.id, vm.course);
+        function updateCourse(callback) {
+
+            academyListService.putData(vm.course.id, vm.course, callback);
+        }
+
+        function notifyAboutSuccess(response) {
+
+            if (response)
+            {
+                $timeout(function () {
+                    $uibModalInstance.close();
+
+                    toastr.success(
+                   vm.message, vm.operation,
+                   {
+                       closeButton: true, timeOut: 6000
+                   });
+                }, 700);
+            }
         }
 
         function cancel() {

@@ -13,6 +13,7 @@
 
     function AcademyListController(academyListService, $location, $uibModal, $routeParams) {
         var vm = this;
+        vm.columnForOrder = 'name';
         vm.openCourse = openCourse;
         vm.changeView = changeView;
         vm.openNewCourseWindow = openNewCourseWindow;
@@ -20,6 +21,29 @@
         vm.createNewCourse = createNewCourse;
         vm.search = search;
         vm.cancelSearch = cancelSearch;
+        vm.orderCourseByColumn = orderCourseByColumn;
+
+        vm.courseMenuOptions = [
+        //[
+        //    'Share', function ($itemScope) {
+        //        vm.academy = $itemScope.academy;
+        //        //vm.openNewCourseWindow();
+        //    }
+        //],
+        //null,
+        [
+            'Edit', function ($itemScope) {
+                vm.academy = $itemScope.academy;
+                vm.openNewCourseWindow();
+            }
+        ],
+        null,
+        [
+            'Delete', function ($itemScope) {
+                deleteCourse($itemScope.academy.id);
+            }
+        ]
+        ];
         
         activate();
 
@@ -28,31 +52,12 @@
             vm.view = "fa fa-th";
             vm.showTable = true;
             vm.showGrid = false;
-            vm.columnForOrder = 'name';
+            vm.courseColumnForOrder = 'name';
             vm.searchText = $routeParams.tagName;
             vm.iconHeight = 30;
             vm.icon = "./Content/Icons/academyPro.svg";
-  
-
-            vm.courseMenuOptions = [
-   
-         [
-             'Edit', function ($itemScope) {
-                 vm.academy = $itemScope.academy;
-                 vm.openNewCourseWindow();
-             }
-         ],
-         [
-             'Delete', function ($itemScope) {
-                 deleteCourse($itemScope.academy.id);
-             }
-         ]
-     ];
-            if (vm.searchText === undefined) {
-                getAcademies();
-            } else {
-                search();
-            }
+            search();         
+            
         }
 
         function getAcademies() {
@@ -102,9 +107,9 @@
             });
 
             courseModalInstance.result.then(function () {
-                getAcademies();
+                search();
             }, function () {
-                getAcademies();
+                search();
                 console.log('Modal dismissed');
             });
         };
@@ -118,7 +123,9 @@
         }
  
         function deleteCourse(id) {
-            academyListService.deleteData(id);
+            academyListService.deleteData(id, function () {
+                search();
+            });
         }
 
         function search() {
@@ -129,6 +136,10 @@
         function cancelSearch() {
             vm.searchText = "";
             search();
+        }
+
+        function orderCourseByColumn(column) {
+            vm.courseColumnForOrder = academyListService.orderCoursesByColumn(column, vm.courseColumnForOrder);
         }
     }
 }());

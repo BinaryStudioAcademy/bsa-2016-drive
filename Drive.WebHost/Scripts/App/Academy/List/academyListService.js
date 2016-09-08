@@ -17,7 +17,8 @@
             putData: putData,
             deleteData: deleteData,
             getAllUsers: getAllUsers,
-            searchCourses: searchCourses
+            searchCourses: searchCourses,
+            orderCoursesByColumn: orderCoursesByColumn
         }
 
         return service;
@@ -36,44 +37,40 @@
             }
         }
 
-        function pushData(data) {
+        function pushData(data, callback) {
             return $http.post(baseUrl + '/api/academies', data)
-                .then(pushDataCompleted)
-                .catch(pushDataFailed);
-
-            function pushDataCompleted(response) {
-                return response.data;
-            }
-
-            function pushDataFailed(error) {
-                console.log('XHR Failed for pushData.' + error.data);
-            }
+                .then(function (response) {
+                    if (callback) {
+                        callback(response.data);
+                }
+            },
+                function () {
+                    console.log('Error while course creation!');
+                });
         }
 
-        function putData(id, data) {
+        function putData(id, data, callback) {
             $http.put(baseUrl + '/api/academies/' + id, data)
-                .then(putDataCompleted)
-                .catch(putDataFailed);
-
-            function putDataCompleted() {
-            }
-
-            function putDataFailed(error) {
-                console.log('XHR Failed for putData.' + error.data);
-            }
+                .then(function (response) {
+                    if (callback) {
+                        callback(response.data);
+                    }
+                },
+                    function () {
+                        console.log('Error while course editing!');
+                    });
         }
 
-        function deleteData(id) {
+        function deleteData(id, callback) {
             $http.delete(baseUrl + '/api/academies/' + id)
-                .then(deleteDataCompleted)
-                .catch(deleteDataFailed);
-
-            function deleteDataCompleted() {
-            }
-
-            function deleteDataFailed(error) {
-                console.log('XHR Failed for putData.' + error.data);
-            }
+                .then(function(response) {
+                    if(callback) {
+                        callback(response);
+                    }
+                },
+                function () {
+                        console.log('Error while course deletion!');
+                    });
         }
 
         function getAllUsers(callback) {
@@ -106,6 +103,12 @@
                             callback(response.data);
                         }
                     });
+        }
+
+        function orderCoursesByColumn(columnClicked, columnCurrent) {
+            var pos = columnCurrent.indexOf(columnClicked);
+            if (pos == 0) { return '-' + columnClicked; }
+            return columnClicked;
         }
     }
 })();
