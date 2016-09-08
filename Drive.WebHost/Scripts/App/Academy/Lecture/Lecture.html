@@ -339,8 +339,8 @@
         <div class="container" ng-show="lectureCtrl.isEditing">
             <div class="col-md-12">
                 <div class="row" style="margin: 1em 0 1em 0;" ng-show="lectureCtrl.isEditing">
-                    <button class="btn btn-success col-md-2" ng-click="lectureCtrl.updateLecture()">Save</button>
-                    <button class="btn btn-danger col-md-2" ng-click="lectureCtrl.edit()">Cancel</button>
+                    <button class="btn btn-info col-md-2" ng-click="lectureCtrl.updateLecture()">Save</button>
+                    <button class="btn btn-default col-md-2" ng-click="lectureCtrl.cancelUpdate()">Cancel</button>
                 </div>
                 <form name="courseForm" ng-submit="submitForm()" class="form-horizontal" novalidate>
                     <div class="form-group" ng-class="{ 'has-error' : courseForm.name.$invalid && !courseForm.name.$pristine }">

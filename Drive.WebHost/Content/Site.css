@@ -145,7 +145,6 @@ textarea {
     }
 
 .users tbody {
-    height: 150px;
     overflow-y: auto;
     background: white;
 }

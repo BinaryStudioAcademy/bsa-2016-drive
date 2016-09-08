@@ -27,6 +27,7 @@
         vm.submitRepository = submitRepository;
         vm.submitSample = submitSample;
         vm.submitUseful = submitUseful;
+        vm.cancelUpdate = cancelUpdate;
 
         activate();
 
@@ -57,7 +58,7 @@
         }
 
         function edit() {
-            vm.isEditing = !vm.isEditing;
+            vm.isEditing = true;
         }
 
         function update() {
@@ -71,7 +72,7 @@
             if (vm.lecture.name) {
                 vm.update()
                     .then(function () {
-                        vm.getLecture();
+                        return vm.getLecture();
                     });
                 toastr.success(
                 'New lecture was successfully updated!', 'Academy Pro',
@@ -79,6 +80,11 @@
                     closeButton: true, timeOut: 6000
                 });
             }
+        }
+
+        function cancelUpdate() {
+            vm.isEditing = false;
+            return vm.getLecture();
         }
 
         function openCalendar(e) {
