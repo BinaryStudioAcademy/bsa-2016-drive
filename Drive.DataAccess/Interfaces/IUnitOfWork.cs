@@ -18,6 +18,7 @@ namespace Drive.DataAccess.Interfaces
         IRepository<Log> Logs { get; }
         IRepository<AcademyProCourse> AcademyProCourses { get; }
         IRepository<CodeSample> CodeSamples { get; }
+        IRepository<HomeTask> HomeTasks { get; }
         IRepository<ContentLink> ContentLinks { get; }
         IRepository<Tag> Tags { get; }
         IRepository<Lecture> Lectures { get; }

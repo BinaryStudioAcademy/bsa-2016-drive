@@ -6,5 +6,6 @@ namespace Drive.WebHost.Services.Pro.Abstract
 {
     public interface IAcademyProCourseService : IBasicService<AcademyProCourseDto>
     {
+        Task<IEnumerable<AcademyProCourseDto>> SearchCourses(string text);
     }
 }

@@ -22,10 +22,9 @@
         return directive;
 
         function link(scope, element, attrs) {
-            var unwatch = scope.$watch('linksModel', function (newVal, oldVal) {
+            scope.$watch('linksModel', function (newVal, oldVal) {
                 if (newVal) {
                     init();
-                    unwatch();
                 }
             });
 
@@ -34,9 +33,18 @@
             }
 
             scope.linkModel = {};
-            scope.saveLink = function() {
+            scope.saveLink = function () {
                 scope.internalLinks.push(scope.linkModel);
                 scope.linkModel = {};
+            };
+
+            scope.removeLink = function (index) {
+                scope.internalLinks.splice(index, 1);
+            };
+
+            scope.editLink = function (index) {
+                scope.linkModel = scope.internalLinks[index];
+                scope.internalLinks.splice(index, 1);
             };
         }
     }

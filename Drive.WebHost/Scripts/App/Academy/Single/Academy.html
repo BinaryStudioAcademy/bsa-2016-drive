@@ -9,11 +9,13 @@
     <div>
         <span us-spinner="{radius:30, width:8, length: 16}"></span>
         <div class="col-md-12" style="padding: 0">
-            <tags-input class="bootstrap col-sm-5" style="padding: 0; border-radius: 4px" ng-model="academyCtrl.academy.tags" display-property="name" placeholder="{{''}}" disabled="true"></tags-input>
+            <div class="col-sm-6 tagslist">
+                <a ng-click="academyCtrl.searchByTag(tag.name)" ng-repeat="tag in academyCtrl.academy.tags" class="bootstrap">{{tag.name}}</a>
+            </div>
 
             <div class="col-sm-push-6-offset pull-right">
                 <p>
-                    <small class="text-muted" title="Course author"><i class="fa fa-user" aria-hidden="true"></i> {{academyCtrl.academy.fileUnit.author}}</small>
+                    <small class="text-muted" title="Course author"><i class="fa fa-user" aria-hidden="true"></i> {{academyCtrl.academy.author.name}}</small>
                 </p>
                 <p>
                     <small class="text-muted" title="Course start date"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> {{ academyCtrl.academy.startDate | date:'dd-MM-yyyy HH:mm'}}</small>
@@ -34,7 +36,7 @@
                 </div>
                 <div>
                     <button type="button" class="btn btn-default btn-custom" ng-click="academyCtrl.createLecture()" title="Add new lecture">
-                        <img src="./Content/Icons/seo-training.svg" height="32" alt="Add lecture" />
+                        <img src="./Content/Icons/lecture-black.svg" height="32" alt="Add lecture" />
                     </button>
                 </div>
                 

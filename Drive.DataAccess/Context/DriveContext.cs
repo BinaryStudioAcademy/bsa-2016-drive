@@ -25,6 +25,7 @@ namespace Drive.DataAccess.Context
         public DbSet<Lecture> Lectures { get; set; }
         public DbSet<ContentLink> ContentLinks { get; set; }
         public DbSet<CodeSample> CodeSamples { get; set; }
+        public DbSet<HomeTask> HomeTasks { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Shared> SharedSpaces { get; set; }
 

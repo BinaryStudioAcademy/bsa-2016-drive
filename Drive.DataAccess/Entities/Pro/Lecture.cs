@@ -25,7 +25,7 @@ namespace Drive.DataAccess.Entities.Pro
         public IList<ContentLink> ContentList { get; set; }
 
         public IList<CodeSample> CodeSamples { get; set; }
-
+        public IList<HomeTask> HomeTasks { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
     }

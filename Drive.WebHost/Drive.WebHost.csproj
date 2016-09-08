@@ -207,6 +207,7 @@
     <Compile Include="Api\FoldersController.cs" />
     <Compile Include="Api\GlobalExceptionLogger.cs" />
     <Compile Include="Api\LogsController.cs" />
+    <Compile Include="Api\Pro\HomeTasksController.cs" />
     <Compile Include="Api\RolesController.cs" />
     <Compile Include="Api\Pro\AcademiesController.cs" />
     <Compile Include="Api\Pro\CodeSamplesController.cs" />
@@ -248,6 +249,8 @@
     <Compile Include="Services\ITrashBinService.cs" />
     <Compile Include="Services\IUsersService.cs" />
     <Compile Include="Services\LogsService.cs" />
+    <Compile Include="Services\Pro\Abstract\IHomeTasksService.cs" />
+    <Compile Include="Services\Pro\HomeTasksService.cs" />
     <Compile Include="Services\RolesService.cs" />
     <Compile Include="Services\Pro\Abstract\IAcademyProCourseService.cs" />
     <Compile Include="Services\Pro\Abstract\IBasicService.cs" />
@@ -294,6 +297,8 @@
     <Content Include="Content\Icons\event_bw.svg" />
     <Content Include="Content\Icons\folder.svg" />
     <Content Include="Content\Icons\folder_bw.svg" />
+    <Content Include="Content\Icons\lecture-black.svg" />
+    <Content Include="Content\Icons\lecture.svg" />
     <Content Include="Content\Icons\link.svg" />
     <Content Include="Content\Icons\menu_shared.svg" />
     <Content Include="Content\Icons\menu_space-home.svg" />

@@ -20,6 +20,7 @@
         vm.submitRepository = submitRepository;
         vm.submitSample = submitSample;
         vm.submitUseful = submitUseful;
+        vm.submitTask = submitTask;
 
         activate();
 
@@ -31,7 +32,8 @@
                 sampleLinks: [],
                 usefulLinks: [],
                 repositoryLinks: [],
-                codeSamples: []
+                codeSamples: [],
+                homeTasks: []
             };
 
             vm.calendar = {
@@ -116,9 +118,16 @@
         }
 
         function submitUseful() {
-            if (vm.currentuseful.name && vm.currentuseful.link) {
-                vm.lecture.usefulLinks.push(vm.currentuseful);
+            if (vm.currentUseful.name && vm.currentUseful.link) {
+                vm.lecture.usefulLinks.push(vm.currentUseful);
                 vm.currentuseful = {};
+            }
+        }
+
+        function submitTask() {
+            if (vm.currentTask.description) {
+                vm.lecture.homeTasks.push(vm.currentTask);
+                vm.currentTask = {};
             }
         }
     }
