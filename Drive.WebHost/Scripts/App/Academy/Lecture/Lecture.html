@@ -294,7 +294,10 @@
                                 <p>
                                     {{task.description}}
                                 </p>
-                                <p>{{task.taskDate}}</p>
+                                <p>
+                                    <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                    {{ task.deadlineDate | date:'dd-MM-yyyy HH:mm' }}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -363,7 +366,7 @@
                 <div class="form-group datetimepicker">
                     <label class="col-sm-2">Start date:</label>
                     <p class="input-group">
-                        <input type="text" class="form-control" datetime-picker="yyyy-MM-dd HH:mm:ss" ng-model="lectureCtrl.lecture.startDate" is-open="lectureCtrl.calendar.isOpen" placeholder="Select start date" timepicker-options="lectureCtrl.calendar.timepickerOptions" />
+                        <input ng-model-options="{timezone:'+0000'}" type="datetime" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="lectureCtrl.lecture.startDate" is-open="lectureCtrl.calendar.isOpen" placeholder="Select start date" timepicker-options="lectureCtrl.calendar.timepickerOptions" />
                         <span class="input-group-btn">
                             <button type="button" class="btn btn-default" ng-click="lectureCtrl.calendar.openCalendar($event, prop)"><i class="fa fa-calendar"></i></button>
                         </span>
@@ -409,8 +412,8 @@
                                         </thead>
                                         <tbody style="overflow-x: hidden;">
                                             <tr ng-repeat="task in lectureCtrl.lecture.homeTasks">
-                                                <td style="width: 30%" class="description" title="{{task.deadlineDate}}">
-                                                    {{ task.deadlineDate | limitTo: 16}}{{task.deadlineDate.length > 16 ? '...' : '' }}
+                                                <td style="width: 30%" class="description" title="{{ task.deadlineDate | date:'dd-MM-yyyy HH:mm' }}">
+                                                   {{ task.deadlineDate | date:'dd-MM-yyyy HH:mm' }}
                                                 </td>
                                                 <td style="width: 60%" class="description" title="{{task.description}}">
                                                     {{ task.description | limitTo: 36 }}{{task.description.length > 36 ? '...' : '' }}
@@ -437,7 +440,7 @@
                                             <label class="col-sm-3">Deadline:</label>
                                             <p class="input-group">
                                                 <span class="input-group-btn">
-                                                    <input type="datetime" name="deadlineDate" id="deadlineDate" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="lectureCtrl.currentTask.deadlineDate" is-open="lectureCtrl.calendarHomeTask.isOpen" placeholder="Select deadline date" timepicker-options="lectureCtrl.calendarHomeTask.timepickerOptions" required />
+                                                    <input ng-model-options="{timezone:'+0000'}" type="datetime" name="deadlineDate" id="deadlineDate" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="lectureCtrl.currentTask.deadlineDate" is-open="lectureCtrl.calendarHomeTask.isOpen" placeholder="Select deadline date" timepicker-options="lectureCtrl.calendarHomeTask.timepickerOptions" required />
                                                     <button type="button" class="btn btn-default" ng-click="lectureCtrl.calendarHomeTask.openCalendarHomeTask($event, prop)"><i class="fa fa-calendar"></i></button>
                                                 </span>
                                             <p ng-show="taskForm.deadlineDate.$error.required && taskForm.deadlineDate.$touched" class="help-block col-sm-offset-3">Date is required</p>
