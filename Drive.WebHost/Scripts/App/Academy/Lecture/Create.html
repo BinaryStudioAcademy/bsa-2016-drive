@@ -79,7 +79,7 @@
                             <label class="col-sm-2">Start date:</label>
                             <p class="input-group">
                                 <span class="input-group-btn">
-                                    <input type="datetime" name="date" id="date" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="lectureCreateCtrl.lecture.startDate" is-open="lectureCreateCtrl.calendar.isOpen" placeholder="Select start date" timepicker-options="lectureCreateCtrl.calendar.timepickerOptions" required />
+                                    <input ng-model-options="{timezone:'+0000'}" type="datetime" name="date" id="date" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="lectureCreateCtrl.lecture.startDate" is-open="lectureCreateCtrl.calendar.isOpen" placeholder="Select start date" timepicker-options="lectureCreateCtrl.calendar.timepickerOptions" required />
                                     <button type="button" class="btn btn-default" ng-click="lectureCreateCtrl.calendar.openCalendar($event, prop)"><i class="fa fa-calendar"></i></button>
                                 </span>
                             <p ng-show="courseForm.date.$error.required && courseForm.date.$touched" class="help-block col-sm-offset-2">Date is required</p>
