@@ -20,6 +20,21 @@
         vm.createNewCourse = createNewCourse;
         vm.search = search;
         vm.cancelSearch = cancelSearch;
+
+        vm.courseMenuOptions = [
+
+        [
+            'Edit', function ($itemScope) {
+                vm.academy = $itemScope.academy;
+                vm.openNewCourseWindow();
+            }
+        ],
+        [
+            'Delete', function ($itemScope) {
+                deleteCourse($itemScope.academy.id);
+            }
+        ]
+        ];
         
         activate();
 
@@ -32,24 +47,7 @@
             vm.searchText = $routeParams.tagName;
             vm.iconHeight = 30;
             vm.icon = "./Content/Icons/academyPro.svg";
-  
-
-            vm.courseMenuOptions = [
-   
-         [
-             'Edit', function ($itemScope) {
-                 vm.academy = $itemScope.academy;
-                 vm.openNewCourseWindow();
-             }
-         ],
-         [
-             'Delete', function ($itemScope) {
-                 deleteCourse($itemScope.academy.id);
-             }
-         ]
-     ];
-            
-            search();
+            search();         
             
         }
 
@@ -100,9 +98,9 @@
             });
 
             courseModalInstance.result.then(function () {
-                getAcademies();
+                search();
             }, function () {
-                getAcademies();
+                search();
                 console.log('Modal dismissed');
             });
         };
@@ -116,7 +114,9 @@
         }
  
         function deleteCourse(id) {
-            academyListService.deleteData(id, search());
+            academyListService.deleteData(id, function () {
+                search();
+            });
         }
 
         function search() {

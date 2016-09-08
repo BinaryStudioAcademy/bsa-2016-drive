@@ -115,6 +115,15 @@ namespace Drive.WebHost.Services.Pro
         public async Task<AcademyProCourseDto> CreateAsync(AcademyProCourseDto dto)
         {
             var userId = _userService.CurrentUserId;
+
+            var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == dto.Author.GlobalId);
+            if (user == null)
+            {
+                UserDto userdto = new UserDto();
+                userdto.serverUserId = dto.Author.GlobalId;
+                await _userService.CreateAsync(userdto);
+            }
+
             var course = new AcademyProCourse
             {
                 StartDate = dto.StartDate,
@@ -175,8 +184,9 @@ namespace Drive.WebHost.Services.Pro
 
         public async Task DeleteAsync(int id)
         {
-            var course = await _unitOfWork.AcademyProCourses.Query.Include(x => x.FileUnit).Include(x => x.Lectures).SingleOrDefaultAsync(x => x.Id == id);
-            _unitOfWork.AcademyProCourses.Delete(id);
+            var course = await _unitOfWork.AcademyProCourses.Query.Include(x => x.FileUnit).SingleOrDefaultAsync(x => x.Id == id);
+            _unitOfWork.Files.Delete(course.FileUnit.Id);
+            //_unitOfWork.AcademyProCourses.Delete(id);
             await _unitOfWork.SaveChangesAsync();
         }
 
@@ -190,8 +200,8 @@ namespace Drive.WebHost.Services.Pro
             var authors = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
 
             var courses = await _unitOfWork.AcademyProCourses.Query.Include(c => c.Tags).Include(c => c.FileUnit).
-                                                                    Where(x => x.FileUnit.Name.Contains(text.ToLower()) ||
-                                                                    x.Tags.Any(t => t.Name.Contains(text.ToLower()))).
+                                                                    Where(x => (x.FileUnit.Name.Contains(text.ToLower()) ||
+                                                                    x.Tags.Any(t => t.Name.Contains(text.ToLower()))) && !x.FileUnit.IsDeleted).
                                                                     GroupBy(c => c.FileUnit.Space).
                                                                     Select(course => new AppsAPDto
                                                                     {
@@ -242,10 +252,10 @@ namespace Drive.WebHost.Services.Pro
         {
             string userId = _userService.CurrentUserId;
             var courses = await _unitOfWork.AcademyProCourses.Query.Include(c => c.FileUnit).Include(c =>c.Tags)
-               .Where(c => c.FileUnit.Space.Type == SpaceType.BinarySpace
+               .Where(c => (c.FileUnit.Space.Type == SpaceType.BinarySpace
                || c.FileUnit.Space.Owner.GlobalId == userId
                || c.FileUnit.Space.ReadPermittedUsers.Any(x => x.GlobalId == userId)
-               || c.FileUnit.Space.ReadPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId)))
+               || c.FileUnit.Space.ReadPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))) && !c.FileUnit.IsDeleted)
                .GroupBy(c => c.FileUnit.Space)
                  .Select(course => new AppsAPDto
                  {
