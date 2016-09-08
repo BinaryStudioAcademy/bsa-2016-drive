@@ -53,6 +53,9 @@
                 if (vm.allModify) {
                     addWriteUser(true, vm.users[i].id);
                 }
+                else {
+                    vm.space.modifyPermittedUsers = [];
+                }
             }
         }
 
