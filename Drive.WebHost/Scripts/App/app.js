@@ -84,13 +84,7 @@
                 {
                     templateUrl: baseUrl + "/Scripts/App/Space/Space.html",
                     controller: "SpaceController",
-                    controllerAs: "spaceCtrl",
-                    hotkeys: [
-                        ['ctrl+x', 'Cut selected file', 'spaceCtrl.cutByHotkeys()'],
-      ['ctrl+c', 'Copy selected file', 'spaceCtrl.copyByHotkeys()'],
-      ['ctrl+v', 'Paste selected file', 'spaceCtrl.pasteByHotkeys()'],
-      ['del', 'Delete selected file', 'spaceCtrl.deleteByHotkeys()']
-                    ]
+                    controllerAs: "spaceCtrl"
                 })
                 .otherwise({
                     // This is when any route not matched - error

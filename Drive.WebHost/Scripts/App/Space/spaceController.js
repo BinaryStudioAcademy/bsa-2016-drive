@@ -5,7 +5,7 @@
         .module("driveApp")
         .controller("SpaceController", SpaceController);
 
-    SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', '$uibModal', 'localStorageService', '$routeParams', '$location', 'toastr'];
+    SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', '$uibModal', 'localStorageService', '$routeParams', '$location', 'toastr', '$scope', 'hotkeys'];
 
     function SpaceController(spaceService,
         folderService,
@@ -14,7 +14,9 @@
         localStorageService,
         $routeParams,
         $location,
-        toastr) {
+        toastr,
+        $scope,
+        hotkeys) {
         var vm = this;
 
         vm.folderList = [];
@@ -79,6 +81,32 @@
         vm.deleteByHotkeys = deleteByHotkeys;
         activate();
 
+        hotkeys.bindTo($scope)
+    .add({
+        combo: 'ctrl+x',
+        callback: function () {
+            cutByHotkeys();
+        }
+    })
+        .add({
+            combo: 'ctrl+c',
+            callback: function () {
+                copyByHotkeys();
+            }
+        })
+        .add({
+            combo: 'ctrl+v',
+            callback: function () {
+                pasteByHotkeys();
+            }
+        })
+        .add({
+            combo: 'del',
+            callback: function () {
+                deleteByHotkeys();
+            }
+        })
+
         function deleteByHotkeys() {
             if (vm.row != undefined) {
                 if (!vm.condition) {
@@ -114,6 +142,7 @@
 
         function copyByHotkeys() {
             if (vm.row != undefined) {
+                localStorageService.clearAll();
                 localStorageService.set('copy', { id: vm.row, file: vm.condition });
                 toastr.info(
                    'File has been copied to the clipboard.', 'Space',
@@ -125,6 +154,7 @@
 
         function cutByHotkeys() {
             if (vm.row != undefined) {
+                localStorageService.clearAll();
                 localStorageService.set('cut-out', { id: vm.row, file: vm.condition });
                 localStorageService.set('oldParentId', vm.parentId);
                 if (vm.condition == true) {
@@ -337,11 +367,13 @@
             null,
              [
                 'Copy', function ($itemScope) {
+                    localStorageService.clearAll();
                     localStorageService.set('copy', { id: $itemScope.folder.id, file: false });
                 }
              ],
             [
                 'Cut', function ($itemScope) {
+                    localStorageService.clearAll();
                     localStorageService.set('cut-out', { id: $itemScope.folder.id, file: false });
                     localStorageService.set('oldParentId', vm.parentId);
                     deleteFolder($itemScope.folder.id);
@@ -375,11 +407,13 @@
              null,
             [
                 'Copy', function ($itemScope) {
+                    localStorageService.clearAll();
                     localStorageService.set('copy', { id: $itemScope.file.id, file: true });
                 }
             ],
             [
                 'Cut', function ($itemScope) {
+                    localStorageService.clearAll();
                     localStorageService.set('cut-out', { id: $itemScope.file.id, file: true });
                     localStorageService.set('oldParentId', vm.parentId);
                     deleteFile($itemScope.file.id);
