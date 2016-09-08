@@ -439,7 +439,7 @@
             ['New Folder', function () { vm.createNewFolder(); }],
             ['New File', function () { vm.createNewFile(); }],
             ['New Academy Pro', function() {
-                vm.openNewCourseWindow('lg');
+                vm.createNewAP();
             }],
             null,
             ['Upload File', function ($itemScope) {
