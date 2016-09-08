@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
 using Drive.WebHost.Services.Pro.Abstract;
 using Driver.Shared.Dto.Pro;
@@ -73,6 +74,21 @@ namespace Drive.WebHost.Api.Pro
             _academyProCourseService.DeleteAsync(id);
 
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("search")]
+        public async Task<IHttpActionResult> SearchFiles( string text = "")
+        {
+
+            text = text ?? string.Empty;
+
+            var result = await _academyProCourseService.SearchCourses(text);
+            if (result == null || !result.Any())
+            {
+                return NotFound();
+            }
+            return Ok(result);
         }
     }
 }

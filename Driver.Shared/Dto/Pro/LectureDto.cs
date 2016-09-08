@@ -29,7 +29,7 @@ namespace Driver.Shared.Dto.Pro
         public IEnumerable<ContentLinkDto> RepositoryLinks { get; set; }
 
         public IEnumerable<CodeSampleDto> CodeSamples { get; set; }
-
+        public IEnumerable<HomeTaskDto> HomeTasks { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime ModifiedAt { get; set; }
     }

@@ -16,7 +16,8 @@
             pushData: pushData,
             putData: putData,
             deleteData: deleteData,
-            getAllUsers: getAllUsers
+            getAllUsers: getAllUsers,
+            searchCourses: searchCourses
         }
 
         return service;
@@ -77,13 +78,34 @@
 
         function getAllUsers(callback) {
             $http.get(baseUrl + '/api/users')
-            .then(function (response) {
-                if (callback) {
-                    callback(response.data);
-                }
-            }, function () {
-                console.log('Error while getting all users!');
-            });
+                .then(function(response) {
+                        if (callback) {
+                            callback(response.data);
+                        }
+                    },
+                    function() {
+                        console.log('Error while getting all users!');
+                    });
+        }
+
+        function searchCourses(text, callback) {
+            $http.get(baseUrl + '/api/academies/search',
+                {
+                    params: {
+                        text: text
+                    }
+                })
+                .then(function(response) {
+                        if (callback) {
+                            callback(response.data);
+                        }
+                    },
+                    function errorCallback(response) {
+                        console.log('Error in searchCourses Method! Code:' + response.status);
+                        if (response.status === 404 && callback) {
+                            callback(response.data);
+                        }
+                    });
         }
     }
 })();

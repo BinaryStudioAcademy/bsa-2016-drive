@@ -7,16 +7,19 @@
     AcademyListController.$inject = [
         'AcademyListService',
         '$location',
-        '$uibModal'
+        '$uibModal',
+        '$routeParams'
     ];
 
-    function AcademyListController(academyListService, $location, $uibModal) {
+    function AcademyListController(academyListService, $location, $uibModal, $routeParams) {
         var vm = this;
         vm.openCourse = openCourse;
         vm.changeView = changeView;
         vm.openNewCourseWindow = openNewCourseWindow;
         vm.deleteCourse = deleteCourse;
         vm.createNewCourse = createNewCourse;
+        vm.search = search;
+        vm.cancelSearch = cancelSearch;
         
         activate();
 
@@ -26,11 +29,10 @@
             vm.showTable = true;
             vm.showGrid = false;
             vm.columnForOrder = 'name';
-            vm.searchText = '';
+            vm.searchText = $routeParams.tagName;
             vm.iconHeight = 30;
-            vm.showTable = true;
             vm.icon = "./Content/Icons/academyPro.svg";
-            vm.iconHeight = 30;
+  
 
             vm.courseMenuOptions = [
    
@@ -46,8 +48,11 @@
              }
          ]
      ];
-
-            return getAcademies();
+            if (vm.searchText === undefined) {
+                getAcademies();
+            } else {
+                search();
+            }
         }
 
         function getAcademies() {
@@ -111,7 +116,19 @@
             };
             vm.openNewCourseWindow('lg');
         }
-        function deleteCourse(id)
-        { }
+ 
+        function deleteCourse(id) {
+            academyListService.deleteData(id);
+        }
+
+        function search() {
+            academyListService.searchCourses(vm.searchText, function (data) {
+                vm.academiesList = data;
+            });
+        }
+        function cancelSearch() {
+            vm.searchText = "";
+            search();
+        }
     }
 }());

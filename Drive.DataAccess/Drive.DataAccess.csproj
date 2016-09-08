@@ -67,6 +67,7 @@
     <Compile Include="Entities\Log.cs" />
     <Compile Include="Entities\Pro\AcademyProCourse.cs" />
     <Compile Include="Entities\Pro\CodeSample.cs" />
+    <Compile Include="Entities\Pro\HomeTask.cs" />
     <Compile Include="Entities\Pro\Lecture.cs" />
     <Compile Include="Entities\Pro\ContentLink.cs" />
     <Compile Include="Entities\Pro\Tag.cs" />

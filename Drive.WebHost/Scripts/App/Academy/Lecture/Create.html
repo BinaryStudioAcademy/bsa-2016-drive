@@ -105,43 +105,44 @@
                                   links-name="Useful links"
                                   image-class="fa fa-link fa-lg">
                     </create-links>
-
                     <div uib-accordion-group class="panel-default" is-open="status.open6" title="Home task">
                         <uib-accordion-heading>
                             <i class="fa fa-paper-plane-o fa-lg" aria-hidden="true"></i> Home task <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open6, 'glyphicon-chevron-right': !status.open6}"></i>
                         </uib-accordion-heading>
-                        <div class="col-md-10">
+                        <div class="col-md-12">
                             <div class="row">
-                                <div>
+                                <div class="col-sm-6">
+                                    <form name="taskForm" ng-submit="lectureCreateCtrl.submitUseful()" class="form-horizontal" novalidate>
+                                        <div class="form-group" ng-class="{ 'has-error' : taskForm.usefulName.$invalid && !taskForm.usefulName.$pristine }">
+                                            <label class="col-sm-3">Description:</label>
+                                            <textarea type="text" name="usefulName" id="usefulName" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="lectureCreateCtrl.currentUseful.name" placeholder="Description" required></textarea>
+                                            <p ng-show="taskForm.usefulName.$error.required && taskForm.usefulName.$touched" class="help-block col-sm-offset-3" ng-cloak>Description is required</p>
+                                            <p ng-show="taskForm.usefulName.$error.pattern" class="help-block col-sm-offset-3" ng-cloak>Not a valid description</p>
+                                        </div>
+                                        <div class="form-group datetimepicker" ng-class="{ 'has-error' : taskForm.taskDate.$invalid && !taskForm.taskDate.$pristine }">
+                                            <label class="col-sm-3">Deadline:</label>
+                                            <p class="input-group">
+                                                <span class="input-group-btn">
+                                                    <input type="datetime" name="taskDate" id="taskDate" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="lectureCreateCtrl.hometask.startDate" is-open="lectureCreateCtrl.calendarHomeTask.isOpen" placeholder="Select deadline date" timepicker-options="lectureCreateCtrl.calendarHomeTask.timepickerOptions" required />
+                                                    <button type="button" class="btn btn-default" ng-click="lectureCreateCtrl.calendarHomeTask.openCalendarHomeTask($event, prop)"><i class="fa fa-calendar"></i></button>
+                                                </span>
+                                            <p ng-show="taskForm.taskDate.$error.required && taskForm.taskDate.$touched" class="help-block col-sm-offset-3">Date is required</p>
+                                            <p ng-show="taskForm.taskDate.$error.datetime" class="help-block col-sm-offset-3">Not a valid date</p>
+                                            </p>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-3"></label>
+                                            <button type="submit" class="btn btn-info" ng-disabled="taskForm.$invalid">
+                                                <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Add task
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col-sm-6">
                                     <ul class="ul">
                                         <li class="list" ng-repeat="useful in lectureCreateCtrl.lecture.usefulLinks">{{useful.name}} ({{useful.link}})</li>
                                     </ul>
                                 </div>
-                                <form name="taskForm" ng-submit="lectureCreateCtrl.submitUseful()" class="form-horizontal" novalidate>
-                                    <div class="form-group" ng-class="{ 'has-error' : taskForm.usefulName.$invalid && !taskForm.usefulName.$pristine }">
-                                        <label class="col-sm-2">Description:</label>
-                                        <textarea type="text" name="usefulName" id="usefulName" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="lectureCreateCtrl.currentUseful.name" placeholder="Description" required></textarea>
-                                        <p ng-show="taskForm.usefulName.$error.required && taskForm.usefulName.$touched" class="help-block col-sm-offset-2" ng-cloak>Description is required</p>
-                                        <p ng-show="taskForm.usefulName.$error.pattern" class="help-block col-sm-offset-2" ng-cloak>Not a valid description</p>
-                                    </div>
-
-                                    <div class="form-group datetimepicker" ng-class="{ 'has-error' : taskForm.taskDate.$invalid && !taskForm.taskDate.$pristine }">
-                                        <label class="col-sm-2">Deadline:</label>
-                                        <p class="input-group">
-                                            <span class="input-group-btn">
-                                                <input type="datetime" name="taskDate" id="taskDate" class="form-control" datetime-picker="yyyy-MM-dd HH:mm:ss" ng-model="lectureCreateCtrl.hometask.startDate" is-open="lectureCreateCtrl.calendarHomeTask.isOpen" placeholder="Select deadline date" timepicker-options="lectureCreateCtrl.calendarHomeTask.timepickerOptions" required />
-                                                <button type="button" class="btn btn-default" ng-click="lectureCreateCtrl.calendarHomeTask.openCalendarHomeTask($event, prop)"><i class="fa fa-calendar"></i></button>
-                                            </span>
-                                        <p ng-show="taskForm.taskDate.$error.required && taskForm.taskDate.$touched" class="help-block col-sm-offset-2">Date is required</p>
-                                        <p ng-show="taskForm.taskDate.$error.datetime" class="help-block col-sm-offset-2">Not a valid date</p>
-                                        </p>
-                                    </div>
-                                    <div class="button-add">
-                                        <button type="submit" class="btn btn-info" ng-disabled="taskForm.$invalid">
-                                            <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Add task
-                                        </button>
-                                    </div>
-                                </form>
                             </div>
                         </div>
                     </div>

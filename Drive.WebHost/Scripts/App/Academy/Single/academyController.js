@@ -14,6 +14,7 @@
         vm.changeView = changeView;
         vm.createLecture = createLecture;
         vm.getCourseList = getCourseList;
+        vm.searchByTag = searchByTag;
 
         activate();
 
@@ -25,7 +26,7 @@
             vm.searchText = '';
             vm.iconHeight = 30;
             vm.showTable = true;
-            vm.icon = "./Content/Icons/presentation.svg";
+            vm.icon = "./Content/Icons/lecture.svg";
             vm.iconHeight = 30;
 
             return getAcademy();
@@ -64,6 +65,9 @@
         }
         function getCourseList() {
             $location.url('/apps/academy/');
+        }
+        function searchByTag(tag) {
+            $location.url('/apps/academies/' + tag);
         }
     }
 }());
