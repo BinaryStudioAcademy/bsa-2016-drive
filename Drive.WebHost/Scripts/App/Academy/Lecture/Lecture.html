@@ -268,7 +268,7 @@
         </div>
         <div class="col-md-12 lecture-wrap">
             <ul class="timeline">
-                <li>
+                <li ng-show="lectureCtrl.lecture.description.length">
                     <div class="timeline-badge info" title="Lecture description">
                         <i class="fa fa-info fa-lg" aria-hidden="true"></i>
                     </div>
@@ -281,43 +281,7 @@
                         </div>
                     </div>
                 </li>
-                <li lecture-links
-                    links-model="lectureCtrl.lecture.videoLinks"
-                    link-type="lectureCtrl.linkTypes.video"
-                    link-types="lectureCtrl.linkTypes"
-                    icon-class="fa fa-video-camera fa-lg"
-                    block-title="Videos">
-                </li>
-                <li lecture-links
-                    links-model="lectureCtrl.lecture.slidesLinks"
-                    link-type="lectureCtrl.linkTypes.slide"
-                    link-types="lectureCtrl.linkTypes"
-                    icon-class="fa fa-file-powerpoint-o fa-lg"
-                    block-title="Slides"
-                    link-trust="lectureCtrl.trustSrc(src)">
-                </li>
-                <li lecture-links
-                    links-model="lectureCtrl.lecture.repositoryLinks"
-                    link-type="lectureCtrl.linkTypes.repository"
-                    link-types="lectureCtrl.linkTypes"
-                    icon-class="fa fa-github fa-lg"
-                    block-title="Repositories">
-                </li>
-                <li lecture-links
-                    links-model="lectureCtrl.lecture.codeSamples"
-                    link-type="lectureCtrl.linkTypes.sample"
-                    link-types="lectureCtrl.linkTypes"
-                    icon-class="fa fa-code fa-lg"
-                    block-title="Code samples">
-                </li>
-                <li lecture-links
-                    links-model="lectureCtrl.lecture.usefulLinks"
-                    link-type="lectureCtrl.linkTypes.useful"
-                    link-types="lectureCtrl.linkTypes"
-                    icon-class="fa fa-link fa-lg"
-                    block-title="Useful links">
-                </li>
-                <li>
+                <li ng-show="lectureCtrl.lecture.homeTasks.length">
                     <div class="timeline-badge info" title="Home task">
                         <i class="fa fa-paper-plane-o fa-lg" aria-hidden="true"></i>
                     </div>
@@ -325,7 +289,7 @@
                         <div class="timeline-heading">
                             <h4 class="timeline-title">Home task</h4>
                         </div>
-                        <div class="timeline-body" ng-show="lectureCtrl.lecture.homeTasks.length">
+                        <div class="timeline-body" >
                             <div class="bs-callout bs-callout-info" ng-repeat="task in lectureCtrl.lecture.homeTasks">
                                 <h4>{{task.description}}</h4>
                                 <p>
@@ -335,6 +299,47 @@
                             </div>
                         </div>
                     </div>
+                </li>
+                <li lecture-links
+                    links-model="lectureCtrl.lecture.videoLinks"
+                    ng-show="lectureCtrl.lecture.videoLinks.length"
+                    link-type="lectureCtrl.linkTypes.video"
+                    link-types="lectureCtrl.linkTypes"
+                    icon-class="fa fa-video-camera fa-lg"
+                    block-title="Videos">
+                </li>
+                <li lecture-links
+                    links-model="lectureCtrl.lecture.slidesLinks"
+                    ng-show="lectureCtrl.lecture.slidesLinks.length"
+                    link-type="lectureCtrl.linkTypes.slide"
+                    link-types="lectureCtrl.linkTypes"
+                    icon-class="fa fa-file-powerpoint-o fa-lg"
+                    block-title="Slides"
+                    link-trust="lectureCtrl.trustSrc(src)">
+                </li>
+                <li lecture-links
+                    links-model="lectureCtrl.lecture.repositoryLinks"
+                    ng-show="lectureCtrl.lecture.repositoryLinks.length"
+                    link-type="lectureCtrl.linkTypes.repository"
+                    link-types="lectureCtrl.linkTypes"
+                    icon-class="fa fa-github fa-lg"
+                    block-title="Repositories">
+                </li>
+                <li lecture-links
+                    links-model="lectureCtrl.lecture.codeSamples"
+                    ng-show="lectureCtrl.lecture.codeSamples.length"
+                    link-type="lectureCtrl.linkTypes.sample"
+                    link-types="lectureCtrl.linkTypes"
+                    icon-class="fa fa-code fa-lg"
+                    block-title="Code samples">
+                </li>
+                <li lecture-links
+                    links-model="lectureCtrl.lecture.usefulLinks"
+                    ng-show="lectureCtrl.lecture.usefulLinks.length"
+                    link-type="lectureCtrl.linkTypes.useful"
+                    link-types="lectureCtrl.linkTypes"
+                    icon-class="fa fa-link fa-lg"
+                    block-title="Useful links">
                 </li>
             </ul>
         </div>
