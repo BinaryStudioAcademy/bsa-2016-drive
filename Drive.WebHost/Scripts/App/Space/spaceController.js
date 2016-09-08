@@ -59,6 +59,7 @@
 
         // Drag and Drop
         vm.onDrop = onDrop;
+        vm.dropValidate = dropValidate;
         vm.dndMoveFile = dndMoveFile;
         vm.dndMoveFolder = dndMoveFolder;
 
@@ -810,7 +811,7 @@
             }
         }
 
-        vm.dropValidate = function (target, source) {
+        function dropValidate(target, source) {
             return target !== source;
         }
 

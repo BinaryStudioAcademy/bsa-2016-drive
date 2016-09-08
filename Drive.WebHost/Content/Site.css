@@ -1159,3 +1159,9 @@ End Cancel button on search input*/
     transition: all 0.2s;
     height: 34px;
 }
+
+.dragging-elem{
+    opacity: 0.7;
+    background-color: white!important;
+}
+/* END Drag'n'Drop */

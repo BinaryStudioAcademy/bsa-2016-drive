@@ -133,8 +133,8 @@
                     <div class="row filter-table-row" role="button" ng-repeat="folder in spaceCtrl.space.folders | orderBy: spaceCtrl.columnForOrder" 
                          ui-draggable="true" drag="{'dataUnit': folder, 'type': 'folder'}" drag-channel="folder" drop-channel="file, folder" 
                          drop-validate="spaceCtrl.dropValidate(folder, $data.dataUnit)" ui-on-drop="spaceCtrl.onDrop(folder.id, $data)"
-                         ng-click="spaceCtrl.activeRow(folder.id, 'false')" 
-                         ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)" 
+                         ng-click="spaceCtrl.activeRow(folder.id, 'false')" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)" 
+                         ondragstart="this.classList.add('dragging-elem');" ondragend="this.classList.remove('dragging-elem')"
                          ng-class="{selected: folder.selected}" context-menu="spaceCtrl.folderMenuOptions">
                         <div class="col-md-3 filter-table-cell description" title="{{ folder.name }}">
                             <img src="./Content/Icons/folder.svg" height="{{spaceCtrl.iconHeight}}" />
@@ -149,13 +149,13 @@
                     </div>
                 </div>
             </div>
-            <div style="transition: all 2s">
+            <div style="transition: all 2s" id="files">
                 <div class="filter-table-row">
                     <div class="row filter-table-row" role="button" ng-repeat="file in spaceCtrl.space.files | orderBy: spaceCtrl.columnForOrder" 
                          ui-draggable="true" drag="{'dataUnit': file, 'type': 'file'}" drag-channel="file"
-                         ng-click="spaceCtrl.activeRow(file.id, 'true')" 
-                         ng-dblclick="spaceCtrl.openDocument(file.link)" 
-                         ng-class="{selected: file.selected}" 
+                         ng-click="spaceCtrl.activeRow(file.id, 'true')" ng-dblclick="spaceCtrl.openDocument(file.link)" 
+                         ondragstart="this.classList.add('dragging-elem');" ondragend="this.classList.remove('dragging-elem')"
+                         ng-class="{'selected': file.selected}" 
                          context-menu="spaceCtrl.fileMenuOptions">
                         <div class="col-md-3 filter-table-cell description" title="{{ file.name }}">
                             <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" height="{{spaceCtrl.iconHeight}}" />
