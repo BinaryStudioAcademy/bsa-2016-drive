@@ -188,7 +188,7 @@ namespace Drive.WebHost.Services.Pro
 
                 var addedLinks = linksList.Where(link => links.All(x => x.Id != link.Id)).ToList();
                 var deletedLinks = links.Where(link => linksList.All(x => x.Id != link.Id)).ToList();
-                var updatedLinks = linksList.Where(link => deletedLinks.All(x => x.Id != link.Id)).ToList();
+                var updatedLinks = linksList.Where(link => deletedLinks.All(x => x.Id != link.Id)).Where(link => addedLinks.All(x => x.Id != link.Id)).ToList();
 
                 var taskList = dto.HomeTasks.Select(task => new HomeTask
                 {
@@ -201,7 +201,7 @@ namespace Drive.WebHost.Services.Pro
 
                 var addedTasks = taskList.Where(link => tasks.All(x => x.Id != link.Id)).ToList();
                 var deletedTasks = tasks.Where(link => taskList.All(x => x.Id != link.Id)).ToList();
-                var updatedTasks = taskList.Where(link => deletedTasks.All(x => x.Id != link.Id)).ToList();
+                var updatedTasks = taskList.Where(link => deletedTasks.All(x => x.Id != link.Id)).Where(link => addedTasks.All(x => x.Id != link.Id)).ToList();
 
                 addedLinks.ForEach(x => _unitOfWork.ContentLinks.Create(x));
                 updatedLinks.ForEach(x => _unitOfWork.ContentLinks.Update(x));
