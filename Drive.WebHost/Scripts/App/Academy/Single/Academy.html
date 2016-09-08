@@ -9,7 +9,9 @@
     <div>
         <span us-spinner="{radius:30, width:8, length: 16}"></span>
         <div class="col-md-12" style="padding: 0">
-            <tags-input class="bootstrap col-sm-5" style="padding: 0; border-radius: 4px" ng-model="academyCtrl.academy.tags" display-property="name" placeholder="{{''}}" disabled="true"></tags-input>
+            <div class="col-sm-6 tagslist">
+                <a ng-click="academyCtrl.searchByTag(tag.name)" ng-repeat="tag in academyCtrl.academy.tags" class="bootstrap">{{tag.name}}</a>
+            </div>
 
             <div class="col-sm-push-6-offset pull-right">
                 <p>

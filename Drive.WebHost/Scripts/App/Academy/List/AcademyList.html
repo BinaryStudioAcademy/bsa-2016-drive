@@ -11,6 +11,23 @@
                     <i class={{academyListCtrl.view}} title="view"> </i>
                 </button>
             </div>
+            <div>
+                <div class="col-sm-3 pull-right">
+                    <div>
+                        <div class="input-group">
+                            <form id="form-container">
+                                <div id="searchtext">
+                                    <input type="text" size="40" class="search-input" value="" name="s" id="s" placeholder="Search..." ng-model="academyListCtrl.searchText">
+                                    <a id="clear_input" ng-show="academyListCtrl.searchText.length > 0" ng-click="academyListCtrl.cancelSearch()">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                    <button class="search-submit-button" type="submit" ng-click="academyListCtrl.search()"> <i class="fa fa-search"></i> </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <ul class="sp-gv-flex-container wrap" ng-show="!academyListCtrl.showTable">
             <li class="sp-gv-flex-item" role="button" ng-repeat="academy in academyListCtrl.academiesList" ng-dblclick="academyListCtrl.openCourse(academy.id)"  title="Created {{ academy.createdAt | date : 'short' }}">

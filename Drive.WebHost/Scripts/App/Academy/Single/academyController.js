@@ -14,6 +14,7 @@
         vm.changeView = changeView;
         vm.createLecture = createLecture;
         vm.getCourseList = getCourseList;
+        vm.searchByTag = searchByTag;
 
         activate();
 
@@ -64,6 +65,9 @@
         }
         function getCourseList() {
             $location.url('/apps/academy/');
+        }
+        function searchByTag(tag) {
+            $location.url('/apps/academies/' + tag);
         }
     }
 }());

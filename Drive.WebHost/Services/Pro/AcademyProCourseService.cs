@@ -173,8 +173,104 @@ namespace Drive.WebHost.Services.Pro
 
         public async Task DeleteAsync(int id)
         {
+            var course = await _unitOfWork.AcademyProCourses.Query.Include(x => x.FileUnit).Include(x => x.Lectures).SingleOrDefaultAsync(x => x.Id == id);
             _unitOfWork.AcademyProCourses.Delete(id);
             await _unitOfWork.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<AcademyProCourseDto>> SearchCourses(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return await FilterCourses();
+            }
+
+            var authors = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
+
+            var courses = await _unitOfWork.AcademyProCourses.Query.Include(c => c.Tags).Include(c => c.FileUnit).
+                                                                    Where(x => x.FileUnit.Name.Contains(text.ToLower()) ||
+                                                                    x.Tags.Any(t => t.Name.Contains(text.ToLower()))).
+                                                                    Select(course => new AcademyProCourseDto
+            {
+                Id = course.Id,
+                IsDeleted = course.IsDeleted,
+                StartDate = course.StartDate,
+                Lectures = course.Lectures.Select(lecture => new LectureDto
+                {
+                    Id = lecture.Id,
+                    Name = lecture.Name,
+                    Description = lecture.Description,
+                    StartDate = lecture.StartDate,
+                    CreatedAt = lecture.CreatedAt
+                }),
+                FileUnit = new FileUnitDto
+                {
+                    Id = course.FileUnit.Id,
+                    Name = course.FileUnit.Name,
+                    FileType = course.FileUnit.FileType,
+                    Description = course.FileUnit.Description,
+                    CreatedAt = course.FileUnit.CreatedAt,
+                    LastModified = course.FileUnit.LastModified
+                },
+                Tags = course.Tags.Select(tag => new TagDto
+                {
+                    Id = tag.Id,
+                    Name = tag.Name
+                }),
+                Author = new AuthorDto() { Id = course.Author.Id, GlobalId = course.Author.GlobalId }
+            }).ToListAsync();
+
+            Parallel.ForEach(courses,
+                course => { course.Author.Name = authors.FirstOrDefault(a => a.Id == course.Author.GlobalId)?.Name; });
+
+            return courses;
+        }
+
+        private async Task<IEnumerable<AcademyProCourseDto>> FilterCourses()
+        {
+            string userId = _userService.CurrentUserId;
+            var result = await _unitOfWork.AcademyProCourses.Query.Include(c => c.FileUnit).Include(c =>c.Tags)
+               .Where(c => c.FileUnit.Space.Type == SpaceType.BinarySpace
+               || c.FileUnit.Space.Owner.GlobalId == userId
+               || c.FileUnit.Space.ReadPermittedUsers.Any(x => x.GlobalId == userId)
+               || c.FileUnit.Space.ReadPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId)))
+                 .Select(course => new AcademyProCourseDto
+                 {
+                     Id = course.Id,
+                     IsDeleted = course.IsDeleted,
+                     StartDate = course.StartDate,
+                     Lectures = course.Lectures.Select(lecture => new LectureDto
+                     {
+                         Id = lecture.Id,
+                         Name = lecture.Name,
+                         Description = lecture.Description,
+                         StartDate = lecture.StartDate,
+                         CreatedAt = lecture.CreatedAt
+                     }),
+                     FileUnit = new FileUnitDto
+                     {
+                         Id = course.FileUnit.Id,
+                         Name = course.FileUnit.Name,
+                         FileType = course.FileUnit.FileType,
+                         Description = course.FileUnit.Description,
+                         CreatedAt = course.FileUnit.CreatedAt,
+                         LastModified = course.FileUnit.LastModified
+                     },
+                     Tags = course.Tags.Select(tag => new TagDto
+                     {
+                         Id = tag.Id,
+                         Name = tag.Name
+                     }),
+                     Author = new AuthorDto() { Id = course.Author.Id, GlobalId = course.Author.GlobalId }
+                 }).ToListAsync();
+
+            var owners = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
+
+            Parallel.ForEach(result, course =>
+            {
+                course.Author.Name = owners.FirstOrDefault(o => o.Id == course.Author.GlobalId)?.Name;
+            });
+            return result;
         }
 
         public void Dispose()
