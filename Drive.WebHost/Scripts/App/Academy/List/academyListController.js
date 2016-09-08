@@ -22,13 +22,13 @@
         vm.cancelSearch = cancelSearch;
 
         vm.courseMenuOptions = [
-        [
-            'Share', function ($itemScope) {
-                vm.academy = $itemScope.academy;
-                //vm.openNewCourseWindow();
-            }
-        ],
-        null,
+        //[
+        //    'Share', function ($itemScope) {
+        //        vm.academy = $itemScope.academy;
+        //        //vm.openNewCourseWindow();
+        //    }
+        //],
+        //null,
         [
             'Edit', function ($itemScope) {
                 vm.academy = $itemScope.academy;
