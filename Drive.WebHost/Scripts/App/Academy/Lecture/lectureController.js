@@ -9,10 +9,12 @@
         '$routeParams',
         '$sce',
         'LinkTypeService',
-        'toastr'
+        'toastr',
+        '$location',
+        'AcademyService'
     ];
 
-    function LectureController(lectureService, $routeParams, $sce, linkTypeService, toastr) {
+    function LectureController(lectureService, $routeParams, $sce, linkTypeService, toastr, $location, academyService) {
         var vm = this;
         vm.currentLectureId = $routeParams.lectureId;
         vm.lecture = null;
@@ -22,11 +24,13 @@
         vm.updateLecture = updateLecture;
         vm.linkTypes = linkTypeService;
         vm.getLecture = getLecture;
+        vm.getAcademy = getAcademy;
         vm.submitVideo = submitVideo;
         vm.submitSlide = submitSlide;
         vm.submitRepository = submitRepository;
         vm.submitSample = submitSample;
         vm.submitUseful = submitUseful;
+        vm.getCourseList = getCourseList;
 
         activate();
 
@@ -40,7 +44,7 @@
                     showMeridian: false
                 }
             }
-
+           
             return getLecture();
         }
 
@@ -49,6 +53,14 @@
                 .then(function (data) {
                     vm.lecture = data;
                     return vm.lecture;
+                });
+        }
+
+        function getAcademy(id) {
+            return academyService.getAcademy(id)
+                .then(function (data) {
+                    vm.academy = data;
+                    return vm.academy;
                 });
         }
 
@@ -121,6 +133,10 @@
                 vm.lecture.usefulLinks.push(vm.currentuseful);
                 vm.currentuseful = {};
             }
+        }
+
+        function getCourseList() {
+            $location.url('/apps/academy/');
         }
     }
 }());

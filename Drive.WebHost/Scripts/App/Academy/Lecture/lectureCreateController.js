@@ -6,10 +6,11 @@
         'LectureService',
         'toastr',
         '$location',
-        '$routeParams'
+        '$routeParams',
+         'AcademyService'
     ];
 
-    function LectureCreateController(lectureService, toastr, $location, $routeParams) {
+    function LectureCreateController(lectureService, toastr, $location, $routeParams, academyService) {
         var vm = this;
         vm.currentAcademyId = $routeParams.id;
         vm.addNewLecture = addNewLecture;
@@ -20,6 +21,8 @@
         vm.submitRepository = submitRepository;
         vm.submitSample = submitSample;
         vm.submitUseful = submitUseful;
+        vm.getAcademy = getAcademy;
+        vm.getCourseList = getCourseList;
 
         activate();
 
@@ -54,6 +57,14 @@
         function addNewLecture() {
             return lectureService.pushData(vm.lecture);
         };
+
+        function getAcademy(id) {
+            return academyService.getAcademy(id)
+                .then(function (data) {
+                    vm.academy = data;
+                    return vm.academy;
+                });
+        }
 
         function create() {
             if (vm.lecture.name) {
@@ -120,6 +131,10 @@
                 vm.lecture.usefulLinks.push(vm.currentuseful);
                 vm.currentuseful = {};
             }
+        }
+
+        function getCourseList() {
+            $location.url('/apps/academy/');
         }
     }
 })();

@@ -242,7 +242,13 @@
 <div class="container-fluid">
     <br />
     <div class="btn-group btn-breadcrumb">
-        <a class="btn btn-info"><i class="fa fa-graduation-cap fa-lg"></i> Academy Pro</a>
+        <a ng-click="lectureCtrl.getCourseList()" class="btn btn-info"><i class="fa fa-graduation-cap fa-lg"></i> Academy Pro</a>
+        <a href="#/apps/academy/{{lectureCtrl.lecture.courseId}}" ng-click="lectureCtrl.getAcademy(lectureCtrl.lecture.courseId)" title="{{lectureCtrl.academy.fileUnit.name}}" class="btn btn-default">
+            {{lectureCtrl.academy.fileUnit.name | limitTo: 10}}{{lectureCtrl.academy.fileUnit.name.length > 10 ? '...' : ''}}
+        </a>
+        <a title="{{lectureCtrl.lecture.name}}" class="btn btn-default">
+            {{lectureCtrl.lecture.name | limitTo: 10}}{{lectureCtrl.lecture.name.length > 10 ? '...' : ''}}
+        </a>
     </div>
     <div>
         <span us-spinner="{radius:30, width:8, length: 16}"></span>

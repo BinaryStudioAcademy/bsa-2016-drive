@@ -42,10 +42,16 @@
 <div class="container-fluid">
     <br />
     <div class="btn-group btn-breadcrumb">
-        <a class="btn btn-info"><i class="fa fa-graduation-cap fa-lg"></i> Academy Pro</a>
+        <a ng-click="lectureCreateCtrl.getCourseList()" class="btn btn-info"><i class="fa fa-graduation-cap fa-lg"></i> Academy Pro</a>
+        <a href="#/apps/academy/{{lectureCreateCtrl.currentAcademyId}}" ng-click="lectureCreateCtrl.getAcademy(lectureCreateCtrl.currentAcademyId)" title="{{lectureCreateCtrl.academy.fileUnit.name}}" class="btn btn-default">
+            {{lectureCreateCtrl.academy.fileUnit.name | limitTo: 10}}{{lectureCreateCtrl.academy.fileUnit.name.length > 10 ? '...' : ''}}
+        </a>
+        <a title="{{lectureCreateCtrl.lecture.name ? lectureCreateCtrl.lecture.name : 'Create new lecture'}}" class="btn btn-default">
+            {{lectureCreateCtrl.lecture.name ? lectureCreateCtrl.lecture.name : 'Create new lecture' | limitTo: 18}}{{lectureCreateCtrl.lecture.name.length > 18 ? '...' : ''}}
+        </a>
     </div>
     <h2>
-        {{lectureCreateCtrl.lecture.name ? lectureCreateCtrl.lecture.name : 'Create new lecture'}}
+        {{lectureCreateCtrl.lecture.name ? lectureCreateCtrl.lecture.name : 'Create new lecture' | limitTo: 25}}{{lectureCreateCtrl.lecture.name.length > 25 ? '...' : ''}}
         <div style="display: inline-block;">
             <button class="btn btn-info" ng-click="lectureCreateCtrl.create()" title="Create new lecture" ng-disabled="courseForm.$invalid">
                 <i class="fa fa-plus-circle fa-lg"></i>  Create
@@ -62,8 +68,8 @@
                         <div class="form-group" ng-class="{ 'has-error' : courseForm.name.$invalid && !courseForm.name.$pristine }">
                             <label class="col-sm-2">Lecture name:</label>
                             <input type="text" name="name" id="name" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="lectureCreateCtrl.lecture.name" placeholder="Lecture name" required>
-                            <p ng-show="courseForm.name.$error.required && courseForm.name.$touched" class="help-block col-sm-offset-2">Name is required.</p>
-                            <p ng-show="courseForm.name.$error.pattern" class="help-block col-sm-offset-2">Not a valid name.</p>
+                            <p ng-show="courseForm.name.$error.required && courseForm.name.$touched" class="help-block col-sm-offset-2">Name is required</p>
+                            <p ng-show="courseForm.name.$error.pattern" class="help-block col-sm-offset-2">Not a valid name</p>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2">Description:</label>
