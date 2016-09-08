@@ -128,9 +128,13 @@
         </div>
 
         <div class="filter-table-internal" context-menu="spaceCtrl.containerMenuOptions">
-            <div style="transition: all 2s">
+            <div style="transition: all 2s" id="folders">
                 <div class="filter-table-row">
-                    <div class="row filter-table-row" role="button" ng-repeat="folder in spaceCtrl.space.folders | orderBy: spaceCtrl.columnForOrder" ng-click="spaceCtrl.activeRow(folder.id, 'false')" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)" ng-class="{selected: folder.selected}" context-menu="spaceCtrl.folderMenuOptions">
+                    <div class="row filter-table-row" role="button" ng-repeat="folder in spaceCtrl.space.folders | orderBy: spaceCtrl.columnForOrder" 
+                         ui-on-drop="spaceCtrl.onDrop(folder.id, $data)" drag-channel="folder" drop-channel="file"
+                         ng-click="spaceCtrl.activeRow(folder.id, 'false')" 
+                         ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)" 
+                         ng-class="{selected: folder.selected}" context-menu="spaceCtrl.folderMenuOptions">
                         <div class="col-md-3 filter-table-cell description" title="{{ folder.name }}">
                             <img src="./Content/Icons/folder.svg" height="{{spaceCtrl.iconHeight}}" />
                             {{folder.name | limitTo: 20}}{{folder.name.length > 20 ? '...' : ''}}
@@ -146,7 +150,12 @@
             </div>
             <div style="transition: all 2s">
                 <div class="filter-table-row">
-                    <div class="row filter-table-row" role="button" ng-repeat="file in spaceCtrl.space.files | orderBy: spaceCtrl.columnForOrder" ng-click="spaceCtrl.activeRow(file.id, 'true')" ng-dblclick="spaceCtrl.openDocument(file.link)" ng-class="{selected: file.selected}" context-menu="spaceCtrl.fileMenuOptions">
+                    <div class="row filter-table-row" role="button" ng-repeat="file in spaceCtrl.space.files | orderBy: spaceCtrl.columnForOrder" 
+                         ui-draggable="true" drag="file" drag-channel="file"
+                         ng-click="spaceCtrl.activeRow(file.id, 'true')" 
+                         ng-dblclick="spaceCtrl.openDocument(file.link)" 
+                         ng-class="{selected: file.selected}" 
+                         context-menu="spaceCtrl.fileMenuOptions">
                         <div class="col-md-3 filter-table-cell description" title="{{ file.name }}">
                             <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" height="{{spaceCtrl.iconHeight}}" />
                             {{file.name | limitTo: 20}}{{file.name.length > 20 ? '...' : ''}}

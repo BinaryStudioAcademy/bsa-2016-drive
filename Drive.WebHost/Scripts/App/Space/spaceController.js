@@ -57,6 +57,10 @@
 
         vm.redirectToSpaceSettings = redirectToSpaceSettings;
 
+        // Drag and Drop
+        vm.onDrop = onDrop;
+        vm.dndMoveFileToFolder = dndMoveFileToFolder;
+
         vm.paginate = {
             currentPage: 1,
             pageSize: 15,
@@ -794,5 +798,29 @@
             vm.iconSrc = fileService.chooseIcon(type);
             return vm.iconSrc;
         }
+
+        //Drag'n'Drop
+        function onDrop (target, source) {
+            vm.dndMoveFileToFolder(target, source);
+        };
+
+        //vm.dropValidate = function (target, source) {
+        //    return target !== source;
+        //};
+
+        function dndMoveFileToFolder(folderId, file) {
+            file.parentId = folderId;
+            file.spaceId = vm.space.id;
+            fileService.updateFile(file.id, file, function () {
+                if (vm.parentId == null) {
+                    vm.getSpace();
+                } else {
+                    vm.getFolderContent(vm.parentId);
+                }
+
+            });
+        }
+        //Drag'n'Drop end 
+
     }
 }());
