@@ -43,7 +43,7 @@
     <br />
     <div class="btn-group btn-breadcrumb">
         <a ng-click="lectureCreateCtrl.getCourseList()" class="btn btn-info"><i class="fa fa-graduation-cap fa-lg"></i> Academy Pro</a>
-        <a href="#/apps/academy/{{lectureCreateCtrl.currentAcademyId}}" ng-click="lectureCreateCtrl.getAcademy(lectureCreateCtrl.currentAcademyId)" title="{{lectureCreateCtrl.academy.fileUnit.name}}" class="btn btn-default">
+        <a ng-click="lectureCreateCtrl.getCourse(lectureCreateCtrl.currentAcademyId)" title="{{lectureCreateCtrl.academy.fileUnit.name}}" class="btn btn-default">
             {{lectureCreateCtrl.academy.fileUnit.name | limitTo: 10}}{{lectureCreateCtrl.academy.fileUnit.name.length > 10 ? '...' : ''}}
         </a>
         <a title="{{lectureCreateCtrl.lecture.name ? lectureCreateCtrl.lecture.name : 'Create new lecture'}}" class="btn btn-default">

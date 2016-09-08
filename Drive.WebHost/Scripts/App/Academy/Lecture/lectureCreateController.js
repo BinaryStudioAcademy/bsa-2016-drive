@@ -23,6 +23,7 @@
         vm.submitUseful = submitUseful;
         vm.getAcademy = getAcademy;
         vm.getCourseList = getCourseList;
+        vm.getCourse = getCourse;
 
         activate();
 
@@ -45,6 +46,8 @@
                 }
             };
 
+            getAcademy();
+
             vm.calendarHomeTask = {
                 isOpen: false,
                 openCalendarHomeTask: openCalendarHomeTask,
@@ -58,8 +61,8 @@
             return lectureService.pushData(vm.lecture);
         };
 
-        function getAcademy(id) {
-            return academyService.getAcademy(id)
+        function getAcademy() {
+            return academyService.getAcademy(vm.currentAcademyId)
                 .then(function (data) {
                     vm.academy = data;
                     return vm.academy;
@@ -135,6 +138,10 @@
 
         function getCourseList() {
             $location.url('/apps/academy/');
+        }
+
+        function getCourse(id) {
+            $location.url('/apps/academy/' + id);
         }
     }
 })();

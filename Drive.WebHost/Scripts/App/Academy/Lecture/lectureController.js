@@ -17,6 +17,7 @@
     function LectureController(lectureService, $routeParams, $sce, linkTypeService, toastr, $location, academyService) {
         var vm = this;
         vm.currentLectureId = $routeParams.lectureId;
+        vm.currentAcademyId = $routeParams.id;
         vm.lecture = null;
         vm.trustSrc = trustSrc;
         vm.edit = edit;
@@ -31,6 +32,7 @@
         vm.submitSample = submitSample;
         vm.submitUseful = submitUseful;
         vm.getCourseList = getCourseList;
+        vm.getCourse = getCourse;
 
         activate();
 
@@ -44,7 +46,9 @@
                     showMeridian: false
                 }
             }
-           
+
+            getAcademy();
+
             return getLecture();
         }
 
@@ -56,8 +60,8 @@
                 });
         }
 
-        function getAcademy(id) {
-            return academyService.getAcademy(id)
+        function getAcademy() {
+            return academyService.getAcademy(vm.currentAcademyId)
                 .then(function (data) {
                     vm.academy = data;
                     return vm.academy;
@@ -137,6 +141,10 @@
 
         function getCourseList() {
             $location.url('/apps/academy/');
+        }
+
+        function getCourse(id) {
+            $location.url('/apps/academy/' + id);
         }
     }
 }());
