@@ -42,6 +42,14 @@
                 }
             }
 
+            vm.calendarHomeTask = {
+                isOpen: false,
+                openCalendarHomeTask: openCalendarHomeTask,
+                timepickerOptions: {
+                    showMeridian: false
+                }
+            }
+
             return getLecture();
         }
 
@@ -92,6 +100,13 @@
             e.stopPropagation();
 
             vm.calendar.isOpen = true;
+        };
+
+        function openCalendarHomeTask(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            vm.calendarHomeTask.isOpen = true;
         };
 
         function submitTask() {
