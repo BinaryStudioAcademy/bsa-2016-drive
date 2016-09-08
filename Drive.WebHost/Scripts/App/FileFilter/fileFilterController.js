@@ -19,8 +19,8 @@
         vm.openDocument = openDocument;
         vm.openFileWindow = openFileWindow;
         vm.deleteFile = deleteFile;
-        vm.openSharedFileWindow = openSharedFileWindow;
-        vm.sharedFile = sharedFile;
+        vm.openSharedContentWindow = openSharedContentWindow;
+        vm.sharedContent = sharedContent;
 
         activate();
 
@@ -46,8 +46,8 @@
         vm.fileMenuOptions = [
             [
                 'Share', function ($itemScope) {
-                    vm.fileSharedId = $itemScope.file.id;
-                    vm.sharedFile();
+                    vm.contentSharedId = $itemScope.file.id;
+                    vm.sharedContent();
                 },
                 function ($itemScope) {
                     if ($itemScope.file.spaceId == 1) {
@@ -97,18 +97,22 @@
             });
         }
 
-        function openSharedFileWindow(size) {
+        function openSharedContentWindow(size) {
 
             var fileModalInstance = $uibModal.open({
                 animation: false,
-                templateUrl: 'Scripts/App/SharedFile/SharedFileForm.html',
-                windowTemplateUrl: 'Scripts/App/SharedFile/Modal.html',
-                controller: 'SharedFileModalCtrl',
-                controllerAs: 'sharedFileModalCtrl',
+                templateUrl: 'Scripts/App/SharedContent/SharedContentForm.html',
+                windowTemplateUrl: 'Scripts/App/SharedContent/Modal.html',
+                controller: 'SharedContentModalCtrl',
+                controllerAs: 'sharedContentModalCtrl',
                 size: size,
                 resolve: {
                     items: function () {
-                        return vm.fileSharedId;
+                        var sharedContInfo = {
+                            contentId: vm.contentSharedId,
+                            title: 'Shared file'
+                        }
+                        return sharedContInfo;
                     }
                 }
             });
@@ -120,9 +124,9 @@
             });
         }
 
-        function sharedFile() {
+        function sharedContent() {
             vm.fileId = { parentId: vm.parentId, spaceId: vm.spaceId };
-            vm.openSharedFileWindow();
+            vm.openSharedContentWindow();
         }
 
         function deleteFile(id) {

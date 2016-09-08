@@ -346,9 +346,9 @@
     <Content Include="Scripts\App\AdminPanel\Roles\roleService.js" />
     <Content Include="Scripts\App\File\fileUpload.directive.js" />
     <Content Include="Scripts\App\File\UploadFile.html" />
-    <Content Include="Scripts\App\SharedFile\SharedFileForm.html" />
-    <Content Include="Scripts\App\SharedFile\sharedFileModalController.js" />
-    <Content Include="Scripts\App\SharedFile\Modal.html" />
+    <Content Include="Scripts\App\SharedContent\SharedContentForm.html" />
+    <Content Include="Scripts\App\SharedContent\sharedContentModalController.js" />
+    <Content Include="Scripts\App\SharedContent\Modal.html" />
     <Content Include="Scripts\App\FileFilter\fileFilterController.js" />
     <Content Include="Scripts\App\FileFilter\FileFilter.html" />
     <Content Include="Scripts\App\File\FileForm.html" />
@@ -404,12 +404,12 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Scripts\Libs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="App_Data\Drive-9345df2608d2.json" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Scripts\App\Academy\Lecture\lectureLinks.directive.html" />

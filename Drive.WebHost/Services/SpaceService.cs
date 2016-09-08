@@ -260,9 +260,10 @@ namespace Drive.WebHost.Services
                         }
                         else
                         {
-                            for (int j = 0; j < spacesList[i].ReadPermittedRoles.Count; j++)
+                            foreach (var item in spacesList[i].ReadPermittedRoles)
                             {
-                                if (spacesList[i].ReadPermittedRoles[j].Users.FirstOrDefault(x => x.GlobalId == userId) == null)
+                                var role = await _roleService.GetAsync(item.Id);
+                                if (role.Users.FirstOrDefault(x => x.GlobalId == userId) == null)
                                 {
                                     spacesList.RemoveAt(i);
                                     i--;

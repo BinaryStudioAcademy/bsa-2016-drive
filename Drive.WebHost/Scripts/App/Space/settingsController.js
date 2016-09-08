@@ -32,8 +32,21 @@
         vm.setTab = setTab;
         vm.isSet = isSet;
         vm.deleteSpace = deleteSpace;
+        vm.addAllUsers = addAllUsers;
 
         activate();
+
+        function addAllUsers() {
+            for (var i = 0; i < vm.users.length; i++) {
+                var pos = vm.permittedUsers.map(function (e) { return e.globalId; }).indexOf(vm.users[i].id);
+                if (pos == -1) {
+                    vm.permittedUsers.push({
+                        name: vm.users[i].name,
+                        globalId: vm.users[i].id
+                    });
+                }
+            }
+        }
 
         function activate() {
             settingsService.getSpace(vm.selectedSpace, function (data) {

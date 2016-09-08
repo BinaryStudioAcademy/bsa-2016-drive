@@ -7,8 +7,9 @@
         "LocalStorageModule", "ngLoadingSpinner",
         'ngAnimate',
         "toastr",
-        "ui.sortable",
-        "driveApp.academyPro"
+        "driveApp.academyPro",
+        "cfp.hotkeys",
+        "ui.sortable"
     ])
     .factory('BaseUrl', function () {
         return window.globalVars.baseUrl;

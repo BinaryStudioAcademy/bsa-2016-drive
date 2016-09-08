@@ -1,4 +1,3 @@
-
 <div class="container-fluid" style="overflow: hidden; height: 100%">
     <br />
     <div class="btn-group btn-breadcrumb">
@@ -57,7 +56,7 @@
 
     <!--New gridview-->
     <ul class="sp-gv-flex-container wrap" ng-show="spaceCtrl.showGrid" context-menu="spaceCtrl.containerMenuOptions">
-        <li class="sp-gv-flex-item" role="button" context-menu="spaceCtrl.folderMenuOptions" dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize" total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)">
+        <li class="sp-gv-flex-item" role="button" context-menu="spaceCtrl.folderMenuOptions" dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize" total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" ng-click="spaceCtrl.activeRow(folder.id, 'false')" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)" ng-class="{selected: folder.selected}" >
             <div class="sp-gv-wrapper-flex-item">
                 <div class="sp-gv-item-content card">
                     <div class="sp-gv-item-img-wrapper">
@@ -75,7 +74,7 @@
             </div>
         </li>
 
-        <li class="sp-gv-flex-item" role="button" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="spaceCtrl.openDocument(file.link)">
+        <li class="sp-gv-flex-item" role="button" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-click="spaceCtrl.activeRow(file.id, 'true')" ng-dblclick="spaceCtrl.openDocument(file.link)" ng-class="{selected: file.selected}" >
             <div class="sp-gv-wrapper-flex-item">
                 <div class="sp-gv-item-content card">
                     <div class="sp-gv-item-img-wrapper">
@@ -97,8 +96,6 @@
         <li class="sp-gv-flex-item"></li>
     </ul>
     <!--End New gridview-->
-
-
     <div class="filter-table container-md" ng-show="spaceCtrl.showTable">
         <div class="header-wrapper">
             <div class="row header-row" context-menu="spaceCtrl.containerMenuOptions">
@@ -132,8 +129,8 @@
 
         <div class="filter-table-internal" context-menu="spaceCtrl.containerMenuOptions">
             <div style="transition: all 2s">
-                <div class="filter-table-row" context-menu="spaceCtrl.folderMenuOptions">
-                    <div class="row filter-table-row" role="button" ng-repeat="folder in spaceCtrl.space.folders | orderBy: spaceCtrl.columnForOrder" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)" context-menu="spaceCtrl.folderMenuOptions">
+                <div class="filter-table-row">
+                    <div class="row filter-table-row" role="button" ng-repeat="folder in spaceCtrl.space.folders | orderBy: spaceCtrl.columnForOrder" ng-click="spaceCtrl.activeRow(folder.id, 'false')" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)" ng-class="{selected: folder.selected}" context-menu="spaceCtrl.folderMenuOptions">
                         <div class="col-md-3 filter-table-cell description" title="{{ folder.name }}">
                             <img src="./Content/Icons/folder.svg" height="{{spaceCtrl.iconHeight}}" />
                             {{folder.name | limitTo: 20}}{{folder.name.length > 20 ? '...' : ''}}
@@ -148,8 +145,8 @@
                 </div>
             </div>
             <div style="transition: all 2s">
-                <div class="filter-table-row" context-menu="spaceCtrl.fileMenuOptions">
-                    <div class="row filter-table-row" role="button" ng-repeat="file in spaceCtrl.space.files | orderBy: spaceCtrl.columnForOrder" ng-dblclick="spaceCtrl.openDocument(file.link)" context-menu="spaceCtrl.fileMenuOptions">
+                <div class="filter-table-row">
+                    <div class="row filter-table-row" role="button" ng-repeat="file in spaceCtrl.space.files | orderBy: spaceCtrl.columnForOrder" ng-click="spaceCtrl.activeRow(file.id, 'true')" ng-dblclick="spaceCtrl.openDocument(file.link)" ng-class="{selected: file.selected}" context-menu="spaceCtrl.fileMenuOptions">
                         <div class="col-md-3 filter-table-cell description" title="{{ file.name }}">
                             <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" height="{{spaceCtrl.iconHeight}}" />
                             {{file.name | limitTo: 20}}{{file.name.length > 20 ? '...' : ''}}
@@ -169,3 +166,8 @@
         <dir-pagination-controls class="page-footer" on-page-change="spaceCtrl.paginate.getContent(newPageNumber)"></dir-pagination-controls>
     </div>
 </div>
+<style>
+.selected {
+    background-color: lightgray;
+}
+</style>
