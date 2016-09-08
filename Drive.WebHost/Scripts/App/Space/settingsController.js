@@ -9,7 +9,7 @@
     function SettingsController(settingsService, spaceService, folderService, fileService, $routeParams, $location, $rootScope, $window, toastr, $timeout) {
         var vm = this;
         vm.save = save;
-        vm.cancel = cancel;     
+        vm.cancel = cancel;
         vm.addSpaceUser = addSpaceUser;
         vm.addSpaceRole = addSpaceRole;
         vm.addReadUser = addReadUser;
@@ -33,16 +33,20 @@
         vm.isSet = isSet;
         vm.deleteSpace = deleteSpace;
         vm.addAllUsers = addAllUsers;
+        vm.allModify = false;
 
         activate();
 
         function addAllUsers() {
+            vm.permittedUsers = [];
             for (var i = 0; i < vm.users.length; i++) {
                 var pos = vm.permittedUsers.map(function (e) { return e.globalId; }).indexOf(vm.users[i].id);
                 if (pos == -1) {
                     vm.permittedUsers.push({
                         name: vm.users[i].name,
-                        globalId: vm.users[i].id
+                        globalId: vm.users[i].id,
+                        confirmedRead: true,
+                        confirmedWrite: vm.allModify
                     });
                 }
             }
@@ -321,8 +325,7 @@
             return vm.tab === tabNum;
         };
 
-        function deleteSpace()
-        {
+        function deleteSpace() {
             swal({
                 title: "Deleting space!",
                 text: "Are you sure that you want delete space and all folders and files in it?",
