@@ -130,7 +130,10 @@ namespace Drive.WebHost.Services.Pro
                     FileType = FileType.AcademyPro,
                     IsDeleted = false
                 },
-                Author = await _unitOfWork.Users.Query.SingleOrDefaultAsync(u => u.GlobalId == dto.Author.GlobalId)
+                //Author = await _unitOfWork.Users.Query.SingleOrDefaultAsync(u => u.GlobalId == dto.Author.GlobalId)
+
+                // TODO: Temporary fix. Change after adding author fields to create view
+                Author = await _unitOfWork.Users.Query.SingleOrDefaultAsync(u => u.GlobalId == userId)
             };
 
             dto.Tags.ForEach(tag =>
