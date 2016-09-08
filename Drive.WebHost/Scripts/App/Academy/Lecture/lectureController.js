@@ -26,12 +26,12 @@
         vm.linkTypes = linkTypeService;
         vm.getLecture = getLecture;
         vm.getAcademy = getAcademy;
-        vm.getCourseList = getCourseList;
-        vm.getCourse = getCourse;
         vm.submitTask = submitTask;
         vm.removeTask = removeTask;
         vm.editTask = editTask;
         vm.cancelUpdate = cancelUpdate;
+        vm.getCourseList = getCourseList;
+        vm.getCourse = getCourse;
 
         activate();
 
@@ -43,6 +43,14 @@
             vm.calendar = {
                 isOpen: false,
                 openCalendar: openCalendar,
+                timepickerOptions: {
+                    showMeridian: false
+                }
+            }
+
+            vm.calendarHomeTask = {
+                isOpen: false,
+                openCalendarHomeTask: openCalendarHomeTask,
                 timepickerOptions: {
                     showMeridian: false
                 }
@@ -108,6 +116,13 @@
             e.stopPropagation();
 
             vm.calendar.isOpen = true;
+        };
+
+        function openCalendarHomeTask(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            vm.calendarHomeTask.isOpen = true;
         };
 
         function submitTask() {
