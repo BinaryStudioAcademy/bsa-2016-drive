@@ -59,6 +59,12 @@
 
         vm.redirectToSpaceSettings = redirectToSpaceSettings;
 
+        // Drag and Drop
+        vm.onDrop = onDrop;
+        vm.dropValidate = dropValidate;
+        vm.dndMoveFile = dndMoveFile;
+        vm.dndMoveFolder = dndMoveFolder;
+
         vm.paginate = {
             currentPage: 1,
             pageSize: 15,
@@ -840,5 +846,45 @@
             vm.iconSrc = fileService.chooseIcon(type);
             return vm.iconSrc;
         }
+
+        //Drag'n'Drop
+        function onDrop(target, source) {
+            if (source.type == 'file') {
+                vm.dndMoveFile(target, source.dataUnit);
+            }
+            else {
+                vm.dndMoveFolder(target, source.dataUnit);
+            }
+        }
+
+        function dropValidate(target, source) {
+            return target !== source;
+        }
+
+        function dndMoveFile(folderId, file) {
+            file.parentId = folderId;
+            file.spaceId = vm.space.id;
+            fileService.updateFile(file.id, file, function () {
+                if (vm.parentId == null) {
+                    vm.getSpace();
+                } else {
+                    vm.getFolderContent(vm.parentId);
+                }
+            });
+        }
+
+        function dndMoveFolder(newParentId, folder) {
+            folder.parentId = newParentId;
+            folder.spaceId = vm.space.id;
+            folderService.updateFolder(folder, function () {
+                if (vm.parentId == null) {
+                    vm.getSpace();
+                } else {
+                    vm.getFolderContent(vm.parentId);
+                }
+            });
+        }
+        //Drag'n'Drop end 
+
     }
 }());

@@ -1247,3 +1247,49 @@ End Cancel button on search input*/
 
 
 /*end lecture wrapper*/
+/* Drag and Drop styles */
+#folders .on-drag-hover {
+    font-weight:bold;
+}
+
+#folders .on-drag-hover img{
+    transition: all 0.2s;
+    height: 40px;
+}
+
+#folders .on-drag-enter {
+    transition: all 0.4s;
+    padding: 0px 1em;
+}
+
+#folders .on-drag-enter img{
+    transition: all 0.2s;
+    height: 34px;
+}
+
+.dragging-elem{
+    opacity: 0.7;
+    background-color: white!important;
+}
+
+li.folder.on-drag-hover{
+    transition: all 0.2s;
+    padding-left: 0.4em;
+    padding-right: 0.4em;
+}
+
+li.folder.on-drag-hover img{
+    transition: all 0.2s;
+    height: 97px;
+}
+li.folder.on-drag-enter {
+    transition: all 0.4s;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+
+li.folder.on-drag-enter img{
+    transition: all 0.3s;
+    height: 77px;
+}
+/* END Drag'n'Drop */

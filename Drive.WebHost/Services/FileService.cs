@@ -159,7 +159,10 @@ namespace Drive.WebHost.Services
             file.IsDeleted = dto.IsDeleted;
             file.LastModified = DateTime.Now;
             file.Link = dto.Link;
-
+            if (dto.ParentId != 0)
+            {
+                file.FolderUnit = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
+            }
             await _unitOfWork?.SaveChangesAsync();
 
             return dto;
