@@ -17,7 +17,8 @@
             putData: putData,
             deleteData: deleteData,
             getAllUsers: getAllUsers,
-            searchCourses: searchCourses
+            searchCourses: searchCourses,
+            orderCoursesByColumn: orderCoursesByColumn
         }
 
         return service;
@@ -102,6 +103,12 @@
                             callback(response.data);
                         }
                     });
+        }
+
+        function orderCoursesByColumn(columnClicked, columnCurrent) {
+            var pos = columnCurrent.indexOf(columnClicked);
+            if (pos == 0) { return '-' + columnClicked; }
+            return columnClicked;
         }
     }
 })();

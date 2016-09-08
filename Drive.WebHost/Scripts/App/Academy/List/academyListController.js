@@ -13,6 +13,7 @@
 
     function AcademyListController(academyListService, $location, $uibModal, $routeParams) {
         var vm = this;
+        vm.columnForOrder = 'name';
         vm.openCourse = openCourse;
         vm.changeView = changeView;
         vm.openNewCourseWindow = openNewCourseWindow;
@@ -20,6 +21,7 @@
         vm.createNewCourse = createNewCourse;
         vm.search = search;
         vm.cancelSearch = cancelSearch;
+        vm.orderCourseByColumn = orderCourseByColumn;
 
         vm.courseMenuOptions = [
         //[
@@ -50,7 +52,7 @@
             vm.view = "fa fa-th";
             vm.showTable = true;
             vm.showGrid = false;
-            vm.columnForOrder = 'name';
+            vm.courseColumnForOrder = 'name';
             vm.searchText = $routeParams.tagName;
             vm.iconHeight = 30;
             vm.icon = "./Content/Icons/academyPro.svg";
@@ -134,6 +136,10 @@
         function cancelSearch() {
             vm.searchText = "";
             search();
+        }
+
+        function orderCourseByColumn(column) {
+            vm.courseColumnForOrder = academyListService.orderCoursesByColumn(column, vm.courseColumnForOrder);
         }
     }
 }());
