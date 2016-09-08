@@ -48,11 +48,9 @@
              }
          ]
      ];
-            if (vm.searchText === undefined) {
-                getAcademies();
-            } else {
-                search();
-            }
+            
+            search();
+            
         }
 
         function getAcademies() {
@@ -118,7 +116,7 @@
         }
  
         function deleteCourse(id) {
-            academyListService.deleteData(id);
+            academyListService.deleteData(id, search());
         }
 
         function search() {

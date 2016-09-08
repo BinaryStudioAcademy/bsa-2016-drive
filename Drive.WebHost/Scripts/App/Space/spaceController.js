@@ -503,7 +503,7 @@
 
         function createNewAP() {
             vm.course = {
-                 fileUnit: {}
+                fileUnit: { parentId: vm.parentId, spaceId: vm.spaceId }
             };
             vm.openNewCourseWindow('lg');
         }

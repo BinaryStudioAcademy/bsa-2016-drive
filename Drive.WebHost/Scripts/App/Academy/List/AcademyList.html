@@ -29,58 +29,90 @@
                 </div>
             </div>
         </div>
-        <ul class="sp-gv-flex-container wrap" ng-show="!academyListCtrl.showTable">
-            <li class="sp-gv-flex-item" role="button" ng-repeat="academy in academyListCtrl.academiesList" ng-dblclick="academyListCtrl.openCourse(academy.id)"  title="Created {{ academy.createdAt | date : 'short' }}">
-                <div class="sp-gv-wrapper-flex-item">
-                    <div class="sp-gv-item-content card">
-                        <div class="sp-gv-item-img-wrapper">
-                            <img ng-src="{{academyListCtrl.icon}}" alt="Academy" title="Course" />
-                        </div>
-                        <div class="sp-gv-item-text">
-                            <h4 title="{{ academy.fileUnit.name}}">{{ academy.fileUnit.name}}</h4>
-                            <h5 title="Author: {{academy.author.name}}">
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                                {{academy.author.name}}
-                            </h5>
-                            <br/>
-                            <h5 title="Start date {{ academy.startDate | date:'dd-MM-yyyy HH:mm'}}">
-                                <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
-                                {{ academy.startDate | date:'dd-MM-yyyy HH:mm'}}
-                            </h5>
-                            <p title="{{academy.fileUnit.description}}">{{academy.fileUnit.description}}</p>
-                        </div>
-                    </div>
-                </div>
-            </li>
-            <li class="sp-gv-flex-item"></li>
-            <li class="sp-gv-flex-item"></li>
-            <li class="sp-gv-flex-item"></li>
-        </ul>
-</div>
-    <div class="filter-table" ng-show="academyListCtrl.showTable">
-        <div class="header-wrapper">
-            <div class="row header-row">
-                <div class="col-md-3">Name</div>
-                <div class="col-md-3">Description</div>
-                <div class="col-md-3">Author</div>
-                <div class="col-md-3">Start date</div>
-            </div>
-        </div>
-        <div class="filter-table-internal">
-            <div class="filter-table-row">
-                <div class="row filter-table-row" role="button" ng-repeat="academy in academyListCtrl.academiesList"
-                     ng-dblclick="academyListCtrl.openCourse(academy.id)" context-menu="academyListCtrl.courseMenuOptions">
-                    <div class="col-md-2 filter-table-cell description" title="{{ academy.fileUnit.name }}">
-                        <img ng-src="{{academyListCtrl.icon}}" height="{{academyListCtrl.iconHeight}}" /> 
-                        {{academy.fileUnit.name | limitTo: 15}}{{academy.fileUnit.name.length > 15 ? '...' : ''}}
-                    </div>
-                    <div class="col-md-4 filter-table-cell description" title="{{academy.fileUnit.description}}">
-                        {{academy.fileUnit.description | limitTo: 40}}{{academy.fileUnit.description.length > 40 ? '...' : ''}}
-                    </div>
-                    <div class="col-md-3 filter-table-cell">{{ academy.author.name }}</div>
-                    <div class="col-md-3 filter-table-cell">{{ academy.startDate | date:'dd-MM-yyyy HH:mm' }}</div>
-                </div>
-            </div>
-        </div>
+       <div class="wrap" ng-show="!academyListCtrl.showTable">
+           <div ng-repeat="academyspace in academyListCtrl.academiesList">
+               <div class="grid-space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ academyspace.name }}</div>
+               <div uib-collapse="space.isCollapsed">
+                   <ul class="sp-gv-flex-container">
+                       <li class="sp-gv-flex-item" role="button" ng-repeat="academy in academyspace.courses" ng-dblclick="academyListCtrl.openCourse(academy.id)" title="Created {{ academy.createdAt | date : 'short' }}">
+                           <div class="sp-gv-wrapper-flex-item ">
+                               <div class="sp-gv-item-content card">
+                                   <div class="sp-gv-item-img-wrapper">
+                                       <img ng-src="{{academyListCtrl.icon}}" alt="Academy" title="Course" />
+                                   </div>
+                                   <div class="sp-gv-item-text">
+                                       <h4 title="{{ academy.fileUnit.name}}">{{ academy.fileUnit.name}}</h4>
+                                       <h5 title="Author: {{academy.author.name}}">
+                                           <i class="fa fa-user" aria-hidden="true"></i>
+                                           {{academy.author.name}}
+                                       </h5>
+                                       <br />
+                                       <h5 title="Start date {{ academy.startDate | date:'dd-MM-yyyy HH:mm'}}">
+                                           <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                                           {{ academy.startDate | date:'dd-MM-yyyy HH:mm'}}
+                                       </h5>
+                                       <p title="{{academy.fileUnit.description}}">{{academy.fileUnit.description}}</p>
+                                   </div>
+                               </div>
+                           </div>
+                       </li>
+                       <li class="sp-gv-flex-item"></li>
+                       <li class="sp-gv-flex-item"></li>
+                       <li class="sp-gv-flex-item"></li>
+                   </ul>
+               </div>
+               <hr />
+           </div>
+       </div>
+       <div class="filter-table container-md" ng-show="academyListCtrl.showTable">
+           <div class="header-wrapper">
+               <div class="row header-row">
+                   <div class="col-md-3" ng-click="academyListCtrl.orderByColumn('name')">
+                       Name
+                       <span ng-show="academyListCtrl.columnForOrder == 'name'"><i class="fa fa-sort-asc"></i></span>
+                       <span ng-show="academyListCtrl.columnForOrder == '-name'"><i class="fa fa-sort-desc"></i></span>
+                   </div>
+                   <div class="col-md-3" ng-click="fileFilterCtrl.orderByColumn('description')">
+                       Description
+                       <span ng-show="academyListCtrl.columnForOrder == 'description'"><i class="fa fa-sort-asc"></i></span>
+                       <span ng-show="academyListCtrl.columnForOrder == '-description'"><i class="fa fa-sort-desc"></i></span>
+                   </div>
+                   <div class="col-md-2" ng-click="fileFilterCtrl.orderByColumn('author.name')">
+                       Author
+                       <span ng-show="academyListCtrl.columnForOrder == 'author.name'"><i class="fa fa-sort-asc"></i></span>
+                       <span ng-show="academyListCtrl.columnForOrder == '-author.name'"><i class="fa fa-sort-desc"></i></span>
+                   </div>
+                   <div class="col-md-2" ng-click="fileFilterCtrl.orderByColumn('createdAt')">
+                       Created
+                       <span ng-show="academyListCtrl.columnForOrder == 'createdAt'"><i class="fa fa-sort-asc"></i></span>
+                       <span ng-show="academyListCtrl.columnForOrder == '-createdAt'"><i class="fa fa-sort-desc"></i></span>
+                   </div>
+                   <div class="col-md-2">Type</div>
+               </div>
+           </div>
+           <div class="filter-table-internal">
+               <div ng-repeat="academyspace in academyListCtrl.academiesList">
+                   <div class="space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ academyspace.name }}</div>
+                   <div uib-collapse="space.isCollapsed">
+                       <div style="transition: all 2s">
+                           <div class="filter-table-row">
+                               <div class="row filter-table-row" role="button" ng-repeat="academy in academyspace.courses | orderBy: academyListCtrl.columnForOrder" ng-dblclick="academyListCtrl.openCourse(academy.id)" context-menu="academyListCtrl.courseMenuOptions">
+                                   <div class="col-md-3 filter-table-cell description" title="{{ academy.fileUnit.name }}">
+                                       <img ng-src="{{academyListCtrl.icon}}" height="{{academyListCtrl.iconHeight}}" />
+                                       {{academy.fileUnit.name | limitTo: 15}}{{academy.fileUnit.name.length > 15 ? '...' : ''}}
+                                   </div>
+                                   <div class="col-md-3 filter-table-cell description" title="{{academy.fileUnit.description}}">
+                                       {{academy.fileUnit.description | limitTo: 40}}{{academy.fileUnit.description.length > 40 ? '...' : ''}}
+                                   </div>
+                                   <div class="col-md-2 filter-table-cell">{{ academy.author.name }}</div>
+                                   <div class="col-md-2 filter-table-cell">{{ academy.startDate | date:'dd-MM-yyyy HH:mm' }}</div>
+                                   <div class="col-md-2 filter-table-cell">{{ academy.fileUnit.fileType | typeOfFile }}</div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>     
     </div>
 </div>
