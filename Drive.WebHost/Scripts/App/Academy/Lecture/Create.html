@@ -111,23 +111,50 @@
                         </uib-accordion-heading>
                         <div class="col-md-12">
                             <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table users table-striped table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:30%">Deadline</th>
+                                                <th style="width:60%">Description</th>
+                                                <th style="width:10%"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="overflow-x: hidden;">
+                                            <tr ng-repeat="task in lectureCreateCtrl.lecture.homeTasks">
+                                                <td style="width: 30%" class="description" title="{{task.deadlineDate}}">
+                                                    {{ task.deadlineDate | limitTo: 16}}{{task.deadlineDate.length > 16 ? '...' : '' }}
+                                                </td>
+                                                <td style="width: 60%" class="description" title="{{task.description}}">
+                                                    {{ task.description | limitTo: 36 }}{{task.description.length > 36 ? '...' : '' }}
+                                                </td>
+                                                <td style="width:10%">
+                                                    <i role="button" class="fa fa-pencil-square-o fa-lg" ng-click="editLink($index)" title="Edit link" aria-hidden="true"></i>
+                                                    <i role="button" class="fa fa-trash fa-lg" ng-click="removeLink($index)" title="Delete link" aria-hidden="true"></i>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
                                 <div class="col-sm-6">
-                                    <form name="taskForm" ng-submit="lectureCreateCtrl.submitUseful()" class="form-horizontal" novalidate>
-                                        <div class="form-group" ng-class="{ 'has-error' : taskForm.usefulName.$invalid && !taskForm.usefulName.$pristine }">
+                                    <form name="taskForm" ng-submit="lectureCreateCtrl.submitTask()" class="form-horizontal" novalidate>
+                                        <div class="form-group" ng-class="{ 'has-error' : taskForm.taskDescription.$invalid && !taskForm.taskDescription.$pristine }">
                                             <label class="col-sm-3">Description:</label>
-                                            <textarea type="text" name="usefulName" id="usefulName" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="lectureCreateCtrl.currentUseful.name" placeholder="Description" required></textarea>
-                                            <p ng-show="taskForm.usefulName.$error.required && taskForm.usefulName.$touched" class="help-block col-sm-offset-3" ng-cloak>Description is required</p>
-                                            <p ng-show="taskForm.usefulName.$error.pattern" class="help-block col-sm-offset-3" ng-cloak>Not a valid description</p>
+                                            <textarea type="text" name="taskDescription" id="taskDescription" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="lectureCreateCtrl.currentTask.description" placeholder="Description" required></textarea>
+                                            <p ng-show="taskForm.taskDescription.$error.required && taskForm.taskDescription.$touched" class="help-block col-sm-offset-3" ng-cloak>Description is required</p>
+                                            <p ng-show="taskForm.taskDescription.$error.pattern" class="help-block col-sm-offset-3" ng-cloak>Not a valid description</p>
                                         </div>
-                                        <div class="form-group datetimepicker" ng-class="{ 'has-error' : taskForm.taskDate.$invalid && !taskForm.taskDate.$pristine }">
+                                        <div class="form-group datetimepicker" ng-class="{ 'has-error' : taskForm.deadlineDate.$invalid && !taskForm.deadlineDate.$pristine }">
                                             <label class="col-sm-3">Deadline:</label>
                                             <p class="input-group">
                                                 <span class="input-group-btn">
-                                                    <input type="datetime" name="taskDate" id="taskDate" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="lectureCreateCtrl.hometask.startDate" is-open="lectureCreateCtrl.calendarHomeTask.isOpen" placeholder="Select deadline date" timepicker-options="lectureCreateCtrl.calendarHomeTask.timepickerOptions" required />
+                                                    <input type="datetime" name="deadlineDate" id="deadlineDate" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="lectureCreateCtrl.currentTask.deadlineDate" is-open="lectureCreateCtrl.calendarHomeTask.isOpen" placeholder="Select deadline date" timepicker-options="lectureCreateCtrl.calendarHomeTask.timepickerOptions" required />
                                                     <button type="button" class="btn btn-default" ng-click="lectureCreateCtrl.calendarHomeTask.openCalendarHomeTask($event, prop)"><i class="fa fa-calendar"></i></button>
                                                 </span>
-                                            <p ng-show="taskForm.taskDate.$error.required && taskForm.taskDate.$touched" class="help-block col-sm-offset-3">Date is required</p>
-                                            <p ng-show="taskForm.taskDate.$error.datetime" class="help-block col-sm-offset-3">Not a valid date</p>
+                                                <p ng-show="taskForm.deadlineDate.$error.required && taskForm.deadlineDate.$touched" class="help-block col-sm-offset-3">Date is required</p>
+                                                <p ng-show="taskForm.deadlineDate.$error.datetime" class="help-block col-sm-offset-3">Not a valid date</p>
                                             </p>
                                         </div>
                                         <div class="form-group">
@@ -137,11 +164,6 @@
                                             </button>
                                         </div>
                                     </form>
-                                </div>
-                                <div class="col-sm-6">
-                                    <ul class="ul">
-                                        <li class="list" ng-repeat="useful in lectureCreateCtrl.lecture.usefulLinks">{{useful.name}} ({{useful.link}})</li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>

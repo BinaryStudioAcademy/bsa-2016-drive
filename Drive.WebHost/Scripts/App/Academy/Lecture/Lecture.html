@@ -258,7 +258,7 @@
                 </div>
                 <div class="small">
                     <p>
-                        <small class="text-muted" title="Lecture author"><i class="fa fa-user" aria-hidden="true"></i> {{ lectureCtrl.lecture.author }}</small>
+                        <small class="text-muted" title="Lecture author"><i class="fa fa-user" aria-hidden="true"></i> {{ lectureCtrl.lecture.author.name }}</small>
                     </p>
                     <p>
                         <small class="text-muted" title="Lecture start date"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> {{ lectureCtrl.lecture.startDate | date:'dd-MM-yyyy HH:mm' }}</small>
@@ -276,6 +276,24 @@
                         </div>
                         <div class="timeline-body">
                             <p>{{lectureCtrl.lecture.description}}</p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="timeline-badge info" title="Home task">
+                        <i class="fa fa-paper-plane-o fa-lg" aria-hidden="true"></i>
+                    </div>
+                    <div class="timeline-panel">
+                        <div class="timeline-heading">
+                            <h4 class="timeline-title">Home task</h4>
+                        </div>
+                        <div class="timeline-body" ng-show="lectureCtrl.lecture.homeTasks.length">
+                            <div class="bs-callout bs-callout-info" ng-repeat="task in lectureCtrl.lecture.homeTasks">
+                                <p>
+                                    {{task.description}}
+                                </p>
+                                <p>{{task.taskDate}}</p>
+                            </div>
                         </div>
                     </div>
                 </li>
@@ -314,25 +332,6 @@
                     link-types="lectureCtrl.linkTypes"
                     icon-class="fa fa-link fa-lg"
                     block-title="Useful links">
-                </li>
-                <li>
-                    <div class="timeline-badge info" title="Home task">
-                        <i class="fa fa-paper-plane-o fa-lg" aria-hidden="true"></i>
-                    </div>
-                    <div class="timeline-panel">
-                        <div class="timeline-heading">
-                            <h4 class="timeline-title">Home task</h4>
-                        </div>
-                        <div class="timeline-body" ng-show="lectureCtrl.lecture.homeTasks.length">
-                            <div class="bs-callout bs-callout-info" ng-repeat="task in lectureCtrl.lecture.homeTasks">
-                                <h4>{{task.description}}</h4>
-                                <p>
-                                    <a ng-href="{{link.link}}" target="_blank">{{link.link}} <i class="fa fa-external-link" aria-hidden="true"></i></a>
-                                </p>
-                                <p>{{task.taskDate}}</p>
-                            </div>
-                        </div>
-                    </div>
                 </li>
             </ul>
         </div>
@@ -385,6 +384,69 @@
                                       links-name="Useful links"
                                       image-class="fa fa-link fa-lg">
                         </create-links>
+                        <div uib-accordion-group class="panel-default" is-open="status.open6" title="Home task">
+                            <uib-accordion-heading>
+                                <i class="fa fa-paper-plane-o fa-lg" aria-hidden="true"></i> Home task <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open6, 'glyphicon-chevron-right': !status.open6}"></i>
+                            </uib-accordion-heading>
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <table class="table users table-striped table-hover">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width:30%">Deadline</th>
+                                                    <th style="width:60%">Description</th>
+                                                    <th style="width:10%"></th>
+                                                </tr>
+                                            </thead>
+                                            <tbody style="overflow-x: hidden;">
+                                                <tr ng-repeat="task in lectureCtrl.lecture.homeTasks">
+                                                    <td style="width: 30%" class="description" title="{{task.deadlineDate}}">
+                                                        {{ task.deadlineDate | limitTo: 16}}{{task.deadlineDate.length > 16 ? '...' : '' }}
+                                                    </td>
+                                                    <td style="width: 60%" class="description" title="{{task.description}}">
+                                                        {{ task.description | limitTo: 36 }}{{task.description.length > 36 ? '...' : '' }}
+                                                    </td>
+                                                    <td style="width:10%">
+                                                        <i role="button" class="fa fa-pencil-square-o fa-lg" ng-click="lectureCtrl.editTask($index)" title="Edit link" aria-hidden="true"></i>
+                                                        <i role="button" class="fa fa-trash fa-lg" ng-click="lectureCtrl.removeTask($index)" title="Delete link" aria-hidden="true"></i>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <form name="taskForm" ng-submit="lectureCtrl.submitTask()" class="form-horizontal" novalidate>
+                                            <div class="form-group" ng-class="{ 'has-error' : taskForm.taskDescription.$invalid && !taskForm.taskDescription.$pristine }">
+                                                <label class="col-sm-3">Description:</label>
+                                                <textarea type="text" name="taskDescription" id="taskDescription" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="lectureCtrl.currentTask.description" placeholder="Description" required></textarea>
+                                                <p ng-show="taskForm.taskDescription.$error.required && taskForm.taskDescription.$touched" class="help-block col-sm-offset-3" ng-cloak>Description is required</p>
+                                                <p ng-show="taskForm.taskDescription.$error.pattern" class="help-block col-sm-offset-3" ng-cloak>Not a valid description</p>
+                                            </div>
+                                            <div class="form-group datetimepicker" ng-class="{ 'has-error' : taskForm.deadlineDate.$invalid && !taskForm.deadlineDate.$pristine }">
+                                                <label class="col-sm-3">Deadline:</label>
+                                                <p class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <input type="datetime" name="deadlineDate" id="deadlineDate" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="lectureCtrl.currentTask.deadlineDate" is-open="lectureCtrl.calendarHomeTask.isOpen" placeholder="Select deadline date" timepicker-options="lectureCtrl.calendarHomeTask.timepickerOptions" required />
+                                                        <button type="button" class="btn btn-default" ng-click="lectureCtrl.calendarHomeTask.openCalendarHomeTask($event, prop)"><i class="fa fa-calendar"></i></button>
+                                                    </span>
+                                                <p ng-show="taskForm.deadlineDate.$error.required && taskForm.deadlineDate.$touched" class="help-block col-sm-offset-3">Date is required</p>
+                                                <p ng-show="taskForm.deadlineDate.$error.datetime" class="help-block col-sm-offset-3">Not a valid date</p>
+                                                </p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-3"></label>
+                                                <button type="submit" class="btn btn-info" ng-disabled="taskForm.$invalid">
+                                                    <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Add task
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </uib-accordion>
                 </div>
             </div>

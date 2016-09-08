@@ -22,17 +22,17 @@
         vm.updateLecture = updateLecture;
         vm.linkTypes = linkTypeService;
         vm.getLecture = getLecture;
-        vm.submitVideo = submitVideo;
-        vm.submitSlide = submitSlide;
-        vm.submitRepository = submitRepository;
-        vm.submitSample = submitSample;
-        vm.submitUseful = submitUseful;
+        vm.submitTask = submitTask;
+        vm.removeTask = removeTask;
+        vm.editTask = editTask;
         vm.cancelUpdate = cancelUpdate;
 
         activate();
 
         function activate() {
             vm.isEditing = false;
+
+            vm.currentTask = {};
 
             vm.calendar = {
                 isOpen: false,
@@ -94,39 +94,20 @@
             vm.calendar.isOpen = true;
         };
 
-        function submitVideo() {
-            if (vm.currentVideo.name && vm.currentVideo.link) {
-                vm.lecture.videoLinks.push(vm.currentVideo);
-                vm.currentVideo = {};
+        function submitTask() {
+            if (vm.currentTask.description) {
+                vm.lecture.homeTasks.push(vm.currentTask);
+                vm.currentTask = {};
             }
         }
 
-        function submitSlide() {
-            if (vm.currentSlide.name && vm.currentSlide.link) {
-                vm.lecture.slidesLinks.push(vm.currentSlide);
-                vm.currentSlide = {};
-            }
-        }
+        function removeTask(index) {
+            vm.lecture.homeTasks.splice(index, 1);
+        };
 
-        function submitRepository() {
-            if (vm.currentRepository.name && vm.currentRepository.link) {
-                vm.lecture.repositoryLinks.push(vm.currentRepository);
-                vm.currentRepository = {};
-            }
-        }
-
-        function submitSample() {
-            if (vm.currentSample.name && vm.currentSample.link) {
-                vm.lecture.sampleLinks.push(vm.currentSample);
-                vm.currentSample = {};
-            }
-        }
-
-        function submitUseful() {
-            if (vm.currentuseful.name && vm.currentuseful.link) {
-                vm.lecture.usefulLinks.push(vm.currentuseful);
-                vm.currentuseful = {};
-            }
-        }
+        function editTask(index) {
+            vm.currentTask = vm.lecture.homeTasks[index];
+            vm.lecture.homeTasks.splice(index, 1);
+        };
     }
 }());
