@@ -59,7 +59,8 @@
 
         // Drag and Drop
         vm.onDrop = onDrop;
-        vm.dndMoveFileToFolder = dndMoveFileToFolder;
+        vm.dndMoveFile = dndMoveFile;
+        vm.dndMoveFolder = dndMoveFolder;
 
         vm.paginate = {
             currentPage: 1,
@@ -800,15 +801,20 @@
         }
 
         //Drag'n'Drop
-        function onDrop (target, source) {
-            vm.dndMoveFileToFolder(target, source);
-        };
+        function onDrop(target, source) {
+            if (source.type == 'file') {
+                vm.dndMoveFile(target, source.dataUnit);
+            }
+            else {
+                vm.dndMoveFolder(target, source.dataUnit);
+            }
+        }
 
-        //vm.dropValidate = function (target, source) {
-        //    return target !== source;
-        //};
+        vm.dropValidate = function (target, source) {
+            return target !== source;
+        }
 
-        function dndMoveFileToFolder(folderId, file) {
+        function dndMoveFile(folderId, file) {
             file.parentId = folderId;
             file.spaceId = vm.space.id;
             fileService.updateFile(file.id, file, function () {
@@ -817,7 +823,18 @@
                 } else {
                     vm.getFolderContent(vm.parentId);
                 }
+            });
+        }
 
+        function dndMoveFolder(newParentId, folder) {
+            folder.parentId = newParentId;
+            folder.spaceId = vm.space.id;
+            folderService.updateFolder(folder, function () {
+                if (vm.parentId == null) {
+                    vm.getSpace();
+                } else {
+                    vm.getFolderContent(vm.parentId);
+                }
             });
         }
         //Drag'n'Drop end 
