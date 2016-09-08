@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using Drive.DataAccess.Entities.Pro;
 using Drive.DataAccess.Interfaces;
 using Drive.Logging;
 using Drive.WebHost.Services.Pro.Abstract;
 using Driver.Shared.Dto.Pro;
+using Driver.Shared.Dto.Users;
 
 namespace Drive.WebHost.Services.Pro
 {
@@ -16,11 +16,13 @@ namespace Drive.WebHost.Services.Pro
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ILogger _logger;
+        private readonly IUsersService _userService;
 
-        public LectureService(IUnitOfWork unitOfWork, ILogger logger)
+        public LectureService(IUnitOfWork unitOfWork, ILogger logger, IUsersService userService)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
+            _userService = userService;
         }
 
         public async Task<IEnumerable<LectureDto>> GetAllAsync()
@@ -98,21 +100,27 @@ namespace Drive.WebHost.Services.Pro
                     IsDeleted = sample.IsDeleted,
                     Code = sample.Code
                 }),
-                HomeTasks = lecture.HomeTasks.Select(task => new HomeTaskDto
+                HomeTasks = lecture.HomeTasks.Where(x => !x.IsDeleted).Select(task => new HomeTaskDto
                 {
                     Id = task.Id,
                     Description = task.Description,
                     IsDeleted = task.IsDeleted,
                     DeadlineDate = task.DeadlineDate
                 }),
-                CourseId = lecture.Course.Id
+                CourseId = lecture.Course.Id,
+                Author = new AuthorDto { Id = lecture.Author.Id }
             }).SingleOrDefaultAsync();
+
+            var author = await _userService.GetAsync(result.Author.Id);
+            result.Author.Name = author.name + " " + author.surname;
 
             return result;
         }
 
         public async Task<LectureDto> CreateAsync(LectureDto dto)
         {
+            var userId = _userService.CurrentUserId;
+
             var linksList = new List<ContentLink>();
 
             linksList.AddRange(ProcessList(dto.VideoLinks, LinkType.Video));
@@ -137,6 +145,7 @@ namespace Drive.WebHost.Services.Pro
                     Code = sample.Code,
                     IsDeleted = false
                 }).ToList(),
+                Author = await _unitOfWork.Users.Query.SingleOrDefaultAsync(u => u.GlobalId == userId),
                 HomeTasks = dto.HomeTasks.Select(task => new HomeTask
                 {
                     Description = task.Description,
@@ -152,7 +161,10 @@ namespace Drive.WebHost.Services.Pro
 
         public async Task<LectureDto> UpdateAsync(int id, LectureDto dto)
         {
-            var lecture = await _unitOfWork.Lectures.Query.Where(x => x.Id == id).Include(x => x.ContentList).SingleOrDefaultAsync();
+            var lecture = await _unitOfWork.Lectures.Query.Where(x => x.Id == id).SingleOrDefaultAsync();
+            var links = await _unitOfWork.ContentLinks.Query.AsNoTracking().Where(x => x.Lecture.Id == id).ToListAsync();
+            var tasks = await _unitOfWork.HomeTasks.Query.AsNoTracking().Where(x => x.Lecture.Id == id).ToListAsync();
+
             if (lecture != null)
             {
                 _unitOfWork.Lectures.Update(lecture);
@@ -174,14 +186,30 @@ namespace Drive.WebHost.Services.Pro
 
                 linksList.ForEach(x => x.Lecture = lecture);
 
-                var existingLinks = lecture.ContentList.ToList();
-                var addedLinks = linksList.Where(link => existingLinks.All(x => x.Id != link.Id)).ToList();
-                var deletedLinks = existingLinks.Where(link => linksList.All(x => x.Id != link.Id)).ToList();
-                var updatedLinks = existingLinks.Where(link => deletedLinks.All(x => x.Id != link.Id)).ToList();
+                var addedLinks = linksList.Where(link => links.All(x => x.Id != link.Id)).ToList();
+                var deletedLinks = links.Where(link => linksList.All(x => x.Id != link.Id)).ToList();
+                var updatedLinks = linksList.Where(link => deletedLinks.All(x => x.Id != link.Id)).ToList();
+
+                var taskList = dto.HomeTasks.Select(task => new HomeTask
+                {
+                    Id = task.Id,
+                    IsDeleted = false,
+                    Description = task.Description,
+                    DeadlineDate = task.DeadlineDate,
+                    Lecture = lecture
+                }).ToList();
+
+                var addedTasks = taskList.Where(link => tasks.All(x => x.Id != link.Id)).ToList();
+                var deletedTasks = tasks.Where(link => taskList.All(x => x.Id != link.Id)).ToList();
+                var updatedTasks = taskList.Where(link => deletedTasks.All(x => x.Id != link.Id)).ToList();
 
                 addedLinks.ForEach(x => _unitOfWork.ContentLinks.Create(x));
                 updatedLinks.ForEach(x => _unitOfWork.ContentLinks.Update(x));
-                deletedLinks.ForEach(x => _unitOfWork.ContentLinks.ForceDelete(x.Id));
+                deletedLinks.ForEach(x => _unitOfWork.ContentLinks.Delete(x.Id));
+
+                addedTasks.ForEach(x => _unitOfWork.HomeTasks.Create(x));
+                updatedTasks.ForEach(x => _unitOfWork.HomeTasks.Update(x));
+                deletedTasks.ForEach(x => _unitOfWork.HomeTasks.Delete(x.Id));
             }
 
             await _unitOfWork.SaveChangesAsync();
