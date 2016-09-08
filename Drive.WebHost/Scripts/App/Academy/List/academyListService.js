@@ -64,11 +64,11 @@
             $http.delete(baseUrl + '/api/academies/' + id)
                 .then(function(response) {
                     if(callback) {
-                        callback(response.data);
+                        callback(response);
                     }
                 },
                 function () {
-                        console.log('Error while course editing!');
+                        console.log('Error while course deletion!');
                     });
         }
 
