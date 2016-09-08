@@ -49,6 +49,10 @@
                         confirmedWrite: vm.allModify
                     });
                 }
+                addReadUser(true, vm.users[i].id);
+                if (vm.allModify) {
+                    addWriteUser(true, vm.users[i].id);
+                }
             }
         }
 
