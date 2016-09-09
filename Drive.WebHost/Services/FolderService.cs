@@ -155,6 +155,10 @@ namespace Drive.WebHost.Services
             folder.IsDeleted = dto.IsDeleted;
             folder.Name = dto.Name;
             folder.LastModified = DateTime.Now;
+            if (dto.ParentId != 0)
+            {
+                folder.FolderUnit = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
+            }
 
             await _unitOfWork?.SaveChangesAsync();
 

@@ -6,10 +6,11 @@
         'LectureService',
         'toastr',
         '$location',
-        '$routeParams'
+        '$routeParams',
+         'AcademyService'
     ];
 
-    function LectureCreateController(lectureService, toastr, $location, $routeParams) {
+    function LectureCreateController(lectureService, toastr, $location, $routeParams, academyService) {
         var vm = this;
         vm.currentAcademyId = $routeParams.id;
         vm.addNewLecture = addNewLecture;
@@ -20,6 +21,9 @@
         vm.submitRepository = submitRepository;
         vm.submitSample = submitSample;
         vm.submitUseful = submitUseful;
+        vm.getAcademy = getAcademy;
+        vm.getCourseList = getCourseList;
+        vm.getCourse = getCourse;
         vm.submitTask = submitTask;
 
         activate();
@@ -44,6 +48,8 @@
                 }
             };
 
+            getAcademy();
+
             vm.calendarHomeTask = {
                 isOpen: false,
                 openCalendarHomeTask: openCalendarHomeTask,
@@ -57,10 +63,18 @@
             return lectureService.pushData(vm.lecture);
         };
 
+        function getAcademy() {
+            return academyService.getAcademy(vm.currentAcademyId)
+                .then(function (data) {
+                    vm.academy = data;
+                    return vm.academy;
+                });
+        }
+
         function create() {
             if (vm.lecture.name) {
                 vm.addNewLecture()
-                    .then(function() {
+                    .then(function () {
                         $location.url('/apps/academy/' + vm.currentAcademyId);
                     });
                 toastr.success(
@@ -129,6 +143,14 @@
                 vm.lecture.homeTasks.push(vm.currentTask);
                 vm.currentTask = {};
             }
+        }
+
+        function getCourseList() {
+            $location.url('/apps/academy/');
+        }
+
+        function getCourse(id) {
+            $location.url('/apps/academy/' + id);
         }
     }
 })();

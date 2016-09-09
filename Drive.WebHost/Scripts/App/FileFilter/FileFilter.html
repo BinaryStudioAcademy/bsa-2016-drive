@@ -32,7 +32,7 @@
             <div class="grid-space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ space.name }}</div>
             <div uib-collapse="space.isCollapsed">
                 <ul class="sp-gv-flex-container">
-                    <li class="sp-gv-flex-item" role="button" context-menu="fileFilterCtrl.fileMenuOptions" ng-repeat="file in space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="fileFilterCtrl.openDocument(file.link)">
+                    <li class="sp-gv-flex-item" role="button" context-menu="fileFilterCtrl.fileMenuOptions" ng-repeat="file in space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="fileFilterCtrl.openDocument(file)">
                         <div class="sp-gv-wrapper-flex-item ">
                             <div class="sp-gv-item-content card">
                                 <div class="sp-gv-item-img-wrapper">
@@ -89,7 +89,7 @@
                 <div uib-collapse="space.isCollapsed">
                     <div style="transition: all 2s">
                         <div class="filter-table-row">
-                            <div class="row filter-table-row" role="button" ng-repeat="file in space.files | orderBy: fileFilterCtrl.columnForOrder" ng-dblclick="fileFilterCtrl.openDocument(file.link)" context-menu="fileFilterCtrl.fileMenuOptions">
+                            <div class="row filter-table-row" role="button" ng-repeat="file in space.files | orderBy: fileFilterCtrl.columnForOrder" ng-dblclick="fileFilterCtrl.openDocument(file)" context-menu="fileFilterCtrl.fileMenuOptions">
                                 <div class="col-md-3 filter-table-cell description" title="{{ file.name }}">
                                     <img ng-src="{{fileFilterCtrl.chooseIcon(file.fileType)}}" height="{{fileFilterCtrl.iconHeight}}" />
                                     {{file.name | limitTo: 20}}{{file.name.length > 20 ? '...' : ''}}

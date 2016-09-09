@@ -211,8 +211,8 @@
             vm.columnForOrder = fileService.orderByColumn(column, vm.columnForOrder);
         }
 
-        function openDocument(url) {
-            fileService.openFile(url);
+        function openDocument(file) {
+            fileService.openFile(file.link);
         }
 
         function chooseIcon(type) {

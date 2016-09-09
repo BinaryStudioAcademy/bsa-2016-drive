@@ -21,7 +21,7 @@
                     case 6:
                         return 'Physical file';
                     case 7:
-                        return "AcademyPro"
+                        return "AcademyPro";
                     default:
                         return '';
                 }

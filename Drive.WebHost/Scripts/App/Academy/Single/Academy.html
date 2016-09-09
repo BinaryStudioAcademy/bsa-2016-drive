@@ -1,4 +1,4 @@
-﻿<div class="container-fluid">
+﻿<div class="container-fluid" style="overflow: hidden; height: 100%">
     <br />
     <div class="btn-group btn-breadcrumb">
         <a class="btn btn-info" ng-click="academyCtrl.getCourseList()"><i class="fa fa-graduation-cap fa-lg"></i> Academy Pro</a>
@@ -22,8 +22,6 @@
                 </p>
             </div>
         </div>
-        <hr>
-        <hr>
         <hr>
         <p>{{academyCtrl.academy.fileUnit.description}}</p>
         
@@ -69,11 +67,11 @@
                 <li class="sp-gv-flex-item"></li>
             </ul>
         </div>
-        <div class="filter-table" ng-show="academyCtrl.showTable">
+        <div class="filter-table-lecture container-md" ng-show="academyCtrl.showTable">
             <div class="header-wrapper">
                 <div class="row header-row">
-                    <div class="col-md-3">Name</div>
-                    <div class="col-md-3">Description</div>
+                    <div class="col-md-2">Name</div>
+                    <div class="col-md-4">Description</div>
                     <div class="col-md-3">Author</div>
                     <div class="col-md-3">Start date</div>
                 </div>

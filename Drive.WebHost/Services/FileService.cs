@@ -159,7 +159,10 @@ namespace Drive.WebHost.Services
             file.IsDeleted = dto.IsDeleted;
             file.LastModified = DateTime.Now;
             file.Link = dto.Link;
-
+            if (dto.ParentId != 0)
+            {
+                file.FolderUnit = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
+            }
             await _unitOfWork?.SaveChangesAsync();
 
             return dto;
@@ -265,6 +268,13 @@ namespace Drive.WebHost.Services
         {
             _unitOfWork?.Files?.Delete(id);
             await _unitOfWork?.SaveChangesAsync();
+        }
+
+        public async Task<int> SearchCourse(int fileId)
+        {
+            var result = await _unitOfWork.AcademyProCourses.Query.SingleOrDefaultAsync(c => c.FileUnit.Id == fileId);
+
+            return result.Id;
         }
 
         public async Task<ICollection<AppDto>> FilterApp(FileType fileType)

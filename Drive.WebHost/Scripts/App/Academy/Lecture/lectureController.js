@@ -9,12 +9,15 @@
         '$routeParams',
         '$sce',
         'LinkTypeService',
-        'toastr'
+        'toastr',
+        '$location',
+        'AcademyService'
     ];
 
-    function LectureController(lectureService, $routeParams, $sce, linkTypeService, toastr) {
+    function LectureController(lectureService, $routeParams, $sce, linkTypeService, toastr, $location, academyService) {
         var vm = this;
         vm.currentLectureId = $routeParams.lectureId;
+        vm.currentAcademyId = $routeParams.id;
         vm.lecture = null;
         vm.trustSrc = trustSrc;
         vm.edit = edit;
@@ -22,10 +25,13 @@
         vm.updateLecture = updateLecture;
         vm.linkTypes = linkTypeService;
         vm.getLecture = getLecture;
+        vm.getAcademy = getAcademy;
         vm.submitTask = submitTask;
         vm.removeTask = removeTask;
         vm.editTask = editTask;
         vm.cancelUpdate = cancelUpdate;
+        vm.getCourseList = getCourseList;
+        vm.getCourse = getCourse;
 
         activate();
 
@@ -50,6 +56,8 @@
                 }
             }
 
+            getAcademy();
+
             return getLecture();
         }
 
@@ -58,6 +66,14 @@
                 .then(function (data) {
                     vm.lecture = data;
                     return vm.lecture;
+                });
+        }
+
+        function getAcademy() {
+            return academyService.getAcademy(vm.currentAcademyId)
+                .then(function (data) {
+                    vm.academy = data;
+                    return vm.academy;
                 });
         }
 
@@ -71,7 +87,7 @@
 
         function update() {
             return lectureService.putData(vm.currentLectureId, vm.lecture)
-            .then(function() {
+            .then(function () {
                 vm.isEditing = !vm.isEditing;
             });
         }
@@ -124,5 +140,13 @@
             vm.currentTask = vm.lecture.homeTasks[index];
             vm.lecture.homeTasks.splice(index, 1);
         };
+
+        function getCourseList() {
+            $location.url('/apps/academy/');
+        }
+
+        function getCourse(id) {
+            $location.url('/apps/academy/' + id);
+        }
     }
 }());
