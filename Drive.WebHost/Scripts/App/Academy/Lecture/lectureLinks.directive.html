@@ -9,7 +9,7 @@
         <div class="bs-callout bs-callout-info" ng-if="linkType == linkTypes.sample || linkType == linkTypes.useful || linkType == linkTypes.repository" ng-repeat="link in links">
             <h4>{{link.name}}</h4>
             <p>
-                <a ng-href="{{link.link}}" target="_blank">{{link.link}} <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                <a ng-href="{{link.link|external}}" target="_blank">{{link.link}} <i class="fa fa-external-link" aria-hidden="true"></i></a>
             </p>
             <p>{{link.description}}</p>
         </div>
