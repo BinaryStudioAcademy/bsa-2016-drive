@@ -17,6 +17,7 @@
         vm.save = save;
         vm.cancel = cancel;
         vm.updateCourse = updateCourse;
+        vm.loadTags = loadTags;
 
 
         activate();
@@ -25,6 +26,7 @@
             vm.title = "Add new course";
             vm.course = items;
             vm.editAuthor = false;
+            vm.allTags = [];
 
             academyListService.getAllUsers(function(data) {
                 vm.users = data.map(function(user) {
@@ -99,5 +101,21 @@
 
             vm.calendar.isOpen = true;
         };
+
+        function loadTags($query) {
+            if (vm.allTags.length == 0) {
+                academyListService.getAllTags(function (data) {
+                    vm.allTags = data;
+                    return vm.allTags.filter(function (tag) {
+                        return tag.name.toLowerCase().indexOf($query.toLowerCase()) != -1;
+                    })
+                });
+            }
+            else {
+                return vm.allTags.filter(function (tag) {
+                    return tag.name.toLowerCase().indexOf($query.toLowerCase()) != -1;
+                });
+            }
+        }
     }
 })();
