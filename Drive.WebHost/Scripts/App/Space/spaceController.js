@@ -146,11 +146,17 @@
         }
 
         function copyByHotkeys() {
+            for (var i = 0; i < vm.space.folders.length; i++) {
+                vm.space.folders[i].cutted = false;
+            }
+            for (var i = 0; i < vm.space.files.length; i++) {
+                vm.space.files[i].cutted = false;
+            }
             if (vm.row != undefined) {
                 localStorageService.clearAll();
                 localStorageService.set('copy', { id: vm.row, file: vm.condition });
                 toastr.info(
-                    'File has been copied to the clipboard.',
+                    'Item has been copied to the clipboard.',
                     'Space',
                     {
                         closeButton: true,
@@ -160,6 +166,12 @@
         }
 
         function cutByHotkeys() {
+            for (var i = 0; i < vm.space.folders.length; i++) {
+                vm.space.folders[i].cutted = false;
+            }
+            for (var i = 0; i < vm.space.files.length; i++) {
+                vm.space.files[i].cutted = false;
+            }
             if (vm.row != undefined) {
                 localStorageService.clearAll();
                 localStorageService.set('cut-out', { id: vm.row, file: vm.condition });
@@ -167,7 +179,7 @@
                 console.log(JSON.parse(JSON.stringify(localStorageService.get('cut-out'))));
                 localStorageService.set('oldParentId', vm.parentId);
                 toastr.info(
-                    'File has been copied to the clipboard.',
+                    'Item has been copied to the clipboard.',
                     'Space',
                     {
                         closeButton: true,
@@ -175,6 +187,14 @@
                     });
                 vm.cuttedRow = vm.row;
                 vm.cuttedCondition = vm.condition;
+                if (vm.condition) {
+                    var pos = vm.space.files.map(function (e) { return e.id; }).indexOf(vm.row);
+                    vm.space.files[pos].cutted = true;
+                }
+                else {
+                    var pos = vm.space.folders.map(function (e) { return e.id; }).indexOf(vm.row);
+                    vm.space.folders[pos].cutted = true;
+                }
             }
         }
 
