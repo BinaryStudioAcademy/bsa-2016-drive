@@ -77,10 +77,14 @@
             </div>
         </li>
 
+<<<<<<< Updated upstream
         <li class="sp-gv-flex-item" role="button" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}" 
             ng-click="spaceCtrl.activeRow(file.id, 'true')" ng-dblclick="spaceCtrl.openDocument(file.link)" ng-class="{selected: file.selected}" 
             ui-draggable="true" drag="{'dataUnit': file, 'type': 'file'}" drag-channel="file"
             ondragstart="this.classList.add('dragging-elem');" ondragend="this.classList.remove('dragging-elem')">
+=======
+        <li class="sp-gv-flex-item" role="button" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-click="spaceCtrl.activeRow(file.id, 'true')" ng-dblclick="spaceCtrl.openDocument(file)" ng-class="{selected: file.selected}" >
+>>>>>>> Stashed changes
             <div class="sp-gv-wrapper-flex-item">
                 <div class="sp-gv-item-content card">
                     <div class="sp-gv-item-img-wrapper">
@@ -159,7 +163,7 @@
                 <div class="filter-table-row">
                     <div class="row filter-table-row" role="button" ng-repeat="file in spaceCtrl.space.files | orderBy: spaceCtrl.columnForOrder" 
                          ui-draggable="true" drag="{'dataUnit': file, 'type': 'file'}" drag-channel="file"
-                         ng-click="spaceCtrl.activeRow(file.id, 'true')" ng-dblclick="spaceCtrl.openDocument(file.link)" 
+                         ng-click="spaceCtrl.activeRow(file.id, 'true')" ng-dblclick="spaceCtrl.openDocument(file)" 
                          ondragstart="this.classList.add('dragging-elem');" ondragend="this.classList.remove('dragging-elem')"
                          ng-class="{'selected': file.selected}" 
                          context-menu="spaceCtrl.fileMenuOptions">

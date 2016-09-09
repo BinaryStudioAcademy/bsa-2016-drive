@@ -27,6 +27,7 @@ namespace Drive.WebHost.Services
         Task<ICollection<AppDto>> FilterApp(FileType fileType);
         Task<ICollection<AppDto>> SearchFiles(FileType fileType, string text);
         Task<string> UploadFile(HttpPostedFile file, int spaceId, int folderId);
+        Task<int> SearchCourse(int fileId);
         void Dispose();
     }
 }

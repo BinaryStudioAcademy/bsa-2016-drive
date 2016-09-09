@@ -229,8 +229,18 @@
             });
         }
 
-        function openDocument(url) {
-            window.open(url, '_blank');
+        function openDocument(file) {
+            if (file.fileType !== 7) {
+                window.open(file.link, '_blank');
+            } else {
+                fileService.findCourse(file.id,
+                    function (data) {
+                        if (data !== undefined) {
+                            $location.url('/apps/academy/' + data);
+                        }
+                    });
+            }
+            
         }
 
         function orderByColumn(column) {

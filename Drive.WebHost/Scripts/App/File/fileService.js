@@ -25,8 +25,9 @@
             searchFiles: searchFiles,
             openFile: openFile,
             chooseIcon: chooseIcon,
-            uploadFile: uploadFile
-        };
+            uploadFile: uploadFile,
+            findCourse: findCourse
+    };
 
         function getAllFiles(callBack) {
             $http.get(baseUrl + '/api/files')
@@ -182,7 +183,7 @@
                         }
                     },
                     function() {
-                        console.log('Error while getting file!');
+                        console.log('Error while deleting file!');
                     });
         }
 
@@ -194,6 +195,18 @@
 
         function openFile(url) {
             window.open(url, '_blank');
+        }
+
+        function findCourse(id, callBack) {
+            $http.get(baseUrl + '/api/files/apps/findcourse/' + id)
+                .then(function (response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                },
+                    function () {
+                        console.log('Error while getting course!');
+                    });
         }
 
         function chooseIcon(type) {

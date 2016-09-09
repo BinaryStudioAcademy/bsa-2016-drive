@@ -270,6 +270,13 @@ namespace Drive.WebHost.Services
             await _unitOfWork?.SaveChangesAsync();
         }
 
+        public async Task<int> SearchCourse(int fileId)
+        {
+            var result = await _unitOfWork.AcademyProCourses.Query.SingleOrDefaultAsync(c => c.FileUnit.Id == fileId);
+
+            return result.Id;
+        }
+
         public async Task<ICollection<AppDto>> FilterApp(FileType fileType)
         {
             string userId = _usersService.CurrentUserId;
