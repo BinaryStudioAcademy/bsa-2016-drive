@@ -384,33 +384,40 @@ namespace Drive.WebHost.Services
                 await request.UploadAsync();
                 link = request.ResponseBody.Id;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                throw (e);
+                throw new Exception("Failed to upload file to drive!");
             }
 
             var user = await _usersService.GetCurrentUser();
             var space = await _unitOfWork?.Spaces?.GetByIdAsync(spaceId);
             var parentFolder = await _unitOfWork?.Folders.GetByIdAsync(parentId);
 
-            if (space != null)
+            try
             {
-                var fileDto = new FileUnit()
+                if (space != null)
                 {
-                    Name = filename,
-                    FileType = FileType.Physical,
-                    Link = link,
-                    Description = "",
-                    CreatedAt = DateTime.Now,
-                    LastModified = DateTime.Now,
-                    IsDeleted = false,
-                    Space = space,
-                    FolderUnit = parentFolder,
-                    Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId)
-                };
+                    var fileDto = new FileUnit()
+                    {
+                        Name = filename,
+                        FileType = FileType.Physical,
+                        Link = link,
+                        Description = "",
+                        CreatedAt = DateTime.Now,
+                        LastModified = DateTime.Now,
+                        IsDeleted = false,
+                        Space = space,
+                        FolderUnit = parentFolder,
+                        Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId)
+                    };
 
-                _unitOfWork?.Files?.Create(fileDto);
-                await _unitOfWork?.SaveChangesAsync();
+                    _unitOfWork?.Files?.Create(fileDto);
+                    await _unitOfWork?.SaveChangesAsync();
+                }
+            }
+            catch (Exception)
+            {
+                throw new Exception("Failed to save file to data base!");
             }
             return "File uploaded successfully. File Id: " + link;
         }
