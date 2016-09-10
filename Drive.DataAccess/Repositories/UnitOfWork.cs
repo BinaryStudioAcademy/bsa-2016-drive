@@ -6,6 +6,7 @@ using Drive.DataAccess.Entities.Pro;
 using Drive.DataAccess.Interfaces;
 using System.Data.Entity.Validation;
 using System.Diagnostics;
+using Drive.DataAccess.Entities.Event;
 
 namespace Drive.DataAccess.Repositories
 {
@@ -34,6 +35,9 @@ namespace Drive.DataAccess.Repositories
         private IRepository<Tag> _tagsRepository;
         private IRepository<Lecture> _lecturesRepository;
         private IRepository<Shared> _sharedSpaceRepository;
+        private IRepository<EventContent> _eventContentRepository;
+        private IRepository<Event> _eventRepository;
+
 
         public IRepository<FolderUnit> Folders
         {
@@ -134,6 +138,22 @@ namespace Drive.DataAccess.Repositories
             get
             {
                 return _sharedSpaceRepository ?? (_sharedSpaceRepository = _repositoryFactory.CreateRepository<Shared>(_context));
+            }
+        }
+
+        public IRepository<EventContent> EventContents
+        {
+            get
+            {
+                return _eventContentRepository ?? (_eventContentRepository = _repositoryFactory.CreateRepository<EventContent>(_context));
+            }
+        }
+
+        public IRepository<Event> Events
+        {
+            get
+            {
+                return _eventRepository ?? (_eventRepository = _repositoryFactory.CreateRepository<Event>(_context));
             }
         }
 

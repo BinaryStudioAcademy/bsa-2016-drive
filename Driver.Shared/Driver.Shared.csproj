@@ -42,6 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dto\AppDto.cs" />
+    <Compile Include="Dto\Events\EventContentDto.cs" />
+    <Compile Include="Dto\Events\EventDto.cs" />
     <Compile Include="Dto\Pro\AppsAPDto.cs" />
     <Compile Include="Dto\Pro\HomeTaskDto.cs" />
     <Compile Include="Dto\SharedSpaceDto.cs" />
