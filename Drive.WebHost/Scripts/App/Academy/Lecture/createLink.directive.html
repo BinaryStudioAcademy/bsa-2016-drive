@@ -1,5 +1,5 @@
 ﻿<div>
-    <div uib-accordion-group class="panel-default" is-open="status.open" is-disabled="status.isFirstDisabled">
+    <div uib-accordion-group class="panel-default" is-open="status.open1" is-disabled="status.isFirstDisabled">
         <uib-accordion-heading>
             <i ng-class="imageClass" aria-hidden="true"></i> {{linksName}} <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open1, 'glyphicon-chevron-right': !status.open1}"></i>
         </uib-accordion-heading>
@@ -17,10 +17,10 @@
                         <tbody style="overflow-x: hidden;">
                             <tr ng-repeat="link in internalLinks">
                                 <td style="width: 30%" class="description" title="{{link.name}}">
-                                    {{ link.name | limitTo: 16}}{{link.name.length > 16 ? '...' : '' }}
+                                    {{ link.name | limitTo: 33}}{{link.name.length > 33 ? '...' : '' }}
                                 </td>
                                 <td style="width: 60%" class="description" title="{{link.link}}">
-                                    {{ link.link | limitTo: 36 }}{{link.link.length > 36 ? '...' : '' }}
+                                    {{ link.link | limitTo: 75 }}{{link.link.length > 75 ? '...' : '' }}
                                 </td>
                                 <td style="width:10%">
                                     <i role="button" class="fa fa-pencil-square-o fa-lg" ng-click="editLink($index)" title="Edit link" aria-hidden="true"></i>

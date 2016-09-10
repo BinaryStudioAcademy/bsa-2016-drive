@@ -99,7 +99,7 @@
                         return vm.getLecture();
                     });
                 toastr.success(
-                'New lecture was successfully updated!', 'Academy Pro',
+                'Lecture was successfully updated!', 'Academy Pro',
                 {
                     closeButton: true, timeOut: 6000
                 });

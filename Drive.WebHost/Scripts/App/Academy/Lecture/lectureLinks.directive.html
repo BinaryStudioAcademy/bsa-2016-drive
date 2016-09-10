@@ -1,4 +1,5 @@
-﻿<div class="timeline-badge info" title="{{blockTitle}}">
+﻿
+<div class="timeline-badge info" title="{{blockTitle}}">
     <i ng-class="iconClass" aria-hidden="true"></i>
 </div>
 <div class="timeline-panel">
@@ -26,7 +27,9 @@
                     <span class="card-title">{{video.name}}</span>
                 </div>
                 <div class="card-action">
-                    <p>{{video.description}}</p>
+                    <p title="{{video.description}}">
+                        {{ video.description | limitTo: 167 }}{{video.description.length > 167 ? '...' : '' }}
+                    </p>
                 </div>
             </div>
         </div>
@@ -43,7 +46,9 @@
                     <span class="card-title">{{slide.name}}</span>
                 </div>
                 <div class="card-action">
-                    <p>{{slide.description}}</p>
+                    <p title="{{slide.description}}">
+                        {{ slide.description | limitTo: 167 }}{{slide.description.length > 167 ? '...' : '' }}
+                    </p>
                 </div>
             </div>
         </div>
