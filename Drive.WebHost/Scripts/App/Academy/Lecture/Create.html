@@ -135,8 +135,8 @@
                                                     {{ task.description | limitTo: 80 }}{{task.description.length > 80 ? '...' : '' }}
                                                 </td>
                                                 <td style="width:10%">
-                                                    <i role="button" class="fa fa-pencil-square-o fa-lg" ng-click="editLink($index)" title="Edit home task" aria-hidden="true"></i>
-                                                    <i role="button" class="fa fa-trash fa-lg" ng-click="removeLink($index)" title="Delete home task" aria-hidden="true"></i>
+                                                    <i role="button" class="fa fa-pencil-square-o fa-lg" ng-click="lectureCreateCtrl.editTask($index)" title="Edit home task" aria-hidden="true"></i>
+                                                    <i role="button" class="fa fa-trash fa-lg" ng-click="lectureCreateCtrl.removeTask($index)" title="Delete home task" aria-hidden="true"></i>
                                                 </td>
                                             </tr>
                                         </tbody>
