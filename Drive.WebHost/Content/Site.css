@@ -1401,6 +1401,7 @@ li.folder.on-drag-enter {
 .timeline-title {
     margin-top: 0;
     color: inherit;
+    font-weight: 600;
 }
 
 .timeline-body > p,
@@ -1495,6 +1496,7 @@ li.folder.on-drag-enter {
 /*Lecture header*/
 .lecture-header {
     margin: 0;
+    padding-bottom: 3px;
 }
 /*End Lecture header*/
 
@@ -1503,6 +1505,7 @@ li.folder.on-drag-enter {
     position: relative;
     width: 100%;
     margin-top: 15px;
+    padding-left: 0;
     overflow-y: auto;
     overflow-x: hidden;
     height: 80vh;
@@ -1527,10 +1530,15 @@ li.folder.on-drag-enter {
     position: relative;
     width: 100%;
     color: #333;
-    margin-top: 20px;
+    margin-top: 10px;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 73vh;
+    height: 70vh;
+}
+
+.create-lecture-form {
+    padding: 0; 
+    width: 13%
 }
 /*End Create new lecture*/
 

@@ -23,20 +23,20 @@
         <span us-spinner="{radius:30, width:8, length: 16}"></span>
         <div class="create-lecture-wrap">
             <div class="container">
-                <div class="col-md-12">
+                <div class="col-md-12" style="padding-left: 0">
                     <form name="courseForm" ng-submit="submitForm()" class="form-horizontal" novalidate>
                         <div class="form-group" ng-class="{ 'has-error' : courseForm.name.$invalid && !courseForm.name.$pristine }">
-                            <label class="col-sm-2">Lecture name:</label>
+                            <label class="col-sm-2 create-lecture-form">Lecture name:</label>
                             <input type="text" name="name" id="name" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="lectureCreateCtrl.lecture.name" placeholder="Lecture name" required>
                             <p ng-show="courseForm.name.$error.required && courseForm.name.$touched" class="help-block col-sm-offset-2">Name is required</p>
                             <p ng-show="courseForm.name.$error.pattern" class="help-block col-sm-offset-2">Not a valid name</p>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2">Description:</label>
+                            <label class="col-sm-2 create-lecture-form">Description:</label>
                             <textarea type="text" name="description" class="form-control" id="description" ng-model="lectureCreateCtrl.lecture.description" placeholder="Enter description"></textarea>
                         </div>
                         <div class="form-group datetimepicker" ng-class="{ 'has-error' : courseForm.date.$invalid && !courseForm.date.$pristine }">
-                            <label class="col-sm-2">Start date:</label>
+                            <label class="col-sm-2 create-lecture-form">Start date:</label>
                             <p class="input-group">
                                 <span class="input-group-btn">
                                     <input ng-model-options="{timezone:'+0000'}" type="datetime" name="date" id="date" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="lectureCreateCtrl.lecture.startDate" is-open="lectureCreateCtrl.calendar.isOpen" placeholder="Select start date" timepicker-options="lectureCreateCtrl.calendar.timepickerOptions" required />
