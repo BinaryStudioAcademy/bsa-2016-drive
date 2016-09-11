@@ -400,7 +400,7 @@ namespace Drive.WebHost.Services
                     var fileDto = new FileUnit()
                     {
                         Name = filename,
-                        FileType = FileType.Physical,
+                        FileType = FileType.Uploaded,
                         Link = link,
                         Description = "",
                         CreatedAt = DateTime.Now,

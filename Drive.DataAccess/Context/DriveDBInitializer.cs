@@ -201,7 +201,7 @@ namespace Drive.DataAccess.Context
                 {
                     IsDeleted = false,
                     Name = "Other Links",
-                    FileType = FileType.Link,
+                    FileType = FileType.Links,
                     CreatedAt = new DateTime(2016, 7, 11, 8, 18, 26),
                     LastModified = new DateTime(2016, 7, 11, 8, 18, 26),
                     Owner = user1,

@@ -169,7 +169,6 @@
                     vm.filesType = 'Checklist';
                     vm.icon = 'fa fa-check-square-o fa-lg';
                     break;
-                //
                 case 'trello':
                     vm.filesType = 'Trello';
                     vm.icon = 'fa fa-trello fa-lg';
@@ -185,6 +184,14 @@
                 case 'slides':
                     vm.filesType = 'Slides';
                     vm.icon = 'fa fa-file-powerpoint-o fa-lg';
+                    break;
+                case 'links':
+                    vm.filesType = 'Links';
+                    vm.icon = 'fa fa-link fa-lg';
+                    break;
+                case 'uploaded':
+                    vm.filesType = 'Uploaded';
+                    vm.icon = 'fa fa-cloud-upload fa-lg';
                     break;
             }
         }
