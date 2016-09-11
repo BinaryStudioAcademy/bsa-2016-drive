@@ -475,16 +475,31 @@
             null,
             [
                 'Copy', function ($itemScope) {
+                    for (var i = 0; i < vm.space.folders.length; i++) {
+                        vm.space.folders[i].cutted = false;
+                    }
+                    for (var i = 0; i < vm.space.files.length; i++) {
+                        vm.space.files[i].cutted = false;
+                    }
                     localStorageService.clearAll();
                     localStorageService.set('copy', { id: $itemScope.folder.id, file: false });
                 }
             ],
             [
                 'Cut', function ($itemScope) {
+                    for (var i = 0; i < vm.space.folders.length; i++) {
+                        vm.space.folders[i].cutted = false;
+                    }
+                    for (var i = 0; i < vm.space.files.length; i++) {
+                        vm.space.files[i].cutted = false;
+                    }
                     localStorageService.clearAll();
                     localStorageService.set('cut-out', { id: $itemScope.folder.id, file: false });
                     localStorageService.set('oldParentId', vm.parentId);
-                    deleteFolder($itemScope.folder.id);
+                    vm.cuttedRow = $itemScope.folder.id;
+                    vm.cuttedCondition = false;
+                    var pos = vm.space.folders.map(function (e) { return e.id; }).indexOf(vm.cuttedRow);
+                    vm.space.folders[pos].cutted = true;
                 }
             ],
             null,
@@ -515,16 +530,31 @@
             null,
             [
                 'Copy', function ($itemScope) {
+                    for (var i = 0; i < vm.space.folders.length; i++) {
+                        vm.space.folders[i].cutted = false;
+                    }
+                    for (var i = 0; i < vm.space.files.length; i++) {
+                        vm.space.files[i].cutted = false;
+                    }
                     localStorageService.clearAll();
                     localStorageService.set('copy', { id: $itemScope.file.id, file: true });
                 }
             ],
             [
                 'Cut', function ($itemScope) {
+                    for (var i = 0; i < vm.space.folders.length; i++) {
+                        vm.space.folders[i].cutted = false;
+                    }
+                    for (var i = 0; i < vm.space.files.length; i++) {
+                        vm.space.files[i].cutted = false;
+                    }
                     localStorageService.clearAll();
                     localStorageService.set('cut-out', { id: $itemScope.file.id, file: true });
                     localStorageService.set('oldParentId', vm.parentId);
-                    deleteFile($itemScope.file.id);
+                    vm.cuttedRow = $itemScope.file.id;
+                    vm.cuttedCondition = true;
+                    var pos = vm.space.files.map(function (e) { return e.id; }).indexOf(vm.cuttedRow);
+                    vm.space.files[pos].cutted = true;
                 }
             ],
             null,
@@ -562,45 +592,49 @@
             [
                 'Paste', function () {
                     if (localStorageService.get('cut-out') != null) {
-                        if (localStorageService.get('cut-out').file) {
-                            fileService.getDeletedFile(localStorageService.get('cut-out').id,
-                                function (data) {
-                                    var file = data;
-                                    file.isDeleted = false;
-                                    file.spaceId = vm.spaceId;
-                                    file.parentId = vm.parentId;
+                        var item = localStorageService.get('cut-out');
+                        if (item.file) {
+                            deleteFile(vm.cuttedRow, function () {
+                                fileService.getDeletedFile(item.id,
+                                    function (data) {
+                                        var file = data;
+                                        file.isDeleted = false;
+                                        file.spaceId = vm.spaceId;
+                                        file.parentId = vm.parentId;
 
-                                    fileService.updateDeletedFile(file.id,
-                                        localStorageService.get('oldParentId'),
-                                        file,
-                                        function () {
-                                            if (vm.parentId == null) {
-                                                vm.getSpace();
-                                            } else {
-                                                vm.getFolderContent(vm.parentId);
-                                            }
-                                        });
-                                });
+                                        fileService.updateDeletedFile(file.id,
+                                            localStorageService.get('oldParentId'),
+                                            file,
+                                            function () {
+                                                if (vm.parentId == null) {
+                                                    vm.getSpace();
+                                                } else {
+                                                    vm.getFolderContent(vm.parentId);
+                                                }
+                                            });
+                                    });
+                            });
                         } else {
+                            deleteFolder(vm.cuttedRow, function () {
+                                folderService.getDeleted(item.id,
+                                    function (data) {
+                                        var folder = data;
+                                        folder.isDeleted = false;
+                                        folder.spaceId = vm.spaceId;
+                                        folder.parentId = vm.parentId;
 
-                            folderService.getDeleted(localStorageService.get('cut-out').id,
-                                function (data) {
-                                    var folder = data;
-                                    folder.isDeleted = false;
-                                    folder.spaceId = vm.spaceId;
-                                    folder.parentId = vm.parentId;
-
-                                    folderService.updateDeleted(folder.id,
-                                        localStorageService.get('oldParentId'),
-                                        folder,
-                                        function () {
-                                            if (vm.parentId == null) {
-                                                vm.getSpace();
-                                            } else {
-                                                vm.getFolderContent(vm.parentId);
-                                            }
-                                        });
-                                });
+                                        folderService.updateDeleted(folder.id,
+                                            localStorageService.get('oldParentId'),
+                                            folder,
+                                            function () {
+                                                if (vm.parentId == null) {
+                                                    vm.getSpace();
+                                                } else {
+                                                    vm.getFolderContent(vm.parentId);
+                                                }
+                                            });
+                                    });
+                            });
                         }
                         localStorageService.set('cut-out', null);
                     }
