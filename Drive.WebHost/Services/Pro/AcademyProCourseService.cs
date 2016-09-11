@@ -209,6 +209,7 @@ namespace Drive.WebHost.Services.Pro
                                                                     Select(course => new AppsAPDto
                                                                     {
                                                                         SpaceId = course.Key.Id,
+                                                                        SpaceType = course.Key.Type,
                                                                         Name = course.Key.Name,
                                                                         Courses = course.Select(c => new AcademyProCourseDto
                                                                         {
@@ -231,7 +232,8 @@ namespace Drive.WebHost.Services.Pro
                                                                                 FileType = c.FileUnit.FileType,
                                                                                 Description = c.FileUnit.Description,
                                                                                 CreatedAt = c.FileUnit.CreatedAt,
-                                                                                LastModified = c.FileUnit.LastModified
+                                                                                LastModified = c.FileUnit.LastModified,
+                                                                                SpaceId = c.FileUnit.Space.Id
                                                                             },
                                                                             Tags = c.Tags.Select(tag => new TagDto
                                                                             {
@@ -263,6 +265,7 @@ namespace Drive.WebHost.Services.Pro
                  .Select(course => new AppsAPDto
                  {
                      SpaceId = course.Key.Id,
+                     SpaceType = course.Key.Type,
                      Name = course.Key.Name,
                      Courses = course.Select(c => new AcademyProCourseDto
                      {
@@ -285,7 +288,8 @@ namespace Drive.WebHost.Services.Pro
                              FileType = c.FileUnit.FileType,
                              Description = c.FileUnit.Description,
                              CreatedAt = c.FileUnit.CreatedAt,
-                             LastModified = c.FileUnit.LastModified
+                             LastModified = c.FileUnit.LastModified,
+                             SpaceId = c.FileUnit.Space.Id
                          },
                          Tags = c.Tags.Select(tag => new TagDto
                          {

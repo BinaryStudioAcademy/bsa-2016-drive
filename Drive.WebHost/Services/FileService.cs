@@ -363,6 +363,7 @@ namespace Drive.WebHost.Services
                  .GroupBy(f => f.Space).Select(f => new AppDto()
                  {
                      SpaceId = f.Key.Id,
+                     SpaceType = f.Key.Type,
                      Name = f.Key.Name,
                      Files = f.Select(d => new FileUnitDto
                      {
@@ -402,6 +403,7 @@ namespace Drive.WebHost.Services
                .GroupBy(f => f.Space).Select(f => new AppDto()
                {
                    SpaceId = f.Key.Id,
+                   SpaceType = f.Key.Type,
                    Name = f.Key.Name,
                    Files = f.Select(d => new FileUnitDto
                    {

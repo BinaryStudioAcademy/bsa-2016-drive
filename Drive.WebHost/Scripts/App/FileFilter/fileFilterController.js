@@ -21,6 +21,7 @@
         vm.deleteFile = deleteFile;
         vm.openSharedContentWindow = openSharedContentWindow;
         vm.sharedContent = sharedContent;
+        vm.getBinarySpaceId = getBinarySpaceId;
 
         activate();
 
@@ -31,26 +32,29 @@
             vm.columnForOrder = 'name';
             vm.searchText = '';
             vm.iconHeight = 30;
+            vm.binarySpaceId = 0;
 
             vm.spaces = [];
 
             setFileData();
             getFiles();
+            
         }
         function getFiles() {
             fileService.getFilesApp(vm.filesType, function (data) {
                 vm.spaces = data;
+                getBinarySpaceId(vm.spaces);
             });
         }
 
         vm.fileMenuOptions = [
             [
                 'Share', function ($itemScope) {
-                    vm.contentSharedId = $itemScope.file.id;
+                vm.contentSharedId = $itemScope.file.id;
                     vm.sharedContent();
                 },
                 function ($itemScope) {
-                    if ($itemScope.file.spaceId == 1) {
+                    if ($itemScope.file.spaceId == vm.binarySpaceId) {
                         return false;
                     }
                     return true;
@@ -125,7 +129,6 @@
         }
 
         function sharedContent() {
-            vm.fileId = { parentId: vm.parentId, spaceId: vm.spaceId };
             vm.openSharedContentWindow();
         }
 
@@ -231,5 +234,16 @@
             vm.iconSrc = fileService.chooseIcon(type);
             return vm.iconSrc;
         }
+
+        function getBinarySpaceId(list) {
+            for (var i = 0; i < list.length; i++) {
+                if (list[i].spaceType === 0) {
+                    vm.binarySpaceId = list[i].spaceId;
+                    return vm.binarySpaceId;
+                }
+            }
+            return 0;
+        }
+
     }
 }());
