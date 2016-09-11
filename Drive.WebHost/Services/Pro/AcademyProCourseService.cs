@@ -172,6 +172,13 @@ namespace Drive.WebHost.Services.Pro
 
             course.Author = user;
 
+            for(int i=0;i < course.Tags?.Count;i++)
+            {
+                var tag = course.Tags[i];
+                if (dto.Tags?.FirstOrDefault(t => t.Name == tag.Name) == null)
+                    course.Tags?.RemoveAt(i);
+            }
+
             dto.Tags.ForEach(tag =>
             {
                 if (course.Tags?.Count(t => t.Name == tag.Name) == 0)
