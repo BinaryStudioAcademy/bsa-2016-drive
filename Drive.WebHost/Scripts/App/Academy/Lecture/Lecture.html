@@ -110,7 +110,7 @@
     <div class="container" ng-show="lectureCtrl.isEditing" style="padding: 0;">
         <div class="col-md-12" style="padding-left: 0">
             <div class="row col-md-5" style="margin: 1em 0 1em 0; padding-left: 0" ng-show="lectureCtrl.isEditing">
-                <button class="btn btn-info" ng-click="lectureCtrl.updateLecture()">Save</button>
+                <button class="btn btn-info" ng-click="lectureCtrl.updateLecture()" ng-disabled="courseForm.$invalid">Save</button>
                 <button class="btn btn-default" ng-click="lectureCtrl.cancelUpdate()">Cancel</button>
             </div>
             <div class="edit-lecture-wrap">
@@ -120,20 +120,22 @@
                             <div class="form-group" ng-class="{ 'has-error' : courseForm.name.$invalid && !courseForm.name.$pristine }">
                                 <label class="col-sm-2 create-lecture-form">Lecture name:</label>
                                 <input type="text" name="name" id="name" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="lectureCtrl.lecture.name" placeholder="Lecture name" required>
-                                <p ng-show="courseForm.name.$error.required && courseForm.name.$touched" class="help-block col-sm-offset-2">Name is required</p>
-                                <p ng-show="courseForm.name.$error.pattern" class="help-block col-sm-offset-2">Not a valid name</p>
+                                <p ng-show="courseForm.name.$error.required && courseForm.name.$touched" class="help-block col-sm-offset-2 lecture-validation">Name is required</p>
+                                <p ng-show="courseForm.name.$error.pattern" class="help-block col-sm-offset-2 lecture-validation">Not a valid name</p>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 create-lecture-form">Description:</label>
                                 <textarea type="text" name="description" class="form-control" id="description" ng-model="lectureCtrl.lecture.description" placeholder="Enter description"></textarea>
                             </div>
-                            <div class="form-group datetimepicker">
+                            <div class="form-group datetimepicker" ng-class="{ 'has-error' : courseForm.date.$invalid && !courseForm.date.$pristine }">
                                 <label class="col-sm-2 create-lecture-form">Start date:</label>
                                 <p class="input-group">
-                                    <input ng-model-options="{timezone:'+0000'}" type="datetime" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="lectureCtrl.lecture.startDate" is-open="lectureCtrl.calendar.isOpen" placeholder="Select start date" timepicker-options="lectureCtrl.calendar.timepickerOptions" />
+                                    <input ng-model-options="{timezone:'+0000'}" type="datetime" name="date" id="date" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="lectureCtrl.lecture.startDate" is-open="lectureCtrl.calendar.isOpen" placeholder="Select start date" timepicker-options="lectureCtrl.calendar.timepickerOptions" required />
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="lectureCtrl.calendar.openCalendar($event, prop)"><i class="fa fa-calendar"></i></button>
                                     </span>
+                                <p ng-show="courseForm.date.$error.required && courseForm.date.$touched" class="help-block col-sm-offset-2 lecture-validation">Date is required</p>
+                                <p ng-show="courseForm.date.$error.datetime" class="help-block col-sm-offset-2 lecture-validation">Not a valid date</p>
                                 </p>
                             </div>
                         </form>
@@ -161,7 +163,7 @@
                                       links-name="Useful links"
                                       image-class="fa fa-link fa-lg">
                         </create-links>
-                        <div uib-accordion-group class="panel-default" is-open="status.open6" title="Home task">
+                        <div uib-accordion-group class="panel-default" is-open="status.open6">
                             <uib-accordion-heading>
                                 <i class="fa fa-paper-plane-o fa-lg" aria-hidden="true"></i> Home task <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open6, 'glyphicon-chevron-right': !status.open6}"></i>
                             </uib-accordion-heading>

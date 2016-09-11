@@ -1537,8 +1537,12 @@ li.folder.on-drag-enter {
 }
 
 .create-lecture-form {
-    padding: 0; 
-    width: 13%
+    padding: 0;
+    width: 13%;
+}
+
+.lecture-validation {
+    margin-left: 13%;
 }
 /*End Create new lecture*/
 
