@@ -87,6 +87,10 @@
         vm.pasteByHotkeys = pasteByHotkeys;
         vm.cutByHotkeys = cutByHotkeys;
         vm.deleteByHotkeys = deleteByHotkeys;
+        vm.undoByHotkeys = undoByHotkeys;
+        vm.lastActionType = undefined;
+        vm.lastItemId = undefined;
+        
 
         activate();
 
@@ -115,12 +119,67 @@
                     deleteByHotkeys();
                 }
             })
+            .add({
+                combo: 'ctrl+z',
+                callback: function () {
+                    undoByHotkeys();
+                }
+            })
+
+        function undoByHotkeys() {
+            if (vm.lastActionType == 'deleteFile') {
+                fileService.getDeletedFile(vm.lastItemId,
+        function (data) {
+        var file = data;
+        file.isDeleted = false;
+        file.spaceId = vm.spaceId;
+        file.parentId = vm.parentId;
+
+        fileService.updateDeletedFile(file.id,
+            localStorageService.get('oldParentId'),
+            file,
+            function () {
+                if (vm.parentId == null) {
+                    vm.getSpace();
+                } else {
+                    vm.getFolderContent(vm.parentId);
+                }
+            });
+    });
+            }
+            else if (vm.lastActionType == 'deleteFolder') {
+                folderService.getDeleted(vm.lastItemId,
+    function (data) {
+        var folder = data;
+        folder.isDeleted = false;
+        folder.spaceId = vm.spaceId;
+        folder.parentId = vm.parentId;
+
+        folderService.updateDeleted(folder.id,
+            localStorageService.get('oldParentId'),
+            folder,
+            function () {
+                if (vm.parentId == null) {
+                    vm.getSpace();
+                } else {
+                    vm.getFolderContent(vm.parentId);
+                }
+            });
+    });
+            }
+            vm.lastActionType = undefined;
+            vm.lastItemId = undefined;
+        }
 
         function deleteByHotkeys() {
             if (vm.row != undefined) {
                 if (!vm.condition) {
+                    vm.lastActionType = 'deleteFolder';
+                    vm.lastItemId = vm.row;
                     return deleteFolder(vm.row);
                 } else {
+                    vm.lastActionType = 'deleteFile';
+                    vm.lastItemId = vm.row;
                     return deleteFile(vm.row);
                 }
             }
@@ -203,8 +262,6 @@
         function pasteByHotkeys() {
             if (localStorageService.get('cut-out') != null) {
                 var item = localStorageService.get('cut-out');
-                console.log('pasteByHotkeys');
-                console.log(JSON.parse(JSON.stringify(item)));
                 if (item.file) {
                     deleteFile(vm.cuttedRow,
                         function () {
