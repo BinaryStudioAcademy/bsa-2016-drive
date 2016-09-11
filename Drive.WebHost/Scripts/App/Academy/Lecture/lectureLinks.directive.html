@@ -15,7 +15,7 @@
             <p>{{link.description}}</p>
         </div>
         <div class="col-md-6" ng-if="linkType == linkTypes.video">
-            <div class="card" ng-repeat="video in links">
+            <div class="card cards" ng-repeat="video in links">
                 <div class="card-image">
                     <div>
                         <div>
@@ -34,7 +34,7 @@
             </div>
         </div>
         <div class="col-md-6" ng-if="linkType == linkTypes.slide">
-            <div class="card" ng-repeat="slide in links">
+            <div class="card cards" ng-repeat="slide in links">
                 <div class="card-image">
                     <div>
                         <div>

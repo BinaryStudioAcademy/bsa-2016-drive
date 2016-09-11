@@ -34,7 +34,7 @@
                 <ul class="sp-gv-flex-container">
                     <li class="sp-gv-flex-item" role="button" context-menu="fileFilterCtrl.fileMenuOptions" ng-repeat="file in space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="fileFilterCtrl.openDocument(file)">
                         <div class="sp-gv-wrapper-flex-item ">
-                            <div class="sp-gv-item-content card">
+                            <div class="sp-gv-item-content cards">
                                 <div class="sp-gv-item-img-wrapper">
                                     <img ng-src="{{fileFilterCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" />
                                 </div>

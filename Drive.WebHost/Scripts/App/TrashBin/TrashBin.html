@@ -48,7 +48,7 @@
                 <ul class="sp-gv-flex-container">
                     <li class="sp-gv-flex-item" role="button" context-menu="trashBinCtrl.folderMenuOptions" ng-repeat="folder in space.folders" title="Created {{ folder.createdAt | date : 'short' }}">
                         <div class="sp-gv-wrapper-flex-item">
-                            <div class="sp-gv-item-content card">
+                            <div class="sp-gv-item-content cards">
                                 <div class="sp-gv-item-img-wrapper">
                                     <img src="./Content/Icons/folder.svg" alt="Folder" title="Folder" />
                                 </div>
@@ -65,7 +65,7 @@
                     </li>
                     <li class="sp-gv-flex-item" role="button" context-menu="trashBinCtrl.fileMenuOptions" ng-repeat="file in space.files" title="Created {{ file.createdAt | date : 'short' }}">
                         <div class="sp-gv-wrapper-flex-item">
-                            <div class="sp-gv-item-content card">
+                            <div class="sp-gv-item-content cards">
                                 <div class="sp-gv-item-img-wrapper">
                                     <img ng-src="{{trashBinCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" />
                                 </div>

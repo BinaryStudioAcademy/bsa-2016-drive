@@ -39,10 +39,10 @@
                 </div>
                 
             </div>
-            <ul class="sp-gv-flex-container wrap" ng-show="!academyCtrl.showTable">
+            <ul class="sp-gv-flex-container wrap-lecture" ng-show="!academyCtrl.showTable">
                 <li class="sp-gv-flex-item" role="button" ng-repeat="lecture in academyCtrl.academy.lectures" ng-dblclick="academyCtrl.openLecture(lecture.id)">
                     <div class="sp-gv-wrapper-flex-item">
-                        <div class="sp-gv-item-content card">
+                        <div class="sp-gv-item-content cards">
                             <div class="sp-gv-item-img-wrapper">
                                 <img ng-src="{{academyCtrl.icon}}" alt="Academy" title="Lecture" />
                             </div>

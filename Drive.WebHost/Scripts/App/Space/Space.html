@@ -61,7 +61,7 @@
             drop-validate="spaceCtrl.dropValidate(folder, $data.dataUnit)" ui-on-drop="spaceCtrl.onDrop(folder.id, $data)"
             ondragstart="this.style.opacity = 0.7" ondragend="this.style.opacity = 1">
             <div class="sp-gv-wrapper-flex-item">
-                <div class="sp-gv-item-content card">
+                <div class="sp-gv-item-content cards">
                     <div class="sp-gv-item-img-wrapper">
                         <img ng-src="./Content/Icons/folder.svg" alt="Folder" title="Folder" draggable="false"/>
                     </div>
@@ -81,7 +81,7 @@
             ui-draggable="true" drag="{'dataUnit': file, 'type': 'file'}" drag-channel="file"
             ondragstart="this.classList.add('dragging-elem');" ondragend="this.classList.remove('dragging-elem')">
             <div class="sp-gv-wrapper-flex-item">
-                <div class="sp-gv-item-content card">
+                <div class="sp-gv-item-content cards">
                     <div class="sp-gv-item-img-wrapper">
                         <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false"/>
                     </div>
