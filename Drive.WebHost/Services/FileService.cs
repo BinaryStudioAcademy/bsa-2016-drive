@@ -10,6 +10,7 @@ using Driver.Shared.Dto.Users;
 using System.IO;
 using System.Web;
 using Google.Apis.Drive.v3;
+using Drive.DataAccess.Entities.Pro;
 
 namespace Drive.WebHost.Services
 {
@@ -229,13 +230,24 @@ namespace Drive.WebHost.Services
 
             var user = await _usersService?.GetCurrentUser();
 
-            string name = file.Name;
+            string name = file.Name + "-copy";
 
-            if (await _unitOfWork.Files.Query.FirstOrDefaultAsync(f => f.Name == file.Name &&
-                                        (f.FolderUnit.Id == dto.ParentId || (dto.ParentId == 0 && f.Space.Id == dto.SpaceId))) != null)
+            var copies = await _unitOfWork.Files.Query.Where(f => f.Name.StartsWith(file.Name + "-copy") &&
+                                        (f.FolderUnit.Id == dto.ParentId || (dto.ParentId == 0 && f.Space.Id == dto.SpaceId))).ToListAsync();
+
+            if (copies.Count > 0)
             {
-                name = name + "-copy";
+                int index = 0;
+                int maxIndex = 1;
+                foreach (var copyStr in copies.Select(c => c.Name.Substring(name.Length)))
+                {
+                    if (Int32.TryParse(copyStr, out index))
+                        if (index > maxIndex)
+                            maxIndex = index;
+                }
+                name = name + (maxIndex + 1).ToString();
             }
+
             var copy = new FileUnit
             {
                 Name = name,
@@ -257,6 +269,68 @@ namespace Drive.WebHost.Services
             {
                 var parent = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
                 copy.FolderUnit = parent;
+            }
+            if (file.FileType == FileType.AcademyPro)
+            {
+                var course = await _unitOfWork.AcademyProCourses.Query
+                    .Include(a => a.Author)
+                    .Include(a => a.Tags)
+                    .Include(a => a.Lectures.Select(l => l.CodeSamples))
+                    .Include(a => a.Lectures.Select(l => l.ContentList))
+                    .Include(a => a.Lectures.Select(l => l.HomeTasks))
+                    .Include(a => a.Lectures.Select(l => l.Author))
+                    .FirstOrDefaultAsync(a => a.FileUnit.Id == file.Id);
+
+                var coursecopy = new AcademyProCourse
+                {
+                    StartDate = course.StartDate,
+                    IsDeleted = false,
+                    Tags = new List<Tag>(),
+                    FileUnit = copy,
+                    Author = course.Author,
+                    Lectures = new List<Lecture>()
+                };
+
+                course.Tags?.ToList().ForEach(tag =>
+                {
+                    coursecopy.Tags.Add(_unitOfWork.Tags.Query.FirstOrDefault(x => x.Name == tag.Name) ?? new Tag { Name = tag.Name, IsDeleted = false });
+                });
+
+                course.Lectures?.ToList().ForEach(lecture =>
+                {
+                coursecopy.Lectures.Add(new Lecture
+                {
+                    Author = lecture.Author,
+                    Name = lecture.Name,
+                    Description = lecture.Description,
+                    IsDeleted = lecture.IsDeleted,
+                    CreatedAt = DateTime.Now,
+                    StartDate = lecture.StartDate,
+                    ModifiedAt = DateTime.Now,
+                    CodeSamples = lecture.CodeSamples.Select(cs => new CodeSample
+                    {
+                        Code = cs.Code,
+                        IsDeleted = cs.IsDeleted,
+                        Name = cs.Name
+                    }).ToList(),
+                    ContentList = lecture.ContentList.Select(cl => new ContentLink
+                    {
+                        Name = cl.Name,
+                        IsDeleted = cl.IsDeleted,
+                        Description = cl.Description,
+                        LinkType = cl.LinkType,
+                        Link = cl.Link
+                    }).ToList(),
+                    HomeTasks = lecture.HomeTasks.Select(ht => new HomeTask
+                    {
+                        Description = ht.Description,
+                        IsDeleted = ht.IsDeleted,
+                        DeadlineDate = ht.DeadlineDate
+                    }).ToList()
+                });
+                });
+
+                _unitOfWork.AcademyProCourses.Create(coursecopy);
             }
 
             _unitOfWork.Files.Create(copy);

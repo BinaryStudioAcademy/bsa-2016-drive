@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Drive.DataAccess.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace Drive.DataAccess.Entities.Pro
 {
@@ -14,6 +15,7 @@ namespace Drive.DataAccess.Entities.Pro
         public string Link { get; set; }
         public LinkType LinkType { get; set; }
 
+        [Required]
         public Lecture Lecture { get; set; }
     }
 
