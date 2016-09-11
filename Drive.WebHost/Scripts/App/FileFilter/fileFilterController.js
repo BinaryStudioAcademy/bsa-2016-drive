@@ -219,7 +219,12 @@
         }
 
         function openDocument(file) {
-            fileService.openFile(file.link);
+            if (file.fileType == 6) {
+                fileService.downloadFile(file.link);
+            }
+            else {
+                fileService.openFile(file.link);
+            }
         }
 
         function chooseIcon(type) {

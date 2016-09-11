@@ -231,7 +231,12 @@
 
         function openDocument(file) {
             if (file.fileType !== 7) {
-                window.open(file.link, '_blank');
+                if (file.fileType == 6) {
+                    fileService.downloadFile(file.link);
+                }
+                else {
+                    window.open(file.link, '_blank');;
+                }                
             } else {
                 fileService.findCourse(file.id,
                     function (data) {

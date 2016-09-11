@@ -6,6 +6,9 @@ using Driver.Shared.Dto;
 using Drive.DataAccess.Entities;
 using System;
 using System.Web;
+using System.Net.Http;
+using System.Net;
+using System.Net.Http.Headers;
 
 namespace Drive.WebHost.Api
 {
@@ -199,6 +202,31 @@ namespace Drive.WebHost.Api
             catch (System.Exception e)
             {
                 return BadRequest(e.Message.ToString());
+            }
+        }
+
+        // GET: api/files/dowload&fileId=(string)
+        [HttpGet]
+        [Route("~/api/files/download")]
+        public async Task<HttpResponseMessage> DownloadFile(string fileId)
+        {
+            HttpResponseMessage response;
+            try
+            {
+                var dto = await _service?.DownloadFile(fileId);
+                response = new HttpResponseMessage(HttpStatusCode.OK);
+                response.Content = new StreamContent(dto.Content);
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue(dto.Type);
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = dto.Name
+                };
+
+                return response;
+            }
+            catch (Exception)
+            {
+                return response = new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
         }
     }

@@ -444,6 +444,34 @@ namespace Drive.WebHost.Services
                 return ms.ToArray();
             }
         }
+        public async Task<DownloadFileDto> DownloadFile(string fileId)
+        {
+            DriveService service;
+            try
+            {
+                service = AuthorizationService.ServiceAccountAuthorization();
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            var request = service.Files.Get(fileId);
+            Google.Apis.Drive.v3.Data.File file = service.Files.Get(fileId).Execute();
+
+            var stream = new System.IO.MemoryStream();
+            await request.DownloadAsync(stream);
+
+            stream.Seek(0, SeekOrigin.Begin);
+            DownloadFileDto dto = new DownloadFileDto()
+            {
+                Name = file.Name,
+                Type = file.MimeType,
+                Content = stream
+            };
+
+            return dto;
+        }
+
         public void Dispose()
         {
             _unitOfWork?.Dispose();

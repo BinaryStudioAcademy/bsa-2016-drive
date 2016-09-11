@@ -675,10 +675,15 @@
             });
             fileModalInstance.result.then(function (response) {
                 console.log(response);
-            },
-                function () {
-                    console.log('Modal dismissed');
-                });
+                if (vm.parentId == null) {
+                    vm.getSpace();
+                }
+                else {
+                    vm.getFolderContent(vm.parentId);
+                }
+            }, function () {
+                console.log('Modal dismissed');
+            });
         }
 
         function openSharedContentWindow(size) {
@@ -909,7 +914,12 @@
 
         function openDocument(file) {
             if (file.fileType !== 7) {
-                fileService.openFile(file.link);
+                if (file.fileType == 6) {
+                    fileService.downloadFile(file.link);
+                }
+                else {
+                    fileService.openFile(file.link);
+                }                
             } else {
                 fileService.findCourse(file.id,
                     function (data) {
