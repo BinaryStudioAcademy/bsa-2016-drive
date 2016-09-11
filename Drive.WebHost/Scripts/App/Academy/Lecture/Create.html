@@ -1,44 +1,4 @@
 ﻿
-<style type="text/css">
-    /*List style*/
-    .ul {
-        list-style: none;
-        padding: 0;
-        margin-left: 110px;
-    }
-
-    .list {
-        padding-left: 1.3em;
-    }
-
-        .list:before {
-            content: "\f00c"; /* FontAwesome Unicode */
-            font-family: FontAwesome;
-            display: inline-block;
-            margin-left: -1.3em;
-            width: 1.3em;
-        }
-    /*End List style*/
-
-    /*Button for adding content*/
-    .button-add {
-        margin-left: 125px;
-    }
-    /*End Button for adding content*/
-
-    /*Create new lecture view*/
-    .create-lecture-wrap {
-        position: relative;
-        width: 100%;
-        color: #333;
-        margin-top: 20px;
-        overflow-y: auto;
-        overflow-x: hidden;
-        height: 73vh;
-    }
-    /*End Create new lecture view*/
-</style>
-
 <div class="container-fluid">
     <br />
     <div class="btn-group btn-breadcrumb">
@@ -128,8 +88,8 @@
                                         </thead>
                                         <tbody style="overflow-x: hidden;">
                                             <tr ng-repeat="task in lectureCreateCtrl.lecture.homeTasks">
-                                                <td style="width: 20%" class="description" title="{{ task.deadlineDate | date:'dd-MM-yyyy HH:mm' }}">
-                                                   {{ task.deadlineDate | date:'dd-MM-yyyy HH:mm' }}
+                                                <td style="width: 20%" class="description" title="{{ task.deadlineDate | date:'dd-MM-yyyy HH:mm' : 'UTC' }}">
+                                                    {{ task.deadlineDate | date:'dd-MM-yyyy HH:mm' : 'UTC' }}
                                                 </td>
                                                 <td style="width: 70%" class="description" title="{{task.description}}">
                                                     {{ task.description | limitTo: 80 }}{{task.description.length > 80 ? '...' : '' }}
@@ -159,8 +119,8 @@
                                                     <input ng-model-options="{timezone:'+0000'}" type="datetime" name="deadlineDate" id="deadlineDate" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="lectureCreateCtrl.currentTask.deadlineDate" is-open="lectureCreateCtrl.calendarHomeTask.isOpen" placeholder="Select deadline date" timepicker-options="lectureCreateCtrl.calendarHomeTask.timepickerOptions" required />
                                                     <button type="button" class="btn btn-default" ng-click="lectureCreateCtrl.calendarHomeTask.openCalendarHomeTask($event, prop)"><i class="fa fa-calendar"></i></button>
                                                 </span>
-                                                <p ng-show="taskForm.deadlineDate.$error.required && taskForm.deadlineDate.$touched" class="help-block col-sm-offset-3">Date is required</p>
-                                                <p ng-show="taskForm.deadlineDate.$error.datetime" class="help-block col-sm-offset-3">Not a valid date</p>
+                                            <p ng-show="taskForm.deadlineDate.$error.required && taskForm.deadlineDate.$touched" class="help-block col-sm-offset-3">Date is required</p>
+                                            <p ng-show="taskForm.deadlineDate.$error.datetime" class="help-block col-sm-offset-3">Not a valid date</p>
                                             </p>
                                         </div>
                                         <div class="form-group">
