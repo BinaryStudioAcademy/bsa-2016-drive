@@ -80,7 +80,7 @@
             if (response)
             {
                 $timeout(function () {
-                    $uibModalInstance.close();
+                    $uibModalInstance.close(response);
 
                     toastr.success(
                    vm.message, vm.operation,

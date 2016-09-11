@@ -151,6 +151,7 @@ namespace Drive.WebHost.Services.Pro
 
             _unitOfWork.AcademyProCourses.Create(course);
             await _unitOfWork.SaveChangesAsync();
+            dto.Id = course.Id;
             return dto;
         }
 
@@ -184,7 +185,9 @@ namespace Drive.WebHost.Services.Pro
 
         public async Task DeleteAsync(int id)
         {
-            var course = await _unitOfWork.AcademyProCourses.Query.Include(x => x.FileUnit).SingleOrDefaultAsync(x => x.Id == id);
+            var course = await _unitOfWork.AcademyProCourses.Query
+                .Include(x => x.FileUnit)
+                .SingleOrDefaultAsync(x => x.Id == id);
             _unitOfWork.Files.Delete(course.FileUnit.Id);
             //_unitOfWork.AcademyProCourses.Delete(id);
             await _unitOfWork.SaveChangesAsync();

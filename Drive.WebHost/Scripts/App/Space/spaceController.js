@@ -822,7 +822,7 @@
             });
 
             courseModalInstance.result.then(function (response) {
-                $location.url('/apps/academy');
+                $location.url('/apps/academy/'+ response.id);
             },
                 function () {
                     console.log('Modal dismissed');
