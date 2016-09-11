@@ -1533,3 +1533,66 @@ li.folder.on-drag-enter {
     height: 73vh;
 }
 /*End Create new lecture*/
+
+/*Admin>Logs*/
+.input-group .form-control {
+  z-index: 0;
+}
+.input-group .form-control:focus {
+    z-index: 0;
+}
+.log-t-row-1{
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden !important;
+    line-height: 20px;
+}
+
+.log-t-row-4{
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    overflow: hidden !important;
+    font-size: 14px;
+    line-height: 20px;
+    max-height: 100px;
+    -webkit-line-clamp: 5;
+    -webkit-box-orient: vertical;
+}
+
+.log-table-padding{
+    padding: 10px 0;
+}
+.log-footer-wrap{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+.log-form-wrap{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 0;
+    list-style: none;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+.log-form-col{
+    width:150px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+/*END Admin>Logs*/
