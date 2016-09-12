@@ -161,8 +161,8 @@ namespace Drive.WebHost.Api
         [Route("apps/findcourse/{id:int}")]
         public async Task<IHttpActionResult> SearchCourse(int id)
         {
-            int result = await _service.SearchCourse(id);
-            if (result == 0)
+            var result = await _service.SearchCourse(id);
+            if (result == null)
             {
                 return NotFound();
             }

@@ -524,7 +524,15 @@
                     vm.file = $itemScope.file;
                     vm.file.parentId = vm.parentId;
                     vm.file.spaceId = vm.spaceId;
-                    vm.openFileWindow();
+                    if (vm.file.fileType !== 7) {
+                        vm.openFileWindow();
+                    }
+                    else {
+                        fileService.findCourse(vm.file.id, function (response) {
+                            vm.course = response;
+                            vm.openNewCourseWindow('lg');
+                        });
+                    }
                 }
             ],
             null,
@@ -1015,7 +1023,7 @@
                 fileService.findCourse(file.id,
                     function (data) {
                         if (data !== undefined) {
-                            $location.url('/apps/academy/' + data);
+                            $location.url('/apps/academy/' + data.id);
                         }
                     });
             }

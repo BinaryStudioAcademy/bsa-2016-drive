@@ -241,7 +241,7 @@
                 fileService.findCourse(file.id,
                     function (data) {
                         if (data !== undefined) {
-                            $location.url('/apps/academy/' + data);
+                            $location.url('/apps/academy/' + data.id);
                         }
                     });
             }
