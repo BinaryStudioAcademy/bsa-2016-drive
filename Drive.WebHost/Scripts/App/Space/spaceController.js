@@ -69,7 +69,8 @@
 
         // Multiselect
         vm.selectItems = selectItems;
-
+        vm.rightClickSelection = rightClickSelection;
+        vm.initSelection = initSelection;
 
         vm.paginate = {
             currentPage: 1,
@@ -427,6 +428,7 @@
                 function (data) {
                     vm.space = data;
                     vm.spaceId = data.id;
+                    vm.initSelection();
                 });
         }
 
@@ -920,6 +922,7 @@
                 function (data) {
                     vm.space.folders = data.folders;
                     vm.space.files = data.files;
+                    vm.initSelection();
                 });
         }
 
@@ -1171,10 +1174,44 @@
             }
         }
 
+        function rightClickSelection(item, isFile) {
+            if (!item.selected) {
+                resetSelection();
+                item.selected = true;
+                vm.previousSelect = { data: item, isFile: isFile };
+            }
+        }
+
+        function initSelection() {
+            if (vm.space.folders.length > 0) {
+                vm.previousSelect = { data: vm.space.folders[0], isFile: false };
+            }
+            else if (vm.space.files.length > 0) {
+                vm.previousSelect = { data: vm.space.files[0], isFile: true };
+            }
+        }
+
         function resetSelection() {
             vm.space.folders.forEach(function (item) { item.selected = false; })
             vm.space.files.forEach(function (item) { item.selected = false; });
         }
         //Selection end
+
     }
 }());
+
+(function () {
+    "use strict";
+    angular.module('driveApp')
+    .directive('ngRightClick', function ($parse) {
+        return function (scope, element, attrs) {
+            var fn = $parse(attrs.ngRightClick);
+            element.bind('contextmenu', function (event) {
+                scope.$apply(function () {
+                    event.preventDefault();
+                    fn(scope, { $event: event });
+                });
+            });
+        };
+    });
+})();
