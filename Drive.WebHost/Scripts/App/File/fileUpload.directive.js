@@ -42,7 +42,7 @@
         return {
             restrict: "A",
             scope: {
-                inputFile: "=",
+                inputFile: "="
             },
             link: function (scope, element, attributes) {
                 element.bind("change", function (changeEvent) {

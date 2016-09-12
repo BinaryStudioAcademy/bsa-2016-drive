@@ -157,7 +157,7 @@
         function openShareCourseContentWindow(size) {
 
             var shareModalInstance = $uibModal.open({
-                animation: false,
+                animation: true,
                 templateUrl: 'Scripts/App/SharedContent/SharedContentForm.html',
                 windowTemplateUrl: 'Scripts/App/SharedContent/Modal.html',
                 controller: 'SharedContentModalCtrl',

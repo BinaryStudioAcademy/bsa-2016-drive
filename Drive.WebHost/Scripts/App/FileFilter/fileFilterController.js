@@ -80,7 +80,7 @@
         function openFileWindow(size) {
 
             var fileModalInstance = $uibModal.open({
-                animation: false,
+                animation: true,
                 templateUrl: 'Scripts/App/File/FileForm.html',
                 windowTemplateUrl: 'Scripts/App/File/Modal.html',
                 controller: 'FileModalCtrl',
@@ -104,7 +104,7 @@
         function openSharedContentWindow(size) {
 
             var fileModalInstance = $uibModal.open({
-                animation: false,
+                animation: true,
                 templateUrl: 'Scripts/App/SharedContent/SharedContentForm.html',
                 windowTemplateUrl: 'Scripts/App/SharedContent/Modal.html',
                 controller: 'SharedContentModalCtrl',

@@ -142,32 +142,32 @@
         }
         function downloadFile(fileId, callBack) {
             $http({
-                method: 'GET',
-                url: baseUrl + '/api/files/download?fileId=' + fileId,
-                responseType: 'arraybuffer'
-            })
-             .success(function (data, status, headers) {
-                 headers = headers();
-                 var fileName = getFileNameFromHeader(headers['content-disposition']);
-                 var contentType = headers['content-type'];
+                    method: 'GET',
+                    url: baseUrl + '/api/files/download?fileId=' + fileId,
+                    responseType: 'arraybuffer'
+                })
+                .success(function(data, status, headers) {
+                    headers = headers();
+                    var fileName = getFileNameFromHeader(headers['content-disposition']);
+                    var contentType = headers['content-type'];
 
-                 try {
-                     console.log("Trying save file:");
-                     console.log(fileName);
-                     var blob = new Blob([data], { type: contentType });
-                     var url = URL.createObjectURL(blob);
-                     var a = document.createElement('a');
-                     a.href = url;
-                     a.download = fileName;
-                     a.target = '_blank';
-                     a.click();
-                     console.log("File saving succeeded");
-                     success = true;
-                 } catch (ex) {
-                     console.log("Fale saving failed with the following exception:");
-                     console.log(ex);
-                 }
-             })
+                    try {
+                        console.log("Trying save file:");
+                        console.log(fileName);
+                        var blob = new Blob([data], { type: contentType });
+                        var url = URL.createObjectURL(blob);
+                        var a = document.createElement('a');
+                        a.href = url;
+                        a.download = fileName;
+                        a.target = '_blank';
+                        a.click();
+                        console.log("File saving succeeded");
+                        success = true;
+                    } catch (ex) {
+                        console.log("Fale saving failed with the following exception:");
+                        console.log(ex);
+                    }
+                });
         }
         function getFileNameFromHeader(header) {
             var result = header.split(';')[1].trim().split('=')[1];
