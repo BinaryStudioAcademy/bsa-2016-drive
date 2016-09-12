@@ -22,15 +22,24 @@
         vm.search = search;
         vm.cancelSearch = cancelSearch;
         vm.orderCourseByColumn = orderCourseByColumn;
+        vm.openShareCourseContentWindow = openShareCourseContentWindow;
+        vm.sharedCourseContent = sharedCourseContent;
+        vm.getBinarySpaceIdent = getBinarySpaceIdent;
 
         vm.courseMenuOptions = [
-        //[
-        //    'Share', function ($itemScope) {
-        //        vm.academy = $itemScope.academy;
-        //        //vm.openNewCourseWindow();
-        //    }
-        //],
-        //null,
+        [
+            'Share', function ($itemScope) {
+                vm.contentSharedId = $itemScope.academy.fileUnit.id;
+                sharedCourseContent();
+            },
+                function ($itemScope) {
+                    if ($itemScope.academy.fileUnit.spaceId == vm.binarySpaceId) {
+                        return false;
+                    }
+                    return true;
+                }
+        ],
+        null,
         [
             'Edit', function ($itemScope) {
                 vm.academy = $itemScope.academy;
@@ -55,6 +64,7 @@
             vm.courseColumnForOrder = 'name';
             vm.searchText = $routeParams.tagName;
             vm.iconHeight = 30;
+            vm.binarySpaceId = 0;
             vm.icon = "./Content/Icons/academyPro.svg";
             search();         
             
@@ -64,6 +74,7 @@
             return academyListService.getAcademies()
                 .then(function(data) {
                     vm.academiesList = data;
+                    getBinarySpaceIdent(vm.academiesList);
                     return vm.academiesList;
                 });
         }
@@ -131,6 +142,7 @@
         function search() {
             academyListService.searchCourses(vm.searchText, function (data) {
                 vm.academiesList = data;
+                getBinarySpaceIdent(vm.academiesList);
             });
         }
         function cancelSearch() {
@@ -140,6 +152,47 @@
 
         function orderCourseByColumn(column) {
             vm.courseColumnForOrder = academyListService.orderCoursesByColumn(column, vm.courseColumnForOrder);
+        }
+
+        function openShareCourseContentWindow(size) {
+
+            var shareModalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'Scripts/App/SharedContent/SharedContentForm.html',
+                windowTemplateUrl: 'Scripts/App/SharedContent/Modal.html',
+                controller: 'SharedContentModalCtrl',
+                controllerAs: 'sharedContentModalCtrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        var sharedContInfo = {
+                            contentId: vm.contentSharedId,
+                            title: 'Shared file'
+                        }
+                        return sharedContInfo;
+                    }
+                }
+            });
+
+            shareModalInstance.result.then(function (response) {
+                console.log(response);
+            }, function () {
+                console.log('Modal dismissed');
+            });
+        }
+
+        function sharedCourseContent() {
+             openShareCourseContentWindow();
+        }
+
+        function getBinarySpaceIdent(list) {
+            for (var i = 0; i <list.length; i++) {
+                if (list[i].spaceType === 0) {
+                    vm.binarySpaceId = list[i].spaceId;
+                    return vm.binarySpaceId;
+                }
+            }
+            return 0;
         }
     }
 }());

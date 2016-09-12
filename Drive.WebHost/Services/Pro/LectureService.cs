@@ -53,7 +53,7 @@ namespace Drive.WebHost.Services.Pro
                 ModifiedAt = lecture.ModifiedAt,
                 IsDeleted = lecture.IsDeleted,
                 StartDate = lecture.StartDate,
-                VideoLinks = lecture.ContentList.Where(links => links.LinkType == LinkType.Video).Select(link => new ContentLinkDto
+                VideoLinks = lecture.ContentList.Where(link => !link.IsDeleted).Where(links => links.LinkType == LinkType.Video).Select(link => new ContentLinkDto
                 {
                     Id = link.Id,
                     Name = link.Name,
@@ -61,7 +61,7 @@ namespace Drive.WebHost.Services.Pro
                     Link = link.Link,
                     LinkType = link.LinkType
                 }),
-                SlidesLinks = lecture.ContentList.Where(links => links.LinkType == LinkType.Slide).Select(link => new ContentLinkDto
+                SlidesLinks = lecture.ContentList.Where(link => !link.IsDeleted).Where(links => links.LinkType == LinkType.Slide).Select(link => new ContentLinkDto
                 {
                     Id = link.Id,
                     Name = link.Name,
@@ -69,7 +69,7 @@ namespace Drive.WebHost.Services.Pro
                     Link = link.Link,
                     LinkType = link.LinkType
                 }),
-                SampleLinks = lecture.ContentList.Where(links => links.LinkType == LinkType.Sample).Select(link => new ContentLinkDto
+                SampleLinks = lecture.ContentList.Where(link => !link.IsDeleted).Where(links => links.LinkType == LinkType.Sample).Select(link => new ContentLinkDto
                 {
                     Id = link.Id,
                     Name = link.Name,
@@ -77,7 +77,7 @@ namespace Drive.WebHost.Services.Pro
                     Link = link.Link,
                     LinkType = link.LinkType
                 }),
-                UsefulLinks = lecture.ContentList.Where(links => links.LinkType == LinkType.Useful).Select(link => new ContentLinkDto
+                UsefulLinks = lecture.ContentList.Where(link => !link.IsDeleted).Where(links => links.LinkType == LinkType.Useful).Select(link => new ContentLinkDto
                 {
                     Id = link.Id,
                     Name = link.Name,
@@ -85,7 +85,7 @@ namespace Drive.WebHost.Services.Pro
                     Link = link.Link,
                     LinkType = link.LinkType
                 }),
-                RepositoryLinks = lecture.ContentList.Where(links => links.LinkType == LinkType.Repository).Select(link => new ContentLinkDto
+                RepositoryLinks = lecture.ContentList.Where(link => !link.IsDeleted).Where(link => !link.IsDeleted).Where(links => links.LinkType == LinkType.Repository).Select(link => new ContentLinkDto
                 {
                     Id = link.Id,
                     Name = link.Name,
@@ -93,14 +93,14 @@ namespace Drive.WebHost.Services.Pro
                     Link = link.Link,
                     LinkType = link.LinkType
                 }),
-                CodeSamples = lecture.CodeSamples.Select(sample => new CodeSampleDto
+                CodeSamples = lecture.CodeSamples.Where(link => !link.IsDeleted).Select(sample => new CodeSampleDto
                 {
                     Id = sample.Id,
                     Name = sample.Name,
                     IsDeleted = sample.IsDeleted,
                     Code = sample.Code
                 }),
-                HomeTasks = lecture.HomeTasks.Where(x => !x.IsDeleted).Select(task => new HomeTaskDto
+                HomeTasks = lecture.HomeTasks.Where(link => !link.IsDeleted).Where(x => !x.IsDeleted).Select(task => new HomeTaskDto
                 {
                     Id = task.Id,
                     Description = task.Description,

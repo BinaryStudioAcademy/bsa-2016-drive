@@ -25,6 +25,8 @@
         vm.getCourseList = getCourseList;
         vm.getCourse = getCourse;
         vm.submitTask = submitTask;
+        vm.removeTask = removeTask;
+        vm.editTask = editTask;
 
         activate();
 
@@ -144,6 +146,15 @@
                 vm.currentTask = {};
             }
         }
+
+        function removeTask(index) {
+            vm.lecture.homeTasks.splice(index, 1);
+        };
+
+        function editTask(index) {
+            vm.currentTask = vm.lecture.homeTasks[index];
+            vm.lecture.homeTasks.splice(index, 1);
+        };
 
         function getCourseList() {
             $location.url('/apps/academy/');

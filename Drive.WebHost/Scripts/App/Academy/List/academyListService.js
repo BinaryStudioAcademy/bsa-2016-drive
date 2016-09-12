@@ -18,7 +18,8 @@
             deleteData: deleteData,
             getAllUsers: getAllUsers,
             searchCourses: searchCourses,
-            orderCoursesByColumn: orderCoursesByColumn
+            orderCoursesByColumn: orderCoursesByColumn,
+            getAllTags: getAllTags
         }
 
         return service;
@@ -109,6 +110,18 @@
             var pos = columnCurrent.indexOf(columnClicked);
             if (pos == 0) { return '-' + columnClicked; }
             return columnClicked;
+        }
+
+        function getAllTags(callback) {
+            $http.get(baseUrl + '/api/tags')
+                .then(function(response) {
+                        if (callback) {
+                            callback(response.data);
+                        }
+                    },
+                    function() {
+                        console.log('Error while getting all tags!');
+                    });
         }
     }
 })();

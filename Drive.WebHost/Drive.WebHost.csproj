@@ -306,6 +306,7 @@
     <Content Include="Content\Icons\lecture-black.svg" />
     <Content Include="Content\Icons\lecture.svg" />
     <Content Include="Content\Icons\link.svg" />
+    <Content Include="Content\Icons\link_bw.svg" />
     <Content Include="Content\Icons\menu_shared.svg" />
     <Content Include="Content\Icons\menu_space-home.svg" />
     <Content Include="Content\Icons\menu_space-other.svg" />
@@ -318,6 +319,7 @@
     <Content Include="Content\Icons\seo-training.svg" />
     <Content Include="Content\Icons\trello.svg" />
     <Content Include="Content\Icons\trello_bw.svg" />
+    <Content Include="Content\Icons\upload-doc-o_bw.svg" />
     <Content Include="Content\Icons\upload-doc_bw.svg" />
     <Content Include="Content\Icons\xls.svg" />
     <Content Include="Content\Icons\xls_bw.svg" />
@@ -327,6 +329,7 @@
     <Content Include="icon.png" />
     <Content Include="Scripts\App\Academy\Lecture\createLink.directive.html" />
     <Content Include="Scripts\App\Academy\Lecture\createLink.directive.js" />
+    <Content Include="Scripts\App\Academy\Lecture\externalLink.filter.js" />
     <Content Include="Scripts\App\Academy\Lecture\Lecture.html" />
     <Content Include="Scripts\App\Academy\Lecture\lectureController.js" />
     <Content Include="Scripts\App\Academy\Lecture\lectureService.js" />

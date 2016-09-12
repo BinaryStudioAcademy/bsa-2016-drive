@@ -40,7 +40,7 @@
         <ul class="sp-gv-flex-container wrap" ng-show="sharedSpaceCtrl.showGrid" context-menu="sharedSpaceCtrl.folderMenuOptions">
         <li class="sp-gv-flex-item" role="button" context-menu="sharedSpaceCtrl.folderMenuOptions" dir-paginate="folder in sharedSpaceCtrl.space.folders | itemsPerPage: sharedSpaceCtrl.paginate.pageSize" total-items="sharedSpaceCtrl.paginate.numberOfItems" current-page="sharedSpaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="sharedSpaceCtrl.getFolderContent(folder.id); sharedSpaceCtrl.addElem(folder)">
             <div class="sp-gv-wrapper-flex-item">
-                <div class="sp-gv-item-content card">
+                <div class="sp-gv-item-content cards">
                     <div class="sp-gv-item-img-wrapper">
                         <img ng-src="./Content/Icons/folder.svg" alt="Folder" title="Folder" />
                     </div>
@@ -54,9 +54,9 @@
             </div>
         </li>
 
-        <li class="sp-gv-flex-item" role="button" context-menu="sharedSpaceCtrl.fileMenuOptions" ng-repeat="file in sharedSpaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="sharedSpaceCtrl.openDocument(file.link)">
+        <li class="sp-gv-flex-item" role="button" context-menu="sharedSpaceCtrl.fileMenuOptions" ng-repeat="file in sharedSpaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="sharedSpaceCtrl.openDocument(file)">
             <div class="sp-gv-wrapper-flex-item">
-                <div class="sp-gv-item-content card">
+                <div class="sp-gv-item-content cards">
                     <div class="sp-gv-item-img-wrapper">
                         <img ng-src="{{sharedSpaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" />
                     </div>
@@ -128,7 +128,7 @@
             </div>
             <div style="transition: all 2s">
                 <div class="filter-table-row">
-                    <div class="row filter-table-row" role="button" ng-repeat="file in sharedSpaceCtrl.space.files | orderBy: sharedSpaceCtrl.columnForOrder" ng-click="sharedSpaceCtrl.activeRow(file.id, 'true')" ng-dblclick="sharedSpaceCtrl.openDocument(file.link)" ng-class="{selected: file.selected}" context-menu="sharedSpaceCtrl.fileMenuOptions">
+                    <div class="row filter-table-row" role="button" ng-repeat="file in sharedSpaceCtrl.space.files | orderBy: sharedSpaceCtrl.columnForOrder" ng-click="sharedSpaceCtrl.activeRow(file.id, 'true')" ng-dblclick="sharedSpaceCtrl.openDocument(file)" ng-class="{selected: file.selected}" context-menu="sharedSpaceCtrl.fileMenuOptions">
                         <div class="col-md-3 filter-table-cell description" title="{{ file.name }}">
                             <img ng-src="{{sharedSpaceCtrl.chooseIcon(file.fileType)}}" height="{{sharedSpaceCtrl.iconHeight}}" />
                             {{file.name | limitTo: 20}}{{file.name.length > 20 ? '...' : ''}}

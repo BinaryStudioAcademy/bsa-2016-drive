@@ -19,9 +19,9 @@ namespace Drive.DataAccess.Entities
         Sheets,
         Slides,
         Trello,
-        Link,
-        Physical,
-        AcademyPro,
+        Links,
+        Uploaded,
+        AcademyPro, 
         Event
     }
 }

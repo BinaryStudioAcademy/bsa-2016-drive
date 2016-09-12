@@ -1,4 +1,5 @@
-﻿<div class="timeline-badge info" title="{{blockTitle}}">
+﻿
+<div class="timeline-badge info" title="{{blockTitle}}">
     <i ng-class="iconClass" aria-hidden="true"></i>
 </div>
 <div class="timeline-panel">
@@ -9,12 +10,12 @@
         <div class="bs-callout bs-callout-info" ng-if="linkType == linkTypes.sample || linkType == linkTypes.useful || linkType == linkTypes.repository" ng-repeat="link in links">
             <h4>{{link.name}}</h4>
             <p>
-                <a ng-href="{{link.link}}" target="_blank">{{link.link}} <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                <a ng-href="{{link.link|external}}" target="_blank">{{link.link}} <i class="fa fa-external-link" aria-hidden="true"></i></a>
             </p>
             <p>{{link.description}}</p>
         </div>
         <div class="col-md-6" ng-if="linkType == linkTypes.video">
-            <div class="card" ng-repeat="video in links">
+            <div class="card cards" ng-repeat="video in links">
                 <div class="card-image">
                     <div>
                         <div>
@@ -26,12 +27,14 @@
                     <span class="card-title">{{video.name}}</span>
                 </div>
                 <div class="card-action">
-                    <p>{{video.description}}</p>
+                    <p title="{{video.description}}">
+                        {{ video.description | limitTo: 167 }}{{video.description.length > 167 ? '...' : '' }}
+                    </p>
                 </div>
             </div>
         </div>
         <div class="col-md-6" ng-if="linkType == linkTypes.slide">
-            <div class="card" ng-repeat="slide in links">
+            <div class="card cards" ng-repeat="slide in links">
                 <div class="card-image">
                     <div>
                         <div>
@@ -43,7 +46,9 @@
                     <span class="card-title">{{slide.name}}</span>
                 </div>
                 <div class="card-action">
-                    <p>{{slide.description}}</p>
+                    <p title="{{slide.description}}">
+                        {{ slide.description | limitTo: 167 }}{{slide.description.length > 167 ? '...' : '' }}
+                    </p>
                 </div>
             </div>
         </div>

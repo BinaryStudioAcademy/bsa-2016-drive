@@ -1,44 +1,4 @@
 ﻿
-<style type="text/css">
-    /*List style*/
-    .ul {
-        list-style: none;
-        padding: 0;
-        margin-left: 110px;
-    }
-
-    .list {
-        padding-left: 1.3em;
-    }
-
-        .list:before {
-            content: "\f00c"; /* FontAwesome Unicode */
-            font-family: FontAwesome;
-            display: inline-block;
-            margin-left: -1.3em;
-            width: 1.3em;
-        }
-    /*End List style*/
-
-    /*Button for adding content*/
-    .button-add {
-        margin-left: 125px;
-    }
-    /*End Button for adding content*/
-
-    /*Create new lecture view*/
-    .create-lecture-wrap {
-        position: relative;
-        width: 100%;
-        color: #333;
-        margin-top: 20px;
-        overflow-y: auto;
-        overflow-x: hidden;
-        height: 73vh;
-    }
-    /*End Create new lecture view*/
-</style>
-
 <div class="container-fluid">
     <br />
     <div class="btn-group btn-breadcrumb">
@@ -63,27 +23,27 @@
         <span us-spinner="{radius:30, width:8, length: 16}"></span>
         <div class="create-lecture-wrap">
             <div class="container">
-                <div class="col-md-12">
+                <div class="col-md-12" style="padding-left: 0">
                     <form name="courseForm" ng-submit="submitForm()" class="form-horizontal" novalidate>
                         <div class="form-group" ng-class="{ 'has-error' : courseForm.name.$invalid && !courseForm.name.$pristine }">
-                            <label class="col-sm-2">Lecture name:</label>
+                            <label class="col-sm-2 create-lecture-form">Lecture name:</label>
                             <input type="text" name="name" id="name" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="lectureCreateCtrl.lecture.name" placeholder="Lecture name" required>
-                            <p ng-show="courseForm.name.$error.required && courseForm.name.$touched" class="help-block col-sm-offset-2">Name is required</p>
-                            <p ng-show="courseForm.name.$error.pattern" class="help-block col-sm-offset-2">Not a valid name</p>
+                            <p ng-show="courseForm.name.$error.required && courseForm.name.$touched" class="help-block col-sm-offset-2 lecture-validation">Name is required</p>
+                            <p ng-show="courseForm.name.$error.pattern" class="help-block col-sm-offset-2 lecture-validation">Not a valid name</p>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2">Description:</label>
+                            <label class="col-sm-2 create-lecture-form">Description:</label>
                             <textarea type="text" name="description" class="form-control" id="description" ng-model="lectureCreateCtrl.lecture.description" placeholder="Enter description"></textarea>
                         </div>
                         <div class="form-group datetimepicker" ng-class="{ 'has-error' : courseForm.date.$invalid && !courseForm.date.$pristine }">
-                            <label class="col-sm-2">Start date:</label>
+                            <label class="col-sm-2 create-lecture-form">Start date:</label>
                             <p class="input-group">
                                 <span class="input-group-btn">
                                     <input ng-model-options="{timezone:'+0000'}" type="datetime" name="date" id="date" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="lectureCreateCtrl.lecture.startDate" is-open="lectureCreateCtrl.calendar.isOpen" placeholder="Select start date" timepicker-options="lectureCreateCtrl.calendar.timepickerOptions" required />
                                     <button type="button" class="btn btn-default" ng-click="lectureCreateCtrl.calendar.openCalendar($event, prop)"><i class="fa fa-calendar"></i></button>
                                 </span>
-                            <p ng-show="courseForm.date.$error.required && courseForm.date.$touched" class="help-block col-sm-offset-2">Date is required</p>
-                            <p ng-show="courseForm.date.$error.datetime" class="help-block col-sm-offset-2">Not a valid date</p>
+                            <p ng-show="courseForm.date.$error.required && courseForm.date.$touched" class="help-block col-sm-offset-2 lecture-validation">Date is required</p>
+                            <p ng-show="courseForm.date.$error.datetime" class="help-block col-sm-offset-2 lecture-validation">Not a valid date</p>
                             </p>
                         </div>
                     </form>
@@ -111,9 +71,9 @@
                                   links-name="Useful links"
                                   image-class="fa fa-link fa-lg">
                     </create-links>
-                    <div uib-accordion-group class="panel-default" is-open="status.open6" title="Home task">
+                    <div uib-accordion-group class="panel-default" is-open="status.open2">
                         <uib-accordion-heading>
-                            <i class="fa fa-paper-plane-o fa-lg" aria-hidden="true"></i> Home task <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open6, 'glyphicon-chevron-right': !status.open6}"></i>
+                            <i class="fa fa-paper-plane-o fa-lg" aria-hidden="true"></i> Home task <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open2, 'glyphicon-chevron-right': !status.open2}"></i>
                         </uib-accordion-heading>
                         <div class="col-md-12">
                             <div class="row">
@@ -121,22 +81,22 @@
                                     <table class="table users table-striped table-hover">
                                         <thead>
                                             <tr>
-                                                <th style="width:30%">Deadline</th>
-                                                <th style="width:60%">Description</th>
+                                                <th style="width:20%">Deadline</th>
+                                                <th style="width:70%">Description</th>
                                                 <th style="width:10%"></th>
                                             </tr>
                                         </thead>
                                         <tbody style="overflow-x: hidden;">
                                             <tr ng-repeat="task in lectureCreateCtrl.lecture.homeTasks">
-                                                <td style="width: 30%" class="description" title="{{ task.deadlineDate | date:'dd-MM-yyyy HH:mm' }}">
-                                                   {{ task.deadlineDate | date:'dd-MM-yyyy HH:mm' }}
+                                                <td style="width: 20%" class="description" title="{{ task.deadlineDate | date:'dd-MM-yyyy HH:mm' : 'UTC' }}">
+                                                    {{ task.deadlineDate | date:'dd-MM-yyyy HH:mm' : 'UTC' }}
                                                 </td>
-                                                <td style="width: 60%" class="description" title="{{task.description}}">
-                                                    {{ task.description | limitTo: 36 }}{{task.description.length > 36 ? '...' : '' }}
+                                                <td style="width: 70%" class="description" title="{{task.description}}">
+                                                    {{ task.description | limitTo: 80 }}{{task.description.length > 80 ? '...' : '' }}
                                                 </td>
                                                 <td style="width:10%">
-                                                    <i role="button" class="fa fa-pencil-square-o fa-lg" ng-click="editLink($index)" title="Edit link" aria-hidden="true"></i>
-                                                    <i role="button" class="fa fa-trash fa-lg" ng-click="removeLink($index)" title="Delete link" aria-hidden="true"></i>
+                                                    <i role="button" class="fa fa-pencil-square-o fa-lg" ng-click="lectureCreateCtrl.editTask($index)" title="Edit home task" aria-hidden="true"></i>
+                                                    <i role="button" class="fa fa-trash fa-lg" ng-click="lectureCreateCtrl.removeTask($index)" title="Delete home task" aria-hidden="true"></i>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -159,8 +119,8 @@
                                                     <input ng-model-options="{timezone:'+0000'}" type="datetime" name="deadlineDate" id="deadlineDate" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="lectureCreateCtrl.currentTask.deadlineDate" is-open="lectureCreateCtrl.calendarHomeTask.isOpen" placeholder="Select deadline date" timepicker-options="lectureCreateCtrl.calendarHomeTask.timepickerOptions" required />
                                                     <button type="button" class="btn btn-default" ng-click="lectureCreateCtrl.calendarHomeTask.openCalendarHomeTask($event, prop)"><i class="fa fa-calendar"></i></button>
                                                 </span>
-                                                <p ng-show="taskForm.deadlineDate.$error.required && taskForm.deadlineDate.$touched" class="help-block col-sm-offset-3">Date is required</p>
-                                                <p ng-show="taskForm.deadlineDate.$error.datetime" class="help-block col-sm-offset-3">Not a valid date</p>
+                                            <p ng-show="taskForm.deadlineDate.$error.required && taskForm.deadlineDate.$touched" class="help-block col-sm-offset-3">Date is required</p>
+                                            <p ng-show="taskForm.deadlineDate.$error.datetime" class="help-block col-sm-offset-3">Not a valid date</p>
                                             </p>
                                         </div>
                                         <div class="form-group">

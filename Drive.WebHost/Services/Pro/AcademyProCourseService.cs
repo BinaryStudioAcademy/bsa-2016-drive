@@ -151,6 +151,7 @@ namespace Drive.WebHost.Services.Pro
 
             _unitOfWork.AcademyProCourses.Create(course);
             await _unitOfWork.SaveChangesAsync();
+            dto.Id = course.Id;
             return dto;
         }
 
@@ -171,6 +172,13 @@ namespace Drive.WebHost.Services.Pro
 
             course.Author = user;
 
+            for(int i=0;i < course.Tags?.Count;i++)
+            {
+                var tag = course.Tags[i];
+                if (dto.Tags?.FirstOrDefault(t => t.Name == tag.Name) == null)
+                    course.Tags?.RemoveAt(i);
+            }
+
             dto.Tags.ForEach(tag =>
             {
                 if (course.Tags?.Count(t => t.Name == tag.Name) == 0)
@@ -184,7 +192,9 @@ namespace Drive.WebHost.Services.Pro
 
         public async Task DeleteAsync(int id)
         {
-            var course = await _unitOfWork.AcademyProCourses.Query.Include(x => x.FileUnit).SingleOrDefaultAsync(x => x.Id == id);
+            var course = await _unitOfWork.AcademyProCourses.Query
+                .Include(x => x.FileUnit)
+                .SingleOrDefaultAsync(x => x.Id == id);
             _unitOfWork.Files.Delete(course.FileUnit.Id);
             //_unitOfWork.AcademyProCourses.Delete(id);
             await _unitOfWork.SaveChangesAsync();
@@ -206,6 +216,7 @@ namespace Drive.WebHost.Services.Pro
                                                                     Select(course => new AppsAPDto
                                                                     {
                                                                         SpaceId = course.Key.Id,
+                                                                        SpaceType = course.Key.Type,
                                                                         Name = course.Key.Name,
                                                                         Courses = course.Select(c => new AcademyProCourseDto
                                                                         {
@@ -228,7 +239,8 @@ namespace Drive.WebHost.Services.Pro
                                                                                 FileType = c.FileUnit.FileType,
                                                                                 Description = c.FileUnit.Description,
                                                                                 CreatedAt = c.FileUnit.CreatedAt,
-                                                                                LastModified = c.FileUnit.LastModified
+                                                                                LastModified = c.FileUnit.LastModified,
+                                                                                SpaceId = c.FileUnit.Space.Id
                                                                             },
                                                                             Tags = c.Tags.Select(tag => new TagDto
                                                                             {
@@ -260,6 +272,7 @@ namespace Drive.WebHost.Services.Pro
                  .Select(course => new AppsAPDto
                  {
                      SpaceId = course.Key.Id,
+                     SpaceType = course.Key.Type,
                      Name = course.Key.Name,
                      Courses = course.Select(c => new AcademyProCourseDto
                      {
@@ -282,7 +295,8 @@ namespace Drive.WebHost.Services.Pro
                              FileType = c.FileUnit.FileType,
                              Description = c.FileUnit.Description,
                              CreatedAt = c.FileUnit.CreatedAt,
-                             LastModified = c.FileUnit.LastModified
+                             LastModified = c.FileUnit.LastModified,
+                             SpaceId = c.FileUnit.Space.Id
                          },
                          Tags = c.Tags.Select(tag => new TagDto
                          {

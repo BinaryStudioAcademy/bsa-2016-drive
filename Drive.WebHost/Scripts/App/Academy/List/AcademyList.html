@@ -36,7 +36,7 @@
                    <ul class="sp-gv-flex-container">
                        <li class="sp-gv-flex-item" role="button" ng-repeat="academy in academyspace.courses" ng-dblclick="academyListCtrl.openCourse(academy.id)" title="Created {{ academy.createdAt | date : 'short' }}">
                            <div class="sp-gv-wrapper-flex-item ">
-                               <div class="sp-gv-item-content card">
+                               <div class="sp-gv-item-content cards">
                                    <div class="sp-gv-item-img-wrapper">
                                        <img ng-src="{{academyListCtrl.icon}}" alt="Academy" title="Course" />
                                    </div>
@@ -82,10 +82,10 @@
                        <span ng-show="academyListCtrl.courseColumnForOrder == 'author.name'"><i class="fa fa-sort-asc"></i></span>
                        <span ng-show="academyListCtrl.courseColumnForOrder == '-author.name'"><i class="fa fa-sort-desc"></i></span>
                    </div>
-                   <div class="col-md-2" ng-click="academyListCtrl.orderCourseByColumn('createdAt')">
-                       Created
-                       <span ng-show="academyListCtrl.courseColumnForOrder == 'createdAt'"><i class="fa fa-sort-asc"></i></span>
-                       <span ng-show="academyListCtrl.courseColumnForOrder == '-createdAt'"><i class="fa fa-sort-desc"></i></span>
+                   <div class="col-md-2" ng-click="academyListCtrl.orderCourseByColumn('startDate')">
+                       Start Date
+                       <span ng-show="academyListCtrl.courseColumnForOrder == 'startDate'"><i class="fa fa-sort-asc"></i></span>
+                       <span ng-show="academyListCtrl.courseColumnForOrder == '-startDate'"><i class="fa fa-sort-desc"></i></span>
                    </div>
                    <div class="col-md-2">Type</div>
                </div>

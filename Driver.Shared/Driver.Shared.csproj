@@ -42,6 +42,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dto\AppDto.cs" />
+    <Compile Include="Dto\DownloadFileDto.cs" />
     <Compile Include="Dto\Events\EventContentDto.cs" />
     <Compile Include="Dto\Events\EventDto.cs" />
     <Compile Include="Dto\Pro\AppsAPDto.cs" />
