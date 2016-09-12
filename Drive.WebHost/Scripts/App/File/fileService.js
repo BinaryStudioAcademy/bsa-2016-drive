@@ -263,6 +263,8 @@
                     return "./Content/Icons/physical-file.svg";
                 case 7:
                     return "./Content/Icons/academyPro.svg";
+                case 8:
+                    return "./Content/Icons/image.svg";
                 default:
                     return "./Content/Icons/folder.svg";
             }

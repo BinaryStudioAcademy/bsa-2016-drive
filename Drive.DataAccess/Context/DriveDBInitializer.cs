@@ -576,6 +576,18 @@ namespace Drive.DataAccess.Context
                     Link = "https://docs.google.com/document/d/1-JUEdHh2ZsIonOgeY8QEcAYFBPFsSi64DQ3hBjiwAbQ/edit",
                     Space = space2
                 },
+                 new FileUnit()
+                {
+                    IsDeleted = false,
+                    Name = "Mockups",
+                    FileType = FileType.Images,
+                    Description = "Mockups  for Drive",
+                    CreatedAt = new DateTime(2016, 8, 15, 15, 7, 23),
+                    LastModified = new DateTime(2016, 8, 15, 15, 7, 23),
+                    Owner = user1,
+                    Link = "https://ninjamock.com/s/3WSXD",
+                    Space = space2
+                },
                 new FileUnit()
                 {
                     IsDeleted = false,
@@ -912,6 +924,30 @@ namespace Drive.DataAccess.Context
                     LastModified = new DateTime(2016, 8, 15, 15, 7, 23),
                     Owner = user1,
                     Link = "http://www.tutorialspoint.com/csharp/csharp_online_test.htm",
+                    Space = space2
+                },
+                new FileUnit()
+                {
+                    IsDeleted = false,
+                    Name = "Nature",
+                    FileType = FileType.Images,
+                    Description = "Sample image",
+                    CreatedAt = new DateTime(2016, 8, 15, 15, 7, 23),
+                    LastModified = new DateTime(2016, 8, 15, 15, 7, 23),
+                    Owner = user1,
+                    Link = "https://flic.kr/p/9kNyZ4",
+                    Space = space2
+                },
+                new FileUnit()
+                {
+                    IsDeleted = false,
+                    Name = "City",
+                    FileType = FileType.Images,
+                    Description = "Sample image",
+                    CreatedAt = new DateTime(2016, 8, 15, 15, 7, 23),
+                    LastModified = new DateTime(2016, 8, 15, 15, 7, 23),
+                    Owner = user1,
+                    Link = "https://flic.kr/p/ek58Tx",
                     Space = space2
                 },
                 new FileUnit()
