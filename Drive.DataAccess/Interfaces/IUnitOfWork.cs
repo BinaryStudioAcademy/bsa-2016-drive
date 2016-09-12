@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Drive.DataAccess.Entities;
 using Drive.DataAccess.Entities.Pro;
+using Drive.DataAccess.Entities.Event;
 
 namespace Drive.DataAccess.Interfaces
 {
@@ -23,7 +24,8 @@ namespace Drive.DataAccess.Interfaces
         IRepository<Tag> Tags { get; }
         IRepository<Lecture> Lectures { get; }
         IRepository<Shared> SharedSpace { get; }
-
+        IRepository<EventContent> EventContents { get; }
+        IRepository<Event> Events { get; }
         Task SaveChangesAsync();
     }
 }

@@ -21,6 +21,7 @@ namespace Drive.DataAccess.Entities
         Trello,
         Link,
         Physical,
-        AcademyPro
+        AcademyPro,
+        Event
     }
 }

@@ -18,7 +18,7 @@ namespace Driver.Shared.Dto.Events
         public DateTime EventDate { get; set; }
         public IList<EventContentDto> ContentLinks { get; set; }
         public FileUnitDto FileUnit { get; set; }
-        public UserDto Author { get; set; }
+        public AuthorDto Author { get; set; }
         public DateTime CreatedAt { get; set; }
     }
 }
