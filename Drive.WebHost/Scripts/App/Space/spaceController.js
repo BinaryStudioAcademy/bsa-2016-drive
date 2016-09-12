@@ -67,6 +67,10 @@
         vm.dndCopyFile = dndCopyFile;
         vm.dndCopyFolder = dndCopyFolder;
 
+        // Multiselect
+        vm.selectItems = selectItems;
+
+
         vm.paginate = {
             currentPage: 1,
             pageSize: 15,
@@ -1115,5 +1119,62 @@
         }
         //Drag'n'Drop end 
 
+        //Selection: select-multiselect
+        function selectItems(event, item, isFile) {
+            if (event.shiftKey) {
+                resetSelection();
+                if (vm.previousSelect.isFile && isFile) {// file & file
+                    var prevIndex = vm.space.files.indexOf(vm.previousSelect.data);
+                    var currIndex = vm.space.files.indexOf(item);
+                    var start = (prevIndex < currIndex) ? prevIndex : currIndex;
+                    var end = (prevIndex > currIndex) ? prevIndex : currIndex;
+                    for (var i = start; i <= end; i++) {
+                        vm.space.files[i].selected = true;
+                    }
+                }
+                else {
+                    if (!vm.previousSelect.isFile && !isFile) {// folder & folder
+                        var prevIndex = vm.space.folders.indexOf(vm.previousSelect.data);
+                        var currIndex = vm.space.folders.indexOf(item);
+                        var start = (prevIndex < currIndex) ? prevIndex : currIndex;
+                        var end = (prevIndex > currIndex) ? prevIndex : currIndex;
+                        for (var i = start; i <= end; i++) {
+                            vm.space.folders[i].selected = true;
+                        }
+                    }
+                    else {// file & folder
+                        if (isFile) {
+                            var startFolder = vm.space.folders.indexOf(vm.previousSelect.data);
+                            var startFile = vm.space.files.indexOf(item);
+                        }
+                        else {
+                            var startFolder = vm.space.folders.indexOf(item);
+                            var startFile = vm.space.files.indexOf(vm.previousSelect.data);
+                        }
+                        for (var i = startFolder; i < vm.space.folders.length; i++) {
+                            vm.space.folders[i].selected = true;
+                        }
+                        for (var i = 0; i <= startFile; i++) {
+                            vm.space.files[i].selected = true;
+                        }
+                    }
+                }
+            }
+            else if (event.ctrlKey) {
+                item.selected = !item.selected;
+                vm.previousSelect = {data: item, isFile: isFile};
+            }
+            else {
+                resetSelection();
+                item.selected = true;
+                vm.previousSelect = { data: item, isFile: isFile };
+            }
+        }
+
+        function resetSelection() {
+            vm.space.folders.forEach(function (item) { item.selected = false; })
+            vm.space.files.forEach(function (item) { item.selected = false; });
+        }
+        //Selection end
     }
 }());
