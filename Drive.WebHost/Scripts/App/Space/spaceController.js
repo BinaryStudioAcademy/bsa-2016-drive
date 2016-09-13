@@ -49,6 +49,7 @@
         vm.createNewFolder = createNewFolder;
         vm.createNewFile = createNewFile;
         vm.uploadFile = uploadFile;
+        vm.createNewEvent = createNewEvent;
 
         vm.search = search;
         vm.cancelSearch = cancelSearch;
@@ -857,6 +858,15 @@
                 fileUnit: { parentId: vm.parentId, spaceId: vm.spaceId }
             };
             vm.openNewCourseWindow('lg');
+        }
+
+        function createNewEvent() {
+            vm.event = {
+                fileUnit: { parentId: vm.parentId, spaceId: vm.spaceId }
+            };
+            localStorageService.set('event', vm.event);
+            $location.url('/apps/events/newevent');
+
         }
 
         function uploadFile() {

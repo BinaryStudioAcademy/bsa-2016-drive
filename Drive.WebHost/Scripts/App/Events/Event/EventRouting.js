@@ -1,24 +1,33 @@
 ﻿(function () {
     angular.module('driveApp.events', [
+        'youtube-embed',
+        'ui.bootstrap',
+        'ui.bootstrap.datetimepicker'
     ])
-    .config([
-        '$routeProvider', function config($routeProvider) {
-            var baseUrl = window.globalVars.baseUrl;
-            $routeProvider
-                .when('/apps/events',
-                {
-                    templateUrl: baseUrl + '/Scripts/App/Events/List/EventsList.html',
-                    controller: 'EventsListController',
-                    controllerAs: 'eventsListCtrl'
-                })
-                .when('/apps/events/newevent',
-                {
-                    templateUrl: baseUrl + '/Scripts/App/Events/Event/CreateEvent.html',
-                    controller: 'EventCreateController',
-                    controllerAs: 'eventCreateCtrl'
-                });
-        }
-    ])
+        .config([
+            '$routeProvider', function config($routeProvider) {
+                var baseUrl = window.globalVars.baseUrl;
+                $routeProvider
+                    .when('/apps/event',
+                    {
+                        templateUrl: baseUrl + '/Scripts/App/Event/EventList.html',
+                        controller: 'EventListController',
+                        controllerAs: 'eventListCtrl'
+                    })
+                    .when('/apps/events/:id',
+                    {
+                        templateUrl: baseUrl + '/Scripts/App/Event/Event.html',
+                        controller: 'EventController',
+                        controllerAs: 'eventCtrl'
+                    })
+                    .when('/apps/event/newevent',
+                    {
+                        templateUrl: baseUrl + '/Scripts/App/Event/EventContent/CreateEvent.html',
+                        controller: 'EventCreateController',
+                        controllerAs: 'eventCreateCtrl'
+                    });
+            }
+        ])
     .constant('uiDatetimePickerConfig', {
         dateFormat: 'yyyy-MM-dd HH:mm',
         defaultTime: '10:00:00',
