@@ -8,6 +8,7 @@
         'ngAnimate',
         "toastr",
         "driveApp.academyPro",
+        "driveApp.events",
         "cfp.hotkeys",
         "ang-drag-drop"
     ])
