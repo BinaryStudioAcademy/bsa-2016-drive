@@ -2,8 +2,7 @@
     angular.module('driveApp.academyPro', [
         'youtube-embed',
         'ui.bootstrap',
-        'ui.bootstrap.datetimepicker',
-        'ngTagsInput'
+        'ui.bootstrap.datetimepicker'
     ])
         .config([
             '$routeProvider', function config($routeProvider) {

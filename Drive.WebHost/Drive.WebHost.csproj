@@ -203,6 +203,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\Event\EventsContentController.cs" />
+    <Compile Include="Api\Event\EventsController.cs" />
     <Compile Include="Api\FilesController.cs" />
     <Compile Include="Api\FoldersController.cs" />
     <Compile Include="Api\GlobalExceptionLogger.cs" />
@@ -237,6 +239,10 @@
     <Compile Include="Providers\FakeUserProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthorizationService.cs" />
+    <Compile Include="Services\Events\EventContentService.cs" />
+    <Compile Include="Services\Events\EventService.cs" />
+    <Compile Include="Services\Events\IEventContentService.cs" />
+    <Compile Include="Services\Events\IEventService.cs" />
     <Compile Include="Services\FileService.cs" />
     <Compile Include="Services\FolderService.cs" />
     <Compile Include="Services\IFileService.cs" />
@@ -349,6 +355,14 @@
     <Content Include="Scripts\App\AdminPanel\Roles\EditRole.html" />
     <Content Include="Scripts\App\AdminPanel\Roles\roleController.js" />
     <Content Include="Scripts\App\AdminPanel\Roles\roleService.js" />
+    <Content Include="Scripts\App\Events\eventsModule.js" />
+    <Content Include="Scripts\App\Events\List\EventsList.html" />
+    <Content Include="Scripts\App\Events\List\eventsListController.js" />
+    <Content Include="Scripts\App\Events\List\eventsListService.js" />
+    <Content Include="Scripts\App\Events\Event\CreateEvent.html" />
+    <Content Include="Scripts\App\Events\Event\EventContent\eventContentService.js" />
+    <Content Include="Scripts\App\Events\Event\eventCreateController.js" />
+    <Content Include="Scripts\App\Events\Event\Modal.html" />
     <Content Include="Scripts\App\File\fileUpload.directive.js" />
     <Content Include="Scripts\App\File\UploadFile.html" />
     <Content Include="Scripts\App\SharedContent\SharedContentForm.html" />

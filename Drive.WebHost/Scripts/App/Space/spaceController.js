@@ -49,6 +49,7 @@
         vm.createNewFolder = createNewFolder;
         vm.createNewFile = createNewFile;
         vm.uploadFile = uploadFile;
+        vm.createNewEvent = createNewEvent;
 
         vm.search = search;
         vm.cancelSearch = cancelSearch;
@@ -270,7 +271,7 @@
             if (localStorageService.get('cut-out') != null) {
                 var item = localStorageService.get('cut-out');
                 if (item.file) {
-                    deleteFile(vm.cuttedRow,
+                    deleteFile(item.id,
                         function () {
                             fileService.getDeletedFile(item.id,
                                 function (data) {
@@ -292,7 +293,7 @@
                                 });
                         });
                 } else {
-                    deleteFolder(vm.cuttedRow,
+                    deleteFolder(item.id,
                         function () {
                             folderService.getDeleted(item.id,
                                 function (data) {
@@ -522,6 +523,8 @@
             ],
             [
                 'Delete', function ($itemScope) {
+                    vm.lastActionType = 'deleteFolder';
+                    vm.lastItemId = $itemScope.folder.id;
                     return deleteFolder($itemScope.folder.id);
                 }
             ]
@@ -585,6 +588,8 @@
             ],
             [
                 'Delete', function ($itemScope) {
+                    vm.lastActionType = 'deleteFile';
+                    vm.lastItemId = $itemScope.file.id;
                     return deleteFile($itemScope.file.id);
                 }
             ]
@@ -864,6 +869,15 @@
             vm.openNewCourseWindow('lg');
         }
 
+        function createNewEvent() {
+            vm.event = {
+                fileUnit: { parentId: vm.parentId, spaceId: vm.spaceId }
+            };
+            localStorageService.set('event', vm.event);
+            $location.url('/apps/events/newevent');
+
+        }
+
         function uploadFile() {
             vm.file = { parentId: vm.parentId, spaceId: vm.spaceId };
             vm.openFileUploadWindow('lg');
@@ -1091,8 +1105,7 @@
             else {
                 vm.dndMoveContent(targetId, source);
             }
-            console.log(source);
-
+                        vm.dndCopyFolder(targetId, source);
         }
 
         function dropValidate(target, source) {
