@@ -1545,6 +1545,26 @@ li.folder.on-drag-enter {
     margin-left: 13%;
 }
 /*End Create new lecture*/
+/*Create new event*/
+.create-event-wrap {
+    position: relative;
+    width: 100%;
+    color: #333;
+    margin-top: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 70vh;
+}
+
+.create-event-form {
+    padding: 0;
+    width: 13%;
+}
+
+.event-validation {
+    margin-left: 13%;
+}
+/*End Create new lecture*/
 
 /*Admin>Logs*/
 .input-group .form-control {

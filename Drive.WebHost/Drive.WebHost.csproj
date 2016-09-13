@@ -359,6 +359,10 @@
     <Content Include="Scripts\App\Events\List\EventsList.html" />
     <Content Include="Scripts\App\Events\List\eventsListController.js" />
     <Content Include="Scripts\App\Events\List\eventsListService.js" />
+    <Content Include="Scripts\App\Events\Event\CreateEvent.html" />
+    <Content Include="Scripts\App\Events\Event\EventContent\eventContentService.js" />
+    <Content Include="Scripts\App\Events\Event\eventCreateController.js" />
+    <Content Include="Scripts\App\Events\Event\Modal.html" />
     <Content Include="Scripts\App\File\fileUpload.directive.js" />
     <Content Include="Scripts\App\File\UploadFile.html" />
     <Content Include="Scripts\App\SharedContent\SharedContentForm.html" />

@@ -1,19 +1,24 @@
 ﻿(function () {
     angular.module('driveApp.events', [
-        'driveApp'
     ])
-        .config([
-            '$routeProvider', function config($routeProvider) {
-                var baseUrl = window.globalVars.baseUrl;
-                $routeProvider
-                    .when('/apps/events',
-                    {
-                        templateUrl: baseUrl + '/Scripts/App/Events/List/EventsList.html',
-                        controller: 'EventsListController',
-                        controllerAs: 'eventsListCtrl'
-                    });
-            }
-        ])
+    .config([
+        '$routeProvider', function config($routeProvider) {
+            var baseUrl = window.globalVars.baseUrl;
+            $routeProvider
+                .when('/apps/events',
+                {
+                    templateUrl: baseUrl + '/Scripts/App/Events/List/EventsList.html',
+                    controller: 'EventsListController',
+                    controllerAs: 'eventsListCtrl'
+                })
+                .when('/apps/events/newevent',
+                {
+                    templateUrl: baseUrl + '/Scripts/App/Events/Event/CreateEvent.html',
+                    controller: 'EventCreateController',
+                    controllerAs: 'eventCreateCtrl'
+                });
+        }
+    ])
     .constant('uiDatetimePickerConfig', {
         dateFormat: 'yyyy-MM-dd HH:mm',
         defaultTime: '10:00:00',

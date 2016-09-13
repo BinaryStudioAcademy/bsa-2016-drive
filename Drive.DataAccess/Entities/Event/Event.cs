@@ -9,9 +9,6 @@ namespace Drive.DataAccess.Entities.Event
     {
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
-
-        public string Name { get; set; }
-        public string Description { get; set; }
         public EventType EventType { get; set; }
         public DateTime EventDate { get; set; }
 
@@ -20,7 +17,7 @@ namespace Drive.DataAccess.Entities.Event
         public FileUnit FileUnit { get; set; }
 
         public User Author { get; set; }
-        public DateTime CreatedAt { get; set; }
+
     }
 
     public enum EventType

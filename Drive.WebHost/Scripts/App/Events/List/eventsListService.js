@@ -1,9 +1,9 @@
-﻿(function () {
+﻿(function() {
     'use strict';
 
     angular
-    .module('driveApp.events')
-    .factory('EventsListService', EventsListService);
+        .module('driveApp.events')
+        .factory('EventsListService', EventsListService);
 
     EventsListService.$inject = [
         '$http',
@@ -19,8 +19,8 @@
 
         function getEvents() {
             return $http.get(baseUrl + '/api/events')
-            .then(getEventsCompleted)
-            .catch(getEventsFailed);
+                .then(getEventsCompleted)
+                .catch(getEventsFailed);
 
             function getEventsCompleted(response) {
                 return response.data;
@@ -31,4 +31,4 @@
             }
         }
     }
-})
+})();

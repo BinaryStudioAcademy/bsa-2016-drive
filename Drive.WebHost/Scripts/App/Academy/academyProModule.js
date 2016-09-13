@@ -1,6 +1,5 @@
 ﻿(function () {
     angular.module('driveApp.academyPro', [
-        'driveApp',
         'youtube-embed',
         'ui.bootstrap',
         'ui.bootstrap.datetimepicker'
