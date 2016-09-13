@@ -1,6 +1,6 @@
 ﻿(function () {
     angular.module('driveApp.events', [
-
+        'driveApp'
     ])
         .config([
             '$routeProvider', function config($routeProvider) {
