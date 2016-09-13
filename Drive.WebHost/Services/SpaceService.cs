@@ -650,6 +650,60 @@ namespace Drive.WebHost.Services
             }
         }
 
+        public async Task MoveContentAsync(CopyMoveContentDto content)
+        {
+            if (content.FilesId.Count() > 0)
+            {
+                var files = await _unitOfWork.Files.Query.Where(f => content.FilesId.Contains(f.Id)).ToListAsync();
+                for (int i = 0; i < files.Count(); i++)
+                {
+                    files[i].FolderUnit = await _unitOfWork.Folders.GetByIdAsync(content.NewParentId);
+                    files[i].Space = await _unitOfWork.Spaces.GetByIdAsync(content.SpaceId);
+                }
+            }
+            if (content.FoldersId.Count() > 0)
+            {
+                var folders = await _unitOfWork.Folders.Query.Where(f => content.FoldersId.Contains(f.Id)).ToListAsync();
+                for (int i = 0; i < folders.Count(); i++)
+                {
+                    folders[i].FolderUnit = await _unitOfWork.Folders.GetByIdAsync(content.NewParentId);
+                    folders[i].Space = await _unitOfWork.Spaces.GetByIdAsync(content.SpaceId);
+                }
+            }
+            await _unitOfWork.SaveChangesAsync();
+        }
+        public async Task CopyContentAsync(CopyMoveContentDto content)
+        {
+            if (content.FilesId.Count() > 0)
+            {
+                var filesDto = content.FilesId
+                    .Select(fileId => new FileUnitDto
+                    {
+                        Id = fileId,
+                        SpaceId = content.SpaceId,
+                        ParentId = content.NewParentId
+                    });
+                foreach (var file in filesDto)
+                {
+                    await _fileService.CreateCopyAsync(file.Id, file);
+                }
+            }
+            if (content.FoldersId.Count() > 0)
+            {
+                var foldersDto = content.FoldersId
+                    .Select(folderId => new FolderUnitDto
+                    {
+                        Id = folderId,
+                        SpaceId = content.SpaceId,
+                        ParentId = content.NewParentId
+                    });
+                foreach (var folder in foldersDto)
+                {
+                    await _folderService.CreateCopyAsync(folder.Id, folder);
+                }
+            }
+        }
+
         public void Dispose()
         {
             _unitOfWork?.Dispose();
@@ -697,5 +751,6 @@ namespace Drive.WebHost.Services
 
             return space;
         }
+
     }
 }

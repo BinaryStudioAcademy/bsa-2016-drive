@@ -17,7 +17,9 @@
             searchFoldersAndFiles: searchFoldersAndFiles,
             getNumberOfResultSearchFoldersAndFiles: getNumberOfResultSearchFoldersAndFiles,
             getSpaceTotal: getSpaceTotal,
-            getAllRoles: getAllRoles
+            getAllRoles: getAllRoles,
+            moveContent: moveContent,
+            copyContent: copyContent
         };
         function getAllRoles(callback) {
             $http.get(baseUrl + '/api/roles')
@@ -154,6 +156,30 @@
                     callback(response.data)
                 }
             });
+        }
+
+        function moveContent(content, callBack) {
+            $http.put(baseUrl + '/api/spaces/movecontent', content)
+                .then(function (response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                },
+                    function () {
+                        console.log('Error while moving data! [spaceService.moveContent()]');
+                    });
+        }
+
+        function copyContent(content, callBack) {
+            $http.put(baseUrl + '/api/spaces/copycontent', content)
+                .then(function (response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                },
+                    function () {
+                        console.log('Error while copying data! [spaceService.copyContent()]');
+                    });
         }
 
         return service;

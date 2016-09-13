@@ -62,15 +62,16 @@
         // Drag and Drop
         vm.onDrop = onDrop;
         vm.dropValidate = dropValidate;
-        vm.dndMoveFile = dndMoveFile;
-        vm.dndMoveFolder = dndMoveFolder;
-        vm.dndCopyFile = dndCopyFile;
-        vm.dndCopyFolder = dndCopyFolder;
+        vm.dndMoveContent = dndMoveContent;
+        vm.dndCopyContent = dndCopyContent;
+        vm.getDragImageId = getDragImageId;
 
         // Multiselect
         vm.selectItems = selectItems;
+        vm.selectItemsForDrag = selectItemsForDrag;
         vm.rightClickSelection = rightClickSelection;
         vm.initSelection = initSelection;
+        vm.getSelectedItems = getSelectedItems;
 
         vm.paginate = {
             currentPage: 1,
@@ -95,7 +96,7 @@
         vm.undoByHotkeys = undoByHotkeys;
         vm.lastActionType = undefined;
         vm.lastItemId = undefined;
-        
+
 
         activate();
 
@@ -135,22 +136,22 @@
             if (vm.lastActionType == 'deleteFile') {
                 fileService.getDeletedFile(vm.lastItemId,
         function (data) {
-        var file = data;
-        file.isDeleted = false;
-        file.spaceId = vm.spaceId;
-        file.parentId = vm.parentId;
+            var file = data;
+            file.isDeleted = false;
+            file.spaceId = vm.spaceId;
+            file.parentId = vm.parentId;
 
-        fileService.updateDeletedFile(file.id,
-            localStorageService.get('oldParentId'),
-            file,
-            function () {
-                if (vm.parentId == null) {
-                    vm.getSpace();
-                } else {
-                    vm.getFolderContent(vm.parentId);
-                }
-            });
-    });
+            fileService.updateDeletedFile(file.id,
+                localStorageService.get('oldParentId'),
+                file,
+                function () {
+                    if (vm.parentId == null) {
+                        vm.getSpace();
+                    } else {
+                        vm.getFolderContent(vm.parentId);
+                    }
+                });
+        });
             }
             else if (vm.lastActionType == 'deleteFolder') {
                 folderService.getDeleted(vm.lastItemId,
@@ -532,8 +533,8 @@
                     vm.file.parentId = vm.parentId;
                     vm.file.spaceId = vm.spaceId;
                     if (vm.file.fileType !== 7) {
-                    vm.openFileWindow();
-                }
+                        vm.openFileWindow();
+                    }
                     else {
                         fileService.findCourse(vm.file.id, function (response) {
                             vm.course = response;
@@ -833,7 +834,7 @@
             });
 
             courseModalInstance.result.then(function (response) {
-                $location.url('/apps/academy/'+ response.id);
+                $location.url('/apps/academy/' + response.id);
             },
                 function () {
                     console.log('Modal dismissed');
@@ -1022,7 +1023,7 @@
                 }
                 else {
                     fileService.openFile(file.link);
-                }                
+                }
             } else {
                 fileService.findCourse(file.id,
                     function (data) {
@@ -1083,86 +1084,51 @@
 
         //Drag'n'Drop
         function onDrop(event, channel, targetId, source) {
-            switch (channel) {
-                case 'file':
-                    if (event.shiftKey || event.ctrlKey) {
-                        vm.dndCopyFile(targetId, source);
-                    }
-                    else {
-                        vm.dndMoveFile(targetId, source);
-                    }
-                    break;
-                case 'folder':
-                    if (event.shiftKey || event.ctrlKey) {
-                        vm.dndCopyFolder(targetId, source);
-                    }
-                    else {
-                        vm.dndMoveFolder(targetId, source);
-                    }
-                    break;
+            if (event.shiftKey || event.ctrlKey) {
+                vm.dndCopyContent(targetId, source);
             }
+            else {
+                vm.dndMoveContent(targetId, source);
+            }
+            console.log(source);
+
         }
 
         function dropValidate(target, source) {
             return target !== source;
         }
 
-        function dndMoveFile(folderId, file) {
-            file.parentId = folderId;
-            file.spaceId = vm.space.id;
-            fileService.updateFile(file.id, file, function () {
+        function dndMoveContent(folderId, selectedContent) {
+            selectedContent.newParentId = folderId;
+            selectedContent.spaceId = vm.space.id;
+            spaceService.moveContent(selectedContent, function () {
                 if (vm.parentId == null) {
                     vm.getSpace();
                 } else {
                     vm.getFolderContent(vm.parentId);
                 }
                 toastr.success(
-                    'File was successfully moved!', 'File moving',
+                    'Selected items were successfully moved!', 'Moving data',
                     {
                         closeButton: true, timeOut: 5000
                     });
             });
         }
 
-        function dndMoveFolder(newParentId, folder) {
-            folder.parentId = newParentId;
-            folder.spaceId = vm.space.id;
-            folderService.updateFolder(folder, function () {
-                if (vm.parentId == null) {
-                    vm.getSpace();
-                } else {
-                    vm.getFolderContent(vm.parentId);
-                }
+        function dndCopyContent(folderId, selectedContent) {
+            selectedContent.newParentId = folderId;
+            selectedContent.spaceId = vm.space.id;
+            spaceService.copyContent(selectedContent, function () {
                 toastr.success(
-                    'Folder was successfully moved!', 'Folder moving',
+                    'Selected items were successfully copied!', 'Copying data',
                     {
                         closeButton: true, timeOut: 5000
                     });
             });
         }
 
-        function dndCopyFile (folderId, file) {
-            file.parentId = folderId;
-            file.spaceId = vm.space.id;
-            fileService.createCopyFile(file.id, file, function () {
-                toastr.success(
-                    'File was successfully copied!', 'File copy',
-                    {
-                        closeButton: true, timeOut: 5000
-                    });
-            });
-        }
-
-        function dndCopyFolder(newParentId, folder) {
-            folder.parentId = newParentId;
-            folder.spaceId = vm.space.id;
-            folderService.createCopy(folder.id, folder, function () {
-                toastr.success(
-                    'Folder was successfully copied!', 'Folder copy',
-                    {
-                        closeButton: true, timeOut: 5000
-                    });
-            });
+        function getDragImageId() {
+            return 'customDrag1';
         }
         //Drag'n'Drop end 
 
@@ -1209,9 +1175,17 @@
             }
             else if (event.ctrlKey) {
                 item.selected = !item.selected;
-                vm.previousSelect = {data: item, isFile: isFile};
+                vm.previousSelect = { data: item, isFile: isFile };
             }
             else {
+                resetSelection();
+                item.selected = true;
+                vm.previousSelect = { data: item, isFile: isFile };
+            }
+        }
+
+        function selectItemsForDrag(event, item, isFile) {
+            if (event.which === 1 && !item.selected && !event.shiftKey && !event.ctrlKey) {
                 resetSelection();
                 item.selected = true;
                 vm.previousSelect = { data: item, isFile: isFile };
@@ -1238,6 +1212,13 @@
         function resetSelection() {
             vm.space.folders.forEach(function (item) { item.selected = false; })
             vm.space.files.forEach(function (item) { item.selected = false; });
+        }
+
+        function getSelectedItems() {
+            var selected = { filesId: [], foldersId: [] };
+            vm.space.files.forEach(function (f) { if (f.selected) selected.filesId.push(f.id) });
+            vm.space.folders.forEach(function (f) { if (f.selected) selected.foldersId.push(f.id) });
+            return selected;
         }
         //Selection end
 

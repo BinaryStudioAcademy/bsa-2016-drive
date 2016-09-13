@@ -27,6 +27,8 @@ namespace Drive.WebHost.Services
         Task<int> NumberOfFoundFoldersAndFilesAsync(int spaceId, int? folderId, string text);
 
         Task CreateUserAndFirstSpaceAsync(string globalId);
+        Task MoveContentAsync(CopyMoveContentDto content);
+        Task CopyContentAsync(CopyMoveContentDto content);
         void Dispose();
     }
 }

@@ -58,7 +58,7 @@
     <ul class="sp-gv-flex-container wrap" ng-show="spaceCtrl.showGrid" context-menu="spaceCtrl.containerMenuOptions">
         <li class="sp-gv-flex-item folder" role="button" context-menu="spaceCtrl.folderMenuOptions" dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize" total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" 
             ng-click="spaceCtrl.selectItems($event ,folder, false)" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)" ng-class="{selected: folder.selected, cutted: folder.cutted}"
-            ui-draggable="true" drag="folder" drag-channel="folder" drop-channel="file, folder" 
+            ng-mousedown="spaceCtrl.selectItemsForDrag($event, folder, false)" ui-draggable="true" drag="spaceCtrl.getSelectedItems()" drag-channel="folder" drop-channel="file, folder" 
             drop-validate="spaceCtrl.dropValidate(folder, $data)" ui-on-drop="spaceCtrl.onDrop($event, $channel, folder.id, $data)"
             ondragstart="this.style.opacity = 0.7" ondragend="this.style.opacity = 1" ng-right-click="spaceCtrl.rightClickSelection(folder, false)">
             <div class="sp-gv-wrapper-flex-item">
@@ -79,7 +79,7 @@
         </li>
         <li class="sp-gv-flex-item" role="button" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}" 
             ng-click="spaceCtrl.selectItems($event, file, true)" ng-dblclick="spaceCtrl.openDocument(file)" ng-class="{selected: file.selected, cutted: file.cutted}" 
-            ui-draggable="true" drag="file" drag-channel="file"
+            ng-mousedown="spaceCtrl.selectItemsForDrag($event, file, true)" ui-draggable="true" drag="spaceCtrl.getSelectedItems()" drag-channel="file"
             ondragstart="this.classList.add('dragging-elem');" ondragend="this.classList.remove('dragging-elem')" ng-right-click="spaceCtrl.rightClickSelection(file, true)">
             <div class="sp-gv-wrapper-flex-item">
                 <div class="sp-gv-item-content cards">
@@ -137,9 +137,10 @@
             <div style="transition: all 2s" id="folders">
                 <div class="filter-table-row">
                     <div class="row filter-table-row" role="button" ng-repeat="folder in spaceCtrl.space.folders" 
-                         ui-draggable="true" drag="folder" drag-channel="folder" drop-channel="file, folder" 
+                         ui-draggable="true" drag="spaceCtrl.getSelectedItems()" drag-channel="folder" drop-channel="file, folder" 
                          drop-validate="spaceCtrl.dropValidate(folder, $data)" ui-on-drop="spaceCtrl.onDrop($event, $channel, folder.id, $data)"
-                         ng-click="spaceCtrl.selectItems($event, folder, false)" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)" 
+                         ng-click="spaceCtrl.selectItems($event, folder, false)" ng-mousedown="spaceCtrl.selectItemsForDrag($event, folder, false)"
+                         ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)" 
                          ondragstart="this.classList.add('dragging-elem');" ondragend="this.classList.remove('dragging-elem')"
                          ng-class="{selected: folder.selected, cutted: folder.cutted}" context-menu="spaceCtrl.folderMenuOptions" ng-right-click="spaceCtrl.rightClickSelection(folder, false)">
                         <div class="col-md-3 filter-table-cell description" title="{{ folder.name }}">
@@ -158,8 +159,8 @@
             <div style="transition: all 2s" id="files">
                 <div class="filter-table-row">
                     <div class="row filter-table-row" role="button" ng-repeat="file in spaceCtrl.space.files" 
-                         ui-draggable="true" drag="file" drag-channel="file"
-                         ng-click="spaceCtrl.selectItems($event, file, true)" ng-dblclick="spaceCtrl.openDocument(file)" 
+                         ui-draggable="true" drag="spaceCtrl.getSelectedItems()" drag-channel="file" drag-image-element-id="spaceCtrl.getDragImageId()"
+                         ng-click="spaceCtrl.selectItems($event, file, true)" ng-mousedown="spaceCtrl.selectItemsForDrag($event, file, true)" ng-dblclick="spaceCtrl.openDocument(file)" 
                          ondragstart="this.classList.add('dragging-elem');" ondragend="this.classList.remove('dragging-elem')"
                          ng-class="{'selected': file.selected, cutted: file.cutted}" 
                          context-menu="spaceCtrl.fileMenuOptions" ng-right-click="spaceCtrl.rightClickSelection(file, true)">
@@ -178,6 +179,8 @@
             </div>
         </div>
     </div>
+    <div id="customDrag1" class="alert alert-info" style="position: absolute; top: 0; right: 0; z-index: -2; max-width: 200px">copy/move selected</div>
+    <div id="coverUp" style="position: absolute; top: 0; right: 0; z-index: -1; background-color: white; width: 200px; height: 60px"></div>
     <div class="page-footer-center">
         <dir-pagination-controls class="page-footer" on-page-change="spaceCtrl.paginate.getContent(newPageNumber)"></dir-pagination-controls>
     </div>
