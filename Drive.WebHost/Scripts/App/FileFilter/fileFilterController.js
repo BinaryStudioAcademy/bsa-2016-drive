@@ -4,9 +4,9 @@
     angular.module("driveApp")
         .controller("FileFilterController", FileFilterController);
 
-    FileFilterController.$inject = ['FileService', '$uibModal', '$routeParams'];
+    FileFilterController.$inject = ['FileService', '$uibModal', '$routeParams', 'Lightbox'];
 
-    function FileFilterController(fileService, $uibModal, $routeParams) {
+    function FileFilterController(fileService, $uibModal, $routeParams, Lightbox) {
         var vm = this;
 
         vm.changeView = changeView;
@@ -22,6 +22,7 @@
         vm.openSharedContentWindow = openSharedContentWindow;
         vm.sharedContent = sharedContent;
         vm.getBinarySpaceId = getBinarySpaceId;
+        vm.openLightboxModal = openLightboxModal;
 
         activate();
 
@@ -36,13 +37,29 @@
 
             vm.spaces = [];
 
+            vm.images = [];
+
             setFileData();
             getFiles();
-            
         }
+
         function getFiles() {
             fileService.getFilesApp(vm.filesType, function (data) {
                 vm.spaces = data;
+
+                for (var i = 0; i < vm.spaces.length; i++) {
+                    for (var k = 0; k < vm.spaces[i].files.length; k++) {
+                        var file = vm.spaces[i].files[k];
+                        vm.images.push({
+                            url: file.link,
+                            caption: file.name,
+                            thumbUrl: file.link,
+                            fileType: file.fileType,
+                            created: file.createdAt
+                        });
+                    }
+                }
+
                 getBinarySpaceId(vm.spaces);
             });
         }
@@ -152,7 +169,6 @@
             }
         }
 
-
         function setFileData() {
             switch ($routeParams.appName) {
                 // not defined types => update Enum
@@ -234,6 +250,10 @@
                 fileService.openFile(file.link);
             }
         }
+
+        function openLightboxModal(index) {
+            Lightbox.openModal(vm.images, index);
+        };
 
         function chooseIcon(type) {
             vm.iconSrc = fileService.chooseIcon(type);

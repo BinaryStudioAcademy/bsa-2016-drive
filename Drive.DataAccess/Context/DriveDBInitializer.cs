@@ -579,13 +579,13 @@ namespace Drive.DataAccess.Context
                  new FileUnit()
                 {
                     IsDeleted = false,
-                    Name = "Mockups",
+                    Name = "Mountain lake",
                     FileType = FileType.Images,
-                    Description = "Mockups  for Drive",
+                    Description = "Sample image",
                     CreatedAt = new DateTime(2016, 8, 15, 15, 7, 23),
                     LastModified = new DateTime(2016, 8, 15, 15, 7, 23),
                     Owner = user1,
-                    Link = "https://ninjamock.com/s/3WSXD",
+                    Link = "http://cdn.paper4pc.com/images/mountains-landscape-nature-mountain-lake-wallpaper-4.jpg",
                     Space = space2
                 },
                 new FileUnit()
@@ -935,7 +935,7 @@ namespace Drive.DataAccess.Context
                     CreatedAt = new DateTime(2016, 8, 15, 15, 7, 23),
                     LastModified = new DateTime(2016, 8, 15, 15, 7, 23),
                     Owner = user1,
-                    Link = "https://flic.kr/p/9kNyZ4",
+                    Link = "http://www.wallpapereast.com/static/images/beauty-nature-reflections-wallpaper-high-definition-ktuj2f3n6u.jpg",
                     Space = space2
                 },
                 new FileUnit()
@@ -947,7 +947,19 @@ namespace Drive.DataAccess.Context
                     CreatedAt = new DateTime(2016, 8, 15, 15, 7, 23),
                     LastModified = new DateTime(2016, 8, 15, 15, 7, 23),
                     Owner = user1,
-                    Link = "https://flic.kr/p/ek58Tx",
+                    Link = "https://images5.alphacoders.com/439/439361.jpg",
+                    Space = space2
+                },
+                new FileUnit()
+                {
+                    IsDeleted = false,
+                    Name = "City",
+                    FileType = FileType.Images,
+                    Description = "Sample image",
+                    CreatedAt = new DateTime(2016, 8, 15, 15, 7, 23),
+                    LastModified = new DateTime(2016, 8, 15, 15, 7, 23),
+                    Owner = user1,
+                    Link = "https://images8.alphacoders.com/394/394821.jpg",
                     Space = space2
                 },
                 new FileUnit()

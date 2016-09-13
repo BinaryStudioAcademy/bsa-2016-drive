@@ -9,7 +9,8 @@
         "toastr",
         "cfp.hotkeys",
         "ang-drag-drop",
-        "ngTagsInput"
+        "ngTagsInput",
+        "bootstrapLightbox"
     ])
     .factory('BaseUrl', function () {
         return window.globalVars.baseUrl;

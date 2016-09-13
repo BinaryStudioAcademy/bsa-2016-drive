@@ -68,7 +68,8 @@ gulp.task("libs", function () {
       paths.bower + "angular-youtube-embed.js",
       paths.bower + "youtube.iframe-api.js",
       paths.bower + "datetime-picker.js",
-      paths.bower + "draganddrop.js"
+      paths.bower + "draganddrop.js",
+      paths.bower + "angular-bootstrap-lightbox.js"
     ])
 
         .pipe(concat("libs.js"))
@@ -84,6 +85,7 @@ gulp.task("styles", function () {
         paths.bower + "angular-toastr.css",
         paths.bower + "sweetalert.css",
         paths.bower + "ng-tags-input.css",
+        paths.bower + "angular-bootstrap-lightbox.css",
         "./Content/*.css"
     ])
         .pipe(concat("styles.css"))

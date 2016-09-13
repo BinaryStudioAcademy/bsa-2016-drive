@@ -1,4 +1,5 @@
-﻿<div class="container col-md-12">
+﻿
+<div class="container col-md-12">
     <br />
     <div class="btn-group btn-breadcrumb">
         <a class="btn btn-info"><i class={{fileFilterCtrl.icon}}></i> {{fileFilterCtrl.filesType}}</a>
@@ -31,28 +32,52 @@
         <div ng-repeat="space in fileFilterCtrl.spaces">
             <div class="grid-space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ space.name }}</div>
             <div uib-collapse="space.isCollapsed">
-                <ul class="sp-gv-flex-container">
-                    <li class="sp-gv-flex-item" role="button" context-menu="fileFilterCtrl.fileMenuOptions" ng-repeat="file in space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="fileFilterCtrl.openDocument(file)">
-                        <div class="sp-gv-wrapper-flex-item ">
-                            <div class="sp-gv-item-content cards">
-                                <div class="sp-gv-item-img-wrapper">
-                                    <img ng-src="{{fileFilterCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" />
-                                </div>
-                                <div class="sp-gv-item-text">
-                                    <h4 title="{{file.name}}">{{file.name}}</h4>
-                                    <h5 title="{{file.author.name}}">
-                                        <i class="fa fa-user" aria-hidden="true"></i>
-                                        {{file.author.name}}
-                                    </h5>
-                                    <p title="{{file.description}}">{{file.description}}</p>
+
+                <div ng-show="fileFilterCtrl.images.fileType == 8">
+                    <ul class="sp-gv-flex-container">
+                        <li class="sp-gv-flex-item" role="button" context-menu="fileFilterCtrl.fileMenuOptions" ng-repeat="file in space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="fileFilterCtrl.openDocument(file)">
+                            <div class="sp-gv-wrapper-flex-item ">
+                                <div class="sp-gv-item-content cards">
+                                    <div class="sp-gv-item-img-wrapper">
+                                        <img ng-src="{{fileFilterCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" />
+                                    </div>
+                                    <div class="sp-gv-item-text">
+                                        <h4 title="{{file.name}}">{{file.name}}</h4>
+                                        <h5 title="{{file.author.name}}">
+                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                            {{file.author.name}}
+                                        </h5>
+                                        <p title="{{file.description}}">{{file.description}}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
-                    <li class="sp-gv-flex-item"></li>
-                    <li class="sp-gv-flex-item"></li>
-                    <li class="sp-gv-flex-item"></li>
-                </ul>
+                        </li>
+                        <li class="sp-gv-flex-item"></li>
+                        <li class="sp-gv-flex-item"></li>
+                        <li class="sp-gv-flex-item"></li>
+                    </ul>
+                </div>
+
+                <div ng-show="fileFilterCtrl.images.fileType !== 8">
+                    <ul class="sp-gv-flex-container">
+                        <li class="sp-gv-flex-item" role="button" context-menu="fileFilterCtrl.fileMenuOptions" ng-repeat="image in fileFilterCtrl.images" ng-dblclick="fileFilterCtrl.openLightboxModal($index)">
+                            <div class="sp-gv-wrapper-flex-item" title="Created {{ image.created | date : 'short' }}">
+                                <div class="sp-gv-item-content cards">
+                                    <div class="sp-gv-item-img-wrapper-image">
+                                        <img ng-src="{{image.thumbUrl}}" class="img-thumbnail" alt="{{ image.fileType | typeOfFile }}" title="{{ image.fileType | typeOfFile }}" />
+                                    </div>
+                                    <div class="sp-gv-item-text">
+                                        <h4 title="{{image.caption}}">{{image.caption}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="sp-gv-flex-item"></li>
+                        <li class="sp-gv-flex-item"></li>
+                        <li class="sp-gv-flex-item"></li>
+                    </ul>
+                </div>
+
             </div>
             <hr />
         </div>
