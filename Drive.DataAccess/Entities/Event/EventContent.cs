@@ -1,4 +1,5 @@
-﻿using Drive.DataAccess.Interfaces;
+﻿using System;
+using Drive.DataAccess.Interfaces;
 
 namespace Drive.DataAccess.Entities.Event
 {
@@ -10,14 +11,21 @@ namespace Drive.DataAccess.Entities.Event
         public string Name { get; set; }
         public string Description { get; set; }
 
-        public string Link { get; set; }
-        public ContentLinkType LinkType { get; set; }
+        public string Content { get; set; }
+        public ContentType ContentType { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public DateTime LastModified { get; set; }
+        public Event Event { get; set; }
+        public int Order { get; set; }
+
     }
 
-    public enum ContentLinkType
+    public enum ContentType
     {
         None,
+        Text,
         Photo,
         Video,
+        Link
     }
 }

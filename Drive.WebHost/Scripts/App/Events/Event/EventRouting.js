@@ -1,20 +1,28 @@
 ﻿(function () {
     angular.module('driveApp.events', [
-        'driveApp'
+        'youtube-embed',
+        'ui.bootstrap',
+        'ui.bootstrap.datetimepicker'
     ])
         .config([
             '$routeProvider', function config($routeProvider) {
                 var baseUrl = window.globalVars.baseUrl;
                 $routeProvider
-                    .when('/apps/events',
+                    .when('/apps/event',
                     {
-                        templateUrl: baseUrl + '/Scripts/App/Events/List/EventsList.html',
-                        controller: 'EventsListController',
-                        controllerAs: 'eventsListCtrl'
+                        templateUrl: baseUrl + '/Scripts/App/Event/EventList.html',
+                        controller: 'EventListController',
+                        controllerAs: 'eventListCtrl'
                     })
-                    .when('/apps/events/newevent',
+                    .when('/apps/events/:id',
                     {
-                        templateUrl: baseUrl + '/Scripts/App/Events/Event/CreateEvent.html',
+                        templateUrl: baseUrl + '/Scripts/App/Event/Event.html',
+                        controller: 'EventController',
+                        controllerAs: 'eventCtrl'
+                    })
+                    .when('/apps/event/newevent',
+                    {
+                        templateUrl: baseUrl + '/Scripts/App/Event/EventContent/CreateEvent.html',
                         controller: 'EventCreateController',
                         controllerAs: 'eventCreateCtrl'
                     });

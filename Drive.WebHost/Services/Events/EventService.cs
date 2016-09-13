@@ -31,12 +31,9 @@ namespace Drive.WebHost.Services.Events
             var newEvent = new Event
             {
                 Author = await _unitOfWork.Users.Query.SingleOrDefaultAsync(u => u.GlobalId == dto.Author.GlobalId),
-                Name = dto.Name,
-                Description = dto.Description,
                 IsDeleted = false,
                 EventDate = dto.EventDate,
                  EventType = dto.EventType,
-                 CreatedAt = DateTime.Now,
                  FileUnit = new FileUnit
                  {
                      Name = dto.FileUnit.Name,
@@ -79,9 +76,6 @@ namespace Drive.WebHost.Services.Events
                     CreatedAt = _event.FileUnit.CreatedAt,
                     LastModified = _event.FileUnit.LastModified
                 },
-                Name = _event.Name,
-                Description = _event.Description,
-                CreatedAt = _event.CreatedAt,
                 EventType = _event.EventType,
                 Author = new AuthorDto() { Id = _event.Author.Id, GlobalId = _event.Author.GlobalId }
             }).ToListAsync();
