@@ -65,6 +65,7 @@
         vm.dndMoveContent = dndMoveContent;
         vm.dndCopyContent = dndCopyContent;
         vm.getDragImageId = getDragImageId;
+        vm.clearDragImage = clearDragImage;
 
         // Multiselect
         vm.selectItems = selectItems;
@@ -1131,7 +1132,41 @@
         }
 
         function getDragImageId() {
-            return 'customDrag1';
+            for (var i = 0; i < vm.space.folders.length; i++) {
+                if (vm.space.folders[i].selected) {
+                    var p = document.createElement("P");
+                    var icon = document.createElement("IMG");
+                    icon.setAttribute("src", "./Content/Icons/folder.svg");
+                    icon.setAttribute("width", "20");
+                    icon.setAttribute("width", "20");
+                    var t = document.createTextNode(' ' + vm.space.folders[i].name);
+                    p.appendChild(icon);
+                    p.appendChild(t);
+                    document.getElementById("dragPreview").appendChild(p);
+                }
+            }
+            for (var i = 0; i < vm.space.files.length; i++) {
+                if (vm.space.files[i].selected) {
+                    var p = document.createElement("P");
+                    var icon = document.createElement("IMG");
+                    icon.setAttribute("src", chooseIcon(vm.space.files[i].fileType));
+                    icon.setAttribute("width", "20");
+                    icon.setAttribute("width", "20");
+                    var t = document.createTextNode(' ' + vm.space.files[i].name);
+                    p.appendChild(icon);
+                    p.appendChild(t);
+                    document.getElementById("dragPreview").appendChild(p);
+                }
+            }
+            return 'dragPreview';
+        }
+
+        function clearDragImage() {
+            var dragView = document.getElementById("dragPreview");
+
+            while (dragView.hasChildNodes()) {
+                dragView.removeChild(dragView.firstChild);
+            }
         }
         //Drag'n'Drop end 
 
@@ -1188,7 +1223,8 @@
         }
 
         function selectItemsForDrag(event, item, isFile) {
-            if (event.which === 1 && !item.selected && !event.shiftKey && !event.ctrlKey) {
+            var condition = !event.shiftKey && !event.ctrlKey || event.shiftKey && event.ctrlKey;
+            if (event.which === 1 && !item.selected && condition) {
                 resetSelection();
                 item.selected = true;
                 vm.previousSelect = { data: item, isFile: isFile };

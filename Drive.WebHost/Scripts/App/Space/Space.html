@@ -56,15 +56,16 @@
 
     <!--New gridview-->
     <ul class="sp-gv-flex-container wrap" ng-show="spaceCtrl.showGrid" context-menu="spaceCtrl.containerMenuOptions">
-        <li class="sp-gv-flex-item folder" role="button" context-menu="spaceCtrl.folderMenuOptions" dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize" total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" 
+        <li class="sp-gv-flex-item folder" role="button" context-menu="spaceCtrl.folderMenuOptions" dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize" total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}"
             ng-click="spaceCtrl.selectItems($event ,folder, false)" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)" ng-class="{selected: folder.selected, cutted: folder.cutted}"
-            ng-mousedown="spaceCtrl.selectItemsForDrag($event, folder, false)" ui-draggable="true" drag="spaceCtrl.getSelectedItems()" drag-channel="folder" drop-channel="file, folder" 
+            ng-mousedown="spaceCtrl.selectItemsForDrag($event, folder, false)" ui-draggable="true" drag="spaceCtrl.getSelectedItems()" drag-channel="folder" drop-channel="file, folder"  drag-image-element-id="spaceCtrl.getDragImageId()"
             drop-validate="spaceCtrl.dropValidate(folder, $data)" ui-on-drop="spaceCtrl.onDrop($event, $channel, folder.id, $data)"
+            on-drop-failure="spaceCtrl.clearDragImage()" on-drop-success="spaceCtrl.clearDragImage()" 
             ondragstart="this.style.opacity = 0.7" ondragend="this.style.opacity = 1" ng-right-click="spaceCtrl.rightClickSelection(folder, false)">
             <div class="sp-gv-wrapper-flex-item">
                 <div class="sp-gv-item-content cards">
                     <div class="sp-gv-item-img-wrapper">
-                        <img ng-src="./Content/Icons/folder.svg" alt="Folder" title="Folder" draggable="false"/>
+                        <img ng-src="./Content/Icons/folder.svg" alt="Folder" title="Folder" draggable="false" />
                     </div>
                     <div class="sp-gv-item-text">
                         <h4 title="{{folder.name}}">{{folder.name}}</h4>
@@ -77,14 +78,15 @@
                 </div>
             </div>
         </li>
-        <li class="sp-gv-flex-item" role="button" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}" 
-            ng-click="spaceCtrl.selectItems($event, file, true)" ng-dblclick="spaceCtrl.openDocument(file)" ng-class="{selected: file.selected, cutted: file.cutted}" 
-            ng-mousedown="spaceCtrl.selectItemsForDrag($event, file, true)" ui-draggable="true" drag="spaceCtrl.getSelectedItems()" drag-channel="file"
+        <li class="sp-gv-flex-item" role="button" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}"
+            ng-click="spaceCtrl.selectItems($event, file, true)" ng-dblclick="spaceCtrl.openDocument(file)" ng-class="{selected: file.selected, cutted: file.cutted}"
+            ng-mousedown="spaceCtrl.selectItemsForDrag($event, file, true)" ui-draggable="true" drag="spaceCtrl.getSelectedItems()" drag-channel="file"  drag-image-element-id="spaceCtrl.getDragImageId()"
+            on-drop-failure="spaceCtrl.clearDragImage()" on-drop-success="spaceCtrl.clearDragImage()" 
             ondragstart="this.classList.add('dragging-elem');" ondragend="this.classList.remove('dragging-elem')" ng-right-click="spaceCtrl.rightClickSelection(file, true)">
             <div class="sp-gv-wrapper-flex-item">
                 <div class="sp-gv-item-content cards">
                     <div class="sp-gv-item-img-wrapper">
-                        <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false"/>
+                        <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
                     </div>
                     <div class="sp-gv-item-text">
                         <h4 title="{{file.name}}">{{file.name}}</h4>
@@ -136,15 +138,16 @@
         <div class="filter-table-internal" context-menu="spaceCtrl.containerMenuOptions">
             <div style="transition: all 2s" id="folders">
                 <div class="filter-table-row">
-                    <div class="row filter-table-row" role="button" ng-repeat="folder in spaceCtrl.space.folders" 
-                         ui-draggable="true" drag="spaceCtrl.getSelectedItems()" drag-channel="folder" drop-channel="file, folder" 
+                    <div class="row filter-table-row" role="button" ng-repeat="folder in spaceCtrl.space.folders"
+                         ui-draggable="true" drag="spaceCtrl.getSelectedItems()" drag-channel="folder" drop-channel="file, folder"  drag-image-element-id="spaceCtrl.getDragImageId()"
                          drop-validate="spaceCtrl.dropValidate(folder, $data)" ui-on-drop="spaceCtrl.onDrop($event, $channel, folder.id, $data)"
                          ng-click="spaceCtrl.selectItems($event, folder, false)" ng-mousedown="spaceCtrl.selectItemsForDrag($event, folder, false)"
-                         ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)" 
+                         ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)"
                          ondragstart="this.classList.add('dragging-elem');" ondragend="this.classList.remove('dragging-elem')"
+                         on-drop-failure="spaceCtrl.clearDragImage()" on-drop-success="spaceCtrl.clearDragImage()"                     
                          ng-class="{selected: folder.selected, cutted: folder.cutted}" context-menu="spaceCtrl.folderMenuOptions" ng-right-click="spaceCtrl.rightClickSelection(folder, false)">
                         <div class="col-md-3 filter-table-cell description" title="{{ folder.name }}">
-                            <img src="./Content/Icons/folder.svg" height="{{spaceCtrl.iconHeight}}" draggable="false"/>
+                            <img src="./Content/Icons/folder.svg" height="{{spaceCtrl.iconHeight}}" draggable="false" />
                             {{folder.name | limitTo: 20}}{{folder.name.length > 20 ? '...' : ''}}
                         </div>
                         <div class="col-md-3 filter-table-cell description" title="{{ folder.description }}">
@@ -158,14 +161,15 @@
             </div>
             <div style="transition: all 2s" id="files">
                 <div class="filter-table-row">
-                    <div class="row filter-table-row" role="button" ng-repeat="file in spaceCtrl.space.files" 
+                    <div class="row filter-table-row" role="button" ng-repeat="file in spaceCtrl.space.files"
                          ui-draggable="true" drag="spaceCtrl.getSelectedItems()" drag-channel="file" drag-image-element-id="spaceCtrl.getDragImageId()"
-                         ng-click="spaceCtrl.selectItems($event, file, true)" ng-mousedown="spaceCtrl.selectItemsForDrag($event, file, true)" ng-dblclick="spaceCtrl.openDocument(file)" 
+                         ng-click="spaceCtrl.selectItems($event, file, true)" ng-mousedown="spaceCtrl.selectItemsForDrag($event, file, true)" ng-dblclick="spaceCtrl.openDocument(file)"
                          ondragstart="this.classList.add('dragging-elem');" ondragend="this.classList.remove('dragging-elem')"
-                         ng-class="{'selected': file.selected, cutted: file.cutted}" 
+                         on-drop-failure="spaceCtrl.clearDragImage()" on-drop-success="spaceCtrl.clearDragImage()"
+                         ng-class="{'selected': file.selected, cutted: file.cutted}"
                          context-menu="spaceCtrl.fileMenuOptions" ng-right-click="spaceCtrl.rightClickSelection(file, true)">
                         <div class="col-md-3 filter-table-cell description" title="{{ file.name }}">
-                            <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" height="{{spaceCtrl.iconHeight}}" draggable="false"/>
+                            <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" height="{{spaceCtrl.iconHeight}}" draggable="false" />
                             {{file.name | limitTo: 20}}{{file.name.length > 20 ? '...' : ''}}
                         </div>
                         <div class="col-md-3 filter-table-cell description" title="{{ file.description }}">
@@ -179,17 +183,17 @@
             </div>
         </div>
     </div>
-    <div id="customDrag1" class="alert alert-info" style="position: absolute; top: 0; right: 0; z-index: -2; max-width: 200px">copy/move selected</div>
-    <div id="coverUp" style="position: absolute; top: 0; right: 0; z-index: -1; background-color: white; width: 200px; height: 60px"></div>
+    <div id="dragPreview" class="alert alert-info" style="position: absolute; top:130px; left: 70px; z-index: -3; max-width: 400px"></div>
     <div class="page-footer-center">
         <dir-pagination-controls class="page-footer" on-page-change="spaceCtrl.paginate.getContent(newPageNumber)"></dir-pagination-controls>
     </div>
 </div>
 <style>
-.selected {
-    background-color: lightgray;
-}
-.cutted {
-    opacity: 0.5;
-}
+    .selected {
+        background-color: lightgray;
+    }
+
+    .cutted {
+        opacity: 0.5;
+    }
 </style>
