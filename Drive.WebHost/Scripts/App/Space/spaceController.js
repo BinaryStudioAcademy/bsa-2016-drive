@@ -264,7 +264,7 @@
             if (localStorageService.get('cut-out') != null) {
                 var item = localStorageService.get('cut-out');
                 if (item.file) {
-                    deleteFile(vm.cuttedRow,
+                    deleteFile(item.id,
                         function () {
                             fileService.getDeletedFile(item.id,
                                 function (data) {
@@ -286,7 +286,7 @@
                                 });
                         });
                 } else {
-                    deleteFolder(vm.cuttedRow,
+                    deleteFolder(item.id,
                         function () {
                             folderService.getDeleted(item.id,
                                 function (data) {
@@ -514,6 +514,8 @@
             ],
             [
                 'Delete', function ($itemScope) {
+                    vm.lastActionType = 'deleteFolder';
+                    vm.lastItemId = $itemScope.folder.id;
                     return deleteFolder($itemScope.folder.id);
                 }
             ]
@@ -577,6 +579,8 @@
             ],
             [
                 'Delete', function ($itemScope) {
+                    vm.lastActionType = 'deleteFile';
+                    vm.lastItemId = $itemScope.file.id;
                     return deleteFile($itemScope.file.id);
                 }
             ]
