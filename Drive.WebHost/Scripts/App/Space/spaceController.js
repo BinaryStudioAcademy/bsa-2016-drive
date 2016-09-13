@@ -356,6 +356,7 @@
             vm.showGrid = false;
             vm.changeView = changeView;
             vm.columnForOrder = 'name';
+            vm.reverseSort = false;
             vm.iconHeight = 30;
 
             vm.space = {
@@ -1028,8 +1029,47 @@
             }
         }
 
-        function orderByColumn(column) {
-            vm.columnForOrder = fileService.orderByColumn(column, vm.columnForOrder);
+        function orderByColumn(column, reverse) {
+            var comparator;
+            switch (column) {
+                case 'name':
+                    comparator = function (a, b) {
+                        if (a.name > b.name) { return !reverse ? 1 : -1; }
+                        else { return reverse ? 1 : -1; }
+                    }
+                    vm.columnForOrder = 'name';
+                    break;
+                case 'description':
+                    comparator = function (a, b) {
+                        if (a.description > b.description) { return !reverse ? 1 : -1; }
+                        else { return reverse ? 1 : -1; }
+                    }
+                    vm.columnForOrder = 'description';
+                    break;
+                case 'author.name':
+                    comparator = function (a, b) {
+                        if (a.author.name > b.author.name) { return !reverse ? 1 : -1; }
+                        else { return reverse ? 1 : -1; }
+                    }
+                    vm.columnForOrder = 'author.name';
+                    break;
+                case 'createdAt':
+                    comparator = function (a, b) {
+                        if (a.createdAt > b.createdAt) { return !reverse ? 1 : -1; }
+                        else { return reverse ? 1 : -1; }
+                    }
+                    vm.columnForOrder = 'createdAt';
+                    break;
+                case 'fileType':
+                    comparator = function (a, b) {
+                        if (a.fileType > b.fileType) { return !reverse ? 1 : -1; }
+                        else { return reverse ? 1 : -1; }
+                    }
+                    vm.columnForOrder = 'fileType';
+                    break;
+            }
+            vm.space.folders.sort(comparator);
+            vm.space.files.sort(comparator);
         }
 
         function chooseIcon(type) {

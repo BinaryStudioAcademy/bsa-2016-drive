@@ -105,30 +105,30 @@
     <div class="filter-table container-md" ng-show="spaceCtrl.showTable">
         <div class="header-wrapper">
             <div class="row header-row" context-menu="spaceCtrl.containerMenuOptions">
-                <div class="col-md-3" ng-click="spaceCtrl.orderByColumn('name')">
+                <div class="col-md-3" ng-click="spaceCtrl.reverseSort=!spaceCtrl.reverseSort;spaceCtrl.orderByColumn('name', spaceCtrl.reverseSort)">
                     Name
-                    <span ng-show="spaceCtrl.columnForOrder == 'name'"><i class="fa fa-sort-asc"></i></span>
-                    <span ng-show="spaceCtrl.columnForOrder == '-name'"><i class="fa fa-sort-desc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == 'name' && !spaceCtrl.reverseSort"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == 'name' && spaceCtrl.reverseSort"><i class="fa fa-sort-desc"></i></span>
                 </div>
-                <div class="col-md-3" ng-click="spaceCtrl.orderByColumn('description')">
+                <div class="col-md-3" ng-click="spaceCtrl.reverseSort=!spaceCtrl.reverseSort;spaceCtrl.orderByColumn('description', spaceCtrl.reverseSort)">
                     Description
-                    <span ng-show="spaceCtrl.columnForOrder == 'description'"><i class="fa fa-sort-asc"></i></span>
-                    <span ng-show="spaceCtrl.columnForOrder == '-description'"><i class="fa fa-sort-desc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == 'description' && !spaceCtrl.reverseSort"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == 'description' && spaceCtrl.reverseSort"><i class="fa fa-sort-desc"></i></span>
                 </div>
-                <div class="col-md-2" ng-click="spaceCtrl.orderByColumn('author.name')">
+                <div class="col-md-2" ng-click="spaceCtrl.reverseSort=!spaceCtrl.reverseSort;spaceCtrl.orderByColumn('author.name', spaceCtrl.reverseSort)">
                     Author
-                    <span ng-show="spaceCtrl.columnForOrder == 'author.name'"><i class="fa fa-sort-asc"></i></span>
-                    <span ng-show="spaceCtrl.columnForOrder == '-author.name'"><i class="fa fa-sort-desc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == 'author.name' && !spaceCtrl.reverseSort"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == 'author.name' && spaceCtrl.reverseSort"><i class="fa fa-sort-desc"></i></span>
                 </div>
-                <div class="col-md-2" ng-click="spaceCtrl.orderByColumn('createdAt')">
+                <div class="col-md-2" ng-click="spaceCtrl.reverseSort=!spaceCtrl.reverseSort;spaceCtrl.orderByColumn('createdAt', spaceCtrl.reverseSort)">
                     Created
-                    <span ng-show="spaceCtrl.columnForOrder == 'createdAt'"><i class="fa fa-sort-asc"></i></span>
-                    <span ng-show="spaceCtrl.columnForOrder == '-createdAt'"><i class="fa fa-sort-desc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == 'createdAt' && !spaceCtrl.reverseSort"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == 'createdAt' && spaceCtrl.reverseSort"><i class="fa fa-sort-desc"></i></span>
                 </div>
-                <div class="col-md-2" ng-click="spaceCtrl.orderByColumn('fileType')">
+                <div class="col-md-2" ng-click="spaceCtrl.reverseSort=!spaceCtrl.reverseSort;spaceCtrl.orderByColumn('fileType', spaceCtrl.reverseSort)">
                     Type
-                    <span ng-show="spaceCtrl.columnForOrder == 'fileType'"><i class="fa fa-sort-asc"></i></span>
-                    <span ng-show="spaceCtrl.columnForOrder == '-fileType'"><i class="fa fa-sort-desc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == 'fileType' && !spaceCtrl.reverseSort"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == 'fileType' && spaceCtrl.reverseSort"><i class="fa fa-sort-desc"></i></span>
                 </div>
             </div>
         </div>
