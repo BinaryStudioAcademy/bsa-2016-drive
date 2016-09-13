@@ -10,6 +10,7 @@ using Ninject.Web.Mvc.FilterBindingSyntax;
 using Drive.WebHost.Providers;
 using System.Configuration;
 using System;
+using Drive.WebHost.Services.Events;
 
 namespace Drive.WebHost.Infrastructure
 {
@@ -41,6 +42,8 @@ namespace Drive.WebHost.Infrastructure
             //Kernel.BindFilter<JWTAuthenticationFilter>(FilterScope.Global, 0);
             Kernel.Bind<ISharedSpaceService>().To<SharedSpaceService>();
             Kernel.Bind<ITrashBinService>().To<TrashBinService>();
+            Kernel.Bind<IEventService>().To<EventService>();
+            Kernel.Bind<IEventContentService>().To<EventContentService>();
         }
     }
 }

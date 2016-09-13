@@ -7,9 +7,9 @@
         "LocalStorageModule", "ngLoadingSpinner",
         'ngAnimate',
         "toastr",
-        "driveApp.academyPro",
         "cfp.hotkeys",
-        "ang-drag-drop"
+        "ang-drag-drop",
+        "ngTagsInput"
     ])
     .factory('BaseUrl', function () {
         return window.globalVars.baseUrl;
