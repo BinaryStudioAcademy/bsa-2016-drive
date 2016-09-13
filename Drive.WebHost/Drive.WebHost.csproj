@@ -297,6 +297,8 @@
     <Content Include="Content\Icons\event_bw.svg" />
     <Content Include="Content\Icons\folder.svg" />
     <Content Include="Content\Icons\folder_bw.svg" />
+    <Content Include="Content\Icons\image.svg" />
+    <Content Include="Content\Icons\image_bw.svg" />
     <Content Include="Content\Icons\lecture-black.svg" />
     <Content Include="Content\Icons\lecture.svg" />
     <Content Include="Content\Icons\link.svg" />

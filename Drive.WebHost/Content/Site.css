@@ -1607,4 +1607,8 @@ li.folder.on-drag-enter {
     margin-top: 5px;
     margin-bottom: 5px;
 }
+
+.log-form-button{
+    width:72px;
+}
 /*END Admin>Logs*/

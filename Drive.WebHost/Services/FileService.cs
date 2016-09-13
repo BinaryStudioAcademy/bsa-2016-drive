@@ -11,6 +11,7 @@ using System.IO;
 using System.Web;
 using Google.Apis.Drive.v3;
 using Drive.DataAccess.Entities.Pro;
+using Driver.Shared.Dto.Pro;
 
 namespace Drive.WebHost.Services
 {
@@ -344,11 +345,42 @@ namespace Drive.WebHost.Services
             await _unitOfWork?.SaveChangesAsync();
         }
 
-        public async Task<int> SearchCourse(int fileId)
+        public async Task<AcademyProCourseDto> SearchCourse(int fileId)
         {
-            var result = await _unitOfWork.AcademyProCourses.Query.SingleOrDefaultAsync(c => c.FileUnit.Id == fileId);
+            var authors = (await _usersService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
 
-            return result.Id;
+            var result = await _unitOfWork.AcademyProCourses.Query
+                    .Include(a => a.FileUnit)
+                    .Include(a => a.Author)
+                    .Include(a => a.Tags)
+                    .SingleOrDefaultAsync(c => c.FileUnit.Id == fileId);
+            if (result == null)
+                return null;
+            var resultCourse = new AcademyProCourseDto
+            {
+                Id = result.Id,
+                StartDate = result.StartDate,
+                IsDeleted = result.IsDeleted,
+                FileUnit = new FileUnitDto
+                {
+                    Id = result.FileUnit.Id,
+                    Name = result.FileUnit.Name,
+                    FileType = result.FileUnit.FileType,
+                    Description = result.FileUnit.Description,
+                    CreatedAt = result.FileUnit.CreatedAt,
+                    LastModified = result.FileUnit.LastModified
+                },
+                Tags = result.Tags.Select(tag => new TagDto
+                {
+                    Id = tag.Id,
+                    Name = tag.Name
+                }),
+                Author = new AuthorDto { Id = result.Author.Id, GlobalId = result.Author.GlobalId }
+            };
+
+            resultCourse.Author.Name = authors.SingleOrDefault(a => a.Id == resultCourse.Author.GlobalId)?.Name;
+
+            return resultCourse;
         }
 
         public async Task<ICollection<AppDto>> FilterApp(FileType fileType)

@@ -27,6 +27,7 @@
             vm.course = items;
             vm.editAuthor = false;
             vm.allTags = [];
+            vm.isMatched = true;
 
             academyListService.getAllUsers(function(data) {
                 vm.users = data.map(function(user) {
@@ -58,6 +59,21 @@
         };
 
         function save() {
+            vm.check = false;
+            if (vm.course.author.name === undefined) {
+                vm.course.author = {name: vm.course.author};
+                }
+            for (var i = 0; i < vm.users.length; i++) {
+                if (vm.users[i].name.toLowerCase() === vm.course.author.name.toLowerCase()) {
+                    vm.check = true;
+                    vm.course.author.globalid = vm.users[i].globalid;
+                    break;
+                }
+            }
+            if (vm.check != true) {
+                vm.isMatched = false;
+                return;
+            }
             vm.message = 'New course was added successfully!';
             vm.operation = 'Create new Course';
             if (vm.course.id !== undefined) {

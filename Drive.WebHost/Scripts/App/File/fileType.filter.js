@@ -11,9 +11,9 @@
                     case 1:
                         return 'Document';
                     case 2:
-                        return 'Sheets';
+                        return 'Sheet';
                     case 3:
-                        return 'Slides';
+                        return 'Slide';
                     case 4:
                         return 'Trello';
                     case 5:
@@ -22,6 +22,8 @@
                         return 'Physical file';
                     case 7:
                         return "AcademyPro";
+                    case 8:
+                        return "Image";
                     default:
                         return '';
                 }

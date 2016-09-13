@@ -21,6 +21,7 @@ namespace Drive.DataAccess.Entities
         Trello,
         Links,
         Uploaded,
-        AcademyPro
+        AcademyPro,
+        Images
     }
 }

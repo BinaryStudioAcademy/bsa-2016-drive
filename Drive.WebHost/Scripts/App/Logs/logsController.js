@@ -23,6 +23,20 @@
             return logs();
         }
 
+        vm.search = function () {
+
+            vm.searchType = angular.copy(vm.searchFields);
+        }
+        vm.cancelSearch = function () {
+            vm.searchFields.callerName = '';
+            vm.searchFields.exception = '';
+            vm.searchFields.exception = '';
+            vm.searchFields.message = '';
+            vm.searchFields.level = '';
+            vm.searchFields.logged = '';
+            vm.searchType = angular.copy(vm.searchFields);
+        }
+
         function logs() {
             return logsService.getAllLogs()
                 .then(function(data) {
