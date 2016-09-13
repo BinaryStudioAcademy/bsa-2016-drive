@@ -2,14 +2,14 @@
     "use strict";
 
     angular.module('driveApp.events')
-    .controller('EventsListController', EventsListController);
+        .controller('EventsListController', EventsListController);
+
 
     EventsListController.$inject = [
-        'EventsListService',
-        '$uibModal'
+        "EventsListService"
     ];
 
-    function EventsListController(EventsListService, $uibModal) {
+    function EventsListController(EventsListService) {
         var vm = this;
         vm.columnForOrder = 'name';
         vm.openEvent = openEvent;

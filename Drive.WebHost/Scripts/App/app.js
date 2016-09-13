@@ -1,4 +1,7 @@
-﻿angular.module("driveApp",
+﻿(function() {
+    'use strict';
+
+    angular.module("driveApp",
     [
         "ngRoute",
         "ui.bootstrap.contextMenu",
@@ -9,7 +12,9 @@
         "toastr",
         "cfp.hotkeys",
         "ang-drag-drop",
-        "ngTagsInput"
+        "ngTagsInput",
+        "driveApp.academyPro",
+        "driveApp.events"
     ])
     .factory('BaseUrl', function () {
         return window.globalVars.baseUrl;
@@ -92,3 +97,4 @@
                 });
         }
     ]);
+})();
