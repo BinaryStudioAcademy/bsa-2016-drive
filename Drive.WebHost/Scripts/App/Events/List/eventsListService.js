@@ -6,10 +6,11 @@
     .factory('EventsListService', EventsListService);
 
     EventsListService.$inject = [
-        '$http'
+        '$http',
+        'BaseUrl'
     ];
 
-    function EventsListService($http) {
+    function EventsListService($http, baseUrl) {
         var service = {
             getEvents: getEvents
         }
@@ -17,7 +18,7 @@
         return service;
 
         function getEvents() {
-            return $http.get('/api/events')
+            return $http.get(baseUrl + '/api/events')
             .then(getEventsCompleted)
             .catch(getEventsFailed);
 

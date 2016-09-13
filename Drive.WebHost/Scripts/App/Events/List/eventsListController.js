@@ -12,7 +12,7 @@
     function EventsListController(EventsListService, $uibModal) {
         var vm = this;
         vm.columnForOrder = 'name';
-        //vm.openEvent = openEvent;
+        vm.openEvent = openEvent;
         //vm.changeView = changeView;
         //vm.openNewEventWindow = openNewEventWindow;
         //vm.deleteEvent = deleteEvent;
@@ -52,6 +52,10 @@
                 vm.eventsList = data;
                 return vm.eventsList;
             });
+        }
+
+        function openEvent(id) {
+            $location.url('/apps/events/' + id);
         }
     }
 }());

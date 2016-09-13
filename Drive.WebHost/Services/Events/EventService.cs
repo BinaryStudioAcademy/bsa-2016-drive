@@ -44,7 +44,7 @@ namespace Drive.WebHost.Services.Events
                      CreatedAt = DateTime.Now,
                      LastModified = DateTime.Now,
                      Owner = await _unitOfWork.Users.Query.SingleOrDefaultAsync(x => x.GlobalId == userId),
-                     FileType = FileType.Event,
+                     FileType = FileType.Events,
                      IsDeleted = false,
                      FolderUnit = await _unitOfWork.Folders.Query.SingleOrDefaultAsync(f => f.Id == dto.FileUnit.ParentId),
                      Space = await _unitOfWork.Spaces.Query.SingleOrDefaultAsync(f => f.Id == dto.FileUnit.SpaceId)

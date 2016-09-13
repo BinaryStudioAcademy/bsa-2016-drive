@@ -22,6 +22,6 @@ namespace Drive.DataAccess.Entities
         Links,
         Uploaded,
         AcademyPro, 
-        Event
+        Events
     }
 }
