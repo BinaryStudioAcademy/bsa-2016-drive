@@ -26,7 +26,7 @@
             localStorageService.remove('event');
 
             vm.event = {
-                fileUnit: tempevent.fileUnit,
+                fileUnit: vm.tempevent.fileUnit,
                 videoLinks: [],
                 simpleLinks: [],
                 photoLinks: [],
