@@ -1095,7 +1095,10 @@
         }
 
         function dropValidate(target, source) {
-            return target !== source;
+            return !source.foldersId.some(
+                function (id) {
+                    return id == target.id;
+                });
         }
 
         function dndMoveContent(folderId, selectedContent) {
