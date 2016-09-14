@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using Drive.DataAccess.Entities;
+using Drive.DataAccess.Entities.Event;
 using Drive.DataAccess.Entities.Pro;
 
 namespace Drive.DataAccess.Context
@@ -100,7 +101,7 @@ namespace Drive.DataAccess.Context
                 CreatedAt = new DateTime(2016, 2, 6, 10, 23, 13),
                 LastModified = new DateTime(2016, 2, 6, 10, 23, 13),
                 Owner = user1,
-                                Space = space1,
+                Space = space1,
                 DataUnits = null
             };
             FolderUnit folder6 = new FolderUnit()
@@ -111,7 +112,7 @@ namespace Drive.DataAccess.Context
                 CreatedAt = new DateTime(2016, 2, 6, 13, 13, 45),
                 LastModified = new DateTime(2016, 2, 6, 13, 13, 45),
                 Owner = user1,
-                
+
                 Space = space1,
                 DataUnits = null
             };
@@ -123,7 +124,7 @@ namespace Drive.DataAccess.Context
                 CreatedAt = new DateTime(2016, 2, 6, 15, 33, 15),
                 LastModified = new DateTime(2016, 2, 6, 15, 33, 15),
                 Owner = user1,
-                
+
                 Space = space1,
                 DataUnits = null
             };
@@ -142,7 +143,7 @@ namespace Drive.DataAccess.Context
                         Owner = user2,
                         Link = "https://drive.google.com/file/d/0B3JV038xc3jlSEhiMXg0VmphRUE/view?usp=sharing",
                         Space = space1
-                        
+
                     },
                 new FileUnit()
                 {
@@ -532,7 +533,7 @@ namespace Drive.DataAccess.Context
                 CreatedAt = new DateTime(2016, 2, 11, 19, 15, 33),
                 LastModified = new DateTime(2016, 2, 11, 19, 15, 33),
                 Owner = user1,
-                
+
                 Space = space2,
                 DataUnits = null
             };
@@ -544,7 +545,7 @@ namespace Drive.DataAccess.Context
                 CreatedAt = new DateTime(2016, 3, 18, 9, 15, 33),
                 LastModified = new DateTime(2016, 3, 18, 9, 15, 33),
                 Owner = user1,
-                
+
                 Space = space2,
                 DataUnits = null
             };
@@ -1441,6 +1442,96 @@ namespace Drive.DataAccess.Context
             context.AcademyProCourses.Add(academy1);
             context.AcademyProCourses.Add(academy2);
             #endregion
+
+            var ev = new Event
+            {
+                FileUnit = new FileUnit
+                {
+                    Owner = user1,
+                    FileType = FileType.Events,
+                    Name = "Event 1",
+                    Description =
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed tempus quam. Ut lobortis, mauris sed aliquam placerat, lectus libero venenatis metus, vitae mattis risus sem et ex. Etiam sed dictum dui. Vestibulum id nisl maximus sem auctor consequat.",
+                    CreatedAt = DateTime.Now,
+                    LastModified = DateTime.Now,
+                    IsDeleted = false,
+                    Space = space1
+                },
+                Author = user1,
+                EventDate = DateTime.Now,
+                EventType = EventType.Entertainment,
+                IsDeleted = false
+            };
+
+            var content = new List<EventContent>
+            {
+                new EventContent
+                {
+                    Event = ev,
+                    IsDeleted = false,
+                    ContentType = ContentType.Text,
+                    CreatedAt = DateTime.Now,
+                    LastModified = DateTime.Now,
+                    Order = 1,
+                    Name = "Event Content 1",
+                    Description = "Event content description",
+                    Content = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut fermentum tempus libero, eu rutrum metus facilisis et. Ut eu quam euismod risus malesuada efficitur vel vitae nulla. Pellentesque facilisis sapien erat, ut porttitor tortor ornare sit amet. Maecenas commodo erat eget nisi ullamcorper facilisis. Donec convallis rutrum nisi id dapibus. Phasellus mauris nibh, commodo ut porttitor sed, iaculis tincidunt lacus. Nullam eget dolor diam. Aliquam erat volutpat
+Duis ante erat, sagittis id sollicitudin sed, facilisis et enim. Aliquam molestie, quam a faucibus faucibus, dui dui elementum urna, quis bibendum ipsum erat non nisl. Aliquam ac justo tristique, dignissim orci sed, vulputate ligula. Sed cursus quis nibh non cursus. Phasellus ac lectus ut felis porttitor bibendum et at lorem. Curabitur scelerisque ligula et ipsum maximus viverra. Ut varius suscipit odio, vitae malesuada neque volutpat id. Morbi gravida lorem pharetra aliquam ornare. Mauris tellus mi, sollicitudin eget porta ac, dictum eget enim."
+                },
+                new EventContent
+                {
+                    Event = ev,
+                    IsDeleted = false,
+                    ContentType = ContentType.Photo,
+                    CreatedAt = DateTime.Now,
+                    LastModified = DateTime.Now,
+                    Order = 2,
+                    Name = "Noooooooooooooooo!",
+                    Description = "I am your father, Luke!",
+                    Content = "http://assets2.ignimgs.com/2015/08/06/darth-vader-crossed-arms-1280jpg-88461e1280wjpg-67c0c2_1280w.jpg"
+                },
+                new EventContent
+                {
+                    Event = ev,
+                    IsDeleted = false,
+                    ContentType = ContentType.Link,
+                    CreatedAt = DateTime.Now,
+                    LastModified = DateTime.Now,
+                    Order = 3,
+                    Name = "Event Content 3",
+                    Description = "Event content description",
+                    Content = "https://youtube.com"
+                },
+                new EventContent
+                {
+                    Event = ev,
+                    IsDeleted = false,
+                    ContentType = ContentType.Video,
+                    CreatedAt = DateTime.Now,
+                    LastModified = DateTime.Now,
+                    Order = 4,
+                    Name = "Event Content 4",
+                    Description = "Event content description",
+                    Content = "https://www.youtube.com/watch?v=LowVhCfLm68"
+                },
+                new EventContent
+                {
+                    Event = ev,
+                    IsDeleted = false,
+                    ContentType = ContentType.Text,
+                    CreatedAt = DateTime.Now,
+                    LastModified = DateTime.Now,
+                    Order = 5,
+                    Name = "Event Content 5",
+                    Description = "Event content description",
+                    Content = @"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut fermentum tempus libero, eu rutrum metus facilisis et. Ut eu quam euismod risus malesuada efficitur vel vitae nulla. Pellentesque facilisis sapien erat, ut porttitor tortor ornare sit amet. Maecenas commodo erat eget nisi ullamcorper facilisis. Donec convallis rutrum nisi id dapibus. Phasellus mauris nibh, commodo ut porttitor sed, iaculis tincidunt lacus. Nullam eget dolor diam. Aliquam erat volutpat
+Duis ante erat, sagittis id sollicitudin sed, facilisis et enim. Aliquam molestie, quam a faucibus faucibus, dui dui elementum urna, quis bibendum ipsum erat non nisl. Aliquam ac justo tristique, dignissim orci sed, vulputate ligula. Sed cursus quis nibh non cursus. Phasellus ac lectus ut felis porttitor bibendum et at lorem. Curabitur scelerisque ligula et ipsum maximus viverra. Ut varius suscipit odio, vitae malesuada neque volutpat id. Morbi gravida lorem pharetra aliquam ornare. Mauris tellus mi, sollicitudin eget porta ac, dictum eget enim."
+                },
+            };
+
+            ev.ContentLinks = content;
+
+            context.Events.Add(ev);
 
             base.Seed(context);
         }
