@@ -16,8 +16,8 @@ namespace Drive.WebHost.Services.Events
 {
     public class EventService : IEventService
     {
-        IUnitOfWork _unitOfWork;
-        IUsersService _userService;
+        readonly IUnitOfWork _unitOfWork;
+        readonly IUsersService _userService;
 
         public EventService(IUnitOfWork unitOfWork, IUsersService userService)
         {
@@ -86,9 +86,67 @@ namespace Drive.WebHost.Services.Events
             return events;
         }
 
-        public Task<EventDto> GetAsync(int id)
+        public async Task<EventDto> GetAsync(int id)
         {
-            throw new NotImplementedException();
+            var events = await _unitOfWork.Events.Query.Where(x => x.Id == id).Include(c => c.ContentLinks).Select(ev => new EventDto
+            {
+                Id = ev.Id,
+                FileUnit = new FileUnitDto
+                {
+                    Id = ev.FileUnit.Id,
+                    Name = ev.FileUnit.Name,
+                    Description = ev.FileUnit.Description
+                },
+                CreatedAt = ev.FileUnit.CreatedAt,
+                EventType = ev.EventType,
+                ContentPhotos = ev.ContentLinks.Where(content => content.ContentType == ContentType.Photo).Select(c => new EventContentDto
+                {
+                    Id = c.Id,
+                    ContentType = c.ContentType,
+                    Name = c.Name,
+                    Description = c.Description,
+                    Link = c.Content,
+                    Order = c.Order,
+                    CreatedAt = c.CreatedAt,
+                    LastModified = c.LastModified
+                }),
+                ContentVideoLinks = ev.ContentLinks.Where(content => content.ContentType == ContentType.Video).Select(c => new EventContentDto
+                {
+                    Id = c.Id,
+                    ContentType = c.ContentType,
+                    Name = c.Name,
+                    Description = c.Description,
+                    Link = c.Content,
+                    Order = c.Order,
+                    CreatedAt = c.CreatedAt,
+                    LastModified = c.LastModified
+                }),
+                ContentSimpleLinks = ev.ContentLinks.Where(content => content.ContentType == ContentType.Link).Select(c => new EventContentDto
+                {
+                    Id = c.Id,
+                    ContentType = c.ContentType,
+                    Name = c.Name,
+                    Description = c.Description,
+                    Link = c.Content,
+                    Order = c.Order,
+                    CreatedAt = c.CreatedAt,
+                    LastModified = c.LastModified
+                }),
+                ContentTexts = ev.ContentLinks.Where(content => content.ContentType == ContentType.Text).Select(c => new EventContentDto
+                {
+                    Id = c.Id,
+                    ContentType = c.ContentType,
+                    Name = c.Name,
+                    Description = c.Description,
+                    Link = c.Content,
+                    Order = c.Order,
+                    CreatedAt = c.CreatedAt,
+                    LastModified = c.LastModified
+                }),
+                EventDate = ev.EventDate
+            }).FirstOrDefaultAsync();
+
+            return events;
         }
 
         public Task<EventDto> UpdateAsync(int id, EventDto dto)
