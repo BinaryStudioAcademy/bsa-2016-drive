@@ -465,6 +465,20 @@ namespace Drive.WebHost.Services
         public async Task<string> UploadFile(HttpPostedFile file, int spaceId, int parentId)
         {
             var filename = file.FileName;
+
+            FileType fileType;
+
+            string extension = Path.GetExtension(filename);
+
+            if (extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".bmp")
+            {
+               fileType = FileType.Images;
+            }
+            else
+            {
+                fileType = FileType.Uploaded;
+            }
+
             string link = "";
             DriveService service;
             try
@@ -508,7 +522,7 @@ namespace Drive.WebHost.Services
                     var fileDto = new FileUnit()
                     {
                         Name = filename,
-                        FileType = FileType.Uploaded,
+                        FileType = fileType,
                         Link = link,
                         Description = "",
                         CreatedAt = DateTime.Now,
