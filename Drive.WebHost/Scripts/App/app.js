@@ -9,7 +9,8 @@
         "toastr",
         "driveApp.academyPro",
         "cfp.hotkeys",
-        "ang-drag-drop"
+        "ang-drag-drop",
+        "pdf"
     ])
     .factory('BaseUrl', function () {
         return window.globalVars.baseUrl;

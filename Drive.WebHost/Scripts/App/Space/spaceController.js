@@ -39,6 +39,7 @@
         vm.openNewCourseWindow = openNewCourseWindow;
         vm.createNewAP = createNewAP;
         vm.openSharedContentWindow = openSharedContentWindow;
+        vm.openTextFileReader = openTextFileReader;
 
         vm.sharedContent = sharedContent;
 
@@ -535,6 +536,23 @@
                     }
                 }
             ],
+            [
+                'Read', function ($itemScope) {
+                    //vm.file = $itemScope.file;
+                    //vm.file.parentId = vm.parentId;
+                    //vm.file.spaceId = vm.spaceId;
+                    //if (vm.file.fileType !== 7) {
+                    //    vm.openFileWindow();
+                    //}
+                    //else {
+                    //    fileService.findCourse(vm.file.id, function (response) {
+                    //        vm.course = response;
+                    //        vm.openNewCourseWindow('lg');
+                    //    });
+                    //}
+                    vm.openTextFileReader('lg');
+                }
+            ],
             null,
             [
                 'Copy', function ($itemScope) {
@@ -806,6 +824,34 @@
             });
 
             fileModalInstance.result.then(function (response) {
+                console.log(response);
+            },
+                function () {
+                    console.log('Modal dismissed');
+                });
+        }
+
+        function openTextFileReader(size) {
+
+            var fileReaderModalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'Scripts/App/File/TextFileReader/TextFileReader.html',
+                windowTemplateUrl: 'Scripts/App/File/TextFileReader/Modal.html',
+                controller: 'TextFileReaderCtrl',
+                controllerAs: 'textFileReaderCtrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        var sharedContInfo = {
+                            contentId: vm.contentSharedId,
+                            title: vm.sharedModalWindowTitle
+                        }
+                        return sharedContInfo;
+                    }
+                }
+            });
+
+            fileReaderModalInstance.result.then(function (response) {
                 console.log(response);
             },
                 function () {
