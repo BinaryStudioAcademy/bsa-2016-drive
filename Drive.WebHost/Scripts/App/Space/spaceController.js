@@ -1105,8 +1105,20 @@
             else {
                 vm.dndMoveContent(targetId, source);
             }
-                        vm.dndCopyFolder(targetId, source);
         }
+
+        $scope.handleDragStart = function (event) {
+            markSelectedAsCutted();
+            if (!this.classList.contains('selected') && event.shiftKey || !this.classList.contains('selected') && event.ctrlKey) {
+                resetSelection();
+                unmarkAsCutted();
+                this.classList.add('selected');
+            }
+        };
+        
+        $scope.handleDragEnd = function (e) {
+            unmarkAsCutted();
+        };
 
         function dropValidate(target, source) {
             return !source.foldersId.some(
@@ -1144,7 +1156,12 @@
             });
         }
 
-        function getDragImageId() {
+        function getDragImageId(event, item, isFile) {
+            if (!item.selected && event.shiftKey || !item.selected && event.ctrlKey) {
+                item.selected = true;
+                item.cutted = true;
+                vm.previousSelect = { data: item, isFile: isFile };
+            }
             for (var i = 0; i < vm.space.folders.length; i++) {
                 if (vm.space.folders[i].selected) {
                     var p = document.createElement("P");
@@ -1236,8 +1253,7 @@
         }
 
         function selectItemsForDrag(event, item, isFile) {
-            var condition = !event.shiftKey && !event.ctrlKey || event.shiftKey && event.ctrlKey;
-            if (event.which === 1 && !item.selected && condition) {
+            if (event.which === 1 && !item.selected && !event.shiftKey && !event.ctrlKey) {
                 resetSelection();
                 item.selected = true;
                 vm.previousSelect = { data: item, isFile: isFile };
@@ -1259,6 +1275,8 @@
             else if (vm.space.files.length > 0) {
                 vm.previousSelect = { data: vm.space.files[0], isFile: true };
             }
+            vm.space.files.forEach(function (f) { f.selected = false; f.cutted = false; });
+            vm.space.folders.forEach(function (f) { f.selected = false; f.cutted = false; });
         }
 
         function resetSelection() {
@@ -1266,10 +1284,24 @@
             vm.space.files.forEach(function (item) { item.selected = false; });
         }
 
-        function getSelectedItems() {
+        function markSelectedAsCutted() {
+            vm.space.folders.forEach(function (f) { f.cutted = f.selected });
+            vm.space.files.forEach(function (f) { f.cutted = f.selected });
+        }
+
+        function unmarkAsCutted() {
+            vm.space.folders.forEach(function (f) { f.cutted = false });
+            vm.space.files.forEach(function (f) { f.cutted = false });
+        }
+
+        function getSelectedItems(item, isFile) {
             var selected = { filesId: [], foldersId: [] };
             vm.space.files.forEach(function (f) { if (f.selected) selected.filesId.push(f.id) });
             vm.space.folders.forEach(function (f) { if (f.selected) selected.foldersId.push(f.id) });
+            if (selected.filesId.length == 0 && selected.foldersId.length == 0) {
+                if (isFile) { selected.filesId.push(item.id); }
+                else { selected.foldersId.push(item.id); }
+            }
             return selected;
         }
         //Selection end
@@ -1277,18 +1309,3 @@
     }
 }());
 
-(function () {
-    "use strict";
-    angular.module('driveApp')
-    .directive('ngRightClick', function ($parse) {
-        return function (scope, element, attrs) {
-            var fn = $parse(attrs.ngRightClick);
-            element.bind('contextmenu', function (event) {
-                scope.$apply(function () {
-                    event.preventDefault();
-                    fn(scope, { $event: event });
-                });
-            });
-        };
-    });
-})();
