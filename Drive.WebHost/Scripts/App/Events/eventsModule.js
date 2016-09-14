@@ -1,5 +1,6 @@
 ﻿(function () {
     angular.module('driveApp.events', [
+        "ang-drag-drop"
     ])
     .config([
         '$routeProvider', function config($routeProvider) {
