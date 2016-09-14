@@ -19,7 +19,8 @@
             getSpaceTotal: getSpaceTotal,
             getAllRoles: getAllRoles,
             moveContent: moveContent,
-            copyContent: copyContent
+            copyContent: copyContent,
+            deleteContent: deleteContent
         };
         function getAllRoles(callback) {
             $http.get(baseUrl + '/api/roles')
@@ -158,11 +159,11 @@
             });
         }
 
-        function moveContent(content, callBack) {
+        function moveContent(content, callback) {
             $http.put(baseUrl + '/api/spaces/movecontent', content)
                 .then(function (response) {
-                    if (callBack) {
-                        callBack(response.data);
+                    if (callback) {
+                        callback(response.data);
                     }
                 },
                     function () {
@@ -170,16 +171,24 @@
                     });
         }
 
-        function copyContent(content, callBack) {
+        function copyContent(content, callback) {
             $http.put(baseUrl + '/api/spaces/copycontent', content)
                 .then(function (response) {
-                    if (callBack) {
-                        callBack(response.data);
+                    if (callback) {
+                        callback(response.data);
                     }
                 },
                     function () {
                         console.log('Error while copying data! [spaceService.copyContent()]');
                     });
+        }
+
+        function deleteContent(content, callback) {
+            $http.put(baseUrl + '/api/spaces/deletecontent', content)
+                .then(function(response) {
+                    if (callback)
+                        callback(response);
+                });
         }
 
         return service;

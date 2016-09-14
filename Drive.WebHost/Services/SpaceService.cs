@@ -672,6 +672,7 @@ namespace Drive.WebHost.Services
             }
             await _unitOfWork.SaveChangesAsync();
         }
+
         public async Task CopyContentAsync(CopyMoveContentDto content)
         {
             if (content.FilesId.Count() > 0)
@@ -701,6 +702,18 @@ namespace Drive.WebHost.Services
                 {
                     await _folderService.CreateCopyAsync(folder.Id, folder);
                 }
+            }
+        }
+
+        public async Task DeleteContentAsync(CopyMoveContentDto content)
+        {
+            foreach (var id in content.FilesId)
+            {
+                await _fileService.DeleteAsync(id);
+            }
+            foreach (var id in content.FoldersId)
+            {
+                await _folderService.DeleteAsync(id);
             }
         }
 
