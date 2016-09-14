@@ -13,24 +13,24 @@
         vm.addNewEvent = addNewEvent;
         vm.create = create;
         vm.cancel = cancel;
-        vm.submitVideo = submitVideo;
-        vm.submitSimpleLink = submitSimpleLink;
-        vm.submitPhoto = submitPhoto;
-        vm.submitText = submitText;
+        vm.newVideo = newVideo;
+        vm.newSimpleLink = newSimpleLink;
+        vm.newPhoto = newPhoto;
+        vm.newText = newText;
         vm.getEventList = getEventList;
+        vm.saveContent = saveContent;
 
         activate();
 
         function activate() {
+            vm.showEditArea = false;
+            vm.order = 0;
             vm.tempevent = localStorageService.get('event');
             localStorageService.remove('event');
 
             vm.event = {
                 fileUnit: vm.tempevent.fileUnit,
-                videoLinks: [],
-                simpleLinks: [],
-                photoLinks: [],
-                textLinks: []
+                contentList:[]
             };
 
             vm.calendar = {
@@ -73,32 +73,30 @@
         };
 
 
-        function submitVideo() {
-            if (vm.currentVideo.name && vm.currentVideo.link) {
-                vm.event.videoLinks.push(vm.currentVideo);
-                vm.currentVideo = {};
-            }
+        function newVideo() {
+            vm.showEditArea = true;
+            vm.currentContent = {contentType: 3};            
         }
 
-        function submitSimpleLink() {
-            if (vm.currentSimpleLink.name && vm.currentSimpleLink.link) {
-                vm.event.simpleLinks.push(vm.currentSimpleLink);
-                vm.currentSimpleLink = {};
-            }
+        function newSimpleLink() {
+            vm.showEditArea = true;
+            vm.currentContent = {contentType: 4};            
         }
 
-        function submitPhoto() {
-            if (vm.currentPhoto.name && vm.currentPhoto.link) {
-                vm.event.photoLinks.push(vm.currentPhoto);
-                vm.currentPhoto = {};
-            }
+        function newPhoto() {
+            vm.showEditArea = true;
+            vm.currentContent = { contentType: 2};
         }
 
-        function submitText() {
-            if (vm.currentText.name && vm.currentText.description) {
-                vm.event.textLinks.push(vm.currentText);
-                vm.currentText = {};
-            }
+        function newText() {
+            vm.showEditArea = true;
+            vm.currentContent = { contentType: 1};
+        }
+
+        function saveContent() {
+            vm.currentContent.order = ++vm.order;
+            vm.event.contentList.push(vm.currentContent);
+            vm.showEditArea = false;
         }
 
         function getEventList() {
