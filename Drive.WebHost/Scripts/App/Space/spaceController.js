@@ -538,18 +538,6 @@
             ],
             [
                 'Read', function ($itemScope) {
-                    //vm.file = $itemScope.file;
-                    //vm.file.parentId = vm.parentId;
-                    //vm.file.spaceId = vm.spaceId;
-                    //if (vm.file.fileType !== 7) {
-                    //    vm.openFileWindow();
-                    //}
-                    //else {
-                    //    fileService.findCourse(vm.file.id, function (response) {
-                    //        vm.course = response;
-                    //        vm.openNewCourseWindow('lg');
-                    //    });
-                    //}
                     vm.openTextFileReader('lg');
                 }
             ],

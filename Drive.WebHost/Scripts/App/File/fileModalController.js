@@ -34,6 +34,11 @@
                 4: ["trello.com"],
                 5: ["."] // link
             };
+            vm.buffer = {
+                link : null,
+                fileExtantion: null
+            }
+            vm.linkDisabled = false;
 
             if (vm.file.parentId === 0) vm.file.parentId = null;
 
@@ -43,15 +48,24 @@
                 vm.name = items.name;
                 vm.description = items.description;
                 vm.link = items.link;
+                if (vm.file.fileType == 6) {
+                    vm.buffer.link = vm.file.link;
+                    //vm.link = '';
+                    vm.file.link = '';
+                    vm.linkDisabled = true;
+                    vm.buffer.fileExtantion = getFileExtantion();
+                    vm.file.name = getFileName();
+                    vm.linkDisabled = true;
+                }
             }
 
         }
 
         function save() {
             vm.submitted = true;
-            vm.checkUrl();
             if (vm.file.name !== undefined) {
                 if (vm.file.id === undefined) {
+                    vm.checkUrl();
                     fileService.createFile(vm.file,
                         function (response) {
                             if (response) {
@@ -63,6 +77,11 @@
                             }
                         });
                 } else {
+                    if (vm.file.fileType == 6) {
+                        var fullname = vm.file.name + vm.buffer.fileExtantion
+                        vm.file.name = fullname;
+                        vm.file.link = vm.buffer.link;
+                    }
                     fileService.updateFile(vm.file.id, vm.file,
                         function (response) {
                             if (response) {
@@ -132,6 +151,19 @@
         }
         function remove() {
             vm.inputFile = null;
+        }
+
+        function getFileExtantion() {
+            var fullFileName = vm.file.name;
+            var pointIndex = fullFileName.lastIndexOf(".");
+            var fileExtantion = fullFileName.slice(pointIndex);
+            return fileExtantion;
+        }
+        function getFileName() {
+            var fullFileName = vm.file.name;
+            var pointIndex = fullFileName.lastIndexOf(".");
+            var fileName = fullFileName.slice(0, pointIndex);
+            return fileName;
         }
     }
 }());
