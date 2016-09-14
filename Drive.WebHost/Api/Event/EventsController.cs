@@ -47,7 +47,7 @@ namespace Drive.WebHost.Api
 
         // POST: api/events
         [HttpPost]
-        public async Task<IHttpActionResult> CreateAsync(EventDto data)
+        public async Task<IHttpActionResult> CreateAsync(CreateEventDto data)
         {
             var result = await _eventService.CreateAsync(data);
             if (result == null)
@@ -77,6 +77,15 @@ namespace Drive.WebHost.Api
             _eventService.DeleteAsync(id);
 
             return Ok();
+        }
+
+        [HttpGet]
+        [Route("eventtypes")]
+        public IHttpActionResult GetEventTypes()
+        {
+            var result = _eventService.GetEventTypes();
+
+            return Ok(result);
         }
 
         [HttpGet]

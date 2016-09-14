@@ -12,11 +12,9 @@ namespace Drive.DataAccess.Entities.Event
         public EventType EventType { get; set; }
         public DateTime EventDate { get; set; }
 
-        public IList<EventContent> ContentLinks { get; set; }
+        public IList<EventContent> ContentList { get; set; }
         [Required]
         public FileUnit FileUnit { get; set; }
-
-        public User Author { get; set; }
 
     }
 

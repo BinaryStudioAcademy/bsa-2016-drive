@@ -11,6 +11,7 @@ using Drive.DataAccess.Entities;
 using System.Data.Entity;
 using Drive.DataAccess.Entities.Event;
 using Driver.Shared.Dto;
+using System.Collections;
 
 namespace Drive.WebHost.Services.Events
 {
@@ -25,27 +26,42 @@ namespace Drive.WebHost.Services.Events
             _userService = userService;
         }
 
-        public async Task<EventDto> CreateAsync(EventDto dto)
+        public async Task<CreateEventDto> CreateAsync(CreateEventDto dto)
         {
             var userId = _userService.CurrentUserId;
+
+            var contentList = new List<EventContent>();
+            contentList.AddRange(dto.ContentList.
+                        Select(c => new EventContent
+                                                {
+                                                    Name = c.Name,
+                                                    Description = c.Description,
+                                                    IsDeleted = c.IsDeleted,
+                                                    CreatedAt = DateTime.Now,
+                                                    LastModified = DateTime.Now,
+                                                    ContentType = c.ContentType,
+                                                    Content = c.Content,
+                                                    Order = c.Order
+                                                          
+                                                }));
             var newEvent = new Event
             {
-                Author = await _unitOfWork.Users.Query.SingleOrDefaultAsync(u => u.GlobalId == dto.Author.GlobalId),
                 IsDeleted = false,
                 EventDate = dto.EventDate,
-                 EventType = dto.EventType,
-                 FileUnit = new FileUnit
-                 {
-                     Name = dto.FileUnit.Name,
-                     Description = dto.FileUnit.Description,
-                     CreatedAt = DateTime.Now,
-                     LastModified = DateTime.Now,
-                     Owner = await _unitOfWork.Users.Query.SingleOrDefaultAsync(x => x.GlobalId == userId),
-                     FileType = FileType.Events,
-                     IsDeleted = false,
-                     FolderUnit = await _unitOfWork.Folders.Query.SingleOrDefaultAsync(f => f.Id == dto.FileUnit.ParentId),
-                     Space = await _unitOfWork.Spaces.Query.SingleOrDefaultAsync(f => f.Id == dto.FileUnit.SpaceId)
-                 }
+                EventType = dto.EventType,
+                ContentList = contentList,
+                FileUnit = new FileUnit
+                {
+                    Name = dto.FileUnit.Name,
+                    Description = dto.FileUnit.Description,
+                    CreatedAt = DateTime.Now,
+                    LastModified = DateTime.Now,
+                    Owner = await _unitOfWork.Users.Query.SingleOrDefaultAsync(x => x.GlobalId == userId),
+                    FileType = FileType.Events,
+                    IsDeleted = false,
+                    FolderUnit = await _unitOfWork.Folders.Query.SingleOrDefaultAsync(f => f.Id == dto.FileUnit.ParentId),
+                    Space = await _unitOfWork.Spaces.Query.SingleOrDefaultAsync(f => f.Id == dto.FileUnit.SpaceId)
+                }
             };
             _unitOfWork.Events.Create(newEvent);
             await _unitOfWork.SaveChangesAsync();
@@ -62,7 +78,7 @@ namespace Drive.WebHost.Services.Events
         public async Task<IEnumerable<EventDto>> GetAllAsync()
         {
             var authors = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
-            var events =  await _unitOfWork.Events.Query.Select(_event => new EventDto
+            var events =  await _unitOfWork.Events.Query.Include(e => e.FileUnit.Owner).Select(_event => new EventDto
             {
                 Id = _event.Id,
                 IsDeleted = _event.IsDeleted,
@@ -74,14 +90,14 @@ namespace Drive.WebHost.Services.Events
                     FileType = _event.FileUnit.FileType,
                     Description = _event.FileUnit.Description,
                     CreatedAt = _event.FileUnit.CreatedAt,
-                    LastModified = _event.FileUnit.LastModified
+                    LastModified = _event.FileUnit.LastModified,
+                    Author = new AuthorDto() { Id = _event.FileUnit.Owner.Id, GlobalId = _event.FileUnit.Owner.GlobalId }
                 },
-                EventType = _event.EventType,
-                Author = new AuthorDto() { Id = _event.Author.Id, GlobalId = _event.Author.GlobalId }
+                EventType = _event.EventType
             }).ToListAsync();
 
             Parallel.ForEach(events,
-                newEvent => { newEvent.Author.Name = authors.FirstOrDefault(a => a.Id == newEvent.Author.GlobalId)?.Name; });
+                newEvent => { newEvent.FileUnit.Author.Name = authors.FirstOrDefault(a => a.Id == newEvent.FileUnit.Author.GlobalId)?.Name; });
 
             return events;
         }
@@ -115,9 +131,9 @@ namespace Drive.WebHost.Services.Events
                                                                                 Description = c.FileUnit.Description,
                                                                                 CreatedAt = c.FileUnit.CreatedAt,
                                                                                 LastModified = c.FileUnit.LastModified,
-                                                                                SpaceId = c.FileUnit.Space.Id
+                                                                                SpaceId = c.FileUnit.Space.Id,
                                                                             },
-                                                                            Author = new AuthorDto { Id = c.Author.Id, GlobalId = c.Author.GlobalId }
+                                                                            Author = new AuthorDto { Id = c.FileUnit.Owner.Id, GlobalId = c.FileUnit.Owner.GlobalId }
                                                                         })
                                                                     }).ToListAsync();
 
@@ -159,7 +175,7 @@ namespace Drive.WebHost.Services.Events
                              LastModified = c.FileUnit.LastModified,
                              SpaceId = c.FileUnit.Space.Id
                          },
-                         Author = new AuthorDto { Id = c.Author.Id, GlobalId = c.Author.GlobalId }
+                         Author = new AuthorDto { Id = c.FileUnit.Owner.Id, GlobalId = c.FileUnit.Owner.GlobalId }
                      })
                  }).ToListAsync();
 
@@ -182,6 +198,16 @@ namespace Drive.WebHost.Services.Events
         public Task<EventDto> UpdateAsync(int id, EventDto dto)
         {
             throw new NotImplementedException();
+        }
+
+        public List<int> GetEventTypes()
+        {
+            var result = new List<int>();
+            foreach (var r in Enum.GetValues(typeof(ContentType)))
+            {
+                result.Add((int)r);
+            }
+            return result;
         }
     }
 }
