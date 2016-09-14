@@ -585,7 +585,7 @@ namespace Drive.DataAccess.Context
                     CreatedAt = new DateTime(2016, 8, 15, 15, 7, 23),
                     LastModified = new DateTime(2016, 8, 15, 15, 7, 23),
                     Owner = user1,
-                    Link = "http://cdn.paper4pc.com/images/mountains-landscape-nature-mountain-lake-wallpaper-4.jpg",
+                    Link = "http://www.magic4walls.com/wp-content/uploads/2013/12/landscape-trees-nature-lake-flowers-path-sky-clouds-2146140.jpg",
                     Space = space2
                 },
                 new FileUnit()

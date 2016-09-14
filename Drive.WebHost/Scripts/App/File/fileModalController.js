@@ -32,7 +32,8 @@
                 2: ["docs.google.com/spreadsheets/"],
                 3: ["docs.google.com/presentation/"],
                 4: ["trello.com"],
-                5: ["."] // link
+                //5: ["."], // link
+                8: [".jpg", ".jpeg", ".png", ".bmp"]
             };
 
             if (vm.file.parentId === 0) vm.file.parentId = null;

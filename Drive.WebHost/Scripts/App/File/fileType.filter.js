@@ -7,7 +7,7 @@
             return function (input, uppercase) {
                 switch (input) {
                     case 0:
-                        return 'Undefined';
+                        return 'Link';
                     case 1:
                         return 'Document';
                     case 2:
