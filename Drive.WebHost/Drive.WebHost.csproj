@@ -356,7 +356,10 @@
     <Content Include="Scripts\App\AdminPanel\Roles\roleController.js" />
     <Content Include="Scripts\App\AdminPanel\Roles\roleService.js" />
     <Content Include="Scripts\App\Events\eventsModule.js" />
+    <Content Include="Scripts\App\Events\Event\Event.html" />
     <Content Include="Scripts\App\Events\Event\eventContentType.filter.js" />
+    <Content Include="Scripts\App\Events\Event\eventController.js" />
+    <Content Include="Scripts\App\Events\Event\eventService.js" />
     <Content Include="Scripts\App\Events\List\EventsList.html" />
     <Content Include="Scripts\App\Events\List\eventsListController.js" />
     <Content Include="Scripts\App\Events\List\eventsListService.js" />
