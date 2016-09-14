@@ -12,13 +12,14 @@
 
         vm.save = save;
         vm.cancel = cancel;
+        vm.downloadFile = downloadFile;
 
         activate();
 
         function activate() {
             vm.file = items;
             vm.pdfDelegate = pdfDelegate.$getByHandle('my-pdf-container');
-            fileService.fileTextReader('0B376tLk_2m8PTzdDNEY3R2dhR3c',
+            fileService.fileTextReader(vm.file.link,
                     function (response) {
                         var fileData = response.data;
                         var fileHeader = response.headers();
@@ -37,6 +38,10 @@
         function cancel() {
             $uibModalInstance.dismiss('cancel');
         };
+
+        function downloadFile(link) {
+            fileService.downloadFile(link);
+        }
 
     }
 }());

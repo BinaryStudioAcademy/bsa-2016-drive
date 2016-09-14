@@ -1,6 +1,15 @@
-﻿<div style="height: 86vh;">
-    <h1>Rost16</h1>
+﻿<div class="tfr-modal-container" style="height: 88vh;">
+    <div class="row tfr-modal-header">
+        <div class="col-xs-6">
+            <h3 >{{textFileReaderCtrl.file.name}}</h3>
+            <button class="btn btn-default btn-custom" style="margin-right: 10px;" type="button" ng-click="textFileReaderCtrl.downloadFile()" title="Upload file">
+                <img src="./Content/Icons/download-doc-o_bw.svg" alt="Download file" height="30">
+            </button>
+            
+        </div>
+    </div>
     <div class="fr-modal-container" >
+        <div us-spinner="{radius:10, width:2, length: 10}" style=" top:50%; right:50%"></div>
         <div class="clearfix">
             <pdf-viewer delegate-handle="my-pdf-container"
                         url="textFileReaderCtrl.pdfUrl"
@@ -11,28 +20,139 @@
 </div>
 
 <style>
-    .fr-modal-container{
-        height:91%;
-        
+    .tfr-modal-header{
+        padding: 0px 15px;
+    }
+    .tfr-modal-header div{
+        margin-top: 15px;
+    }
+    
+    .tfr-modal-header h3{
+        display: -moz-inline-box;
+        display: inline-block;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+    
+    .tfr-modal-header button{
+        display: -moz-inline-box;
+        display: inline-block;
+        padding: 15px;
+        padding-top: 0px;
+        margin-left: 10px;
+    }
+
+    .tfr-modal-container .fr-modal-container{
+        height:88%;
         overflow:auto;
     }
-
-    .clearfix:after,.clearfix:before{
-        content:" ";
-        display:table
-
+    .fr-modal-container canvas{
+        padding: 0;
+        margin: auto;
+        display: block;
     }
-    .clearfix:after{clear:both}
-    .mb2{margin-bottom:1rem}
-    .white{color:#fff}.blue{color:#0076df}
-                      .bg-blue{background-color:#0076df}
-left{border-left-style:solid;border-left-width:1px;border-left-color:#ccc}
-.button,button{font-weight:700;text-decoration:none;cursor:pointer;display:inline-block;-moz-box-sizing:border-box;box-sizing:border-box;line-height:1.125;padding:.5em 1rem;margin:0;height:auto;border:1px solid transparent;-webkit-appearance:none}::-moz-focus-inner{border:0;padding:0}.button:hover{text-decoration:none;color: #fff;}
-button{margin:0}
-.py2{padding-top:1rem;padding-bottom:1rem}
-.m0{margin:0}
-.button-nav-dark{color:#fff}.button-nav-dark.is-active,.button-nav-dark:active,.button-nav-dark:hover{background-color:rgba(0,0,0,.125)}
-                            .field-dark{color:#fff;background-color:rgba(0,0,0,.25);border:1px solid rgba(0,0,0,.0625);border-radius:3px}.field-dark::-webkit-input-placeholder{color:rgba(255,255,255,.75)}.field-dark::-moz-placeholder{color:rgba(255,255,255,.75)}.field-dark:-ms-input-placeholder{color:rgba(255,255,255,.75)}.field-dark::placeholder{color:rgba(255,255,255,.75)}.field-dark:focus{outline:0;border:1px solid rgba(255,255,255,.5)}.field-dark:read-only:not(select){background-color:rgba(255,255,255,.25)}.field-dark:invalid{border-color:#f95020}.field-dark.is-success{border-color:#00cf26}.field-dark.is-warning{border-color:#efcc00}.field-dark.is-error{border-color:#f95020}
+
+    .tfr-modal-container .clearfix:after,.clearfix:before{
+        content:" ";
+        display:table;
+    }
+    .tfr-modal-container .clearfix:after{
+        clear:both;
+    }
+    .tfr-modal-container .mb2{
+        margin-bottom:1rem;
+    }
+    .tfr-modal-container .mb2 input{
+        width: 25px !important;
+    }
+
+    .tfr-modal-container .white{
+        color:#666;
+    }
+
+    .tfr-modal-container .blue{
+        color:#0076df
+    }
+    .tfr-modal-container .bg-blue{
+        background-color:#eaebec;
+        position: fixed;
+        width: 98%;
+        margin: 0px;
+    }
+    .tfr-modal-container .left{
+        border-left-style:solid;border-left-width:1px;border-left-color:#ccc
+    }
+    .tfr-modal-container .button,button{
+    font-weight:700;
+    text-decoration:none;
+    cursor:pointer;
+    display:inline-block;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+    line-height:1.125;
+    padding:.5em 1rem;
+    margin:0;
+    height:auto;
+    border:1px solid transparent;
+    -webkit-appearance:none;
+    }
+    .tfr-modal-container .button:hover{
+        text-decoration:none;
+        color: #fff;
+    }
+    .tfr-modal-container .button{
+        margin:0;
+    }
+    .tfr-modal-container .py2{
+        padding-top:1rem;
+        padding-bottom:1rem
+    }
+    .tfr-modal-container .m0{
+        margin:0;
+    }
+    .tfr-modal-container .button-nav-dark{
+        color:#666;
+    }
+    .tfr-modal-container .button-nav-dark.is-active, .button-nav-dark:active, .button-nav-dark:hover{
+        background-color:rgba(0,0,0,.125);
+    }
+    .tfr-modal-container .field-dark{
+        color:#fff;
+        background-color:rgba(0,0,0,.25);
+        border:1px solid rgba(0,0,0,.0625);
+        border-radius:3px;
+    }
+    .tfr-modal-container .field-dark::-webkit-input-placeholder{
+        color:rgba(255,255,255,.75);
+    }
+    .tfr-modal-container .field-dark::-moz-placeholder{
+        color:rgba(255,255,255,.75);
+    }
+    .tfr-modal-container .field-dark:-ms-input-placeholder{
+        color:rgba(255,255,255,.75);
+    }
+    .tfr-modal-container .field-dark::-moz-placeholder{
+        color:rgba(255,255,255,.75);
+    }
+    .tfr-modal-container .field-dark:focus{
+         outline:0;
+         border:1px solid rgba(255,255,255,.5);
+     }
+     .tfr-modal-container .field-dark:read-only:not(select){
+         background-color:rgba(255,255,255,.25);
+     }
+     .tfr-modal-container .field-dark:invalid{
+         border-color:#f95020;
+     }
+     .tfr-modal-container .field-dark.is-success{
+         border-color:#00cf26;
+     }
+     .tfr-modal-container .field-dark.is-warning{
+         border-color:#efcc00;
+     }
+     .tfr-modal-container .field-dark.is-error{
+         border-color:#f95020;
+     }
 
 
 </style>

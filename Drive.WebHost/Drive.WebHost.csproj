@@ -290,6 +290,7 @@
     <Content Include="Content\Icons\checklist_bw.svg" />
     <Content Include="Content\Icons\doc.svg" />
     <Content Include="Content\Icons\doc_bw.svg" />
+    <Content Include="Content\Icons\download-doc-o_bw.svg" />
     <Content Include="Content\Icons\employees-add.svg" />
     <Content Include="Content\Icons\employees.svg" />
     <Content Include="Content\Icons\employees_bw.svg" />

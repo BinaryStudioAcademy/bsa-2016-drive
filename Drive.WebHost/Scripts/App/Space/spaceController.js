@@ -819,7 +819,7 @@
                 });
         }
 
-        function openTextFileReader(size) {
+        function openTextFileReader(size, file) {
 
             var fileReaderModalInstance = $uibModal.open({
                 animation: false,
@@ -830,11 +830,7 @@
                 size: size,
                 resolve: {
                     items: function () {
-                        var sharedContInfo = {
-                            contentId: vm.contentSharedId,
-                            title: vm.sharedModalWindowTitle
-                        }
-                        return sharedContInfo;
+                        return file;
                     }
                 }
             });
@@ -1048,7 +1044,13 @@
         function openDocument(file) {
             if (file.fileType !== 7) {
                 if (file.fileType == 6) {
-                    fileService.downloadFile(file.link);
+                    var fileExtantion = file.name.slice(file.name.lastIndexOf("."));
+                    if (fileExtantion == '.pdf') {
+                        vm.openTextFileReader('lg', file);
+                    }
+                    else {
+                        fileService.downloadFile(file.link);
+                    }
                 }
                 else {
                     fileService.openFile(file.link);
