@@ -1,0 +1,22 @@
+﻿<div ng-if="content.contentType == contentTypes.video">
+    <h4>{{content.name}}</h4>
+    <p>{{content.link}}</p>
+    <p>{{content.description}}</p>
+    <youtube-video video-url="content.link"></youtube-video>
+</div>
+<div ng-if="content.contentType == contentTypes.text">
+    <h4>{{content.name}}</h4>
+    <p>{{content.link}}</p>
+    <p>{{content.description}}</p>
+</div>
+<div ng-if="content.contentType == contentTypes.photo">
+    <h4>{{content.name}}</h4>
+    <img class="img-responsive" ng-src="{{content.link}}"/>
+    <p>{{content.description}}</p>
+</div>
+<div ng-if="content.contentType == contentTypes.link">
+    <a ng-href="content.link"></a>
+    <a ng-href="{{content.link}}" target="_blank">{{content.name}} <i class="fa fa-external-link" aria-hidden="true"></i></a>
+    <p>{{content.description}}</p>
+</div>
+<br/>
