@@ -88,6 +88,7 @@
                     </div>
                 </div>
                 <div class="row">
+                    <p>{{createcontentform.contentlink.$invalid}}</p>
                     <div class="col-sm-3 pull-right">
                         <button type="submit" class="btn btn-info pull-right" ng-disabled="createcontentform.$invalid">
                             <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Submit
@@ -96,11 +97,11 @@
                 </div>
             </form>
             <div class="create-eventcontent-wrap">
-                <div ng-repeat="content in eventCreateCtrl.event.contentList">
-                    <div class="space-label" ng-click="content.isCollapsed = !content.isCollapsed"
-                         ui-draggable="true" drag="content" drag-channel="content"
+                <div ng-repeat="content in eventCreateCtrl.event.contentList"
+                     ui-draggable="true" drag="content" drag-channel="content"
                          ondragstart="this.classList.add('dragging-elem');"
                          ondragend="this.classList.remove('dragging-elem')">
+                    <div class="space-label" ng-click="content.isCollapsed = !content.isCollapsed">
                         {{ content.contentType | contentType}}: {{content.name | limitTo: 20}}{{content.name.length > 20 ? '...' : ''}}
                     </div>
                     <div uib-collapse="content.isCollapsed">
