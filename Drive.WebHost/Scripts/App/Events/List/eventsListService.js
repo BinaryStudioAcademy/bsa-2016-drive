@@ -12,7 +12,8 @@
 
     function EventsListService($http, baseUrl) {
         var service = {
-            getEvents: getEvents
+            getEvents: getEvents,
+            searchEvents: searchEvents
         }
 
         return service;
@@ -29,6 +30,26 @@
             function getEventsFailed(error) {
                 console.log('XHR Failed for getEvents.' + error.data);
             }
+        }
+
+        function searchEvents(text, callback) {
+            $http.get(baseUrl + '/api/events/search',
+                {
+                    params: {
+                        text: text
+                    }
+                })
+                .then(function (response) {
+                    if (callback) {
+                        callback(response.data);
+                    }
+                },
+                    function errorCallback(response) {
+                        console.log('Error in searchEvents Method! Code:' + response.status);
+                        if (response.status === 404 && callback) {
+                            callback(response.data);
+                        }
+                    });
         }
     }
 })();

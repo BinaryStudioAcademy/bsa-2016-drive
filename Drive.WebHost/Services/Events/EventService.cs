@@ -86,6 +86,94 @@ namespace Drive.WebHost.Services.Events
             return events;
         }
 
+        public async Task<IEnumerable<AppsEventDto>> SearchEvents(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+            {
+                return await FilterEvents();
+            }
+
+            var authors = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
+
+            var events = await _unitOfWork.Events.Query.Include(c => c.FileUnit).
+                                                                    Where(x => x.FileUnit.Name.Contains(text.ToLower())).
+                                                                    GroupBy(c => c.FileUnit.Space).
+                                                                    Select(_event => new AppsEventDto
+                                                                    {
+                                                                        SpaceId = _event.Key.Id,
+                                                                        SpaceType = _event.Key.Type,
+                                                                        Name = _event.Key.Name,
+                                                                        Events = _event.Select(c => new EventDto
+                                                                        {
+                                                                            Id = c.Id,
+                                                                            IsDeleted = c.IsDeleted,
+                                                                            FileUnit = new FileUnitDto
+                                                                            {
+                                                                                Id = c.FileUnit.Id,
+                                                                                Name = c.FileUnit.Name,
+                                                                                FileType = c.FileUnit.FileType,
+                                                                                Description = c.FileUnit.Description,
+                                                                                CreatedAt = c.FileUnit.CreatedAt,
+                                                                                LastModified = c.FileUnit.LastModified,
+                                                                                SpaceId = c.FileUnit.Space.Id
+                                                                            },
+                                                                            Author = new AuthorDto { Id = c.Author.Id, GlobalId = c.Author.GlobalId }
+                                                                        })
+                                                                    }).ToListAsync();
+
+            Parallel.ForEach(events,
+                _event =>
+                {
+                    Parallel.ForEach(_event.Events,
+                        c => { c.Author.Name = authors.FirstOrDefault(a => a.Id == c.Author.GlobalId)?.Name; });
+                });
+
+            return events;
+        }
+
+        private async Task<IEnumerable<AppsEventDto>> FilterEvents()
+        {
+            string userId = _userService.CurrentUserId;
+            var events = await _unitOfWork.Events.Query.Include(c => c.FileUnit)
+               .Where(c => (c.FileUnit.Space.Type == SpaceType.BinarySpace
+               || c.FileUnit.Space.Owner.GlobalId == userId
+               || c.FileUnit.Space.ReadPermittedUsers.Any(x => x.GlobalId == userId)
+               || c.FileUnit.Space.ReadPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))) && !c.FileUnit.IsDeleted)
+               .GroupBy(c => c.FileUnit.Space)
+                 .Select(_event => new AppsEventDto
+                 {
+                     SpaceId = _event.Key.Id,
+                     SpaceType = _event.Key.Type,
+                     Name = _event.Key.Name,
+                     Events = _event.Select(c => new EventDto
+                     {
+                         Id = c.Id,
+                         IsDeleted = c.IsDeleted,
+                         FileUnit = new FileUnitDto
+                         {
+                             Id = c.FileUnit.Id,
+                             Name = c.FileUnit.Name,
+                             FileType = c.FileUnit.FileType,
+                             Description = c.FileUnit.Description,
+                             CreatedAt = c.FileUnit.CreatedAt,
+                             LastModified = c.FileUnit.LastModified,
+                             SpaceId = c.FileUnit.Space.Id
+                         },
+                         Author = new AuthorDto { Id = c.Author.Id, GlobalId = c.Author.GlobalId }
+                     })
+                 }).ToListAsync();
+
+            var authors = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
+
+            Parallel.ForEach(events,
+               _event => {
+                   Parallel.ForEach(_event.Events,
+                       c => { c.Author.Name = authors.FirstOrDefault(a => a.Id == c.Author.GlobalId)?.Name; });
+               });
+
+            return events;
+        }
+
         public Task<EventDto> GetAsync(int id)
         {
             throw new NotImplementedException();

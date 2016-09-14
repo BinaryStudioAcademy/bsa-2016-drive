@@ -6,14 +6,17 @@
 
 
     EventsListController.$inject = [
-        "EventsListService"
+        "EventsListService",
+        '$location'
     ];
 
-    function EventsListController(EventsListService) {
+    function EventsListController(EventsListService, $location) {
         var vm = this;
         vm.columnForOrder = 'name';
         vm.openEvent = openEvent;
-        //vm.changeView = changeView;
+        vm.changeView = changeView;
+        vm.search = search;
+        vm.cancelSearch = cancelSearch;
         //vm.openNewEventWindow = openNewEventWindow;
         //vm.deleteEvent = deleteEvent;
         //vm.createNewEvent = createNewEvent;
@@ -42,8 +45,8 @@
             vm.showGrid = false;
             vm.eventColumnForOrder = 'name';
             vm.iconHeight = 30;
-            vm.icon = "./Content/Icons/academyPro.svg";
-            getEvents();
+            vm.icon = "./Content/Icons/event.svg";
+            search();
         }
 
         function getEvents() {
@@ -56,6 +59,46 @@
 
         function openEvent(id) {
             $location.url('/apps/events/' + id);
+        }
+
+        function changeView(view) {
+            if (view === "fa fa-th") {
+                activateGridView();
+            } else {
+                activateTableView();
+            }
+        }
+
+        function activateTableView() {
+            vm.view = "fa fa-th";
+            vm.showTable = true;
+        }
+
+        function activateGridView() {
+            vm.view = "fa fa-list";
+            vm.showTable = false;
+        }
+
+        function search() {
+            EventsListService.searchEvents(vm.searchText, function (data) {
+                vm.eventsList = data;
+                getBinarySpaceIdent(vm.eventsList);
+            });
+        }
+
+        function cancelSearch() {
+            vm.searchText = "";
+            search();
+        }
+
+        function getBinarySpaceIdent(list) {
+            for (var i = 0; i < list.length; i++) {
+                if (list[i].spaceType === 0) {
+                    vm.binarySpaceId = list[i].spaceId;
+                    return vm.binarySpaceId;
+                }
+            }
+            return 0;
         }
     }
 }());

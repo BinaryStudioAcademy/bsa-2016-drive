@@ -78,5 +78,18 @@ namespace Drive.WebHost.Api
 
             return Ok();
         }
+
+        [HttpGet]
+        [Route("search")]
+        public async Task<IHttpActionResult> SearchFiles(string text = "")
+        {
+            text = text ?? string.Empty;
+            var result = await _eventService.SearchEvents(text);
+            if (result == null || !result.Any())
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
     }
 }
