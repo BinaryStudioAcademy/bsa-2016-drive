@@ -1591,7 +1591,8 @@ li.folder.on-drag-enter {
     margin-top: 10px;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 40vh;
+    height: 30vh;
+    line-height:0.5em;
 }
 /*end create event content wrap*/
 .create-event-title {
