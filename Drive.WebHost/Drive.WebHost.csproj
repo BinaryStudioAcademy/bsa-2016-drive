@@ -369,6 +369,7 @@
     <Content Include="Scripts\App\Events\Event\CreateEvent.html" />
     <Content Include="Scripts\App\Events\Event\EventContent\eventContentService.js" />
     <Content Include="Scripts\App\Events\Event\eventCreateController.js" />
+    <Content Include="Scripts\App\Events\Event\eventType.filter.js" />
     <Content Include="Scripts\App\Events\Event\Modal.html" />
     <Content Include="Scripts\App\File\fileUpload.directive.js" />
     <Content Include="Scripts\App\File\UploadFile.html" />
@@ -405,6 +406,7 @@
     <Content Include="Scripts\App\SharedSpace\sharedSpaceService.js" />
     <Content Include="Scripts\App\Space\Create.html" />
     <Content Include="Scripts\App\Space\createSpaceController.js" />
+    <Content Include="Scripts\App\Space\dndEventsDerectives.js" />
     <Content Include="Scripts\App\Space\Modal.html" />
     <Content Include="Scripts\App\Space\Settings.html" />
     <Content Include="Scripts\App\Space\settingsController.js" />

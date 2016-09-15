@@ -3,12 +3,13 @@
         .controller('EventCreateController', EventCreateController);
 
     EventCreateController.$inject = [
+        'EventService',
         'toastr',
         '$location',
         'localStorageService'
     ];
 
-    function EventCreateController(toastr, $location, localStorageService) {
+    function EventCreateController(eventService, toastr, $location, localStorageService) {
         var vm = this;
         vm.addNewEvent = addNewEvent;
         vm.create = create;
@@ -19,12 +20,16 @@
         vm.newText = newText;
         vm.getEventList = getEventList;
         vm.saveContent = saveContent;
+        vm.isValidEventUrl = isValidEventUrl;
 
         activate();
 
         function activate() {
             vm.showEditArea = false;
             vm.order = 0;
+            eventService.getEventTypes(function (data) {
+                vm.eventTypes = data;
+            });
             vm.tempevent = localStorageService.get('event');
             localStorageService.remove('event');
 
@@ -44,7 +49,11 @@
             }
 
         function addNewEvent() {
-            //return eventService.pushData(vm.event);
+            if (vm.event.contentList.length > 0)
+                for (var i = 0; i < vm.event.contentList.length; i++) {
+                    vm.event.contentList[i].order = i;
+                }
+            return eventService.pushData(vm.event);
         };
 
         function create() {
@@ -97,6 +106,19 @@
             vm.currentContent.order = ++vm.order;
             vm.event.contentList.push(vm.currentContent);
             vm.showEditArea = false;
+        }
+
+ 
+
+        function isValidEventUrl() {
+            if (vm.currentContent.contentType === 1) {
+                vm.urlIsValid = true;
+                return;
+            }
+
+            var expression = "^(?:(?:ht|f)tps?://)?(?:[\\-\\w]+@)?(?:[\\-0-9a-z]*[0-9a-z]\\.)+[a-z]{2,6}(?::\\d{1,5})?(?:[?/\\\\#][?!^$.(){}:|=[\\]+\\-/\\\\*;&~#@,%\\wА-Яа-я]*)?$";
+            var reg = new RegExp(expression);
+            vm.urlIsValid = reg.test(vm.currentContent.content);
         }
 
         function getEventList() {

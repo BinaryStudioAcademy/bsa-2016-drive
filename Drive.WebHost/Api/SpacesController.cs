@@ -133,5 +133,23 @@ namespace Drive.WebHost.Api
                 return NotFound();
             return Ok(result);
         }
+
+        // PUT: api/spaces/movecontent
+        [HttpPut]
+        [Route("movecontent")]
+        public async Task<IHttpActionResult> MoveContent(CopyMoveContentDto content)
+        {
+            await _spaceService.MoveContentAsync(content);
+            return Ok();
+        }
+
+        // PUT: api/spaces/copycontent
+        [HttpPut]
+        [Route("copycontent")]
+        public async Task<IHttpActionResult> CopyContent(CopyMoveContentDto content)
+        {
+            await _spaceService.CopyContentAsync(content);
+            return Ok();
+        }
     }
 }

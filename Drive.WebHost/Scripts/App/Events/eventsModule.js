@@ -2,6 +2,7 @@
     angular.module('driveApp.events', [
         "ang-drag-drop",
         'youtube-embed'
+        "dndLists"
     ])
     .config([
         '$routeProvider', function config($routeProvider) {

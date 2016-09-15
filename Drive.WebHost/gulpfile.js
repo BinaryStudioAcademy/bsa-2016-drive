@@ -68,7 +68,8 @@ gulp.task("libs", function () {
       paths.bower + "angular-youtube-embed.js",
       paths.bower + "youtube.iframe-api.js",
       paths.bower + "datetime-picker.js",
-      paths.bower + "draganddrop.js"
+      paths.bower + "draganddrop.js",
+      paths.bower + "angular-drag-and-drop-lists.js"
     ])
 
         .pipe(concat("libs.js"))

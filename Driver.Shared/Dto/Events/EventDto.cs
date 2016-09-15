@@ -12,8 +12,6 @@ namespace Driver.Shared.Dto.Events
     {
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
         public EventType EventType { get; set; }
         public DateTime EventDate { get; set; }
         public IEnumerable<EventContentDto> ContentVideoLinks { get; set; }
@@ -22,6 +20,5 @@ namespace Driver.Shared.Dto.Events
         public IEnumerable<EventContentDto> ContentTexts { get; set; }
         public FileUnitDto FileUnit { get; set; }
         public AuthorDto Author { get; set; }
-        public DateTime CreatedAt { get; set; }
     }
 }
