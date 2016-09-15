@@ -34,7 +34,7 @@
                 <div class="grid-space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ eventspace.name }}</div>
                 <div uib-collapse="space.isCollapsed">
                     <ul class="sp-gv-flex-container">
-                        <li class="sp-gv-flex-item" role="button" ng-repeat="event in eventspace.events" ng-dblclick="eventsListCtrl.openEvent(event.id)" title="Created {{ event.createdAt | date : 'short' }}">
+                        <li class="sp-gv-flex-item" role="button" ng-repeat="event in eventspace.events" context-menu="eventsListCtrl.eventMenuOptions" ng-dblclick="eventsListCtrl.openEvent(event.id)" title="Created {{ event.createdAt | date : 'short' }}">
                             <div class="sp-gv-wrapper-flex-item ">
                                 <div class="sp-gv-item-content cards">
                                     <div class="sp-gv-item-img-wrapper">

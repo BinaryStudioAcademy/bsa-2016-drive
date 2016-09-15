@@ -39,7 +39,8 @@
                 3: ["docs.google.com/presentation/"],
                 4: ["trello.com"],
                 //5: ["."], // link
-                8: [".jpg", ".jpeg", ".png", ".bmp"]
+                8: [".jpg", ".jpeg", ".png", ".bmp"],
+                10: ["youtube.com", "vimeo.com", "dailymotion.com"]
             };
             vm.buffer = {
                 link : null,
@@ -154,7 +155,7 @@
                 var data = [];
                 for (var i = 0; i < vm.inputFile.length; i++) {
                     var temp = {};
-                    temp.name = vm.inputFile[i].filename
+                    temp.name = vm.inputFile[i].filename;
                     temp.extension = vm.inputFile[i].extension;
                     temp.description = vm.inputFile[i].description;
                     data.push(temp);
