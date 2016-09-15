@@ -133,6 +133,8 @@ namespace Drive.WebHost.Services.Events
                                                                                 LastModified = c.FileUnit.LastModified,
                                                                                 SpaceId = c.FileUnit.Space.Id,
                                                                             },
+                                                                            EventDate = c.EventDate,
+                                                                            EventType = c.EventType,
                                                                             Author = new AuthorDto { Id = c.FileUnit.Owner.Id, GlobalId = c.FileUnit.Owner.GlobalId }
                                                                         })
                                                                     }).ToListAsync();
@@ -175,6 +177,8 @@ namespace Drive.WebHost.Services.Events
                              LastModified = c.FileUnit.LastModified,
                              SpaceId = c.FileUnit.Space.Id
                          },
+                         EventDate = c.EventDate,
+                         EventType = c.EventType,
                          Author = new AuthorDto { Id = c.FileUnit.Owner.Id, GlobalId = c.FileUnit.Owner.GlobalId }
                      })
                  }).ToListAsync();

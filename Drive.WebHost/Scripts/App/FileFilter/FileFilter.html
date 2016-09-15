@@ -87,7 +87,7 @@
                     <span ng-show="fileFilterCtrl.columnForOrder == 'name'"><i class="fa fa-sort-asc"></i></span>
                     <span ng-show="fileFilterCtrl.columnForOrder == '-name'"><i class="fa fa-sort-desc"></i></span>
                 </div>
-                <div class="col-md-3" ng-click="fileFilterCtrl.orderByColumn('description')">
+                <div class="col-md-5" ng-click="fileFilterCtrl.orderByColumn('description')">
                     Description
                     <span ng-show="fileFilterCtrl.columnForOrder == 'description'"><i class="fa fa-sort-asc"></i></span>
                     <span ng-show="fileFilterCtrl.columnForOrder == '-description'"><i class="fa fa-sort-desc"></i></span>
@@ -102,7 +102,6 @@
                     <span ng-show="fileFilterCtrl.columnForOrder == 'createdAt'"><i class="fa fa-sort-asc"></i></span>
                     <span ng-show="fileFilterCtrl.columnForOrder == '-createdAt'"><i class="fa fa-sort-desc"></i></span>
                 </div>
-                <div class="col-md-2">Type</div>
             </div>
         </div>
         <div class="filter-table-internal">
@@ -114,14 +113,13 @@
                             <div class="row filter-table-row" role="button" ng-repeat="file in space.files | orderBy: fileFilterCtrl.columnForOrder" ng-dblclick="file.fileType !== 8 ? fileFilterCtrl.openDocument(file) : fileFilterCtrl.openLightboxModal($index)" context-menu="fileFilterCtrl.fileMenuOptions">
                                 <div class="col-md-3 filter-table-cell description" title="{{ file.name }}">
                                     <img ng-src="{{fileFilterCtrl.chooseIcon(file.fileType)}}" height="{{fileFilterCtrl.iconHeight}}" />
-                                    {{file.name | limitTo: 20}}{{file.name.length > 20 ? '...' : ''}}
+                                    {{file.name | limitTo: 23}}{{file.name.length > 23 ? '...' : ''}}
                                 </div>
-                                <div class="col-md-3 filter-table-cell description" title="{{ file.description }}">
-                                    {{file.description | limitTo: 28}}{{file.description.length > 28 ? '...' : ''}}
+                                <div class="col-md-5 filter-table-cell description" title="{{ file.description }}">
+                                    {{file.description | limitTo: 56}}{{file.description.length > 56 ? '...' : ''}}
                                 </div>
                                 <div class="col-md-2 filter-table-cell">{{ file.author.name }}</div>
                                 <div class="col-md-2 filter-table-cell">{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</div>
-                                <div class="col-md-2 filter-table-cell">{{ file.fileType | typeOfFile }}</div>
                             </div>
                         </div>
                     </div>
