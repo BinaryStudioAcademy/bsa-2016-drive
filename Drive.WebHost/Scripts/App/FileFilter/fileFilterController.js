@@ -20,6 +20,7 @@
         vm.openFileWindow = openFileWindow;
         vm.deleteFile = deleteFile;
         vm.openSharedContentWindow = openSharedContentWindow;
+        vm.openTextFileReader = openTextFileReader;
         vm.sharedContent = sharedContent;
         vm.getBinarySpaceId = getBinarySpaceId;
         vm.openLightboxModal = openLightboxModal;
@@ -158,6 +159,30 @@
             });
         }
 
+        function openTextFileReader(size, file) {
+
+            var fileReaderModalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'Scripts/App/File/TextFileReader/TextFileReader.html',
+                windowTemplateUrl: 'Scripts/App/File/TextFileReader/Modal.html',
+                controller: 'TextFileReaderCtrl',
+                controllerAs: 'textFileReaderCtrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        return file;
+                    }
+                }
+            });
+
+            fileReaderModalInstance.result.then(function (response) {
+                console.log(response);
+            },
+                function () {
+                    console.log('Modal dismissed');
+                });
+        }
+
         function sharedContent() {
             vm.openSharedContentWindow();
         }
@@ -258,11 +283,26 @@
         }
 
         function openDocument(file) {
-            if (file.fileType === 6 || file.fileType === 8) {
-                fileService.downloadFile(file.link);
-            }
-            else {
-                fileService.openFile(file.link);
+            if (file.fileType !== 7) {
+                if (file.fileType == 6) {
+                    var fileExtantion = file.name.slice(file.name.lastIndexOf("."));
+                    if (fileExtantion == '.pdf' || fileExtantion == '.txt' || fileExtantion == '.cs' || fileExtantion == '.js' || fileExtantion == '.html' || fileExtantion == '.css') {
+                        vm.openTextFileReader('lg', file);
+                    }
+                    else {
+                        fileService.downloadFile(file.link);
+                    }
+                }
+                else {
+                    fileService.openFile(file.link);
+                }
+            } else {
+                fileService.findCourse(file.id,
+                    function (data) {
+                        if (data !== undefined) {
+                            $location.url('/apps/academy/' + data.id);
+                        }
+                    });
             }
         }
 
