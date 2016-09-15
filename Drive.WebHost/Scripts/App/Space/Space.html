@@ -1,4 +1,4 @@
-<div class="container-fluid" style="overflow: hidden; height: 100%">
+<div class="container-fluid" id="data-container" style="overflow: hidden; height: 100%">
     <br />
     <div class="btn-group btn-breadcrumb">
         <a class="btn btn-info" ng-click="spaceCtrl.getSpaceByButton()" title="{{spaceCtrl.space.name}}">
@@ -30,7 +30,10 @@
                     <img src="./Content/Icons/upload-doc_bw.svg" height="30" alt="Upload file" />
                 </button>
                 <button type="button" class="btn btn-default btn-custom" ng-click="spaceCtrl.createNewAP()" title="Add new Academy Pro course">
-                    <img src="./Content/Icons/academyPro_bw.svg" height="30" alt="Academy Pro course" />
+                    <img src="./Content/Icons/academyPro_bw.svg" height="30" alt="Academy Pro course"/>
+                </button>
+                <button type="button" class="btn btn-default btn-custom" ng-click="spaceCtrl.createNewEvent()" title="Add new Event">
+                    <img src="./Content/Icons/event_bw.svg" height="30" alt="Event" />
                 </button>
             </div>
         </div>
@@ -56,14 +59,16 @@
 
     <!--New gridview-->
     <ul class="sp-gv-flex-container wrap" ng-show="spaceCtrl.showGrid" context-menu="spaceCtrl.containerMenuOptions">
-        <li class="sp-gv-flex-item folder" role="button" context-menu="spaceCtrl.folderMenuOptions" dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize" total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" ng-click="spaceCtrl.activeRow(folder.id, 'false')" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)" ng-class="{selected: folder.selected, cutted: folder.cutted}"
-            ui-draggable="true" drag="folder" drag-channel="folder" drop-channel="file, folder" 
+        <li class="sp-gv-flex-item folder" role="button" context-menu="spaceCtrl.folderMenuOptions" dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize" total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}"
+            ui-draggable="true" drag="spaceCtrl.getSelectedItems(folder, false)" drag-channel="folder" drop-channel="file, folder"  drag-image-element-id="spaceCtrl.getDragImageId($event, folder, false)"
             drop-validate="spaceCtrl.dropValidate(folder, $data)" ui-on-drop="spaceCtrl.onDrop($event, $channel, folder.id, $data)"
-            ondragstart="this.style.opacity = 0.7" ondragend="this.style.opacity = 1">
+            ng-click="spaceCtrl.selectItems($event, folder, false)" ng-mousedown="spaceCtrl.selectItemsForDrag($event, folder, false)" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)"
+            ng-drag-start-end-listen="true" on-drop-failure="spaceCtrl.clearDragImage()" on-drop-success="spaceCtrl.clearDragImage()"                     
+            ng-class="{selected: folder.selected, cutted: folder.cutted}" ng-right-click="spaceCtrl.rightClickSelection(folder, false)">
             <div class="sp-gv-wrapper-flex-item">
                 <div class="sp-gv-item-content cards">
                     <div class="sp-gv-item-img-wrapper">
-                        <img ng-src="./Content/Icons/folder.svg" alt="Folder" title="Folder" draggable="false"/>
+                        <img ng-src="./Content/Icons/folder.svg" alt="Folder" title="Folder" draggable="false" />
                     </div>
                     <div class="sp-gv-item-text">
                         <h4 title="{{folder.name}}">{{folder.name}}</h4>
@@ -76,14 +81,15 @@
                 </div>
             </div>
         </li>
-        <li class="sp-gv-flex-item" role="button" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}" 
-            ng-click="spaceCtrl.activeRow(file.id, 'true')" ng-dblclick="spaceCtrl.openDocument(file)" ng-class="{selected: file.selected, cutted: file.cutted}" 
-            ui-draggable="true" drag="file" drag-channel="file"
-            ondragstart="this.classList.add('dragging-elem');" ondragend="this.classList.remove('dragging-elem')">
+        <li class="sp-gv-flex-item" role="button" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}"
+            ui-draggable="true" drag="spaceCtrl.getSelectedItems(file, true)" drag-channel="file" drag-image-element-id="spaceCtrl.getDragImageId($event, file, true)"
+            ng-click="spaceCtrl.selectItems($event, file, true)" ng-mousedown="spaceCtrl.selectItemsForDrag($event, file, true)" ng-dblclick="spaceCtrl.openDocument(file)"
+            ng-drag-start-end-listen="true" on-drop-failure="spaceCtrl.clearDragImage()" on-drop-success="spaceCtrl.clearDragImage()"
+            ng-class="{selected: file.selected, cutted: file.cutted}" ng-right-click="spaceCtrl.rightClickSelection(file, true)">
             <div class="sp-gv-wrapper-flex-item">
                 <div class="sp-gv-item-content cards">
                     <div class="sp-gv-item-img-wrapper">
-                        <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false"/>
+                        <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
                     </div>
                     <div class="sp-gv-item-text">
                         <h4 title="{{file.name}}">{{file.name}}</h4>
@@ -104,30 +110,30 @@
     <div class="filter-table container-md" ng-show="spaceCtrl.showTable">
         <div class="header-wrapper">
             <div class="row header-row" context-menu="spaceCtrl.containerMenuOptions">
-                <div class="col-md-3" ng-click="spaceCtrl.orderByColumn('name')">
+                <div class="col-md-3" ng-click="spaceCtrl.reverseSort=!spaceCtrl.reverseSort;spaceCtrl.orderByColumn('name', spaceCtrl.reverseSort)">
                     Name
-                    <span ng-show="spaceCtrl.columnForOrder == 'name'"><i class="fa fa-sort-asc"></i></span>
-                    <span ng-show="spaceCtrl.columnForOrder == '-name'"><i class="fa fa-sort-desc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == 'name' && !spaceCtrl.reverseSort"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == 'name' && spaceCtrl.reverseSort"><i class="fa fa-sort-desc"></i></span>
                 </div>
-                <div class="col-md-3" ng-click="spaceCtrl.orderByColumn('description')">
+                <div class="col-md-3" ng-click="spaceCtrl.reverseSort=!spaceCtrl.reverseSort;spaceCtrl.orderByColumn('description', spaceCtrl.reverseSort)">
                     Description
-                    <span ng-show="spaceCtrl.columnForOrder == 'description'"><i class="fa fa-sort-asc"></i></span>
-                    <span ng-show="spaceCtrl.columnForOrder == '-description'"><i class="fa fa-sort-desc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == 'description' && !spaceCtrl.reverseSort"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == 'description' && spaceCtrl.reverseSort"><i class="fa fa-sort-desc"></i></span>
                 </div>
-                <div class="col-md-2" ng-click="spaceCtrl.orderByColumn('author.name')">
+                <div class="col-md-2" ng-click="spaceCtrl.reverseSort=!spaceCtrl.reverseSort;spaceCtrl.orderByColumn('author.name', spaceCtrl.reverseSort)">
                     Author
-                    <span ng-show="spaceCtrl.columnForOrder == 'author.name'"><i class="fa fa-sort-asc"></i></span>
-                    <span ng-show="spaceCtrl.columnForOrder == '-author.name'"><i class="fa fa-sort-desc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == 'author.name' && !spaceCtrl.reverseSort"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == 'author.name' && spaceCtrl.reverseSort"><i class="fa fa-sort-desc"></i></span>
                 </div>
-                <div class="col-md-2" ng-click="spaceCtrl.orderByColumn('createdAt')">
+                <div class="col-md-2" ng-click="spaceCtrl.reverseSort=!spaceCtrl.reverseSort;spaceCtrl.orderByColumn('createdAt', spaceCtrl.reverseSort)">
                     Created
-                    <span ng-show="spaceCtrl.columnForOrder == 'createdAt'"><i class="fa fa-sort-asc"></i></span>
-                    <span ng-show="spaceCtrl.columnForOrder == '-createdAt'"><i class="fa fa-sort-desc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == 'createdAt' && !spaceCtrl.reverseSort"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == 'createdAt' && spaceCtrl.reverseSort"><i class="fa fa-sort-desc"></i></span>
                 </div>
-                <div class="col-md-2" ng-click="spaceCtrl.orderByColumn('fileType')">
+                <div class="col-md-2" ng-click="spaceCtrl.reverseSort=!spaceCtrl.reverseSort;spaceCtrl.orderByColumn('fileType', spaceCtrl.reverseSort)">
                     Type
-                    <span ng-show="spaceCtrl.columnForOrder == 'fileType'"><i class="fa fa-sort-asc"></i></span>
-                    <span ng-show="spaceCtrl.columnForOrder == '-fileType'"><i class="fa fa-sort-desc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == 'fileType' && !spaceCtrl.reverseSort"><i class="fa fa-sort-asc"></i></span>
+                    <span ng-show="spaceCtrl.columnForOrder == 'fileType' && spaceCtrl.reverseSort"><i class="fa fa-sort-desc"></i></span>
                 </div>
             </div>
         </div>
@@ -135,14 +141,14 @@
         <div class="filter-table-internal" context-menu="spaceCtrl.containerMenuOptions">
             <div style="transition: all 2s" id="folders">
                 <div class="filter-table-row">
-                    <div class="row filter-table-row" role="button" ng-repeat="folder in spaceCtrl.space.folders | orderBy: spaceCtrl.columnForOrder" 
-                         ui-draggable="true" drag="folder" drag-channel="folder" drop-channel="file, folder" 
+                    <div class="row filter-table-row" role="button" ng-repeat="folder in spaceCtrl.space.folders"
+                         ui-draggable="true" drag="spaceCtrl.getSelectedItems(folder, false)" drag-channel="folder" drop-channel="file, folder"  drag-image-element-id="spaceCtrl.getDragImageId($event, folder, false)"
                          drop-validate="spaceCtrl.dropValidate(folder, $data)" ui-on-drop="spaceCtrl.onDrop($event, $channel, folder.id, $data)"
-                         ng-click="spaceCtrl.activeRow(folder.id, 'false')" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)" 
-                         ondragstart="this.classList.add('dragging-elem');" ondragend="this.classList.remove('dragging-elem')"
-                         ng-class="{selected: folder.selected, cutted: folder.cutted}" context-menu="spaceCtrl.folderMenuOptions">
+                         ng-click="spaceCtrl.selectItems($event, folder, false)" ng-mousedown="spaceCtrl.selectItemsForDrag($event, folder, false)" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)"
+                         ng-drag-start-end-listen="true" on-drop-failure="spaceCtrl.clearDragImage()" on-drop-success="spaceCtrl.clearDragImage()"                     
+                         ng-class="{selected: folder.selected, cutted: folder.cutted}" context-menu="spaceCtrl.folderMenuOptions" ng-right-click="spaceCtrl.rightClickSelection(folder, false)">
                         <div class="col-md-3 filter-table-cell description" title="{{ folder.name }}">
-                            <img src="./Content/Icons/folder.svg" height="{{spaceCtrl.iconHeight}}" draggable="false"/>
+                            <img src="./Content/Icons/folder.svg" height="{{spaceCtrl.iconHeight}}" draggable="false" />
                             {{folder.name | limitTo: 20}}{{folder.name.length > 20 ? '...' : ''}}
                         </div>
                         <div class="col-md-3 filter-table-cell description" title="{{ folder.description }}">
@@ -156,14 +162,13 @@
             </div>
             <div style="transition: all 2s" id="files">
                 <div class="filter-table-row">
-                    <div class="row filter-table-row" role="button" ng-repeat="file in spaceCtrl.space.files | orderBy: spaceCtrl.columnForOrder" 
-                         ui-draggable="true" drag="file" drag-channel="file"
-                         ng-click="spaceCtrl.activeRow(file.id, 'true')" ng-dblclick="spaceCtrl.openDocument(file)" 
-                         ondragstart="this.classList.add('dragging-elem');" ondragend="this.classList.remove('dragging-elem')"
-                         ng-class="{'selected': file.selected, cutted: file.cutted}" 
-                         context-menu="spaceCtrl.fileMenuOptions">
+                    <div class="row filter-table-row" role="button" ng-repeat="file in spaceCtrl.space.files"
+                         ui-draggable="true" drag="spaceCtrl.getSelectedItems(file, true)" drag-channel="file" drag-image-element-id="spaceCtrl.getDragImageId($event, file, true)"
+                         ng-click="spaceCtrl.selectItems($event, file, true)" ng-mousedown="spaceCtrl.selectItemsForDrag($event, file, true)" ng-dblclick="spaceCtrl.openDocument(file)"
+                         ng-drag-start-end-listen="true" on-drop-failure="spaceCtrl.clearDragImage()" on-drop-success="spaceCtrl.clearDragImage()"
+                         ng-class="{selected: file.selected, cutted: file.cutted}" context-menu="spaceCtrl.fileMenuOptions" ng-right-click="spaceCtrl.rightClickSelection(file, true)">
                         <div class="col-md-3 filter-table-cell description" title="{{ file.name }}">
-                            <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" height="{{spaceCtrl.iconHeight}}" draggable="false"/>
+                            <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" height="{{spaceCtrl.iconHeight}}" draggable="false" />
                             {{file.name | limitTo: 20}}{{file.name.length > 20 ? '...' : ''}}
                         </div>
                         <div class="col-md-3 filter-table-cell description" title="{{ file.description }}">
@@ -177,15 +182,17 @@
             </div>
         </div>
     </div>
+    <div id="dragPreview" class="alert alert-warning fade in" style="position: absolute; top:130px; left: 70px; z-index: -3; max-width: 400px"></div>
     <div class="page-footer-center">
         <dir-pagination-controls class="page-footer" on-page-change="spaceCtrl.paginate.getContent(newPageNumber)"></dir-pagination-controls>
     </div>
 </div>
 <style>
-.selected {
-    background-color: lightgray;
-}
-.cutted {
-    opacity: 0.5;
-}
+    .selected {
+        background-color: lightgray;
+    }
+
+    .cutted {
+        opacity: 0.5;
+    }
 </style>

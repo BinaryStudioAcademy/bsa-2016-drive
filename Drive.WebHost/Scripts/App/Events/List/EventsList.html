@@ -1,1 +1,118 @@
-﻿
+﻿<div class="container col-md-12">
+    <br />
+    <div class="btn-group btn-breadcrumb">
+        <a class="btn btn-info"><i class="fa fa-calendar fa-lg"></i> Events</a>
+    </div>
+    <div>
+        <div us-spinner="{radius:5, width:2, length: 5}" style="position:absolute; top:40px; right:35px"></div>
+        <div class="row" style="margin: 1em 0 1em 0;">
+            <div class="col-lg-push-4-offset pull-right">
+                <button class="btn btn-default" ng-click="eventsListCtrl.changeView(eventsListCtrl.view)">
+                    <i class={{eventsListCtrl.view}} title="view"> </i>
+                </button>
+            </div>
+            <div>
+                <div class="col-sm-3 pull-right">
+                    <div>
+                        <div class="input-group">
+                            <form id="form-container">
+                                <div id="searchtext">
+                                    <input type="text" size="40" class="search-input" value="" name="s" id="s" placeholder="Search..." ng-model="eventsListCtrl.searchText">
+                                    <a id="clear_input" ng-show="eventsListCtrl.searchText.length > 0" ng-click="eventsListCtrl.cancelSearch()">
+                                        <i class="fa fa-times"></i>
+                                    </a>
+                                    <button class="search-submit-button" type="submit" ng-click="eventsListCtrl.search()"> <i class="fa fa-search"></i> </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="wrap" ng-show="!eventsListCtrl.showTable">
+            <div ng-repeat="eventspace in eventsListCtrl.eventsList">
+                <div class="grid-space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ eventspace.name }}</div>
+                <div uib-collapse="space.isCollapsed">
+                    <ul class="sp-gv-flex-container">
+                        <li class="sp-gv-flex-item" role="button" ng-repeat="event in eventspace.events" ng-dblclick="eventsListCtrl.openEvent(event.id)" title="Created {{ event.createdAt | date : 'short' }}">
+                            <div class="sp-gv-wrapper-flex-item ">
+                                <div class="sp-gv-item-content cards">
+                                    <div class="sp-gv-item-img-wrapper">
+                                        <img ng-src="{{eventsListCtrl.icon}}" alt="Event" title="Event" />
+                                    </div>
+                                    <div class="sp-gv-item-text">
+                                        <h4 title="{{ event.fileUnit.name}}">{{ event.fileUnit.name}}</h4>
+                                        <h5 title="Author: {{event.author.name}}">
+                                            <i class="fa fa-user" aria-hidden="true"></i>
+                                            {{event.author.name}}
+                                        </h5>
+                                        <br />
+                                        <h5 title="Start date {{ event.eventDate | date:'dd-MM-yyyy HH:mm'}}">
+                                            <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
+                                            {{ event.eventDate | date:'dd-MM-yyyy HH:mm'}}
+                                        </h5>
+                                        <p title="{{event.fileUnit.description}}">{{event.fileUnit.description}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="sp-gv-flex-item"></li>
+                        <li class="sp-gv-flex-item"></li>
+                        <li class="sp-gv-flex-item"></li>
+                    </ul>
+                </div>
+                <hr />
+            </div>
+        </div>
+        <div class="filter-table container-md" ng-show="eventsListCtrl.showTable">
+            <div class="header-wrapper">
+                <div class="row header-row">
+                    <div class="col-md-3" ng-click="eventsListCtrl.orderEventByColumn('fileUnit.name')">
+                        Name
+                        <span ng-show="eventsListCtrl.eventColumnForOrder == 'fileUnit.name'"><i class="fa fa-sort-asc"></i></span>
+                        <span ng-show="eventsListCtrl.eventColumnForOrder == '-fileUnit.name'"><i class="fa fa-sort-desc"></i></span>
+                    </div>
+                    <div class="col-md-3" ng-click="eventsListCtrl.orderEventByColumn('fileUnit.description')">
+                        Description
+                        <span ng-show="eventsListCtrl.eventColumnForOrder == 'fileUnit.description'"><i class="fa fa-sort-asc"></i></span>
+                        <span ng-show="eventsListCtrl.eventolumnForOrder == '-fileUnit.description'"><i class="fa fa-sort-desc"></i></span>
+                    </div>
+                    <div class="col-md-2" ng-click="eventsListCtrl.orderEventByColumn('author.name')">
+                        Author
+                        <span ng-show="eventsListCtrl.eventColumnForOrder == 'author.name'"><i class="fa fa-sort-asc"></i></span>
+                        <span ng-show="eventsListCtrl.eventColumnForOrder == '-author.name'"><i class="fa fa-sort-desc"></i></span>
+                    </div>
+                    <div class="col-md-2" ng-click="eventsListCtrl.orderEventByColumn('startDate')">
+                        Start Date
+                        <span ng-show="eventsListCtrl.eventColumnForOrder == 'startDate'"><i class="fa fa-sort-asc"></i></span>
+                        <span ng-show="eventsListCtrl.eventColumnForOrder == '-startDate'"><i class="fa fa-sort-desc"></i></span>
+                    </div>
+                    <div class="col-md-2">Type</div>
+                </div>
+            </div>
+            <div class="filter-table-internal">
+                <div ng-repeat="eventspace in eventsListCtrl.eventsList">
+                    <div class="space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ eventspace.name }}</div>
+                    <div uib-collapse="space.isCollapsed">
+                        <div style="transition: all 2s">
+                            <div class="filter-table-row">
+                                <div class="row filter-table-row" role="button" ng-repeat="event in eventspace.events | orderBy: academyListCtrl.eventsColumnForOrder" ng-dblclick="eventsListCtrl.openEvent(event.id)" context-menu="eventsListCtrl.eventMenuOptions">
+                                    <div class="col-md-3 filter-table-cell description" title="{{ event.fileUnit.name }}">
+                                        <img ng-src="{{eventsListCtrl.icon}}" height="{{eventsListCtrl.iconHeight}}" />
+                                        {{event.fileUnit.name | limitTo: 15}}{{event.fileUnit.name.length > 15 ? '...' : ''}}
+                                    </div>
+                                    <div class="col-md-3 filter-table-cell description" title="{{event.fileUnit.description}}">
+                                        {{event.fileUnit.description | limitTo: 40}}{{event.fileUnit.description.length > 40 ? '...' : ''}}
+                                    </div>
+                                    <div class="col-md-2 filter-table-cell">{{ event.author.name }}</div>
+                                    <div class="col-md-2 filter-table-cell">{{ event.eventDate | date:'dd-MM-yyyy HH:mm' }}</div>
+                                    <div class="col-md-2 filter-table-cell">{{ event.fileUnit.fileType | typeOfFile }}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

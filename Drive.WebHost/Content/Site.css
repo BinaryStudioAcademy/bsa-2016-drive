@@ -1562,6 +1562,51 @@ li.folder.on-drag-enter {
 }
 /*End Create new lecture*/
 
+/*Create new event*/
+.create-event-wrap {
+    position: relative;
+    width: 100%;
+    color: #333;
+    margin-top: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 70vh;
+}
+
+.create-event-form {
+    padding: 0;
+    width: 13%;
+}
+
+.event-validation {
+    margin-left: 13%;
+}
+/*End Create new event*/
+
+/*create event content wrap*/
+.create-eventcontent-wrap {
+    position: relative;
+    width: 100%;
+    color: #333;
+    margin-top: 10px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 40vh;
+}
+/*end create event content wrap*/
+
+/*Event view*/
+.event-wrap {
+    position: relative;
+    width: 100%;
+    margin-top: 15px;
+    padding-left: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 80vh;
+}
+/*Event view*/
+
 /*Admin>Logs*/
 .input-group .form-control {
   z-index: 0;

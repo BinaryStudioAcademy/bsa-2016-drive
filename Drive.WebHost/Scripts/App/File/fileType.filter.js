@@ -24,6 +24,8 @@
                         return "AcademyPro";
                     case 8:
                         return "Image";
+                    case 9:
+                        return "Event";
                     default:
                         return '';
                 }

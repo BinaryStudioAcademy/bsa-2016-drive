@@ -1,19 +1,33 @@
 ﻿(function () {
     angular.module('driveApp.events', [
-        'driveApp'
+        "ang-drag-drop",
+        'youtube-embed',
+        "dndLists"
     ])
-        .config([
-            '$routeProvider', function config($routeProvider) {
-                var baseUrl = window.globalVars.baseUrl;
+    .config([
+        '$routeProvider', function config($routeProvider) {
+            var baseUrl = window.globalVars.baseUrl;
                 $routeProvider
                     .when('/apps/events',
                     {
                         templateUrl: baseUrl + '/Scripts/App/Events/List/EventsList.html',
                         controller: 'EventsListController',
                         controllerAs: 'eventsListCtrl'
+                    })
+                    .when('/apps/events/newevent',
+                    {
+                        templateUrl: baseUrl + '/Scripts/App/Events/Event/CreateEvent.html',
+                        controller: 'EventCreateController',
+                        controllerAs: 'eventCreateCtrl'
+                    })
+                    .when('/apps/events/:id',
+                    {
+                        templateUrl: baseUrl + '/Scripts/App/Events/Event/Event.html',
+                        controller: 'EventController',
+                        controllerAs: 'eventCtrl'
                     });
             }
-        ])
+    ])
     .constant('uiDatetimePickerConfig', {
         dateFormat: 'yyyy-MM-dd HH:mm',
         defaultTime: '10:00:00',

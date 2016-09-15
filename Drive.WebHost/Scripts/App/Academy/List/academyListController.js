@@ -145,6 +145,7 @@
                 getBinarySpaceIdent(vm.academiesList);
             });
         }
+
         function cancelSearch() {
             vm.searchText = "";
             search();

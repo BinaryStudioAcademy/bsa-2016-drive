@@ -1,9 +1,9 @@
-﻿(function () {
+﻿(function() {
     'use strict';
 
     angular
-    .module('driveApp.events')
-    .factory('EventsListService', EventsListService);
+        .module('driveApp.events')
+        .factory('EventsListService', EventsListService);
 
     EventsListService.$inject = [
         '$http',
@@ -12,15 +12,16 @@
 
     function EventsListService($http, baseUrl) {
         var service = {
-            getEvents: getEvents
+            getEvents: getEvents,
+            searchEvents: searchEvents
         }
 
         return service;
 
         function getEvents() {
             return $http.get(baseUrl + '/api/events')
-            .then(getEventsCompleted)
-            .catch(getEventsFailed);
+                .then(getEventsCompleted)
+                .catch(getEventsFailed);
 
             function getEventsCompleted(response) {
                 return response.data;
@@ -30,5 +31,25 @@
                 console.log('XHR Failed for getEvents.' + error.data);
             }
         }
+
+        function searchEvents(text, callback) {
+            $http.get(baseUrl + '/api/events/search',
+                {
+                    params: {
+                        text: text
+                    }
+                })
+                .then(function (response) {
+                    if (callback) {
+                        callback(response.data);
+                    }
+                },
+                    function errorCallback(response) {
+                        console.log('Error in searchEvents Method! Code:' + response.status);
+                        if (response.status === 404 && callback) {
+                            callback(response.data);
+                        }
+                    });
+        }
     }
-})
+})();
