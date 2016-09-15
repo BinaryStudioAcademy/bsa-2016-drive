@@ -15,12 +15,11 @@
     function EventController(eventService, $routeParams, $sce, contentTypeService) {
         var vm = this;
         vm.currentEventId = $routeParams.id;
-        vm.event = null;
+        vm.event = {};
         vm.getEvent = getEvent;
         vm.trustSrc = trustSrc;
         vm.contentTypes = contentTypeService;
         
-
         activate();
 
         function activate() {
