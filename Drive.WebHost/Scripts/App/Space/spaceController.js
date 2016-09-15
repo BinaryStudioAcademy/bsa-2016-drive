@@ -568,7 +568,7 @@
             [
                 'Copy', function ($itemScope) {
                     var content = getSelectedItems($itemScope.file, true);
-                    pushToClipboard(content, true);                  
+                    pushToClipboard(content, true);
                     //for (var i = 0; i < vm.space.folders.length; i++) {
                     //    vm.space.folders[i].cutted = false;
                     //}
@@ -632,8 +632,8 @@
             null,
             [
                 'Paste', function () {
-                    var data = localStorageService.get('clipboard');
                     var isCopy = localStorageService.get('isCopy');
+                    var data = localStorageService.get('clipboard');
                     pasteFromClipboard(data, isCopy);
                     //if (localStorageService.get('cut-out') != null) {
                     //    var item = localStorageService.get('cut-out');
@@ -1127,29 +1127,76 @@
         }
 
         ////// Copy-Cut-Paste-Delelte operations
-        // data is an object => { filesId: [], foldersId: [] }
         function pushToClipboard(data, isCopy) {
+            data.newParentId = vm.parentId;
+            data.spaceId = vm.space.id;
             localStorageService.set('clipboard', data);
             localStorageService.set('isCopy', isCopy);
             if (isCopy) {
                 unmarkAsCutted();
+                toastr.success(
+                    'Data copied to clipboard!', 'Copy',
+                    {
+                        closeButton: true, timeOut: 5000
+                    });
             }
             else {
                 markSelectedAsCutted();
+                toastr.success(
+                    'Data cutted to clipboard!', 'Cut',
+                    {
+                        closeButton: true, timeOut: 5000
+                    });
             }
-            
+
             vm.test();
         }
 
         function pasteFromClipboard(data, isCopy) {
             if (data != null && isCopy != null) {
                 if (isCopy) {
-                    //make copy
+                    data.newParentId = vm.parentId;
+                    data.spaceId = vm.space.id;
+                    spaceService.copyContent(data, function () {
+                        if (vm.parentId == null) {
+                            vm.getSpace();
+                        } else {
+                            vm.getFolderContent(vm.parentId);
+                        }
+                        toastr.success(
+                            'Data successfully copied!', 'Paste',
+                            {
+                                closeButton: true, timeOut: 5000
+                            });
+                    });
                 }
                 else {
-                    //move data
+                    if (data.newParentId != vm.parentId || data.spaceId != vm.space.id && vm.parentId == null) {
+                        data.newParentId = vm.parentId;
+                        data.spaceId = vm.space.id;
+                        spaceService.moveContent(data, function () {
+                            if (vm.parentId == null) {
+                                vm.getSpace();
+                            } else {
+                                vm.getFolderContent(vm.parentId);
+                            }
+                            toastr.success(
+                                'Data successfully moved!', 'Paste',
+                                {
+                                    closeButton: true, timeOut: 5000
+                                });
+                        });
+                    }
+                    else {
+                        unmarkAsCutted();
+                    }
+                    clearClipboard();
                 }
             }
+            else {
+                // clipboard is empty
+            }
+            vm.test();
         }
 
         function clearClipboard() {
@@ -1164,6 +1211,11 @@
                 } else {
                     getFolderContentTotal(vm.parentId);
                 }
+                toastr.success(
+                    'Data moved to trash bin!', 'Delete',
+                    {
+                        closeButton: true, timeOut: 5000
+                    });
             });
         }
 
@@ -1178,16 +1230,16 @@
         }
 
         $scope.handleDragStart = function (event) {
-            markSelectedAsCutted();
+            markAsDragging();
             if (!this.classList.contains('selected') && event.shiftKey || !this.classList.contains('selected') && event.ctrlKey) {
                 resetSelection();
-                unmarkAsCutted();
+                unmarkAsDragging();
                 this.classList.add('selected');
             }
         };
 
         $scope.handleDragEnd = function (event) {
-            unmarkAsCutted();
+            unmarkAsDragging();
         };
 
         function dropValidate(target, source) {
@@ -1363,6 +1415,16 @@
         function unmarkAsCutted() {
             vm.space.folders.forEach(function (f) { f.cutted = false });
             vm.space.files.forEach(function (f) { f.cutted = false });
+        }
+
+        function markAsDragging() {
+            vm.space.folders.forEach(function (f) { f.isDragging = f.selected });
+            vm.space.files.forEach(function (f) { f.isDragging = f.selected });
+        }
+
+        function unmarkAsDragging() {
+            vm.space.folders.forEach(function (f) { f.isDragging = false });
+            vm.space.files.forEach(function (f) { f.isDragging = false });
         }
 
         function getSelectedItems(item, isFile) {

@@ -654,19 +654,19 @@ namespace Drive.WebHost.Services
         {
             if (content.FilesId.Count() > 0)
             {
-                var files = await _unitOfWork.Files.Query.Where(f => content.FilesId.Contains(f.Id)).ToListAsync();
+                var files = await _unitOfWork.Files.Query.Include(f => f.FolderUnit).Where(f => content.FilesId.Contains(f.Id)).ToListAsync();
                 for (int i = 0; i < files.Count(); i++)
                 {
-                    files[i].FolderUnit = await _unitOfWork.Folders.GetByIdAsync(content.NewParentId);
+                    files[i].FolderUnit = await _unitOfWork?.Folders?.GetByIdAsync(content.NewParentId);
                     files[i].Space = await _unitOfWork.Spaces.GetByIdAsync(content.SpaceId);
                 }
             }
             if (content.FoldersId.Count() > 0)
             {
-                var folders = await _unitOfWork.Folders.Query.Where(f => content.FoldersId.Contains(f.Id)).ToListAsync();
+                var folders = await _unitOfWork.Folders.Query.Include(f => f.FolderUnit).Where(f => content.FoldersId.Contains(f.Id)).ToListAsync();
                 for (int i = 0; i < folders.Count(); i++)
                 {
-                    folders[i].FolderUnit = await _unitOfWork.Folders.GetByIdAsync(content.NewParentId);
+                    folders[i].FolderUnit = await _unitOfWork?.Folders?.GetByIdAsync(content.NewParentId);
                     folders[i].Space = await _unitOfWork.Spaces.GetByIdAsync(content.SpaceId);
                 }
             }

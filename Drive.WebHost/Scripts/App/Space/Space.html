@@ -64,7 +64,7 @@
             drop-validate="spaceCtrl.dropValidate(folder, $data)" ui-on-drop="spaceCtrl.onDrop($event, $channel, folder.id, $data)"
             ng-click="spaceCtrl.selectItems($event, folder, false)" ng-mousedown="spaceCtrl.selectItemsForDrag($event, folder, false)" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)"
             ng-drag-start-end-listen="true" on-drop-failure="spaceCtrl.clearDragImage()" on-drop-success="spaceCtrl.clearDragImage()"                     
-            ng-class="{selected: folder.selected, cutted: folder.cutted}" ng-right-click="spaceCtrl.rightClickSelection(folder, false)">
+            ng-class="{selected: folder.selected, cutted: folder.cutted, dragging: folder.isDragging}" ng-right-click="spaceCtrl.rightClickSelection(folder, false)">
             <div class="sp-gv-wrapper-flex-item">
                 <div class="sp-gv-item-content cards">
                     <div class="sp-gv-item-img-wrapper">
@@ -85,7 +85,7 @@
             ui-draggable="true" drag="spaceCtrl.getSelectedItems(file, true)" drag-channel="file" drag-image-element-id="spaceCtrl.getDragImageId($event, file, true)"
             ng-click="spaceCtrl.selectItems($event, file, true)" ng-mousedown="spaceCtrl.selectItemsForDrag($event, file, true)" ng-dblclick="spaceCtrl.openDocument(file)"
             ng-drag-start-end-listen="true" on-drop-failure="spaceCtrl.clearDragImage()" on-drop-success="spaceCtrl.clearDragImage()"
-            ng-class="{selected: file.selected, cutted: file.cutted}" ng-right-click="spaceCtrl.rightClickSelection(file, true)">
+            ng-class="{selected: file.selected, cutted: file.cutted, dragging: file.isDragging}" ng-right-click="spaceCtrl.rightClickSelection(file, true)">
             <div class="sp-gv-wrapper-flex-item">
                 <div class="sp-gv-item-content cards">
                     <div class="sp-gv-item-img-wrapper">
@@ -146,7 +146,7 @@
                          drop-validate="spaceCtrl.dropValidate(folder, $data)" ui-on-drop="spaceCtrl.onDrop($event, $channel, folder.id, $data)"
                          ng-click="spaceCtrl.selectItems($event, folder, false)" ng-mousedown="spaceCtrl.selectItemsForDrag($event, folder, false)" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)"
                          ng-drag-start-end-listen="true" on-drop-failure="spaceCtrl.clearDragImage()" on-drop-success="spaceCtrl.clearDragImage()"                     
-                         ng-class="{selected: folder.selected, cutted: folder.cutted}" context-menu="spaceCtrl.folderMenuOptions" ng-right-click="spaceCtrl.rightClickSelection(folder, false)">
+                         ng-class="{selected: folder.selected, cutted: folder.cutted, dragging: folder.isDragging}" context-menu="spaceCtrl.folderMenuOptions" ng-right-click="spaceCtrl.rightClickSelection(folder, false)">
                         <div class="col-md-3 filter-table-cell description" title="{{ folder.name }}">
                             <img src="./Content/Icons/folder.svg" height="{{spaceCtrl.iconHeight}}" draggable="false" />
                             {{folder.name | limitTo: 20}}{{folder.name.length > 20 ? '...' : ''}}
@@ -166,7 +166,7 @@
                          ui-draggable="true" drag="spaceCtrl.getSelectedItems(file, true)" drag-channel="file" drag-image-element-id="spaceCtrl.getDragImageId($event, file, true)"
                          ng-click="spaceCtrl.selectItems($event, file, true)" ng-mousedown="spaceCtrl.selectItemsForDrag($event, file, true)" ng-dblclick="spaceCtrl.openDocument(file)"
                          ng-drag-start-end-listen="true" on-drop-failure="spaceCtrl.clearDragImage()" on-drop-success="spaceCtrl.clearDragImage()"
-                         ng-class="{selected: file.selected, cutted: file.cutted}" context-menu="spaceCtrl.fileMenuOptions" ng-right-click="spaceCtrl.rightClickSelection(file, true)">
+                         ng-class="{selected: file.selected, cutted: file.cutted, dragging: file.isDragging}" context-menu="spaceCtrl.fileMenuOptions" ng-right-click="spaceCtrl.rightClickSelection(file, true)">
                         <div class="col-md-3 filter-table-cell description" title="{{ file.name }}">
                             <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" height="{{spaceCtrl.iconHeight}}" draggable="false" />
                             {{file.name | limitTo: 20}}{{file.name.length > 20 ? '...' : ''}}
@@ -193,12 +193,4 @@
     </div>
 
 </div>
-<style>
-    .selected {
-        background-color: lightgray;
-    }
 
-    .cutted {
-        opacity: 0.5;
-    }
-</style>
