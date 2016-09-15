@@ -3,7 +3,7 @@
 
     angular.module("driveApp",
     [
-        "ngRoute",
+       "ngRoute",
         "ui.bootstrap.contextMenu",
         "ui.bootstrap",
         "angularUtils.directives.dirPagination",
@@ -14,7 +14,8 @@
         "ang-drag-drop",
         "ngTagsInput",
         "driveApp.academyPro",
-        "driveApp.events"
+        "driveApp.events",
+        "bootstrapLightbox"
     ])
     .factory('BaseUrl', function () {
         return window.globalVars.baseUrl;

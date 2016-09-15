@@ -1033,7 +1033,7 @@
 
         function openDocument(file) {
             if (file.fileType !== 7) {
-                if (file.fileType == 6) {
+                if (file.fileType === 6 || file.fileType === 8) {
                     fileService.downloadFile(file.link);
                 }
                 else {

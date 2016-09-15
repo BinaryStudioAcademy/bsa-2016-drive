@@ -910,6 +910,23 @@ End Cancel button on search input*/
         margin-top: 15px;
     }
 
+    /*For image GridView*/
+    .sp-gv-item-img-wrapper-image {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    justify-content: space-around;
+    align-content: space-around;
+    height: 120px;
+}
+    /*End For image GridView*/
+
+
 .sp-gv-item-text {
     padding: 15px 20px;
 }
@@ -956,7 +973,6 @@ End Cancel button on search input*/
         font-weight: 300;
     }
 /*End New GridView*/
-
 
 /*Scrollbar style*/
 ::-webkit-scrollbar-track {

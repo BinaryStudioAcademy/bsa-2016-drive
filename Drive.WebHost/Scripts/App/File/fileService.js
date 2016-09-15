@@ -248,7 +248,7 @@
         function chooseIcon(type) {
             switch (type) {
                 case 0:
-                    return 'Undefined';
+                    return "./Content/Icons/link.svg";
                 case 1:
                     return "./Content/Icons/doc.svg";
                 case 2:
@@ -266,7 +266,7 @@
                 case 8:
                     return "./Content/Icons/image.svg";
                 default:
-                    return "./Content/Icons/folder.svg";
+                    return "./Content/Icons/link.svg";
             }
         }
 
