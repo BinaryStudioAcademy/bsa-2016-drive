@@ -27,7 +27,7 @@
 
         // vm.getAllFolders = getAllFolders;
         vm.getFolder = getFolder;
-        vm.deleteFolder = deleteFolder;
+        //vm.deleteFolder = deleteFolder;
         vm.openFolderWindow = openFolderWindow;
         vm.getFolderContent = getFolderContent;
 
@@ -61,6 +61,13 @@
         vm.redirectToSpaceSettings = redirectToSpaceSettings;
 
         ////// Copy-Cut-Paste-Delelte operations
+        vm.test = function () { // for testing, delete it
+            vm.clipboardState = localStorageService.get('clipboard');
+            vm.action = localStorageService.get('isCopy');
+        }
+        vm.pushToClipboard = pushToClipboard;
+        vm.pasteFromClipboard = pasteFromClipboard;
+        vm.clearClipboard = clearClipboard;
         vm.deleteContent = deleteContent;
 
         ////// Drag and Drop
@@ -357,6 +364,7 @@
         }
 
         function activate() {
+            vm.test();
             vm.view = "fa fa-th";
             vm.showTable = true;
             vm.showGrid = false;
@@ -488,31 +496,35 @@
             null,
             [
                 'Copy', function ($itemScope) {
-                    for (var i = 0; i < vm.space.folders.length; i++) {
-                        vm.space.folders[i].cutted = false;
-                    }
-                    for (var i = 0; i < vm.space.files.length; i++) {
-                        vm.space.files[i].cutted = false;
-                    }
-                    localStorageService.clearAll();
-                    localStorageService.set('copy', { id: $itemScope.folder.id, file: false });
+                    var content = getSelectedItems($itemScope.folder, false);
+                    pushToClipboard(content, true);
+                    //for (var i = 0; i < vm.space.folders.length; i++) {
+                    //    vm.space.folders[i].cutted = false;
+                    //}
+                    //for (var i = 0; i < vm.space.files.length; i++) {
+                    //    vm.space.files[i].cutted = false;
+                    //}
+                    //localStorageService.clearAll();
+                    //localStorageService.set('copy', { id: $itemScope.folder.id, file: false });
                 }
             ],
             [
                 'Cut', function ($itemScope) {
-                    for (var i = 0; i < vm.space.folders.length; i++) {
-                        vm.space.folders[i].cutted = false;
-                    }
-                    for (var i = 0; i < vm.space.files.length; i++) {
-                        vm.space.files[i].cutted = false;
-                    }
-                    localStorageService.clearAll();
-                    localStorageService.set('cut-out', { id: $itemScope.folder.id, file: false });
-                    localStorageService.set('oldParentId', vm.parentId);
-                    vm.cuttedRow = $itemScope.folder.id;
-                    vm.cuttedCondition = false;
-                    var pos = vm.space.folders.map(function (e) { return e.id; }).indexOf(vm.cuttedRow);
-                    vm.space.folders[pos].cutted = true;
+                    var content = getSelectedItems($itemScope.folder, false);
+                    pushToClipboard(content, false);
+                    //for (var i = 0; i < vm.space.folders.length; i++) {
+                    //    vm.space.folders[i].cutted = false;
+                    //}
+                    //for (var i = 0; i < vm.space.files.length; i++) {
+                    //    vm.space.files[i].cutted = false;
+                    //}
+                    //localStorageService.clearAll();
+                    //localStorageService.set('cut-out', { id: $itemScope.folder.id, file: false });
+                    //localStorageService.set('oldParentId', vm.parentId);
+                    //vm.cuttedRow = $itemScope.folder.id;
+                    //vm.cuttedCondition = false;
+                    //var pos = vm.space.folders.map(function (e) { return e.id; }).indexOf(vm.cuttedRow);
+                    //vm.space.folders[pos].cutted = true;
                 }
             ],
             null,
@@ -555,31 +567,35 @@
             null,
             [
                 'Copy', function ($itemScope) {
-                    for (var i = 0; i < vm.space.folders.length; i++) {
-                        vm.space.folders[i].cutted = false;
-                    }
-                    for (var i = 0; i < vm.space.files.length; i++) {
-                        vm.space.files[i].cutted = false;
-                    }
-                    localStorageService.clearAll();
-                    localStorageService.set('copy', { id: $itemScope.file.id, file: true });
+                    var content = getSelectedItems($itemScope.file, true);
+                    pushToClipboard(content, true);                  
+                    //for (var i = 0; i < vm.space.folders.length; i++) {
+                    //    vm.space.folders[i].cutted = false;
+                    //}
+                    //for (var i = 0; i < vm.space.files.length; i++) {
+                    //    vm.space.files[i].cutted = false;
+                    //}
+                    //localStorageService.clearAll();
+                    //localStorageService.set('copy', { id: $itemScope.file.id, file: true });
                 }
             ],
             [
                 'Cut', function ($itemScope) {
-                    for (var i = 0; i < vm.space.folders.length; i++) {
-                        vm.space.folders[i].cutted = false;
-                    }
-                    for (var i = 0; i < vm.space.files.length; i++) {
-                        vm.space.files[i].cutted = false;
-                    }
-                    localStorageService.clearAll();
-                    localStorageService.set('cut-out', { id: $itemScope.file.id, file: true });
-                    localStorageService.set('oldParentId', vm.parentId);
-                    vm.cuttedRow = $itemScope.file.id;
-                    vm.cuttedCondition = true;
-                    var pos = vm.space.files.map(function (e) { return e.id; }).indexOf(vm.cuttedRow);
-                    vm.space.files[pos].cutted = true;
+                    var content = getSelectedItems($itemScope.file, true);
+                    pushToClipboard(content, false);
+                    //for (var i = 0; i < vm.space.folders.length; i++) {
+                    //    vm.space.folders[i].cutted = false;
+                    //}
+                    //for (var i = 0; i < vm.space.files.length; i++) {
+                    //    vm.space.files[i].cutted = false;
+                    //}
+                    //localStorageService.clearAll();
+                    //localStorageService.set('cut-out', { id: $itemScope.file.id, file: true });
+                    //localStorageService.set('oldParentId', vm.parentId);
+                    //vm.cuttedRow = $itemScope.file.id;
+                    //vm.cuttedCondition = true;
+                    //var pos = vm.space.files.map(function (e) { return e.id; }).indexOf(vm.cuttedRow);
+                    //vm.space.files[pos].cutted = true;
                 }
             ],
             null,
@@ -616,85 +632,91 @@
             null,
             [
                 'Paste', function () {
-                    if (localStorageService.get('cut-out') != null) {
-                        var item = localStorageService.get('cut-out');
-                        if (item.file) {
-                            deleteFile(vm.cuttedRow, function () {
-                                fileService.getDeletedFile(item.id,
-                                    function (data) {
-                                        var file = data;
-                                        file.isDeleted = false;
-                                        file.spaceId = vm.spaceId;
-                                        file.parentId = vm.parentId;
+                    var data = localStorageService.get('clipboard');
+                    var isCopy = localStorageService.get('isCopy');
+                    pasteFromClipboard(data, isCopy);
+                    //if (localStorageService.get('cut-out') != null) {
+                    //    var item = localStorageService.get('cut-out');
+                    //    if (item.file) {
+                    //        deleteFile(vm.cuttedRow, function () {
+                    //            fileService.getDeletedFile(item.id,
+                    //                function (data) {
+                    //                    var file = data;
+                    //                    file.isDeleted = false;
+                    //                    file.spaceId = vm.spaceId;
+                    //                    file.parentId = vm.parentId;
 
-                                        fileService.updateDeletedFile(file.id,
-                                            localStorageService.get('oldParentId'),
-                                            file,
-                                            function () {
-                                                if (vm.parentId == null) {
-                                                    vm.getSpace();
-                                                } else {
-                                                    vm.getFolderContent(vm.parentId);
-                                                }
-                                            });
-                                    });
-                            });
-                        } else {
-                            deleteFolder(vm.cuttedRow, function () {
-                                folderService.getDeleted(item.id,
-                                    function (data) {
-                                        var folder = data;
-                                        folder.isDeleted = false;
-                                        folder.spaceId = vm.spaceId;
-                                        folder.parentId = vm.parentId;
+                    //                    fileService.updateDeletedFile(file.id,
+                    //                        localStorageService.get('oldParentId'),
+                    //                        file,
+                    //                        function () {
+                    //                            if (vm.parentId == null) {
+                    //                                vm.getSpace();
+                    //                            } else {
+                    //                                vm.getFolderContent(vm.parentId);
+                    //                            }
+                    //                        });
+                    //                });
+                    //        });
+                    //    } else {
+                    //        deleteFolder(vm.cuttedRow, function () {
+                    //            folderService.getDeleted(item.id,
+                    //                function (data) {
+                    //                    var folder = data;
+                    //                    folder.isDeleted = false;
+                    //                    folder.spaceId = vm.spaceId;
+                    //                    folder.parentId = vm.parentId;
 
-                                        folderService.updateDeleted(folder.id,
-                                            localStorageService.get('oldParentId'),
-                                            folder,
-                                            function () {
-                                                if (vm.parentId == null) {
-                                                    vm.getSpace();
-                                                } else {
-                                                    vm.getFolderContent(vm.parentId);
-                                                }
-                                            });
-                                    });
-                            });
-                        }
-                        localStorageService.set('cut-out', null);
-                    }
-                    if (localStorageService.get('copy') != null) {
-                        if (localStorageService.get('copy').file) {
-                            var file = {};
-                            file.spaceId = vm.spaceId;
-                            file.parentId = vm.parentId;
+                    //                    folderService.updateDeleted(folder.id,
+                    //                        localStorageService.get('oldParentId'),
+                    //                        folder,
+                    //                        function () {
+                    //                            if (vm.parentId == null) {
+                    //                                vm.getSpace();
+                    //                            } else {
+                    //                                vm.getFolderContent(vm.parentId);
+                    //                            }
+                    //                        });
+                    //                });
+                    //        });
+                    //    }
+                    //    localStorageService.set('cut-out', null);
+                    //}
+                    //if (localStorageService.get('copy') != null) {
+                    //    if (localStorageService.get('copy').file) {
+                    //        var file = {};
+                    //        file.spaceId = vm.spaceId;
+                    //        file.parentId = vm.parentId;
 
-                            fileService.createCopyFile(localStorageService.get('copy').id,
-                                file,
-                                function () {
-                                    if (vm.parentId == null) {
-                                        vm.getSpace();
-                                    } else {
-                                        vm.getFolderContent(vm.parentId);
-                                    }
-                                });
-                        } else {
-                            var folder = {};
-                            folder.spaceId = vm.spaceId;
-                            folder.parentId = vm.parentId;
+                    //        fileService.createCopyFile(localStorageService.get('copy').id,
+                    //            file,
+                    //            function () {
+                    //                if (vm.parentId == null) {
+                    //                    vm.getSpace();
+                    //                } else {
+                    //                    vm.getFolderContent(vm.parentId);
+                    //                }
+                    //            });
+                    //    } else {
+                    //        var folder = {};
+                    //        folder.spaceId = vm.spaceId;
+                    //        folder.parentId = vm.parentId;
 
-                            folderService.createCopy(localStorageService.get('copy').id,
-                                folder,
-                                function () {
-                                    if (vm.parentId == null) {
-                                        vm.getSpace();
-                                    } else {
-                                        vm.getFolderContent(vm.parentId);
-                                    }
-                                });
-                        }
-                        localStorageService.set('copy', null);
-                    }
+                    //        folderService.createCopy(localStorageService.get('copy').id,
+                    //            folder,
+                    //            function () {
+                    //                if (vm.parentId == null) {
+                    //                    vm.getSpace();
+                    //                } else {
+                    //                    vm.getFolderContent(vm.parentId);
+                    //                }
+                    //            });
+                    //    }
+                    //    localStorageService.set('copy', null);
+                    //}
+                }, function ($itemScope) {
+                    var data = localStorageService.get('clipboard');
+                    return data != null;
                 }
             ]
         ];
@@ -916,20 +938,20 @@
             return -1;
         }
 
-        function deleteFolder(id, callback) {
-            folderService.deleteFolder(id,
-                function () {
-                    vm.paginate.getContent();
-                    if (vm.parentId == null) {
-                        getSpaceTotal();
-                    } else {
-                        getFolderContentTotal(vm.parentId);
-                    }
-                    if (callback) {
-                        callback();
-                    }
-                });
-        }
+        //function deleteFolder(id, callback) {
+        //    folderService.deleteFolder(id,
+        //        function () {
+        //            vm.paginate.getContent();
+        //            if (vm.parentId == null) {
+        //                getSpaceTotal();
+        //            } else {
+        //                getFolderContentTotal(vm.parentId);
+        //            }
+        //            if (callback) {
+        //                callback();
+        //            }
+        //        });
+        //}
 
         function getFolderContent(id) {
             vm.paginate.getContent = getFolderContentFromApi;
@@ -1105,7 +1127,35 @@
         }
 
         ////// Copy-Cut-Paste-Delelte operations
-        // content is an object => { filesId: [], foldersId: [] }
+        // data is an object => { filesId: [], foldersId: [] }
+        function pushToClipboard(data, isCopy) {
+            localStorageService.set('clipboard', data);
+            localStorageService.set('isCopy', isCopy);
+            if (isCopy) {
+                unmarkAsCutted();
+            }
+            else {
+                markSelectedAsCutted();
+            }
+            
+            vm.test();
+        }
+
+        function pasteFromClipboard(data, isCopy) {
+            if (data != null && isCopy != null) {
+                if (isCopy) {
+                    //make copy
+                }
+                else {
+                    //move data
+                }
+            }
+        }
+
+        function clearClipboard() {
+            localStorageService.remove('clipboard', 'isCopy');
+        }
+
         function deleteContent(content) {
             spaceService.deleteContent(content, function () {
                 vm.paginate.getContent();
