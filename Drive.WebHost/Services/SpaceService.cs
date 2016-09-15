@@ -657,7 +657,7 @@ namespace Drive.WebHost.Services
                 var files = await _unitOfWork.Files.Query.Include(f => f.FolderUnit).Where(f => content.FilesId.Contains(f.Id)).ToListAsync();
                 for (int i = 0; i < files.Count(); i++)
                 {
-                    files[i].FolderUnit = await _unitOfWork?.Folders?.GetByIdAsync(content.NewParentId);
+                    files[i].FolderUnit = await _unitOfWork?.Folders?.GetByIdAsync(content.ParentId);
                     files[i].Space = await _unitOfWork.Spaces.GetByIdAsync(content.SpaceId);
                 }
             }
@@ -666,7 +666,7 @@ namespace Drive.WebHost.Services
                 var folders = await _unitOfWork.Folders.Query.Include(f => f.FolderUnit).Where(f => content.FoldersId.Contains(f.Id)).ToListAsync();
                 for (int i = 0; i < folders.Count(); i++)
                 {
-                    folders[i].FolderUnit = await _unitOfWork?.Folders?.GetByIdAsync(content.NewParentId);
+                    folders[i].FolderUnit = await _unitOfWork?.Folders?.GetByIdAsync(content.ParentId);
                     folders[i].Space = await _unitOfWork.Spaces.GetByIdAsync(content.SpaceId);
                 }
             }
@@ -682,7 +682,7 @@ namespace Drive.WebHost.Services
                     {
                         Id = fileId,
                         SpaceId = content.SpaceId,
-                        ParentId = content.NewParentId
+                        ParentId = content.ParentId
                     });
                 foreach (var file in filesDto)
                 {
@@ -696,7 +696,7 @@ namespace Drive.WebHost.Services
                     {
                         Id = folderId,
                         SpaceId = content.SpaceId,
-                        ParentId = content.NewParentId
+                        ParentId = content.ParentId
                     });
                 foreach (var folder in foldersDto)
                 {
