@@ -214,7 +214,7 @@
                 vm.space.files[i].cutted = false;
             }
             if (vm.row != undefined) {
-                localStorageService.clearAll();
+                localStorageService.remove('cut-out', 'copy', 'oldParentId');
                 localStorageService.set('copy', { id: vm.row, file: vm.condition });
                 toastr.info(
                     'Item has been copied to the clipboard.',
@@ -234,7 +234,7 @@
                 vm.space.files[i].cutted = false;
             }
             if (vm.row != undefined) {
-                localStorageService.clearAll();
+                localStorageService.remove('cut-out', 'copy', 'oldParentId');
                 localStorageService.set('cut-out', { id: vm.row, file: vm.condition });
                 console.log('cutByHotkeys');
                 console.log(JSON.parse(JSON.stringify(localStorageService.get('cut-out'))));
@@ -332,9 +332,22 @@
         }
 
         function activate() {
-            vm.view = "fa fa-th";
-            vm.showTable = true;
-            vm.showGrid = false;
+            var view = localStorageService.get('view')
+            if (view == undefined) {
+                vm.showTable = true;
+                vm.showGrid = false;
+                vm.view = "fa fa-th";
+            }
+            else if (view.showTable) {
+                vm.showTable = true;
+                vm.showGrid = false;
+                vm.view = "fa fa-th";
+            }
+            else {
+                vm.showGrid = true;
+                vm.showTable = false;
+                vm.view = "fa fa-list";
+            }
             vm.changeView = changeView;
             vm.columnForOrder = 'name';
             vm.reverseSort = false;
@@ -430,8 +443,10 @@
         function changeView(view) {
             if (view == "fa fa-th") {
                 activateGridView();
+                localStorageService.set('view', { showTable: false });
             } else {
                 activateTableView();
+                localStorageService.set('view', { showTable: true });
             }
         }
 
@@ -466,7 +481,7 @@
                     for (var i = 0; i < vm.space.files.length; i++) {
                         vm.space.files[i].cutted = false;
                     }
-                    localStorageService.clearAll();
+                    localStorageService.remove('cut-out', 'copy', 'oldParentId');
                     localStorageService.set('copy', { id: $itemScope.folder.id, file: false });
                 }
             ],
@@ -478,7 +493,7 @@
                     for (var i = 0; i < vm.space.files.length; i++) {
                         vm.space.files[i].cutted = false;
                     }
-                    localStorageService.clearAll();
+                    localStorageService.remove('cut-out', 'copy', 'oldParentId');
                     localStorageService.set('cut-out', { id: $itemScope.folder.id, file: false });
                     localStorageService.set('oldParentId', vm.parentId);
                     vm.cuttedRow = $itemScope.folder.id;
@@ -531,7 +546,7 @@
                     for (var i = 0; i < vm.space.files.length; i++) {
                         vm.space.files[i].cutted = false;
                     }
-                    localStorageService.clearAll();
+                    localStorageService.remove('cut-out', 'copy', 'oldParentId');
                     localStorageService.set('copy', { id: $itemScope.file.id, file: true });
                 }
             ],
@@ -543,7 +558,7 @@
                     for (var i = 0; i < vm.space.files.length; i++) {
                         vm.space.files[i].cutted = false;
                     }
-                    localStorageService.clearAll();
+                    localStorageService.remove('cut-out', 'copy', 'oldParentId');
                     localStorageService.set('cut-out', { id: $itemScope.file.id, file: true });
                     localStorageService.set('oldParentId', vm.parentId);
                     vm.cuttedRow = $itemScope.file.id;

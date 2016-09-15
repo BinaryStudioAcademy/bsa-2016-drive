@@ -44,6 +44,8 @@
                     return 'NetWorking';
                 case 4:
                     return 'Entertainment';
+                default:
+                    return '';
             }
         }
     });

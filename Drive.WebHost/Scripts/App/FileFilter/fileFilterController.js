@@ -4,9 +4,9 @@
     angular.module("driveApp")
         .controller("FileFilterController", FileFilterController);
 
-    FileFilterController.$inject = ['FileService', '$uibModal', '$routeParams', 'Lightbox'];
+    FileFilterController.$inject = ['FileService', '$uibModal', '$routeParams', 'Lightbox', 'localStorageService'];
 
-    function FileFilterController(fileService, $uibModal, $routeParams, Lightbox) {
+    function FileFilterController(fileService, $uibModal, $routeParams, Lightbox, localStorageService) {
         var vm = this;
 
         vm.changeView = changeView;
@@ -27,9 +27,22 @@
         activate();
 
         function activate() {
-            vm.view = "fa fa-th";
-            vm.showTable = true;
-            vm.showGrid = false;
+            var view = localStorageService.get('view')
+            if (view == undefined) {
+                vm.showTable = true;
+                vm.showGrid = false;
+                vm.view = "fa fa-th";
+            }
+            else if (view.showTable) {
+                vm.showTable = true;
+                vm.showGrid = false;
+                vm.view = "fa fa-th";
+            }
+            else {
+                vm.showGrid = true;
+                vm.showTable = false;
+                vm.view = "fa fa-list";
+            }
             vm.columnForOrder = 'name';
             vm.searchText = '';
             vm.iconHeight = 30;
@@ -223,8 +236,10 @@
         function changeView(view) {
             if (view == "fa fa-th") {
                 activateGridView();
+                localStorageService.set('view', { showTable: false });
             } else {
                 activateTableView();
+                localStorageService.set('view', { showTable: true });
             }
         }
         function activateTableView() {
