@@ -15,13 +15,19 @@
         vm.isValidUrl = isValidUrl;
         vm.checkUrl = checkUrl;
 
-        vm.inputFile = null;
+        vm.inputFile = [];
         vm.upload = upload;
-        vm.remove = remove;
+        vm.removeAll = removeAll;
+        vm.removeItem = removeItem;
+        vm.disableElement = disableElement;
+        vm.getFileName = getFileName;
+        vm.getFileExtension = getFileExtension;
+        vm.checkModel = checkModel;
 
         activate();
 
         function activate() {
+            vm.modelIsValid = false;
             vm.file = items;
             vm.title = 'New link';
             vm.icon = "./Content/Icons/add-file_bw.svg";
@@ -142,16 +148,52 @@
         }
 
         function upload() {
-            fileService.uploadFile(vm.file.spaceId,
-                    vm.file.parentId,
-                    vm.inputFile.file,
-                    function (response) {
-                        if (response)
-                            $uibModalInstance.close(response);
-                    });
+            var valid = fileService.checkFilesValidationProperty(vm.inputFile);
+            if (valid) {
+                vm.modelIsValid = true;
+                var data = [];
+                for (var i = 0; i < vm.inputFile.length; i++) {
+                    var temp = {};
+                    temp.name = vm.inputFile[i].filename
+                    temp.extension = vm.inputFile[i].extension;
+                    temp.description = vm.inputFile[i].description;
+                    data.push(temp);
+                }
+                fileService.uploadFile(vm.file.spaceId, vm.file.parentId, vm.inputFile, data, function (response) {
+                    if (response)
+                        $uibModalInstance.close(response);
+                });
+            }
+            else {
+                vm.modelIsValid = false;
+            }
         }
-        function remove() {
-            vm.inputFile = null;
+        function removeAll() {
+            vm.inputFile.length = 0;
+        }
+        function removeItem(index) {
+            vm.inputFile.splice(index, 1);
+            vm.checkModel();
+        }
+
+        function disableElement() {
+            if (vm.inputFile.length == 0)
+                return true;
+        }
+        function getFileName(fileName) {
+            var name = fileName.substr(0, fileName.lastIndexOf('.'));
+            return name;
+        }
+        function getFileExtension(fileName) {
+            var extension = fileName.substr(fileName.lastIndexOf('.'));
+            return extension;
+        }
+        function checkModel() {
+            var valid = fileService.checkFilesValidationProperty(vm.inputFile);
+            if (valid) {
+                vm.modelIsValid = true;
+            }
+            else vm.modelIsValid = false;
         }
 
         function getFileExtantion() {

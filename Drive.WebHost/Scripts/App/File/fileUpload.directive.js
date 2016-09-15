@@ -1,13 +1,15 @@
 ﻿(function () {
     'use strict';
-    angular.module('driveApp').directive('fileDropzone', ['$parse', function ($parse) {
+    angular.module('driveApp').directive('fileDropzone', ['$parse', "FileService", function ($parse, fileService) {
         return {
             restrict: 'A',
             scope: {
                 dropFile: '=',
+                maxSize: "=",
+                valid: "="
             },
             link: function (scope, element, attrs) {
-                var processDragOverOrEnter;
+                var processDragOverOrEnter, queue;
                 processDragOverOrEnter = function (event) {
                     if (event != null) {
                         event.preventDefault();
@@ -21,47 +23,70 @@
                     if (event != null) {
                         event.preventDefault();
                     }
-                    if (scope.dropFile != null) {
-                        scope.$apply(function () {
-                            scope.dropFile = null;
-                        });
+                    var files = event.dataTransfer.files;
+                    for (var i = 0; i < files.length; i++) {
+                        (function (file) {
+                            var reader = new FileReader();
+                            reader.onload = function (dropEvent) {
+                                scope.$apply(function () {
+                                    file.filename = fileService.getFileName(file.name);
+                                    file.extension = fileService.getFileExtension(file.name);
+                                    file.isValid = fileService.checkFileSize(file.size, scope.maxSize);
+                                    scope.dropFile.push(file);
+                                });
+                            }
+                            reader.readAsArrayBuffer(file);
+                        })(files[i]);
                     }
-                    var reader = new FileReader();
-                    reader.onload = function (evt) {
-                        scope.$apply(function () {
-                            scope.dropFile = event.dataTransfer.files[0];
-                        })
-                    };
-                    reader.readAsArrayBuffer(event.dataTransfer.files[0]);
-                    return false;
                 });
             }
         };
     }])
-    .directive("fileread", ["$parse", function ($parse) {
+    .directive("fileread", ["$parse", "FileService", function ($parse, fileService) {
         return {
             restrict: "A",
             scope: {
-                inputFile: "="
+                inputFile: "=",
+                maxSize: "=",
+                valid: "="
             },
             link: function (scope, element, attributes) {
                 element.bind("change", function (changeEvent) {
-
-                    if (scope.inputFile != null) {
-                        scope.$apply(function () {
-                            scope.inputFile = null;
-                        });
+                    var files = event.target.files;
+                    for (var i = 0; i < files.length; i++) {
+                        (function (file) {
+                            var reader = new FileReader();
+                            reader.onload = function (loadEvent) {
+                                scope.$apply(function () {
+                                    file.filename = fileService.getFileName(file.name);
+                                    file.extension = fileService.getFileExtension(file.name);
+                                    file.isValid = fileService.checkFileSize(file.size, scope.maxSize);
+                                    file.thumbnail = new Image();
+                                    file.thumbnail.onload = function () {
+                                        canvas.width = 100;
+                                        canvas.height = 100;
+                                        ctx.drawImage(img, 0, 0);
+                                    }
+                                    file.thumbnail.src = event.target.result;
+                                    scope.inputFile.push(file);
+                                });
+                            }
+                            reader.readAsArrayBuffer(file);
+                        })(files[i]);
                     }
-                    var reader = new FileReader();
-
-                    reader.onload = function (loadEvent) {
-                        scope.$apply(function () {
-                            scope.inputFile = changeEvent.target.files[0];
-                        });
-                    }
-                    reader.readAsArrayBuffer(changeEvent.target.files[0]);
                 });
             }
         };
+    }])
+    .directive('repeatDone', ['$parse', 'FileService', function ($parse, fileService) {
+        return {
+            scope: {
+                model: "=",
+                valid: "="
+            },
+            link: function (scope, element, attrs) {
+                scope.valid = fileService.checkFilesValidationProperty(scope.model);
+            }
+        }
     }])
 }).call(this);

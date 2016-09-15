@@ -12,6 +12,7 @@ using System.Web;
 using Google.Apis.Drive.v3;
 using Drive.DataAccess.Entities.Pro;
 using Driver.Shared.Dto.Pro;
+using System.Drawing;
 
 namespace Drive.WebHost.Services
 {
@@ -462,110 +463,113 @@ namespace Drive.WebHost.Services
             }
         }
 
-        public async Task<string> UploadFile(HttpPostedFile file, int spaceId, int parentId)
+        public async Task<string> UploadFile(HttpPostedFile file, AdditionalData fileData, int spaceId, int parentId)
         {
-            var filename = file.FileName;
+            var user = await _usersService.GetCurrentUser();
+            var localUser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == user.serverUserId);
 
-            FileType fileType;
+            var space = await _unitOfWork?.Spaces?.GetByIdAsync(spaceId);
+            var parentFolder = await _unitOfWork?.Folders.GetByIdAsync(parentId);
 
-            string extension = Path.GetExtension(filename);
+            List<User> ReadPermittedUsers = new List<User>();
 
-            if (extension == ".jpg" || extension == ".jpeg" || extension == ".png" || extension == ".bmp")
-            {
-               fileType = FileType.Images;
-            }
-            else
-            {
-                fileType = FileType.Uploaded;
-            }
+            ReadPermittedUsers.Add(localUser);
 
-            string link = "";
+            List<User> ModifyPermittedUsers = new List<User>();
+
+            ModifyPermittedUsers.Add(localUser);
+
+            string filename = fileData.Name + fileData.Extension;
+            string mimeType = GetMimeType(filename);
+            var isImage = IsImageMime(mimeType);
+
+            // File's content.
+            Stream filestream = file.InputStream;
+            byte[] byteArray = ReadFully(filestream);
+            MemoryStream stream = new MemoryStream(byteArray);
+
             DriveService service;
             try
             {
-                 service = AuthorizationService.ServiceAccountAuthorization();
+                service = AuthorizationService.ServiceAccountAuthorization();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 throw e;
             }
 
             Google.Apis.Drive.v3.Data.File body = new Google.Apis.Drive.v3.Data.File();
-            body.Name = System.IO.Path.GetFileName(filename);
-            body.MimeType = GetMimeType(filename);
+            body.Name = filename;
+            body.MimeType = mimeType;
             body.Parents = null;
 
-            // File's content.
-            Stream filestream = file.InputStream;
-            byte[] byteArray = ReadFully(filestream);
-
-            MemoryStream stream = new MemoryStream(byteArray);
-            try
+            if (isImage)
             {
-                FilesResource.CreateMediaUpload request = service.Files.Create(body, stream, GetMimeType(filename));
-                await request.UploadAsync();
-                link = request.ResponseBody.Id;
-            }
-            catch (Exception)
-            {
-                throw new Exception("Failed to upload file to drive!");
-            }
-
-            var user = await _usersService.GetCurrentUser();
-            var space = await _unitOfWork?.Spaces?.GetByIdAsync(spaceId);
-            var parentFolder = await _unitOfWork?.Folders.GetByIdAsync(parentId);
-
-            try
-            {
-                if (space != null)
+                try
                 {
-                    var fileDto = new FileUnit()
+                    var image_link = await UploadToDriveAsync(service, body, stream, mimeType);
+                    var prev_filename = "prev_" + fileData.Name + ".jpeg";
+                    body.Name = prev_filename;
+                    body.MimeType = "image/jpeg";
+                    var img_stream = MakeThumbnail(stream);
+                    var prev_link = await UploadToDriveAsync(service, body, img_stream, "image/jpeg");
+
+                    var imageDto = new ImageUnit()
                     {
                         Name = filename,
-                        FileType = fileType,
-                        Link = link,
-                        Description = "",
+                        FileType = FileType.Images,
+                        Link = image_link,
+                        Prev_Link = prev_link,
+                        Description = fileData.Description,
                         CreatedAt = DateTime.Now,
                         LastModified = DateTime.Now,
                         IsDeleted = false,
                         Space = space,
                         FolderUnit = parentFolder,
-                        Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId)
+                        Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId),
+                        ReadPermittedUsers = ReadPermittedUsers,
+                        ModifyPermittedUsers = ModifyPermittedUsers
                     };
+                    _unitOfWork?.Files?.Create(imageDto);
+                    await _unitOfWork?.SaveChangesAsync();
+                }
+                catch (Exception e)
+                {
+                    throw e;
+                }
+            }
+            else
+            {
+                try
+                {
+                    var link = await UploadToDriveAsync(service, body, stream, mimeType);
 
+                    var fileDto = new FileUnit()
+                    {
+                        Name = filename,
+                        FileType = FileType.Uploaded,
+                        Link = link,
+                        Description = fileData.Description,
+                        CreatedAt = DateTime.Now,
+                        LastModified = DateTime.Now,
+                        IsDeleted = false,
+                        Space = space,
+                        FolderUnit = parentFolder,
+                        Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId),
+                        ReadPermittedUsers = ReadPermittedUsers,
+                        ModifyPermittedUsers = ModifyPermittedUsers
+                    };
                     _unitOfWork?.Files?.Create(fileDto);
                     await _unitOfWork?.SaveChangesAsync();
                 }
+                catch (Exception e)
+                {
+                    throw e;
+                }
             }
-            catch (Exception)
-            {
-                throw new Exception("Failed to save file to data base!");
-            }
-            return "File uploaded successfully. File Id: " + link;
+            return "Files uploaded successfully";
         }
 
-        private static string GetMimeType(string fileName)
-        {
-            string mimeType = "application/unknown";
-            string ext = System.IO.Path.GetExtension(fileName).ToLower();
-            Microsoft.Win32.RegistryKey regKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(ext);
-            if (regKey != null && regKey.GetValue("Content Type") != null)
-                mimeType = regKey.GetValue("Content Type").ToString();
-            return mimeType;
-        }
-        private byte[] ReadFully(Stream input)
-        {
-            byte[] buffer = new byte[16 * 1024];
-            using (MemoryStream ms = new MemoryStream())
-            {
-                int read;
-                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
-                {
-                    ms.Write(buffer, 0, read);
-                }
-                return ms.ToArray();
-            }
-        }
         public async Task<DownloadFileDto> DownloadFile(string fileId)
         {
             DriveService service;
@@ -597,6 +601,63 @@ namespace Drive.WebHost.Services
         public void Dispose()
         {
             _unitOfWork?.Dispose();
+        }
+
+        private async Task<string> UploadToDriveAsync(DriveService service, Google.Apis.Drive.v3.Data.File body, MemoryStream stream, string mimeType)
+        {
+            string result = "";
+            try
+            {
+                FilesResource.CreateMediaUpload request = service.Files.Create(body, stream, mimeType);
+                await request.UploadAsync();
+                result = request.ResponseBody.Id;
+            }
+            catch (Exception e)
+            {
+                throw (e);
+            }
+            return result;
+        }
+        private bool IsImageMime(string mimeType)
+        {
+            string[] imageMimes = { "image/gif", "image/jpeg", "image/png", "image/tiff", "image/bmp" };
+            if (imageMimes.Contains(mimeType))
+                return true;
+            else return false;
+        }
+        private MemoryStream MakeThumbnail(MemoryStream myImage)
+        {
+            MemoryStream ms = new MemoryStream();
+            var image = Image.FromStream(myImage);
+            var width = (int)(image.Width * 0.4);
+            var height = (int)(image.Height * 0.4);
+            using (Image thumbnail = Image.FromStream(myImage).GetThumbnailImage(width, height, null, new IntPtr()))
+            {
+                thumbnail.Save(ms, System.Drawing.Imaging.ImageFormat.Jpeg);
+                return ms;
+            }
+        }
+        private string GetMimeType(string fileName)
+        {
+            string mimeType = "application/unknown";
+            string ext = System.IO.Path.GetExtension(fileName).ToLower();
+            Microsoft.Win32.RegistryKey regKey = Microsoft.Win32.Registry.ClassesRoot.OpenSubKey(ext);
+            if (regKey != null && regKey.GetValue("Content Type") != null)
+                mimeType = regKey.GetValue("Content Type").ToString();
+            return mimeType;
+        }
+        private byte[] ReadFully(Stream input)
+        {
+            byte[] buffer = new byte[16 * 1024];
+            using (MemoryStream ms = new MemoryStream())
+            {
+                int read;
+                while ((read = input.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    ms.Write(buffer, 0, read);
+                }
+                return ms.ToArray();
+            }
         }
     }
 }
