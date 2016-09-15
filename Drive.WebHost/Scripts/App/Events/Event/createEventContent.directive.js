@@ -39,7 +39,13 @@
             
             scope.saveContent = function () {
                 scope.content = scope.contentModel;
-                scope.contentList.push(scope.content);
+                if (scope.content.order === undefined) {
+                    scope.contentList.push(scope.content);
+                }
+                else {
+                    scope.contentList[scope.content.order] = scope.content;
+                }
+
                 scope.afterSaveMethod();
                 scope.contentModel = { contentType: scope.contentsModel.contentType, isCollapsed: true };
             };

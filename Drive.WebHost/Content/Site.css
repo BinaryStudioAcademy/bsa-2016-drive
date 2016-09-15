@@ -1614,6 +1614,18 @@ li.folder.on-drag-enter {
 }
 /*Event view*/
 
+/*Edit event view*/
+.edit-event-wrap {
+    position: relative;
+    width: 86%;
+    color: #333;
+    margin-top: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 73vh;
+}
+/*End Edit event view*/
+
 /*Admin>Logs*/
 .input-group .form-control {
   z-index: 0;

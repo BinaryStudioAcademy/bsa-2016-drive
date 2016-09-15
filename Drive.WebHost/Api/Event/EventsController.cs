@@ -47,7 +47,7 @@ namespace Drive.WebHost.Api
 
         // POST: api/events
         [HttpPost]
-        public async Task<IHttpActionResult> CreateAsync(CreateEventDto data)
+        public async Task<IHttpActionResult> CreateAsync(EventDto data)
         {
             var result = await _eventService.CreateAsync(data);
             if (result == null)
