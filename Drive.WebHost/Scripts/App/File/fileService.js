@@ -28,7 +28,12 @@
             uploadFile: uploadFile,
             downloadFile: downloadFile,
             getFileNameFromHeader: getFileNameFromHeader,
-            findCourse: findCourse
+            getFileName: getFileName,
+            getFileExtension: getFileExtension, 
+            checkFileSize: checkFileSize,
+            checkFilesValidationProperty: checkFilesValidationProperty,
+            findCourse: findCourse,
+            fileTextReader: fileTextReader
     };
 
         function getAllFiles(callBack) {
@@ -116,19 +121,22 @@
                     });
         }
 
-        function uploadFile(spaceId, parentId, file, callBack) {
+        function uploadFile(spaceId, parentId, files, filedata, callBack) {
 
-            var fd = new FormData();
-            fd.append('file', file);
+            var data = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                data.append("file" + i, files[i]);
+                data.append("data" + i, JSON.stringify(filedata));
+            }
 
-            $http.post(baseUrl + '/api/files/upload?spaceId=' + spaceId + '&parentId=' + parentId, fd,
+            $http.post(baseUrl + '/api/files/upload?spaceId=' + spaceId + '&parentId=' + parentId, data,
                 {
-                withCredentials: false,
-                headers: {
-                    'Content-Type': undefined
-                },
-                transformRequest: angular.identity
-            })
+                    withCredentials: false,
+                    headers: {
+                        'Content-Type': undefined
+                    },
+                    transformRequest: angular.identity
+                })
             .then(function (response) {
                 if (callBack) {
                     callBack(response.data);
@@ -169,6 +177,42 @@
                     }
                 });
         }
+        function getFileName(fileName) {
+            var name = fileName.substr(0, fileName.lastIndexOf('.'));
+            return name;
+        }
+        function getFileExtension(fileName) {
+            var extension = fileName.substr(fileName.lastIndexOf('.'));
+            return extension;
+        }
+        function checkFileSize(size, maxSize) {
+            if ((size / 1024) / 1024 > maxSize) {
+                return false;
+            }
+            else return true;
+        }
+        function checkFilesValidationProperty(array) {
+            for (var i = 0; i < array.length; i++) {
+                if (!array[i].isValid) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        function fileTextReader(fileId, callBack) {
+            $http({
+                method: 'GET',
+                url: baseUrl + '/api/files/download?fileId=' + fileId,
+                responseType: 'arraybuffer'
+            })
+                            .then(function (response) {
+                                if (callBack) {
+                                    callBack(response);
+                                }
+                            });
+        }
+
         function getFileNameFromHeader(header) {
             var result = header.split(';')[1].trim().split('=')[1];
 
@@ -248,7 +292,7 @@
         function chooseIcon(type) {
             switch (type) {
                 case 0:
-                    return 'Undefined';
+                    return "./Content/Icons/link.svg";
                 case 1:
                     return "./Content/Icons/doc.svg";
                 case 2:
@@ -266,7 +310,7 @@
                 case 8:
                     return "./Content/Icons/image.svg";
                 default:
-                    return "./Content/Icons/folder.svg";
+                    return "./Content/Icons/link.svg";
             }
         }
 

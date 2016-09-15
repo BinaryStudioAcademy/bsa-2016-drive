@@ -910,6 +910,23 @@ End Cancel button on search input*/
         margin-top: 15px;
     }
 
+    /*For image GridView*/
+    .sp-gv-item-img-wrapper-image {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-flow: row wrap;
+    justify-content: space-around;
+    align-content: space-around;
+    height: 120px;
+}
+    /*End For image GridView*/
+
+
 .sp-gv-item-text {
     padding: 15px 20px;
 }
@@ -956,7 +973,6 @@ End Cancel button on search input*/
         font-weight: 300;
     }
 /*End New GridView*/
-
 
 /*Scrollbar style*/
 ::-webkit-scrollbar-track {
@@ -1583,9 +1599,40 @@ li.folder.on-drag-enter img {
     margin-top: 10px;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 40vh;
+    height: 30vh;
+    line-height:0.5em;
 }
 /*end create event content wrap*/
+.create-event-title {
+    width: 80%;
+    margin: 0;
+    height: 1.5em;
+    font-size: x-large;
+}
+
+/*Event view*/
+.event-wrap {
+    position: relative;
+    width: 100%;
+    margin-top: 15px;
+    padding-left: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 80vh;
+}
+/*Event view*/
+
+/*Edit event view*/
+.edit-event-wrap {
+    position: relative;
+    width: 86%;
+    color: #333;
+    margin-top: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 73vh;
+}
+/*End Edit event view*/
 
 /*Admin>Logs*/
 .input-group .form-control {
@@ -1653,3 +1700,179 @@ li.folder.on-drag-enter img {
     width:72px;
 }
 /*END Admin>Logs*/
+
+/*File Reader*/
+    .tfr-modal-header{
+        padding: 0px 15px;
+    }
+    .tfr-modal-header div{
+        margin-top: 15px;
+    }
+    
+    .tfr-modal-header h3{
+        display: -moz-inline-box;
+        display: inline-block;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+    
+    .tfr-modal-header button{
+        display: -moz-inline-box;
+        display: inline-block;
+        padding: 15px;
+        padding-top: 0px;
+        margin-left: 10px;
+    }
+
+    .tfr-modal-container .fr-modal-container{
+        height:88%;
+        overflow:auto;
+    }
+
+    .fr-modal-container-txt{
+        padding: 0 10px;
+        padding: 15px 35px;
+        background: rgba(233, 227, 227, 0.35);
+        height: 100%;
+    }
+
+    .fr-modal-container canvas{
+        padding: 0;
+        margin: auto;
+        display: block;
+        margin-top: 40px;
+    }
+
+    .tfr-modal-container .clearfix:after,.clearfix:before{
+        content:" ";
+        display:table;
+    }
+
+    .tfr-modal-container .clearfix:after{
+        clear:both;
+    }
+
+    .tfr-modal-container .mb2{
+        margin-bottom:1rem;
+    }
+
+    .tfr-modal-container .mb2 input{
+        width: 25px !important;
+    }
+
+    .tfr-modal-container .white{
+        color:#666;
+    }
+
+    .tfr-modal-container .blue{
+        color:#0076df
+    }
+
+    .tfr-modal-container .bg-blue{
+        position: fixed;
+        width: 95%;
+        margin: 0px;
+        text-align: center;
+        
+    }
+
+    .tfr-modal-container .left{
+        border-left-style:solid;
+        border-left-width:1px;
+        border-left-color:#ccc;
+        display: inline-block;
+        border: 1px solid lightgray;
+        border-radius: 5px;
+        padding-right: 10px;
+        background: white;
+    }
+
+    .tfr-modal-container .button,button{
+    font-weight:700;
+    text-decoration:none;
+    cursor:pointer;
+    display:inline-block;
+    -moz-box-sizing:border-box;
+    box-sizing:border-box;
+    line-height:1.125;
+    padding:.5em 1rem;
+    margin:0;
+    height:auto;
+    border:1px solid transparent;
+    -webkit-appearance:none;
+    }
+
+    .tfr-modal-container .button:hover{
+        text-decoration:none;
+        color: #fff;
+    }
+
+    .tfr-modal-container .button{
+        margin:0;
+    }
+
+    .tfr-modal-container .py2{
+        padding-top:1rem;
+        padding-bottom:1rem
+    }
+
+    .tfr-modal-container .m0{
+        margin:0;
+    }
+
+    .tfr-modal-container .button-nav-dark{
+        color:#666;
+    }
+
+    .tfr-modal-container .button-nav-dark.is-active, .button-nav-dark:active, .button-nav-dark:hover{
+        background-color:rgba(0,0,0,.125);
+    }
+
+    .tfr-modal-container .field-dark{
+        color:#fff;
+        background-color:rgba(0,0,0,.25);
+        border:1px solid rgba(0,0,0,.0625);
+        border-radius:3px;
+    }
+
+    .tfr-modal-container .field-dark::-webkit-input-placeholder{
+        color:rgba(255,255,255,.75);
+    }
+
+    .tfr-modal-container .field-dark::-moz-placeholder{
+        color:rgba(255,255,255,.75);
+    }
+
+    .tfr-modal-container .field-dark:-ms-input-placeholder{
+        color:rgba(255,255,255,.75);
+    }
+
+    .tfr-modal-container .field-dark::-moz-placeholder{
+        color:rgba(255,255,255,.75);
+    }
+
+    .tfr-modal-container .field-dark:focus{
+         outline:0;
+         border:1px solid rgba(255,255,255,.5);
+     }
+
+     .tfr-modal-container .field-dark:read-only:not(select){
+         background-color:rgba(255,255,255,.25);
+     }
+
+     .tfr-modal-container .field-dark:invalid{
+         border-color:#f95020;
+     }
+
+     .tfr-modal-container .field-dark.is-success{
+         border-color:#00cf26;
+     }
+
+     .tfr-modal-container .field-dark.is-warning{
+         border-color:#efcc00;
+     }
+
+     .tfr-modal-container .field-dark.is-error{
+         border-color:#f95020;
+     }
+/*END File Reader*/

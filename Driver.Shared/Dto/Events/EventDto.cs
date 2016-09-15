@@ -12,16 +12,10 @@ namespace Driver.Shared.Dto.Events
     {
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
         public EventType EventType { get; set; }
         public DateTime EventDate { get; set; }
-        public IList<EventContentDto> ContentVideoLinks { get; set; }
-        public IList<EventContentDto> ContentSimpleLinks { get; set; }
-        public IList<EventContentDto> ContentPhotos { get; set; }
-        public IList<EventContentDto> ContentTexts { get; set; }
+        public IEnumerable<EventContentDto> ContentList { get; set; }
         public FileUnitDto FileUnit { get; set; }
         public AuthorDto Author { get; set; }
-        public DateTime CreatedAt { get; set; }
     }
 }

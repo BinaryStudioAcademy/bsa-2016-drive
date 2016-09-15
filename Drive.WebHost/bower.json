@@ -22,11 +22,16 @@
     "sweetalert": "latest",
     "bootstrap-ui-datetime-picker": "^2.4.3",
     "ng-tags-input": "3.1.1",
-    "angular-native-dragdrop": "~1.2.2"     
+    "angular-native-dragdrop": "~1.2.2",
+    "angular-bootstrap-lightbox": "~0.12.0",
+    "angular-drag-and-drop-lists": "~1.4.0",
+    "pdfjs-dist": "1.5.456",
+    "angular-pdf-viewer": "0.2.9"
   },
   "resolutions": {
     "angular": "1.5.9-build.5006+sha.e3a378e",
     "angular-bootstrap": "~2.0.1",
-    "jquery": ">=1.6"
+    "jquery": ">=1.6",
+    "pdfjs-dist": "1.5.456"
   }
 }

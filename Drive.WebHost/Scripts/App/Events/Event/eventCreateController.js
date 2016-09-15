@@ -3,12 +3,13 @@
         .controller('EventCreateController', EventCreateController);
 
     EventCreateController.$inject = [
+        'EventService',
         'toastr',
         '$location',
         'localStorageService'
     ];
 
-    function EventCreateController(toastr, $location, localStorageService) {
+    function EventCreateController(eventService, toastr, $location, localStorageService) {
         var vm = this;
         vm.addNewEvent = addNewEvent;
         vm.create = create;
@@ -18,13 +19,18 @@
         vm.newPhoto = newPhoto;
         vm.newText = newText;
         vm.getEventList = getEventList;
-        vm.saveContent = saveContent;
+        vm.contentSaved = contentSaved;
+        vm.removeContent = removeContent;
+        vm.editContent = editContent;
 
         activate();
 
         function activate() {
             vm.showEditArea = false;
             vm.order = 0;
+            eventService.getEventTypes(function (data) {
+                vm.eventTypes = data;
+            });
             vm.tempevent = localStorageService.get('event');
             localStorageService.remove('event');
 
@@ -44,7 +50,11 @@
             }
 
         function addNewEvent() {
-            //return eventService.pushData(vm.event);
+            if (vm.event.contentList.length > 0)
+                for (var i = 0; i < vm.event.contentList.length; i++) {
+                    vm.event.contentList[i].order = i;
+                }
+            return eventService.pushData(vm.event);
         };
 
         function create() {
@@ -93,9 +103,8 @@
             vm.currentContent = { contentType: 1};
         }
 
-        function saveContent() {
-            vm.currentContent.order = ++vm.order;
-            vm.event.contentList.push(vm.currentContent);
+        function contentSaved() {
+
             vm.showEditArea = false;
         }
 
@@ -103,6 +112,16 @@
             $location.url('/apps/events');
         }
 
+        function removeContent(index) {
+            vm.event.contentList.splice(index, 1);
+        };
+
+        function editContent(index) {
+            vm.event.contentList[index].order = index;
+            vm.currentContent = vm.event.contentList[index];
+            vm.showEditArea = true;
+            //vm.event.contentList.splice(index, 1);
+        }
 
     }
 })();

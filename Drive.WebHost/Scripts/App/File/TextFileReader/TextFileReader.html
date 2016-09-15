@@ -1,0 +1,24 @@
+﻿<div class="tfr-modal-container" style="height: 88vh;">
+    <div class="row tfr-modal-header">
+        <div class="col-xs-12">
+            <h3 >{{textFileReaderCtrl.file.name}}</h3>
+            <button class="btn btn-default btn-custom" style="margin-right: 10px;" type="button" ng-click="textFileReaderCtrl.downloadFile(textFileReaderCtrl.file.link)" title="Upload file">
+                <img src="./Content/Icons/download-doc-o_bw.svg" alt="Download file" height="30">
+            </button>
+            
+        </div>
+    </div>
+    <div class="fr-modal-container" >
+        <div us-spinner="{radius:10, width:2, length: 10}" style=" top:50%; right:50%"></div>
+        <div class="clearfix" ng-show="textFileReaderCtrl.pdfReaderShow">
+            <pdf-viewer delegate-handle="my-pdf-container"
+                        url="textFileReaderCtrl.fileUrl"
+                        scale="1"
+                        show-toolbar="true"></pdf-viewer>
+        </div>
+        <div class="fr-modal-container-txt" ng-show="textFileReaderCtrl.elseReaderShow">
+            <p ng-repeat="t in textFileReaderCtrl.textFileContent track by $index">{{t}}</p>
+        </div>
+    </div>
+</div>
+

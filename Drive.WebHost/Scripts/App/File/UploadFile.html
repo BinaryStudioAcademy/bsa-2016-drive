@@ -1,57 +1,74 @@
-﻿<div file-dropzone="" drop-file="fileModalCtrl.inputFile.file" >
+﻿<div file-dropzone="" drop-file="fileModalCtrl.inputFile" max-size="fileModalCtrl.file.maxFileSize" valid="fileModalCtrl.modelIsValid">
     <form role="form" name="uploadForm" enctype="multipart/form-data">
         <div class="modal-header">
-            <h3 class="modal-title"><span style="font-size: 40px; color: darkgray;"><i ng-class="fileModalCtrl.icon"></i></span> Upload file</h3>
+            <div class="col-md-6">
+                <h3 class="modal-title">
+                    <span style="font-size: 40px; color: darkgray;">
+                        <i class="fa fa-upload fa-lg" aria-hidden="true"></i>
+                    </span>
+                    Upload file
+                </h3>
+            </div>
+            <div class="col-md-offset-5 col-xs-1">
+                <button class="btn btn-default btn-sm" type="submit" ng-click="fileModalCtrl.cancel()" title="Close window">
+                    <i class="fa fa-times fa-lg" ></i>
+                </button>
+            </div>
         </div>
-        <div class="modal-body" style="padding-bottom:2em;">
+        <div class="modal-body">
             <div class="row">
-                <div class="col-md-7">
+                <div class="col-md-4">
                     <label>Choose local files</label>
-                    <button type="button" class="btn btn-default fileinput-button">
+                    <button type="button" class="btn btn-default fileinput-button" style="left:10px">
                         <span>
                             <i class="glyphicon glyphicon-plus"></i>
                             Add file...
-                            <input type="file" name="files" fileread input-file="fileModalCtrl.inputFile.file" >
+                            <input type="file" name="files" multiple fileread input-file="fileModalCtrl.inputFile" max-size="fileModalCtrl.file.maxFileSize" valid="fileModalCtrl.modelIsValid" />
                         </span>
                     </button>
                 </div>
-                <!--<div class="col-md-5 input-group">
-                    <input type="url" class="form-control" placeholder="Type link here">
-                    <button type="button" class="btn btn-default" ng-disabled="true">
-                        <i class="glyphicon glyphicon-plus"></i>
-                        <span>Add</span>
-                    </button>
-                </div>-->
             </div>
-            <table class="table table-upload-file">
+            <table class="table table-upload-file" ng-show="!fileModalCtrl.disableElement()">
                 <thead>
                     <tr>
-                        <th width="50%">Name</th>
-                        <th>Size</th>
-                        <th>Type</th>
+                        <th width="13%"></th>
+                        <th width="32%">Name</th>
+                        <th width="25%">Description</th>
+                        <th width="10%">Size</th>
+                        <th width="10%">Type</th>
+                        <th width="10%">Remove</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><strong>{{ fileModalCtrl.inputFile.file.name }}</strong></td>
-                        <td>{{ fileModalCtrl.inputFile.file.size/1024/1024|number:3 }} MB</td>
-                        <td>{{ fileModalCtrl.inputFile.file.type }}</td>
+                    <tr ng-repeat="file in fileModalCtrl.inputFile" repeat-done model="fileModalCtrl.inputFile" valid="fileModalCtrl.modelIsValid">
+                        <td></td>
+                        <td>
+                            <input ng-model="file.filename" size="27" required />
+                            <label>{{file.extension}}</label>
+                            <span style="color: red" class="alert error" ng-show="file.filename.$error.required && file.filename.$touched">Name required</span>
+                            <span style="color: red" class="alert error" ng-show="!file.isValid">Size of file is more than 100 MB</span>
+                        </td>
+                        <td><textarea rows="2" cols="25" style="resize:none;" placeholder="enter description of file" ng-model="file.description"></textarea></td>
+                        <td>{{ file.size | sizeOfFile }}</td>
+                        <td>{{ file.type }}</td>
+                        <td>
+                            <button type="button" class="btn btn-default btn-s" ng-click="fileModalCtrl.removeItem($index)">
+                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                            </button>
+                        </td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
         <div class="modal-footer">
-            <div class="col-md-6">
-                <button type="button" class="btn btn-default btn-s" ng-click="fileModalCtrl.upload()" ng-disabled="!fileModalCtrl.inputFile">
-                    <span class="glyphicon glyphicon-upload"></span> Upload file
+            <div class="col-md-6 col-md-offset-1">
+                <button type="submit" class="btn btn-default btn-s" ng-click="fileModalCtrl.upload()" ng-disabled="fileModalCtrl.disableElement() || !fileModalCtrl.modelIsValid">
+                    <i class="fa fa-arrow-circle-o-up"></i> Upload file
                 </button>
-                <button type="button" class="btn btn-default btn-s" ng-click="fileModalCtrl.remove()" ng-disabled="!fileModalCtrl.inputFile">
-                    <span class="glyphicon glyphicon-trash"></span> Remove
+                <button type="button" class="btn btn-default btn-s" ng-click="fileModalCtrl.removeAll()" ng-disabled="fileModalCtrl.disableElement()">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i> Remove
                 </button>
-            </div>
-            <div class="col-md-offset-4 col-md-2">
-                <button class="btn btn-default" type="submit" ng-click="fileModalCtrl.cancel()">Cancel</button>
             </div>
         </div>
     </form>

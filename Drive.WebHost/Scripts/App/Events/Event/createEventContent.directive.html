@@ -1,0 +1,42 @@
+﻿<form name="createcontentform" ng-submit="saveContent()" class="form-horizontal" novalidate>
+    <h4> New {{contentModel.contentType | contentType}}</h4>
+    <div class="row form-group">
+        <div class="col-sm-4" ng-class="{ 'has-error' : createcontentform.eventcontentname.$invalid && !createcontentform.eventcontentname.$pristine }">
+            <label class="links-form">Name:</label>
+            <input type="text" name="eventcontentname" id="eventcontentname" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="contentModel.name" placeholder="Name" required>
+            <p ng-show="createcontentform.eventcontentname.$error.required && createcontentform.eventcontentname.$touched" class="help-block" ng-cloak>Name is required</p>
+            <p ng-show="createcontentform.eventcontentname.$error.pattern" class="help-block" ng-cloak>Not a valid name</p>
+        </div>
+        <div ng-hide="contentModel.contentType === 1">
+            <div class="col-sm-4">
+                <label class="links-form">Description:</label>
+                <input type="text" name="description" class="form-control" id="description" ng-model="contentModel.description" placeholder="Description">
+            </div>
+            <div class="col-sm-4" ng-class="{ 'has-error' : createcontentform.contentlink.$invalid && !createcontentform.contentlink.$pristine && 
+                 eventCreateCtrl.currentContent.contentType !== 1 }" ng-cloak>
+                <label class="links-form">Content:</label>
+                <input type="text" name="contentlink" class="form-control text-valid" id="contentlink" ng-model="contentModel.content"
+                       ng-change="isValidEventUrl()" placeholder="Content"
+                       ng-required="contentModel.contentType != 1">
+                <p ng-show="createcontentform.contentlink.$error.required && createcontentform.contentlink.$touched" class="help-block" ng-cloak>Content is required</p>
+                <p ng-show="!urlIsValid && createcontentform.contentlink.$touched" class="help-block" ng-cloak>Not a valid link</p>
+            </div>
+        </div>
+        <div ng-hide="contentModel.contentType !== 1">
+            <div class="col-sm-8" ng-class="{ 'has-error' : createcontentform.contentdescription.$invalid && !createcontentform.contentdescription.$pristine  && contentModel.contentType === 1}">
+                <label class="links-form">Content:</label>
+                <textarea type="text" name="contentdescription" id="contentdescription" class="form-control"
+                          ng-model="contentModel.content" placeholder="Content"
+                          ng-required="contentModel.contentType === 1"></textarea>
+                <p ng-show="createcontentform.contentdescription.$error.required && createcontentform.contentdescription.$touched" class="help-block" ng-cloak>Content is required</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3 pull-right">
+            <button type="submit" class="btn btn-info pull-right" ng-disabled="createcontentform.$invalid">
+                <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Submit
+            </button>
+        </div>
+    </div>
+</form>

@@ -30,7 +30,7 @@ namespace Drive.WebHost.Services.Events
                 Name = dto.Name,
                 Description = dto.Description,
                 IsDeleted = false,
-                Content = dto.Link,
+                Content = dto.Content,
                 ContentType = dto.ContentType,
                 CreatedAt = DateTime.Now,
                 LastModified = DateTime.Now,
@@ -60,7 +60,7 @@ namespace Drive.WebHost.Services.Events
                 LastModified = ec.LastModified,
                 IsDeleted = ec.IsDeleted,
                 EventId = ec.Event.Id,
-                Link = ec.Content,
+                Content = ec.Content,
                 ContentType = ec.ContentType,
                 Order = ec.Order
             }).ToListAsync();
@@ -79,7 +79,7 @@ namespace Drive.WebHost.Services.Events
                 LastModified = ec.LastModified,
                 IsDeleted = ec.IsDeleted,
                 EventId = ec.Event.Id,
-                Link = ec.Content,
+                Content = ec.Content,
                 ContentType = ec.ContentType,
                 Order = ec.Order
             }).SingleOrDefaultAsync();
@@ -92,7 +92,7 @@ namespace Drive.WebHost.Services.Events
             var ec = await _unitOfWork.EventContents.GetByIdAsync(id);
             ec.Name = dto.Name;
             ec.Description = dto.Description;
-            ec.Content = dto.Link;
+            ec.Content = dto.Content;
             ec.ContentType = dto.ContentType;
             ec.IsDeleted = dto.IsDeleted;
             ec.LastModified = DateTime.Now;

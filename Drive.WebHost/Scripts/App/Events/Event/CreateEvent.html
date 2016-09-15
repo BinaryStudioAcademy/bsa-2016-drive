@@ -3,14 +3,12 @@
     <div class="btn-group btn-breadcrumb">
         <a ng-click="eventCreateCtrl.getEventList()" class="btn btn-info"><i class="fa fa-calendar fa-lg"></i> Events </a>
     </div>
-    <h2>
-        Create new event
-        <div style="display: inline-block;">
-            <button class="btn btn-info" ng-click="eventCreateCtrl.create()" title="Create new lecture" ng-disabled="eventForm.$invalid">
-                <i class="fa fa-plus-circle fa-lg"></i>  Create
-            </button>
-        </div>
-    </h2>
+    <div>
+        <label class="create-event-title">Create new event</label>
+        <button class="btn btn-info pull-right" ng-click="eventCreateCtrl.create()" title="Create new event" ng-disabled="eventForm.$invalid">
+            <i class="fa fa-plus-circle fa-lg"></i> Create
+        </button>
+    </div>
     <br />
     <div>
         <div class="create-event-wrap">
@@ -21,11 +19,18 @@
                             <label class="col-sm-2 create-event-form">Event name:</label>
                             <input type="text" name="name" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="eventCreateCtrl.event.fileUnit.name" placeholder="Event name" required>
                             <p ng-show="eventForm.name.$error.required && eventForm.name.$touched" class="help-block col-sm-offset-2 event-validation">Name is required</p>
-                            <p ng-show="eventForm.name.$error.pattern" class="help-block col-sm-offset-2 lecture-validation">Not a valid name</p>
+                            <p ng-show="eventForm.name.$error.pattern" class="help-block col-sm-offset-2 event-validation">Not a valid name</p>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 create-event-form">Description:</label>
                             <textarea type="text" name="description" class="form-control" ng-model="eventCreateCtrl.event.fileUnit.description" placeholder="Enter description"></textarea>
+                        </div>
+                        <div class="form-group" ng-class="{ 'has-error' : eventForm.eventtype.$invalid && !eventForm.eventtype.$pristine }">
+                            <label class="col-sm-2 create-event-form">Event type:</label>
+                            <select name="eventtype" class="form-control text-valid" ng-model="eventCreateCtrl.event.eventType" placeholder="Event type" required>
+                                <option ng-repeat="type in eventCreateCtrl.eventTypes" value="{{type}}">{{type | eventType}}</option>
+                            </select>
+                            <p ng-show="eventForm.name.$error.required && eventForm.name.$touched" class="help-block col-sm-offset-2 event-validation">Type is required</p>
                         </div>
                         <div class="form-group datetimepicker" ng-class="{ 'has-error' : eventForm.date.$invalid && !eventForm.date.$pristine }">
                             <label class="col-sm-2 create-event-form">Event date:</label>
@@ -36,14 +41,14 @@
                                            timepicker-options="eventCreateCtrl.calendar.timepickerOptions" required />
                                     <button type="button" class="btn btn-default" ng-click="eventCreateCtrl.calendar.openCalendar($event, prop)"><i class="fa fa-calendar"></i></button>
                                 </span>
-                                <p ng-show="eventForm.date.$error.required && eventForm.date.$touched" class="help-block col-sm-offset-2 event-validation">Date is required</p>
-                                <p ng-show="eventForm.date.$error.datetime" class="help-block col-sm-offset-2 lecture-validation">Not a valid date</p>
+                            <p ng-show="eventForm.date.$error.required && eventForm.date.$touched" class="help-block col-sm-offset-2 event-validation">Date is required</p>
+                            <p ng-show="eventForm.date.$error.datetime" class="help-block col-sm-offset-2 event-validation">Not a valid date</p>
                             </p>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="btn-group">
+            <div class="btn-group" style="cursor:pointer">
                 <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Add content <span class="caret"></span>
                 </button>
@@ -54,61 +59,50 @@
                     <li><a ng-click="eventCreateCtrl.newSimpleLink()">New link</a></li>
                 </ul>
             </div>
-            <br/>
-            <form ng-show="eventCreateCtrl.showEditArea" name="createcontentform" ng-submit="eventCreateCtrl.saveContent()" class="form-horizontal" novalidate>
-                <h4> New {{eventCreateCtrl.currentContent.contentType | contentType}}</h4>
-                <div class="row form-group">
-                    <div class="col-sm-4" ng-class="{ 'has-error' : createcontentform.eventcontentname.$invalid && !createcontentform.eventcontentname.$pristine }">
-                        <label class="links-form">Name:</label>
-                        <input type="text" name="eventcontentname" id="eventcontentname" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="eventCreateCtrl.currentContent.name" placeholder="Name" required>
-                        <p ng-show="createcontentform.eventcontentname.$error.required && createcontentform.eventcontentname.$touched" class="help-block" ng-cloak>Name is required</p>
-                        <p ng-show="createcontentform.eventcontentname.$error.pattern" class="help-block" ng-cloak>Not a valid name</p>
-                    </div>
-                    <div ng-hide="eventCreateCtrl.currentContent.contentType === 1">
-                        <div class="col-sm-4">
-                            <label class="links-form">Description:</label>
-                            <input type="text" name="description" class="form-control" id="description" ng-model="eventCreateCtrl.currentContent.description" placeholder="Description">
-                        </div>
-                        <div class="col-sm-4" ng-class="{ 'has-error' : createcontentform.contentlink.$invalid && !createcontentform.contentlink.$pristine && eventCreateCtrl.currentContent.contentType !== 1 }" ng-cloak>
-                            <label class="links-form">Content:</label>
-                            <input type="url" name="contentlink" class="form-control text-valid" id="contentlink" ng-model="eventCreateCtrl.currentContent.content" placeholder="Content" 
-                                   ng-required="eventCreateCtrl.currentContent.contentType != 1">
-                            <p ng-show="createcontentform.contentlink.$error.required && createcontentform.contentlink.$touched" class="help-block" ng-cloak>Content is required</p>
-                            <p ng-show="createcontentform.contentlink.$error.url" class="help-block" ng-cloak>Not a valid link</p>
-                        </div>
-                    </div>
-                    <div ng-hide="eventCreateCtrl.currentContent.contentType !== 1">
-                        <div class="col-sm-8" ng-class="{ 'has-error' : createcontentform.contentdescription.$invalid && !createcontentform.contentdescription.$pristine  && eventCreateCtrl.currentContent.contentType === 1}">
-                            <label class="links-form">Content:</label>
-                            <textarea type="text" name="contentdescription" id="contentdescription" class="form-control"
-                                      ng-model="eventCreateCtrl.currentContent.content" placeholder="Content"
-                                      ng-required="eventCreateCtrl.currentContent.contentType === 1"></textarea>
-                            <p ng-show="createcontentform.contentdescription.$error.required && createcontentform.contentdescription.$touched" class="help-block" ng-cloak>Content is required</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <p>{{createcontentform.contentlink.$invalid}}</p>
-                    <div class="col-sm-3 pull-right">
-                        <button type="submit" class="btn btn-info pull-right" ng-disabled="createcontentform.$invalid">
-                            <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Submit
-                        </button>
-                    </div>
-                </div>
-            </form>
-            <div class="create-eventcontent-wrap">
+            <br />
+            <div ng-if="eventCreateCtrl.showEditArea">
+                <create-event-content contents-model="eventCreateCtrl.currentContent"
+                                      content-list="eventCreateCtrl.event.contentList"
+                                      after-save-method="eventCreateCtrl.contentSaved">
+                </create-event-content>
+            </div>
+            <div class="create-eventcontent-wrap" dnd-list="eventCreateCtrl.event.contentList">
                 <div ng-repeat="content in eventCreateCtrl.event.contentList"
-                     ui-draggable="true" drag="content" drag-channel="content"
-                         ondragstart="this.classList.add('dragging-elem');"
-                         ondragend="this.classList.remove('dragging-elem')">
+                     dnd-draggable="content" dnd-effect-allowed="move"
+                     dnd-moved="eventCreateCtrl.event.contentList.splice($index, 1)">
+                    <br />
                     <div class="space-label" ng-click="content.isCollapsed = !content.isCollapsed">
                         {{ content.contentType | contentType}}: {{content.name | limitTo: 20}}{{content.name.length > 20 ? '...' : ''}}
+                        <i role="button" class="fa fa-trash fa-lg pull-right" ng-click="eventCreateCtrl.removeContent($index)" title="Delete content" aria-hidden="true"></i>
+                        <i role="button" class="fa fa-pencil-square-o fa-lg pull-right" ng-click="eventCreateCtrl.editContent($index)" title="Edit content" aria-hidden="true"></i>
                     </div>
                     <div uib-collapse="content.isCollapsed">
-                       </div> 
-                    </div>
+                        <div class="row" ng-if="content.contentType == 1">
+                            <div class="col-md-12">
+                                <p style="display: block;line-height:1em;">
+                                    {{content.content}}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="thumbnail" ng-if="content.contentType == 2">
+                            <img src="{{content.content}}" alt="content.name">
+                        </div>
+                        <div class="row" ng-if="content.contentType == 3">
+                            <div class="col-md-12">
+                                <youtube-video player-width="'100%'" video-url="content.content"></youtube-video>
+                            </div>
+                        </div>
+                        <div class="row" ng-if="content.contentType == 4">
+                            <div class="col-md-12">
+                                <p>
+                                <a ng-href="{{content.content}}" target="_blank">{{content.content}} <i class="fa fa-external-content" aria-hidden="true"></i></a>
+                                </p>
+                                <p>{{content.description}}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
+            </div>
+        </div>
     </div>
 </div>
-

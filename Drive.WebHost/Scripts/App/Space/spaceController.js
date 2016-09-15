@@ -39,6 +39,8 @@
         vm.openNewCourseWindow = openNewCourseWindow;
         vm.createNewAP = createNewAP;
         vm.openSharedContentWindow = openSharedContentWindow;
+        vm.openTextFileReader = openTextFileReader;
+
 
         vm.sharedContent = sharedContent;
 
@@ -106,10 +108,23 @@
         activate();
 
         function activate() {
+            var view = localStorageService.get('view')
+            if (view == undefined) {
+                vm.showTable = true;
+                vm.showGrid = false;
             vm.view = "fa fa-th";
+            }
+            else if (view.showTable) {
             vm.showTable = true;
             vm.showGrid = false;
-            vm.deletedContent = null;
+                vm.view = "fa fa-th";
+            }
+            else {
+                vm.showGrid = true;
+                vm.showTable = false;
+                vm.view = "fa fa-list";
+            }
+            vm.changeView = changeView;
             vm.columnForOrder = 'name';
             vm.reverseSort = false;
             vm.iconHeight = 30;
@@ -126,8 +141,7 @@
 
             }
             if ($routeParams.spaceType) {
-                spaceService.getSpaceByType($routeParams.spaceType,
-                    function (data) {
+                spaceService.getSpaceByType($routeParams.spaceType, function (data) {
                         vm.spaceId = data;
                         pagination();
                         // Hide settings space button for Binary and My space
@@ -177,11 +191,10 @@
         }
 
         function getSpaceContent() {
-            spaceService.getSpace(vm.spaceId,
+            spaceService.getSpace(vm.spaceId, 
                 vm.paginate.currentPage,
                 vm.paginate.pageSize,
-                vm.sortByDate,
-                function (data) {
+                vm.sortByDate, function (data) {
                     vm.space = data;
                     vm.spaceId = data.id;
                     vm.initSelection();
@@ -197,8 +210,7 @@
         }
 
         function getSpaceTotal() {
-            spaceService.getSpaceTotal(vm.spaceId,
-                function (data) {
+            spaceService.getSpaceTotal(vm.spaceId, function (data) {
                     vm.paginate.numberOfItems = data;
                 });
         }
@@ -206,8 +218,10 @@
         function changeView(view) {
             if (view == "fa fa-th") {
                 activateGridView();
+                localStorageService.set('view', { showTable: false });
             } else {
                 activateTableView();
+                localStorageService.set('view', { showTable: true });
             }
         }
 
@@ -465,6 +479,30 @@
                 });
         }
 
+        function openTextFileReader(size, file) {
+
+            var fileReaderModalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'Scripts/App/File/TextFileReader/TextFileReader.html',
+                windowTemplateUrl: 'Scripts/App/File/TextFileReader/Modal.html',
+                controller: 'TextFileReaderCtrl',
+                controllerAs: 'textFileReaderCtrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        return file;
+                    }
+                }
+            });
+
+            fileReaderModalInstance.result.then(function (response) {
+                console.log(response);
+            },
+                function () {
+                    console.log('Modal dismissed');
+                });
+        }
+
         function openNewCourseWindow(size) {
 
             var courseModalInstance = $uibModal.open({
@@ -530,8 +568,7 @@
         };
 
         function getFolder(id) {
-            folderService.get(id,
-                function (folder) {
+            folderService.get(id, function (folder) {
                     vm.folder = folder;
                 });
         }
@@ -575,15 +612,13 @@
         }
 
         function getFolderContentTotal(id) {
-            folderService.getFolderContentTotal(id,
-                function (data) {
+            folderService.getFolderContentTotal(id, function (data) {
                     vm.paginate.numberOfItems = data;
                 });
         }
 
         function getFile(id) {
-            fileService.getFile(id,
-                function (file) {
+            fileService.getFile(id, function (file) {
                     vm.file = file;
                 });
         }
@@ -645,9 +680,16 @@
         function openDocument(file) {
             if (file.fileType !== 7) {
                 if (file.fileType == 6) {
+                    var fileExtantion = file.name.slice(file.name.lastIndexOf("."));
+                    if (fileExtantion == '.pdf' || fileExtantion == '.txt' || fileExtantion == '.cs' || fileExtantion == '.js' || fileExtantion == '.html' || fileExtantion == '.css') {
+                        vm.openTextFileReader('lg', file);
+                    }
+                    else {
                     fileService.downloadFile(file.link);
                 }
-                else {
+                } else if (ile.fileType === 8) {
+                    fileService.downloadFile(file.link);
+                } else {
                     fileService.openFile(file.link);
                 }
             } else {
@@ -1142,4 +1184,3 @@
         //Selection end
     }
 }());
-

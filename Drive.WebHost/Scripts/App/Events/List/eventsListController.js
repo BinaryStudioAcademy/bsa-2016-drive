@@ -6,14 +6,18 @@
 
 
     EventsListController.$inject = [
-        "EventsListService"
+        "EventsListService",
+        '$location',
+        'localStorageService'
     ];
 
-    function EventsListController(EventsListService) {
+    function EventsListController(EventsListService, $location, localStorageService) {
         var vm = this;
         vm.columnForOrder = 'name';
         vm.openEvent = openEvent;
-        //vm.changeView = changeView;
+        vm.changeView = changeView;
+        vm.search = search;
+        vm.cancelSearch = cancelSearch;
         //vm.openNewEventWindow = openNewEventWindow;
         //vm.deleteEvent = deleteEvent;
         //vm.createNewEvent = createNewEvent;
@@ -37,13 +41,26 @@
 
         function activate() {
             vm.eventsList = [];
-            vm.view = "fa fa-th";
-            vm.showTable = true;
-            vm.showGrid = false;
+            var view = localStorageService.get('view')
+            if (view == undefined) {
+                vm.showTable = true;
+                vm.showGrid = false;
+                vm.view = "fa fa-th";
+            }
+            else if (view.showTable) {
+                vm.showTable = true;
+                vm.showGrid = false;
+                vm.view = "fa fa-th";
+            }
+            else {
+                vm.showGrid = true;
+                vm.showTable = false;
+                vm.view = "fa fa-list";
+            }
             vm.eventColumnForOrder = 'name';
             vm.iconHeight = 30;
-            vm.icon = "./Content/Icons/academyPro.svg";
-            getEvents();
+            vm.icon = "./Content/Icons/event.svg";
+            search();
         }
 
         function getEvents() {
@@ -56,6 +73,50 @@
 
         function openEvent(id) {
             $location.url('/apps/events/' + id);
+        }
+
+        function changeView(view) {
+            if (view === "fa fa-th") {
+                activateGridView();
+                localStorageService.set('view', { showTable: false });
+            } else {
+                activateTableView();
+                localStorageService.set('view', { showTable: true });
+            }
+        }
+
+        function activateTableView() {
+            vm.view = "fa fa-th";
+            vm.showTable = true;
+            vm.showGrid = false;
+        }
+
+        function activateGridView() {
+            vm.view = "fa fa-list";
+            vm.showTable = false;
+            vm.showGrid = true;
+        }
+
+        function search() {
+            EventsListService.searchEvents(vm.searchText, function (data) {
+                vm.eventsList = data;
+                getBinarySpaceIdent(vm.eventsList);
+            });
+        }
+
+        function cancelSearch() {
+            vm.searchText = "";
+            search();
+        }
+
+        function getBinarySpaceIdent(list) {
+            for (var i = 0; i < list.length; i++) {
+                if (list[i].spaceType === 0) {
+                    vm.binarySpaceId = list[i].spaceId;
+                    return vm.binarySpaceId;
+                }
+            }
+            return 0;
         }
     }
 }());
