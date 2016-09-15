@@ -15,7 +15,7 @@
         "ngTagsInput",
         "driveApp.academyPro",
         "driveApp.events",
-        "bootstrapLightbox"
+        "bootstrapLightbox",
         "pdf"
     ])
     .factory('BaseUrl', function () {
