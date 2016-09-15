@@ -1457,7 +1457,6 @@ namespace Drive.DataAccess.Context
                     IsDeleted = false,
                     Space = space1
                 },
-                Author = user1,
                 EventDate = DateTime.Now,
                 EventType = EventType.Entertainment,
                 IsDeleted = false
@@ -1529,7 +1528,7 @@ Duis ante erat, sagittis id sollicitudin sed, facilisis et enim. Aliquam molesti
                 },
             };
 
-            ev.ContentLinks = content;
+            ev.ContentList = content;
 
             context.Events.Add(ev);
 
