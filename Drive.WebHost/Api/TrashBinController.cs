@@ -99,12 +99,21 @@ namespace Drive.WebHost.Api
             return Ok();
         }
 
-        // PUT: api.TrashBin/Spaces
+        // PUT: api/TrashBin/Spaces
         [HttpPut]
         [Route("spaces")]
         public async Task<IHttpActionResult> RestoreSpaces(List<int> spaces)
         {
             await _trashBinService.RestoreAllFromSpacesAsync(spaces);
+            return Ok();
+        }
+
+        // PUT: api/TrashBin/Restore
+        [HttpPut]
+        [Route("restore")]
+        public async Task<IHttpActionResult> RestoreContent(CopyMoveContentDto content)
+        {
+            await _trashBinService.RestoreContentAsync(content);
             return Ok();
         }
     }
