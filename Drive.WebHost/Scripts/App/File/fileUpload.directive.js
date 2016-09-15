@@ -35,7 +35,7 @@
                                     scope.dropFile.push(file);
                                 });
                             }
-                            reader.readAsArrayBuffer(file);
+                            reader.readAsBinaryString(file);
                         })(files[i]);
                     }
                 });
@@ -71,7 +71,7 @@
                                     scope.inputFile.push(file);
                                 });
                             }
-                            reader.readAsArrayBuffer(file);
+                            reader.readAsBinaryString(file);
                         })(files[i]);
                     }
                 });

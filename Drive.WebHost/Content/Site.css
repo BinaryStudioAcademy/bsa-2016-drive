@@ -1524,6 +1524,13 @@ li.folder.on-drag-enter img {
 }
 /*End Lecture header*/
 
+/*Course header*/
+.course-header {
+    margin: 0;
+    padding-bottom: 10px;
+}
+/*End Course header*/
+
 /*Lecture view*/
 .lecture-wrap {
     position: relative;
