@@ -102,7 +102,7 @@
                                         {{event.fileUnit.name | limitTo: 15}}{{event.fileUnit.name.length > 15 ? '...' : ''}}
                                     </div>
                                     <div class="col-md-3 filter-table-cell description" title="{{event.fileUnit.description}}">
-                                        {{event.fileUnit.description | limitTo: 40}}{{event.fileUnit.description.length > 40 ? '...' : ''}}
+                                        {{event.fileUnit.description | limitTo: 30}}{{event.fileUnit.description.length > 30 ? '...' : ''}}
                                     </div>
                                     <div class="col-md-2 filter-table-cell">{{ event.author.name }}</div>
                                     <div class="col-md-2 filter-table-cell">{{ event.fileUnit.createdAt | date:'dd-MM-yyyy HH:mm' }}</div>
