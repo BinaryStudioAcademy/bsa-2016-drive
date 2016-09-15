@@ -5,9 +5,9 @@
         .module("driveApp")
         .controller("TextFileReaderCtrl", TextFileReaderCtrl);
 
-    TextFileReaderCtrl.$inject = ['FileService', '$uibModalInstance', 'items', 'pdfDelegate'];
+    TextFileReaderCtrl.$inject = ['FileService', '$uibModalInstance', 'items', 'pdfDelegate', '$scope'];
 
-    function TextFileReaderCtrl(fileService, $uibModalInstance, items, pdfDelegate) {
+    function TextFileReaderCtrl(fileService, $uibModalInstance, items, pdfDelegate, $scope) {
         var vm = this;
 
         vm.save = save;
@@ -18,7 +18,8 @@
 
         function activate() {
             vm.file = items;
-            vm.pdfDelegate = pdfDelegate.$getByHandle('my-pdf-container');
+            var fileExtantion = vm.file.name.slice(vm.file.name.lastIndexOf("."));
+
             fileService.fileTextReader(vm.file.link,
                     function (response) {
                         var fileData = response.data;
@@ -26,8 +27,26 @@
                         var contentType = fileHeader['content-type'];
                         var blob = new Blob([fileData], { type: contentType });
                         var url = URL.createObjectURL(blob);
-                        vm.pdfUrl = url;
-                        pdfDelegate.$getByHandle('my-pdf-container').load(url);
+                        vm.fileUrl = url;
+                        if (fileExtantion == '.pdf') {
+                            pdfDelegate.$getByHandle('my-pdf-container').load(url);
+                            vm.pdfReaderShow = true;
+                            vm.elseReaderShow = false;
+                        }
+                        else{
+                            vm.elseReaderShow = true;
+                            vm.pdfReaderShow = false;
+                            var reader = new FileReader();
+                            reader.onload = function (e) {
+                                $scope.$apply(function () {
+                                    var lines = null;
+                                    lines = e.target.result.split("\n")
+                                    vm.textFileContent = lines;
+                                });
+                            };
+                            reader.readAsText(blob);
+                        }
+                        
                     });
         }
 

@@ -536,11 +536,6 @@
                     }
                 }
             ],
-            [
-                'Read', function ($itemScope) {
-                    vm.openTextFileReader('lg');
-                }
-            ],
             null,
             [
                 'Copy', function ($itemScope) {
@@ -1045,7 +1040,7 @@
             if (file.fileType !== 7) {
                 if (file.fileType == 6) {
                     var fileExtantion = file.name.slice(file.name.lastIndexOf("."));
-                    if (fileExtantion == '.pdf') {
+                    if (fileExtantion == '.pdf' || fileExtantion == '.txt' || fileExtantion == '.cs' || fileExtantion == '.js' || fileExtantion == '.html' || fileExtantion == '.css') {
                         vm.openTextFileReader('lg', file);
                     }
                     else {
