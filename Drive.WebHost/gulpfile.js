@@ -70,7 +70,9 @@ gulp.task("libs", function () {
       paths.bower + "datetime-picker.js",
       paths.bower + "draganddrop.js",
       paths.bower + "angular-bootstrap-lightbox.js",
-      paths.bower + "angular-drag-and-drop-lists.js"
+      paths.bower + "angular-drag-and-drop-lists.js",
+      paths.bower + "build/pdf.combined.js",
+      paths.bower + "dist/angular-pdf-viewer.min.js"
     ])
 
         .pipe(concat("libs.js"))

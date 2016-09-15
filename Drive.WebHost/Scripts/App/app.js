@@ -16,6 +16,7 @@
         "driveApp.academyPro",
         "driveApp.events",
         "bootstrapLightbox"
+        "pdf"
     ])
     .factory('BaseUrl', function () {
         return window.globalVars.baseUrl;

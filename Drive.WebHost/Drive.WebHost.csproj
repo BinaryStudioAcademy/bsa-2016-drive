@@ -296,6 +296,7 @@
     <Content Include="Content\Icons\checklist_bw.svg" />
     <Content Include="Content\Icons\doc.svg" />
     <Content Include="Content\Icons\doc_bw.svg" />
+    <Content Include="Content\Icons\download-doc-o_bw.svg" />
     <Content Include="Content\Icons\employees-add.svg" />
     <Content Include="Content\Icons\employees.svg" />
     <Content Include="Content\Icons\employees_bw.svg" />
@@ -374,6 +375,9 @@
     <Content Include="Scripts\App\Events\Event\eventType.filter.js" />
     <Content Include="Scripts\App\Events\Event\Modal.html" />
     <Content Include="Scripts\App\File\fileUpload.directive.js" />
+    <Content Include="Scripts\App\File\TextFileReader\textFileReaderController.js" />
+    <Content Include="Scripts\App\File\TextFileReader\Modal.html" />
+    <Content Include="Scripts\App\File\TextFileReader\TextFileReader.html" />
     <Content Include="Scripts\App\File\UploadFile.html" />
     <Content Include="Scripts\App\SharedContent\SharedContentForm.html" />
     <Content Include="Scripts\App\SharedContent\sharedContentModalController.js" />

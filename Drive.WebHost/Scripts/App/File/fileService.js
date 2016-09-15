@@ -28,7 +28,8 @@
             uploadFile: uploadFile,
             downloadFile: downloadFile,
             getFileNameFromHeader: getFileNameFromHeader,
-            findCourse: findCourse
+            findCourse: findCourse,
+            fileTextReader: fileTextReader
     };
 
         function getAllFiles(callBack) {
@@ -169,6 +170,20 @@
                     }
                 });
         }
+
+        function fileTextReader(fileId, callBack) {
+            $http({
+                method: 'GET',
+                url: baseUrl + '/api/files/download?fileId=' + fileId,
+                responseType: 'arraybuffer'
+            })
+                            .then(function (response) {
+                                if (callBack) {
+                                    callBack(response);
+                                }
+                            });
+        }
+
         function getFileNameFromHeader(header) {
             var result = header.split(';')[1].trim().split('=')[1];
 
