@@ -1578,6 +1578,12 @@ li.folder.on-drag-enter {
     height: 40vh;
 }
 /*end create event content wrap*/
+.create-event-title {
+    width: 80%;
+    margin: 0;
+    height: 1.5em;
+    font-size: x-large;
+}
 
 /*Event view*/
 .event-wrap {

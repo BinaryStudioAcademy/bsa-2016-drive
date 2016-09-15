@@ -362,6 +362,8 @@
     <Content Include="Scripts\App\Events\Event\eventService.js" />
     <Content Include="Scripts\App\Events\Event\eventContent.directive.html" />
     <Content Include="Scripts\App\Events\Event\eventContent.directive.js" />
+    <Content Include="Scripts\App\Events\Event\createEventContent.directive.html" />
+    <Content Include="Scripts\App\Events\Event\createEventContent.directive.js" />
     <Content Include="Scripts\App\Events\Event\contentTypeService.js" />
     <Content Include="Scripts\App\Events\List\EventsList.html" />
     <Content Include="Scripts\App\Events\List\eventsListController.js" />

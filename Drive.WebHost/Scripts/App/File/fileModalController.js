@@ -114,7 +114,7 @@
 
             if (vm.urlIsValid) {
                 vm.checkUrl();
-                vm.icon = fileService.chooseIcon(vm.file.fileType)
+                vm.icon = fileService.chooseIcon(vm.file.fileType);
             }
             else {
                 vm.icon = "./Content/Icons/add-file_bw.svg";

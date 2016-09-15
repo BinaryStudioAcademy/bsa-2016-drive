@@ -19,8 +19,9 @@
         vm.newPhoto = newPhoto;
         vm.newText = newText;
         vm.getEventList = getEventList;
-        vm.saveContent = saveContent;
-        vm.isValidEventUrl = isValidEventUrl;
+        vm.contentSaved = contentSaved;
+        vm.removeContent = removeContent;
+        vm.editContent = editContent;
 
         activate();
 
@@ -102,29 +103,24 @@
             vm.currentContent = { contentType: 1};
         }
 
-        function saveContent() {
-            vm.currentContent.order = ++vm.order;
-            vm.event.contentList.push(vm.currentContent);
+        function contentSaved() {
+
             vm.showEditArea = false;
-        }
-
- 
-
-        function isValidEventUrl() {
-            if (vm.currentContent.contentType === 1) {
-                vm.urlIsValid = true;
-                return;
-            }
-
-            var expression = "^(?:(?:ht|f)tps?://)?(?:[\\-\\w]+@)?(?:[\\-0-9a-z]*[0-9a-z]\\.)+[a-z]{2,6}(?::\\d{1,5})?(?:[?/\\\\#][?!^$.(){}:|=[\\]+\\-/\\\\*;&~#@,%\\wА-Яа-я]*)?$";
-            var reg = new RegExp(expression);
-            vm.urlIsValid = reg.test(vm.currentContent.content);
         }
 
         function getEventList() {
             $location.url('/apps/events');
         }
 
+        function removeContent(index) {
+            vm.event.contentList.splice(index, 1);
+        };
+
+        function editContent(index) {
+            vm.currentContent = vm.event.contentList[index];
+            vm.showEditArea = true;
+            vm.event.contentList.splice(index, 1);
+        }
 
     }
 })();

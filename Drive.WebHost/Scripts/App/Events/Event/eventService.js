@@ -1,4 +1,4 @@
-﻿(function() {
+﻿(function () {
     'use strict';
 
     angular
@@ -12,7 +12,9 @@
 
     function EventService($http, baseUrl) {
         var service = {
-            getEvent: getEvent
+            getEvent: getEvent,
+            pushData: pushData,
+            getEventTypes: getEventTypes
         };
 
         return service;
@@ -30,5 +32,32 @@
                 console.log('XHR Failed for getEvent.' + error.data);
             }
         }
+
+        function pushData(data) {
+            return $http.post(baseUrl + '/api/events', data)
+                  .then(pushDataCompleted)
+                       .catch(pushDataFailed);
+
+            function pushDataCompleted(response) {
+                return response.data;
+            }
+
+            function pushDataFailed(error) {
+                console.log('XHR Failed for pushData.' + error.data);
+            }
+        }
+
+        function getEventTypes(callback) {
+            return $http.get(baseUrl + '/api/events/eventtypes')
+                   .then(function (response) {
+                       if (callback) {
+                           callback(response.data);
+                       }
+                   },
+                     function () {
+                         console.log('Error while getting all users!');
+                     });
+        }
     }
+
 })();
