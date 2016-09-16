@@ -29,7 +29,7 @@
         activate();
 
         function activate() {
-            var view = localStorageService.get('view')
+            var view = localStorageService.get('view');
             if (view == undefined) {
                 vm.showTable = true;
                 vm.showGrid = false;
@@ -70,7 +70,8 @@
                             caption: file.name,
                             thumbUrl: file.link,
                             fileType: file.fileType,
-                            created: file.createdAt
+                            created: file.createdAt,
+                            fileId: file.id
                         });
                     }
                 }
@@ -92,6 +93,7 @@
                             thumbUrl: file.link,
                             fileType: file.fileType,
                             created: file.createdAt,
+                            fileId: file.id,
                             type: 'video'
                         });
                     }
@@ -108,7 +110,7 @@
                     vm.sharedContent();
                 },
                 function ($itemScope) {
-                    if ($itemScope.file.spaceId == vm.binarySpaceId) {
+                    if ($itemScope.file.spaceId === vm.binarySpaceId) {
                         return false;
                     }
                     return true;
@@ -288,7 +290,7 @@
         }
 
         function changeView(view) {
-            if (view == "fa fa-th") {
+            if (view === "fa fa-th") {
                 activateGridView();
                 localStorageService.set('view', { showTable: false });
             } else {
@@ -313,9 +315,9 @@
 
         function openDocument(file) {
             if (file.fileType !== 7) {
-                if (file.fileType == 6) {
+                if (file.fileType === 6) {
                     var fileExtantion = file.name.slice(file.name.lastIndexOf("."));
-                    if (fileExtantion == '.pdf' || fileExtantion == '.txt' || fileExtantion == '.cs' || fileExtantion == '.js' || fileExtantion == '.html' || fileExtantion == '.css') {
+                    if (fileExtantion === '.pdf' || fileExtantion === '.txt' || fileExtantion === '.cs' || fileExtantion === '.js' || fileExtantion === '.html' || fileExtantion === '.css') {
                         vm.openTextFileReader('lg', file);
                     }
                     else {
@@ -343,9 +345,16 @@
             }
         }
 
-        function openLightboxModal(index) {
-            Lightbox.openModal(vm.images, index);
-        };
+        function openLightboxModal(fileId) {
+
+            var i;
+            for (i = 0; i < vm.images.length; i++) {
+                if (vm.images[i].fileId === fileId) {
+                    break;
+                }
+            }
+            Lightbox.openModal(vm.images, i);
+        }
 
         function chooseIcon(type) {
             vm.iconSrc = fileService.chooseIcon(type);
@@ -361,6 +370,5 @@
             }
             return 0;
         }
-
     }
 }());
