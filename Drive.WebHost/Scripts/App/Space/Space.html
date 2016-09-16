@@ -83,13 +83,16 @@
         </li>
         <li class="sp-gv-flex-item" role="button" context-menu="spaceCtrl.fileMenuOptions" ng-repeat="file in spaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}"
             ui-draggable="true" drag="spaceCtrl.getSelectedItems(file, true)" drag-channel="file" drag-image-element-id="spaceCtrl.getDragImageId($event, file, true)"
-            ng-click="spaceCtrl.selectItems($event, file, true)" ng-mousedown="spaceCtrl.selectItemsForDrag($event, file, true)" ng-dblclick="spaceCtrl.openDocument(file)"
+            ng-click="spaceCtrl.selectItems($event, file, true)" ng-mousedown="spaceCtrl.selectItemsForDrag($event, file, true)" ng-dblclick="spaceCtrl.checkFileType(file.fileType) ? spaceCtrl.openDocument(file) : spaceCtrl.openLightboxModal(file.id)"
             ng-drag-start-end-listen="true" on-drop-failure="spaceCtrl.clearDragImage()" on-drop-success="spaceCtrl.clearDragImage()"
             ng-class="{selected: file.selected, cutted: file.cutted, dragging: file.isDragging}" ng-right-click="spaceCtrl.rightClickSelection(file, true)">
             <div class="sp-gv-wrapper-flex-item">
                 <div class="sp-gv-item-content cards">
-                    <div class="sp-gv-item-img-wrapper">
+                    <div class="sp-gv-item-img-wrapper" ng-show="file.fileType !== 8">
                         <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
+                    </div>
+                    <div class="sp-gv-item-img-wrapper-image" ng-show="file.fileType == 8" style="height: 105px">
+                        <img ng-src="{{file.link}}" class="img-thumbnail" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
                     </div>
                     <div class="sp-gv-item-text">
                         <h4 title="{{file.name}}">{{file.name}}</h4>
@@ -102,10 +105,12 @@
                 </div>
             </div>
         </li>
+
         <li class="sp-gv-flex-item"></li>
         <li class="sp-gv-flex-item"></li>
         <li class="sp-gv-flex-item"></li>
     </ul>
+    
     <!--End New gridview-->
     <div class="filter-table container-md" ng-show="spaceCtrl.showTable">
         <div class="header-wrapper">
@@ -164,7 +169,7 @@
                 <div class="filter-table-row">
                     <div class="row filter-table-row" role="button" ng-repeat="file in spaceCtrl.space.files"
                          ui-draggable="true" drag="spaceCtrl.getSelectedItems(file, true)" drag-channel="file" drag-image-element-id="spaceCtrl.getDragImageId($event, file, true)"
-                         ng-click="spaceCtrl.selectItems($event, file, true)" ng-mousedown="spaceCtrl.selectItemsForDrag($event, file, true)" ng-dblclick="spaceCtrl.openDocument(file)"
+                         ng-click="spaceCtrl.selectItems($event, file, true)" ng-mousedown="spaceCtrl.selectItemsForDrag($event, file, true)" ng-dblclick="spaceCtrl.checkFileType(file.fileType) ? spaceCtrl.openDocument(file) : spaceCtrl.openLightboxModal(file.id)"
                          ng-drag-start-end-listen="true" on-drop-failure="spaceCtrl.clearDragImage()" on-drop-success="spaceCtrl.clearDragImage()"
                          ng-class="{selected: file.selected, cutted: file.cutted, dragging: file.isDragging}" context-menu="spaceCtrl.fileMenuOptions" ng-right-click="spaceCtrl.rightClickSelection(file, true)">
                         <div class="col-md-3 filter-table-cell description" title="{{ file.name }}">
