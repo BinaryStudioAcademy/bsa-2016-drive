@@ -665,8 +665,8 @@ namespace Drive.WebHost.Services
                 _logger.WriteInfo("Creating upload request ");
                 FilesResource.CreateMediaUpload request = service.Files.Create(body, stream, mimeType);
                 _logger.WriteInfo("Uploading file to google drive");
-                Exception ex =  request.Upload().Exception;
-                throw ex;
+                await request.UploadAsync();
+                //_logger.WriteError(ex, "Drive exception " + ex.Message);
                 result = request.ResponseBody.Id;
                 _logger.WriteInfo("Result file id: " + result);
             }
