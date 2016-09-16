@@ -32,9 +32,11 @@ namespace Drive.WebHost.Services
             try
             {
                 string userId = _userService.CurrentUserId;
-
+                
                 spacesList = await _unitOfWork.Spaces.Query
-                                        .Where(s => s.Owner.GlobalId == userId || s.Type == SpaceType.BinarySpace)
+                                        .Where(s => s.Owner.GlobalId == userId || s.Type == SpaceType.BinarySpace
+                                            || s.ReadPermittedUsers.Any(x => x.GlobalId == userId)
+                                            || s.ReadPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId)))
                                         .Where(s => s.ContentList.Count(d => d.IsDeleted) > 0)
                                         .Select(s => new TrashBinDto
                     {

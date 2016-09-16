@@ -1585,7 +1585,7 @@ li.folder.on-drag-enter img {
     margin-top: 10px;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 70vh;
+    height: 80vh;
 }
 
 .create-event-form {
@@ -1606,7 +1606,7 @@ li.folder.on-drag-enter img {
     margin-top: 10px;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 30vh;
+    height: 45vh;
     line-height:0.5em;
 }
 /*end create event content wrap*/

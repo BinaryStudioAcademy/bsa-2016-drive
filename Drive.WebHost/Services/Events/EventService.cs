@@ -262,15 +262,5 @@ namespace Drive.WebHost.Services.Events
             await _unitOfWork.SaveChangesAsync();
             return dto;
         }
-
-        public List<int> GetEventTypes()
-        {
-            var result = new List<int>();
-            foreach (var r in Enum.GetValues(typeof(ContentType)))
-            {
-                result.Add((int)r);
-            }
-            return result;
-        }
     }
 }

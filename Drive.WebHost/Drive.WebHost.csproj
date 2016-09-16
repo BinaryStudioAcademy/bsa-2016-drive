@@ -290,6 +290,7 @@
     <Content Include="Content\Fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\Icons\academyPro.svg" />
     <Content Include="Content\Icons\academyPro_bw.svg" />
+    <Content Include="Content\Icons\academyPro_toolbar.svg" />
     <Content Include="Content\Icons\add-file_bw.svg" />
     <Content Include="Content\Icons\add-folder_bw.svg" />
     <Content Include="Content\Icons\checklist.svg" />
@@ -302,6 +303,7 @@
     <Content Include="Content\Icons\employees_bw.svg" />
     <Content Include="Content\Icons\event.svg" />
     <Content Include="Content\Icons\event_bw.svg" />
+    <Content Include="Content\Icons\event_toolbar.svg" />
     <Content Include="Content\Icons\folder.svg" />
     <Content Include="Content\Icons\folder_bw.svg" />
     <Content Include="Content\Icons\image.svg" />
@@ -372,9 +374,7 @@
     <Content Include="Scripts\App\Events\List\eventsListController.js" />
     <Content Include="Scripts\App\Events\List\eventsListService.js" />
     <Content Include="Scripts\App\Events\Event\CreateEvent.html" />
-    <Content Include="Scripts\App\Events\Event\EventContent\eventContentService.js" />
     <Content Include="Scripts\App\Events\Event\eventCreateController.js" />
-    <Content Include="Scripts\App\Events\Event\eventType.filter.js" />
     <Content Include="Scripts\App\Events\Event\Modal.html" />
     <Content Include="Scripts\App\File\fileSize.filter.js" />
     <Content Include="Scripts\App\File\fileUpload.directive.js" />

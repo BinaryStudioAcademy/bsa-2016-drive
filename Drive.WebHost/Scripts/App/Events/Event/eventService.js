@@ -14,8 +14,7 @@
         var service = {
             getEvent: getEvent,
             pushData: pushData,
-            putData: putData,
-            getEventTypes: getEventTypes
+            putData: putData
         };
 
         return service;
@@ -62,17 +61,6 @@
             }
         }
 
-        function getEventTypes(callback) {
-            return $http.get(baseUrl + '/api/events/eventtypes')
-                   .then(function (response) {
-                       if (callback) {
-                           callback(response.data);
-                       }
-                   },
-                     function () {
-                         console.log('Error while getting all users!');
-                     });
-        }
     }
 
 })();

@@ -28,9 +28,6 @@
         function activate() {
             vm.showEditArea = false;
             vm.order = 0;
-            eventService.getEventTypes(function (data) {
-                vm.eventTypes = data;
-            });
             vm.tempevent = localStorageService.get('event');
             localStorageService.remove('event');
 
@@ -90,7 +87,7 @@
 
         function newSimpleLink() {
             vm.showEditArea = true;
-            vm.currentContent = {contentType: 4};            
+            vm.currentContent = { contentType: 4};
         }
 
         function newPhoto() {

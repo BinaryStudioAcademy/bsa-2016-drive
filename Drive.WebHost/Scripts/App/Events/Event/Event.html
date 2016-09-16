@@ -59,11 +59,10 @@
                                 <textarea type="text" name="description" class="form-control" ng-model="eventCtrl.event.fileUnit.description" placeholder="Enter description"></textarea>
                             </div>
                             <div class="form-group" ng-class="{ 'has-error' : eventForm.eventtype.$invalid && !eventForm.eventtype.$pristine }">
-                                <label class="col-sm-2 create-event-form">Event type:</label>
-                                <select name="eventtype" class="form-control text-valid" ng-model="eventCtrl.event.eventType" placeholder="Event type" required>
-                                    <option ng-selected="{{eventCtrl.event.eventType | eventType}}" ng-repeat="type in eventCtrl.eventTypes" value="{{type}}">{{type | eventType}}</option>
-                                </select>
-                                <p ng-show="eventForm.name.$error.required && eventForm.name.$touched" class="help-block col-sm-offset-2 event-validation">Type is required</p>
+                                <label class="col-sm-2 create-event-form">Event type: </label>
+                                <input type="text" name="eventtype" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="eventCtrl.event.eventType" placeholder="Event type" required>
+                                <p ng-show="eventForm.eventtype.$error.required && eventForm.eventtype.$touched" class="help-block col-sm-offset-2 event-validation">Type is required</p>
+                                <p ng-show="eventForm.eventtype.$error.pattern" class="help-block col-sm-offset-2 event-validation">Not a valid type</p>
                             </div>
                             <div class="form-group datetimepicker" ng-class="{ 'has-error' : eventForm.date.$invalid && !eventForm.date.$pristine }">
                                 <label class="col-sm-2 create-event-form">Event date:</label>
