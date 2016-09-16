@@ -2,6 +2,9 @@
     <br />
     <div class="btn-group btn-breadcrumb">
         <a ng-click="eventCtrl.getCourseList()" class="btn btn-info"><i class="fa fa-calendar fa-lg"></i> Events</a>
+        <a title="{{eventCtrl.event.fileUnit.name}}" class="btn btn-default">
+            {{eventCtrl.event.fileUnit.name | limitTo: 10}}{{eventCtrl.event.fileUnit.name > 10 ? '...' : ''}}
+        </a>
     </div>
     <div ng-show="!eventCtrl.isEditing">
         <div us-spinner="{radius:5, width:2, length: 5}" style="position:absolute; top:35px; right:60px"></div>
@@ -11,7 +14,7 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <p>
-                            <small class="text-muted" title="event author"><i class="fa fa-user" aria-hidden="true"></i> {{ eventCtrl.event.fileUnit.author.name }}</small>
+                            <small class="text-muted" title="event author"><i class="fa fa-user" aria-hidden="true"></i> {{ eventCtrl.event.author.name }}</small>
                         </p>
                         <p>
                             <small class="text-muted" title="event start date"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> {{ eventCtrl.event.eventDate | date:'dd-MM-yyyy HH:mm' }}</small>

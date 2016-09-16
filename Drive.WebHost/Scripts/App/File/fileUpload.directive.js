@@ -32,10 +32,10 @@
                                     file.filename = fileService.getFileName(file.name);
                                     file.extension = fileService.getFileExtension(file.name);
                                     file.isValid = fileService.checkFileSize(file.size, scope.maxSize);
-                                    scope.dropFile.push(file);
+                                    
                                 });
                             }
-                            reader.readAsBinaryString(file);
+                            reader.readAsArrayBuffer(file);
                         })(files[i]);
                     }
                 });
@@ -61,17 +61,10 @@
                                     file.filename = fileService.getFileName(file.name);
                                     file.extension = fileService.getFileExtension(file.name);
                                     file.isValid = fileService.checkFileSize(file.size, scope.maxSize);
-                                    file.thumbnail = new Image();
-                                    file.thumbnail.onload = function () {
-                                        canvas.width = 100;
-                                        canvas.height = 100;
-                                        ctx.drawImage(img, 0, 0);
-                                    }
-                                    file.thumbnail.src = event.target.result;
                                     scope.inputFile.push(file);
                                 });
                             }
-                            reader.readAsBinaryString(file);
+                            reader.readAsArrayBuffer(file);
                         })(files[i]);
                     }
                 });

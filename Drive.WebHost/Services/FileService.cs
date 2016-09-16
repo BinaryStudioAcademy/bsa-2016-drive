@@ -13,6 +13,7 @@ using Google.Apis.Drive.v3;
 using Drive.DataAccess.Entities.Pro;
 using Driver.Shared.Dto.Pro;
 using System.Drawing;
+using Driver.Shared.Dto.Events;
 
 namespace Drive.WebHost.Services
 {
@@ -382,6 +383,40 @@ namespace Drive.WebHost.Services
             resultCourse.Author.Name = authors.SingleOrDefault(a => a.Id == resultCourse.Author.GlobalId)?.Name;
 
             return resultCourse;
+        }
+
+        public async Task<EventDto> SearchEvent(int id)
+        {
+            var authors = (await _usersService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
+            var events = await _unitOfWork.Events.Query.Include(c => c.FileUnit).Include(c => c.ContentList).Where(x => x.FileUnit.Id == id).Select(ev => new EventDto
+            {
+                Id = ev.Id,
+                FileUnit = new FileUnitDto
+                {
+                    Id = ev.FileUnit.Id,
+                    Name = ev.FileUnit.Name,
+                    Description = ev.FileUnit.Description,
+                    Author = new AuthorDto { Id = ev.FileUnit.Owner.Id, GlobalId = ev.FileUnit.Owner.GlobalId }
+                },
+                EventType = ev.EventType,
+                ContentList = ev.ContentList.Select(c => new EventContentDto
+                {
+                    Id = c.Id,
+                    ContentType = c.ContentType,
+                    Name = c.Name,
+                    Description = c.Description,
+                    Content = c.Content,
+                    Order = c.Order,
+                    CreatedAt = c.CreatedAt,
+                    LastModified = c.LastModified,
+                }),
+                EventDate = ev.EventDate,
+                Author = new AuthorDto { Id = ev.FileUnit.Owner.Id, GlobalId = ev.FileUnit.Owner.GlobalId }
+            }).FirstOrDefaultAsync();
+
+            events.Author.Name = authors.SingleOrDefault(a => a.Id == events.Author.GlobalId)?.Name;
+
+            return events;
         }
 
         public async Task<ICollection<AppDto>> FilterApp(FileType fileType)
