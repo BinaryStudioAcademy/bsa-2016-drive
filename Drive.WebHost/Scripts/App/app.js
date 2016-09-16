@@ -16,7 +16,8 @@
         "driveApp.academyPro",
         "driveApp.events",
         "bootstrapLightbox",
-        "pdf"
+        "pdf",
+        'videosharing-embed'
     ])
     .factory('BaseUrl', function () {
         return window.globalVars.baseUrl;

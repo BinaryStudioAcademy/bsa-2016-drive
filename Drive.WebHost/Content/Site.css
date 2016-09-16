@@ -1300,10 +1300,18 @@ li.folder.on-drag-enter {
     padding-right: 1em;
 }
 
-    li.folder.on-drag-enter img {
-        transition: all 0.3s;
-        height: 77px;
-    }
+li.folder.on-drag-enter img {
+    transition: all 0.3s;
+    height: 77px;
+}
+
+.selected {
+    background-color: lightgray;
+}
+
+.cutted, .dragging{
+    opacity: 0.5;
+}
 /* END Drag'n'Drop */
 
 /*Lecture styles*/
@@ -1516,6 +1524,13 @@ li.folder.on-drag-enter {
 }
 /*End Lecture header*/
 
+/*Course header*/
+.course-header {
+    margin: 0;
+    padding-bottom: 10px;
+}
+/*End Course header*/
+
 /*Lecture view*/
 .lecture-wrap {
     position: relative;
@@ -1591,7 +1606,8 @@ li.folder.on-drag-enter {
     margin-top: 10px;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 40vh;
+    height: 30vh;
+    line-height:0.5em;
 }
 /*end create event content wrap*/
 .create-event-title {
@@ -1612,6 +1628,18 @@ li.folder.on-drag-enter {
     height: 80vh;
 }
 /*Event view*/
+
+/*Edit event view*/
+.edit-event-wrap {
+    position: relative;
+    width: 86%;
+    color: #333;
+    margin-top: 20px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 73vh;
+}
+/*End Edit event view*/
 
 /*Admin>Logs*/
 .input-group .form-control {

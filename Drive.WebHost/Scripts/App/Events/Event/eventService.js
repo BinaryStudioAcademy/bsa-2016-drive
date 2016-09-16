@@ -14,6 +14,7 @@
         var service = {
             getEvent: getEvent,
             pushData: pushData,
+            putData: putData,
             getEventTypes: getEventTypes
         };
 
@@ -44,6 +45,20 @@
 
             function pushDataFailed(error) {
                 console.log('XHR Failed for pushData.' + error.data);
+            }
+        }
+
+        function putData(id, data) {
+            return $http.put(baseUrl + '/api/events/' + id, data)
+                .then(putDataCompleted)
+                .catch(putDataFailed);
+
+            function putDataCompleted(response) {
+                return response.data;
+            }
+
+            function putDataFailed(error) {
+                console.log('XHR Failed for putData.' + error.data);
             }
         }
 

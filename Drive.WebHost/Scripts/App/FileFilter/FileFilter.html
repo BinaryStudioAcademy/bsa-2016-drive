@@ -35,7 +35,7 @@
             <div uib-collapse="space.isCollapsed">
 
                 <ul class="sp-gv-flex-container">
-                    <li class="sp-gv-flex-item" role="button" context-menu="fileFilterCtrl.fileMenuOptions" ng-repeat="file in space.files" ng-show="file.fileType !== 8" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="fileFilterCtrl.openDocument(file)">
+                    <li class="sp-gv-flex-item" role="button" context-menu="fileFilterCtrl.fileMenuOptions" ng-repeat="file in space.files" ng-show="file.fileType !== 8" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="file.fileType !== 10 ? fileFilterCtrl.openDocument(file) : fileFilterCtrl.openLightboxModal(file.id)">
                         <div class="sp-gv-wrapper-flex-item ">
                             <div class="sp-gv-item-content cards">
                                 <div class="sp-gv-item-img-wrapper">
@@ -58,14 +58,14 @@
                 </ul>
 
                 <ul class="sp-gv-flex-container">
-                    <li class="sp-gv-flex-item" role="button" context-menu="fileFilterCtrl.fileMenuOptions" ng-repeat="image in fileFilterCtrl.images" ng-show="image.fileType == 8" ng-dblclick="fileFilterCtrl.openLightboxModal($index)">
-                        <div class="sp-gv-wrapper-flex-item" title="Created {{ image.created | date : 'short' }}">
+                    <li class="sp-gv-flex-item" role="button" context-menu="fileFilterCtrl.fileMenuOptions" ng-repeat="file in space.files" ng-show="file.fileType == 8" ng-dblclick="fileFilterCtrl.openLightboxModal(file.id)">
+                        <div class="sp-gv-wrapper-flex-item" title="Created {{ file.createdAt | date : 'short' }}">
                             <div class="sp-gv-item-content cards">
                                 <div class="sp-gv-item-img-wrapper-image">
-                                    <img ng-src="{{image.thumbUrl}}" class="img-thumbnail" alt="{{ image.fileType | typeOfFile }}" title="{{ image.fileType | typeOfFile }}" />
+                                    <img ng-src="{{file.link}}" class="img-thumbnail" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" />
                                 </div>
                                 <div class="sp-gv-item-text">
-                                    <h4 title="{{image.caption}}">{{image.caption}}</h4>
+                                    <h4 title="{{file.name}}">{{file.name}}</h4>
                                 </div>
                             </div>
                         </div>
@@ -87,7 +87,7 @@
                     <span ng-show="fileFilterCtrl.columnForOrder == 'name'"><i class="fa fa-sort-asc"></i></span>
                     <span ng-show="fileFilterCtrl.columnForOrder == '-name'"><i class="fa fa-sort-desc"></i></span>
                 </div>
-                <div class="col-md-3" ng-click="fileFilterCtrl.orderByColumn('description')">
+                <div class="col-md-5" ng-click="fileFilterCtrl.orderByColumn('description')">
                     Description
                     <span ng-show="fileFilterCtrl.columnForOrder == 'description'"><i class="fa fa-sort-asc"></i></span>
                     <span ng-show="fileFilterCtrl.columnForOrder == '-description'"><i class="fa fa-sort-desc"></i></span>
@@ -102,7 +102,6 @@
                     <span ng-show="fileFilterCtrl.columnForOrder == 'createdAt'"><i class="fa fa-sort-asc"></i></span>
                     <span ng-show="fileFilterCtrl.columnForOrder == '-createdAt'"><i class="fa fa-sort-desc"></i></span>
                 </div>
-                <div class="col-md-2">Type</div>
             </div>
         </div>
         <div class="filter-table-internal">
@@ -111,17 +110,16 @@
                 <div uib-collapse="space.isCollapsed">
                     <div style="transition: all 2s">
                         <div class="filter-table-row">
-                            <div class="row filter-table-row" role="button" ng-repeat="file in space.files | orderBy: fileFilterCtrl.columnForOrder" ng-dblclick="file.fileType !== 8 ? fileFilterCtrl.openDocument(file) : fileFilterCtrl.openLightboxModal($index)" context-menu="fileFilterCtrl.fileMenuOptions">
+                            <div class="row filter-table-row" role="button" ng-repeat="file in space.files | orderBy: fileFilterCtrl.columnForOrder" ng-dblclick="fileFilterCtrl.checkFileType(file.fileType) ? fileFilterCtrl.openDocument(file) : fileFilterCtrl.openLightboxModal(file.id)" context-menu="fileFilterCtrl.fileMenuOptions">
                                 <div class="col-md-3 filter-table-cell description" title="{{ file.name }}">
                                     <img ng-src="{{fileFilterCtrl.chooseIcon(file.fileType)}}" height="{{fileFilterCtrl.iconHeight}}" />
-                                    {{file.name | limitTo: 20}}{{file.name.length > 20 ? '...' : ''}}
+                                    {{file.name | limitTo: 23}}{{file.name.length > 23 ? '...' : ''}}
                                 </div>
-                                <div class="col-md-3 filter-table-cell description" title="{{ file.description }}">
-                                    {{file.description | limitTo: 28}}{{file.description.length > 28 ? '...' : ''}}
+                                <div class="col-md-5 filter-table-cell description" title="{{ file.description }}">
+                                    {{file.description | limitTo: 56}}{{file.description.length > 56 ? '...' : ''}}
                                 </div>
                                 <div class="col-md-2 filter-table-cell">{{ file.author.name }}</div>
                                 <div class="col-md-2 filter-table-cell">{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</div>
-                                <div class="col-md-2 filter-table-cell">{{ file.fileType | typeOfFile }}</div>
                             </div>
                         </div>
                     </div>

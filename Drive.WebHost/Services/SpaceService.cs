@@ -654,24 +654,25 @@ namespace Drive.WebHost.Services
         {
             if (content.FilesId.Count() > 0)
             {
-                var files = await _unitOfWork.Files.Query.Where(f => content.FilesId.Contains(f.Id)).ToListAsync();
+                var files = await _unitOfWork.Files.Query.Include(f => f.FolderUnit).Where(f => content.FilesId.Contains(f.Id)).ToListAsync();
                 for (int i = 0; i < files.Count(); i++)
                 {
-                    files[i].FolderUnit = await _unitOfWork.Folders.GetByIdAsync(content.NewParentId);
+                    files[i].FolderUnit = await _unitOfWork?.Folders?.GetByIdAsync(content.ParentId);
                     files[i].Space = await _unitOfWork.Spaces.GetByIdAsync(content.SpaceId);
                 }
             }
             if (content.FoldersId.Count() > 0)
             {
-                var folders = await _unitOfWork.Folders.Query.Where(f => content.FoldersId.Contains(f.Id)).ToListAsync();
+                var folders = await _unitOfWork.Folders.Query.Include(f => f.FolderUnit).Where(f => content.FoldersId.Contains(f.Id)).ToListAsync();
                 for (int i = 0; i < folders.Count(); i++)
                 {
-                    folders[i].FolderUnit = await _unitOfWork.Folders.GetByIdAsync(content.NewParentId);
+                    folders[i].FolderUnit = await _unitOfWork?.Folders?.GetByIdAsync(content.ParentId);
                     folders[i].Space = await _unitOfWork.Spaces.GetByIdAsync(content.SpaceId);
                 }
             }
             await _unitOfWork.SaveChangesAsync();
         }
+
         public async Task CopyContentAsync(CopyMoveContentDto content)
         {
             if (content.FilesId.Count() > 0)
@@ -681,7 +682,7 @@ namespace Drive.WebHost.Services
                     {
                         Id = fileId,
                         SpaceId = content.SpaceId,
-                        ParentId = content.NewParentId
+                        ParentId = content.ParentId
                     });
                 foreach (var file in filesDto)
                 {
@@ -695,12 +696,24 @@ namespace Drive.WebHost.Services
                     {
                         Id = folderId,
                         SpaceId = content.SpaceId,
-                        ParentId = content.NewParentId
+                        ParentId = content.ParentId
                     });
                 foreach (var folder in foldersDto)
                 {
                     await _folderService.CreateCopyAsync(folder.Id, folder);
                 }
+            }
+        }
+
+        public async Task DeleteContentAsync(CopyMoveContentDto content)
+        {
+            foreach (var id in content.FilesId)
+            {
+                await _fileService.DeleteAsync(id);
+            }
+            foreach (var id in content.FoldersId)
+            {
+                await _folderService.DeleteAsync(id);
             }
         }
 

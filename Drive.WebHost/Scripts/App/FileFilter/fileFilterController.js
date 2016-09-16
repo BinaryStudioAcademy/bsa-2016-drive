@@ -4,9 +4,9 @@
     angular.module("driveApp")
         .controller("FileFilterController", FileFilterController);
 
-    FileFilterController.$inject = ['FileService', '$uibModal', '$routeParams', 'Lightbox'];
+    FileFilterController.$inject = ['FileService', '$uibModal', '$routeParams', 'Lightbox', 'localStorageService'];
 
-    function FileFilterController(fileService, $uibModal, $routeParams, Lightbox) {
+    function FileFilterController(fileService, $uibModal, $routeParams, Lightbox, localStorageService) {
         var vm = this;
 
         vm.changeView = changeView;
@@ -15,11 +15,13 @@
 
         vm.search = search;
         vm.cancelSearch = cancelSearch;
+        vm.checkFileType = checkFileType;
 
         vm.openDocument = openDocument;
         vm.openFileWindow = openFileWindow;
         vm.deleteFile = deleteFile;
         vm.openSharedContentWindow = openSharedContentWindow;
+        vm.openTextFileReader = openTextFileReader;
         vm.sharedContent = sharedContent;
         vm.getBinarySpaceId = getBinarySpaceId;
         vm.openLightboxModal = openLightboxModal;
@@ -27,9 +29,22 @@
         activate();
 
         function activate() {
-            vm.view = "fa fa-th";
-            vm.showTable = true;
-            vm.showGrid = false;
+            var view = localStorageService.get('view');
+            if (view == undefined) {
+                vm.showTable = true;
+                vm.showGrid = false;
+                vm.view = "fa fa-th";
+            }
+            else if (view.showTable) {
+                vm.showTable = true;
+                vm.showGrid = false;
+                vm.view = "fa fa-th";
+            }
+            else {
+                vm.showGrid = true;
+                vm.showTable = false;
+                vm.view = "fa fa-list";
+            }
             vm.columnForOrder = 'name';
             vm.searchText = '';
             vm.iconHeight = 30;
@@ -55,7 +70,31 @@
                             caption: file.name,
                             thumbUrl: file.link,
                             fileType: file.fileType,
-                            created: file.createdAt
+                            created: file.createdAt,
+                            fileId: file.id
+                        });
+                    }
+                }
+
+                getBinarySpaceId(vm.spaces);
+            });
+        }
+
+        function getVideoFiles() {
+            fileService.getFilesApp(vm.filesType, function (data) {
+                vm.spaces = data;
+
+                for (var i = 0; i < vm.spaces.length; i++) {
+                    for (var k = 0; k < vm.spaces[i].files.length; k++) {
+                        var file = vm.spaces[i].files[k];
+                        vm.images.push({
+                            url: file.link,
+                            caption: file.name,
+                            thumbUrl: file.link,
+                            fileType: file.fileType,
+                            created: file.createdAt,
+                            fileId: file.id,
+                            type: 'video'
                         });
                     }
                 }
@@ -71,7 +110,7 @@
                     vm.sharedContent();
                 },
                 function ($itemScope) {
-                    if ($itemScope.file.spaceId == vm.binarySpaceId) {
+                    if ($itemScope.file.spaceId === vm.binarySpaceId) {
                         return false;
                     }
                     return true;
@@ -143,6 +182,30 @@
             }, function () {
                 console.log('Modal dismissed');
             });
+        }
+
+        function openTextFileReader(size, file) {
+
+            var fileReaderModalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'Scripts/App/File/TextFileReader/TextFileReader.html',
+                windowTemplateUrl: 'Scripts/App/File/TextFileReader/Modal.html',
+                controller: 'TextFileReaderCtrl',
+                controllerAs: 'textFileReaderCtrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        return file;
+                    }
+                }
+            });
+
+            fileReaderModalInstance.result.then(function (response) {
+                console.log(response);
+            },
+                function () {
+                    console.log('Modal dismissed');
+                });
         }
 
         function sharedContent() {
@@ -217,14 +280,22 @@
                     activateGridView();
                     vm.icon = 'fa fa-file-image-o fa-lg';
                     break;
+                case 'videos':
+                    vm.filesType = 'Videos';
+                    activateGridView();
+                    getVideoFiles();
+                    vm.icon = 'fa fa-video-camera fa-lg';
+                    break;
             }
         }
 
         function changeView(view) {
-            if (view == "fa fa-th") {
+            if (view === "fa fa-th") {
                 activateGridView();
+                localStorageService.set('view', { showTable: false });
             } else {
                 activateTableView();
+                localStorageService.set('view', { showTable: true });
             }
         }
         function activateTableView() {
@@ -243,17 +314,47 @@
         }
 
         function openDocument(file) {
-            if (file.fileType === 6 || file.fileType === 8) {
-                fileService.downloadFile(file.link);
-            }
-            else {
-                fileService.openFile(file.link);
+            if (file.fileType !== 7) {
+                if (file.fileType === 6) {
+                    var fileExtantion = file.name.slice(file.name.lastIndexOf("."));
+                    if (fileExtantion === '.pdf' || fileExtantion === '.txt' || fileExtantion === '.cs' || fileExtantion === '.js' || fileExtantion === '.html' || fileExtantion === '.css') {
+                        vm.openTextFileReader('lg', file);
+                    }
+                    else {
+                        fileService.downloadFile(file.link);
+                    }
+                }
+                else {
+                    fileService.openFile(file.link);
+                }
+            } else {
+                fileService.findCourse(file.id,
+                    function (data) {
+                        if (data !== undefined) {
+                            $location.url('/apps/academy/' + data.id);
+                        }
+                    });
             }
         }
 
-        function openLightboxModal(index) {
-            Lightbox.openModal(vm.images, index);
-        };
+        function checkFileType(fileType) {
+            if (fileType === 8 || fileType === 10) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
+        function openLightboxModal(fileId) {
+
+            var i;
+            for (i = 0; i < vm.images.length; i++) {
+                if (vm.images[i].fileId === fileId) {
+                    break;
+                }
+            }
+            Lightbox.openModal(vm.images, i);
+        }
 
         function chooseIcon(type) {
             vm.iconSrc = fileService.chooseIcon(type);
@@ -269,6 +370,5 @@
             }
             return 0;
         }
-
     }
 }());

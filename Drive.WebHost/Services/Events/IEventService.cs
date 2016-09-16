@@ -11,7 +11,7 @@ namespace Drive.WebHost.Services.Events
     {
         Task<IEnumerable<EventDto>> GetAllAsync();
         Task<EventDto> GetAsync(int id);
-        Task<CreateEventDto> CreateAsync(CreateEventDto dto);
+        Task<EventDto> CreateAsync(EventDto dto);
         Task<EventDto> UpdateAsync(int id, EventDto dto);
         Task DeleteAsync(int id);
         Task<IEnumerable<AppsEventDto>> SearchEvents(string text);

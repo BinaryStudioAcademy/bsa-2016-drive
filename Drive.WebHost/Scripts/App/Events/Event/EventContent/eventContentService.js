@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('driveApp.academyPro')
+        .module('driveApp.events')
         .factory('EventContentService', EventContentService);
 
     EventContentService.$inject = [

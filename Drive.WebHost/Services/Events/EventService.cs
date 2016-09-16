@@ -26,24 +26,24 @@ namespace Drive.WebHost.Services.Events
             _userService = userService;
         }
 
-        public async Task<CreateEventDto> CreateAsync(CreateEventDto dto)
+        public async Task<EventDto> CreateAsync(EventDto dto)
         {
             var userId = _userService.CurrentUserId;
 
             var contentList = new List<EventContent>();
             contentList.AddRange(dto.ContentList.
                         Select(c => new EventContent
-                                                {
-                                                    Name = c.Name,
-                                                    Description = c.Description,
-                                                    IsDeleted = c.IsDeleted,
-                                                    CreatedAt = DateTime.Now,
-                                                    LastModified = DateTime.Now,
-                                                    ContentType = c.ContentType,
-                                                    Content = c.Content,
-                                                    Order = c.Order
+                            {
+                                Name = c.Name,
+                                Description = c.Description,
+                                IsDeleted = c.IsDeleted,
+                                CreatedAt = DateTime.Now,
+                                LastModified = DateTime.Now,
+                                ContentType = c.ContentType,
+                                Content = c.Content,
+                                Order = c.Order
                                                           
-                                                }));
+                            }));
             var newEvent = new Event
             {
                 IsDeleted = false,
@@ -133,6 +133,8 @@ namespace Drive.WebHost.Services.Events
                                                                                 LastModified = c.FileUnit.LastModified,
                                                                                 SpaceId = c.FileUnit.Space.Id,
                                                                             },
+                                                                            EventDate = c.EventDate,
+                                                                            EventType = c.EventType,
                                                                             Author = new AuthorDto { Id = c.FileUnit.Owner.Id, GlobalId = c.FileUnit.Owner.GlobalId }
                                                                         })
                                                                     }).ToListAsync();
@@ -175,6 +177,8 @@ namespace Drive.WebHost.Services.Events
                              LastModified = c.FileUnit.LastModified,
                              SpaceId = c.FileUnit.Space.Id
                          },
+                         EventDate = c.EventDate,
+                         EventType = c.EventType,
                          Author = new AuthorDto { Id = c.FileUnit.Owner.Id, GlobalId = c.FileUnit.Owner.GlobalId }
                      })
                  }).ToListAsync();
@@ -192,6 +196,7 @@ namespace Drive.WebHost.Services.Events
 
         public async Task<EventDto> GetAsync(int id)
         {
+            var authors = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
             var events = await _unitOfWork.Events.Query.Where(x => x.Id == id).Include(c => c.ContentList).Select(ev => new EventDto
             {
                 Id = ev.Id,
@@ -199,10 +204,11 @@ namespace Drive.WebHost.Services.Events
                 {
                     Id = ev.FileUnit.Id,
                     Name = ev.FileUnit.Name,
-                    Description = ev.FileUnit.Description
+                    Description = ev.FileUnit.Description,
+                    Author = new AuthorDto { Id = ev.FileUnit.Owner.Id, GlobalId = ev.FileUnit.Owner.GlobalId }
                 },
                 EventType = ev.EventType,
-                ContentPhotos = ev.ContentList.Where(content => content.ContentType == ContentType.Photo).Select(c => new EventContentDto
+                ContentList = ev.ContentList.Select(c => new EventContentDto
                 {
                     Id = c.Id,
                     ContentType = c.ContentType,
@@ -213,48 +219,48 @@ namespace Drive.WebHost.Services.Events
                     CreatedAt = c.CreatedAt,
                     LastModified = c.LastModified
                 }),
-                ContentVideoLinks = ev.ContentList.Where(content => content.ContentType == ContentType.Video).Select(c => new EventContentDto
-                {
-                    Id = c.Id,
-                    ContentType = c.ContentType,
-                    Name = c.Name,
-                    Description = c.Description,
-                    Content = c.Content,
-                    Order = c.Order,
-                    CreatedAt = c.CreatedAt,
-                    LastModified = c.LastModified
-                }),
-                ContentSimpleLinks = ev.ContentList.Where(content => content.ContentType == ContentType.Link).Select(c => new EventContentDto
-                {
-                    Id = c.Id,
-                    ContentType = c.ContentType,
-                    Name = c.Name,
-                    Description = c.Description,
-                    Content = c.Content,
-                    Order = c.Order,
-                    CreatedAt = c.CreatedAt,
-                    LastModified = c.LastModified
-                }),
-                ContentTexts = ev.ContentList.Where(content => content.ContentType == ContentType.Text).Select(c => new EventContentDto
-                {
-                    Id = c.Id,
-                    ContentType = c.ContentType,
-                    Name = c.Name,
-                    Description = c.Description,
-                    Content = c.Content,
-                    Order = c.Order,
-                    CreatedAt = c.CreatedAt,
-                    LastModified = c.LastModified
-                }),
-                EventDate = ev.EventDate
+                EventDate = ev.EventDate,
+                Author = new AuthorDto { Id = ev.FileUnit.Owner.Id, GlobalId = ev.FileUnit.Owner.GlobalId }
             }).FirstOrDefaultAsync();
-
+            events.Author.Name = authors.SingleOrDefault(a => a.Id == events.Author.GlobalId)?.Name;
             return events;
         }
 
-        public Task<EventDto> UpdateAsync(int id, EventDto dto)
+        public async Task<EventDto> UpdateAsync(int id, EventDto dto)
         {
-            throw new NotImplementedException();
+            var currentEvent = await _unitOfWork?.Events?.Query
+                .Include(e => e.FileUnit)
+                .Include(e => e.ContentList)
+                .SingleOrDefaultAsync(e => e.Id == id);
+
+            if (currentEvent == null)
+                return null;
+
+            currentEvent.EventType = dto.EventType;
+            currentEvent.EventDate = dto.EventDate;
+            currentEvent.IsDeleted = dto.IsDeleted;
+            currentEvent.FileUnit.Name = dto.FileUnit.Name;
+            currentEvent.FileUnit.Description = dto.FileUnit.Description;
+
+            currentEvent.ContentList.Clear();
+            var contentList = new List<EventContent>();
+            contentList.AddRange(dto.ContentList.
+                        Select(c => new EventContent
+                        {
+                            Name = c.Name,
+                            Description = c.Description,
+                            IsDeleted = c.IsDeleted,
+                            CreatedAt = DateTime.Now,
+                            LastModified = DateTime.Now,
+                            ContentType = c.ContentType,
+                            Content = c.Content,
+                            Order = c.Order
+
+                        }));
+            currentEvent.ContentList = contentList;
+
+            await _unitOfWork.SaveChangesAsync();
+            return dto;
         }
 
         public List<int> GetEventTypes()

@@ -7,10 +7,11 @@
 
     EventsListController.$inject = [
         "EventsListService",
-        '$location'
+        '$location',
+        'localStorageService'
     ];
 
-    function EventsListController(EventsListService, $location) {
+    function EventsListController(EventsListService, $location, localStorageService) {
         var vm = this;
         vm.columnForOrder = 'name';
         vm.openEvent = openEvent;
@@ -40,9 +41,22 @@
 
         function activate() {
             vm.eventsList = [];
-            vm.view = "fa fa-th";
-            vm.showTable = true;
-            vm.showGrid = false;
+            var view = localStorageService.get('view')
+            if (view == undefined) {
+                vm.showTable = true;
+                vm.showGrid = false;
+                vm.view = "fa fa-th";
+            }
+            else if (view.showTable) {
+                vm.showTable = true;
+                vm.showGrid = false;
+                vm.view = "fa fa-th";
+            }
+            else {
+                vm.showGrid = true;
+                vm.showTable = false;
+                vm.view = "fa fa-list";
+            }
             vm.eventColumnForOrder = 'name';
             vm.iconHeight = 30;
             vm.icon = "./Content/Icons/event.svg";
@@ -64,19 +78,23 @@
         function changeView(view) {
             if (view === "fa fa-th") {
                 activateGridView();
+                localStorageService.set('view', { showTable: false });
             } else {
                 activateTableView();
+                localStorageService.set('view', { showTable: true });
             }
         }
 
         function activateTableView() {
             vm.view = "fa fa-th";
             vm.showTable = true;
+            vm.showGrid = false;
         }
 
         function activateGridView() {
             vm.view = "fa fa-list";
             vm.showTable = false;
+            vm.showGrid = true;
         }
 
         function search() {

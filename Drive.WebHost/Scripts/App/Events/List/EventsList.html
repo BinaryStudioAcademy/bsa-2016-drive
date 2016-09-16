@@ -34,7 +34,7 @@
                 <div class="grid-space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ eventspace.name }}</div>
                 <div uib-collapse="space.isCollapsed">
                     <ul class="sp-gv-flex-container">
-                        <li class="sp-gv-flex-item" role="button" ng-repeat="event in eventspace.events" ng-dblclick="eventsListCtrl.openEvent(event.id)" title="Created {{ event.createdAt | date : 'short' }}">
+                        <li class="sp-gv-flex-item" role="button" ng-repeat="event in eventspace.events" context-menu="eventsListCtrl.eventMenuOptions" ng-dblclick="eventsListCtrl.openEvent(event.id)" title="Created {{ event.createdAt | date : 'short' }}">
                             <div class="sp-gv-wrapper-flex-item ">
                                 <div class="sp-gv-item-content cards">
                                     <div class="sp-gv-item-img-wrapper">
@@ -47,9 +47,9 @@
                                             {{event.author.name}}
                                         </h5>
                                         <br />
-                                        <h5 title="Start date {{ event.eventDate | date:'dd-MM-yyyy HH:mm'}}">
+                                        <h5 title="Start date {{ event.fileUnit.createdAt | date:'dd-MM-yyyy HH:mm'}}">
                                             <i class="fa fa-calendar-check-o" aria-hidden="true"></i>
-                                            {{ event.eventDate | date:'dd-MM-yyyy HH:mm'}}
+                                            {{ event.fileUnit.createdAt | date:'dd-MM-yyyy HH:mm'}}
                                         </h5>
                                         <p title="{{event.fileUnit.description}}">{{event.fileUnit.description}}</p>
                                     </div>
@@ -83,7 +83,7 @@
                         <span ng-show="eventsListCtrl.eventColumnForOrder == '-author.name'"><i class="fa fa-sort-desc"></i></span>
                     </div>
                     <div class="col-md-2" ng-click="eventsListCtrl.orderEventByColumn('startDate')">
-                        Start Date
+                        Created
                         <span ng-show="eventsListCtrl.eventColumnForOrder == 'startDate'"><i class="fa fa-sort-asc"></i></span>
                         <span ng-show="eventsListCtrl.eventColumnForOrder == '-startDate'"><i class="fa fa-sort-desc"></i></span>
                     </div>
@@ -102,11 +102,11 @@
                                         {{event.fileUnit.name | limitTo: 15}}{{event.fileUnit.name.length > 15 ? '...' : ''}}
                                     </div>
                                     <div class="col-md-3 filter-table-cell description" title="{{event.fileUnit.description}}">
-                                        {{event.fileUnit.description | limitTo: 40}}{{event.fileUnit.description.length > 40 ? '...' : ''}}
+                                        {{event.fileUnit.description | limitTo: 30}}{{event.fileUnit.description.length > 30 ? '...' : ''}}
                                     </div>
                                     <div class="col-md-2 filter-table-cell">{{ event.author.name }}</div>
-                                    <div class="col-md-2 filter-table-cell">{{ event.eventDate | date:'dd-MM-yyyy HH:mm' }}</div>
-                                    <div class="col-md-2 filter-table-cell">{{ event.fileUnit.fileType | typeOfFile }}</div>
+                                    <div class="col-md-2 filter-table-cell">{{ event.fileUnit.createdAt | date:'dd-MM-yyyy HH:mm' }}</div>
+                                    <div class="col-md-2 filter-table-cell">{{ event.eventType | typeOfEvent }}</div>
                                 </div>
                             </div>
                         </div>

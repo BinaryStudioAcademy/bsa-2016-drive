@@ -29,6 +29,7 @@ namespace Drive.WebHost.Services
         Task CreateUserAndFirstSpaceAsync(string globalId);
         Task MoveContentAsync(CopyMoveContentDto content);
         Task CopyContentAsync(CopyMoveContentDto content);
+        Task DeleteContentAsync(CopyMoveContentDto content);
         void Dispose();
     }
 }

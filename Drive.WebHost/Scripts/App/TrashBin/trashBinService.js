@@ -18,6 +18,7 @@
             restoreFile: restoreFile,
             restoreFolder: restoreFolder,
             restoreSpaces: restoreSpaces,
+            restoreContent: restoreContent,
             orderByColumn: orderByColumn
         };
 
@@ -99,6 +100,15 @@
 
         function restoreSpaces(spaces, callBack) {
             $http.put(baseUrl + '/api/trashbin/spaces', spaces)
+            .then(function (response) {
+                if (callBack) {
+                    callBack(response.data);
+                }
+            });
+        }
+
+        function restoreContent(content, callBack) {
+            $http.put(baseUrl + '/api/trashbin/restore', content)
             .then(function (response) {
                 if (callBack) {
                     callBack(response.data);

@@ -600,6 +600,54 @@ namespace Drive.DataAccess.Context
                     Owner = user1,
                     Link = "https://trello.com/b/FaDwdwiM/driveboard",
                     Space = space2
+                },
+                new FileUnit()
+                {
+                    IsDeleted = false,
+                    Name = "AngularJS for ASP.NET MVC",
+                    FileType = FileType.Videos,
+                    Description = "AngularJS for ASP.NET MVC Developers",
+                    CreatedAt = new DateTime(2016, 8, 15, 15, 7, 23),
+                    LastModified = new DateTime(2016, 8, 15, 15, 7, 23),
+                    Owner = user1,
+                    Link = "https://www.youtube.com/watch?v=f67PFtrldGQ",
+                    Space = space2
+                },
+                new FileUnit()
+                {
+                    IsDeleted = false,
+                    Name = "What's new in C# 6.0",
+                    FileType = FileType.Videos,
+                    Description = "Sample video",
+                    CreatedAt = new DateTime(2016, 8, 15, 15, 7, 23),
+                    LastModified = new DateTime(2016, 8, 15, 15, 7, 23),
+                    Owner = user1,
+                    Link = "https://www.youtube.com/watch?v=YHWCFeE2L-4",
+                    Space = space2
+                },
+                new FileUnit()
+                {
+                    IsDeleted = false,
+                    Name = "Nature Time Lapse",
+                    FileType = FileType.Videos,
+                    Description = "Sample video",
+                    CreatedAt = new DateTime(2016, 8, 15, 15, 7, 23),
+                    LastModified = new DateTime(2016, 8, 15, 15, 7, 23),
+                    Owner = user1,
+                    Link = "https://vimeo.com/7977632",
+                    Space = space2
+                },
+                 new FileUnit()
+                {
+                    IsDeleted = false,
+                    Name = "Northern Lights Time Lapse",
+                    FileType = FileType.Videos,
+                    Description = "Sample video",
+                    CreatedAt = new DateTime(2016, 8, 15, 15, 7, 23),
+                    LastModified = new DateTime(2016, 8, 15, 15, 7, 23),
+                    Owner = user1,
+                    Link = "http://www.dailymotion.com/video/x3dopy7_gorgeous-time-lapse-northern-lights-show_fun",
+                    Space = space2
                 }
             };
             #region English folder

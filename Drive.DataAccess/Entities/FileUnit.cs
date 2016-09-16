@@ -23,6 +23,7 @@ namespace Drive.DataAccess.Entities
         Uploaded,
         AcademyPro,
         Images,
-        Events
+        Events,
+        Videos
     }
 }

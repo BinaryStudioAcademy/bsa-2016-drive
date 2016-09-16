@@ -34,7 +34,7 @@
                 <div class="grid-space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ academyspace.name }}</div>
                 <div uib-collapse="space.isCollapsed">
                     <ul class="sp-gv-flex-container">
-                        <li class="sp-gv-flex-item" role="button" ng-repeat="academy in academyspace.courses" ng-dblclick="academyListCtrl.openCourse(academy.id)" title="Created {{ academy.createdAt | date : 'short' }}">
+                        <li class="sp-gv-flex-item" role="button" ng-repeat="academy in academyspace.courses" ng-dblclick="academyListCtrl.openCourse(academy.id)" context-menu="academyListCtrl.courseMenuOptions" title="Created {{ academy.createdAt | date : 'short' }}">
                             <div class="sp-gv-wrapper-flex-item ">
                                 <div class="sp-gv-item-content cards">
                                     <div class="sp-gv-item-img-wrapper">
@@ -72,7 +72,7 @@
                         <span ng-show="academyListCtrl.courseColumnForOrder == 'fileUnit.name'"><i class="fa fa-sort-asc"></i></span>
                         <span ng-show="academyListCtrl.courseColumnForOrder == '-fileUnit.name'"><i class="fa fa-sort-desc"></i></span>
                     </div>
-                    <div class="col-md-3" ng-click="academyListCtrl.orderCourseByColumn('fileUnit.description')">
+                    <div class="col-md-5" ng-click="academyListCtrl.orderCourseByColumn('fileUnit.description')">
                         Description
                         <span ng-show="academyListCtrl.courseColumnForOrder == 'fileUnit.description'"><i class="fa fa-sort-asc"></i></span>
                         <span ng-show="academyListCtrl.courseColumnForOrder == '-fileUnit.description'"><i class="fa fa-sort-desc"></i></span>
@@ -87,7 +87,6 @@
                         <span ng-show="academyListCtrl.courseColumnForOrder == 'startDate'"><i class="fa fa-sort-asc"></i></span>
                         <span ng-show="academyListCtrl.courseColumnForOrder == '-startDate'"><i class="fa fa-sort-desc"></i></span>
                     </div>
-                    <div class="col-md-2">Type</div>
                 </div>
             </div>
             <div class="filter-table-internal">
@@ -99,14 +98,13 @@
                                 <div class="row filter-table-row" role="button" ng-repeat="academy in academyspace.courses | orderBy: academyListCtrl.courseColumnForOrder" ng-dblclick="academyListCtrl.openCourse(academy.id)" context-menu="academyListCtrl.courseMenuOptions">
                                     <div class="col-md-3 filter-table-cell description" title="{{ academy.fileUnit.name }}">
                                         <img ng-src="{{academyListCtrl.icon}}" height="{{academyListCtrl.iconHeight}}" />
-                                        {{academy.fileUnit.name | limitTo: 15}}{{academy.fileUnit.name.length > 15 ? '...' : ''}}
+                                        {{academy.fileUnit.name | limitTo: 23}}{{academy.fileUnit.name.length > 23 ? '...' : ''}}
                                     </div>
-                                    <div class="col-md-3 filter-table-cell description" title="{{academy.fileUnit.description}}">
-                                        {{academy.fileUnit.description | limitTo: 40}}{{academy.fileUnit.description.length > 40 ? '...' : ''}}
+                                    <div class="col-md-5 filter-table-cell description" title="{{academy.fileUnit.description}}">
+                                        {{academy.fileUnit.description | limitTo: 56}}{{academy.fileUnit.description.length > 56 ? '...' : ''}}
                                     </div>
                                     <div class="col-md-2 filter-table-cell">{{ academy.author.name }}</div>
                                     <div class="col-md-2 filter-table-cell">{{ academy.startDate | date:'dd-MM-yyyy HH:mm' }}</div>
-                                    <div class="col-md-2 filter-table-cell">{{ academy.fileUnit.fileType | typeOfFile }}</div>
                                 </div>
                             </div>
                         </div>

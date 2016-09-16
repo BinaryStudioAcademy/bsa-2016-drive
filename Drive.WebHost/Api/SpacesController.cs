@@ -151,5 +151,14 @@ namespace Drive.WebHost.Api
             await _spaceService.CopyContentAsync(content);
             return Ok();
         }
+
+        // DELETE: api/spaces/deletecontent
+        [HttpPut]
+        [Route("deletecontent")]
+        public async Task<IHttpActionResult> DeleteContent(CopyMoveContentDto content)
+        {
+            await _spaceService.DeleteContentAsync(content);
+            return Ok();
+        }
     }
 }

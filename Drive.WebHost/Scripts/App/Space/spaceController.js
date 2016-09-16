@@ -5,11 +5,12 @@
         .module("driveApp")
         .controller("SpaceController", SpaceController);
 
-    SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', '$uibModal', 'localStorageService', '$routeParams', '$location', 'toastr', '$scope', 'hotkeys'];
+    SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', 'TrashBinService', '$uibModal', 'localStorageService', '$routeParams', '$location', 'toastr', '$scope', 'hotkeys'];
 
     function SpaceController(spaceService,
         folderService,
         fileService,
+        trashBinService,
         $uibModal,
         localStorageService,
         $routeParams,
@@ -26,19 +27,20 @@
         vm.parentId = null;
 
         // vm.getAllFolders = getAllFolders;
+        vm.changeView = changeView;
         vm.getFolder = getFolder;
-        vm.deleteFolder = deleteFolder;
         vm.openFolderWindow = openFolderWindow;
         vm.getFolderContent = getFolderContent;
 
         vm.getFile = getFile;
-        vm.deleteFile = deleteFile;
         vm.openFileWindow = openFileWindow;
         vm.openFileUploadWindow = openFileUploadWindow;
         vm.openDocument = openDocument;
         vm.openNewCourseWindow = openNewCourseWindow;
         vm.createNewAP = createNewAP;
         vm.openSharedContentWindow = openSharedContentWindow;
+        vm.openTextFileReader = openTextFileReader;
+
 
         vm.sharedContent = sharedContent;
 
@@ -60,7 +62,20 @@
 
         vm.redirectToSpaceSettings = redirectToSpaceSettings;
 
-        // Drag and Drop
+        ////// Copy-Cut-Paste-Delelte operations
+        vm.pushToClipboard = pushToClipboard;
+        vm.pasteFromClipboard = pasteFromClipboard;
+        vm.clearClipboard = clearClipboard;
+        vm.deleteContent = deleteContent;
+
+        vm.copyByHotkeys = copyByHotkeys;
+        vm.pasteByHotkeys = pasteByHotkeys;
+        vm.cutByHotkeys = cutByHotkeys;
+        vm.deleteByHotkeys = deleteByHotkeys;
+        vm.undoByHotkeys = undoByHotkeys;
+        vm.selectAllByHotkeys = selectAllByHotkeys;
+
+        ////// Drag and Drop
         vm.onDrop = onDrop;
         vm.dropValidate = dropValidate;
         vm.dndMoveContent = dndMoveContent;
@@ -68,7 +83,7 @@
         vm.getDragImageId = getDragImageId;
         vm.clearDragImage = clearDragImage;
 
-        // Multiselect
+        ////// Multiselect
         vm.selectItems = selectItems;
         vm.selectItemsForDrag = selectItemsForDrag;
         vm.rightClickSelection = rightClickSelection;
@@ -82,259 +97,33 @@
             getContent: null
         }
 
-        vm.pageChanged = function (pageNumber) {
-            vm.paginate.currentPage = pageNumber;
-            vm.paginate.getContent();
-        }
+        //vm.pageChanged = function (pageNumber) {
+        //    vm.paginate.currentPage = pageNumber;
+        //    vm.paginate.getContent();
+        //}
         vm.folderMenuOptionShareShow = true;
         vm.fileMenuOptionShareShow = true;
         vm.sharedModalWindowTitle = null;
 
-        vm.activeRow = activeRow;
-        vm.copyByHotkeys = copyByHotkeys;
-        vm.pasteByHotkeys = pasteByHotkeys;
-        vm.cutByHotkeys = cutByHotkeys;
-        vm.deleteByHotkeys = deleteByHotkeys;
-        vm.undoByHotkeys = undoByHotkeys;
-        vm.lastActionType = undefined;
-        vm.lastItemId = undefined;
-
-
         activate();
 
-        hotkeys.bindTo($scope)
-            .add({
-                combo: 'ctrl+x',
-                callback: function () {
-                    cutByHotkeys();
-                }
-            })
-            .add({
-                combo: 'ctrl+c',
-                callback: function () {
-                    copyByHotkeys();
-                }
-            })
-            .add({
-                combo: 'ctrl+v',
-                callback: function () {
-                    pasteByHotkeys();
-                }
-            })
-            .add({
-                combo: 'del',
-                callback: function () {
-                    deleteByHotkeys();
-                }
-            })
-            .add({
-                combo: 'ctrl+z',
-                callback: function () {
-                    undoByHotkeys();
-                }
-            })
-
-        function undoByHotkeys() {
-            if (vm.lastActionType == 'deleteFile') {
-                fileService.getDeletedFile(vm.lastItemId, function (data) {
-                    var file = data;
-                    file.isDeleted = false;
-                    file.spaceId = vm.spaceId;
-                    file.parentId = vm.parentId;
-
-                    fileService.updateDeletedFile(file.id, localStorageService.get('oldParentId'), file, function () {
-                        if (vm.parentId == null) {
-                            vm.getSpace();
-                        } else {
-                            vm.getFolderContent(vm.parentId);
-                        }
-                    });
-                });
-            }
-            else if (vm.lastActionType == 'deleteFolder') {
-                folderService.getDeleted(vm.lastItemId, function (data) {
-                    var folder = data;
-                    folder.isDeleted = false;
-                    folder.spaceId = vm.spaceId;
-                    folder.parentId = vm.parentId;
-
-                    folderService.updateDeleted(folder.id, localStorageService.get('oldParentId'), folder, function () {
-                        if (vm.parentId == null) {
-                            vm.getSpace();
-                        } else {
-                            vm.getFolderContent(vm.parentId);
-                        }
-                    });
-                });
-            }
-            vm.lastActionType = undefined;
-            vm.lastItemId = undefined;
-        }
-
-        function deleteByHotkeys() {
-            if (vm.row != undefined) {
-                if (!vm.condition) {
-                    vm.lastActionType = 'deleteFolder';
-                    vm.lastItemId = vm.row;
-                    return deleteFolder(vm.row);
-                } else {
-                    vm.lastActionType = 'deleteFile';
-                    vm.lastItemId = vm.row;
-                    return deleteFile(vm.row);
-                }
-            }
-        }
-
-        function activeRow(id, data) {
-            for (var i = 0; i < vm.space.folders.length; i++) {
-                vm.space.folders[i].selected = false;
-            }
-            for (var i = 0; i < vm.space.files.length; i++) {
-                vm.space.files[i].selected = false;
-            }
-            if (id != undefined) {
-                vm.row = id;
-            }
-            if (data == 'true') {
-                vm.condition = true;
-                var pos = vm.space.files.map(function (e) { return e.id; }).indexOf(id);
-                vm.space.files[pos].selected = true;
-            } else {
-                vm.condition = false;
-                var pos = vm.space.folders.map(function (e) { return e.id; }).indexOf(id);
-                vm.space.folders[pos].selected = true;
-            }
-        }
-
-        function copyByHotkeys() {
-            for (var i = 0; i < vm.space.folders.length; i++) {
-                vm.space.folders[i].cutted = false;
-            }
-            for (var i = 0; i < vm.space.files.length; i++) {
-                vm.space.files[i].cutted = false;
-            }
-            if (vm.row != undefined) {
-                localStorageService.clearAll();
-                localStorageService.set('copy', { id: vm.row, file: vm.condition });
-                toastr.info(
-                    'Item has been copied to the clipboard.',
-                    'Space',
-                    {
-                        closeButton: true,
-                        timeOut: 5000
-                    });
-            }
-        }
-
-        function cutByHotkeys() {
-            for (var i = 0; i < vm.space.folders.length; i++) {
-                vm.space.folders[i].cutted = false;
-            }
-            for (var i = 0; i < vm.space.files.length; i++) {
-                vm.space.files[i].cutted = false;
-            }
-            if (vm.row != undefined) {
-                localStorageService.clearAll();
-                localStorageService.set('cut-out', { id: vm.row, file: vm.condition });
-                console.log('cutByHotkeys');
-                console.log(JSON.parse(JSON.stringify(localStorageService.get('cut-out'))));
-                localStorageService.set('oldParentId', vm.parentId);
-                toastr.info(
-                    'Item has been copied to the clipboard.',
-                    'Space',
-                    {
-                        closeButton: true,
-                        timeOut: 5000
-                    });
-                vm.cuttedRow = vm.row;
-                vm.cuttedCondition = vm.condition;
-                if (vm.condition) {
-                    var pos = vm.space.files.map(function (e) { return e.id; }).indexOf(vm.row);
-                    vm.space.files[pos].cutted = true;
-                }
-                else {
-                    var pos = vm.space.folders.map(function (e) { return e.id; }).indexOf(vm.row);
-                    vm.space.folders[pos].cutted = true;
-                }
-            }
-        }
-
-        function pasteByHotkeys() {
-            if (localStorageService.get('cut-out') != null) {
-                var item = localStorageService.get('cut-out');
-                if (item.file) {
-                    deleteFile(item.id, function () {
-                        fileService.getDeletedFile(item.id, function (data) {
-                            var file = data;
-                            file.isDeleted = false;
-                            file.spaceId = vm.spaceId;
-                            file.parentId = vm.parentId;
-
-                            fileService.updateDeletedFile(file.id, localStorageService.get('oldParentId'), file, function () {
-                                if (vm.parentId == null) {
-                                    vm.getSpace();
-                                } else {
-                                    vm.getFolderContent(vm.parentId);
-                                }
-                            });
-                        });
-                    });
-                } else {
-                    deleteFolder(item.id, function () {
-                        folderService.getDeleted(item.id, function (data) {
-                            var folder = data;
-                            folder.isDeleted = false;
-                            folder.spaceId = vm.spaceId;
-                            folder.parentId = vm.parentId;
-
-                            folderService.updateDeleted(folder.id, localStorageService.get('oldParentId'), folder, function () {
-                                if (vm.parentId == null) {
-                                    vm.getSpace();
-                                } else {
-                                    vm.getFolderContent(vm.parentId);
-                                }
-                            });
-                        });
-                    });
-                }
-                localStorageService.set('cut-out', null);
-            }
-            if (localStorageService.get('copy') != null) {
-                if (localStorageService.get('copy').file) {
-                    var file = {};
-                    file.spaceId = vm.spaceId;
-                    file.parentId = vm.parentId;
-
-                    fileService.createCopyFile(localStorageService.get('copy').id, file, function () {
-                        if (vm.parentId == null) {
-                            vm.getSpace();
-                        } else {
-                            vm.getFolderContent(vm.parentId);
-                        }
-                    });
-                } else {
-                    var folder = {};
-                    folder.spaceId = vm.spaceId;
-                    folder.parentId = vm.parentId;
-
-                    folderService.createCopy(localStorageService.get('copy').id, folder, function () {
-                        if (vm.parentId == null) {
-                            vm.getSpace();
-                        } else {
-                            vm.getFolderContent(vm.parentId);
-                        }
-                    });
-                }
-                localStorageService.set('copy', null);
-            }
-            vm.cuttedRow = undefined;
-            vm.cuttedCondition = undefined;
-        }
-
         function activate() {
+            var view = localStorageService.get('view')
+            if (view == undefined) {
+                vm.showTable = true;
+                vm.showGrid = false;
             vm.view = "fa fa-th";
+            }
+            else if (view.showTable) {
             vm.showTable = true;
             vm.showGrid = false;
+                vm.view = "fa fa-th";
+            }
+            else {
+                vm.showGrid = true;
+                vm.showTable = false;
+                vm.view = "fa fa-list";
+            }
             vm.changeView = changeView;
             vm.columnForOrder = 'name';
             vm.reverseSort = false;
@@ -353,13 +142,13 @@
             }
             if ($routeParams.spaceType) {
                 spaceService.getSpaceByType($routeParams.spaceType, function (data) {
-                    vm.spaceId = data;
-                    pagination();
-                    // Hide settings space button for Binary and My space
-                    if ($routeParams.spaceType == 'binaryspace' || $routeParams.spaceType == 'myspace') {
-                        vm.showSettingsBtn = false;
-                    }
-                });
+                        vm.spaceId = data;
+                        pagination();
+                        // Hide settings space button for Binary and My space
+                        if ($routeParams.spaceType == 'binaryspace' || $routeParams.spaceType == 'myspace') {
+                            vm.showSettingsBtn = false;
+                        }
+                    });
                 if ($routeParams.spaceType == 'binaryspace') {
                     vm.folderMenuOptionShareShow = false;
                     vm.fileMenuOptionShareShow = false;
@@ -409,7 +198,7 @@
                     vm.space = data;
                     vm.spaceId = data.id;
                     vm.initSelection();
-            });
+                });
         }
 
         function getSpaceByButton() {
@@ -422,16 +211,17 @@
 
         function getSpaceTotal() {
             spaceService.getSpaceTotal(vm.spaceId, function (data) {
-                vm.paginate.numberOfItems = data;
-            });
+                    vm.paginate.numberOfItems = data;
+                });
         }
-
 
         function changeView(view) {
             if (view == "fa fa-th") {
                 activateGridView();
+                localStorageService.set('view', { showTable: false });
             } else {
                 activateTableView();
+                localStorageService.set('view', { showTable: true });
             }
         }
 
@@ -460,31 +250,14 @@
             null,
             [
                 'Copy', function ($itemScope) {
-                    for (var i = 0; i < vm.space.folders.length; i++) {
-                        vm.space.folders[i].cutted = false;
-                    }
-                    for (var i = 0; i < vm.space.files.length; i++) {
-                        vm.space.files[i].cutted = false;
-                    }
-                    localStorageService.clearAll();
-                    localStorageService.set('copy', { id: $itemScope.folder.id, file: false });
+                    var content = getSelectedItems($itemScope.folder, false);
+                    pushToClipboard(content, true);
                 }
             ],
             [
                 'Cut', function ($itemScope) {
-                    for (var i = 0; i < vm.space.folders.length; i++) {
-                        vm.space.folders[i].cutted = false;
-                    }
-                    for (var i = 0; i < vm.space.files.length; i++) {
-                        vm.space.files[i].cutted = false;
-                    }
-                    localStorageService.clearAll();
-                    localStorageService.set('cut-out', { id: $itemScope.folder.id, file: false });
-                    localStorageService.set('oldParentId', vm.parentId);
-                    vm.cuttedRow = $itemScope.folder.id;
-                    vm.cuttedCondition = false;
-                    var pos = vm.space.folders.map(function (e) { return e.id; }).indexOf(vm.cuttedRow);
-                    vm.space.folders[pos].cutted = true;
+                    var content = getSelectedItems($itemScope.folder, false);
+                    pushToClipboard(content, false);
                 }
             ],
             null,
@@ -498,9 +271,8 @@
             ],
             [
                 'Delete', function ($itemScope) {
-                    vm.lastActionType = 'deleteFolder';
-                    vm.lastItemId = $itemScope.folder.id;
-                    return deleteFolder($itemScope.folder.id);
+                    var content = getSelectedItems($itemScope.folder, false);
+                    deleteContent(content);
                 }
             ]
         ];
@@ -525,31 +297,14 @@
             null,
             [
                 'Copy', function ($itemScope) {
-                    for (var i = 0; i < vm.space.folders.length; i++) {
-                        vm.space.folders[i].cutted = false;
-                    }
-                    for (var i = 0; i < vm.space.files.length; i++) {
-                        vm.space.files[i].cutted = false;
-                    }
-                    localStorageService.clearAll();
-                    localStorageService.set('copy', { id: $itemScope.file.id, file: true });
+                    var content = getSelectedItems($itemScope.file, true);
+                    pushToClipboard(content, true);
                 }
             ],
             [
                 'Cut', function ($itemScope) {
-                    for (var i = 0; i < vm.space.folders.length; i++) {
-                        vm.space.folders[i].cutted = false;
-                    }
-                    for (var i = 0; i < vm.space.files.length; i++) {
-                        vm.space.files[i].cutted = false;
-                    }
-                    localStorageService.clearAll();
-                    localStorageService.set('cut-out', { id: $itemScope.file.id, file: true });
-                    localStorageService.set('oldParentId', vm.parentId);
-                    vm.cuttedRow = $itemScope.file.id;
-                    vm.cuttedCondition = true;
-                    var pos = vm.space.files.map(function (e) { return e.id; }).indexOf(vm.cuttedRow);
-                    vm.space.files[pos].cutted = true;
+                    var content = getSelectedItems($itemScope.file, true);
+                    pushToClipboard(content, false);
                 }
             ],
             null,
@@ -563,9 +318,8 @@
             ],
             [
                 'Delete', function ($itemScope) {
-                    vm.lastActionType = 'deleteFile';
-                    vm.lastItemId = $itemScope.file.id;
-                    return deleteFile($itemScope.file.id);
+                    var content = getSelectedItems($itemScope.file, true);
+                    deleteContent(content);
                 }
             ]
         ];
@@ -575,8 +329,8 @@
             ['New File', function () { vm.createNewFile(); }],
             ['New Academy Pro', function () { vm.createNewAP(); }],
             null,
-            [
-                'Upload File', function ($itemScope) {
+            ['Upload File',
+                function ($itemScope) {
                     vm.file = { fileType: 6, parentId: vm.parentId, spaceId: vm.spaceId };
                     vm.openFileUploadWindow('lg');
                 }
@@ -584,73 +338,12 @@
             null,
             [
                 'Paste', function () {
-                    if (localStorageService.get('cut-out') != null) {
-                        var item = localStorageService.get('cut-out');
-                        if (item.file) {
-                            deleteFile(vm.cuttedRow, function () {
-                                fileService.getDeletedFile(item.id, function (data) {
-                                    var file = data;
-                                    file.isDeleted = false;
-                                    file.spaceId = vm.spaceId;
-                                    file.parentId = vm.parentId;
-
-                                    fileService.updateDeletedFile(file.id, localStorageService.get('oldParentId'), file, function () {
-                                        if (vm.parentId == null) {
-                                            vm.getSpace();
-                                        } else {
-                                            vm.getFolderContent(vm.parentId);
-                                        }
-                                    });
-                                });
-                            });
-                        } else {
-                            deleteFolder(vm.cuttedRow, function () {
-                                folderService.getDeleted(item.id, function (data) {
-                                    var folder = data;
-                                    folder.isDeleted = false;
-                                    folder.spaceId = vm.spaceId;
-                                    folder.parentId = vm.parentId;
-
-                                    folderService.updateDeleted(folder.id, localStorageService.get('oldParentId'), folder, function () {
-                                        if (vm.parentId == null) {
-                                            vm.getSpace();
-                                        } else {
-                                            vm.getFolderContent(vm.parentId);
-                                        }
-                                    });
-                                });
-                            });
-                        }
-                        localStorageService.set('cut-out', null);
-                    }
-                    if (localStorageService.get('copy') != null) {
-                        if (localStorageService.get('copy').file) {
-                            var file = {};
-                            file.spaceId = vm.spaceId;
-                            file.parentId = vm.parentId;
-
-                            fileService.createCopyFile(localStorageService.get('copy').id, file, function () {
-                                if (vm.parentId == null) {
-                                    vm.getSpace();
-                                } else {
-                                    vm.getFolderContent(vm.parentId);
-                                }
-                            });
-                        } else {
-                            var folder = {};
-                            folder.spaceId = vm.spaceId;
-                            folder.parentId = vm.parentId;
-
-                            folderService.createCopy(localStorageService.get('copy').id, folder, function () {
-                                if (vm.parentId == null) {
-                                    vm.getSpace();
-                                } else {
-                                    vm.getFolderContent(vm.parentId);
-                                }
-                            });
-                        }
-                        localStorageService.set('copy', null);
-                    }
+                    var data = localStorageService.get('clipboard');
+                    var isCopy = localStorageService.get('isCopy');
+                    pasteFromClipboard(data, isCopy);
+                }, function ($itemScope) {
+                    var data = localStorageService.get('clipboard');
+                    return data != null;
                 }
             ]
         ];
@@ -786,6 +479,30 @@
                 });
         }
 
+        function openTextFileReader(size, file) {
+
+            var fileReaderModalInstance = $uibModal.open({
+                animation: false,
+                templateUrl: 'Scripts/App/File/TextFileReader/TextFileReader.html',
+                windowTemplateUrl: 'Scripts/App/File/TextFileReader/Modal.html',
+                controller: 'TextFileReaderCtrl',
+                controllerAs: 'textFileReaderCtrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        return file;
+                    }
+                }
+            });
+
+            fileReaderModalInstance.result.then(function (response) {
+                console.log(response);
+            },
+                function () {
+                    console.log('Modal dismissed');
+                });
+        }
+
         function openNewCourseWindow(size) {
 
             var courseModalInstance = $uibModal.open({
@@ -852,8 +569,8 @@
 
         function getFolder(id) {
             folderService.get(id, function (folder) {
-                vm.folder = folder;
-            });
+                    vm.folder = folder;
+                });
         }
 
         //function getAllFolders() {
@@ -869,20 +586,6 @@
                 }
             }
             return -1;
-        }
-
-        function deleteFolder(id, callback) {
-            folderService.deleteFolder(id, function () {
-                vm.paginate.getContent();
-                if (vm.parentId == null) {
-                    getSpaceTotal();
-                } else {
-                    getFolderContentTotal(vm.parentId);
-                }
-                if (callback) {
-                    callback();
-                }
-            });
         }
 
         function getFolderContent(id) {
@@ -905,34 +608,19 @@
                     vm.space.folders = data.folders;
                     vm.space.files = data.files;
                     vm.initSelection();
-            });
+                });
         }
 
         function getFolderContentTotal(id) {
             folderService.getFolderContentTotal(id, function (data) {
-                vm.paginate.numberOfItems = data;
-            });
+                    vm.paginate.numberOfItems = data;
+                });
         }
 
         function getFile(id) {
             fileService.getFile(id, function (file) {
-                vm.file = file;
-            });
-        }
-
-        function deleteFile(id, callback) {
-            fileService.deleteFile(id, function () {
-                vm.paginate.getContent();
-                if (vm.parentId == null) {
-                    getSpaceTotal();
-                } else {
-                    getFolderContentTotal(vm.parentId);
-                }
-                localStorageService.set('files', vm.space.files);
-                if (callback) {
-                    callback();
-                }
-            });
+                    vm.file = file;
+                });
         }
 
         function addElem(folder) {
@@ -977,7 +665,7 @@
                 function (data) {
                     vm.space.folders = data.folders;
                     vm.space.files = data.files;
-            });
+                });
         }
 
         function getNumberOfResultSearch() {
@@ -986,23 +674,39 @@
                 vm.searchText,
                 function (data) {
                     vm.paginate.numberOfItems = data;
-            });
+                });
         }
 
         function openDocument(file) {
             if (file.fileType !== 7) {
-                if (file.fileType === 6 || file.fileType === 8) {
+                if (file.fileType == 6) {
+                    var fileExtantion = file.name.slice(file.name.lastIndexOf("."));
+                    if (fileExtantion == '.pdf' || fileExtantion == '.txt' || fileExtantion == '.cs' || fileExtantion == '.js' || fileExtantion == '.html' || fileExtantion == '.css') {
+                        vm.openTextFileReader('lg', file);
+                    }
+                    else {
                     fileService.downloadFile(file.link);
+                }
+                } else if (file.fileType === 8) {
+                    fileService.downloadFile(file.link);
+                } else if (file.fileType === 9) {
+                    fileService.findEvent(file.id,
+                        function (data) {
+                            if (data != undefined) {
+                                $location.url('/apps/events/' + data.id);
+                            }
+                        });
                 }
                 else {
                     fileService.openFile(file.link);
                 }
             } else {
-                fileService.findCourse(file.id, function (data) {
-                    if (data !== undefined) {
-                        $location.url('/apps/academy/' + data.id);
-                    }
-                });
+                fileService.findCourse(file.id,
+                    function (data) {
+                        if (data !== undefined) {
+                            $location.url('/apps/academy/' + data.id);
+                        }
+                    });
             }
         }
 
@@ -1054,7 +758,206 @@
             return vm.iconSrc;
         }
 
-        //Drag'n'Drop
+        ////// Copy-Cut-Paste-Delelte operations
+        function pushToClipboard(data, isCopy) {
+            data.parentId = vm.parentId;
+            data.spaceId = vm.space.id;
+            localStorageService.set('clipboard', data);
+            localStorageService.set('isCopy', isCopy);
+            if (isCopy) {
+                unmarkAsCutted();
+                toastr.success(
+                    'Data copied to clipboard!', 'Copy',
+                    {
+                        closeButton: true, timeOut: 5000
+                    });
+            }
+            else {
+                markSelectedAsCutted();
+                toastr.success(
+                    'Data cutted to clipboard!', 'Cut',
+                    {
+                        closeButton: true, timeOut: 5000
+                    });
+            }
+        }
+
+        function pasteFromClipboard(data, isCopy) {
+            if (data != null && isCopy != null) {
+                if (isCopy) {
+                    data.parentId = vm.parentId;
+                    data.spaceId = vm.space.id;
+                    spaceService.copyContent(data, function () {
+                        if (vm.parentId == null) {
+                            vm.getSpace();
+                        } else {
+                            vm.getFolderContent(vm.parentId);
+                        }
+                        toastr.success(
+                            'Data successfully copied!', 'Paste',
+                            {
+                                closeButton: true, timeOut: 5000
+                            });
+                    });
+                }
+                else {
+                    if (data.parentId != vm.parentId || data.spaceId != vm.space.id && vm.parentId == null) {
+                        data.parentId = vm.parentId;
+                        data.spaceId = vm.space.id;
+                        spaceService.moveContent(data, function () {
+                            if (vm.parentId == null) {
+                                vm.getSpace();
+                            } else {
+                                vm.getFolderContent(vm.parentId);
+                            }
+                            toastr.success(
+                                'Data successfully moved!', 'Paste',
+                                {
+                                    closeButton: true, timeOut: 5000
+                                });
+                        });
+                    }
+                    else {
+                        unmarkAsCutted();
+                    }
+                    clearClipboard();
+                }
+            }
+            else {
+                // clipboard is empty
+            }
+        }
+
+        function clearClipboard() {
+            localStorageService.remove('clipboard', 'isCopy');
+        }
+
+        function deleteContent(content) {
+            content.parentId = vm.parentId;
+            content.spaceId = vm.space.id;
+            var data = localStorageService.get('clipboard');
+            if (data) {
+                content.foldersId.forEach(function (f) {
+                    if (data.foldersId.some(function (d) { return d == f })) {
+                        clearClipboard();
+                        unmarkAsCutted();
+                    }
+                });
+                content.filesId.forEach(function (f) {
+                    if (data.filesId.some(function (d) { return d == f })) {
+                        clearClipboard();
+                        unmarkAsCutted();
+                    }
+                });
+            }
+            spaceService.deleteContent(content, function () {
+                vm.paginate.getContent();
+                if (vm.parentId == null) {
+                    getSpaceTotal();
+                } else {
+                    getFolderContentTotal(vm.parentId);
+                }
+                vm.deletedContent = content;
+                toastr.success(
+                    'Data moved to trash bin!', 'Delete',
+                    {
+                        closeButton: true, timeOut: 5000
+                    });
+            });
+        }
+
+        ////// HotKeys
+        hotkeys.bindTo($scope)
+        .add({
+            combo: 'ctrl+x',
+            callback: function () {
+                cutByHotkeys();
+            }
+        })
+        .add({
+            combo: 'ctrl+c',
+            callback: function () {
+                copyByHotkeys();
+            }
+        })
+        .add({
+            combo: 'ctrl+v',
+            callback: function () {
+                pasteByHotkeys();
+            }
+        })
+        .add({
+            combo: 'del',
+            callback: function () {
+                deleteByHotkeys();
+            }
+        })
+        .add({
+            combo: 'ctrl+z',
+            callback: function () {
+                undoByHotkeys();
+            }
+        })
+        .add({
+            combo: 'ctrl+a',
+            callback: function (event, hotkey) {
+                event.preventDefault();
+                selectAllByHotkeys();
+            }
+        })
+
+        function undoByHotkeys() {
+            if (vm.deletedContent != null) {
+                trashBinService.restoreContent(vm.deletedContent, function () {
+                    vm.deletedContent = null;
+                    if (vm.parentId == null) {
+                        vm.getSpace();
+                    } else {
+                        vm.getFolderContent(vm.parentId);
+                    }
+                    toastr.success(
+                        'Data was successfully restored!', 'Undo',
+                        {
+                            closeButton: true, timeOut: 5000
+                        });
+                });
+            }
+        }
+
+        function deleteByHotkeys() {
+            var content = getSelectedItems();
+            if (content) {
+                deleteContent(content);
+            }
+        }
+
+        function copyByHotkeys() {
+            var content = getSelectedItems();
+            if (content) {
+                pushToClipboard(content, true);
+            }
+        }
+
+        function cutByHotkeys() {
+            var content = getSelectedItems();
+            if (content) {
+                pushToClipboard(content, false);
+            }
+        }
+
+        function pasteByHotkeys() {
+            var data = localStorageService.get('clipboard');
+            var isCopy = localStorageService.get('isCopy');
+            pasteFromClipboard(data, isCopy);
+        }
+
+        function selectAllByHotkeys() {
+            vm.space.files.forEach(function (f) { f.selected = true; });
+            vm.space.folders.forEach(function (f) { f.selected = true; });
+        }
+
+
+        ////// Drag'n'Drop
         function onDrop(event, channel, targetId, source) {
             if (event.shiftKey || event.ctrlKey) {
                 vm.dndCopyContent(targetId, source);
@@ -1065,27 +968,26 @@
         }
 
         $scope.handleDragStart = function (event) {
-            markSelectedAsCutted();
+            markAsDragging();
             if (!this.classList.contains('selected') && event.shiftKey || !this.classList.contains('selected') && event.ctrlKey) {
                 resetSelection();
-                unmarkAsCutted();
+                unmarkAsDragging();
                 this.classList.add('selected');
             }
         };
-        
-        $scope.handleDragEnd = function (e) {
-            unmarkAsCutted();
+
+        $scope.handleDragEnd = function (event) {
+            unmarkAsDragging();
         };
 
         function dropValidate(target, source) {
-            return !source.foldersId.some(
-                function (id) {
+            return !source.foldersId.some(function (id) {
                     return id == target.id;
                 });
         }
 
         function dndMoveContent(folderId, selectedContent) {
-            selectedContent.newParentId = folderId;
+            selectedContent.parentId = folderId;
             selectedContent.spaceId = vm.space.id;
             spaceService.moveContent(selectedContent, function () {
                 if (vm.parentId == null) {
@@ -1102,7 +1004,7 @@
         }
 
         function dndCopyContent(folderId, selectedContent) {
-            selectedContent.newParentId = folderId;
+            selectedContent.parentId = folderId;
             selectedContent.spaceId = vm.space.id;
             spaceService.copyContent(selectedContent, function () {
                 toastr.success(
@@ -1157,7 +1059,8 @@
         }
         //Drag'n'Drop end 
 
-        //Selection: select-multiselect
+
+        ////// Selection: select-multiselect
         function selectItems(event, item, isFile) {
             if (event.shiftKey) {
                 resetSelection();
@@ -1232,8 +1135,22 @@
             else if (vm.space.files.length > 0) {
                 vm.previousSelect = { data: vm.space.files[0], isFile: true };
             }
-            vm.space.files.forEach(function (f) { f.selected = false; f.cutted = false; });
-            vm.space.folders.forEach(function (f) { f.selected = false; f.cutted = false; });
+            var data = localStorageService.get('clipboard');
+            var isCopy = localStorageService.get('isCopy');
+            if (data != null && !isCopy) {
+                vm.space.files.forEach(function (f) {
+                    f.selected = false;
+                    f.cutted = (data.filesId.some(function(id){return f.id == id;})) ? true : false;
+                });
+                vm.space.folders.forEach(function (f) {
+                    f.selected = false;
+                    f.cutted = (data.foldersId.some(function (id) { return f.id == id; })) ? true : false;
+                });
+            }
+            else {
+                vm.space.files.forEach(function (f) { f.selected = false; f.cutted = false; });
+                vm.space.folders.forEach(function (f) { f.selected = false; f.cutted = false; });
+            }
         }
 
         function resetSelection() {
@@ -1251,17 +1168,27 @@
             vm.space.files.forEach(function (f) { f.cutted = false });
         }
 
+        function markAsDragging() {
+            vm.space.folders.forEach(function (f) { f.isDragging = f.selected });
+            vm.space.files.forEach(function (f) { f.isDragging = f.selected });
+        }
+
+        function unmarkAsDragging() {
+            vm.space.folders.forEach(function (f) { f.isDragging = false });
+            vm.space.files.forEach(function (f) { f.isDragging = false });
+        }
+
         function getSelectedItems(item, isFile) {
             var selected = { filesId: [], foldersId: [] };
             vm.space.files.forEach(function (f) { if (f.selected) selected.filesId.push(f.id) });
             vm.space.folders.forEach(function (f) { if (f.selected) selected.foldersId.push(f.id) });
             if (selected.filesId.length == 0 && selected.foldersId.length == 0) {
+                if (!item) { return false; }
                 if (isFile) { selected.filesId.push(item.id); }
                 else { selected.foldersId.push(item.id); }
             }
             return selected;
         }
         //Selection end
-
     }
 }());

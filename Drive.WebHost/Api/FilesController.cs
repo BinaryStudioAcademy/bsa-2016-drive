@@ -9,6 +9,8 @@ using System.Web;
 using System.Net.Http;
 using System.Net;
 using System.Net.Http.Headers;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Drive.WebHost.Api
 {
@@ -169,6 +171,19 @@ namespace Drive.WebHost.Api
             return Ok(result);
         }
 
+        //GET: api/files/apps/findevent/5
+        [HttpGet]
+        [Route("apps/findevent/{id:int}")]
+        public async Task<IHttpActionResult> SearchEvent(int id)
+        {
+            var result = await _service.SearchEvent(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+
         // GET: api/files?spaceId=(int)&parentId=(int)
         [Route("~/api/files/parent")]
         [HttpGet]
@@ -186,23 +201,28 @@ namespace Drive.WebHost.Api
         {
             int parent = parentId ?? 0;
             string result = "";
+            int i = 0;
             HttpRequest request = HttpContext.Current.Request;
             try
             {
+                var data = JsonConvert.DeserializeObject<List<AdditionalData>>(request.Form[i]);
                 foreach (string file in request.Files)
                 {
+                    var fileData = data.ElementAt(i);
                     var fileContent = request.Files[file];
                     if (fileContent != null && fileContent.ContentLength > 0)
                     {
-                        result = await _service?.UploadFile(fileContent, spaceId, parent);
+                        result = await _service?.UploadFile(fileContent, fileData, spaceId, parent);
+
                     }
+                    i++;
                 }
-                return Ok(result);
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 return BadRequest(e.Message.ToString());
             }
+            return Ok(result);
         }
 
         // GET: api/files/dowload&fileId=(string)

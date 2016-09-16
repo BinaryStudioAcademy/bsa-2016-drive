@@ -19,15 +19,15 @@
                             <label class="col-sm-2 create-event-form">Event name:</label>
                             <input type="text" name="name" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="eventCreateCtrl.event.fileUnit.name" placeholder="Event name" required>
                             <p ng-show="eventForm.name.$error.required && eventForm.name.$touched" class="help-block col-sm-offset-2 event-validation">Name is required</p>
-                            <p ng-show="eventForm.name.$error.pattern" class="help-block col-sm-offset-2 lecture-validation">Not a valid name</p>
+                            <p ng-show="eventForm.name.$error.pattern" class="help-block col-sm-offset-2 event-validation">Not a valid name</p>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 create-event-form">Description:</label>
                             <textarea type="text" name="description" class="form-control" ng-model="eventCreateCtrl.event.fileUnit.description" placeholder="Enter description"></textarea>
                         </div>
-                        <div class="form-group" ng-class="{ 'has-error' : eventForm.name.$invalid && !eventForm.name.$pristine }">
+                        <div class="form-group" ng-class="{ 'has-error' : eventForm.eventtype.$invalid && !eventForm.eventtype.$pristine }">
                             <label class="col-sm-2 create-event-form">Event type:</label>
-                            <select class="form-control text-valid" ng-model="eventCreateCtrl.event.eventType" placeholder="Event type" required>
+                            <select name="eventtype" class="form-control text-valid" ng-model="eventCreateCtrl.event.eventType" placeholder="Event type" required>
                                 <option ng-repeat="type in eventCreateCtrl.eventTypes" value="{{type}}">{{type | eventType}}</option>
                             </select>
                             <p ng-show="eventForm.name.$error.required && eventForm.name.$touched" class="help-block col-sm-offset-2 event-validation">Type is required</p>
@@ -41,8 +41,8 @@
                                            timepicker-options="eventCreateCtrl.calendar.timepickerOptions" required />
                                     <button type="button" class="btn btn-default" ng-click="eventCreateCtrl.calendar.openCalendar($event, prop)"><i class="fa fa-calendar"></i></button>
                                 </span>
-                                <p ng-show="eventForm.date.$error.required && eventForm.date.$touched" class="help-block col-sm-offset-2 event-validation">Date is required</p>
-                                <p ng-show="eventForm.date.$error.datetime" class="help-block col-sm-offset-2 lecture-validation">Not a valid date</p>
+                            <p ng-show="eventForm.date.$error.required && eventForm.date.$touched" class="help-block col-sm-offset-2 event-validation">Date is required</p>
+                            <p ng-show="eventForm.date.$error.datetime" class="help-block col-sm-offset-2 event-validation">Not a valid date</p>
                             </p>
                         </div>
                     </form>
@@ -59,17 +59,18 @@
                     <li><a ng-click="eventCreateCtrl.newSimpleLink()">New link</a></li>
                 </ul>
             </div>
-            <br/>
-            <div ng-if ="eventCreateCtrl.showEditArea">
+            <br />
+            <div ng-if="eventCreateCtrl.showEditArea">
                 <create-event-content contents-model="eventCreateCtrl.currentContent"
                                       content-list="eventCreateCtrl.event.contentList"
                                       after-save-method="eventCreateCtrl.contentSaved">
                 </create-event-content>
-                </div>
+            </div>
             <div class="create-eventcontent-wrap" dnd-list="eventCreateCtrl.event.contentList">
                 <div ng-repeat="content in eventCreateCtrl.event.contentList"
                      dnd-draggable="content" dnd-effect-allowed="move"
                      dnd-moved="eventCreateCtrl.event.contentList.splice($index, 1)">
+                    <br />
                     <div class="space-label" ng-click="content.isCollapsed = !content.isCollapsed">
                         {{ content.contentType | contentType}}: {{content.name | limitTo: 20}}{{content.name.length > 20 ? '...' : ''}}
                         <i role="button" class="fa fa-trash fa-lg pull-right" ng-click="eventCreateCtrl.removeContent($index)" title="Delete content" aria-hidden="true"></i>
@@ -77,9 +78,8 @@
                     </div>
                     <div uib-collapse="content.isCollapsed">
                         <div class="row" ng-if="content.contentType == 1">
-                            <br/>
                             <div class="col-md-12">
-                                <p style="display: block">
+                                <p style="display: block;line-height:1em;">
                                     {{content.content}}
                                 </p>
                             </div>
@@ -87,20 +87,22 @@
                         <div class="thumbnail" ng-if="content.contentType == 2">
                             <img src="{{content.content}}" alt="content.name">
                         </div>
-                        <div class="col-md-12" ng-if="content.contentType == 3">
-                            <div>
-                                <youtube-video video-url="content.content"></youtube-video>
+                        <div class="row" ng-if="content.contentType == 3">
+                            <div class="col-md-12">
+                                <youtube-video player-width="'100%'" video-url="content.content"></youtube-video>
                             </div>
                         </div>
-                        <div class="col-md-12" ng-if="content.contentType == 4">
+                        <div class="row" ng-if="content.contentType == 4">
+                            <div class="col-md-12">
+                                <p>
                                 <a ng-href="{{content.content}}" target="_blank">{{content.content}} <i class="fa fa-external-content" aria-hidden="true"></i></a>
+                                </p>
                                 <p>{{content.description}}</p>
-                            
+                            </div>
                         </div>
-                    </div> 
                     </div>
-                   </div>
                 </div>
+            </div>
+        </div>
     </div>
 </div>
-

@@ -117,9 +117,10 @@
         };
 
         function editContent(index) {
+            vm.event.contentList[index].order = index;
             vm.currentContent = vm.event.contentList[index];
             vm.showEditArea = true;
-            vm.event.contentList.splice(index, 1);
+            //vm.event.contentList.splice(index, 1);
         }
 
     }

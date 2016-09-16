@@ -66,6 +66,7 @@
     <Compile Include="Context\DriveDBInitializer.cs" />
     <Compile Include="Entities\Event\Event.cs" />
     <Compile Include="Entities\Event\EventContent.cs" />
+    <Compile Include="Entities\ImageUnit.cs" />
     <Compile Include="Entities\Log.cs" />
     <Compile Include="Entities\Pro\AcademyProCourse.cs" />
     <Compile Include="Entities\Pro\CodeSample.cs" />

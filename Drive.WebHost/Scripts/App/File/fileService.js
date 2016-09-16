@@ -28,7 +28,12 @@
             uploadFile: uploadFile,
             downloadFile: downloadFile,
             getFileNameFromHeader: getFileNameFromHeader,
+            getFileName: getFileName,
+            getFileExtension: getFileExtension, 
+            checkFileSize: checkFileSize,
+            checkFilesValidationProperty: checkFilesValidationProperty,
             findCourse: findCourse,
+            findEvent: findEvent,
             fileTextReader: fileTextReader
     };
 
@@ -117,19 +122,22 @@
                     });
         }
 
-        function uploadFile(spaceId, parentId, file, callBack) {
+        function uploadFile(spaceId, parentId, files, filedata, callBack) {
 
-            var fd = new FormData();
-            fd.append('file', file);
+            var data = new FormData();
+            for (var i = 0; i < files.length; i++) {
+                data.append("file" + i, files[i]);
+                data.append("data" + i, JSON.stringify(filedata));
+            }
 
-            $http.post(baseUrl + '/api/files/upload?spaceId=' + spaceId + '&parentId=' + parentId, fd,
+            $http.post(baseUrl + '/api/files/upload?spaceId=' + spaceId + '&parentId=' + parentId, data,
                 {
-                withCredentials: false,
-                headers: {
-                    'Content-Type': undefined
-                },
-                transformRequest: angular.identity
-            })
+                    withCredentials: false,
+                    headers: {
+                        'Content-Type': undefined
+                    },
+                    transformRequest: angular.identity
+                })
             .then(function (response) {
                 if (callBack) {
                     callBack(response.data);
@@ -169,6 +177,28 @@
                         console.log(ex);
                     }
                 });
+        }
+        function getFileName(fileName) {
+            var name = fileName.substr(0, fileName.lastIndexOf('.'));
+            return name;
+        }
+        function getFileExtension(fileName) {
+            var extension = fileName.substr(fileName.lastIndexOf('.'));
+            return extension;
+        }
+        function checkFileSize(size, maxSize) {
+            if ((size / 1024) / 1024 > maxSize) {
+                return false;
+            }
+            else return true;
+        }
+        function checkFilesValidationProperty(array) {
+            for (var i = 0; i < array.length; i++) {
+                if (!array[i].isValid) {
+                    return false;
+                }
+            }
+            return true;
         }
 
         function fileTextReader(fileId, callBack) {
@@ -260,6 +290,18 @@
                     });
         }
 
+        function findEvent(id, callback) {
+            $http.get(baseUrl + '/api/files/apps/findevent/' + id)
+            .then(function (response) {
+                if (callback) {
+                    callback(response.data);
+                }
+            },
+            function () {
+                console.log('Error while getting event!');
+            });
+        }
+
         function chooseIcon(type) {
             switch (type) {
                 case 0:
@@ -280,6 +322,10 @@
                     return "./Content/Icons/academyPro.svg";
                 case 8:
                     return "./Content/Icons/image.svg";
+                case 9:
+                    return "./Content/Icons/event.svg";
+                case 10:
+                    return "./Content/Icons/video.svg";
                 default:
                     return "./Content/Icons/link.svg";
             }
