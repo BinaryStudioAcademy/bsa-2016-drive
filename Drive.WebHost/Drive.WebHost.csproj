@@ -447,6 +447,7 @@
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="App_Data\Drive-9345df2608d2.json" />
+    <Content Include="App_Data\Google.Apis.Auth.OAuth2.Responses.TokenResponse-user" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Scripts\App\Academy\Lecture\lectureLinks.directive.html" />
