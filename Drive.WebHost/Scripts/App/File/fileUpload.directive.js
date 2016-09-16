@@ -32,10 +32,10 @@
                                     file.filename = fileService.getFileName(file.name);
                                     file.extension = fileService.getFileExtension(file.name);
                                     file.isValid = fileService.checkFileSize(file.size, scope.maxSize);
-                                    scope.dropFile.push(file);
+                                    
                                 });
                             }
-                            reader.readAsBinaryString(file);
+                            reader.readAsArrayBuffer(file);
                         })(files[i]);
                     }
                 });
@@ -61,9 +61,10 @@
                                     file.filename = fileService.getFileName(file.name);
                                     file.extension = fileService.getFileExtension(file.name);
                                     file.isValid = fileService.checkFileSize(file.size, scope.maxSize);
+                                    scope.inputFile.push(file);
                                 });
                             }
-                            reader.readAsBinaryString(file);
+                            reader.readAsArrayBuffer(file);
                         })(files[i]);
                     }
                 });
