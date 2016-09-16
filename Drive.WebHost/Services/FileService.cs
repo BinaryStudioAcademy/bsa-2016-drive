@@ -530,7 +530,7 @@ namespace Drive.WebHost.Services
             }
             catch (Exception e)
             {
-                throw e;
+                throw new Exception("Failed to authorize Drive service " + e.Message);
             }
 
             Google.Apis.Drive.v3.Data.File body = new Google.Apis.Drive.v3.Data.File();
@@ -575,10 +575,17 @@ namespace Drive.WebHost.Services
             }
             else
             {
+                string link = "";
                 try
                 {
-                    var link = await UploadToDriveAsync(service, body, stream, mimeType);
-
+                    link = await UploadToDriveAsync(service, body, stream, mimeType);
+                }
+                catch (Exception e)
+                {
+                    throw new Exception("Failed to upload file to drive " + e.Message);
+                }
+                try
+                {
                     var fileDto = new FileUnit()
                     {
                         Name = filename,
@@ -599,7 +606,7 @@ namespace Drive.WebHost.Services
                 }
                 catch (Exception e)
                 {
-                    throw e;
+                    throw new Exception("Failed to save file to data base " + e.Message);
                 }
             }
             return "Files uploaded successfully";
