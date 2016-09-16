@@ -28,6 +28,7 @@
         vm.removeContent = removeContent;
         vm.editContent = editContent;
         vm.updateEvent = updateEvent;
+        vm.cancelEvent = cancelEvent;
         vm.update = update;
         
         activate();
@@ -121,6 +122,11 @@
 
         function trustSrc(src) {
             return $sce.trustAsResourceUrl(src);
+        }
+
+        function cancelEvent() {
+            vm.isEditing = false;
+            return vm.getEvent();
         }
     }
 })();

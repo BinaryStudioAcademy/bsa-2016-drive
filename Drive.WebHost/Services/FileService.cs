@@ -14,6 +14,7 @@ using Drive.DataAccess.Entities.Pro;
 using Driver.Shared.Dto.Pro;
 using System.Drawing;
 using Driver.Shared.Dto.Events;
+using Drive.Logging;
 
 namespace Drive.WebHost.Services
 {
@@ -21,11 +22,13 @@ namespace Drive.WebHost.Services
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IUsersService _usersService;
+        private readonly ILogger _logger;
 
-        public FileService(IUnitOfWork unitOfWork, IUsersService usersService)
+        public FileService(IUnitOfWork unitOfWork, IUsersService usersService, ILogger logger)
         {
             _unitOfWork = unitOfWork;
             _usersService = usersService;
+            _logger = logger;
         }
 
         public async Task<IEnumerable<FileUnitDto>> GetAllAsync()
@@ -500,6 +503,7 @@ namespace Drive.WebHost.Services
 
         public async Task<string> UploadFile(HttpPostedFile file, AdditionalData fileData, int spaceId, int parentId)
         {
+            _logger.WriteInfo("Upload method started");
             var user = await _usersService.GetCurrentUser();
             var localUser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == user.serverUserId);
 
@@ -513,30 +517,34 @@ namespace Drive.WebHost.Services
             List<User> ModifyPermittedUsers = new List<User>();
 
             ModifyPermittedUsers.Add(localUser);
-
+            _logger.WriteInfo("Getting file info");
             string filename = fileData.Name + fileData.Extension;
             string mimeType = GetMimeType(filename);
             var isImage = IsImageMime(mimeType);
+            _logger.WriteInfo("File name: " + filename + ", Mime type: " + mimeType);
 
             // File's content.
             Stream filestream = file.InputStream;
             byte[] byteArray = ReadFully(filestream);
             MemoryStream stream = new MemoryStream(byteArray);
-
+            _logger.WriteInfo("File content stream: " + stream.Length);
             DriveService service;
             try
             {
+                _logger.WriteInfo("Authorization started");
                 service = AuthorizationService.ServiceAccountAuthorization();
+                _logger.WriteInfo("Authorization succeeded");
             }
             catch (Exception e)
             {
                 throw new Exception("Failed to authorize Drive service " + e.Message);
             }
-
+            
             Google.Apis.Drive.v3.Data.File body = new Google.Apis.Drive.v3.Data.File();
             body.Name = filename;
             body.MimeType = mimeType;
             body.Parents = null;
+            _logger.WriteInfo("File body created: " + body.Name);
 
             if (isImage)
             {
@@ -578,7 +586,9 @@ namespace Drive.WebHost.Services
                 string link = "";
                 try
                 {
+                    _logger.WriteInfo("Begin upload");
                     link = await UploadToDriveAsync(service, body, stream, mimeType);
+                    _logger.WriteInfo("Upload completed");
                 }
                 catch (Exception e)
                 {
@@ -603,9 +613,11 @@ namespace Drive.WebHost.Services
                     };
                     _unitOfWork?.Files?.Create(fileDto);
                     await _unitOfWork?.SaveChangesAsync();
+                    _logger.WriteInfo("File saved to database");
                 }
                 catch (Exception e)
                 {
+                    _logger.WriteError(e, e.Message);
                     throw new Exception("Failed to save file to data base " + e.Message);
                 }
             }
@@ -650,13 +662,18 @@ namespace Drive.WebHost.Services
             string result = "";
             try
             {
+                _logger.WriteInfo("Creating upload request ");
                 FilesResource.CreateMediaUpload request = service.Files.Create(body, stream, mimeType);
+                _logger.WriteInfo("Uploading file to google drive");
                 await request.UploadAsync();
+                _logger.WriteInfo("Upload succeeded");
                 result = request.ResponseBody.Id;
+                _logger.WriteInfo("Result file id: " + result);
             }
             catch (Exception e)
             {
-                throw (e);
+                _logger.WriteError(e, e.Message);
+                throw e;
             }
             return result;
         }

@@ -248,19 +248,18 @@
             if (file.fileType !== 7) {
                 if (file.fileType == 6) {
                     fileService.downloadFile(file.link);
-                }
-                else {
+                } else {
                     window.open(file.link, '_blank');;
-                }                
+                }
             } else {
                 fileService.findCourse(file.id,
-                    function (data) {
+                    function(data) {
                         if (data !== undefined) {
                             $location.url('/apps/academy/' + data.id);
                         }
                     });
             }
-            
+
         }
 
         function orderByColumn(column) {

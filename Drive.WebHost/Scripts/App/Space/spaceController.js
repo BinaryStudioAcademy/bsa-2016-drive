@@ -5,7 +5,7 @@
         .module("driveApp")
         .controller("SpaceController", SpaceController);
 
-    SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', 'TrashBinService', '$uibModal', 'localStorageService', '$routeParams', '$location', 'toastr', '$scope', 'hotkeys'];
+    SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', 'TrashBinService', '$uibModal', 'localStorageService', '$routeParams', '$location', 'toastr', '$scope', 'hotkeys', 'Lightbox'];
 
     function SpaceController(spaceService,
         folderService,
@@ -17,7 +17,8 @@
         $location,
         toastr,
         $scope,
-        hotkeys) {
+        hotkeys,
+        Lightbox) {
         var vm = this;
 
         vm.folderList = [];
@@ -40,7 +41,6 @@
         vm.createNewAP = createNewAP;
         vm.openSharedContentWindow = openSharedContentWindow;
         vm.openTextFileReader = openTextFileReader;
-
 
         vm.sharedContent = sharedContent;
 
@@ -90,6 +90,9 @@
         vm.initSelection = initSelection;
         vm.getSelectedItems = getSelectedItems;
 
+        vm.openLightboxModal = openLightboxModal;
+        vm.checkFileType = checkFileType;
+
         vm.paginate = {
             currentPage: 1,
             pageSize: 15,
@@ -134,6 +137,8 @@
                 files: []
             }
 
+            vm.images = [];
+
             if ($routeParams.id) {
                 vm.spaceId = $routeParams.id;
                 pagination();
@@ -145,7 +150,7 @@
                         vm.spaceId = data;
                         pagination();
                         // Hide settings space button for Binary and My space
-                        if ($routeParams.spaceType == 'binaryspace' || $routeParams.spaceType == 'myspace') {
+                        if ($routeParams.spaceType === 'binaryspace' || $routeParams.spaceType === 'myspace') {
                             vm.showSettingsBtn = false;
                         }
                     });
@@ -191,12 +196,39 @@
         }
 
         function getSpaceContent() {
-            spaceService.getSpace(vm.spaceId, 
+            spaceService.getSpace(vm.spaceId,
                 vm.paginate.currentPage,
                 vm.paginate.pageSize,
-                vm.sortByDate, function (data) {
+                vm.sortByDate,
+                function(data) {
                     vm.space = data;
                     vm.spaceId = data.id;
+
+                    for (var k = 0; k < vm.space.files.length; k++) {
+                        var file = vm.space.files[k];
+
+                        if (file.fileType === 8) {
+                            vm.images.push({
+                                url: file.link,
+                                caption: file.name,
+                                thumbUrl: file.link,
+                                fileType: file.fileType,
+                                created: file.createdAt,
+                                fileId: file.id
+                            });
+                        } else if (file.fileType === 10) {
+                            vm.images.push({
+                                url: file.link,
+                                caption: file.name,
+                                thumbUrl: file.link,
+                                fileType: file.fileType,
+                                created: file.createdAt,
+                                fileId: file.id,
+                                type: 'video'
+                            });
+                        }
+                    }
+
                     vm.initSelection();
                 });
         }
@@ -209,6 +241,24 @@
             localStorageService.set('current', null);
         }
 
+        function openLightboxModal(fileId) {
+            var i;
+            for (i = 0; i < vm.images.length; i++) {
+                if (vm.images[i].fileId === fileId) {
+                    break;
+                }
+            }
+            Lightbox.openModal(vm.images, i);
+        }
+
+        function checkFileType(fileType) {
+            if (fileType === 8 || fileType === 10) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
         function getSpaceTotal() {
             spaceService.getSpaceTotal(vm.spaceId, function (data) {
                     vm.paginate.numberOfItems = data;
@@ -216,7 +266,7 @@
         }
 
         function changeView(view) {
-            if (view == "fa fa-th") {
+            if (view === "fa fa-th") {
                 activateGridView();
                 localStorageService.set('view', { showTable: false });
             } else {
@@ -681,28 +731,29 @@
             if (file.fileType !== 7) {
                 if (file.fileType == 6) {
                     var fileExtantion = file.name.slice(file.name.lastIndexOf("."));
-                    if (fileExtantion == '.pdf' || fileExtantion == '.txt' || fileExtantion == '.cs' || fileExtantion == '.js' || fileExtantion == '.html' || fileExtantion == '.css') {
+                    if (fileExtantion == '.pdf' ||
+                        fileExtantion == '.txt' ||
+                        fileExtantion == '.cs' ||
+                        fileExtantion == '.js' ||
+                        fileExtantion == '.html' ||
+                        fileExtantion == '.css') {
                         vm.openTextFileReader('lg', file);
+                    } else {
+                        fileService.downloadFile(file.link);
                     }
-                    else {
-                    fileService.downloadFile(file.link);
-                }
-                } else if (file.fileType === 8) {
-                    fileService.downloadFile(file.link);
                 } else if (file.fileType === 9) {
                     fileService.findEvent(file.id,
-                        function (data) {
+                        function(data) {
                             if (data != undefined) {
                                 $location.url('/apps/events/' + data.id);
                             }
                         });
-                }
-                else {
+                } else {
                     fileService.openFile(file.link);
                 }
             } else {
                 fileService.findCourse(file.id,
-                    function (data) {
+                    function(data) {
                         if (data !== undefined) {
                             $location.url('/apps/academy/' + data.id);
                         }
