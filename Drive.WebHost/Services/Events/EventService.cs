@@ -196,6 +196,7 @@ namespace Drive.WebHost.Services.Events
 
         public async Task<EventDto> GetAsync(int id)
         {
+            var authors = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
             var events = await _unitOfWork.Events.Query.Where(x => x.Id == id).Include(c => c.ContentList).Select(ev => new EventDto
             {
                 Id = ev.Id,
@@ -203,7 +204,8 @@ namespace Drive.WebHost.Services.Events
                 {
                     Id = ev.FileUnit.Id,
                     Name = ev.FileUnit.Name,
-                    Description = ev.FileUnit.Description
+                    Description = ev.FileUnit.Description,
+                    Author = new AuthorDto { Id = ev.FileUnit.Owner.Id, GlobalId = ev.FileUnit.Owner.GlobalId }
                 },
                 EventType = ev.EventType,
                 ContentList = ev.ContentList.Select(c => new EventContentDto
@@ -217,9 +219,10 @@ namespace Drive.WebHost.Services.Events
                     CreatedAt = c.CreatedAt,
                     LastModified = c.LastModified
                 }),
-                EventDate = ev.EventDate
+                EventDate = ev.EventDate,
+                Author = new AuthorDto { Id = ev.FileUnit.Owner.Id, GlobalId = ev.FileUnit.Owner.GlobalId }
             }).FirstOrDefaultAsync();
-
+            events.Author.Name = authors.SingleOrDefault(a => a.Id == events.Author.GlobalId)?.Name;
             return events;
         }
 

@@ -171,6 +171,19 @@ namespace Drive.WebHost.Api
             return Ok(result);
         }
 
+        //GET: api/files/apps/findevent/5
+        [HttpGet]
+        [Route("apps/findevent/{id:int}")]
+        public async Task<IHttpActionResult> SearchEvent(int id)
+        {
+            var result = await _service.SearchEvent(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+
         // GET: api/files?spaceId=(int)&parentId=(int)
         [Route("~/api/files/parent")]
         [HttpGet]

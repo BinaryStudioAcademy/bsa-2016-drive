@@ -4,6 +4,7 @@ using Driver.Shared.Dto;
 using Drive.DataAccess.Entities;
 using System.Web;
 using Driver.Shared.Dto.Pro;
+using Driver.Shared.Dto.Events;
 
 namespace Drive.WebHost.Services
 {
@@ -30,6 +31,7 @@ namespace Drive.WebHost.Services
         Task<string> UploadFile(HttpPostedFile file, AdditionalData fileData, int spaceId, int folderId);
         Task<DownloadFileDto> DownloadFile(string spaceId);
         Task<AcademyProCourseDto> SearchCourse(int fileId);
+        Task<EventDto> SearchEvent(int fileId);
         void Dispose();
     }
 }

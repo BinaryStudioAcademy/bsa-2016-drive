@@ -687,9 +687,17 @@
                     else {
                     fileService.downloadFile(file.link);
                 }
-                } else if (ile.fileType === 8) {
+                } else if (file.fileType === 8) {
                     fileService.downloadFile(file.link);
-                } else {
+                } else if (file.fileType === 9) {
+                    fileService.findEvent(file.id,
+                        function (data) {
+                            if (data != undefined) {
+                                $location.url('/apps/events/' + data.id);
+                            }
+                        });
+                }
+                else {
                     fileService.openFile(file.link);
                 }
             } else {

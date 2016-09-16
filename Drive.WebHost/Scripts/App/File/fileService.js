@@ -33,6 +33,7 @@
             checkFileSize: checkFileSize,
             checkFilesValidationProperty: checkFilesValidationProperty,
             findCourse: findCourse,
+            findEvent: findEvent,
             fileTextReader: fileTextReader
     };
 
@@ -289,6 +290,18 @@
                     });
         }
 
+        function findEvent(id, callback) {
+            $http.get(baseUrl + '/api/files/apps/findevent/' + id)
+            .then(function (response) {
+                if (callback) {
+                    callback(response.data);
+                }
+            },
+            function () {
+                console.log('Error while getting event!');
+            });
+        }
+
         function chooseIcon(type) {
             switch (type) {
                 case 0:
@@ -309,6 +322,8 @@
                     return "./Content/Icons/academyPro.svg";
                 case 8:
                     return "./Content/Icons/image.svg";
+                case 9:
+                    return "./Content/Icons/event.svg";
                 case 10:
                     return "./Content/Icons/video.svg";
                 default:
