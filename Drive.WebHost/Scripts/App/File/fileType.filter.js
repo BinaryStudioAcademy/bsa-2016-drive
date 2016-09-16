@@ -26,6 +26,8 @@
                         return "Image";
                     case 9:
                         return "Event";
+                    case 10:
+                        return "Video";
                     default:
                         return '';
                 }

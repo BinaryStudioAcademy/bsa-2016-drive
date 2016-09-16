@@ -34,7 +34,7 @@
                 <div class="grid-space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ academyspace.name }}</div>
                 <div uib-collapse="space.isCollapsed">
                     <ul class="sp-gv-flex-container">
-                        <li class="sp-gv-flex-item" role="button" ng-repeat="academy in academyspace.courses" ng-dblclick="academyListCtrl.openCourse(academy.id)" title="Created {{ academy.createdAt | date : 'short' }}">
+                        <li class="sp-gv-flex-item" role="button" ng-repeat="academy in academyspace.courses" ng-dblclick="academyListCtrl.openCourse(academy.id)" context-menu="academyListCtrl.courseMenuOptions" title="Created {{ academy.createdAt | date : 'short' }}">
                             <div class="sp-gv-wrapper-flex-item ">
                                 <div class="sp-gv-item-content cards">
                                     <div class="sp-gv-item-img-wrapper">

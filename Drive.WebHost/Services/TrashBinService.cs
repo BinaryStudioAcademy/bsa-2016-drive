@@ -8,6 +8,7 @@ using Drive.DataAccess.Interfaces;
 using System.Data.Entity;
 using Drive.Logging;
 using System;
+using Driver.Shared.Dto;
 
 namespace Drive.WebHost.Services
 {
@@ -270,6 +271,18 @@ namespace Drive.WebHost.Services
             }
         }
 
+        public async Task RestoreContentAsync(CopyMoveContentDto content)
+        {
+            foreach (var id in content.FilesId)
+            {
+                await RestoreFileAsync(id);
+            }
+            foreach (var id in content.FoldersId)
+            {
+                await RestoreFolderAsync(id);
+            }
+        }
+
         public async Task ClearAllFromSpaceAsync(int spaceId)
         {
             var files = await _unitOfWork.Files.Deleted
@@ -310,5 +323,6 @@ namespace Drive.WebHost.Services
         {
             _unitOfWork?.Dispose();
         }
+
     }
 }

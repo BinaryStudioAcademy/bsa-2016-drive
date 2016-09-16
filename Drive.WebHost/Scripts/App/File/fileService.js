@@ -309,6 +309,8 @@
                     return "./Content/Icons/academyPro.svg";
                 case 8:
                     return "./Content/Icons/image.svg";
+                case 10:
+                    return "./Content/Icons/video.svg";
                 default:
                     return "./Content/Icons/link.svg";
             }

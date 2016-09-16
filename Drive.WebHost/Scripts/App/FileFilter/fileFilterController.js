@@ -15,6 +15,7 @@
 
         vm.search = search;
         vm.cancelSearch = cancelSearch;
+        vm.checkFileType = checkFileType;
 
         vm.openDocument = openDocument;
         vm.openFileWindow = openFileWindow;
@@ -70,6 +71,28 @@
                             thumbUrl: file.link,
                             fileType: file.fileType,
                             created: file.createdAt
+                        });
+                    }
+                }
+
+                getBinarySpaceId(vm.spaces);
+            });
+        }
+
+        function getVideoFiles() {
+            fileService.getFilesApp(vm.filesType, function (data) {
+                vm.spaces = data;
+
+                for (var i = 0; i < vm.spaces.length; i++) {
+                    for (var k = 0; k < vm.spaces[i].files.length; k++) {
+                        var file = vm.spaces[i].files[k];
+                        vm.images.push({
+                            url: file.link,
+                            caption: file.name,
+                            thumbUrl: file.link,
+                            fileType: file.fileType,
+                            created: file.createdAt,
+                            type: 'video'
                         });
                     }
                 }
@@ -255,6 +278,12 @@
                     activateGridView();
                     vm.icon = 'fa fa-file-image-o fa-lg';
                     break;
+                case 'videos':
+                    vm.filesType = 'Videos';
+                    activateGridView();
+                    getVideoFiles();
+                    vm.icon = 'fa fa-video-camera fa-lg';
+                    break;
             }
         }
 
@@ -303,6 +332,14 @@
                             $location.url('/apps/academy/' + data.id);
                         }
                     });
+            }
+        }
+
+        function checkFileType(fileType) {
+            if (fileType === 8 || fileType === 10) {
+                return false;
+            } else {
+                return true;
             }
         }
 
