@@ -5,9 +5,9 @@
         .module("driveApp")
         .controller("SharedSpaceController", SharedSpaceController);
 
-    SharedSpaceController.$inject = ['SharedSpaceService', 'FolderService', 'FileService', '$uibModal', 'localStorageService', '$routeParams', '$location'];
+    SharedSpaceController.$inject = ['SharedSpaceService', 'FolderService', 'FileService', '$uibModal', 'localStorageService', '$routeParams', '$location', 'Lightbox'];
 
-    function SharedSpaceController(sharedSpaceService, folderService, fileService, $uibModal, localStorageService, $routeParams, $location) {
+    function SharedSpaceController(sharedSpaceService, folderService, fileService, $uibModal, localStorageService, $routeParams, $location, Lightbox) {
         var vm = this;
 
         vm.folderList = [];
@@ -22,6 +22,8 @@
             files: []
         }
 
+        vm.images = [];
+
         vm.getFolderContent = getFolderContent;
         vm.getFile = getFile;
         vm.getSharedData = getSharedData;
@@ -33,6 +35,9 @@
         vm.searchText = '';
 
         vm.orderByColumn = orderByColumn;
+
+        vm.openLightboxModal = openLightboxModal;
+        vm.checkFileType = checkFileType;
 
         vm.paginate = {
             currentPage: 1,
@@ -54,7 +59,7 @@
             vm.space.rootFolderId = null;
             vm.space.folderId = null;
 
-            var view = localStorageService.get('view')
+            var view = localStorageService.get('view');
             if (view == undefined) {
                 vm.showTable = true;
                 vm.showGrid = false;
@@ -89,10 +94,40 @@
         }
 
         function getSharedContent() {
-            sharedSpaceService.getSharedData(vm.paginate.currentPage, vm.paginate.pageSize, vm.sortByDate, vm.space.folderId, vm.space.rootFolderId, function (data) {
-                vm.space.files = data.files;
-                vm.space.folders = data.folders;
-            });
+            sharedSpaceService.getSharedData(vm.paginate.currentPage,
+                vm.paginate.pageSize,
+                vm.sortByDate,
+                vm.space.folderId,
+                vm.space.rootFolderId,
+                function(data) {
+                    vm.space.files = data.files;
+                    vm.space.folders = data.folders;
+
+                    for (var k = 0; k < vm.space.files.length; k++) {
+                        var file = vm.space.files[k];
+
+                        if (file.fileType === 8) {
+                            vm.images.push({
+                                url: file.link,
+                                caption: file.name,
+                                thumbUrl: file.link,
+                                fileType: file.fileType,
+                                created: file.createdAt,
+                                fileId: file.id
+                            });
+                        } else if (file.fileType === 10) {
+                            vm.images.push({
+                                url: file.link,
+                                caption: file.name,
+                                thumbUrl: file.link,
+                                fileType: file.fileType,
+                                created: file.createdAt,
+                                fileId: file.id,
+                                type: 'video'
+                            });
+                        }
+                    }
+                });
         }
 
         function getSpaceByButton() {
@@ -110,8 +145,26 @@
             });
         }
 
+        function openLightboxModal(fileId) {
+            var i;
+            for (i = 0; i < vm.images.length; i++) {
+                if (vm.images[i].fileId === fileId) {
+                    break;
+                }
+            }
+            Lightbox.openModal(vm.images, i);
+        }
+
+        function checkFileType(fileType) {
+            if (fileType === 8 || fileType === 10) {
+                return false;
+            } else {
+                return true;
+            }
+        }
+
         function changeView(view) {
-            if (view == "fa fa-th") {
+            if (view === "fa fa-th") {
                 activateGridView();
                 localStorageService.set('view', { showTable: false });
             } else {
@@ -246,7 +299,7 @@
 
         function openDocument(file) {
             if (file.fileType !== 7) {
-                if (file.fileType == 6) {
+                if (file.fileType === 6) {
                     fileService.downloadFile(file.link);
                 } else {
                     window.open(file.link, '_blank');;
@@ -270,7 +323,5 @@
             vm.iconSrc = fileService.chooseIcon(type);
             return vm.iconSrc;
         }
-        
-
     }
 }());

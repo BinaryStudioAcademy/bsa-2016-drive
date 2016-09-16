@@ -35,7 +35,7 @@
     </div>
     <div us-spinner="{radius:5, width:2, length: 5}" style="position:absolute; top:40px; right:37px"></div>
     <!--Gridview-->
-        <ul class="sp-gv-flex-container wrap" ng-show="sharedSpaceCtrl.showGrid" context-menu="sharedSpaceCtrl.folderMenuOptions">
+    <ul class="sp-gv-flex-container wrap" ng-show="sharedSpaceCtrl.showGrid" context-menu="sharedSpaceCtrl.folderMenuOptions">
         <li class="sp-gv-flex-item" role="button" context-menu="sharedSpaceCtrl.folderMenuOptions" dir-paginate="folder in sharedSpaceCtrl.space.folders | itemsPerPage: sharedSpaceCtrl.paginate.pageSize" total-items="sharedSpaceCtrl.paginate.numberOfItems" current-page="sharedSpaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="sharedSpaceCtrl.getFolderContent(folder.id); sharedSpaceCtrl.addElem(folder)">
             <div class="sp-gv-wrapper-flex-item">
                 <div class="sp-gv-item-content cards">
@@ -44,19 +44,23 @@
                     </div>
                     <div class="sp-gv-item-text">
                         <h4 title="{{folder.name}}">{{folder.name}}</h4>
-                        <h5 title="{{folder.author.name}}"><i class="fa fa-user" aria-hidden="true"></i>
-                            {{folder.author.name}}</h5>
+                        <h5 title="{{folder.author.name}}">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                            {{folder.author.name}}
+                        </h5>
                         <p title="{{folder.description}}">{{folder.description}}</p>
                     </div>
                 </div>
             </div>
         </li>
-
-        <li class="sp-gv-flex-item" role="button" context-menu="sharedSpaceCtrl.fileMenuOptions" ng-repeat="file in sharedSpaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="sharedSpaceCtrl.openDocument(file)">
+        <li class="sp-gv-flex-item" role="button" context-menu="sharedSpaceCtrl.fileMenuOptions" ng-repeat="file in sharedSpaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="sharedSpaceCtrl.checkFileType(file.fileType) ? sharedSpaceCtrl.openDocument(file) : sharedSpaceCtrl.openLightboxModal(file.id)">
             <div class="sp-gv-wrapper-flex-item">
                 <div class="sp-gv-item-content cards">
-                    <div class="sp-gv-item-img-wrapper">
+                    <div class="sp-gv-item-img-wrapper" ng-show="file.fileType !== 8">
                         <img ng-src="{{sharedSpaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" />
+                    </div>
+                    <div class="sp-gv-item-img-wrapper-image" ng-show="file.fileType == 8" style="height: 105px">
+                        <img ng-src="{{file.link}}" class="img-thumbnail" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
                     </div>
                     <div class="sp-gv-item-text">
                         <h4 title="{{file.name}}">{{file.name}}</h4>
@@ -74,7 +78,6 @@
         <li class="sp-gv-flex-item"></li>
     </ul>
     <!--End Gridview-->
-
     <!--TableView-->
     <div class="filter-table container-md" ng-show="sharedSpaceCtrl.showTable">
         <div class="header-wrapper">
@@ -126,7 +129,7 @@
             </div>
             <div style="transition: all 2s">
                 <div class="filter-table-row">
-                    <div class="row filter-table-row" role="button" ng-repeat="file in sharedSpaceCtrl.space.files | orderBy: sharedSpaceCtrl.columnForOrder" ng-click="sharedSpaceCtrl.activeRow(file.id, 'true')" ng-dblclick="sharedSpaceCtrl.openDocument(file)" ng-class="{selected: file.selected}" context-menu="sharedSpaceCtrl.fileMenuOptions">
+                    <div class="row filter-table-row" role="button" ng-repeat="file in sharedSpaceCtrl.space.files | orderBy: sharedSpaceCtrl.columnForOrder" ng-click="sharedSpaceCtrl.activeRow(file.id, 'true')" ng-class="{selected: file.selected}" context-menu="sharedSpaceCtrl.fileMenuOptions" ng-dblclick="sharedSpaceCtrl.checkFileType(file.fileType) ? sharedSpaceCtrl.openDocument(file) : sharedSpaceCtrl.openLightboxModal(file.id)">
                         <div class="col-md-3 filter-table-cell description" title="{{ file.name }}">
                             <img ng-src="{{sharedSpaceCtrl.chooseIcon(file.fileType)}}" height="{{sharedSpaceCtrl.iconHeight}}" />
                             {{file.name | limitTo: 20}}{{file.name.length > 20 ? '...' : ''}}
@@ -143,7 +146,6 @@
         </div>
     </div>
     <!--EndTableView-->
-
     <div class="page-footer-center">
         <dir-pagination-controls class="page-footer" on-page-change="sharedSpaceCtrl.paginate.getContent(newPageNumber)"></dir-pagination-controls>
     </div>
