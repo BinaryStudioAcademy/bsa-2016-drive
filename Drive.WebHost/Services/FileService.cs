@@ -517,14 +517,13 @@ namespace Drive.WebHost.Services
             List<User> ModifyPermittedUsers = new List<User>();
 
             ModifyPermittedUsers.Add(localUser);
-            _logger.WriteInfo("Getting file info:");
+            _logger.WriteInfo("Getting file info");
             string filename = fileData.Name + fileData.Extension;
             string mimeType = GetMimeType(filename);
             var isImage = IsImageMime(mimeType);
             _logger.WriteInfo("File name: " + filename + ", Mime type: " + mimeType);
 
             // File's content.
-            _logger.WriteInfo("File content: " + file.InputStream.Length);
             Stream filestream = file.InputStream;
             byte[] byteArray = ReadFully(filestream);
             MemoryStream stream = new MemoryStream(byteArray);
@@ -614,9 +613,11 @@ namespace Drive.WebHost.Services
                     };
                     _unitOfWork?.Files?.Create(fileDto);
                     await _unitOfWork?.SaveChangesAsync();
+                    _logger.WriteInfo("File saved to database");
                 }
                 catch (Exception e)
                 {
+                    _logger.WriteError(e, e.Message);
                     throw new Exception("Failed to save file to data base " + e.Message);
                 }
             }
@@ -663,10 +664,11 @@ namespace Drive.WebHost.Services
             {
                 _logger.WriteInfo("Creating upload request ");
                 FilesResource.CreateMediaUpload request = service.Files.Create(body, stream, mimeType);
-                _logger.WriteInfo("Begin upload file to google drive");
+                _logger.WriteInfo("Uploading file to google drive");
                 await request.UploadAsync();
                 _logger.WriteInfo("Upload succeeded");
                 result = request.ResponseBody.Id;
+                _logger.WriteInfo("Result file id: " + result);
             }
             catch (Exception e)
             {
