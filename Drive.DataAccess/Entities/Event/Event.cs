@@ -9,7 +9,7 @@ namespace Drive.DataAccess.Entities.Event
     {
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
-        public EventType EventType { get; set; }
+        public string EventType { get; set; }
         public DateTime EventDate { get; set; }
 
         public IList<EventContent> ContentList { get; set; }
@@ -18,12 +18,12 @@ namespace Drive.DataAccess.Entities.Event
 
     }
 
-    public enum EventType
-    {
-        None,
-        Ceremonial,  // открытия, закрытия, вручения, приемы 
-        Educational, // семинары, тренинги, круглые столы
-        NetWorking,  // конференции, выставки, митапы
-        Entertainment // тимбилдинги, праздники и другие развлечения
-    }
+    //public enum EventType
+    //{
+    //    None,
+    //    Ceremonial,  // открытия, закрытия, вручения, приемы 
+    //    Educational, // семинары, тренинги, круглые столы
+    //    NetWorking,  // конференции, выставки, митапы
+    //    Entertainment // тимбилдинги, праздники и другие развлечения
+    //}
 }

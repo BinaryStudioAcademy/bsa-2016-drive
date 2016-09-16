@@ -37,9 +37,6 @@
             vm.isEditing = false;
             vm.showEditArea = false;
             vm.sortedContentList = [];
-            eventService.getEventTypes(function (data) {
-                vm.eventTypes = data;
-            });
             return getEvent();
         }
 
@@ -98,7 +95,7 @@
             if (vm.event.fileUnit.name) {
                 vm.update()
                     .then(function () {
-                        return vm.getevent();
+                        return vm.getEvent();
                     });
                 toastr.success(
                 'Event was successfully updated!', 'Events',

@@ -1518,7 +1518,7 @@ namespace Drive.DataAccess.Context
                     Space = space1
                 },
                 EventDate = DateTime.Now,
-                EventType = EventType.Entertainment,
+                EventType = "Entertainment",
                 IsDeleted = false
             };
 

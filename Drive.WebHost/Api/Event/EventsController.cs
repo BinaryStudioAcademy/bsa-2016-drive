@@ -80,15 +80,6 @@ namespace Drive.WebHost.Api
         }
 
         [HttpGet]
-        [Route("eventtypes")]
-        public IHttpActionResult GetEventTypes()
-        {
-            var result = _eventService.GetEventTypes();
-
-            return Ok(result);
-        }
-
-        [HttpGet]
         [Route("search")]
         public async Task<IHttpActionResult> SearchFiles(string text = "")
         {
