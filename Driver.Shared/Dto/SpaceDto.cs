@@ -33,5 +33,7 @@ namespace Driver.Shared.Dto
         public IEnumerable<FolderUnitDto> Folders {get;set;}
 
         public User Owner { get; set; }
+
+        public bool CanModifySpace { get; set; }
     }
 }
