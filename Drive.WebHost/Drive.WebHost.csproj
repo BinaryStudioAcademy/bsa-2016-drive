@@ -376,6 +376,7 @@
     <Content Include="Scripts\App\Events\Event\CreateEvent.html" />
     <Content Include="Scripts\App\Events\Event\eventCreateController.js" />
     <Content Include="Scripts\App\Events\Event\Modal.html" />
+    <Content Include="Scripts\App\FileFilter\videoPreview.filter.js" />
     <Content Include="Scripts\App\File\fileSize.filter.js" />
     <Content Include="Scripts\App\File\fileUpload.directive.js" />
     <Content Include="Scripts\App\File\TextFileReader\textFileReaderController.js" />
