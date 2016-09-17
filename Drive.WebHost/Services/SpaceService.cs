@@ -178,7 +178,7 @@ namespace Drive.WebHost.Services
                                                 true : f.Owner.GlobalId == userId ? 
                                                      true : userCanModify? 
                                                         true : roleCanModify ? 
-                                                            true : false,
+                                                            true : false
                                          }),
                                     Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted)
                                          .Select(f => new FolderUnitDto
@@ -201,7 +201,7 @@ namespace Drive.WebHost.Services
                                                     true : f.Owner.GlobalId == userId ?
                                                          true : userCanModify ?
                                                             true : roleCanModify ?
-                                                                true : false,
+                                                                true : false
                                          })
                                 }).SingleOrDefaultAsync();
 
@@ -541,81 +541,185 @@ namespace Drive.WebHost.Services
         public async Task<SearchResultDto> SearchFoldersAndFilesAsync(int spaceId, int? folderId, string text, int page,
             int count)
         {
-            IEnumerable<FolderUnitDto> resultFolder = new List<FolderUnitDto>();
+            string userId = _userService.CurrentUserId;
+
+            IEnumerable<FolderUnitDto> resultFolders = new List<FolderUnitDto>();
             IEnumerable<FileUnitDto> resultFiles = new List<FileUnitDto>();
+            bool canModifySpace = false;
             try
             {
+                canModifySpace = await (from s in _unitOfWork.Spaces.Query
+                                            let userCanRead = s.ReadPermittedUsers.Any(x => x.GlobalId == userId)
+                                            let roleCanRead = s.ReadPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                            let userCanModify = s.ModifyPermittedUsers.Any(x => x.GlobalId == userId)
+                                            let roleCanModify = s.ModifyPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                            where s.Id == spaceId
+                                             && (s.Type == SpaceType.BinarySpace
+                                             || s.Owner.GlobalId == userId
+                                             || userCanRead || roleCanRead
+                                             || userCanModify || roleCanModify)
+                                            select s.Type == SpaceType.BinarySpace ?
+                                                    true : s.Owner.GlobalId == userId ?
+                                                        true : userCanModify ?
+                                                            true : roleCanModify ?
+                                                                true : false ).SingleAsync();
+
                 if (folderId != null)
                 {
-                    resultFolder = await _unitOfWork.Folders.Query.
-                        Where(f => f.FolderUnit.Id == folderId)
-                        .Select(f => new FolderUnitDto()
-                        {
-                            Id = f.Id,
-                            Name = f.Name,
-                            Description = f.Description,
-                            IsDeleted = f.IsDeleted,
-                            CreatedAt = f.CreatedAt,
-                            LastModified = f.LastModified,
-                            Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
-                        }).ToListAsync();
+                    resultFolders = await (from f in _unitOfWork.Folders.Query
+                                               let userCanRead = f.Space.ReadPermittedUsers.Any(x => x.GlobalId == userId)
+                                               let roleCanRead = f.Space.ReadPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                               let userCanModify = f.Space.ModifyPermittedUsers.Any(x => x.GlobalId == userId)
+                                               let roleCanModify = f.Space.ModifyPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                               where f.FolderUnit.Id == folderId
+                                                    && (f.Space.Type == SpaceType.BinarySpace
+                                                    || f.Space.Owner.GlobalId == userId
+                                                    || userCanRead || roleCanRead
+                                                    || userCanModify || roleCanModify)
+                                               select new FolderUnitDto
+                                               {
+                                                   Id = f.Id,
+                                                   Name = f.Name,
+                                                   Description = f.Description,
+                                                   CreatedAt = f.CreatedAt,
+                                                   IsDeleted = f.IsDeleted,
+                                                   SpaceId = f.Space.Id,
+                                                   Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId },
+                                                   CanRead = f.Space.Type == SpaceType.BinarySpace ?
+                                                   true : f.Space.Owner.GlobalId == userId ?
+                                                       true : f.Owner.GlobalId == userId ?
+                                                          true : userCanRead ?
+                                                              true : roleCanRead ?
+                                                                  true : false,
+                                                   CanModify = f.Space.Type == SpaceType.BinarySpace ?
+                                                   true : f.Space.Owner.GlobalId == userId ?
+                                                      true : f.Owner.GlobalId == userId ?
+                                                           true : userCanModify ?
+                                                              true : roleCanModify ?
+                                                                  true : false
+                                               }).ToListAsync();
 
-                    resultFiles = await _unitOfWork.Files.Query.
-                        Where(f => f.FolderUnit.Id == folderId)
-                        .Select(f => new FileUnitDto
-                        {
-                            Id = f.Id,
-                            Name = f.Name,
-                            Description = f.Description,
-                            FileType = f.FileType,
-                            IsDeleted = f.IsDeleted,
-                            Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
-                        }).ToListAsync();
+                    resultFiles = await (from f in _unitOfWork.Files.Query
+                                            let userCanRead = f.Space.ReadPermittedUsers.Any(x => x.GlobalId == userId)
+                                            let roleCanRead = f.Space.ReadPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                            let userCanModify = f.Space.ModifyPermittedUsers.Any(x => x.GlobalId == userId)
+                                            let roleCanModify = f.Space.ModifyPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                            where f.FolderUnit.Id == folderId
+                                                 && (f.Space.Type == SpaceType.BinarySpace
+                                                 || f.Space.Owner.GlobalId == userId
+                                                 || userCanRead || roleCanRead
+                                                 || userCanModify || roleCanModify)
+                                            select new FileUnitDto
+                                            {
+                                                Description = f.Description,
+                                                FileType = f.FileType,
+                                                Id = f.Id,
+                                                IsDeleted = f.IsDeleted,
+                                                Name = f.Name,
+                                                CreatedAt = f.CreatedAt,
+                                                Link = f.Link,
+                                                Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId },
+                                                CanRead = f.Space.Type == SpaceType.BinarySpace ?
+                                                true : f.Space.Owner.GlobalId == userId ?
+                                                    true : f.Owner.GlobalId == userId ?
+                                                       true : userCanRead ?
+                                                           true : roleCanRead ?
+                                                               true : false,
+                                                CanModify = f.Space.Type == SpaceType.BinarySpace ?
+                                                true : f.Space.Owner.GlobalId == userId ?
+                                                   true : f.Owner.GlobalId == userId ?
+                                                        true : userCanModify ?
+                                                           true : roleCanModify ?
+                                                               true : false
+                                            }).ToListAsync();
+
                 }
                 else
                 {
-                    resultFolder = await _unitOfWork.Folders.Query.
-                        Where(f => f.Space.Id == spaceId && f.FolderUnit == null)
-                        .Select(f => new FolderUnitDto()
-                        {
-                            Id = f.Id,
-                            Name = f.Name,
-                            Description = f.Description,
-                            IsDeleted = f.IsDeleted,
-                            CreatedAt = f.CreatedAt,
-                            LastModified = f.LastModified,
-                            Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
-                        }).ToListAsync();
+                    resultFolders = await (from f in _unitOfWork.Folders.Query
+                                               let userCanRead = f.Space.ReadPermittedUsers.Any(x => x.GlobalId == userId)
+                                               let roleCanRead = f.Space.ReadPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                               let userCanModify = f.Space.ModifyPermittedUsers.Any(x => x.GlobalId == userId)
+                                               let roleCanModify = f.Space.ModifyPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                               where f.Space.Id == spaceId && f.FolderUnit == null
+                                                    && (f.Space.Type == SpaceType.BinarySpace
+                                                    || f.Space.Owner.GlobalId == userId
+                                                    || userCanRead || roleCanRead
+                                                    || userCanModify || roleCanModify)
+                                               select new FolderUnitDto
+                                               {
+                                                   Id = f.Id,
+                                                   Name = f.Name,
+                                                   Description = f.Description,
+                                                   CreatedAt = f.CreatedAt,
+                                                   IsDeleted = f.IsDeleted,
+                                                   SpaceId = f.Space.Id,
+                                                   Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId },
+                                                   CanRead = f.Space.Type == SpaceType.BinarySpace ?
+                                                   true : f.Space.Owner.GlobalId == userId ?
+                                                       true : f.Owner.GlobalId == userId ?
+                                                          true : userCanRead ?
+                                                              true : roleCanRead ?
+                                                                  true : false,
+                                                   CanModify = f.Space.Type == SpaceType.BinarySpace ?
+                                                   true : f.Space.Owner.GlobalId == userId ?
+                                                      true : f.Owner.GlobalId == userId ?
+                                                           true : userCanModify ?
+                                                              true : roleCanModify ?
+                                                                  true : false
+                                               }).ToListAsync();
 
-                    resultFiles = await _unitOfWork.Files.Query.
-                        Where(f => f.Space.Id == spaceId && f.FolderUnit == null)
-                        .Select(f => new FileUnitDto
-                        {
-                            Id = f.Id,
-                            Name = f.Name,
-                            Description = f.Description,
-                            FileType = f.FileType,
-                            IsDeleted = f.IsDeleted,
-                            Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId }
-                        }).ToListAsync();
+                    resultFiles = await (from f in _unitOfWork.Files.Query
+                                              let userCanRead = f.Space.ReadPermittedUsers.Any(x => x.GlobalId == userId)
+                                              let roleCanRead = f.Space.ReadPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                              let userCanModify = f.Space.ModifyPermittedUsers.Any(x => x.GlobalId == userId)
+                                              let roleCanModify = f.Space.ModifyPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                              where f.Space.Id == spaceId && f.FolderUnit == null
+                                                   && (f.Space.Type == SpaceType.BinarySpace
+                                                   || f.Space.Owner.GlobalId == userId
+                                                   || userCanRead || roleCanRead
+                                                   || userCanModify || roleCanModify)
+                                              select new FileUnitDto
+                                              {
+                                                  Description = f.Description,
+                                                  FileType = f.FileType,
+                                                  Id = f.Id,
+                                                  IsDeleted = f.IsDeleted,
+                                                  Name = f.Name,
+                                                  CreatedAt = f.CreatedAt,
+                                                  Link = f.Link,
+                                                  Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId },
+                                                  CanRead = f.Space.Type == SpaceType.BinarySpace ?
+                                                  true : f.Space.Owner.GlobalId == userId ?
+                                                      true : f.Owner.GlobalId == userId ?
+                                                         true : userCanRead ?
+                                                             true : roleCanRead ?
+                                                                 true : false,
+                                                  CanModify = f.Space.Type == SpaceType.BinarySpace ?
+                                                  true : f.Space.Owner.GlobalId == userId ?
+                                                     true : f.Owner.GlobalId == userId ?
+                                                          true : userCanModify ?
+                                                             true : roleCanModify ?
+                                                                 true : false
+                                              }).ToListAsync();
                 }
                 if (!string.IsNullOrEmpty(text))
                 {
                     resultFiles = resultFiles.Where(f => f.Name.ToLower().Contains(text.ToLower()));
-                    resultFolder = resultFolder.Where(f => f.Name.ToLower().Contains(text.ToLower()));
+                    resultFolders = resultFolders.Where(f => f.Name.ToLower().Contains(text.ToLower()));
                 }
 
                 int skipCount = (page - 1) * count;
-                if (resultFolder.Count() <= skipCount)
+                if (resultFolders.Count() <= skipCount)
                 {
-                    skipCount -= resultFolder.Count();
-                    resultFolder = new List<FolderUnitDto>();
+                    skipCount -= resultFolders.Count();
+                    resultFolders = new List<FolderUnitDto>();
                     resultFiles = resultFiles.Skip(skipCount).Take(count);
                 }
                 else
                 {
-                    resultFolder = resultFolder.Skip(skipCount).Take(count);
-                    count -= resultFolder.Count();
+                    resultFolders = resultFolders.Skip(skipCount).Take(count);
+                    count -= resultFolders.Count();
                     resultFiles = resultFiles.Take(count);
                 }
 
@@ -623,14 +727,14 @@ namespace Drive.WebHost.Services
 
                 Parallel.ForEach(resultFiles,
                     file => { file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name; });
-                Parallel.ForEach(resultFolder,
+                Parallel.ForEach(resultFolders,
                     folder => { folder.Author.Name = owners.FirstOrDefault(o => o.Id == folder.Author.GlobalId)?.Name; });
             }
             catch (Exception ex)
             {
                 _logger.WriteError(ex, ex.Message);
             }
-            return new SearchResultDto { Folders = resultFolder.ToList(), Files = resultFiles.ToList() };
+            return new SearchResultDto { Folders = resultFolders.ToList(), Files = resultFiles.ToList(), CanModifySpace = canModifySpace };
         }
 
         public async Task<int> NumberOfFoundFoldersAndFilesAsync(int spaceId, int? folderId, string text)
@@ -638,37 +742,77 @@ namespace Drive.WebHost.Services
             int counter = 0;
             try
             {
+                string userId = _userService.CurrentUserId;
+
                 if (folderId != null)
                 {
-                    var folder = await _unitOfWork.Folders.Query.Where(f => f.Id == folderId)
-                        .Select(s => new
-                        {
-                            Folders = s.DataUnits.OfType<FolderUnit>().Where(f => !f.IsDeleted),
-                            Files = s.DataUnits.OfType<FileUnit>().Where(f => !f.IsDeleted)
-                        }).SingleOrDefaultAsync();
-                    if (folder == null)
-                        return 0;
-                    counter += folder.Folders
-                        .Count(f => f.Name.ToLower().Contains(text.ToLower()));
+                    var resultFolders = await (from f in _unitOfWork.Folders.Query
+                                           let userCanRead = f.Space.ReadPermittedUsers.Any(x => x.GlobalId == userId)
+                                           let roleCanRead = f.Space.ReadPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                           let userCanModify = f.Space.ModifyPermittedUsers.Any(x => x.GlobalId == userId)
+                                           let roleCanModify = f.Space.ModifyPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                           where f.FolderUnit.Id == folderId
+                                                && (f.Space.Type == SpaceType.BinarySpace
+                                                || f.Space.Owner.GlobalId == userId
+                                                || userCanRead || roleCanRead
+                                                || userCanModify || roleCanModify)
+                                           select new
+                                           {
+                                               Name = f.Name
+                                           }).ToListAsync();
 
-                    counter += folder.Files
-                        .Count(f => f.Name.ToLower().Contains(text.ToLower()));
+                    var resultFiles = await (from f in _unitOfWork.Files.Query
+                                         let userCanRead = f.Space.ReadPermittedUsers.Any(x => x.GlobalId == userId)
+                                         let roleCanRead = f.Space.ReadPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                         let userCanModify = f.Space.ModifyPermittedUsers.Any(x => x.GlobalId == userId)
+                                         let roleCanModify = f.Space.ModifyPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                         where f.FolderUnit.Id == folderId
+                                              && (f.Space.Type == SpaceType.BinarySpace
+                                              || f.Space.Owner.GlobalId == userId
+                                              || userCanRead || roleCanRead
+                                              || userCanModify || roleCanModify)
+                                         select new 
+                                         {
+                                             Name = f.Name
+                                         }).ToListAsync();
+
+                    counter += resultFolders.Count(f => f.Name.ToLower().Contains(text.ToLower()));
+                    counter += resultFiles.Count(f => f.Name.ToLower().Contains(text.ToLower()));
                 }
                 else
                 {
-                    var space = await _unitOfWork.Spaces.Query
-                        .Where(s => s.Id == spaceId)
-                        .Select(s => new
-                        {
-                            Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted),
-                            Files = s.ContentList.OfType<FileUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted)
-                        }).SingleOrDefaultAsync();
-                    if (space == null)
-                        return 0;
-                    counter += space.Folders
-                        .Count(f => f.Name.ToLower().Contains(text.ToLower()));
-                    counter += space.Files
-                        .Count(f => f.Name.ToLower().Contains(text.ToLower()));
+                    var resultFolders = await (from f in _unitOfWork.Folders.Query
+                                           let userCanRead = f.Space.ReadPermittedUsers.Any(x => x.GlobalId == userId)
+                                           let roleCanRead = f.Space.ReadPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                           let userCanModify = f.Space.ModifyPermittedUsers.Any(x => x.GlobalId == userId)
+                                           let roleCanModify = f.Space.ModifyPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                           where f.Space.Id == spaceId && f.FolderUnit == null
+                                                && (f.Space.Type == SpaceType.BinarySpace
+                                                || f.Space.Owner.GlobalId == userId
+                                                || userCanRead || roleCanRead
+                                                || userCanModify || roleCanModify)
+                                           select new 
+                                           {
+                                               Name = f.Name
+                                           }).ToListAsync();
+
+                     var resultFiles = await (from f in _unitOfWork.Files.Query
+                                         let userCanRead = f.Space.ReadPermittedUsers.Any(x => x.GlobalId == userId)
+                                         let roleCanRead = f.Space.ReadPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                         let userCanModify = f.Space.ModifyPermittedUsers.Any(x => x.GlobalId == userId)
+                                         let roleCanModify = f.Space.ModifyPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                         where f.Space.Id == spaceId && f.FolderUnit == null
+                                              && (f.Space.Type == SpaceType.BinarySpace
+                                              || f.Space.Owner.GlobalId == userId
+                                              || userCanRead || roleCanRead
+                                              || userCanModify || roleCanModify)
+                                         select new
+                                         {
+                                             Name = f.Name
+                                         }).ToListAsync();
+
+                    counter += resultFolders.Count(f => f.Name.ToLower().Contains(text.ToLower()));
+                    counter += resultFiles.Count(f => f.Name.ToLower().Contains(text.ToLower()));
                 }
             }
             catch (Exception ex)
