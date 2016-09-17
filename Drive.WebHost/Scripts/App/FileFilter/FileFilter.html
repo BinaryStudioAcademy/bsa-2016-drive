@@ -35,7 +35,7 @@
             <div uib-collapse="space.isCollapsed">
 
                 <ul class="sp-gv-flex-container">
-                    <li class="sp-gv-flex-item" role="button" context-menu="fileFilterCtrl.fileMenuOptions" ng-repeat="file in space.files" ng-show="file.fileType !== 8" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="file.fileType !== 10 ? fileFilterCtrl.openDocument(file) : fileFilterCtrl.openLightboxModal(file.id)">
+                    <li class="sp-gv-flex-item" role="button" context-menu="fileFilterCtrl.fileMenuOptions" ng-repeat="file in space.files" ng-hide="file.fileType == 8 || file.fileType == 10" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="fileFilterCtrl.openDocument(file)">
                         <div class="sp-gv-wrapper-flex-item ">
                             <div class="sp-gv-item-content cards">
                                 <div class="sp-gv-item-img-wrapper">
@@ -58,11 +58,14 @@
                 </ul>
 
                 <ul class="sp-gv-flex-container">
-                    <li class="sp-gv-flex-item" role="button" context-menu="fileFilterCtrl.fileMenuOptions" ng-repeat="file in space.files" ng-show="file.fileType == 8" ng-dblclick="fileFilterCtrl.openLightboxModal(file.id)">
+                    <li class="sp-gv-flex-item" role="button" context-menu="fileFilterCtrl.fileMenuOptions" ng-repeat="file in space.files" ng-show="file.fileType == 8 || file.fileType == 10" ng-dblclick="fileFilterCtrl.openLightboxModal(file.id)">
                         <div class="sp-gv-wrapper-flex-item" title="Created {{ file.createdAt | date : 'short' }}">
                             <div class="sp-gv-item-content cards">
-                                <div class="sp-gv-item-img-wrapper-image">
+                                <div class="sp-gv-item-img-wrapper-image" ng-show="file.fileType == 8">
                                     <img ng-src="{{file.link}}" class="img-thumbnail" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" />
+                                </div>
+                                <div class="sp-gv-item-img-wrapper-image" ng-show="file.fileType == 10">
+                                    <img ng-src="http://img.youtube.com/vi/{{ file.link | getVideoId }}/0.jpg" class="img-thumbnail" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" />
                                 </div>
                                 <div class="sp-gv-item-text">
                                     <h4 title="{{file.name}}">{{file.name}}</h4>

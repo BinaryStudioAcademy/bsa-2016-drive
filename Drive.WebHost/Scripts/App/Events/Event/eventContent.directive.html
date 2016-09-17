@@ -1,4 +1,5 @@
-﻿<div ng-if="content.contentType == contentTypes.video">
+﻿
+<div ng-if="content.contentType == contentTypes.video">
     <h4>{{content.name}}</h4>
     <p>{{content.content}}</p>
     <p>{{content.description}}</p>
@@ -11,7 +12,7 @@
 </div>
 <div ng-if="content.contentType == contentTypes.photo">
     <h4>{{content.name}}</h4>
-    <img class="img-responsive" ng-src="{{content.content}}"/>
+    <img class="img-responsive" ng-src="{{content.content}}" />
     <p>{{content.description}}</p>
 </div>
 <div ng-if="content.contentType == contentTypes.content">
@@ -19,4 +20,9 @@
     <a ng-href="{{content.content}}" target="_blank">{{content.name}} <i class="fa fa-external-content" aria-hidden="true"></i></a>
     <p>{{content.description}}</p>
 </div>
-<br/>
+<div ng-if="content.contentType == contentTypes.link">
+    <h4>{{content.name}}</h4>
+    <a ng-href="{{content.content |external}}" target="_blank">{{content.content}} <i class="fa fa-external-link" aria-hidden="true"></i></a>
+    <p>{{content.description}}</p>
+</div>
+<br />

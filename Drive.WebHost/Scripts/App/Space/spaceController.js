@@ -24,7 +24,6 @@
         vm.folderList = [];
         vm.addElem = addElem;
         vm.deleteElems = deleteElems;
-        vm.spaceId = 0;
         vm.parentId = null;
 
         // vm.getAllFolders = getAllFolders;
@@ -47,6 +46,7 @@
         vm.findById = findById;
         vm.getSpace = getSpace;
         vm.getSpaceByButton = getSpaceByButton;
+        vm.resetPath = resetPath;
 
         vm.createNewFolder = createNewFolder;
         vm.createNewFile = createNewFile;
@@ -133,6 +133,8 @@
             vm.iconHeight = 30;
 
             vm.space = {
+                id: null,
+                name: '',
                 folders: [],
                 files: []
             }
@@ -140,14 +142,15 @@
             vm.images = [];
 
             if ($routeParams.id) {
-                vm.spaceId = $routeParams.id;
+                vm.space.id = $routeParams.id;
+                resetPath();
                 pagination();
                 vm.showSettingsBtn = true;
 
             }
             if ($routeParams.spaceType) {
                 spaceService.getSpaceByType($routeParams.spaceType, function (data) {
-                        vm.spaceId = data;
+                        vm.space.id = data;
                         pagination();
                         // Hide settings space button for Binary and My space
                         if ($routeParams.spaceType === 'binaryspace' || $routeParams.spaceType === 'myspace') {
@@ -158,17 +161,11 @@
                     vm.folderMenuOptionShareShow = false;
                     vm.fileMenuOptionShareShow = false;
                 }
+                resetPath();
             }
         }
 
         function pagination() {
-            if (localStorageService.get('spaceId') !== vm.spaceId) {
-                localStorageService.set('spaceId', vm.spaceId);
-                localStorageService.set('current', null);
-                vm.parentId = null;
-                localStorageService.set('list', null);
-            }
-
             if (localStorageService.get('list') != null)
                 vm.folderList = localStorageService.get('list');
 
@@ -196,13 +193,13 @@
         }
 
         function getSpaceContent() {
-            spaceService.getSpace(vm.spaceId,
+            spaceService.getSpace(vm.space.id,
                 vm.paginate.currentPage,
                 vm.paginate.pageSize,
                 vm.sortByDate,
                 function(data) {
                     vm.space = data;
-                    vm.spaceId = data.id;
+                    localStorageService.set('space', { spaceId: data.id, name: data.name, ownerId: data.owner.globalId });
 
                     for (var k = 0; k < vm.space.files.length; k++) {
                         var file = vm.space.files[k];
@@ -241,6 +238,19 @@
             localStorageService.set('current', null);
         }
 
+        function resetPath() {
+            if ($location.path() != localStorageService.get('location')) {
+                localStorageService.set('location', $location.path());
+                localStorageService.set('current', null);
+                vm.parentId = null;
+                localStorageService.set('list', null);
+            }
+            else {
+                vm.space.name = localStorageService.get('space').name;
+                vm.space.owner = { globalId: localStorageService.get('space').ownerId };
+            }
+        }
+
         function openLightboxModal(fileId) {
             var i;
             for (i = 0; i < vm.images.length; i++) {
@@ -260,7 +270,7 @@
         }
 
         function getSpaceTotal() {
-            spaceService.getSpaceTotal(vm.spaceId, function (data) {
+            spaceService.getSpaceTotal(vm.space.id, function (data) {
                     vm.paginate.numberOfItems = data;
                 });
         }
@@ -293,7 +303,7 @@
                 'Edit', function ($itemScope) {
                     vm.folder = $itemScope.folder;
                     vm.folder.parentId = vm.parentId;
-                    vm.folder.spaceId = vm.spaceId;
+                    vm.folder.spaceId = vm.space.id;
                     vm.openFolderWindow();
                 }
             ],
@@ -332,7 +342,7 @@
                 'Edit', function ($itemScope) {
                     vm.file = $itemScope.file;
                     vm.file.parentId = vm.parentId;
-                    vm.file.spaceId = vm.spaceId;
+                    vm.file.spaceId = vm.space.id;
                     if (vm.file.fileType !== 7) {
                         vm.openFileWindow();
                     }
@@ -381,7 +391,7 @@
             null,
             ['Upload File',
                 function ($itemScope) {
-                    vm.file = { fileType: 6, parentId: vm.parentId, spaceId: vm.spaceId };
+                    vm.file = { fileType: 6, parentId: vm.parentId, spaceId: vm.space.id };
                     vm.openFileUploadWindow('lg');
                 }
             ],
@@ -578,30 +588,30 @@
         };
 
         function sharedContent() {
-            vm.fileId = { parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.fileId = { parentId: vm.parentId, spaceId: vm.space.id };
             vm.openSharedContentWindow();
         }
 
         function createNewFolder() {
-            vm.folder = { parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.folder = { parentId: vm.parentId, spaceId: vm.space.id };
             vm.openFolderWindow();
         }
 
         function createNewFile() {
-            vm.file = { parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.file = { parentId: vm.parentId, spaceId: vm.space.id };
             vm.openFileWindow();
         }
 
         function createNewAP() {
             vm.course = {
-                fileUnit: { parentId: vm.parentId, spaceId: vm.spaceId }
+                fileUnit: { parentId: vm.parentId, spaceId: vm.space.id }
             };
             vm.openNewCourseWindow('lg');
         }
 
         function createNewEvent() {
             vm.event = {
-                fileUnit: { parentId: vm.parentId, spaceId: vm.spaceId }
+                fileUnit: { parentId: vm.parentId, spaceId: vm.space.id }
             };
             localStorageService.set('event', vm.event);
             $location.url('/apps/events/newevent');
@@ -609,7 +619,7 @@
         }
 
         function uploadFile() {
-            vm.file = { parentId: vm.parentId, spaceId: vm.spaceId };
+            vm.file = { parentId: vm.parentId, spaceId: vm.space.id };
             vm.openFileUploadWindow('lg');
         }
 
@@ -707,7 +717,7 @@
         }
 
         function getResultSearchFoldersAndFiles() {
-            spaceService.searchFoldersAndFiles(vm.spaceId,
+            spaceService.searchFoldersAndFiles(vm.space.id,
                 vm.parentId,
                 vm.searchText,
                 vm.paginate.currentPage,
@@ -719,7 +729,7 @@
         }
 
         function getNumberOfResultSearch() {
-            spaceService.getNumberOfResultSearchFoldersAndFiles(vm.spaceId,
+            spaceService.getNumberOfResultSearchFoldersAndFiles(vm.space.id,
                 vm.parentId,
                 vm.searchText,
                 function (data) {
