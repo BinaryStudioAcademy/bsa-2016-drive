@@ -225,13 +225,27 @@ namespace Drive.WebHost.Services
         public async Task<int> GetTotalAsync(int id)
         {
             int counter = 0;
-            var space = await _unitOfWork.Spaces.Query.Where(s => s.Id == id).Select(s => new
-            {
-                Files = s.ContentList.OfType<FileUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted).Count(),
-                Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted).Count()
-            }).SingleOrDefaultAsync();
+            string userId = _userService.CurrentUserId;
+
+            var space = await (from s in _unitOfWork.Spaces.Query
+                               let userCanRead = s.ReadPermittedUsers.Any(x => x.GlobalId == userId)
+                               let roleCanRead = s.ReadPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                               let userCanModify = s.ModifyPermittedUsers.Any(x => x.GlobalId == userId)
+                               let roleCanModify = s.ModifyPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                               where s.Id == id
+                                && (s.Type == SpaceType.BinarySpace
+                                || s.Owner.GlobalId == userId
+                                || userCanRead || roleCanRead
+                                || userCanModify || roleCanModify)
+                               select new 
+                               {
+                                   Files = s.ContentList.OfType<FileUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted).Count(),
+                                   Folders = s.ContentList.OfType<FolderUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted).Count()
+                               }).SingleOrDefaultAsync();
+
             if (space == null)
                 return 0;
+
             counter += space.Files;
             counter += space.Folders;
             return counter;
