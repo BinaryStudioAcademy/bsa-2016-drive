@@ -9,11 +9,13 @@
         'EventService',
         '$routeParams',
         '$sce',
-        'ContentTypeService'
+        'ContentTypeService',
+        '$location'
     ];
 
-    function EventController(eventService, $routeParams, $sce, contentTypeService) {
+    function EventController(eventService, $routeParams, $sce, contentTypeService, $location) {
         var vm = this;
+
         vm.currentEventId = $routeParams.id;
         vm.event = {};
         vm.getEvent = getEvent;
@@ -30,7 +32,8 @@
         vm.updateEvent = updateEvent;
         vm.cancelEvent = cancelEvent;
         vm.update = update;
-        
+        vm.getEventsList = getEventsList;
+
         activate();
 
         function activate() {
@@ -46,12 +49,13 @@
 
         function getEvent() {
             return eventService.getEvent(vm.currentEventId)
-                .then(function (data) {
+                .then(function(data) {
                     vm.event = data;
                     vm.sortedContentList = vm.event.contentList;
-                    if (vm.sortedContentList.length) vm.sortedContentList.sort(function (a, b) {
-                        return a.order - b.order;
-                    });
+                    if (vm.sortedContentList.length)
+                        vm.sortedContentList.sort(function(a, b) {
+                            return a.order - b.order;
+                        });
                     return vm.event;
                 });
         }
@@ -94,14 +98,16 @@
         function updateEvent() {
             if (vm.event.fileUnit.name) {
                 vm.update()
-                    .then(function () {
+                    .then(function() {
                         return vm.getEvent();
                     });
                 toastr.success(
-                'Event was successfully updated!', 'Events',
-                {
-                    closeButton: true, timeOut: 6000
-                });
+                    'Event was successfully updated!',
+                    'Events',
+                    {
+                        closeButton: true,
+                        timeOut: 6000
+                    });
             }
         }
 
@@ -112,9 +118,9 @@
                 }
             vm.event.contentList = vm.sortedContentList;
             return eventService.putData(vm.currentEventId, vm.event)
-            .then(function () {
-                vm.isEditing = !vm.isEditing;
-            });
+                .then(function() {
+                    vm.isEditing = !vm.isEditing;
+                });
         }
 
         function trustSrc(src) {
@@ -124,6 +130,10 @@
         function cancelEvent() {
             vm.isEditing = false;
             return vm.getEvent();
+        }
+
+        function getEventsList() {
+            $location.url('/apps/events/');
         }
     }
 })();
