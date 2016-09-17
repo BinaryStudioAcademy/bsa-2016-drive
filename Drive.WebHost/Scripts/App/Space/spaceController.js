@@ -136,7 +136,8 @@
                 id: null,
                 name: '',
                 folders: [],
-                files: []
+                files: [],
+                canModifySpace: null
             }
 
             vm.images = [];
@@ -667,6 +668,7 @@
                 function (data) {
                     vm.space.folders = data.folders;
                     vm.space.files = data.files;
+                    vm.space.canModifySpace = data.canModifySpace;
                     vm.initSelection();
                 });
         }
@@ -725,6 +727,7 @@
                 function (data) {
                     vm.space.folders = data.folders;
                     vm.space.files = data.files;
+                    vm.space.canModifySpace = data.canModifySpace;
                 });
         }
 
