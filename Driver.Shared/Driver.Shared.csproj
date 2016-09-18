@@ -73,6 +73,7 @@
     <Compile Include="Dto\Pro\TagDto.cs" />
     <Compile Include="Dto\SearchResultDto.cs" />
     <Compile Include="Dto\SpaceDto.cs" />
+    <Compile Include="Dto\Users\RemoteUserDto.cs" />
     <Compile Include="Dto\Users\UserDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

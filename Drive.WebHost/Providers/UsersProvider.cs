@@ -19,12 +19,15 @@ namespace Drive.WebHost.Providers
 
         public async Task<UserDto> GetByIdAsync(string id)
         {
-            return (await _client.GetAsync<IEnumerable<UserDto>>("profile/user/getByCentralId/" + id)).FirstOrDefault();
+            var remoteUser = (await _client.GetAsync<IEnumerable<RemoteUserDto>>("profile/user/getByCentralId/" + id)).FirstOrDefault();
+            return remoteUser != null ? ConvertFromRemoteToLocalUser(remoteUser) : null;
         }
 
         public async Task<IEnumerable<UserDto>> GetAsync()
         {
-            return await _client.GetAsync<List<UserDto>>("profile/user/filter");
+            var remoteuserlist = await _client.GetAsync<List<RemoteUserDto>>("profile/user/filter");
+            return remoteuserlist?.Select(x => ConvertFromRemoteToLocalUser(x));
+
         }
 
         public async Task<UserDto> GetCurrentUser()
@@ -37,6 +40,12 @@ namespace Drive.WebHost.Providers
         public string CurrentUserId
         {
             get { return _bsIdentityManager.UserId; }
+        }
+
+        private UserDto ConvertFromRemoteToLocalUser(RemoteUserDto rUser)
+        {
+            var user = new UserDto { id = rUser.serverUserId, name = rUser.name, surname = rUser.surname };
+            return user;
         }
     }
 }
