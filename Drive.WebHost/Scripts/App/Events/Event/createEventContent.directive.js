@@ -67,6 +67,10 @@
                 reg = new RegExp(expression);
                 scope.urlIsValid = reg.test(scope.contentModel.content);
             }
+
+            scope.cancel = function () {
+                scope.afterSaveMethod();
+            }
         }
     }
 })();

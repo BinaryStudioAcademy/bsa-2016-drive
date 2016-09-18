@@ -1611,7 +1611,8 @@ li.folder.on-drag-enter img {
 /*end create event content wrap*/
 /* style for textarea*/
 .contenttext {
-    max-width:100%
+    max-width:100%;
+    line-height:1em;
 }
 /* end style for textarea*/
 .create-event-title {
@@ -1644,12 +1645,6 @@ li.folder.on-drag-enter img {
     height: 73vh;
 }
 /*End Edit event view*/
-/*Event content text style*/
-.eventcontenttext {
-    line-height:1em;
-}
-/*End Event content text style*/
-
 /*Admin>Logs*/
 .input-group .form-control {
   z-index: 0;

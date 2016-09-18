@@ -8,6 +8,8 @@
         <button class="btn btn-info pull-right" ng-click="eventCreateCtrl.create()" title="Create new event" ng-disabled="eventForm.$invalid">
             <i class="fa fa-plus-circle fa-lg"></i> Create
         </button>
+        <button class="btn btn-default pull-right" ng-click="eventCreateCtrl.cancel()" title="Cancel"> Cancel
+        </button>
     </div>
     <br />
     <div>
@@ -53,7 +55,7 @@
                 </div>
             </div>
             <div class="btn-group" style="cursor:pointer">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Add content <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
@@ -62,6 +64,12 @@
                     <li><a ng-click="eventCreateCtrl.newVideo()">New video</a></li>
                     <li><a ng-click="eventCreateCtrl.newSimpleLink()">New link</a></li>
                 </ul>
+                <button type="button" class="btn btn-default" 
+                        ng-click="eventCreateCtrl.changeCollapseState()"
+                        ng-disabled="eventCreateCtrl.event.contentList.length==0">
+                    <span ng-show="eventCreateCtrl.isCollapsed">Expand</span>
+                    <span ng-show="!eventCreateCtrl.isCollapsed">Collapse</span>
+                </button>
             </div>
             <br />
             <div ng-if="eventCreateCtrl.showEditArea">
@@ -87,13 +95,13 @@
                         <div ng-show="!content.isEdit">
                         <div class="row" ng-if="content.contentType == 1">
                             <div class="col-md-12">
-                                <p style="display: block;line-height:1em;">
+                                <p style="display: block;line-height:1em;word-wrap:break-word">
                                     {{content.content}}
                                 </p>
                             </div>
                         </div>
                         <div ng-if="content.contentType == 2">
-                            <img ng-src="{{content.content}}" alt="content.name" height="250" style="width: 100%;">
+                            <img ng-src="{{content.content}}" alt="content.name" height="300" style="width: 100%;">
                         </div>
                         <div class="row" ng-if="content.contentType == 3">
                             <div class="col-md-12">
