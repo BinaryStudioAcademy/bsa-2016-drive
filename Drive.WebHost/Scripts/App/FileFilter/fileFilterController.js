@@ -113,7 +113,7 @@
                     if ($itemScope.file.spaceId === vm.binarySpaceId) {
                         return false;
                     }
-                    return true;
+                    return $itemScope.file.canModify;
                 }
             ],
             null,
@@ -123,13 +123,13 @@
                     vm.file.parentId = $itemScope.file.parentId;
                     vm.file.spaceId = $itemScope.spaceId;
                     vm.openFileWindow();
-                }
+                }, function ($itemScope) { return $itemScope.file.canModify; }
             ],
             null,
             [
                 'Delete', function ($itemScope) {
                     return deleteFile($itemScope.file.id);
-                }
+                }, function ($itemScope) { return $itemScope.file.canModify; }
             ]
         ];
 

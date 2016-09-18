@@ -29,6 +29,8 @@
         vm.getSharedData = getSharedData;
         vm.getSpaceByButton = getSpaceByButton;
         vm.openDocument = openDocument;
+        vm.openFolderWindow = openFolderWindow;
+        vm.openFileWindow = openFileWindow;
 
         vm.search = search;
         vm.cancelSearch = cancelSearch;
@@ -186,6 +188,19 @@
         }
 
         vm.folderMenuOptions = [
+            [
+                'Edit', function ($itemScope) {
+                    vm.folder = $itemScope.folder;
+                    vm.folder.parentId = vm.parentId;
+                    vm.folder.spaceId = vm.space.id;
+                    vm.openFolderWindow();
+                }, function ($itemScope) {
+                    if (vm.space.rootFolderId != null) {
+                        return false;
+                    }
+                    return $itemScope.folder.canModify;
+                }
+            ],
             ['Delete', function ($itemScope) {
                 sharedSpaceService.deleteSharedContent($itemScope.folder.id, function () {
                     if (vm.space.folders.lenght = 1 && vm.paginate.currentPage != 1) {
@@ -216,6 +231,21 @@
         ];
 
         vm.fileMenuOptions = [
+            ['Edit', function ($itemScope) {
+                vm.file = $itemScope.file;
+                vm.file.parentId = vm.parentId;
+                vm.file.spaceId = vm.space.id;
+                if (vm.file.fileType !== 7) {
+                    vm.openFileWindow();
+                }
+                else {
+                    fileService.findCourse(vm.file.id, function (response) {
+                        vm.course = response;
+                        vm.openNewCourseWindow('lg');
+                    });
+                }
+            }, function ($itemScope) { return $itemScope.file.canModify; }
+            ],
            ['Delete', function ($itemScope) {
                sharedSpaceService.deleteSharedContent($itemScope.file.id, function () {
                    if (vm.space.files.lenght = 1 && vm.paginate.currentPage != 1) {
@@ -322,6 +352,81 @@
         function chooseIcon(type) {
             vm.iconSrc = fileService.chooseIcon(type);
             return vm.iconSrc;
+        }
+
+        function openFolderWindow(size) {
+
+            var folderModalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'Scripts/App/Folder/CreateUpdateFolderForm.html',
+                windowTemplateUrl: 'Scripts/App/Folder/Modal.html',
+                controller: 'FolderModalCtrl',
+                controllerAs: 'folderModalCtrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        return vm.folder;
+                    }
+                }
+            });
+
+            folderModalInstance.result.then(function (response) {
+                console.log(response);
+                if (response.operation == 'create') {
+                    if (vm.parentId == null) {
+                        vm.getSpace();
+                    } else {
+                        vm.getFolderContent(vm.parentId);
+                    }
+                }
+                if (response.operation == 'update') {
+                    var index = findById(vm.space.folders, response.item.id);
+                    if (index != -1) {
+                        vm.space.folders[index] = response.item;
+                    }
+                }
+            },
+                function () {
+                    console.log('Modal dismissed');
+                });
+        };
+
+        function openFileWindow(size) {
+
+            var fileModalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'Scripts/App/File/FileForm.html',
+                windowTemplateUrl: 'Scripts/App/File/Modal.html',
+                controller: 'FileModalCtrl',
+                controllerAs: 'fileModalCtrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        return vm.file;
+                    }
+                }
+            });
+
+
+            fileModalInstance.result.then(function (response) {
+                console.log(response);
+                if (response.operation == 'create') {
+                    if (vm.parentId == null) {
+                        vm.getSpace();
+                    } else {
+                        vm.getFolderContent(vm.parentId);
+                    }
+                }
+                if (response.operation == 'update') {
+                    var index = findById(vm.space.files, response.item.id);
+                    if (index != -1) {
+                        vm.space.files[index] = response.item;
+                    }
+                }
+            },
+                function () {
+                    console.log('Modal dismissed');
+                });
         }
     }
 }());
