@@ -388,7 +388,8 @@
         vm.containerMenuOptions = [
             ['New Folder', function () { vm.createNewFolder(); }, function () { return vm.space.canModifySpace; }],
             ['New File', function () { vm.createNewFile(); }, function () { return vm.space.canModifySpace; }],
-            ['New Academy Pro', function () { vm.createNewAP(); }, function () { return vm.space.canModifySpace; }],
+            ['New Academy Pro', function () { vm.createNewAP(); }, function () { return vm.space.canModifySpace; }], ,
+            ['New Event', function () { vm.createNewEvent(); }, function () { return vm.space.canModifySpace;}],
             null,
             ['Upload File',
                 function ($itemScope) {
