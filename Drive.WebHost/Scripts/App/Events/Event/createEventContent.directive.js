@@ -69,6 +69,7 @@
             }
 
             scope.cancel = function () {
+                scope.content.isEdit = false;
                 scope.afterSaveMethod();
             }
         }

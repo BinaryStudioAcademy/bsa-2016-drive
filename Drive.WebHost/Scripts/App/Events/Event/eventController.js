@@ -33,10 +33,12 @@
         vm.cancelEvent = cancelEvent;
         vm.update = update;
         vm.getEventsList = getEventsList;
+        vm.changeCollapseState = changeCollapseState;
 
         activate();
 
         function activate() {
+            vm.isCollapsed = false;
             vm.isEditing = false;
             if ($location.path().indexOf('edit') + 1) {
                 edit();
@@ -94,8 +96,16 @@
         function editContent(index) {
             vm.event.contentList[index].order = index;
             vm.currentContent = vm.event.contentList[index];
-            vm.showEditArea = true;
-            //vm.event.contentList.splice(index, 1);
+            vm.currentContent.isEdit = true;
+            vm.currentContent.isCollapsed = false;
+        }
+
+        function changeCollapseState() {
+            vm.isCollapsed = !vm.isCollapsed;
+            if (vm.event.contentList.length > 0)
+                for (var i = 0; i < vm.event.contentList.length; i++) {
+                    vm.event.contentList[i].isCollapsed = vm.isCollapsed;
+                }
         }
 
         function updateEvent() {

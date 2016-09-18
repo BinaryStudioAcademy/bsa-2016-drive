@@ -8,7 +8,8 @@
         <button class="btn btn-info pull-right" ng-click="eventCreateCtrl.create()" title="Create new event" ng-disabled="eventForm.$invalid">
             <i class="fa fa-plus-circle fa-lg"></i> Create
         </button>
-        <button class="btn btn-default pull-right" ng-click="eventCreateCtrl.cancel()" title="Cancel"> Cancel
+        <button class="btn btn-default pull-right" ng-click="eventCreateCtrl.cancel()" title="Cancel">
+            Cancel
         </button>
     </div>
     <br />
@@ -31,26 +32,26 @@
                             <div class="col-sm-2 col-md-2 col-lg-2 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">
                                 <p ng-show="eventForm.eventtype.$error.required && eventForm.eventtype.$touched" class="help-block">Type is required</p>
                                 <p ng-show="eventForm.eventtype.$error.pattern" class="help-block">Not a valid type</p>
-                             </div>
-                         </div>
+                            </div>
+                        </div>
                         <div class="clearfix"></div>
                         <div class="form-group datetimepicker" ng-class="{ 'has-error' : eventForm.date.$invalid && !eventForm.date.$pristine }">
                             <div class="row">
-                            <label class="col-sm-2 create-event-form">Event date:</label>
-                            <span class="col-sm-4 col-md-4 col-lg-4" style="padding:0">
-                                <input ng-model-options="{timezone:'+0000'}" type="datetime" name="date" class="form-control col-sm-3 col-md-3 col-lg-3" datetime-picker="yyyy-MM-dd HH:mm"
-                                        ng-model="eventCreateCtrl.event.eventDate" is-open="eventCreateCtrl.calendar.isOpen" placeholder="Select date"
-                                        timepicker-options="eventCreateCtrl.calendar.timepickerOptions" required />
-                                <button type="button" class="btn btn-default" ng-click="eventCreateCtrl.calendar.openCalendar($event, prop)"><i class="fa fa-calendar"></i></button>
-                            </span>
-                            <label class="col-sm-2 col-md-2 col-lg-2 create-event-form" style="margin-left:-8px">Description:</label>
-                            <textarea type="text" name="description" class="form-control col-sm-4 col-md-4 col-lg-4" ng-model="eventCreateCtrl.event.fileUnit.description" placeholder="Enter description"></textarea>
+                                <label class="col-sm-2 create-event-form">Event date:</label>
+                                <span class="col-sm-4 col-md-4 col-lg-4" style="padding:0">
+                                    <input ng-model-options="{timezone:'+0000'}" type="datetime" name="date" class="form-control col-sm-3 col-md-3 col-lg-3" datetime-picker="yyyy-MM-dd HH:mm"
+                                           ng-model="eventCreateCtrl.event.eventDate" is-open="eventCreateCtrl.calendar.isOpen" placeholder="Select date"
+                                           timepicker-options="eventCreateCtrl.calendar.timepickerOptions" required />
+                                    <button type="button" class="btn btn-default" ng-click="eventCreateCtrl.calendar.openCalendar($event, prop)"><i class="fa fa-calendar"></i></button>
+                                </span>
+                                <label class="col-sm-2 col-md-2 col-lg-2 create-event-form" style="margin-left:-8px">Description:</label>
+                                <textarea type="text" name="description" class="form-control col-sm-4 col-md-4 col-lg-4" ng-model="eventCreateCtrl.event.fileUnit.description" placeholder="Enter description"></textarea>
                             </div>
                             <div class="col-sm-2 col-md-2 col-lg-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
                                 <p ng-show="eventForm.date.$error.required && eventForm.date.$touched" class="help-block">Date is required</p>
                                 <p ng-show="eventForm.date.$error.datetime" class="help-block">Not a valid date</p>
-                                </div>
                             </div>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -64,7 +65,7 @@
                     <li><a ng-click="eventCreateCtrl.newVideo()">New video</a></li>
                     <li><a ng-click="eventCreateCtrl.newSimpleLink()">New link</a></li>
                 </ul>
-                <button type="button" class="btn btn-default" 
+                <button type="button" class="btn btn-default"
                         ng-click="eventCreateCtrl.changeCollapseState()"
                         ng-disabled="eventCreateCtrl.event.contentList.length==0">
                     <span ng-show="eventCreateCtrl.isCollapsed">Expand</span>
@@ -82,48 +83,53 @@
                 <div ng-repeat="content in eventCreateCtrl.event.contentList"
                      dnd-draggable="content" dnd-effect-allowed="move"
                      dnd-moved="eventCreateCtrl.event.contentList.splice($index, 1)">
-                    <br />
-                    <div class="space-label" >
-                        <i role="button" class="glyphicon"
-                            ng-click="content.isCollapsed = !content.isCollapsed"
-                            ng-class="{'fa fa-plus-square-o': content.isCollapsed, 'fa fa-minus-square-o': !content.isCollapsed}" aria-hidden="true"></i>
-                        {{ content.contentType | contentType}}: {{content.name | limitTo: 20}}{{content.name.length > 20 ? '...' : ''}}
-                        <i role="button" class="fa fa-trash fa-lg pull-right" ng-click="eventCreateCtrl.removeContent($index)" title="Delete content" aria-hidden="true"></i>
-                        <i role="button" class="fa fa-pencil-square-o fa-lg pull-right" ng-click="eventCreateCtrl.editContent($index)" title="Edit content" aria-hidden="true"></i>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="space-label">
+                                <i role="button" class="glyphicon"
+                                   ng-click="content.isCollapsed = !content.isCollapsed"
+                                   ng-class="{'fa fa-plus-square-o': content.isCollapsed, 'fa fa-minus-square-o': !content.isCollapsed}" aria-hidden="true"></i>
+                                {{ content.contentType | contentType}}: {{content.name | limitTo: 20}}{{content.name.length > 20 ? '...' : ''}}
+                                <i role="button" class="fa fa-trash fa-lg pull-right" ng-click="eventCreateCtrl.removeContent($index)" title="Delete content" aria-hidden="true"></i>
+                                <i role="button" class="fa fa-pencil-square-o fa-lg pull-right" ng-click="eventCreateCtrl.editContent($index)" title="Edit content" aria-hidden="true"></i>
+                            </div>
+                            <div uib-collapse="content.isCollapsed">
+                                <div ng-show="!content.isEdit">
+                                    <div class="row" ng-if="content.contentType == 1">
+                                        <div class="col-md-12">
+                                            <p style="display: block;word-wrap:break-word">
+                                                {{content.content}}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-8 col-sm-offset-2">
+                                        <div class="thumbnail" ng-if="content.contentType == 2">
+                                            <img src="{{content.content}}" alt="content.name">
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-if="content.contentType == 3">
+                                        <div class="col-sm-8 col-sm-offset-2">
+                                            <youtube-video video-url="content.content"></youtube-video>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-if="content.contentType == 4">
+                                        <div class="col-md-12">
+                                            <p>
+                                                <a ng-href="{{content.content}}" target="_blank">{{content.content}} <i class="fa fa-external-content" aria-hidden="true"></i></a>
+                                            </p>
+                                            <p>{{content.description}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-show="content.isEdit">
+                                    <create-event-content contents-model="eventCreateCtrl.currentContent"
+                                                          content-list="eventCreateCtrl.event.contentList"
+                                                          after-save-method="eventCreateCtrl.contentSaved">
+                                    </create-event-content>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div uib-collapse="content.isCollapsed">
-                        <div ng-show="!content.isEdit">
-                        <div class="row" ng-if="content.contentType == 1">
-                            <div class="col-md-12">
-                                <p style="display: block;line-height:1em;word-wrap:break-word">
-                                    {{content.content}}
-                                </p>
-                            </div>
-                        </div>
-                        <div ng-if="content.contentType == 2">
-                            <img ng-src="{{content.content}}" alt="content.name" height="300" style="width: 100%;">
-                        </div>
-                        <div class="row" ng-if="content.contentType == 3">
-                            <div class="col-md-12">
-                                <youtube-video player-width="'100%'" player-height="'100%'" video-url="content.content"></youtube-video>
-                            </div>
-                        </div>
-                        <div class="row" ng-if="content.contentType == 4">
-                            <div class="col-md-12">
-                                <p>
-                                <a ng-href="{{content.content}}" target="_blank">{{content.content}} <i class="fa fa-external-content" aria-hidden="true"></i></a>
-                                </p>
-                                <p>{{content.description}}</p>
-                            </div>
-                        </div>
-                            </div>
-                        <div ng-show="content.isEdit">
-                            <create-event-content contents-model="eventCreateCtrl.currentContent"
-                                                  content-list="eventCreateCtrl.event.contentList"
-                                                  after-save-method="eventCreateCtrl.contentSaved">
-                            </create-event-content>
-                        </div>
-                        </div>
                 </div>
             </div>
         </div>
