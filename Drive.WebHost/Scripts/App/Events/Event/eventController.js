@@ -38,6 +38,9 @@
 
         function activate() {
             vm.isEditing = false;
+            if ($location.path().indexOf('edit') + 1) {
+                edit();
+            }
             vm.showEditArea = false;
             vm.sortedContentList = [];
             return getEvent();

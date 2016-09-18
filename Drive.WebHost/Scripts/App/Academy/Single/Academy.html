@@ -47,7 +47,7 @@
 
             </div>
             <ul class="sp-gv-flex-container wrap-lecture" ng-show="!academyCtrl.showTable">
-                <li class="sp-gv-flex-item" role="button" ng-repeat="lecture in academyCtrl.academy.lectures" ng-dblclick="academyCtrl.openLecture(lecture.id)">
+                <li class="sp-gv-flex-item" role="button" ng-repeat="lecture in academyCtrl.academy.lectures" context-menu="academyCtrl.academyMenuOptions" ng-dblclick="academyCtrl.openLecture(lecture.id)">
                     <div class="sp-gv-wrapper-flex-item">
                         <div class="sp-gv-item-content cards">
                             <div class="sp-gv-item-img-wrapper">
@@ -86,6 +86,7 @@
             <div class="filter-table-internal">
                 <div class="filter-table-row">
                     <div class="row filter-table-row" role="button" ng-repeat="lecture in academyCtrl.academy.lectures"
+                         context-menu="academyCtrl.academyMenuOptions" 
                          ng-dblclick="academyCtrl.openLecture(lecture.id)">
                         <div class="col-md-2 filter-table-cell description" title="{{ lecture.name }}">
                             <img ng-src="{{academyCtrl.icon}}" height="{{academyCtrl.iconHeight}}" />

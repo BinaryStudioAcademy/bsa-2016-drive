@@ -77,7 +77,7 @@ namespace Drive.WebHost.Services.Pro
                 Id = course.Id,
                 IsDeleted = course.IsDeleted,
                 StartDate = course.StartDate,
-                Lectures = course.Lectures.Select(lecture => new LectureDto
+                Lectures = course.Lectures.Where(x => x.IsDeleted == false).Select(lecture => new LectureDto
                 {
                     Id = lecture.Id,
                     Name = lecture.Name,

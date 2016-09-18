@@ -8,10 +8,11 @@
     EventsListController.$inject = [
         "EventsListService",
         '$location',
-        'localStorageService'
+        'localStorageService',
+        'EventService'
     ];
 
-    function EventsListController(EventsListService, $location, localStorageService) {
+    function EventsListController(EventsListService, $location, localStorageService, eventService) {
         var vm = this;
         vm.columnForOrder = 'name';
         vm.openEvent = openEvent;
@@ -19,20 +20,19 @@
         vm.search = search;
         vm.cancelSearch = cancelSearch;
         //vm.openNewEventWindow = openNewEventWindow;
-        //vm.deleteEvent = deleteEvent;
+        vm.deleteEvent = deleteEvent;
         //vm.createNewEvent = createNewEvent;
         //vm.orderEventByColumn = orderEventByColumn;
         vm.eventMenuOptions = [
             [
                 'Edit', function ($itemScope) {
-                    vm.events = $itemScope.events;
-                    vm.openNewEventWindow();
+                    $location.url('/apps/events/' + $itemScope.event.id + '/edit');
                 }
             ],
             null,
             [
                 'Delete', function ($itemScope) {
-                    deleteEvent($itemScope.events.id);
+                    deleteEvent($itemScope.event.id);
                 }
             ]
         ];
@@ -117,6 +117,12 @@
                 }
             }
             return 0;
+        }
+
+        function deleteEvent(id) {
+            EventsListService.deleteEvent(id, function () {
+                return search();
+            })
         }
     }
 }());
