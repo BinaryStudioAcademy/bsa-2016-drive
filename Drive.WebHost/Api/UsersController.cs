@@ -52,24 +52,18 @@ namespace Drive.WebHost.Api
             return Ok(users);
         }
 
-        [HttpDelete]
-        public void Delete(int id)
+        // GET api/users/syncusers
+        [HttpGet]
+        [Route("syncusers")]
+
+        public async Task<IHttpActionResult> SyncWithRemote()
         {
-            
+            var users = await _usersService.SyncWithRemoteUsers();
+
+            if (users == null)
+                return BadRequest();
+            return Ok(users);
         }
-
-        [HttpPut]
-        public void Put(int id)
-        {
-
-        }
-
-        [HttpPost]
-        public void Post(int id)
-        {
-
-        }
-
         
     }
 }

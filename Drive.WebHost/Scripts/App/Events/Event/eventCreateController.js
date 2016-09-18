@@ -103,6 +103,7 @@
         function contentSaved() {
 
             vm.showEditArea = false;
+            vm.currentContent = {};
         }
 
         function getEventList() {
@@ -116,7 +117,9 @@
         function editContent(index) {
             vm.event.contentList[index].order = index;
             vm.currentContent = vm.event.contentList[index];
-            vm.showEditArea = true;
+            vm.currentContent.isEdit = true;
+            vm.currentContent.isCollapsed = false;
+            //vm.showEditArea = true;
             //vm.event.contentList.splice(index, 1);
         }
 

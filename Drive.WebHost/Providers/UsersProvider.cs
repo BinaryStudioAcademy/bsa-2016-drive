@@ -5,7 +5,7 @@ using Drive.Core.HttpClient;
 using Drive.Identity.Services;
 using Driver.Shared.Dto.Users;
 
-namespace Drive.WebHost.Services
+namespace Drive.WebHost.Providers
 {
     public class UsersProvider : IUsersProvider
     {
@@ -22,9 +22,9 @@ namespace Drive.WebHost.Services
             return (await _client.GetAsync<IEnumerable<UserDto>>("profile/user/getByCentralId/" + id)).FirstOrDefault();
         }
 
-        public async Task<IEnumerable<UsersDto>> GetAsync()
+        public async Task<IEnumerable<UserDto>> GetAsync()
         {
-            return await _client.GetAsync<List<UsersDto>>("profile/user/filter");
+            return await _client.GetAsync<List<UserDto>>("profile/user/filter");
         }
 
         public async Task<UserDto> GetCurrentUser()

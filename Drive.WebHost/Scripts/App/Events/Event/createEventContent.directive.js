@@ -39,6 +39,7 @@
             
             scope.saveContent = function () {
                 scope.content = scope.contentModel;
+                scope.content.isEdit = false;
                 if (scope.content.order === undefined) {
                     scope.contentList.push(scope.content);
                 }

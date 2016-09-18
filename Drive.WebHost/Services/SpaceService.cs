@@ -246,7 +246,7 @@ namespace Drive.WebHost.Services
             {
                 if (item.Author.GlobalId == userId)
                 {
-                    owners.Add(new { Id = user.serverUserId, Name = user.name + user.surname });
+                    owners.Add(new { Id = user.id, Name = user.name + user.surname });
                 }
             }
 
@@ -353,41 +353,18 @@ namespace Drive.WebHost.Services
             foreach (var item in dto.ReadPermittedUsers)
             {
                 var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
-                if (user == null)
-                {
-                    UserDto userdto = new UserDto();
-                    userdto.serverUserId = item.GlobalId;
-                    await _userService.CreateAsync(userdto);
-                    var suser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
-                    ReadPermittedUsers.Add(suser);
-                }
-                else
-                {
-                    ReadPermittedUsers.Add(user);
-                }
+                ReadPermittedUsers.Add(user);
             }
 
             List<User> ModifyPermittedUsers = new List<User>();
             foreach (var item in dto.ModifyPermittedUsers)
             {
-                var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
-                if (user == null)
+                var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == item.GlobalId);
+                ModifyPermittedUsers.Add(user);
+                var x = ReadPermittedUsers.FirstOrDefault(p => p.GlobalId == user.GlobalId);
+                if (x == null)
                 {
-                    UserDto userdto = new UserDto();
-                    userdto.serverUserId = item.GlobalId;
-                    await _userService.CreateAsync(userdto);
-                    var suser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
-                    ModifyPermittedUsers.Add(suser);
-                    ReadPermittedUsers.Add(suser);
-                }
-                else
-                {
-                    ModifyPermittedUsers.Add(user);
-                    var x = ReadPermittedUsers.FirstOrDefault(p => p.GlobalId == user.GlobalId);
-                    if (x == null)
-                    {
-                        ReadPermittedUsers.Add(user);
-                    }
+                    ReadPermittedUsers.Add(user);
                 }
             }
 
@@ -446,40 +423,17 @@ namespace Drive.WebHost.Services
             foreach (var item in dto.ReadPermittedUsers)
             {
                 var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
-                if (user == null)
-                {
-                    UserDto userdto = new UserDto();
-                    userdto.serverUserId = item.GlobalId;
-                    await _userService.CreateAsync(userdto);
-                    var suser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
-                    ReadPermittedUsers.Add(suser);
-                }
-                else
-                {
-                    ReadPermittedUsers.Add(user);
-                }
+                ReadPermittedUsers.Add(user);
             }
             List<User> ModifyPermittedUsers = new List<User>();
             foreach (var item in dto.ModifyPermittedUsers)
             {
-                var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
-                if (user == null)
+            var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == item.GlobalId);
+                ModifyPermittedUsers.Add(user);
+                var x = ReadPermittedUsers.FirstOrDefault(p => p.GlobalId == user.GlobalId);
+                if (x == null)
                 {
-                    UserDto userdto = new UserDto();
-                    userdto.serverUserId = item.GlobalId;
-                    await _userService.CreateAsync(userdto);
-                    var suser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
-                    ModifyPermittedUsers.Add(suser);
-                    ReadPermittedUsers.Add(suser);
-                }
-                else
-                {
-                    ModifyPermittedUsers.Add(user);
-                    var x = ReadPermittedUsers.FirstOrDefault(p => p.GlobalId == user.GlobalId);
-                    if (x == null)
-                    {
-                        ReadPermittedUsers.Add(user);
-                    }
+                    ReadPermittedUsers.Add(user);
                 }
             }
             List<Role> ReadPermittedRoles = new List<Role>();
@@ -820,46 +774,6 @@ namespace Drive.WebHost.Services
                 _logger.WriteError(ex, ex.Message);
             }
             return counter;
-        }
-
-        public async Task CreateUserAndFirstSpaceAsync(string globalId)
-        {
-            if (globalId != string.Empty)
-            {
-                try
-                {
-                    var user = await _unitOfWork.Users.Query.SingleOrDefaultAsync<User>(u => u.GlobalId == globalId);
-
-                    if (user == null)
-                    {
-                        user = new User() { GlobalId = globalId, IsDeleted = false };
-                        _unitOfWork.Users.Create(user);
-
-                        var users = new List<User>();
-                        users.Add(user);
-                        _unitOfWork.Spaces.Create(new Space()
-                        {
-                            Name = "My Space",
-                            Description = "My Space",
-                            MaxFileSize = 1024,
-                            MaxFilesQuantity = 100,
-                            ModifyPermittedUsers = users,
-                            ReadPermittedUsers = users,
-                            IsDeleted = false,
-                            CreatedAt = DateTime.Now,
-                            LastModified = DateTime.Now,
-                            Owner = user,
-                            Type = SpaceType.MySpace
-                        });
-
-                        await _unitOfWork.SaveChangesAsync();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    _logger.WriteError(ex, ex.Message);
-                }
-            }
         }
 
         public async Task MoveContentAsync(CopyMoveContentDto content)

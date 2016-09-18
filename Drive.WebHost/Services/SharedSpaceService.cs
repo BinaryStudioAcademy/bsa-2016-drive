@@ -63,7 +63,6 @@ namespace Drive.WebHost.Services
                         var fileSharedDeleted = await _unitOfWork.SharedSpace.Deleted.Include(t => t.Content).Include(t => t.User).SingleOrDefaultAsync(f => f.Content.Id == id && f.User.GlobalId == user.GlobalId);
                         if (fileSharedDeleted == null)
                         {
-                            await _spaceService.CreateUserAndFirstSpaceAsync(user.GlobalId);
                             var userDb = await _unitOfWork.Users.Query.FirstOrDefaultAsync(x => x.GlobalId == user.GlobalId);
                             var file = await _unitOfWork.Files.Query.SingleOrDefaultAsync(f => f.Id == id);
                             if (file != null)

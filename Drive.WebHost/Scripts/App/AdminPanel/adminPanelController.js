@@ -12,6 +12,7 @@
         vm.createRole = createRole;
         vm.editRole = editRole;
         vm.removeRole = removeRole;
+        vm.syncUsers = syncUsers;
         vm.tab = 1;
         vm.setTab = setTab;
         vm.isSet = isSet;
@@ -112,5 +113,19 @@
                 });
             });
         }
+        
+        function syncUsers()
+        {
+            adminPanelService.syncUsers(function () {
+                swal({
+                    title: "Synchronized!",
+                    text: "Users have been synchronized.",
+                    timer: 2000,
+                    showConfirmButton: false,
+                    type: "success"
+                });
+            });
+        }
+
     }
 }());

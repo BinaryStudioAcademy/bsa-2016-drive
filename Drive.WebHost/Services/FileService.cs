@@ -106,7 +106,7 @@ namespace Drive.WebHost.Services
         public async Task<FileUnitDto> CreateAsync(FileUnitDto dto)
         {
             var user = await _usersService.GetCurrentUser();
-            var localUser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == user.serverUserId);
+            var localUser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == user.id);
 
             var space = await _unitOfWork?.Spaces?.GetByIdAsync(dto.SpaceId);
             var parentFolder = await _unitOfWork?.Folders.GetByIdAsync(dto.ParentId);
@@ -133,7 +133,7 @@ namespace Drive.WebHost.Services
                     IsDeleted = false,
                     Space = space,
                     FolderUnit = parentFolder,
-                    Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId),
+                    Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.id),
                     ReadPermittedUsers = ReadPermittedUsers,
                     ModifyPermittedUsers = ModifyPermittedUsers
                 };
@@ -264,7 +264,7 @@ namespace Drive.WebHost.Services
                 CreatedAt = DateTime.Now,
                 Link = file.Link,
                 Space = space,
-                Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId),
+                Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user.id),
                 ModifyPermittedUsers = file.ModifyPermittedUsers,
                 ReadPermittedUsers = file.ReadPermittedUsers,
                 MorifyPermittedRoles = file.MorifyPermittedRoles,
@@ -548,7 +548,7 @@ namespace Drive.WebHost.Services
         {
             _logger.WriteInfo("Upload method started");
             var user = await _usersService.GetCurrentUser();
-            var localUser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == user.serverUserId);
+            var localUser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == user.id);
 
             var space = await _unitOfWork?.Spaces?.GetByIdAsync(spaceId);
             var parentFolder = await _unitOfWork?.Folders.GetByIdAsync(parentId);
@@ -612,7 +612,7 @@ namespace Drive.WebHost.Services
                         IsDeleted = false,
                         Space = space,
                         FolderUnit = parentFolder,
-                        Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId),
+                        Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.id),
                         ReadPermittedUsers = ReadPermittedUsers,
                         ModifyPermittedUsers = ModifyPermittedUsers
                     };
@@ -650,7 +650,7 @@ namespace Drive.WebHost.Services
                         IsDeleted = false,
                         Space = space,
                         FolderUnit = parentFolder,
-                        Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId),
+                        Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.id),
                         ReadPermittedUsers = ReadPermittedUsers,
                         ModifyPermittedUsers = ModifyPermittedUsers
                     };
