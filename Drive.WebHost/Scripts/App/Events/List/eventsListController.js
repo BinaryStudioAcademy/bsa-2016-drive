@@ -9,21 +9,34 @@
         "EventsListService",
         '$location',
         'localStorageService',
-        'EventService'
+        'EventService',
+        '$uibModal'
     ];
 
-    function EventsListController(EventsListService, $location, localStorageService, eventService) {
+    function EventsListController(EventsListService, $location, localStorageService, eventService, $uibModal) {
         var vm = this;
         vm.columnForOrder = 'name';
         vm.openEvent = openEvent;
         vm.changeView = changeView;
         vm.search = search;
         vm.cancelSearch = cancelSearch;
-        //vm.openNewEventWindow = openNewEventWindow;
+        vm.openShareEventContentWindow = openShareEventContentWindow;
+        vm.sharedEventContent = sharedEventContent;
         vm.deleteEvent = deleteEvent;
-        //vm.createNewEvent = createNewEvent;
-        //vm.orderEventByColumn = orderEventByColumn;
         vm.eventMenuOptions = [
+                    [
+            'Share', function ($itemScope) {
+                vm.contentSharedId = $itemScope.event.fileUnit.id;
+                sharedEventContent();
+            },
+                function ($itemScope) {
+                    if ($itemScope.event.fileUnit.spaceId == vm.binarySpaceId) {
+                        return false;
+                    }
+                    return true;
+                }
+                    ],
+                    null,
             [
                 'Edit', function ($itemScope) {
                     $location.url('/apps/events/' + $itemScope.event.id + '/edit');
@@ -123,6 +136,37 @@
             EventsListService.deleteEvent(id, function () {
                 return search();
             })
+        }
+
+        function sharedEventContent() {
+            openShareEventContentWindow();
+        }
+
+        function openShareEventContentWindow(size) {
+
+            var shareModalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'Scripts/App/SharedContent/SharedContentForm.html',
+                windowTemplateUrl: 'Scripts/App/SharedContent/Modal.html',
+                controller: 'SharedContentModalCtrl',
+                controllerAs: 'sharedContentModalCtrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        var sharedContInfo = {
+                            contentId: vm.contentSharedId,
+                            title: 'Shared file'
+                        }
+                        return sharedContInfo;
+                    }
+                }
+            });
+
+            shareModalInstance.result.then(function (response) {
+                console.log(response);
+            }, function () {
+                console.log('Modal dismissed');
+            });
         }
     }
 }());
