@@ -870,7 +870,7 @@ End Cancel button on search input*/
 .sp-gv-flex-item {
     padding: 5px;
     width: 210px;
-    height: auto;
+    max-height: 225px;
     margin-top: 10px;
 }
 
