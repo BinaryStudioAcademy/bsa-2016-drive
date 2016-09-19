@@ -31,7 +31,14 @@
                         </p>
                         <br />
                         <div ng-repeat="content in eventCtrl.sortedContentList">
-                            <div event-content content="content" content-types="eventCtrl.contentTypes" link-trust="eventCtrl.trustSrc"></div>
+                            <div ng-if="content.contentType != 4" event-content content="content" content-types="eventCtrl.contentTypes" link-trust="eventCtrl.trustSrc"></div>
+                        </div>
+                        <br/>
+                        <div class="col-sm-12">
+                            <p> Links: </p>
+                        <div ng-repeat="content in eventCtrl.sortedContentList">
+                            <div ng-if="content.contentType == 4" event-content content="content" content-types="eventCtrl.contentTypes" link-trust="eventCtrl.trustSrc"></div>
+                        </div>
                         </div>
                     </div>
                 </div>
@@ -86,7 +93,7 @@
                     </div>
                 </div>
                 <div class="btn-group" style="cursor:pointer">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Add content <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu">

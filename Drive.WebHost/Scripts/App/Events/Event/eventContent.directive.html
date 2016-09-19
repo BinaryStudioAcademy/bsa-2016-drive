@@ -1,28 +1,30 @@
 ﻿
-<div ng-if="content.contentType == contentTypes.video">
-    <h4>{{content.name}}</h4>
-    <p>{{content.content}}</p>
-    <p>{{content.description}}</p>
-    <youtube-video video-url="content.content"></youtube-video>
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2" ng-if="content.contentType == contentTypes.video">
+        <h4>{{content.name}}</h4>
+        <youtube-video video-url="content.content"></youtube-video>
+        <p style="text-align:center">{{content.description}}</p>
+    </div>
 </div>
-<div ng-if="content.contentType == contentTypes.text">
-    <h4>{{content.name}}</h4>
-    <p>{{content.content}}</p>
-    <p>{{content.description}}</p>
+<div class="row">
+    <div class="col-sm-12" ng-if="content.contentType == contentTypes.text">
+        <p>{{content.content}}</p>
+    </div>
 </div>
-<div ng-if="content.contentType == contentTypes.photo">
-    <h4>{{content.name}}</h4>
-    <img class="img-responsive" ng-src="{{content.content}}" />
-    <p>{{content.description}}</p>
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2" ng-if="content.contentType == contentTypes.photo">
+        <h4>{{content.name}}</h4>
+        <img class="img-responsive" ng-src="{{content.content}}" />
+        <p style="text-align:center">{{content.description}}</pstyle="text-align:center">
+    </div>
 </div>
-<div ng-if="content.contentType == contentTypes.content">
-    <a ng-href="content.content"></a>
-    <a ng-href="{{content.content}}" target="_blank">{{content.name}} <i class="fa fa-external-content" aria-hidden="true"></i></a>
-    <p>{{content.description}}</p>
+<div class="row">
+    <div class="col-sm-12" ng-if="content.contentType == contentTypes.link">
+        <div class="col-sm-6">
+            <a ng-href="{{content.content |external}}" target="_blank">{{content.content}} <i class="fa fa-external-link" aria-hidden="true"></i></a>
+        </div>
+        <div class="col-sm-6">
+            <p>{{content.description}}</p>
+        </div>
+    </div>
 </div>
-<div ng-if="content.contentType == contentTypes.link">
-    <h4>{{content.name}}</h4>
-    <a ng-href="{{content.content |external}}" target="_blank">{{content.content}} <i class="fa fa-external-link" aria-hidden="true"></i></a>
-    <p>{{content.description}}</p>
-</div>
-<br />

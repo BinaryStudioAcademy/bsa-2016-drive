@@ -366,14 +366,25 @@
                     vm.file = $itemScope.file;
                     vm.file.parentId = vm.parentId;
                     vm.file.spaceId = vm.space.id;
-                    if (vm.file.fileType !== 7) {
-                        vm.openFileWindow();
-                    }
-                    else {
+                    if (vm.file.fileType === 7) {
                         fileService.findCourse(vm.file.id, function (response) {
                             vm.course = response;
                             vm.openNewCourseWindow('lg');
                         });
+                        
+                    }
+                    else {
+                        if (vm.file.fileType === 9) {
+                            fileService.findEvent(vm.file.id, function (response) {
+                                vm.event = response;
+                                vm.event.isEdit
+                                localStorageService.set('event', vm.event);
+                                $location.url('/apps/events/' + vm.event.id + '/edit');
+                            });
+                        }
+                        else {
+                            vm.openFileWindow();
+                        }
                     }
                 }, function ($itemScope) { return $itemScope.file.canModify; }
             ],
