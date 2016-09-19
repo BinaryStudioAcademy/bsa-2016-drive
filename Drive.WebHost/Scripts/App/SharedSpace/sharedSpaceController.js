@@ -350,19 +350,33 @@
         }
 
         function openDocument(file) {
-            if (file.fileType !== 7) {
-                if (file.fileType === 6) {
+            switch (file.fileType) {
+                case 6: {
                     fileService.downloadFile(file.link);
-                } else {
-                    window.open(file.link, '_blank');;
+                    break;
                 }
-            } else {
-                fileService.findCourse(file.id,
-                    function(data) {
-                        if (data !== undefined) {
-                            $location.url('/apps/academy/' + data.id);
-                        }
-                    });
+                case 7: {
+                    fileService.findCourse(file.id,
+                        function(data) {
+                            if (data !== undefined) {
+                                $location.url('/apps/academy/' + data.id);
+                            }
+                        });
+                    break;
+                }
+                case 9: {
+                    fileService.findEvent(file.id,
+                        function (data) {
+                            if (data != undefined) {
+                                $location.url('/apps/events/' + data.id);
+                            }
+                        });
+                    break;
+                }
+                default: {
+                    window.open(file.link, '_blank');
+                    break;
+                }
             }
         }
 
