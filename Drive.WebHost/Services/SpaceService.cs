@@ -398,8 +398,8 @@ namespace Drive.WebHost.Services
                 ModifyPermittedUsers = ModifyPermittedUsers,
                 ReadPermittedRoles = ReadPermittedRoles,
                 ModifyPermittedRoles = ModifyPermittedRoles,
-                CreatedAt = DateTime.Now,
-                LastModified = DateTime.Now,
+                CreatedAt = DateTime.UtcNow,
+                LastModified = DateTime.UtcNow,
                 IsDeleted = false,
                 Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == userId)
             };
@@ -464,7 +464,7 @@ namespace Drive.WebHost.Services
             space.ModifyPermittedUsers = ModifyPermittedUsers;
             space.ReadPermittedRoles = ReadPermittedRoles;
             space.ModifyPermittedRoles = ModifyPermittedRoles;
-            space.LastModified = DateTime.Now;
+            space.LastModified = DateTime.UtcNow;
 
             await _unitOfWork?.SaveChangesAsync();
         }

@@ -32,8 +32,8 @@ namespace Drive.WebHost.Services.Events
                 IsDeleted = false,
                 Content = dto.Content,
                 ContentType = dto.ContentType,
-                CreatedAt = DateTime.Now,
-                LastModified = DateTime.Now,
+                CreatedAt = DateTime.UtcNow,
+                LastModified = DateTime.UtcNow,
                 Event = await _unitOfWork.Events.Query.FirstOrDefaultAsync(e => e.Id == dto.EventId),
                 Order = dto.Order
             };
@@ -95,7 +95,7 @@ namespace Drive.WebHost.Services.Events
             ec.Content = dto.Content;
             ec.ContentType = dto.ContentType;
             ec.IsDeleted = dto.IsDeleted;
-            ec.LastModified = DateTime.Now;
+            ec.LastModified = DateTime.UtcNow;
             ec.Order = dto.Order;
 
             await _unitOfWork.SaveChangesAsync();

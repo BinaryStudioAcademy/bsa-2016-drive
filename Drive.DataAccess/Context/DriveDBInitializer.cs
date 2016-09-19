@@ -1253,9 +1253,9 @@ namespace Drive.DataAccess.Context
             {
                 Name = "Lecture 1",
                 Author = user1,
-                CreatedAt = DateTime.Now,
-                ModifiedAt = DateTime.Now,
-                StartDate = DateTime.Now.AddDays(5),
+                CreatedAt = DateTime.UtcNow,
+                ModifiedAt = DateTime.UtcNow,
+                StartDate = DateTime.UtcNow.AddDays(5),
                 Description = "Lecture desc"
             };
 
@@ -1303,9 +1303,9 @@ namespace Drive.DataAccess.Context
             {
                 Name = "Lecture 2",
                 Author = user1,
-                CreatedAt = DateTime.Now,
-                ModifiedAt = DateTime.Now,
-                StartDate = DateTime.Now.AddDays(10),
+                CreatedAt = DateTime.UtcNow,
+                ModifiedAt = DateTime.UtcNow,
+                StartDate = DateTime.UtcNow.AddDays(10),
                 Description = "Lecture desc"
             };
 
@@ -1358,12 +1358,12 @@ namespace Drive.DataAccess.Context
                     Name = "Course 1",
                     Description =
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed tempus quam. Ut lobortis, mauris sed aliquam placerat, lectus libero venenatis metus, vitae mattis risus sem et ex. Etiam sed dictum dui. Vestibulum id nisl maximus sem auctor consequat.",
-                    CreatedAt = DateTime.Now,
-                    LastModified = DateTime.Now,
+                    CreatedAt = DateTime.UtcNow,
+                    LastModified = DateTime.UtcNow,
                     IsDeleted = false,
                     Space = space1
                 },
-                StartDate = DateTime.Now.AddDays(5),
+                StartDate = DateTime.UtcNow.AddDays(5),
                 Lectures = new List<Lecture>
                 {
                     lecture1,
@@ -1378,9 +1378,9 @@ namespace Drive.DataAccess.Context
             {
                 Name = "Lecture 1",
                 Author = user1,
-                CreatedAt = DateTime.Now,
-                ModifiedAt = DateTime.Now,
-                StartDate = DateTime.Now.AddDays(5),
+                CreatedAt = DateTime.UtcNow,
+                ModifiedAt = DateTime.UtcNow,
+                StartDate = DateTime.UtcNow.AddDays(5),
                 Description = "Lecture desc"
             };
 
@@ -1428,9 +1428,9 @@ namespace Drive.DataAccess.Context
             {
                 Name = "Lecture 2",
                 Author = user1,
-                CreatedAt = DateTime.Now,
-                ModifiedAt = DateTime.Now,
-                StartDate = DateTime.Now.AddDays(10),
+                CreatedAt = DateTime.UtcNow,
+                ModifiedAt = DateTime.UtcNow,
+                StartDate = DateTime.UtcNow.AddDays(10),
                 Description = "Lecture desc"
             };
 
@@ -1483,12 +1483,12 @@ namespace Drive.DataAccess.Context
                     Name = "Course 2",
                     Description =
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed tempus quam. Ut lobortis, mauris sed aliquam placerat, lectus libero venenatis metus, vitae mattis risus sem et ex. Etiam sed dictum dui. Vestibulum id nisl maximus sem auctor consequat.",
-                    CreatedAt = DateTime.Now,
-                    LastModified = DateTime.Now,
+                    CreatedAt = DateTime.UtcNow,
+                    LastModified = DateTime.UtcNow,
                     IsDeleted = false,
                     Space = space1
                 },
-                StartDate = DateTime.Now.AddDays(5),
+                StartDate = DateTime.UtcNow.AddDays(5),
                 Lectures = new List<Lecture>
                 {
                     lecture3,
@@ -1512,12 +1512,12 @@ namespace Drive.DataAccess.Context
                     Name = "Event 1",
                     Description =
                         "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris sed tempus quam. Ut lobortis, mauris sed aliquam placerat, lectus libero venenatis metus, vitae mattis risus sem et ex. Etiam sed dictum dui. Vestibulum id nisl maximus sem auctor consequat.",
-                    CreatedAt = DateTime.Now,
-                    LastModified = DateTime.Now,
+                    CreatedAt = DateTime.UtcNow,
+                    LastModified = DateTime.UtcNow,
                     IsDeleted = false,
                     Space = space1
                 },
-                EventDate = DateTime.Now,
+                EventDate = DateTime.UtcNow,
                 EventType = "Entertainment",
                 IsDeleted = false
             };
@@ -1529,8 +1529,8 @@ namespace Drive.DataAccess.Context
                     Event = ev,
                     IsDeleted = false,
                     ContentType = ContentType.Text,
-                    CreatedAt = DateTime.Now,
-                    LastModified = DateTime.Now,
+                    CreatedAt = DateTime.UtcNow,
+                    LastModified = DateTime.UtcNow,
                     Order = 1,
                     Name = "Event Content 1",
                     Description = "Event content description",
@@ -1542,8 +1542,8 @@ Duis ante erat, sagittis id sollicitudin sed, facilisis et enim. Aliquam molesti
                     Event = ev,
                     IsDeleted = false,
                     ContentType = ContentType.Photo,
-                    CreatedAt = DateTime.Now,
-                    LastModified = DateTime.Now,
+                    CreatedAt = DateTime.UtcNow,
+                    LastModified = DateTime.UtcNow,
                     Order = 2,
                     Name = "Noooooooooooooooo!",
                     Description = "I am your father, Luke!",
@@ -1554,8 +1554,8 @@ Duis ante erat, sagittis id sollicitudin sed, facilisis et enim. Aliquam molesti
                     Event = ev,
                     IsDeleted = false,
                     ContentType = ContentType.Link,
-                    CreatedAt = DateTime.Now,
-                    LastModified = DateTime.Now,
+                    CreatedAt = DateTime.UtcNow,
+                    LastModified = DateTime.UtcNow,
                     Order = 3,
                     Name = "Event Content 3",
                     Description = "Event content description",
@@ -1566,8 +1566,8 @@ Duis ante erat, sagittis id sollicitudin sed, facilisis et enim. Aliquam molesti
                     Event = ev,
                     IsDeleted = false,
                     ContentType = ContentType.Video,
-                    CreatedAt = DateTime.Now,
-                    LastModified = DateTime.Now,
+                    CreatedAt = DateTime.UtcNow,
+                    LastModified = DateTime.UtcNow,
                     Order = 4,
                     Name = "Event Content 4",
                     Description = "Event content description",
@@ -1578,8 +1578,8 @@ Duis ante erat, sagittis id sollicitudin sed, facilisis et enim. Aliquam molesti
                     Event = ev,
                     IsDeleted = false,
                     ContentType = ContentType.Text,
-                    CreatedAt = DateTime.Now,
-                    LastModified = DateTime.Now,
+                    CreatedAt = DateTime.UtcNow,
+                    LastModified = DateTime.UtcNow,
                     Order = 5,
                     Name = "Event Content 5",
                     Description = "Event content description",

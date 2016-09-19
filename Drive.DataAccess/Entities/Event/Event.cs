@@ -10,6 +10,7 @@ namespace Drive.DataAccess.Entities.Event
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
         public string EventType { get; set; }
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime EventDate { get; set; }
 
         public IList<EventContent> ContentList { get; set; }

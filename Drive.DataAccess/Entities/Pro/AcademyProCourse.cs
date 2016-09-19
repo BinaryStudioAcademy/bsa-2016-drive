@@ -10,6 +10,7 @@ namespace Drive.DataAccess.Entities.Pro
         public int Id { get; set; }
         public bool IsDeleted { get; set; }
 
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime StartDate { get; set; }
 
         public IList<Lecture> Lectures { get; set; }

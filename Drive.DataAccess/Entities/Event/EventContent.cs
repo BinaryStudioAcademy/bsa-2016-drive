@@ -13,7 +13,9 @@ namespace Drive.DataAccess.Entities.Event
 
         public string Content { get; set; }
         public ContentType ContentType { get; set; }
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime CreatedAt { get; set; }
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime LastModified { get; set; }
         public Event Event { get; set; }
         public int Order { get; set; }

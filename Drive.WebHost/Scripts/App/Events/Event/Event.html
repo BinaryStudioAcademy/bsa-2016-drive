@@ -76,7 +76,7 @@
                                 <div class="row">
                                     <label class="col-sm-2 create-event-form">Event date:</label>
                                     <span class="col-sm-4 col-md-4 col-lg-4" style="padding:0">
-                                        <input ng-model-options="{timezone:'+0000'}" type="datetime" name="date" class="form-control col-sm-3 col-md-3 col-lg-3" datetime-picker="yyyy-MM-dd HH:mm"
+                                        <input type="datetime" name="date" class="form-control col-sm-3 col-md-3 col-lg-3" datetime-picker="yyyy-MM-dd HH:mm"
                                                ng-model="eventCtrl.event.eventDate" is-open="eventCtrl.calendar.isOpen" placeholder="Select date"
                                                timepicker-options="eventCtrl.calendar.timepickerOptions" required />
                                         <button type="button" class="btn btn-default" ng-click="eventCtrl.calendar.openCalendar($event, prop)"><i class="fa fa-calendar"></i></button>

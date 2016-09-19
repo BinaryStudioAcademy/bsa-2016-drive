@@ -37,8 +37,8 @@ namespace Drive.WebHost.Services.Events
                                 Name = c.Name,
                                 Description = c.Description,
                                 IsDeleted = c.IsDeleted,
-                                CreatedAt = DateTime.Now,
-                                LastModified = DateTime.Now,
+                                CreatedAt = DateTime.UtcNow,
+                                LastModified = DateTime.UtcNow,
                                 ContentType = c.ContentType,
                                 Content = c.Content,
                                 Order = c.Order
@@ -47,15 +47,15 @@ namespace Drive.WebHost.Services.Events
             var newEvent = new Event
             {
                 IsDeleted = false,
-                EventDate = dto.EventDate,
+                EventDate = dto.EventDate.ToUniversalTime(),
                 EventType = dto.EventType,
                 ContentList = contentList,
                 FileUnit = new FileUnit
                 {
                     Name = dto.FileUnit.Name,
                     Description = dto.FileUnit.Description,
-                    CreatedAt = DateTime.Now,
-                    LastModified = DateTime.Now,
+                    CreatedAt = DateTime.UtcNow,
+                    LastModified = DateTime.UtcNow,
                     Owner = await _unitOfWork.Users.Query.SingleOrDefaultAsync(x => x.GlobalId == userId),
                     FileType = FileType.Events,
                     IsDeleted = false,
@@ -237,7 +237,7 @@ namespace Drive.WebHost.Services.Events
                 return null;
 
             currentEvent.EventType = dto.EventType;
-            currentEvent.EventDate = dto.EventDate;
+            currentEvent.EventDate = dto.EventDate.ToUniversalTime();
             currentEvent.IsDeleted = dto.IsDeleted;
             currentEvent.FileUnit.Name = dto.FileUnit.Name;
             currentEvent.FileUnit.Description = dto.FileUnit.Description;
@@ -250,8 +250,8 @@ namespace Drive.WebHost.Services.Events
                             Name = c.Name,
                             Description = c.Description,
                             IsDeleted = c.IsDeleted,
-                            CreatedAt = DateTime.Now,
-                            LastModified = DateTime.Now,
+                            CreatedAt = DateTime.UtcNow,
+                            LastModified = DateTime.UtcNow,
                             ContentType = c.ContentType,
                             Content = c.Content,
                             Order = c.Order

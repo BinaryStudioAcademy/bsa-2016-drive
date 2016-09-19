@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Context\DriveContext.cs" />
     <Compile Include="Context\DriveDBInitializer.cs" />
+    <Compile Include="Entities\DateTimeKindAttribute.cs" />
     <Compile Include="Entities\Event\Event.cs" />
     <Compile Include="Entities\Event\EventContent.cs" />
     <Compile Include="Entities\ImageUnit.cs" />

@@ -4,6 +4,7 @@ using System.Data.Entity.Infrastructure.Annotations;
 using Drive.DataAccess.Entities;
 using Drive.DataAccess.Entities.Pro;
 using Drive.DataAccess.Entities.Event;
+using System.Data.Entity.Infrastructure;
 
 namespace Drive.DataAccess.Context
 {
@@ -14,6 +15,9 @@ namespace Drive.DataAccess.Context
             //to change when DB structure is stable!!!
             //Database.SetInitializer<DriveContext>(new DropCreateDatabaseIfModelChanges<DriveContext>());
             Database.SetInitializer<DriveContext>(new DriveDBInitializer());
+            ((IObjectContextAdapter)this).ObjectContext.ObjectMaterialized +=
+            (sender, e) => DateTimeKindAttribute.Apply(e.Entity);
+
         }
 
         public DbSet<FolderUnit> Folders { get; set; }

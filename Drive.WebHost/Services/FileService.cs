@@ -130,8 +130,8 @@ namespace Drive.WebHost.Services
                     FileType = dto.FileType,
                     Link = dto.Link,
                     Description = dto.Description,
-                    CreatedAt = DateTime.Now,
-                    LastModified = DateTime.Now,
+                    CreatedAt = DateTime.UtcNow,
+                    LastModified = DateTime.UtcNow,
                     IsDeleted = false,
                     Space = space,
                     FolderUnit = parentFolder,
@@ -166,7 +166,7 @@ namespace Drive.WebHost.Services
             file.FileType = dto.FileType;
             file.Description = dto.Description;
             file.IsDeleted = dto.IsDeleted;
-            file.LastModified = DateTime.Now;
+            file.LastModified = DateTime.UtcNow;
             file.Link = dto.Link;
             if (dto.ParentId != 0)
             {
@@ -188,7 +188,7 @@ namespace Drive.WebHost.Services
             file.FileType = dto.FileType;
             file.Description = dto.Description;
             file.IsDeleted = dto.IsDeleted;
-            file.LastModified = DateTime.Now;
+            file.LastModified = DateTime.UtcNow;
             file.Link = dto.Link;
 
             var space = await _unitOfWork.Spaces.GetByIdAsync(dto.SpaceId);
@@ -269,8 +269,8 @@ namespace Drive.WebHost.Services
                 Description = file.Description,
                 FileType = file.FileType,
                 IsDeleted = file.IsDeleted,
-                LastModified = DateTime.Now,
-                CreatedAt = DateTime.Now,
+                LastModified = DateTime.UtcNow,
+                CreatedAt = DateTime.UtcNow,
                 Link = file.Link,
                 Space = space,
                 Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user.id),
@@ -319,9 +319,9 @@ namespace Drive.WebHost.Services
                     Name = lecture.Name,
                     Description = lecture.Description,
                     IsDeleted = lecture.IsDeleted,
-                    CreatedAt = DateTime.Now,
+                    CreatedAt = DateTime.UtcNow,
                     StartDate = lecture.StartDate,
-                    ModifiedAt = DateTime.Now,
+                    ModifiedAt = DateTime.UtcNow,
                     CodeSamples = lecture.CodeSamples.Select(cs => new CodeSample
                     {
                         Code = cs.Code,
@@ -371,8 +371,8 @@ namespace Drive.WebHost.Services
                                         IsDeleted = c.IsDeleted,
                                         ContentType = c.ContentType,
                                         Order = c.Order,
-                                        CreatedAt = DateTime.Now,
-                                        LastModified = DateTime.Now,
+                                        CreatedAt = DateTime.UtcNow,
+                                        LastModified = DateTime.UtcNow,
                                         Content = c.Content
                                     })
                 );
@@ -647,8 +647,8 @@ namespace Drive.WebHost.Services
                         Link = image_link,
                         Prev_Link = prev_link,
                         Description = fileData.Description,
-                        CreatedAt = DateTime.Now,
-                        LastModified = DateTime.Now,
+                        CreatedAt = DateTime.UtcNow,
+                        LastModified = DateTime.UtcNow,
                         IsDeleted = false,
                         Space = space,
                         FolderUnit = parentFolder,
@@ -685,8 +685,8 @@ namespace Drive.WebHost.Services
                         FileType = FileType.Uploaded,
                         Link = link,
                         Description = fileData.Description,
-                        CreatedAt = DateTime.Now,
-                        LastModified = DateTime.Now,
+                        CreatedAt = DateTime.UtcNow,
+                        LastModified = DateTime.UtcNow,
                         IsDeleted = false,
                         Space = space,
                         FolderUnit = parentFolder,

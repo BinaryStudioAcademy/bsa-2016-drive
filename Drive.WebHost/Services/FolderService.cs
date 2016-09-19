@@ -123,8 +123,8 @@ namespace Drive.WebHost.Services
                     Description = dto.Description,
                     Name = dto.Name,
 
-                    CreatedAt = DateTime.Now,
-                    LastModified = DateTime.Now,
+                    CreatedAt = DateTime.UtcNow,
+                    LastModified = DateTime.UtcNow,
                     IsDeleted = false,
                     Space = space,
                     FolderUnit = parentFolder,
@@ -156,7 +156,7 @@ namespace Drive.WebHost.Services
             folder.Description = dto.Description;
             folder.IsDeleted = dto.IsDeleted;
             folder.Name = dto.Name;
-            folder.LastModified = DateTime.Now;
+            folder.LastModified = DateTime.UtcNow;
             if (dto.ParentId != 0)
             {
                 folder.FolderUnit = await _unitOfWork.Folders.GetByIdAsync(dto.ParentId);
@@ -164,7 +164,7 @@ namespace Drive.WebHost.Services
 
             await _unitOfWork?.SaveChangesAsync();
 
-            dto.LastModified = DateTime.Now;
+            dto.LastModified = DateTime.UtcNow;
 
             return dto;
         }
@@ -180,7 +180,7 @@ namespace Drive.WebHost.Services
             folder.Name = dto.Name;
             folder.Description = dto.Description;
             folder.IsDeleted = dto.IsDeleted;
-            folder.LastModified = DateTime.Now;
+            folder.LastModified = DateTime.UtcNow;
 
             var space = await _unitOfWork.Spaces.GetByIdAsync(dto.SpaceId);
 
@@ -267,8 +267,8 @@ namespace Drive.WebHost.Services
                 Name = folderName,
                 Description = folder.Description,
                 IsDeleted = folder.IsDeleted,
-                CreatedAt = DateTime.Now,
-                LastModified = DateTime.Now,
+                CreatedAt = DateTime.UtcNow,
+                LastModified = DateTime.UtcNow,
                 Space = space,
                 Owner = owner,
                 ModifyPermittedUsers = folder.ReadPermittedUsers,
@@ -291,8 +291,8 @@ namespace Drive.WebHost.Services
                     Name = file.Name,
                     Description = file.Description,
                     IsDeleted = file.IsDeleted,
-                    CreatedAt = DateTime.Now,
-                    LastModified = DateTime.Now,
+                    CreatedAt = DateTime.UtcNow,
+                    LastModified = DateTime.UtcNow,
                     FileType = file.FileType,
                     Link = file.Link,
                     Owner = owner,
