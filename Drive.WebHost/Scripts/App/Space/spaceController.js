@@ -226,6 +226,7 @@
                         } else if (file.fileType === 10) {
                             vm.images.push({
                                 url: file.link,
+                                link: file.link,
                                 caption: file.name,
                                 thumbUrl: file.link,
                                 fileType: file.fileType,
@@ -247,20 +248,23 @@
                     break;
                 }
             }
-            fileService.getImage(vm.images[i].link,
-                function(response) {
-                    var fileData = response.data;
-                    var fileHeader = response.headers();
-                    var contentType = fileHeader['content-type'];
-                    var blob = new Blob([fileData], { type: contentType });
-                    var url = URL.createObjectURL(blob);
-                    vm.images[i].url = url;
-                    if (blob instanceof Blob) {
-                        Lightbox.openModal(vm.images, i);
-                    }
-                });
 
-            Lightbox.openModal(vm.images, i);
+            if (vm.images[i].link.indexOf('http') === -1) {
+                fileService.getImage(vm.images[i].link,
+                    function(response) {
+                        var fileData = response.data;
+                        var fileHeader = response.headers();
+                        var contentType = fileHeader['content-type'];
+                        var blob = new Blob([fileData], { type: contentType });
+                        var url = URL.createObjectURL(blob);
+                        vm.images[i].url = url;
+                        if (blob instanceof Blob) {
+                            Lightbox.openModal(vm.images, i);
+                        }
+                    });
+            } else {
+                Lightbox.openModal(vm.images, i);
+            }
         }
 
         function getSpaceByButton() {
@@ -366,14 +370,25 @@
                     vm.file = $itemScope.file;
                     vm.file.parentId = vm.parentId;
                     vm.file.spaceId = vm.space.id;
-                    if (vm.file.fileType !== 7) {
-                        vm.openFileWindow();
-                    }
-                    else {
+                    if (vm.file.fileType === 7) {
                         fileService.findCourse(vm.file.id, function (response) {
                             vm.course = response;
                             vm.openNewCourseWindow('lg');
                         });
+                        
+                    }
+                    else {
+                        if (vm.file.fileType === 9) {
+                            fileService.findEvent(vm.file.id, function (response) {
+                                vm.event = response;
+                                vm.event.isEdit
+                                localStorageService.set('event', vm.event);
+                                $location.url('/apps/events/' + vm.event.id + '/edit');
+                            });
+                        }
+                        else {
+                            vm.openFileWindow();
+                        }
                     }
                 }, function ($itemScope) { return $itemScope.file.canModify; }
             ],
@@ -415,7 +430,7 @@
             null,
             ['Upload File',
                 function ($itemScope) {
-                    vm.file = { fileType: 6, parentId: vm.parentId, spaceId: vm.space.id, maxSize: vm.file.maxFileSize };
+                    vm.file = { fileType: 6, parentId: vm.parentId, spaceId: vm.space.id, maxSize: vm.space.maxFileSize };
                     vm.openFileUploadWindow('lg');
                 }, function () { return vm.space.canModifySpace; }
             ],

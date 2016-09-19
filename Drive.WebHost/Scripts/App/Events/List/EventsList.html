@@ -96,7 +96,7 @@
                     <div uib-collapse="space.isCollapsed">
                         <div style="transition: all 2s">
                             <div class="filter-table-row">
-                                <div class="row filter-table-row" role="button" ng-repeat="event in eventspace.events | orderBy: academyListCtrl.eventsColumnForOrder" ng-dblclick="eventsListCtrl.openEvent(event.id)" context-menu="eventsListCtrl.eventMenuOptions">
+                                <div class="row filter-table-row" role="button" ng-repeat="event in eventspace.events | orderBy: eventsListCtrl.eventColumnForOrder" ng-dblclick="eventsListCtrl.openEvent(event.id)" context-menu="eventsListCtrl.eventMenuOptions">
                                     <div class="col-md-3 filter-table-cell description" title="{{ event.fileUnit.name }}">
                                         <img ng-src="{{eventsListCtrl.icon}}" height="{{eventsListCtrl.iconHeight}}" />
                                         {{event.fileUnit.name | limitTo: 15}}{{event.fileUnit.name.length > 15 ? '...' : ''}}

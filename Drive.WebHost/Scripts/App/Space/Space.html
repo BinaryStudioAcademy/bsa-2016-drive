@@ -64,9 +64,9 @@
             drop-validate="spaceCtrl.dropValidate(folder, $data)" ui-on-drop="spaceCtrl.onDrop($event, $channel, folder.id, $data)"
             ng-click="spaceCtrl.selectItems($event, folder, false)" ng-mousedown="spaceCtrl.selectItemsForDrag($event, folder, false)" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)"
             ng-drag-start-end-listen="true" on-drop-failure="spaceCtrl.clearDragImage()" on-drop-success="spaceCtrl.clearDragImage()"                     
-            ng-class="{selected: folder.selected, cutted: folder.cutted, dragging: folder.isDragging}" ng-right-click="spaceCtrl.rightClickSelection(folder, false)">
+             ng-right-click="spaceCtrl.rightClickSelection(folder, false)">
             <div class="sp-gv-wrapper-flex-item">
-                <div class="sp-gv-item-content cards">
+                <div class="sp-gv-item-content cards" ng-class="{selected: folder.selected, cutted: folder.cutted, dragging: folder.isDragging}">
                     <div class="sp-gv-item-img-wrapper">
                         <img ng-src="./Content/Icons/folder.svg" alt="Folder" title="Folder" draggable="false" />
                     </div>
@@ -85,9 +85,9 @@
             ui-draggable="true" drag="spaceCtrl.getSelectedItems(file, true)" drag-channel="file" drag-image-element-id="spaceCtrl.getDragImageId($event, file, true)"
             ng-click="spaceCtrl.selectItems($event, file, true)" ng-mousedown="spaceCtrl.selectItemsForDrag($event, file, true)" ng-dblclick="spaceCtrl.checkFileType(file.fileType) ? spaceCtrl.openDocument(file) : spaceCtrl.openLightboxModal(file.id)"
             ng-drag-start-end-listen="true" on-drop-failure="spaceCtrl.clearDragImage()" on-drop-success="spaceCtrl.clearDragImage()"
-            ng-class="{selected: file.selected, cutted: file.cutted, dragging: file.isDragging}" ng-right-click="spaceCtrl.rightClickSelection(file, true)">
+             ng-right-click="spaceCtrl.rightClickSelection(file, true)">
             <div class="sp-gv-wrapper-flex-item">
-                <div class="sp-gv-item-content cards">
+                <div class="sp-gv-item-content cards" ng-class="{selected: file.selected, cutted: file.cutted, dragging: file.isDragging}">
                     <div class="sp-gv-item-img-wrapper" ng-hide="file.fileType == 8 || file.fileType == 10">
                         <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
                     </div>
