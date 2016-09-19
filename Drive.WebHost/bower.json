@@ -27,8 +27,7 @@
     "angular-drag-and-drop-lists": "~1.4.0",
     "pdfjs-dist": "1.5.456",
     "angular-pdf-viewer": "0.2.9",
-    "ng-videosharing-embed": "latest",
-    "angular-jwt": "^0.1.3"
+    "ng-videosharing-embed": "latest"
   },
   "resolutions": {
     "angular": "1.5.9-build.5006+sha.e3a378e",

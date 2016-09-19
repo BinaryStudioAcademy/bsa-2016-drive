@@ -73,8 +73,7 @@ gulp.task("libs", function () {
       paths.bower + "angular-drag-and-drop-lists.js",
       paths.bower + "build/pdf.combined.js",
       paths.bower + "dist/angular-pdf-viewer.min.js",
-      paths.bower + "ng-videosharing-embed.min.js",
-      paths.bower + "angular-jwt.min.js"
+      paths.bower + "ng-videosharing-embed.min.js"
     ])
 
         .pipe(concat("libs.js"))
