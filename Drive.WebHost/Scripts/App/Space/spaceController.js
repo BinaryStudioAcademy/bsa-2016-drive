@@ -415,7 +415,7 @@
             null,
             ['Upload File',
                 function ($itemScope) {
-                    vm.file = { fileType: 6, parentId: vm.parentId, spaceId: vm.space.id };
+                    vm.file = { fileType: 6, parentId: vm.parentId, spaceId: vm.space.id, maxSize: vm.file.maxFileSize };
                     vm.openFileUploadWindow('lg');
                 }, function () { return vm.space.canModifySpace; }
             ],
@@ -643,7 +643,7 @@
         }
 
         function uploadFile() {
-            vm.file = { parentId: vm.parentId, spaceId: vm.space.id };
+            vm.file = { parentId: vm.parentId, spaceId: vm.space.id, maxSize: vm.space.maxFileSize };
             vm.openFileUploadWindow('lg');
         }
 
