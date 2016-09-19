@@ -6,8 +6,8 @@
         .filter('typeOfFile', function () {
             return function (input, uppercase) {
                 switch (input) {
-                    case 0:
-                        return 'Link';
+                    //case 0:
+                    //    return 'Link';
                     case 1:
                         return 'Document';
                     case 2:

@@ -1,4 +1,4 @@
-﻿<div file-dropzone="" drop-file="fileModalCtrl.inputFile" max-size="fileModalCtrl.file.maxFileSize" valid="fileModalCtrl.modelIsValid">
+﻿<div file-dropzone="" drop-file="fileModalCtrl.inputFile" max-size="fileModalCtrl.file.maxSize" valid="fileModalCtrl.modelIsValid">
     <form role="form" name="uploadForm" enctype="multipart/form-data">
         <div class="modal-header">
             <div class="col-md-6">
@@ -23,7 +23,7 @@
                         <span>
                             <i class="glyphicon glyphicon-plus"></i>
                             Add file...
-                            <input type="file" name="files" multiple fileread input-file="fileModalCtrl.inputFile" max-size="fileModalCtrl.file.maxFileSize" valid="fileModalCtrl.modelIsValid" />
+                            <input type="file" name="files" multiple fileread input-file="fileModalCtrl.inputFile" max-size="fileModalCtrl.file.maxSize" valid="fileModalCtrl.modelIsValid" />
                         </span>
                     </button>
                 </div>
@@ -46,7 +46,7 @@
                             <input ng-model="file.filename" size="27" required />
                             <label>{{file.extension}}</label>
                             <span style="color: red" class="alert error" ng-show="file.filename.$error.required && file.filename.$touched">Name required</span>
-                            <span style="color: red" class="alert error" ng-show="!file.isValid">Size of file is more than 100 MB</span>
+                            <span style="color: red" class="alert error" ng-show="!file.isValid">Size of file is more than {{fileModalCtrl.file.maxSize}} MB</span>
                         </td>
                         <td><textarea rows="2" cols="25" style="resize:none;" placeholder="enter description of file" ng-model="file.description"></textarea></td>
                         <td>{{ file.size | sizeOfFile }}</td>
