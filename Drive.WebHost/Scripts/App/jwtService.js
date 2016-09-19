@@ -49,12 +49,25 @@
                 throw new Error('JWT must have 3 parts');
             }
 
-            var decoded = this.urlBase64Decode(parts[1]);
+            var decoded = urlBase64Decode(parts[1]);
             if (!decoded) {
                 throw new Error('Cannot decode the token');
             }
 
             return angular.fromJson(decoded);
         }
+
+        function urlBase64Decode(str) {
+            var output = str.replace(/-/g, '+').replace(/_/g, '/');
+            switch (output.length % 4) {
+                case 0: { break; }
+                case 2: { output += '=='; break; }
+                case 3: { output += '='; break; }
+                default: {
+                    throw 'Illegal base64url string!';
+                }
+            }
+            return $window.decodeURIComponent(escape($window.atob(output))); //polyfill https://github.com/davidchambers/Base64.js
+        };
     }
 })();
