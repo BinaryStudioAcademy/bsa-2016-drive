@@ -132,6 +132,9 @@
                 }
             }
 
+            if (!vm.file.fileType) {
+                vm.file.fileType = 5; // link
+            }
         }
 
         function isValidUrl() {
