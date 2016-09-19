@@ -415,7 +415,7 @@
             null,
             ['Upload File',
                 function ($itemScope) {
-                    vm.file = { fileType: 6, parentId: vm.parentId, spaceId: vm.space.id };
+                    vm.file = { fileType: 6, parentId: vm.parentId, spaceId: vm.space.id, maxSize: vm.file.maxFileSize };
                     vm.openFileUploadWindow('lg');
                 }, function () { return vm.space.canModifySpace; }
             ],
@@ -643,7 +643,7 @@
         }
 
         function uploadFile() {
-            vm.file = { parentId: vm.parentId, spaceId: vm.space.id };
+            vm.file = { parentId: vm.parentId, spaceId: vm.space.id, maxSize: vm.space.maxFileSize };
             vm.openFileUploadWindow('lg');
         }
 
@@ -1012,30 +1012,38 @@
         }
 
         function deleteByHotkeys() {
-            var content = getSelectedItems();
-            if (content) {
-                deleteContent(content);
+            if (vm.space.canModifySpace) {
+                var content = getSelectedItems();
+                if (content) {
+                    deleteContent(content);
+                }
             }
         }
 
         function copyByHotkeys() {
-            var content = getSelectedItems();
-            if (content) {
-                pushToClipboard(content, true);
+            if (vm.space.canModifySpace) {
+                var content = getSelectedItems();
+                if (content) {
+                    pushToClipboard(content, true);
+                }
             }
         }
 
         function cutByHotkeys() {
-            var content = getSelectedItems();
-            if (content) {
-                pushToClipboard(content, false);
+            if (vm.space.canModifySpace) {
+                var content = getSelectedItems();
+                if (content) {
+                    pushToClipboard(content, false);
+                }
             }
         }
 
         function pasteByHotkeys() {
-            var data = localStorageService.get('clipboard');
-            var isCopy = localStorageService.get('isCopy');
-            pasteFromClipboard(data, isCopy);
+            if (vm.space.canModifySpace) {
+                var data = localStorageService.get('clipboard');
+                var isCopy = localStorageService.get('isCopy');
+                pasteFromClipboard(data, isCopy);
+            }
         }
 
         function selectAllByHotkeys() {

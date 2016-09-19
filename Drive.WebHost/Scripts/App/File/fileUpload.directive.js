@@ -32,7 +32,7 @@
                                     file.filename = fileService.getFileName(file.name);
                                     file.extension = fileService.getFileExtension(file.name);
                                     file.isValid = fileService.checkFileSize(file.size, scope.maxSize);
-                                    
+                                    scope.dropFile.push(file);
                                 });
                             }
                             reader.readAsArrayBuffer(file);
