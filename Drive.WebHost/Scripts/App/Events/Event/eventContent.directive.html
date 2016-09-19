@@ -20,10 +20,13 @@
 <div class="row">
     <div class="col-sm-12" ng-if="content.contentType == contentTypes.link">
         <div class="col-sm-4">
-            <a ng-href="{{content.content |external}}" target="_blank">{{content.content}} <i class="fa fa-external-link" aria-hidden="true"></i></a>
+            <p>{{content.name}}</p>
         </div>
-        <div class="col-sm-8">
+        <div class="col-sm-4">
             <p>{{content.description}}</p>
+        </div>
+        <div class="col-sm-4">
+            <a ng-href="{{content.content |external}}" target="_blank">{{content.content}} <i class="fa fa-external-link" aria-hidden="true"></i></a>
         </div>
     </div>
 </div>

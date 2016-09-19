@@ -118,7 +118,7 @@
                 </li>
             </ul>
         </li>
-        <li>
+        <li ng-show="menuController.isAdmin()">
             <div class="d" ng-click="menuController.redirectToAdminPanel()">
                 <span class="fa-stack fa-lg pull-left"><i class="fa fa-sliders fa-stack-1x"></i></span>Admin Panel
             </div>
