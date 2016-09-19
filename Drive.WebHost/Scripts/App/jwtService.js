@@ -5,9 +5,9 @@
         .module('driveApp')
         .factory('JwtService', JwtService);
 
-    JwtService.$inject = [];
+    JwtService.$inject = ['$window'];
 
-    function JwtService() {
+    function JwtService($window) {
         var service = {
             isAdmin: isAdmin,
             isInRole: isInRole,
@@ -68,6 +68,6 @@
                 }
             }
             return $window.decodeURIComponent(escape($window.atob(output))); //polyfill https://github.com/davidchambers/Base64.js
-        };
+        }
     }
 })();
