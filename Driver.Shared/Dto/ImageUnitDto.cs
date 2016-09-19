@@ -1,0 +1,28 @@
+﻿using Drive.DataAccess.Entities;
+using Driver.Shared.Dto.Users;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Driver.Shared.Dto
+{
+    public class ImageUnitDto
+    {
+        public int Id { get; set; }
+        public bool IsDeleted { get; set; }
+        public FileType FileType { get; set; }
+        public string Name { get; set; }
+        public string Link { get; set; }
+        public string Prev_Link { get; set; }
+        public string Description { get; set; }
+        public DateTime CreatedAt { get; set; }
+        public AuthorDto Author { get; set; }
+        public int SpaceId { get; set; }
+        public int ParentId { get; set; }
+        public DateTime LastModified { get; set; }
+        public bool CanRead { get; set; }
+        public bool CanModify { get; set; }
+    }
+}

@@ -3,6 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure.Annotations;
 using Drive.DataAccess.Entities;
 using Drive.DataAccess.Entities.Pro;
+using Drive.DataAccess.Entities.Event;
 
 namespace Drive.DataAccess.Context
 {
@@ -25,8 +26,12 @@ namespace Drive.DataAccess.Context
         public DbSet<Lecture> Lectures { get; set; }
         public DbSet<ContentLink> ContentLinks { get; set; }
         public DbSet<CodeSample> CodeSamples { get; set; }
+        public DbSet<HomeTask> HomeTasks { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Shared> SharedSpaces { get; set; }
+        public DbSet<Event> Events { get; set; }
+        public DbSet<EventContent> EventContents { get; set; }
+
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -129,7 +134,6 @@ namespace Drive.DataAccess.Context
                         tc.ToTable("AcademiesTags");
                     }
                 );
-
         }
 
 

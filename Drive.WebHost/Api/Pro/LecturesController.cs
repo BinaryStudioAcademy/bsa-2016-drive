@@ -68,9 +68,9 @@ namespace Drive.WebHost.Api.Pro
 
         // DELETE: api/lectures/5
         [HttpDelete]
-        public IHttpActionResult DeleteAsync(int id)
+        public async Task<IHttpActionResult> DeleteAsync(int id)
         {
-            _lectureService.DeleteAsync(id);
+            await _lectureService.DeleteAsync(id);
 
             return Ok();
         }

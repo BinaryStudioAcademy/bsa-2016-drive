@@ -5,7 +5,7 @@ using Drive.Core.HttpClient;
 using Drive.Identity.Services;
 using Driver.Shared.Dto.Users;
 
-namespace Drive.WebHost.Services
+namespace Drive.WebHost.Providers
 {
     public class UsersProvider : IUsersProvider
     {
@@ -19,12 +19,15 @@ namespace Drive.WebHost.Services
 
         public async Task<UserDto> GetByIdAsync(string id)
         {
-            return (await _client.GetAsync<IEnumerable<UserDto>>("profile/user/getByCentralId/" + id)).FirstOrDefault();
+            var remoteUser = (await _client.GetAsync<IEnumerable<RemoteUserDto>>("profile/user/getByCentralId/" + id)).FirstOrDefault();
+            return remoteUser != null ? ConvertFromRemoteToLocalUser(remoteUser) : null;
         }
 
-        public async Task<IEnumerable<UsersDto>> GetAsync()
+        public async Task<IEnumerable<UserDto>> GetAsync()
         {
-            return await _client.GetAsync<List<UsersDto>>("profile/user/filter");
+            var remoteuserlist = await _client.GetAsync<List<RemoteUserDto>>("profile/user/filter");
+            return remoteuserlist?.Select(x => ConvertFromRemoteToLocalUser(x));
+
         }
 
         public async Task<UserDto> GetCurrentUser()
@@ -37,6 +40,12 @@ namespace Drive.WebHost.Services
         public string CurrentUserId
         {
             get { return _bsIdentityManager.UserId; }
+        }
+
+        private UserDto ConvertFromRemoteToLocalUser(RemoteUserDto rUser)
+        {
+            var user = new UserDto { id = rUser.serverUserId, name = rUser.name, surname = rUser.surname };
+            return user;
         }
     }
 }

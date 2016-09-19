@@ -1,0 +1,34 @@
+﻿<div class="row">
+    <div class="col-sm-8 col-sm-offset-2" ng-if="content.contentType == contentTypes.video">
+        <h4>{{content.name}}</h4>
+        <youtube-video video-url="content.content"></youtube-video>
+        <p style="text-align:center">{{content.description}}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12" ng-if="content.contentType == contentTypes.text">
+        <p>{{content.content}}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-8 col-sm-offset-2" ng-if="content.contentType == contentTypes.photo">
+        <h4>{{content.name}}</h4>
+        <div class="thumbnail">
+            <img src="{{content.content}}" alt="content.name">
+        </div>
+        <p style="text-align:center">{{content.description}}</p>
+    </div>
+</div>
+<div class="row">
+    <div class="col-sm-12" ng-if="content.contentType == contentTypes.link">
+        <div class="col-sm-4">
+            <p>{{content.name}}</p>
+        </div>
+        <div class="col-sm-4">
+            <p>{{content.description}}</p>
+        </div>
+        <div class="col-sm-4">
+            <a ng-href="{{content.content |external}}" target="_blank">{{content.content}} <i class="fa fa-external-link" aria-hidden="true"></i></a>
+        </div>
+    </div>
+</div>

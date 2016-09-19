@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -41,11 +45,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dto\AdditionalData.cs" />
     <Compile Include="Dto\AppDto.cs" />
+    <Compile Include="Dto\CopyMoveContentDto.cs" />
+    <Compile Include="Dto\DownloadFileDto.cs" />
+    <Compile Include="Dto\Events\AppsEventDto.cs" />
+    <Compile Include="Dto\Events\EventDto.cs" />
+    <Compile Include="Dto\Events\EventContentDto.cs" />
+    <Compile Include="Dto\ImageUnitDto.cs" />
+    <Compile Include="Dto\Pro\AppsAPDto.cs" />
+    <Compile Include="Dto\Pro\HomeTaskDto.cs" />
     <Compile Include="Dto\SharedSpaceDto.cs" />
-    <Compile Include="Dto\TrashBinDto.cs" />
+    <Compile Include="Dto\TrashBin\TrashBinDto.cs" />
+    <Compile Include="Dto\TrashBin\TrashBinFileDto.cs" />
+    <Compile Include="Dto\TrashBin\TrashBinFolderDto.cs" />
     <Compile Include="Dto\UserSharedSpaceDto.cs" />
-    <Compile Include="Dto\Users\UsersDto.cs" />
     <Compile Include="Dto\Users\AuthorDto.cs" />
     <Compile Include="Dto\FileUnitDto.cs" />
     <Compile Include="Dto\FolderContentDto.cs" />
@@ -59,6 +73,7 @@
     <Compile Include="Dto\Pro\TagDto.cs" />
     <Compile Include="Dto\SearchResultDto.cs" />
     <Compile Include="Dto\SpaceDto.cs" />
+    <Compile Include="Dto\Users\RemoteUserDto.cs" />
     <Compile Include="Dto\Users\UserDto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -70,6 +85,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="EntityDiagram\class-diagram.pdf" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

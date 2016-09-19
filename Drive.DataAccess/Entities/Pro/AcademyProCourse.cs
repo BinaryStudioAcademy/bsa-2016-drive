@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Drive.DataAccess.Interfaces;
+using System.ComponentModel.DataAnnotations;
 
 namespace Drive.DataAccess.Entities.Pro
 {
@@ -16,10 +17,8 @@ namespace Drive.DataAccess.Entities.Pro
         public User Author { get; set; }
 
         public IList<Tag> Tags { get; set; }
-
+        [Required]
         public FileUnit FileUnit { get; set; }
 
-        public DateTime CreatedAt { get; set; }
-        public DateTime ModifiedAt { get; set; }
     }
 }

@@ -60,18 +60,7 @@ namespace Drive.WebHost.Services
                 foreach (var item in dto.Users)
                 {
                     var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
-                    if (user == null)
-                    {
-                        UserDto userdto = new UserDto();
-                        userdto.serverUserId = item.GlobalId;
-                        await _userService.CreateAsync(userdto);
-                        var suser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
-                        permittedUsers.Add(suser);
-                    }
-                    else
-                    {
-                        permittedUsers.Add(user);
-                    }
+                    permittedUsers.Add(user);
                 }
 
                 var role = new Role
@@ -105,18 +94,7 @@ namespace Drive.WebHost.Services
                 foreach (var item in dto.Users)
                 {
                     var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
-                    if (user == null)
-                    {
-                        UserDto userdto = new UserDto();
-                        userdto.serverUserId = item.GlobalId;
-                        await _userService.CreateAsync(userdto);
-                        var suser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
-                        permittedUsers.Add(suser);
-                    }
-                    else
-                    {
-                        permittedUsers.Add(user);
-                    }
+                    permittedUsers.Add(user);
                 }
                 var role = await _unitOfWork?.Roles?.Query.Include(x => x.Users).SingleOrDefaultAsync(x => x.Id == id);
                 role.Name = dto.Name;

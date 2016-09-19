@@ -6,13 +6,13 @@ namespace Drive.WebHost.Services
 {
     public interface IUsersService
     {
-        Task<IEnumerable<UsersDto>> GetAllAsync();
+        Task<IEnumerable<UserDto>> GetAllAsync();
         Task<UserDto> GetAsync(int id);
         Task CreateAsync(UserDto dto);
-        //Task UpdateAsync(int id, UserDto dto);
-        //Task DeleteAsync(int id);
         Task<UserDto> GetCurrentUser();
-        Task<IEnumerable<UsersDto>> GetAllWithoutCurrentAsync();
+        Task<IEnumerable<UserDto>> GetAllWithoutCurrentAsync();
+
+        Task<IEnumerable<UserDto>> SyncWithRemoteUsers();
         void Dispose();
         string CurrentUserId { get; }
     }

@@ -14,6 +14,12 @@
                         controller: 'AcademyListController',
                         controllerAs: 'academyListCtrl'
                     })
+                    .when('/apps/academies/:tagName',
+                    {
+                        templateUrl: baseUrl + '/Scripts/App/Academy/List/AcademyList.html',
+                        controller: 'AcademyListController',
+                        controllerAs: 'academyListCtrl'
+                    })
                     .when('/apps/academy/:id',
                     {
                         templateUrl: baseUrl + '/Scripts/App/Academy/Single/Academy.html',
@@ -31,6 +37,12 @@
                         templateUrl: baseUrl + '/Scripts/App/Academy/Lecture/Lecture.html',
                         controller: 'LectureController',
                         controllerAs: 'lectureCtrl'
+                    })
+                    .when('/apps/academy/:id/lecture/:lectureId/edit',
+                    {
+                        templateUrl: baseUrl + '/Scripts/App/Academy/Lecture/Lecture.html',
+                        controller: 'LectureController',
+                        controllerAs: 'lectureCtrl'
                     });
             }
         ])
@@ -39,7 +51,7 @@
         defaultTime: '10:00:00',
         html5Types: {
             date: 'yyyy-MM-dd',
-            'datetime-local': 'yyyy-MM-ddTHH:mm:ss.sss',
+            'datetime-local': 'yyyy-MM-dd HH:mm',
             'month': 'yyyy-MM'
         },
         initialPicker: 'date',
@@ -78,7 +90,7 @@
         appendToBody: false,
         altInputFormats: [],
         ngModelOptions: {},
-        saveAs: false,
-        readAs: false,
+        saveAs: 'ISO',
+        readAs: 'ISO'
     });
 })();

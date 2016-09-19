@@ -6,10 +6,11 @@
         'LectureService',
         'toastr',
         '$location',
-        '$routeParams'
+        '$routeParams',
+         'AcademyService'
     ];
 
-    function LectureCreateController(lectureService, toastr, $location, $routeParams) {
+    function LectureCreateController(lectureService, toastr, $location, $routeParams, academyService) {
         var vm = this;
         vm.currentAcademyId = $routeParams.id;
         vm.addNewLecture = addNewLecture;
@@ -20,6 +21,12 @@
         vm.submitRepository = submitRepository;
         vm.submitSample = submitSample;
         vm.submitUseful = submitUseful;
+        vm.getAcademy = getAcademy;
+        vm.getCourseList = getCourseList;
+        vm.getCourse = getCourse;
+        vm.submitTask = submitTask;
+        vm.removeTask = removeTask;
+        vm.editTask = editTask;
 
         activate();
 
@@ -31,12 +38,23 @@
                 sampleLinks: [],
                 usefulLinks: [],
                 repositoryLinks: [],
-                codeSamples: []
+                codeSamples: [],
+                homeTasks: []
             };
 
             vm.calendar = {
                 isOpen: false,
                 openCalendar: openCalendar,
+                timepickerOptions: {
+                    showMeridian: false
+                }
+            };
+
+            getAcademy();
+
+            vm.calendarHomeTask = {
+                isOpen: false,
+                openCalendarHomeTask: openCalendarHomeTask,
                 timepickerOptions: {
                     showMeridian: false
                 }
@@ -47,12 +65,25 @@
             return lectureService.pushData(vm.lecture);
         };
 
+        function getAcademy() {
+            return academyService.getAcademy(vm.currentAcademyId)
+                .then(function (data) {
+                    vm.academy = data;
+                    return vm.academy;
+                });
+        }
+
         function create() {
             if (vm.lecture.name) {
                 vm.addNewLecture()
-                    .then(function() {
+                    .then(function () {
                         $location.url('/apps/academy/' + vm.currentAcademyId);
                     });
+                toastr.success(
+                'New lecture was added successfully!', 'Academy Pro',
+                {
+                    closeButton: true, timeOut: 6000
+                });
             }
         }
 
@@ -65,6 +96,13 @@
             e.stopPropagation();
 
             vm.calendar.isOpen = true;
+        };
+
+        function openCalendarHomeTask(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            vm.calendarHomeTask.isOpen = true;
         };
 
         function submitVideo() {
@@ -96,10 +134,34 @@
         }
 
         function submitUseful() {
-            if (vm.currentuseful.name && vm.currentuseful.link) {
-                vm.lecture.usefulLinks.push(vm.currentuseful);
+            if (vm.currentUseful.name && vm.currentUseful.link) {
+                vm.lecture.usefulLinks.push(vm.currentUseful);
                 vm.currentuseful = {};
             }
+        }
+
+        function submitTask() {
+            if (vm.currentTask.description) {
+                vm.lecture.homeTasks.push(vm.currentTask);
+                vm.currentTask = {};
+            }
+        }
+
+        function removeTask(index) {
+            vm.lecture.homeTasks.splice(index, 1);
+        };
+
+        function editTask(index) {
+            vm.currentTask = vm.lecture.homeTasks[index];
+            vm.lecture.homeTasks.splice(index, 1);
+        };
+
+        function getCourseList() {
+            $location.url('/apps/academy/');
+        }
+
+        function getCourse(id) {
+            $location.url('/apps/academy/' + id);
         }
     }
 })();

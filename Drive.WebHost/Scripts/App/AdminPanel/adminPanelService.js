@@ -12,7 +12,8 @@
             getAllSpaces: getAllSpaces,
             getAllUsers: getAllUsers,
             getAllRoles: getAllRoles,
-            deleteRole: deleteRole
+            deleteRole: deleteRole,
+            syncUsers: syncUsers
         };
 
         function getAllSpaces(callback) {
@@ -50,6 +51,14 @@
 
         function deleteRole(id, callback) {
             $http.delete(baseUrl + '/api/roles/' + id)
+                .then(function (response) {
+                    if (callback)
+                        callback(response);
+                });
+        }
+
+        function syncUsers(callback) {
+            $http.get(baseUrl + '/api/users/syncusers')
                 .then(function (response) {
                     if (callback)
                         callback(response);

@@ -17,7 +17,10 @@
             searchFoldersAndFiles: searchFoldersAndFiles,
             getNumberOfResultSearchFoldersAndFiles: getNumberOfResultSearchFoldersAndFiles,
             getSpaceTotal: getSpaceTotal,
-            getAllRoles: getAllRoles
+            getAllRoles: getAllRoles,
+            moveContent: moveContent,
+            copyContent: copyContent,
+            deleteContent: deleteContent
         };
         function getAllRoles(callback) {
             $http.get(baseUrl + '/api/roles')
@@ -52,21 +55,15 @@
                 });
         }
 
-        function getSpaceByType(type, currentPage, pageSize, sort, callback) {
-            $http.get(baseUrl + '/api/spaces/spacetype/' + type, {
-                params: {
-                    page: currentPage,
-                    count: pageSize,
-                    sort: sort
-                }
-            })
+        function getSpaceByType(type, callback) {
+            $http.get(baseUrl + '/api/spaces/spacetype/' + type)
             .then(function (response) {
                 if (callback) {
                     callback(response.data);
                 }
             },
             function errorCallback(response) {
-                console.log('Error getSpace spaceService!' + response.status);
+                console.log('Error getSpaceByType spaceService!' + response.status);
                 if (response.status == 404 && callback) {
                     console.log(response.status + ' ' + response.data);
                     callback(response.data)
@@ -160,6 +157,38 @@
                     callback(response.data)
                 }
             });
+        }
+
+        function moveContent(content, callback) {
+            $http.put(baseUrl + '/api/spaces/movecontent', content)
+                .then(function (response) {
+                    if (callback) {
+                        callback(response.data);
+                    }
+                },
+                    function () {
+                        console.log('Error while moving data! [spaceService.moveContent()]');
+                    });
+        }
+
+        function copyContent(content, callback) {
+            $http.put(baseUrl + '/api/spaces/copycontent', content)
+                .then(function (response) {
+                    if (callback) {
+                        callback(response.data);
+                    }
+                },
+                    function () {
+                        console.log('Error while copying data! [spaceService.copyContent()]');
+                    });
+        }
+
+        function deleteContent(content, callback) {
+            $http.put(baseUrl + '/api/spaces/deletecontent', content)
+                .then(function(response) {
+                    if (callback)
+                        callback(response);
+                });
         }
 
         return service;

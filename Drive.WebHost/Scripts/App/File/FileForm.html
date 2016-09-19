@@ -20,7 +20,7 @@
                         </div>
                         <div class="form-group">
                             <label for="link" class="col-md-3">Link:</label>
-                            <input type="text" class="form-control" placeholder="Google Docs, Trello or other resource" name="link" ng-model="fileModalCtrl.file.link" ng-change="fileModalCtrl.isValidUrl()" required>
+                            <input type="text" class="form-control" placeholder="Google Docs, Trello or other resource" name="link" ng-model="fileModalCtrl.file.link" ng-change="fileModalCtrl.isValidUrl()" ng-disabled="fileModalCtrl.linkDisabled" required>
                             <span style="color: red" class="col-md-offset-3">
                                 <span ng-show="fileForm.link.$error.required && fileForm.link.$touched">Link is required.</span>
                                 <span ng-show="!fileModalCtrl.urlIsValid && fileForm.link.$touched">Invalid URL.</span>

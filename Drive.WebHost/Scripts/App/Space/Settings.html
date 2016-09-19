@@ -62,93 +62,95 @@
                 </div>
             </form>
         </div>
-        <div class="col-md-2">
-            <ul class="nav nav-pills nav-stacked">
-                <li ng-class="{ active: settingsCtrl.isSet(1) }">
-                    <a href ng-click="settingsCtrl.setTab(1)">Users</a>
-                </li>
-                <li ng-class="{ active: settingsCtrl.isSet(2) }">
-                    <a href ng-click="settingsCtrl.setTab(2)">Roles</a>
-                </li>
-            </ul>
-        </div>
-        <div class="col-md-7">
-            <div ng-show="settingsCtrl.isSet(1)">
-                <div class="form-group">
-                    <div class="col-md-4" style="padding-right: 0px;">
-                        <input type="text" placeholder="Enter a username" ng-model="settingsCtrl.selected" uib-typeahead="user as user.name for user in settingsCtrl.users | filter:{name:$viewValue} | limitTo:10" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-2">
-                        <button class="btn btn-primary" ng-click="settingsCtrl.addSpaceUser()">Add</button>
-                    </div>
-                </div>
-                <br /><br />
-                <table class="table users table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th style="width:30%">User name</th>
-                            <th style="width:15%">Read</th>
-                            <th style="width:15%">Write</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody style="height: 200px;">
-                        <tr ng-repeat="item in settingsCtrl.permittedUsers">
-                            <td style="width:30%">{{item.name}}</td>
-                            <td style="width:15%">
-                                <input type="checkbox" ng-model="item.confirmedRead" ng-change="settingsCtrl.addReadUser(item.confirmedRead, item.globalId)">
-                            </td>
-                            <td style="width:15%">
-                                <input type="checkbox" ng-model="item.confirmedWrite" ng-change="settingsCtrl.addWriteUser(item.confirmedWrite, item.globalId)">
-                            </td>
-                            <td>
-                                <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="settingsCtrl.removeSpaceUser(item.globalId); settingsCtrl.addReadUser(false, item.globalId); settingsCtrl.addWriteUser(false, item.globalId)"></i>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+            <div class="col-md-2">
+                <ul class="nav nav-pills nav-stacked">
+                    <li ng-class="{ active: settingsCtrl.isSet(1) }">
+                        <a href ng-click="settingsCtrl.setTab(1)">Users</a>
+                    </li>
+                    <li ng-class="{ active: settingsCtrl.isSet(2) }">
+                        <a href ng-click="settingsCtrl.setTab(2)">Roles</a>
+                    </li>
+                </ul>
             </div>
-            <div ng-show="settingsCtrl.isSet(2)">
-                <div class="form-group">
-                    <div class="col-md-4" style="padding-right: 0px;">
-                        <input type="text" placeholder="Enter a role name" ng-model="settingsCtrl.selectedRole" uib-typeahead="role as role.name for role in settingsCtrl.roles | filter:{name:$viewValue} | limitTo:10" class="form-control">
+            <div class="col-md-7">
+                <div ng-show="settingsCtrl.isSet(1)">
+                    <div class="form-group" style="margin-bottom: 0px;">
+                        <div class="col-md-4" style="">
+                            <input type="text" placeholder="Enter a username" ng-model="settingsCtrl.selected" uib-typeahead="user as user.name for user in settingsCtrl.users | filter:{name:$viewValue} | limitTo:10" class="form-control">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-2">
-                        <button class="btn btn-primary" ng-click="settingsCtrl.addSpaceRole()">Add</button>
+                    <div class="form-group" style="margin-bottom: -3%">
+                        <div class="col-md-2" style="width: 12%; margin-left: -3%">
+                                <button class="btn btn-primary" ng-click="settingsCtrl.addSpaceUser()" style="">Add</button>
+                        </div>
+                        <button class="btn btn-primary" ng-click="settingsCtrl.addAllUsers()" style="">Make public</button>
+                        <input type="checkbox" id="check1" style="margin-left: 1%" ng-model="settingsCtrl.allModify"><label for="check1">Can Modify</label>
                     </div>
+                    <br /><br />
+                    <table class="table users table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width:30%">User name</th>
+                                <th style="width:15%">Read</th>
+                                <th style="width:15%">Write</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody style="height: 200px;">
+                            <tr ng-repeat="item in settingsCtrl.permittedUsers">
+                                <td style="width:30%">{{item.name}}</td>
+                                <td style="width:15%">
+                                    <input type="checkbox" ng-model="item.confirmedRead" ng-change="settingsCtrl.addReadUser(item.confirmedRead, item.globalId)">
+                                </td>
+                                <td style="width:15%">
+                                    <input type="checkbox" ng-model="item.confirmedWrite" ng-change="settingsCtrl.addWriteUser(item.confirmedWrite, item.globalId)">
+                                </td>
+                                <td>
+                                    <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="settingsCtrl.removeSpaceUser(item.globalId); settingsCtrl.addReadUser(false, item.globalId); settingsCtrl.addWriteUser(false, item.globalId)"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <br /> <br/>
-                <table class="table users table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th style="width:30%">Role name</th>
-                            <th style="width:15%">Read</th>
-                            <th style="width:15%">Write</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody style="height: 200px;">
-                        <tr ng-repeat="item in settingsCtrl.permittedRoles">
-                            <td style="width:30%">{{item.name}}</td>
-                            <td style="width:15%">
-                                <input type="checkbox" ng-model="item.confirmedRead" ng-change="settingsCtrl.addReadRole(item.confirmedRead, item.id)">
-                            </td>
-                            <td style="width:15%">
-                                <input type="checkbox" ng-model="item.confirmedWrite" ng-change="settingsCtrl.addWriteRole(item.confirmedWrite, item.id)">
-                            </td>
-                            <td>
-                                <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="settingsCtrl.removeSpaceRole(item.id); settingsCtrl.addReadRole(false, item.id); settingsCtrl.addWriteRole(false, item.id)"></i>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div ng-show="settingsCtrl.isSet(2)">
+                    <div class="form-group">
+                        <div class="col-md-4" style="padding-right: 0px;">
+                            <input type="text" placeholder="Enter a role name" ng-model="settingsCtrl.selectedRole" uib-typeahead="role as role.name for role in settingsCtrl.roles | filter:{name:$viewValue} | limitTo:10" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-md-2">
+                            <button class="btn btn-primary" ng-click="settingsCtrl.addSpaceRole()">Add</button>
+                        </div>
+                    </div>
+                    <br /> <br />
+                    <table class="table users table-striped table-hover">
+                        <thead>
+                            <tr>
+                                <th style="width:30%">Role name</th>
+                                <th style="width:15%">Read</th>
+                                <th style="width:15%">Write</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody style="height: 200px;">
+                            <tr ng-repeat="item in settingsCtrl.permittedRoles">
+                                <td style="width:30%">{{item.name}}</td>
+                                <td style="width:15%">
+                                    <input type="checkbox" ng-model="item.confirmedRead" ng-change="settingsCtrl.addReadRole(item.confirmedRead, item.id)">
+                                </td>
+                                <td style="width:15%">
+                                    <input type="checkbox" ng-model="item.confirmedWrite" ng-change="settingsCtrl.addWriteRole(item.confirmedWrite, item.id)">
+                                </td>
+                                <td>
+                                    <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="settingsCtrl.removeSpaceRole(item.id); settingsCtrl.addReadRole(false, item.id); settingsCtrl.addWriteRole(false, item.id)"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
 </div>
 
 <!--For tabs-->

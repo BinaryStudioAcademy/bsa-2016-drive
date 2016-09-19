@@ -14,7 +14,7 @@ namespace Drive.WebHost.Services
 
         Task<SpaceDto> GetAsync(int id);
         Task<SpaceDto> GetAsync(int id, int page, int count, string sotr);
-        Task<SpaceDto> GetSpaceByTypeAsync(SpaceType type, int page, int count, string sort);
+        Task<int> GetSpaceByTypeAsync(SpaceType type);
         Task<int> GetTotalAsync(int id);
 
         Task<int> CreateAsync(SpaceDto space);
@@ -25,8 +25,9 @@ namespace Drive.WebHost.Services
         Task DeleteWithStaff(int id);
         Task<SearchResultDto> SearchFoldersAndFilesAsync(int spaceId, int? folderId, string text, int page, int count);
         Task<int> NumberOfFoundFoldersAndFilesAsync(int spaceId, int? folderId, string text);
-
-        Task CreateUserAndFirstSpaceAsync(string globalId);
+        Task MoveContentAsync(CopyMoveContentDto content);
+        Task CopyContentAsync(CopyMoveContentDto content);
+        Task DeleteContentAsync(CopyMoveContentDto content);
         void Dispose();
     }
 }

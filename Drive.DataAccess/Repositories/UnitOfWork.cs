@@ -4,6 +4,9 @@ using Drive.DataAccess.Context;
 using Drive.DataAccess.Entities;
 using Drive.DataAccess.Entities.Pro;
 using Drive.DataAccess.Interfaces;
+using System.Data.Entity.Validation;
+using System.Diagnostics;
+using Drive.DataAccess.Entities.Event;
 
 namespace Drive.DataAccess.Repositories
 {
@@ -27,10 +30,14 @@ namespace Drive.DataAccess.Repositories
         private IRepository<Log> _logRepository;
         private IRepository<AcademyProCourse> _academyProRepository;
         private IRepository<CodeSample> _codeSamplesRepository;
+        private IRepository<HomeTask> _homeTasksRepository;
         private IRepository<ContentLink> _contentLinksRepository;
         private IRepository<Tag> _tagsRepository;
         private IRepository<Lecture> _lecturesRepository;
         private IRepository<Shared> _sharedSpaceRepository;
+        private IRepository<EventContent> _eventContentRepository;
+        private IRepository<Event> _eventRepository;
+
 
         public IRepository<FolderUnit> Folders
         {
@@ -92,6 +99,13 @@ namespace Drive.DataAccess.Repositories
             }
         }
 
+        public IRepository<HomeTask> HomeTasks
+        {
+            get
+            {
+                return _homeTasksRepository ?? (_homeTasksRepository = _repositoryFactory.CreateRepository<HomeTask>(_context));
+            }
+        }
 
         public IRepository<ContentLink> ContentLinks
         {
@@ -127,6 +141,22 @@ namespace Drive.DataAccess.Repositories
             }
         }
 
+        public IRepository<EventContent> EventContents
+        {
+            get
+            {
+                return _eventContentRepository ?? (_eventContentRepository = _repositoryFactory.CreateRepository<EventContent>(_context));
+            }
+        }
+
+        public IRepository<Event> Events
+        {
+            get
+            {
+                return _eventRepository ?? (_eventRepository = _repositoryFactory.CreateRepository<Event>(_context));
+            }
+        }
+
         public void Dispose()
         {
             Dispose(true);
@@ -148,7 +178,22 @@ namespace Drive.DataAccess.Repositories
 
         public async Task SaveChangesAsync()
         {
-            await _context.SaveChangesAsync();
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbEntityValidationException dbEx)
+            {
+                foreach (var validationErrors in dbEx.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        Trace.TraceInformation("Property: {0} Error: {1}",
+                                                validationError.PropertyName,
+                                                validationError.ErrorMessage);
+                    }
+                }
+            }
         }
 }
 }

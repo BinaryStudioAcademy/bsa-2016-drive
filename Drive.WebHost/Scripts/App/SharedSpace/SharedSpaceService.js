@@ -9,22 +9,24 @@
 
     function SharedSpaceService($http, baseUrl) {
         var service = {
-            getSpace: getSpace,
-            getSpaceTotal: getSpaceTotal,
+            getSharedData: getSharedData,
+            getSharedDataTotal: getSpaceTotal,
             getAllUsers: getAllUsers,
-            deleteSharedFile: deleteSharedFile,
+            deleteSharedContent: deleteSharedContent,
             search: search,
             searchTotal: searchTotal,
             getPermissions: getPermissions,
             createOrUpdatePermission: createOrUpdatePermission
         };
 
-        function getSpace(currentPage, pageSize, sort, callback) {
+        function getSharedData(currentPage, pageSize, sort, folderId, rootFolderId, callback) {
             $http.get(baseUrl + '/api/sharedspace', {
                 params: {
                     page: currentPage,
                     count: pageSize,
-                    sort: sort
+                    sort: sort,
+                    folderId: folderId,
+                    rootFolderId: rootFolderId
                 }
             })
                 .then(function (response) {
@@ -33,7 +35,7 @@
                     }
                 },
                 function errorCallback(response) {
-                    console.log('Error in getSpace sharedSpaceService!' + response.status);
+                    console.log('Error in getSharedData sharedSpaceService!' + response.status);
                     if (response.status == 404 && callback) {
                         console.log(response.status + ' ' + response.data);
                         callback(response.data)
@@ -41,15 +43,20 @@
                 });
         }
         
-        function getSpaceTotal( callback) {
-            $http.get(baseUrl + '/api/sharedspace/total')
+        function getSpaceTotal(folderId, rootFolderId, callback) {
+            $http.get(baseUrl + '/api/sharedspace/total', {
+                params: {
+                    folderId: folderId,
+                    rootFolderId: rootFolderId
+                }
+            })
                .then(function (response) {
                    if (callback) {
                        callback(response.data);
                    }
                },
                function errorCallback(response) {
-                   console.log('Error in getSpaceTotal sharedSpaceService!' + response.status);
+                   console.log('Error in getSharedDataTotal sharedSpaceService!' + response.status);
                    if (response.status == 404 && callback) {
                        console.log(response.status + ' ' + response.data);
                        callback(response.data)
@@ -58,12 +65,15 @@
 
         }
 
-        function search(text, currentPage, pageSize, callback) {
+        function search(text, currentPage, pageSize, sort, folderId, rootFolderId, callback) {
             $http.get(baseUrl + '/api/sharedspace/search', {
                 params: {
                     text: text,
                     page: currentPage,
-                    count: pageSize
+                    count: pageSize,
+                    sort: sort,
+                    folderId: folderId,
+                    rootFolderId: rootFolderId
                 }
             })
             .then(function (response) {
@@ -78,10 +88,12 @@
             });
         }
 
-        function searchTotal(text, callback) {
+        function searchTotal(text, folderId, rootFolderId, callback) {
             $http.get(baseUrl + '/api/sharedspace/searchtotal', {
                 params: {
-                    text: text
+                    text: text,
+                    folderId: folderId,
+                    rootFolderId: rootFolderId
                 }
             })
             .then(function (response) {
@@ -96,7 +108,7 @@
             });
         }
 
-        function deleteSharedFile(id, callback) {
+        function deleteSharedContent(id, callback) {
             $http.delete(baseUrl + '/api/sharedspace', {
                 params: {
                     id: id
@@ -105,9 +117,9 @@
             .then(function (response) {
                 if (callback)
                     callback();
-                console.log('Deleted permissions successful. method: deleteSharedFile')
+                console.log('Deleted permissions successful. method: deleteSharedContent')
             }, function errorCallback(response) {
-                console.log('Error in deleteSharedFile sharedSpaceService! Code: ' + response.status);
+                console.log('Error in deleteSharedContent sharedSpaceService! Code: ' + response.status);
             });
         }
 

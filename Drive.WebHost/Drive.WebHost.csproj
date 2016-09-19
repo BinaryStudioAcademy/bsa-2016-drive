@@ -203,10 +203,13 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\Event\EventsContentController.cs" />
+    <Compile Include="Api\Event\EventsController.cs" />
     <Compile Include="Api\FilesController.cs" />
     <Compile Include="Api\FoldersController.cs" />
     <Compile Include="Api\GlobalExceptionLogger.cs" />
     <Compile Include="Api\LogsController.cs" />
+    <Compile Include="Api\Pro\HomeTasksController.cs" />
     <Compile Include="Api\RolesController.cs" />
     <Compile Include="Api\Pro\AcademiesController.cs" />
     <Compile Include="Api\Pro\CodeSamplesController.cs" />
@@ -236,6 +239,10 @@
     <Compile Include="Providers\FakeUserProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthorizationService.cs" />
+    <Compile Include="Services\Events\EventContentService.cs" />
+    <Compile Include="Services\Events\EventService.cs" />
+    <Compile Include="Services\Events\IEventContentService.cs" />
+    <Compile Include="Services\Events\IEventService.cs" />
     <Compile Include="Services\FileService.cs" />
     <Compile Include="Services\FolderService.cs" />
     <Compile Include="Services\IFileService.cs" />
@@ -248,6 +255,8 @@
     <Compile Include="Services\ITrashBinService.cs" />
     <Compile Include="Services\IUsersService.cs" />
     <Compile Include="Services\LogsService.cs" />
+    <Compile Include="Services\Pro\Abstract\IHomeTasksService.cs" />
+    <Compile Include="Services\Pro\HomeTasksService.cs" />
     <Compile Include="Services\RolesService.cs" />
     <Compile Include="Services\Pro\Abstract\IAcademyProCourseService.cs" />
     <Compile Include="Services\Pro\Abstract\IBasicService.cs" />
@@ -281,39 +290,58 @@
     <Content Include="Content\Fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="Content\Icons\academyPro.svg" />
     <Content Include="Content\Icons\academyPro_bw.svg" />
+    <Content Include="Content\Icons\academyPro_toolbar.svg" />
     <Content Include="Content\Icons\add-file_bw.svg" />
     <Content Include="Content\Icons\add-folder_bw.svg" />
     <Content Include="Content\Icons\checklist.svg" />
     <Content Include="Content\Icons\checklist_bw.svg" />
     <Content Include="Content\Icons\doc.svg" />
     <Content Include="Content\Icons\doc_bw.svg" />
+    <Content Include="Content\Icons\download-doc-o_bw.svg" />
     <Content Include="Content\Icons\employees-add.svg" />
     <Content Include="Content\Icons\employees.svg" />
     <Content Include="Content\Icons\employees_bw.svg" />
     <Content Include="Content\Icons\event.svg" />
     <Content Include="Content\Icons\event_bw.svg" />
+    <Content Include="Content\Icons\event_toolbar.svg" />
     <Content Include="Content\Icons\folder.svg" />
     <Content Include="Content\Icons\folder_bw.svg" />
+    <Content Include="Content\Icons\image.svg" />
+    <Content Include="Content\Icons\image_bw.svg" />
+    <Content Include="Content\Icons\lecture-black.svg" />
+    <Content Include="Content\Icons\lecture.svg" />
     <Content Include="Content\Icons\link.svg" />
+    <Content Include="Content\Icons\link_bw.svg" />
     <Content Include="Content\Icons\menu_shared.svg" />
     <Content Include="Content\Icons\menu_space-home.svg" />
     <Content Include="Content\Icons\menu_space-other.svg" />
     <Content Include="Content\Icons\menu_space-own.svg" />
+    <Content Include="Content\Icons\pencil-striped-symbol-for-interface-edit-buttons.svg" />
     <Content Include="Content\Icons\physical-file.svg" />
     <Content Include="Content\Icons\ppt.svg" />
     <Content Include="Content\Icons\ppt_bw.svg" />
+    <Content Include="Content\Icons\presentation.svg" />
+    <Content Include="Content\Icons\seo-training.svg" />
     <Content Include="Content\Icons\trello.svg" />
     <Content Include="Content\Icons\trello_bw.svg" />
+    <Content Include="Content\Icons\upload-doc-o_bw.svg" />
     <Content Include="Content\Icons\upload-doc_bw.svg" />
+    <Content Include="Content\Icons\video_bw.svg" />
+    <Content Include="Content\Icons\video.svg" />
     <Content Include="Content\Icons\xls.svg" />
     <Content Include="Content\Icons\xls_bw.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="gulpfile.js" />
     <Content Include="icon.png" />
+    <Content Include="Scripts\App\jwtService.js" />
+    <Content Include="Scripts\App\Academy\Lecture\createLink.directive.html" />
+    <Content Include="Scripts\App\Academy\Lecture\createLink.directive.js" />
+    <Content Include="Scripts\App\Academy\Lecture\externalLink.filter.js" />
     <Content Include="Scripts\App\Academy\Lecture\Lecture.html" />
     <Content Include="Scripts\App\Academy\Lecture\lectureController.js" />
     <Content Include="Scripts\App\Academy\Lecture\lectureService.js" />
+    <Content Include="Scripts\App\Academy\Lecture\linkTypeService.js" />
     <Content Include="Scripts\App\Academy\List\courseCreateController.js" />
     <Content Include="Scripts\App\Academy\List\Create.html" />
     <Content Include="Scripts\App\Academy\List\Modal.html" />
@@ -333,11 +361,32 @@
     <Content Include="Scripts\App\AdminPanel\Roles\EditRole.html" />
     <Content Include="Scripts\App\AdminPanel\Roles\roleController.js" />
     <Content Include="Scripts\App\AdminPanel\Roles\roleService.js" />
+    <Content Include="Scripts\App\Events\eventsModule.js" />
+    <Content Include="Scripts\App\Events\Event\Event.html" />
+    <Content Include="Scripts\App\Events\Event\eventContentType.filter.js" />
+    <Content Include="Scripts\App\Events\Event\eventController.js" />
+    <Content Include="Scripts\App\Events\Event\eventService.js" />
+    <Content Include="Scripts\App\Events\Event\eventContent.directive.html" />
+    <Content Include="Scripts\App\Events\Event\eventContent.directive.js" />
+    <Content Include="Scripts\App\Events\Event\createEventContent.directive.html" />
+    <Content Include="Scripts\App\Events\Event\createEventContent.directive.js" />
+    <Content Include="Scripts\App\Events\Event\contentTypeService.js" />
+    <Content Include="Scripts\App\Events\List\EventsList.html" />
+    <Content Include="Scripts\App\Events\List\eventsListController.js" />
+    <Content Include="Scripts\App\Events\List\eventsListService.js" />
+    <Content Include="Scripts\App\Events\Event\CreateEvent.html" />
+    <Content Include="Scripts\App\Events\Event\eventCreateController.js" />
+    <Content Include="Scripts\App\Events\Event\Modal.html" />
+    <Content Include="Scripts\App\FileFilter\videoPreview.filter.js" />
+    <Content Include="Scripts\App\File\fileSize.filter.js" />
     <Content Include="Scripts\App\File\fileUpload.directive.js" />
+    <Content Include="Scripts\App\File\TextFileReader\textFileReaderController.js" />
+    <Content Include="Scripts\App\File\TextFileReader\Modal.html" />
+    <Content Include="Scripts\App\File\TextFileReader\TextFileReader.html" />
     <Content Include="Scripts\App\File\UploadFile.html" />
-    <Content Include="Scripts\App\SharedFile\SharedFileForm.html" />
-    <Content Include="Scripts\App\SharedFile\sharedFileModalController.js" />
-    <Content Include="Scripts\App\SharedFile\Modal.html" />
+    <Content Include="Scripts\App\SharedContent\SharedContentForm.html" />
+    <Content Include="Scripts\App\SharedContent\sharedContentModalController.js" />
+    <Content Include="Scripts\App\SharedContent\Modal.html" />
     <Content Include="Scripts\App\FileFilter\fileFilterController.js" />
     <Content Include="Scripts\App\FileFilter\FileFilter.html" />
     <Content Include="Scripts\App\File\FileForm.html" />
@@ -368,6 +417,7 @@
     <Content Include="Scripts\App\SharedSpace\sharedSpaceService.js" />
     <Content Include="Scripts\App\Space\Create.html" />
     <Content Include="Scripts\App\Space\createSpaceController.js" />
+    <Content Include="Scripts\App\Space\dndEventsDerectives.js" />
     <Content Include="Scripts\App\Space\Modal.html" />
     <Content Include="Scripts\App\Space\Settings.html" />
     <Content Include="Scripts\App\Space\settingsController.js" />
@@ -393,14 +443,17 @@
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Scripts\Libs\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="App_Data\Drive-9345df2608d2.json" />
+    <Content Include="App_Data\Google.Apis.Auth.OAuth2.Responses.TokenResponse-user" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\Error\NotFound.cshtml" />
+    <Content Include="Scripts\App\Academy\Lecture\lectureLinks.directive.html" />
+    <Content Include="Scripts\App\Academy\Lecture\lectureLinks.directive.js" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

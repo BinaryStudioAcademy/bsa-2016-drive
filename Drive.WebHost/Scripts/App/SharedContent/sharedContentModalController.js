@@ -3,13 +3,13 @@
 
     angular
         .module("driveApp")
-        .controller("SharedFileModalCtrl", SharedFileModalCtrl);
+        .controller("SharedContentModalCtrl", SharedContentModalCtrl);
 
-    SharedFileModalCtrl.$inject = ['SharedSpaceService', '$uibModalInstance', 'items'];
+    SharedContentModalCtrl.$inject = ['SharedSpaceService', '$uibModalInstance', 'items'];
 
-    function SharedFileModalCtrl(sharedSpaceService, $uibModalInstance, items) {
+    function SharedContentModalCtrl(sharedSpaceService, $uibModalInstance, items) {
         var vm = this;
-        vm.title = 'Shared File';
+        vm.title = null;
 
         vm.save = save;
         vm.cancel = cancel;
@@ -23,7 +23,8 @@
         activate();
 
         function activate() {
-            vm.fileId = items;
+            vm.fileId = items.contentId;
+            vm.title = items.title;
 
             getUsersWithPermissions();
             addUsersName();

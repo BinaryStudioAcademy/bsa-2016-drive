@@ -6,6 +6,11 @@ using Driver.Shared.Dto;
 using Drive.DataAccess.Entities;
 using System;
 using System.Web;
+using System.Net.Http;
+using System.Net;
+using System.Net.Http.Headers;
+using Newtonsoft.Json;
+using System.Collections.Generic;
 
 namespace Drive.WebHost.Api
 {
@@ -153,6 +158,32 @@ namespace Drive.WebHost.Api
             return Ok(result);
         }
 
+        // GET: api/files/apps/findcourse/5
+        [HttpGet]
+        [Route("apps/findcourse/{id:int}")]
+        public async Task<IHttpActionResult> SearchCourse(int id)
+        {
+            var result = await _service.SearchCourse(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+
+        //GET: api/files/apps/findevent/5
+        [HttpGet]
+        [Route("apps/findevent/{id:int}")]
+        public async Task<IHttpActionResult> SearchEvent(int id)
+        {
+            var result = await _service.SearchEvent(id);
+            if (result == null)
+            {
+                return NotFound();
+            }
+            return Ok(result);
+        }
+
         // GET: api/files?spaceId=(int)&parentId=(int)
         [Route("~/api/files/parent")]
         [HttpGet]
@@ -165,27 +196,57 @@ namespace Drive.WebHost.Api
 
         // POST: api/files/spaceId=(int)&folderId=(int?)
         [HttpPost]
-        [Route("upload")]
+        [Route("~/api/files/upload")]
         public async Task<IHttpActionResult> UploadFile(int spaceId, int? parentId )
         {
             int parent = parentId ?? 0;
             string result = "";
+            int i = 0;
             HttpRequest request = HttpContext.Current.Request;
             try
             {
+                var data = JsonConvert.DeserializeObject<List<AdditionalData>>(request.Form[i]);
                 foreach (string file in request.Files)
                 {
+                    var fileData = data.ElementAt(i);
                     var fileContent = request.Files[file];
                     if (fileContent != null && fileContent.ContentLength > 0)
                     {
-                        result = await _service?.UploadFile(fileContent, spaceId, parent);
+                        result = await _service?.UploadFile(fileContent, fileData, spaceId, parent);
+
                     }
+                    i++;
                 }
-                return Ok(result);
             }
-            catch (System.Exception)
+            catch (Exception e)
             {
-                return BadRequest();
+                return BadRequest(e.Message.ToString());
+            }
+            return Ok(result);
+        }
+
+        // GET: api/files/dowload&fileId=(string)
+        [HttpGet]
+        [Route("~/api/files/download")]
+        public async Task<HttpResponseMessage> DownloadFile(string fileId)
+        {
+            HttpResponseMessage response;
+            try
+            {
+                var dto = await _service?.DownloadFile(fileId);
+                response = new HttpResponseMessage(HttpStatusCode.OK);
+                response.Content = new StreamContent(dto.Content);
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue(dto.Type);
+                response.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment")
+                {
+                    FileName = dto.Name
+                };
+
+                return response;
+            }
+            catch (Exception e)
+            {
+                return response = new HttpResponseMessage(HttpStatusCode.BadRequest);
             }
         }
     }

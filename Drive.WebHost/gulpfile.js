@@ -49,10 +49,12 @@ gulp.task("libs", function () {
       paths.bower + "angular.js",
       paths.bower + "angular-route.js",
       paths.bower + "contextMenu.js",
+      paths.bower + "ng-tags-input.js",
       paths.bower + "massautocomplete.js",
       paths.bower + "ui-bootstrap.js",
       paths.bower + "ui-bootstrap-tpls.js",
       paths.bower + "dist/jquery.js",
+      paths.bower + "jquery-ui.js",
       paths.bower + "bootstrap.js",
       paths.bower + "dirPagination.js",
       paths.bower + "angular-local-storage.js",
@@ -61,10 +63,17 @@ gulp.task("libs", function () {
       paths.bower + "angular-loading-spinner.js",
       paths.bower + "angular-animate.js",
       paths.bower + "angular-toastr.tpls.js",
+      paths.bower + "build/hotkeys.js",
       paths.bower + "sweetalert.min.js",
       paths.bower + "angular-youtube-embed.js",
       paths.bower + "youtube.iframe-api.js",
-      paths.bower + "datetime-picker.js"
+      paths.bower + "datetime-picker.js",
+      paths.bower + "draganddrop.js",
+      paths.bower + "angular-bootstrap-lightbox.js",
+      paths.bower + "angular-drag-and-drop-lists.js",
+      paths.bower + "build/pdf.combined.js",
+      paths.bower + "dist/angular-pdf-viewer.min.js",
+      paths.bower + "ng-videosharing-embed.min.js"
     ])
 
         .pipe(concat("libs.js"))
@@ -79,6 +88,8 @@ gulp.task("styles", function () {
         paths.bower + "massautocomplete.theme.css",
         paths.bower + "angular-toastr.css",
         paths.bower + "sweetalert.css",
+        paths.bower + "ng-tags-input.css",
+        paths.bower + "angular-bootstrap-lightbox.css",
         "./Content/*.css"
     ])
         .pipe(concat("styles.css"))

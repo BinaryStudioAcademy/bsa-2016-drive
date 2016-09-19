@@ -265,6 +265,4 @@ Dependencies/
 **/Bundles/main.js
 **/Bundles/main.min.js
 
-Drive.WebHost/Logs/fulllog.txt
-Drive.WebHost/Logs/fulllog.txt
-Drive.WebHost/Logs/fulllog.txt
+**/Logs/fulllog.txt

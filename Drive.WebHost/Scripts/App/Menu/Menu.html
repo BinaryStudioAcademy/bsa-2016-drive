@@ -53,22 +53,6 @@
                     </div>
                 </li>
                 <li>
-                    <div class="d" ng-click="menuController.redirectToApps('employees')">
-                        <span>
-                            <img src="./Content/Icons/employees_bw.svg" class="menu-icons" alt="Employees" />
-                        </span>
-                        <span class="span-apps">Employees</span>
-                    </div>
-                </li>
-                <li>
-                    <div class="d" ng-click="menuController.redirectToApps('checklist')">
-                        <span>
-                            <img src="./Content/Icons/checklist_bw.svg" class="menu-icons" alt="Checklist" />
-                        </span>
-                        <span class="span-apps">Checklist</span>
-                    </div>
-                </li>
-                <li>
                     <div class="d" ng-click="menuController.redirectToApps('trello')">
                         <span>
                             <img src="./Content/Icons/trello_bw.svg" class="menu-icons" alt="Trello" />
@@ -100,9 +84,41 @@
                         <span class="span-apps">Slides</span>
                     </div>
                 </li>
+                <li>
+                    <div class="d" ng-click="menuController.redirectToApps('images')">
+                        <span>
+                            <img src="./Content/Icons/image_bw.svg" style="height: 28px; margin-left: -5px; padding-right: 1px" class="menu-icons" alt="Images" />
+                        </span>
+                        <span class="span-apps">Images</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="d" ng-click="menuController.redirectToApps('videos')">
+                        <span>
+                            <img src="./Content/Icons/video_bw.svg" style="height: 23px; margin-left: -2px; padding-right: 3px" class="menu-icons" alt="Images" />
+                        </span>
+                        <span class="span-apps">Videos</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="d" ng-click="menuController.redirectToApps('links')">
+                        <span>
+                            <img src="./Content/Icons/link_bw.svg" class="menu-icons" alt="Links" />
+                        </span>
+                        <span class="span-apps">Links</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="d" ng-click="menuController.redirectToApps('uploaded')">
+                        <span>
+                            <img src="./Content/Icons/upload-doc-o_bw.svg" class="menu-icons" alt="Uploaded" />
+                        </span>
+                        <span class="span-apps">Uploaded</span>
+                    </div>
+                </li>
             </ul>
         </li>
-        <li>
+        <li ng-show="menuController.isAdmin()">
             <div class="d" ng-click="menuController.redirectToAdminPanel()">
                 <span class="fa-stack fa-lg pull-left"><i class="fa fa-sliders fa-stack-1x"></i></span>Admin Panel
             </div>

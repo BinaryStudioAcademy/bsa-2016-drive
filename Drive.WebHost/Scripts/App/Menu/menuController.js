@@ -4,9 +4,9 @@
     angular.module("driveApp")
         .controller("MenuController", MenuController);
 
-    MenuController.$inject = ['MenuService', '$location', '$uibModal', '$rootScope'];
+    MenuController.$inject = ['MenuService', '$location', '$uibModal', '$rootScope', 'JwtService'];
 
-    function MenuController(menuService, $location, $uibModal, $rootScope) {
+    function MenuController(menuService, $location, $uibModal, $rootScope, jwtService) {
 
         var vm = this;
 
@@ -21,6 +21,7 @@
         vm.getAllSpaces = getAllSpaces;
         vm.open = open;
         vm.spaces = {};
+        vm.isAdmin = jwtService.isAdmin
 
         activate();
 
@@ -34,7 +35,6 @@
                     }
                 }
             });
-
         }
 
         function redirectToBinarySpace() {
