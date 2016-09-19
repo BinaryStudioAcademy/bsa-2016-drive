@@ -1,9 +1,10 @@
 ﻿
 <div ng-if="content.contentType == contentTypes.video">
     <h4>{{content.name}}</h4>
-    <p>{{content.content}}</p>
     <p>{{content.description}}</p>
-    <youtube-video video-url="content.content"></youtube-video>
+    <div style="margin-left: 16%; margin-right: 5%;">
+        <youtube-video video-url="content.content"></youtube-video>
+    </div>
 </div>
 <div ng-if="content.contentType == contentTypes.text">
     <h4>{{content.name}}</h4>
