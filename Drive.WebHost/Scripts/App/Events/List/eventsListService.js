@@ -14,7 +14,8 @@
         var service = {
             getEvents: getEvents,
             searchEvents: searchEvents,
-            deleteEvent: deleteEvent
+            deleteEvent: deleteEvent,
+            orderEventsByColumn: orderEventsByColumn
         }
 
         return service;
@@ -63,6 +64,12 @@
                 function () {
                     console.log('Error while event deleting!');
                 });
+        }
+
+        function orderEventsByColumn(columnClicked, columnCurrent) {
+            var pos = columnCurrent.indexOf(columnClicked);
+            if (pos == 0) { return '-' + columnClicked; }
+            return columnClicked;
         }
     }
 })();

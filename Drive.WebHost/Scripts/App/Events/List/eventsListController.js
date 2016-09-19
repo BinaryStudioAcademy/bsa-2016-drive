@@ -16,6 +16,7 @@
     function EventsListController(EventsListService, $location, localStorageService, eventService, $uibModal) {
         var vm = this;
         vm.columnForOrder = 'name';
+        vm.orderEventByColumn = orderEventByColumn;
         vm.openEvent = openEvent;
         vm.changeView = changeView;
         vm.search = search;
@@ -167,6 +168,10 @@
             }, function () {
                 console.log('Modal dismissed');
             });
+        }
+
+        function orderEventByColumn(column) {
+            vm.eventColumnForOrder = EventsListService.orderEventsByColumn(column, vm.eventColumnForOrder);
         }
     }
 }());
