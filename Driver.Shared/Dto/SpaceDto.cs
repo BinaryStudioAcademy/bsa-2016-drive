@@ -19,15 +19,6 @@ namespace Driver.Shared.Dto
 
         public int MaxFileSize { get; set; }
 
-        //public IEnumerable<UserDto> ReadPermittedUsers { get; set; }
-        public IList<User> ReadPermittedUsers { get; set; }
-
-        public IList<User> ModifyPermittedUsers { get; set; }
-
-        public IList<Role> ReadPermittedRoles { get; set; }
-
-        public IList<Role> ModifyPermittedRoles { get; set; }
-
         public IEnumerable<FileUnitDto> Files { get; set; }
 
         public IEnumerable<FolderUnitDto> Folders {get;set;}

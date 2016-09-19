@@ -60,10 +60,6 @@ namespace Drive.WebHost.Services
                                                    true : false,
                                    MaxFileSize = s.MaxFileSize,
                                    MaxFilesQuantity = s.MaxFilesQuantity,
-                                   ReadPermittedUsers = s.ReadPermittedUsers,
-                                   ModifyPermittedUsers = s.ModifyPermittedUsers,
-                                   ReadPermittedRoles = s.ReadPermittedRoles,
-                                   ModifyPermittedRoles = s.ModifyPermittedRoles,
                                    Files = s.ContentList.OfType<FileUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted)
                                         .Select(f => new FileUnitDto
                                         {
@@ -152,10 +148,6 @@ namespace Drive.WebHost.Services
                                                     true : false,
                                     MaxFileSize = s.MaxFileSize,
                                     MaxFilesQuantity = s.MaxFilesQuantity,
-                                    ReadPermittedUsers = s.ReadPermittedUsers,
-                                    ModifyPermittedUsers = s.ModifyPermittedUsers,
-                                    ReadPermittedRoles = s.ReadPermittedRoles,
-                                    ModifyPermittedRoles = s.ModifyPermittedRoles,
                                     Files = s.ContentList.OfType<FileUnit>().Where(f => f.FolderUnit == null && !f.IsDeleted)
                                          .Select(f => new FileUnitDto
                                          {
@@ -302,45 +294,21 @@ namespace Drive.WebHost.Services
         {
             string userId = _userService.CurrentUserId;
 
-            var spacesList = await _unitOfWork.Spaces.Query.Include(x => x.ReadPermittedUsers).Include(x => x.ReadPermittedRoles).Select(s => new SpaceDto
-            {
-                Id = s.Id,
-                Name = s.Name,
-                Description = s.Description,
-                ReadPermittedUsers = s.ReadPermittedUsers,
-                ReadPermittedRoles = s.ReadPermittedRoles,
-                Type = s.Type,
-                Owner = s.Owner
-            }).ToListAsync();
-
-
-            for (int i = 0; i < spacesList.Count; i++)
-            {
-                if (spacesList[i].Type != SpaceType.BinarySpace
-                     && spacesList[i].Owner.GlobalId != userId)
-                {
-                    if (spacesList[i].ReadPermittedUsers.FirstOrDefault(x => x.GlobalId == userId) == null)
+            var spacesList = await _unitOfWork?.Spaces?.Query
+                    .Where(s => s.Type == SpaceType.OtherSpace
+                                        && (s.Owner.GlobalId == userId
+                                        || s.ReadPermittedUsers.Any(x => x.GlobalId == userId)
+                                        || s.ReadPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                        || s.ModifyPermittedUsers.Any(x => x.GlobalId == userId)
+                                        || s.ModifyPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))))
+                    .Select(s => new SpaceDto
                     {
-                        if (spacesList[i].ReadPermittedRoles.Count == 0)
-                        {
-                            spacesList.RemoveAt(i);
-                            i--;
-                        }
-                        else
-                        {
-                            foreach (var item in spacesList[i].ReadPermittedRoles)
-                            {
-                                var role = await _roleService.GetAsync(item.Id);
-                                if (role.Users.FirstOrDefault(x => x.GlobalId == userId) == null)
-                                {
-                                    spacesList.RemoveAt(i);
-                                    i--;
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+                        Id = s.Id,
+                        Name = s.Name,
+                        Description = s.Description,
+                        Type = s.Type,
+                        Owner = s.Owner
+                    }).ToListAsync();
 
             return spacesList;
         }
