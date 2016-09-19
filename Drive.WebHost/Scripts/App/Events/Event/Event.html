@@ -3,7 +3,7 @@
     <div class="btn-group btn-breadcrumb">
         <a ng-click="eventCtrl.getEventsList()" class="btn btn-info"><i class="fa fa-calendar fa-lg"></i> Events</a>
         <a title="{{eventCtrl.event.fileUnit.name}}" class="btn btn-default">
-            {{eventCtrl.event.fileUnit.name | limitTo: 10}}{{eventCtrl.event.fileUnit.name > 10 ? '...' : ''}}
+            {{eventCtrl.event.fileUnit.name | limitTo: 15}}{{eventCtrl.event.fileUnit.name > 15 ? '...' : ''}}
         </a>
     </div>
     <div ng-show="!eventCtrl.isEditing">
