@@ -15,21 +15,21 @@ namespace Drive.WebHost.Providers
         }
         public Task<UserDto> GetByIdAsync(string id)
         {
-            var user = new UserDto() { serverUserId = _bsIdentityManager.UserId, name = "Tester", surname="C" };
+            var user = new UserDto { id = _bsIdentityManager.UserId, name = "Tester", surname="C" };
             TaskCompletionSource<UserDto> tcs = new TaskCompletionSource<UserDto>();
             tcs.SetResult(user);
             return tcs.Task;
         }
-        public Task<IEnumerable<UsersDto>> GetAsync()
+        public Task<IEnumerable<UserDto>> GetAsync()
         {
-            var userList = new List<UsersDto>();
-            userList.Add(new UsersDto() { id = "577a16659829fe050adb3f5c", name = "TestName A" });
-            userList.Add(new UsersDto() { id = "577a171c9829fe050adb3f5d", name = "Tester B" });
-            userList.Add(new UsersDto() { id = "577a17669829fe050adb3f5e", name = "Tester C" });
-            userList.Add(new UsersDto() { id = "577a17a99829fe050adb3f5f", name = "Tester D" });
-            userList.Add(new UsersDto() { id = "577a17df9829fe050adb3f60", name = "Tester E" });
-            userList.Add(new UsersDto() { id = "577a18349829fe050adb3f61", name = "Tester F" });
-            TaskCompletionSource<IEnumerable<UsersDto>> tcs = new TaskCompletionSource<IEnumerable<UsersDto>>();
+            var userList = new List<UserDto>();
+            userList.Add(new UserDto { id = "577a16659829fe050adb3f5c", name = "TestName A" });
+            userList.Add(new UserDto { id = "577a171c9829fe050adb3f5d", name = "Tester B" });
+            userList.Add(new UserDto { id = "577a17669829fe050adb3f5e", name = "Tester C" });
+            userList.Add(new UserDto { id = "577a17a99829fe050adb3f5f", name = "Tester D" });
+            userList.Add(new UserDto { id = "577a17df9829fe050adb3f60", name = "Tester E" });
+            userList.Add(new UserDto { id = "577a18349829fe050adb3f61", name = "Tester F" });
+            TaskCompletionSource<IEnumerable<UserDto>> tcs = new TaskCompletionSource<IEnumerable<UserDto>>();
             tcs.SetResult(userList);
             return tcs.Task;
         }

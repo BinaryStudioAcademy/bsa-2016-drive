@@ -39,6 +39,7 @@
             
             scope.saveContent = function () {
                 scope.content = scope.contentModel;
+                scope.content.isEdit = false;
                 if (scope.content.order === undefined) {
                     scope.contentList.push(scope.content);
                 }
@@ -65,6 +66,11 @@
                 var expression = "^(?:(?:ht|f)tps?://)?(?:[\\-\\w]+@)?(?:[\\-0-9a-z]*[0-9a-z]\\.)+[a-z]{2,6}(?::\\d{1,5})?(?:[?/\\\\#][?!^$.(){}:|=[\\]+\\-/\\\\*;&~#@,%\\wА-Яа-я]*)?$";
                 reg = new RegExp(expression);
                 scope.urlIsValid = reg.test(scope.contentModel.content);
+            }
+
+            scope.cancel = function () {
+                scope.content.isEdit = false;
+                scope.afterSaveMethod();
             }
         }
     }

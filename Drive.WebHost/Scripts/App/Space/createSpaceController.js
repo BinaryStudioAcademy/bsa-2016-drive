@@ -223,6 +223,8 @@
                             name: vm.permittedUsers[i].name,
                             globalId: vm.permittedUsers[i].globalId
                         });
+                        vm.permittedUsers[i].confirmedRead = true;
+                        addReadUser(true, id);
                         break;
                     }
                 }
@@ -245,6 +247,8 @@
                             name: vm.permittedRoles[i].name,
                             id: vm.permittedRoles[i].id
                         });
+                        vm.permittedRoles[i].confirmedRead = true;
+                        addReadRole(true, id);
                         break;
                     }
                 }

@@ -77,7 +77,7 @@ namespace Drive.WebHost.Services.Pro
                 Id = course.Id,
                 IsDeleted = course.IsDeleted,
                 StartDate = course.StartDate,
-                Lectures = course.Lectures.Select(lecture => new LectureDto
+                Lectures = course.Lectures.Where(x => x.IsDeleted == false).Select(lecture => new LectureDto
                 {
                     Id = lecture.Id,
                     Name = lecture.Name,
@@ -117,12 +117,6 @@ namespace Drive.WebHost.Services.Pro
             var userId = _userService.CurrentUserId;
 
             var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == dto.Author.GlobalId);
-            if (user == null)
-            {
-                UserDto userdto = new UserDto();
-                userdto.serverUserId = dto.Author.GlobalId;
-                await _userService.CreateAsync(userdto);
-            }
 
             var course = new AcademyProCourse
             {
@@ -164,11 +158,6 @@ namespace Drive.WebHost.Services.Pro
             course.FileUnit.Description = dto.FileUnit.Description;
             course.FileUnit.LastModified = DateTime.Now;
             var user = await _unitOfWork.Users.Query.SingleOrDefaultAsync(u => u.GlobalId == dto.Author.GlobalId);
-            if (user == null)
-            {
-                user = new User() { IsDeleted = false, GlobalId = dto.Author.GlobalId };
-                _unitOfWork.Users.Create(user);
-            }
 
             course.Author = user;
 

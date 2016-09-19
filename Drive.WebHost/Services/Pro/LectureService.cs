@@ -27,7 +27,7 @@ namespace Drive.WebHost.Services.Pro
 
         public async Task<IEnumerable<LectureDto>> GetAllAsync()
         {
-            var result = await _unitOfWork.Lectures.Query.Select(lecture => new LectureDto
+            var result = await _unitOfWork.Lectures.Query.Where(x => x.IsDeleted == false).Select(lecture => new LectureDto
             {
                 Id = lecture.Id,
                 Name = lecture.Name,
@@ -219,7 +219,11 @@ namespace Drive.WebHost.Services.Pro
 
         public async Task DeleteAsync(int id)
         {
-            _unitOfWork.Lectures.Delete(id);
+            var academies= await _unitOfWork.AcademyProCourses.Query.Include(x => x.FileUnit).Include(x => x.Lectures).ToListAsync();
+            var academy = academies.FirstOrDefault(x => x.Lectures.Any(c => c.Id == id));
+            var lecture = academy.Lectures.FirstOrDefault(x => x.Id == id);
+            lecture.IsDeleted = true;
+            //_unitOfWork.Lectures.Delete(id);
             await _unitOfWork.SaveChangesAsync();
         }
 

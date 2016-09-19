@@ -15,7 +15,20 @@
         vm.createLecture = createLecture;
         vm.getCourseList = getCourseList;
         vm.searchByTag = searchByTag;
-
+        vm.deleteLecture = deleteLecture;
+        vm.academyMenuOptions = [
+    [
+        'Edit', function ($itemScope) {
+            $location.url('/apps/academy/' + vm.academy.id + '/lecture/' + $itemScope.lecture.id + '/edit');
+        }
+    ],
+    null,
+    [
+        'Delete', function ($itemScope) {
+            deleteLecture($itemScope.lecture.id);
+        }
+    ]
+        ];
         activate();
 
         function activate() {
@@ -67,21 +80,31 @@
                 localStorageService.set('view', { showTable: true });
             }
         }
+
         function activateTableView() {
             vm.view = "fa fa-th";
             vm.showTable = true;
             vm.showGrid = false;
         }
+
         function activateGridView() {
             vm.view = "fa fa-list";
             vm.showTable = false;
             vm.showGrid = true;
         }
+
         function getCourseList() {
             $location.url('/apps/academy/');
         }
+
         function searchByTag(tag) {
             $location.url('/apps/academies/' + tag);
+        }
+
+        function deleteLecture(id) {
+            academyService.deleteData(id, function () {
+                return getAcademy();
+            });
         }
     }
 }());

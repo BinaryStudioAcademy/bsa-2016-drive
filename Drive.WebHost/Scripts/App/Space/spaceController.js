@@ -139,7 +139,8 @@
                 id: null,
                 name: '',
                 folders: [],
-                files: []
+                files: [],
+                canModifySpace: null
             }
 
             vm.images = [];
@@ -327,20 +328,20 @@
                     vm.folder.parentId = vm.parentId;
                     vm.folder.spaceId = vm.space.id;
                     vm.openFolderWindow();
-                }
+                }, function ($itemScope) { return $itemScope.folder.canModify }
             ],
             null,
             [
                 'Copy', function ($itemScope) {
                     var content = getSelectedItems($itemScope.folder, false);
                     pushToClipboard(content, true);
-                }
+                }, function ($itemScope) { return $itemScope.folder.canModify }
             ],
             [
                 'Cut', function ($itemScope) {
                     var content = getSelectedItems($itemScope.folder, false);
                     pushToClipboard(content, false);
-                }
+                }, function ($itemScope) { return $itemScope.folder.canModify }
             ],
             null,
             [
@@ -349,13 +350,13 @@
                     vm.sharedModalWindowTitle = 'Shared folder';
                     console.log(vm.contentSharedId);
                     vm.sharedContent();
-                }, function ($itemScope) { return vm.fileMenuOptionShareShow }
+                }, function ($itemScope) { return vm.fileMenuOptionShareShow  && $itemScope.folder.canModify }
             ],
             [
                 'Delete', function ($itemScope) {
                     var content = getSelectedItems($itemScope.folder, false);
                     deleteContent(content);
-                }
+                }, function ($itemScope) { return $itemScope.folder.canModify }
             ]
         ];
 
@@ -374,20 +375,20 @@
                             vm.openNewCourseWindow('lg');
                         });
                     }
-                }
+                }, function ($itemScope) { return $itemScope.file.canModify; }
             ],
             null,
             [
                 'Copy', function ($itemScope) {
                     var content = getSelectedItems($itemScope.file, true);
                     pushToClipboard(content, true);
-                }
+                }, function ($itemScope) { return $itemScope.file.canModify; }
             ],
             [
                 'Cut', function ($itemScope) {
                     var content = getSelectedItems($itemScope.file, true);
                     pushToClipboard(content, false);
-                }
+                }, function ($itemScope) { return $itemScope.file.canModify; }
             ],
             null,
             [
@@ -396,26 +397,27 @@
                     vm.contentSharedId = $itemScope.file.id;
                     console.log(vm.contentSharedId);
                     vm.sharedContent();
-                }, function ($itemScope) { return vm.fileMenuOptionShareShow }
+                }, function ($itemScope) { return vm.fileMenuOptionShareShow && $itemScope.file.canModify; }
             ],
             [
                 'Delete', function ($itemScope) {
                     var content = getSelectedItems($itemScope.file, true);
                     deleteContent(content);
-                }
+                }, function ($itemScope) { return $itemScope.file.canModify; }
             ]
         ];
 
         vm.containerMenuOptions = [
-            ['New Folder', function () { vm.createNewFolder(); }],
-            ['New File', function () { vm.createNewFile(); }],
-            ['New Academy Pro', function () { vm.createNewAP(); }],
+            ['New Folder', function () { vm.createNewFolder(); }, function () { return vm.space.canModifySpace; }],
+            ['New File', function () { vm.createNewFile(); }, function () { return vm.space.canModifySpace; }],
+            ['New Academy Pro', function () { vm.createNewAP(); }, function () { return vm.space.canModifySpace; }], ,
+            ['New Event', function () { vm.createNewEvent(); }, function () { return vm.space.canModifySpace;}],
             null,
             ['Upload File',
                 function ($itemScope) {
                     vm.file = { fileType: 6, parentId: vm.parentId, spaceId: vm.space.id };
                     vm.openFileUploadWindow('lg');
-                }
+                }, function () { return vm.space.canModifySpace; }
             ],
             null,
             [
@@ -425,7 +427,7 @@
                     pasteFromClipboard(data, isCopy);
                 }, function ($itemScope) {
                     var data = localStorageService.get('clipboard');
-                    return data != null;
+                    return data != null && vm.space.canModifySpace;
                 }
             ]
         ];
@@ -689,6 +691,7 @@
                 function (data) {
                     vm.space.folders = data.folders;
                     vm.space.files = data.files;
+                    vm.space.canModifySpace = data.canModifySpace;
                     vm.initSelection();
                 });
         }
@@ -747,6 +750,7 @@
                 function (data) {
                     vm.space.folders = data.folders;
                     vm.space.files = data.files;
+                    vm.space.canModifySpace = data.canModifySpace;
                 });
         }
 

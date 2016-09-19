@@ -7,25 +7,31 @@
     .config([
         '$routeProvider', function config($routeProvider) {
             var baseUrl = window.globalVars.baseUrl;
-                $routeProvider
-                    .when('/apps/events',
-                    {
-                        templateUrl: baseUrl + '/Scripts/App/Events/List/EventsList.html',
-                        controller: 'EventsListController',
-                        controllerAs: 'eventsListCtrl'
-                    })
-                    .when('/apps/events/newevent',
-                    {
-                        templateUrl: baseUrl + '/Scripts/App/Events/Event/CreateEvent.html',
-                        controller: 'EventCreateController',
-                        controllerAs: 'eventCreateCtrl'
-                    })
-                    .when('/apps/events/:id',
-                    {
-                        templateUrl: baseUrl + '/Scripts/App/Events/Event/Event.html',
-                        controller: 'EventController',
-                        controllerAs: 'eventCtrl'
-                    });
+            $routeProvider
+                .when('/apps/events',
+                {
+                    templateUrl: baseUrl + '/Scripts/App/Events/List/EventsList.html',
+                    controller: 'EventsListController',
+                    controllerAs: 'eventsListCtrl'
+                })
+                .when('/apps/events/newevent',
+                {
+                    templateUrl: baseUrl + '/Scripts/App/Events/Event/CreateEvent.html',
+                    controller: 'EventCreateController',
+                    controllerAs: 'eventCreateCtrl'
+                })
+                .when('/apps/events/:id',
+                {
+                    templateUrl: baseUrl + '/Scripts/App/Events/Event/Event.html',
+                    controller: 'EventController',
+                    controllerAs: 'eventCtrl'
+                })
+                .when('/apps/events/:id/edit',
+                {
+                    templateUrl: baseUrl + '/Scripts/App/Events/Event/Event.html',
+                    controller: 'EventController',
+                    controllerAs: 'eventCtrl'
+                });
             }
     ])
     .constant('uiDatetimePickerConfig', {

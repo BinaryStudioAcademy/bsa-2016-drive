@@ -13,7 +13,8 @@
     function EventsListService($http, baseUrl) {
         var service = {
             getEvents: getEvents,
-            searchEvents: searchEvents
+            searchEvents: searchEvents,
+            deleteEvent: deleteEvent
         }
 
         return service;
@@ -50,6 +51,18 @@
                             callback(response.data);
                         }
                     });
+        }
+
+        function deleteEvent(id, callback) {
+            $http.delete(baseUrl + '/api/events/' + id)
+                .then(function (response) {
+                    if (callback) {
+                        callback(response);
+                    }
+                },
+                function () {
+                    console.log('Error while event deleting!');
+                });
         }
     }
 })();

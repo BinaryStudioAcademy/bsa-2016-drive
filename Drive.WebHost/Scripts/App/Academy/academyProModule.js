@@ -37,6 +37,12 @@
                         templateUrl: baseUrl + '/Scripts/App/Academy/Lecture/Lecture.html',
                         controller: 'LectureController',
                         controllerAs: 'lectureCtrl'
+                    })
+                    .when('/apps/academy/:id/lecture/:lectureId/edit',
+                    {
+                        templateUrl: baseUrl + '/Scripts/App/Academy/Lecture/Lecture.html',
+                        controller: 'LectureController',
+                        controllerAs: 'lectureCtrl'
                     });
             }
         ])

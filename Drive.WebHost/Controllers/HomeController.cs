@@ -14,17 +14,9 @@ namespace Drive.WebHost.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ISpaceService _spaceService;
-        private readonly IUsersService _userService;
-        public HomeController(ISpaceService spaceService, IUsersService userService)
-        {
-            _spaceService = spaceService;
-            _userService = userService;
-        }
-        public async Task<ActionResult> Index()
+        public ActionResult Index()
         {
             ViewBag.BasePath = System.Configuration.ConfigurationManager.AppSettings["basePath"];
-            await _spaceService.CreateUserAndFirstSpaceAsync(_userService.CurrentUserId);
             return View();
         }
     }

@@ -72,9 +72,9 @@ namespace Drive.WebHost.Api
 
         // DELETE: api/events/{id}
         [HttpDelete]
-        public IHttpActionResult DeleteAsync(int id)
+        public async Task<IHttpActionResult> DeleteAsync(int id)
         {
-            _eventService.DeleteAsync(id);
+            await _eventService.DeleteAsync(id);
 
             return Ok();
         }

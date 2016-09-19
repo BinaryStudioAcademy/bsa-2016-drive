@@ -18,18 +18,15 @@ namespace Drive.WebHost.Infrastructure
     {
         public override void Load()
         {
-            string service = ConfigurationManager.AppSettings["UserProvider"];
+            string service = ConfigurationManager.AppSettings["UserProvider"] ?? "Drive.WebHost.Providers.UsersProvider";
             Type serviceType = Type.GetType(service);
+            Kernel.Bind<IUsersProvider>().To(serviceType);
 
             Kernel.Bind<IRolesService>().To<RolesService>();
             Kernel.Bind<ISpaceService>().To<SpaceService>();
             Kernel.Bind<IFolderService>().To<FolderService>();
             Kernel.Bind<ILogsService>().To<LogsService>();
             Kernel.Bind<IUsersService>().To<UsersService>();
-            if (serviceType != null)
-                Kernel.Bind<IUsersProvider>().To(serviceType);
-            else
-                Kernel.Bind<IUsersProvider>().To<UsersProvider>();
 
             Kernel.Bind<IFileService>().To<FileService>();
 

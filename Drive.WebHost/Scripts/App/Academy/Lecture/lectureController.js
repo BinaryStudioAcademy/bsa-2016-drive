@@ -37,7 +37,9 @@
 
         function activate() {
             vm.isEditing = false;
-
+            if ($location.path().indexOf('edit') + 1) {
+                edit();
+            }
             vm.currentTask = {};
 
             vm.calendar = {

@@ -15,6 +15,8 @@ using Driver.Shared.Dto.Pro;
 using System.Drawing;
 using Driver.Shared.Dto.Events;
 using Drive.Logging;
+using System.Text.RegularExpressions;
+using Drive.DataAccess.Entities.Event;
 
 namespace Drive.WebHost.Services
 {
@@ -106,7 +108,7 @@ namespace Drive.WebHost.Services
         public async Task<FileUnitDto> CreateAsync(FileUnitDto dto)
         {
             var user = await _usersService.GetCurrentUser();
-            var localUser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == user.serverUserId);
+            var localUser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == user.id);
 
             var space = await _unitOfWork?.Spaces?.GetByIdAsync(dto.SpaceId);
             var parentFolder = await _unitOfWork?.Folders.GetByIdAsync(dto.ParentId);
@@ -133,7 +135,7 @@ namespace Drive.WebHost.Services
                     IsDeleted = false,
                     Space = space,
                     FolderUnit = parentFolder,
-                    Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId),
+                    Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.id),
                     ReadPermittedUsers = ReadPermittedUsers,
                     ModifyPermittedUsers = ModifyPermittedUsers
                 };
@@ -236,9 +238,12 @@ namespace Drive.WebHost.Services
 
             var user = await _usersService?.GetCurrentUser();
 
-            string name = file.Name + "-copy";
+            Regex regEx = new Regex(@"(.+?)(\.[^.]*$|$)");
 
-            var copies = await _unitOfWork.Files.Query.Where(f => f.Name.StartsWith(file.Name + "-copy") &&
+            string name = regEx.Match(file.Name)?.Groups[1].Value;
+            string extention = regEx.Match(file.Name)?.Groups[2].Value;
+
+            var copies = await _unitOfWork.Files.Query.Where(f => f.Name.StartsWith(name + "-copy") &&
                                         (f.FolderUnit.Id == dto.ParentId || (dto.ParentId == 0 && f.Space.Id == dto.SpaceId))).ToListAsync();
 
             if (copies.Count > 0)
@@ -253,10 +258,14 @@ namespace Drive.WebHost.Services
                 }
                 name = name + (maxIndex + 1).ToString();
             }
+            else
+            {
+                name = name + "-copy";
+            }
 
             var copy = new FileUnit
             {
-                Name = name,
+                Name = name+extention,
                 Description = file.Description,
                 FileType = file.FileType,
                 IsDeleted = file.IsDeleted,
@@ -264,7 +273,7 @@ namespace Drive.WebHost.Services
                 CreatedAt = DateTime.Now,
                 Link = file.Link,
                 Space = space,
-                Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId),
+                Owner = await _unitOfWork.Users.Query.FirstOrDefaultAsync(u => u.GlobalId == user.id),
                 ModifyPermittedUsers = file.ModifyPermittedUsers,
                 ReadPermittedUsers = file.ReadPermittedUsers,
                 MorifyPermittedRoles = file.MorifyPermittedRoles,
@@ -337,6 +346,37 @@ namespace Drive.WebHost.Services
                 });
 
                 _unitOfWork.AcademyProCourses.Create(coursecopy);
+            }
+
+            if (file.FileType == FileType.Events)
+            {
+                var originalEvent = await _unitOfWork.Events.Query
+                    .Include(e => e.ContentList)
+                    .FirstOrDefaultAsync(e => e.FileUnit.Id == file.Id);
+
+                Event eventCopy = new Event
+                {
+                    IsDeleted = originalEvent.IsDeleted,
+                    EventDate = originalEvent.EventDate,
+                    EventType = originalEvent.EventType,
+                    FileUnit = copy,
+                    ContentList = new List<EventContent>()
+                };
+
+                originalEvent.ContentList.ToList().ForEach(c =>
+                                    eventCopy.ContentList.Add(new EventContent
+                                    {
+                                        Name = c.Name,
+                                        Description = c.Description,
+                                        IsDeleted = c.IsDeleted,
+                                        ContentType = c.ContentType,
+                                        Order = c.Order,
+                                        CreatedAt = DateTime.Now,
+                                        LastModified = DateTime.Now,
+                                        Content = c.Content
+                                    })
+                );
+                _unitOfWork.Events.Create(eventCopy);
             }
 
             _unitOfWork.Files.Create(copy);
@@ -425,30 +465,48 @@ namespace Drive.WebHost.Services
         public async Task<ICollection<AppDto>> FilterApp(FileType fileType)
         {
             string userId = _usersService.CurrentUserId;
-            var result = await _unitOfWork.Files.Query
-               .Where(f => f.FileType == fileType)
-               .Where(f => f.Space.Type == SpaceType.BinarySpace
-               || f.Space.Owner.GlobalId == userId
-               || f.Space.ReadPermittedUsers.Any(x => x.GlobalId == userId)
-               || f.Space.ReadPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId)))
-                 .GroupBy(f => f.Space).Select(f => new AppDto()
-                 {
-                     SpaceId = f.Key.Id,
-                     SpaceType = f.Key.Type,
-                     Name = f.Key.Name,
-                     Files = f.Select(d => new FileUnitDto
-                     {
-                         Id = d.Id,
-                         IsDeleted = d.IsDeleted,
-                         FileType = d.FileType,
-                         Name = d.Name,
-                         Link = d.Link,
-                         CreatedAt = d.CreatedAt,
-                         Author = new AuthorDto() { Id = d.Owner.Id, GlobalId = d.Owner.GlobalId },
-                         Description = d.Description,
-                         SpaceId = d.Space.Id
-                     }),
-                 }).ToListAsync();
+            var result = await (from f in _unitOfWork.Files.Query
+                                 let userCanRead = f.Space.ReadPermittedUsers.Any(x => x.GlobalId == userId)
+                                 let roleCanRead = f.Space.ReadPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                 let userCanModify = f.Space.ModifyPermittedUsers.Any(x => x.GlobalId == userId)
+                                 let roleCanModify = f.Space.ModifyPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                 where f.FileType == fileType
+                                      && (f.Space.Type == SpaceType.BinarySpace
+                                      || f.Space.Owner.GlobalId == userId
+                                      || userCanRead || roleCanRead
+                                      || userCanModify || roleCanModify)
+                                 group new { File = f, userCanRead, roleCanRead, userCanModify, roleCanModify } by f.Space into s
+                                 select new AppDto()
+                                 {
+                                     SpaceId = s.Key.Id,
+                                     SpaceType = s.Key.Type,
+                                     Name = s.Key.Name,
+                                     Files = s.Select(f => new FileUnitDto
+                                     {
+                                         Description = f.File.Description,
+                                         FileType = f.File.FileType,
+                                         Id = f.File.Id,
+                                         IsDeleted = f.File.IsDeleted,
+                                         Name = f.File.Name,
+                                         CreatedAt = f.File.CreatedAt,
+                                         Link = f.File.Link,
+                                         LastModified = f.File.LastModified,
+                                         SpaceId = s.Key.Id,
+                                         Author = new AuthorDto() { Id = f.File.Owner.Id, GlobalId = f.File.Owner.GlobalId },
+                                         CanRead = f.File.Space.Type == SpaceType.BinarySpace ?
+                                             true : f.File.Space.Owner.GlobalId == userId ?
+                                                 true : f.File.Owner.GlobalId == userId ?
+                                                    true : f.userCanRead ?
+                                                        true : f.roleCanRead ?
+                                                            true : false,
+                                         CanModify = f.File.Space.Type == SpaceType.BinarySpace ?
+                                             true : f.File.Space.Owner.GlobalId == userId ?
+                                                true : f.File.Owner.GlobalId == userId ?
+                                                     true : f.userCanModify ?
+                                                        true : f.roleCanModify ?
+                                                            true : false
+                                     })
+                                 }).ToListAsync();
 
             var owners = (await _usersService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
             foreach (var item in result)
@@ -469,25 +527,50 @@ namespace Drive.WebHost.Services
             }
             else
             {
-                var result = await _unitOfWork.Files.Query
-               .Where(f => f.FileType == fileType & f.Name.ToLower().Contains(text.ToLower()))
-               .GroupBy(f => f.Space).Select(f => new AppDto()
-               {
-                   SpaceId = f.Key.Id,
-                   SpaceType = f.Key.Type,
-                   Name = f.Key.Name,
-                   Files = f.Select(d => new FileUnitDto
-                   {
-                       Id = d.Id,
-                       IsDeleted = d.IsDeleted,
-                       FileType = d.FileType,
-                       Name = d.Name,
-                       Link = d.Link,
-                       CreatedAt = d.CreatedAt,
-                       Author = new AuthorDto() { Id = d.Owner.Id, GlobalId = d.Owner.GlobalId },
-                       Description = d.Description
-                   }),
-               }).ToListAsync();
+                string userId = _usersService.CurrentUserId;
+
+                var result = await (from f in _unitOfWork.Files.Query
+                                    let userCanRead = f.Space.ReadPermittedUsers.Any(x => x.GlobalId == userId)
+                                    let roleCanRead = f.Space.ReadPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                    let userCanModify = f.Space.ModifyPermittedUsers.Any(x => x.GlobalId == userId)
+                                    let roleCanModify = f.Space.ModifyPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))
+                                    where f.FileType == fileType && f.Name.ToLower().Contains(text.ToLower())
+                                         && (f.Space.Type == SpaceType.BinarySpace
+                                         || f.Space.Owner.GlobalId == userId
+                                         || userCanRead || roleCanRead
+                                         || userCanModify || roleCanModify)
+                                    group new { File = f, userCanRead, roleCanRead, userCanModify, roleCanModify } by f.Space into s
+                                    select new AppDto()
+                                    {
+                                        SpaceId = s.Key.Id,
+                                        SpaceType = s.Key.Type,
+                                        Name = s.Key.Name,
+                                        Files = s.Select(f => new FileUnitDto
+                                        {
+                                            Description = f.File.Description,
+                                            FileType = f.File.FileType,
+                                            Id = f.File.Id,
+                                            IsDeleted = f.File.IsDeleted,
+                                            Name = f.File.Name,
+                                            CreatedAt = f.File.CreatedAt,
+                                            Link = f.File.Link,
+                                            LastModified = f.File.LastModified,
+                                            SpaceId = s.Key.Id,
+                                            Author = new AuthorDto() { Id = f.File.Owner.Id, GlobalId = f.File.Owner.GlobalId },
+                                            CanRead = f.File.Space.Type == SpaceType.BinarySpace ?
+                                                true : f.File.Space.Owner.GlobalId == userId ?
+                                                    true : f.File.Owner.GlobalId == userId ?
+                                                       true : f.userCanRead ?
+                                                           true : f.roleCanRead ?
+                                                               true : false,
+                                            CanModify = f.File.Space.Type == SpaceType.BinarySpace ?
+                                                true : f.File.Space.Owner.GlobalId == userId ?
+                                                   true : f.File.Owner.GlobalId == userId ?
+                                                        true : f.userCanModify ?
+                                                           true : f.roleCanModify ?
+                                                               true : false
+                                        })
+                                    }).ToListAsync();
 
                 var owners = (await _usersService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
                 foreach (var item in result)
@@ -505,7 +588,7 @@ namespace Drive.WebHost.Services
         {
             _logger.WriteInfo("Upload method started");
             var user = await _usersService.GetCurrentUser();
-            var localUser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == user.serverUserId);
+            var localUser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == user.id);
 
             var space = await _unitOfWork?.Spaces?.GetByIdAsync(spaceId);
             var parentFolder = await _unitOfWork?.Folders.GetByIdAsync(parentId);
@@ -569,7 +652,7 @@ namespace Drive.WebHost.Services
                         IsDeleted = false,
                         Space = space,
                         FolderUnit = parentFolder,
-                        Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId),
+                        Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.id),
                         ReadPermittedUsers = ReadPermittedUsers,
                         ModifyPermittedUsers = ModifyPermittedUsers
                     };
@@ -607,7 +690,7 @@ namespace Drive.WebHost.Services
                         IsDeleted = false,
                         Space = space,
                         FolderUnit = parentFolder,
-                        Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.serverUserId),
+                        Owner = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == user.id),
                         ReadPermittedUsers = ReadPermittedUsers,
                         ModifyPermittedUsers = ModifyPermittedUsers
                     };

@@ -8,6 +8,8 @@ namespace Driver.Shared.Dto
 {
     public class FolderContentDto
     {
+        public bool CanModifySpace { get; set; }
+
         public IEnumerable<FileUnitDto> Files { get; set; }
 
         public IEnumerable<FolderUnitDto> Folders { get; set; }

@@ -1604,12 +1604,16 @@ li.folder.on-drag-enter img {
     width: 100%;
     color: #333;
     margin-top: 10px;
-    overflow-y: auto;
+    overflow-y: visible;
     overflow-x: hidden;
-    height: 45vh;
-    line-height:0.5em;
 }
 /*end create event content wrap*/
+/* style for textarea*/
+.contenttext {
+    max-width:100%;
+    line-height:1em;
+}
+/* end style for textarea*/
 .create-event-title {
     width: 80%;
     margin: 0;
@@ -1640,7 +1644,6 @@ li.folder.on-drag-enter img {
     height: 73vh;
 }
 /*End Edit event view*/
-
 /*Admin>Logs*/
 .input-group .form-control {
   z-index: 0;
