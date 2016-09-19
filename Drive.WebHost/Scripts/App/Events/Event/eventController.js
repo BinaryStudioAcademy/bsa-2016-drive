@@ -10,10 +10,11 @@
         '$routeParams',
         '$sce',
         'ContentTypeService',
-        '$location'
+        '$location',
+        'toastr'
     ];
 
-    function EventController(eventService, $routeParams, $sce, contentTypeService, $location) {
+    function EventController(eventService, $routeParams, $sce, contentTypeService, $location, toastr) {
         var vm = this;
 
         vm.currentEventId = $routeParams.id;

@@ -619,7 +619,13 @@
             });
 
             courseModalInstance.result.then(function (response) {
-                $location.url('/apps/academy/' + response.id);
+                console.log(response);
+                if (vm.parentId == null) {
+                    vm.getSpace();
+                }
+                else {
+                    vm.getFolderContent(vm.parentId);
+                }
             },
                 function () {
                     console.log('Modal dismissed');
