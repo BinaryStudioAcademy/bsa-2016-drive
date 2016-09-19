@@ -40,6 +40,7 @@
         function activate() {
             vm.isCollapsed = false;
             vm.isEditing = false;
+            vm.isLinkExists = false;
             if ($location.path().indexOf('edit') + 1) {
                 edit();
             }
@@ -57,10 +58,18 @@
                 .then(function(data) {
                     vm.event = data;
                     vm.sortedContentList = vm.event.contentList;
-                    if (vm.sortedContentList.length)
-                        vm.sortedContentList.sort(function(a, b) {
+                    if (vm.sortedContentList.length) {
+                        vm.sortedContentList.sort(function (a, b) {
                             return a.order - b.order;
                         });
+                        for (var i = 0; i < vm.sortedContentList.length; i++) {
+                            if (vm.sortedContentList[i].contentType == 4)
+                            {
+                                vm.isLinkExists = true;
+                                break;
+                            }
+                        }
+                    }
                     return vm.event;
                 });
         }

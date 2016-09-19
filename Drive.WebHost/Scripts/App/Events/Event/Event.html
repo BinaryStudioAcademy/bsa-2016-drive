@@ -35,7 +35,7 @@
                         </div>
                         <br/>
                         <div class="col-sm-12">
-                            <p> Links: </p>
+                            <p ng-show="eventCtrl.isLinkExists"> Links: </p>
                         <div ng-repeat="content in eventCtrl.sortedContentList">
                             <div ng-if="content.contentType == 4" event-content content="content" content-types="eventCtrl.contentTypes" link-trust="eventCtrl.trustSrc"></div>
                         </div>

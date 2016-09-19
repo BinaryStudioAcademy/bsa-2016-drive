@@ -13,7 +13,9 @@
 <div class="row">
     <div class="col-sm-8 col-sm-offset-2" ng-if="content.contentType == contentTypes.photo">
         <h4>{{content.name}}</h4>
-        <img class="img-responsive" ng-src="{{content.content}}" />
+        <div class="thumbnail">
+            <img src="{{content.content}}" alt="content.name">
+        </div>
         <p style="text-align:center">{{content.description}}</p>
     </div>
 </div>
