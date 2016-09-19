@@ -130,7 +130,7 @@
                             <div class="form-group datetimepicker" ng-class="{ 'has-error' : courseForm.date.$invalid && !courseForm.date.$pristine }">
                                 <label class="col-sm-2 create-lecture-form">Start date:</label>
                                 <p class="input-group">
-                                    <input ng-model-options="{timezone:'+0000'}" type="datetime" name="date" id="date" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="lectureCtrl.lecture.startDate" is-open="lectureCtrl.calendar.isOpen" placeholder="Select start date" timepicker-options="lectureCtrl.calendar.timepickerOptions" required />
+                                    <input type="datetime" name="date" id="date" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="lectureCtrl.lecture.startDate" is-open="lectureCtrl.calendar.isOpen" placeholder="Select start date" timepicker-options="lectureCtrl.calendar.timepickerOptions" required />
                                     <span class="input-group-btn">
                                         <button type="button" class="btn btn-default" ng-click="lectureCtrl.calendar.openCalendar($event, prop)"><i class="fa fa-calendar"></i></button>
                                     </span>
@@ -206,7 +206,7 @@
                                                 <label class="col-sm-3">Deadline:</label>
                                                 <p class="input-group">
                                                     <span class="input-group-btn">
-                                                        <input ng-model-options="{timezone:'+0000'}" type="datetime" name="deadlineDate" id="deadlineDate" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="lectureCtrl.currentTask.deadlineDate" is-open="lectureCtrl.calendarHomeTask.isOpen" placeholder="Select deadline date" timepicker-options="lectureCtrl.calendarHomeTask.timepickerOptions" required />
+                                                        <input type="datetime" name="deadlineDate" id="deadlineDate" class="form-control" datetime-picker="yyyy-MM-dd HH:mm" ng-model="lectureCtrl.currentTask.deadlineDate" is-open="lectureCtrl.calendarHomeTask.isOpen" placeholder="Select deadline date" timepicker-options="lectureCtrl.calendarHomeTask.timepickerOptions" required />
                                                         <button type="button" class="btn btn-default" ng-click="lectureCtrl.calendarHomeTask.openCalendarHomeTask($event, prop)"><i class="fa fa-calendar"></i></button>
                                                     </span>
                                                 <p ng-show="taskForm.deadlineDate.$error.required && taskForm.deadlineDate.$touched" class="help-block col-sm-offset-3">Date is required</p>

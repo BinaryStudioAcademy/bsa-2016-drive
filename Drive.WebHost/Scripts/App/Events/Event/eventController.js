@@ -45,6 +45,14 @@
             }
             vm.showEditArea = false;
             vm.sortedContentList = [];
+
+            vm.calendar = {
+                isOpen: false,
+                openCalendar: openCalendar,
+                timepickerOptions: {
+                    showMeridian: false
+                }
+            };
             return getEvent();
         }
 
@@ -148,5 +156,12 @@
         function getEventsList() {
             $location.url('/apps/events/');
         }
+
+        function openCalendar(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            vm.calendar.isOpen = true;
+        };
     }
 })();
