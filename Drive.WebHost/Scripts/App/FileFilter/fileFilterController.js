@@ -26,6 +26,9 @@
         vm.getBinarySpaceId = getBinarySpaceId;
         vm.openLightboxModal = openLightboxModal;
 
+        vm.classImageWrap = 'sp-gv-item-img-wrapper-image';
+        vm.classThumbnail = 'img-thumbnail';
+
         activate();
 
         function activate() {
@@ -65,10 +68,19 @@
                 for (var i = 0; i < vm.spaces.length; i++) {
                     for (var k = 0; k < vm.spaces[i].files.length; k++) {
                         var file = vm.spaces[i].files[k];
+                        file.thumbUrl = file.link;
+                        if (file.link.indexOf('http') === -1) {
+                            file.thumbUrl = chooseIcon(file.fileType);
+                            vm.classImageWrap = 'sp-gv-item-img-wrapper';
+                            vm.classThumbnail = '';
+                        } else {
+                            vm.classImageWrap = 'sp-gv-item-img-wrapper-image';
+                            vm.classThumbnail = 'img-thumbnail';
+                        }
+
                         vm.images.push({
-                            url: file.link,
+                            link: file.link,
                             caption: file.name,
-                            thumbUrl: file.link,
                             fileType: file.fileType,
                             created: file.createdAt,
                             fileId: file.id
@@ -224,7 +236,6 @@
             });
         }
 
-
         function cancelSearch() {         
             if (vm.searchText.length >= 1) {
                 vm.searchText = '';
@@ -345,14 +356,26 @@
             }
         }
 
-        function openLightboxModal(fileId) {
+        function openLightboxModal(id) {
 
             var i;
             for (i = 0; i < vm.images.length; i++) {
-                if (vm.images[i].fileId === fileId) {
+                if (vm.images[i].fileId === id) {
                     break;
                 }
             }
+            fileService.getImage(vm.images[i].link,
+                function(response) {
+                    var fileData = response.data;
+                    var fileHeader = response.headers();
+                    var contentType = fileHeader['content-type'];
+                    var blob = new Blob([fileData], { type: contentType });
+                    var url = URL.createObjectURL(blob);
+                    vm.images[i].url = url;
+                    if (blob instanceof Blob) {
+                        Lightbox.openModal(vm.images, i);
+                    }
+                });
             Lightbox.openModal(vm.images, i);
         }
 

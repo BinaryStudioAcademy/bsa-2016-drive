@@ -1,4 +1,8 @@
-﻿
+﻿<style type="text/css">
+    .border-img {
+        border: 0px;
+    }
+</style>
 <div class="container col-md-12">
     <br />
     <div class="btn-group btn-breadcrumb">
@@ -61,8 +65,8 @@
                     <li class="sp-gv-flex-item" role="button" context-menu="fileFilterCtrl.fileMenuOptions" ng-repeat="file in space.files" ng-show="file.fileType == 8 || file.fileType == 10" ng-dblclick="fileFilterCtrl.openLightboxModal(file.id)">
                         <div class="sp-gv-wrapper-flex-item" title="Created {{ file.createdAt | date : 'short' }}">
                             <div class="sp-gv-item-content cards">
-                                <div class="sp-gv-item-img-wrapper-image" ng-show="file.fileType == 8">
-                                    <img ng-src="{{file.link}}" class="img-thumbnail" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" />
+                                <div ng-class="fileFilterCtrl.classImageWrap" ng-show="file.fileType == 8">
+                                    <img ng-src="{{file.thumbUrl}}" ng-class="fileFilterCtrl.classThumbnail" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" />
                                 </div>
                                 <div class="sp-gv-item-img-wrapper-image" ng-show="file.fileType == 10">
                                     <img ng-src="http://img.youtube.com/vi/{{ file.link | getVideoId }}/0.jpg" class="img-thumbnail" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" />

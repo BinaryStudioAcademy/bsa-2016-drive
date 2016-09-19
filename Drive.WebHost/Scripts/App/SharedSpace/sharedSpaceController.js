@@ -50,6 +50,10 @@
             vm.paginate.currentPage = pageNumber;
             vm.paginate.getContent();
         }
+
+        vm.classImageWrap = 'sp-gv-item-img-wrapper-image';
+        vm.classThumbnail = 'img-thumbnail';
+
         vm.chooseIcon = chooseIcon;
 
         activate();
@@ -107,10 +111,15 @@
                         var file = vm.space.files[k];
 
                         if (file.fileType === 8) {
+                            file.thumbUrl = file.link;
+                            if (file.link.indexOf('http') === -1) {
+                                file.thumbUrl = chooseIcon(file.fileType);
+                                vm.classImageWrap = 'sp-gv-item-img-wrapper';
+                                vm.classThumbnail = '';
+                            }
                             vm.images.push({
-                                url: file.link,
+                                link: file.link,
                                 caption: file.name,
-                                thumbUrl: file.link,
                                 fileType: file.fileType,
                                 created: file.createdAt,
                                 fileId: file.id
@@ -130,6 +139,29 @@
                 });
         }
 
+        function openLightboxModal(fileId) {
+            var i;
+            for (i = 0; i < vm.images.length; i++) {
+                if (vm.images[i].fileId === fileId) {
+                    break;
+                }
+            }
+            fileService.getImage(vm.images[i].link,
+                function(response) {
+                    var fileData = response.data;
+                    var fileHeader = response.headers();
+                    var contentType = fileHeader['content-type'];
+                    var blob = new Blob([fileData], { type: contentType });
+                    var url = URL.createObjectURL(blob);
+                    vm.images[i].url = url;
+                    if (blob instanceof Blob) {
+                        Lightbox.openModal(vm.images, i);
+                    }
+                });
+
+            Lightbox.openModal(vm.images, i);
+        }
+
         function getSpaceByButton() {
             vm.space.rootFolderId = null;
             vm.space.folderId = null;
@@ -143,16 +175,6 @@
             sharedSpaceService.getSharedDataTotal(vm.space.folderId, vm.space.rootFolderId, function (data) {
                 vm.paginate.numberOfItems = data;
             });
-        }
-
-        function openLightboxModal(fileId) {
-            var i;
-            for (i = 0; i < vm.images.length; i++) {
-                if (vm.images[i].fileId === fileId) {
-                    break;
-                }
-            }
-            Lightbox.openModal(vm.images, i);
         }
 
         function checkFileType(fileType) {
@@ -312,7 +334,6 @@
                         }
                     });
             }
-
         }
 
         function orderByColumn(column) {

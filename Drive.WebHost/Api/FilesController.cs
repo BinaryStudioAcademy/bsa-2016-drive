@@ -244,7 +244,7 @@ namespace Drive.WebHost.Api
 
                 return response;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return response = new HttpResponseMessage(HttpStatusCode.BadRequest);
             }

@@ -34,7 +34,8 @@
             checkFilesValidationProperty: checkFilesValidationProperty,
             findCourse: findCourse,
             findEvent: findEvent,
-            fileTextReader: fileTextReader
+            fileTextReader: fileTextReader,
+            getImage: getImage
     };
 
         function getAllFiles(callBack) {
@@ -202,6 +203,19 @@
         }
 
         function fileTextReader(fileId, callBack) {
+            $http({
+                method: 'GET',
+                url: baseUrl + '/api/files/download?fileId=' + fileId,
+                responseType: 'arraybuffer'
+            })
+                            .then(function (response) {
+                                if (callBack) {
+                                    callBack(response);
+                                }
+                            });
+        }
+
+        function getImage(fileId, callBack) {
             $http({
                 method: 'GET',
                 url: baseUrl + '/api/files/download?fileId=' + fileId,
