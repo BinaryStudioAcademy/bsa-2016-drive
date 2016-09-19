@@ -233,9 +233,35 @@
         }
 
         function search() {
-            fileService.searchFiles(vm.filesType, vm.searchText, function (data) {
-                vm.spaces = data;
-            });
+            fileService.searchFiles(vm.filesType,
+                vm.searchText,
+                function(data) {
+                    vm.spaces = data;
+
+                    for (var i = 0; i < vm.spaces.length; i++) {
+                        for (var k = 0; k < vm.spaces[i].files.length; k++) {
+                            var file = vm.spaces[i].files[k];
+                            file.thumbUrl = file.link;
+                            if (file.link.indexOf('http') === -1) {
+                                file.thumbUrl = chooseIcon(file.fileType);
+                                vm.classImageWrap = 'sp-gv-item-img-wrapper';
+                                vm.classThumbnail = '';
+                            } else {
+                                vm.classImageWrap = 'sp-gv-item-img-wrapper-image';
+                                vm.classThumbnail = 'img-thumbnail';
+                            }
+
+                            vm.images.push({
+                                url: file.link,
+                                link: file.link,
+                                caption: file.name,
+                                fileType: file.fileType,
+                                created: file.createdAt,
+                                fileId: file.id
+                            });
+                        }
+                    }
+                });
         }
 
         function cancelSearch() {         
