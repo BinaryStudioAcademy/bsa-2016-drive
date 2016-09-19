@@ -226,6 +226,7 @@
                         } else if (file.fileType === 10) {
                             vm.images.push({
                                 url: file.link,
+                                link: file.link,
                                 caption: file.name,
                                 thumbUrl: file.link,
                                 fileType: file.fileType,
@@ -247,20 +248,23 @@
                     break;
                 }
             }
-            fileService.getImage(vm.images[i].link,
-                function(response) {
-                    var fileData = response.data;
-                    var fileHeader = response.headers();
-                    var contentType = fileHeader['content-type'];
-                    var blob = new Blob([fileData], { type: contentType });
-                    var url = URL.createObjectURL(blob);
-                    vm.images[i].url = url;
-                    if (blob instanceof Blob) {
-                        Lightbox.openModal(vm.images, i);
-                    }
-                });
 
-            Lightbox.openModal(vm.images, i);
+            if (vm.images[i].link.indexOf('http') === -1) {
+                fileService.getImage(vm.images[i].link,
+                    function(response) {
+                        var fileData = response.data;
+                        var fileHeader = response.headers();
+                        var contentType = fileHeader['content-type'];
+                        var blob = new Blob([fileData], { type: contentType });
+                        var url = URL.createObjectURL(blob);
+                        vm.images[i].url = url;
+                        if (blob instanceof Blob) {
+                            Lightbox.openModal(vm.images, i);
+                        }
+                    });
+            } else {
+                Lightbox.openModal(vm.images, i);
+            }
         }
 
         function getSpaceByButton() {

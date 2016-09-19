@@ -6,10 +6,12 @@
         .filter('getVideoId',
             function() {
                 return function(input) {
-
-                    var output = input.substr(input.indexOf("=") + 1);
-
-                    return output;
+                    if (input) {
+                        var output = input.substr(input.indexOf("=") + 1);
+                        return output;
+                    } else {
+                        return null;
+                    }
                 }
             });
 })();
