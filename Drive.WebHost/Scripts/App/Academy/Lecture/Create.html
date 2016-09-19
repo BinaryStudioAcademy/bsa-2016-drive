@@ -107,7 +107,7 @@
                                     <form name="taskForm" ng-submit="lectureCreateCtrl.submitTask()" class="form-horizontal" novalidate>
                                         <div class="form-group" ng-class="{ 'has-error' : taskForm.taskDescription.$invalid && !taskForm.taskDescription.$pristine }">
                                             <label class="col-sm-3">Description:</label>
-                                            <textarea type="text" name="taskDescription" id="taskDescription" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="lectureCreateCtrl.currentTask.description" placeholder="Description" required></textarea>
+                                            <textarea type="text" name="taskDescription" id="taskDescription" class="form-control text-valid" ng-pattern="/^[\w - !@#$%^&,.\*()\+-]*$/" ng-model="lectureCreateCtrl.currentTask.description" placeholder="Description" required></textarea>
                                             <p ng-show="taskForm.taskDescription.$error.required && taskForm.taskDescription.$touched" class="help-block col-sm-offset-3" ng-cloak>Description is required</p>
                                             <p ng-show="taskForm.taskDescription.$error.pattern" class="help-block col-sm-offset-3" ng-cloak>Not a valid description</p>
                                         </div>
