@@ -14,7 +14,7 @@ namespace Drive.DataAccess.Entities.Pro
 
         public string Name { get; set; }
         public string Description { get; set; }
-
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime StartDate { get; set; }
 
         public int CourseId { get; set; }
@@ -26,7 +26,9 @@ namespace Drive.DataAccess.Entities.Pro
 
         public IList<CodeSample> CodeSamples { get; set; }
         public IList<HomeTask> HomeTasks { get; set; }
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime CreatedAt { get; set; }
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime ModifiedAt { get; set; }
     }
 }

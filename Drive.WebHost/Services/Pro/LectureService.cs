@@ -133,10 +133,10 @@ namespace Drive.WebHost.Services.Pro
             {
                 Name = dto.Name,
                 Description = dto.Description,
-                StartDate = dto.StartDate,
+                StartDate = dto.StartDate.ToUniversalTime(),
                 IsDeleted = false,
-                CreatedAt = DateTime.Now,
-                ModifiedAt = DateTime.Now,
+                CreatedAt = DateTime.UtcNow,
+                ModifiedAt = DateTime.UtcNow,
                 Course = await _unitOfWork.AcademyProCourses.GetByIdAsync(dto.CourseId),
                 ContentList = linksList,
                 CodeSamples = dto.CodeSamples.Select(sample => new CodeSample()
@@ -179,8 +179,8 @@ namespace Drive.WebHost.Services.Pro
 
                 lecture.Name = dto.Name;
                 lecture.Description = dto.Description;
-                lecture.StartDate = dto.StartDate;
-                lecture.ModifiedAt = DateTime.Now;
+                lecture.StartDate = dto.StartDate.ToUniversalTime();
+                lecture.ModifiedAt = DateTime.UtcNow;
                 lecture.IsDeleted = dto.IsDeleted;
                 lecture.CourseId = dto.CourseId;
 

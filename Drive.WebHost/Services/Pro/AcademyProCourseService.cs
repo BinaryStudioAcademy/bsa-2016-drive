@@ -120,15 +120,15 @@ namespace Drive.WebHost.Services.Pro
 
             var course = new AcademyProCourse
             {
-                StartDate = dto.StartDate,
+                StartDate = dto.StartDate.ToUniversalTime(),
                 IsDeleted = false,
                 Tags = new List<Tag>(),
                 FileUnit = new FileUnit
                 {
                     Name = dto.FileUnit.Name,
                     Description = dto.FileUnit.Description,
-                    CreatedAt = DateTime.Now,
-                    LastModified = DateTime.Now,
+                    CreatedAt = DateTime.UtcNow,
+                    LastModified = DateTime.UtcNow,
                     Owner = await _unitOfWork.Users.Query.SingleOrDefaultAsync(u => u.GlobalId == userId),
                     FileType = FileType.AcademyPro,
                     IsDeleted = false,
@@ -152,11 +152,11 @@ namespace Drive.WebHost.Services.Pro
         public async Task<AcademyProCourseDto> UpdateAsync(int id, AcademyProCourseDto dto)
         {
             var course = await _unitOfWork.AcademyProCourses.Query.Include(x => x.FileUnit).Include(x => x.Tags).SingleOrDefaultAsync(c => c.Id == id);
-            course.StartDate = dto.StartDate;
+            course.StartDate = dto.StartDate.ToUniversalTime();
             course.IsDeleted = dto.IsDeleted;
             course.FileUnit.Name = dto.FileUnit.Name;
             course.FileUnit.Description = dto.FileUnit.Description;
-            course.FileUnit.LastModified = DateTime.Now;
+            course.FileUnit.LastModified = DateTime.UtcNow;
             var user = await _unitOfWork.Users.Query.SingleOrDefaultAsync(u => u.GlobalId == dto.Author.GlobalId);
 
             course.Author = user;

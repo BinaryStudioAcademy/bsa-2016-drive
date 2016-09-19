@@ -80,8 +80,8 @@ namespace Drive.WebHost.Services
                                 ModifyPermittedUsers = usersWithPermissions,
                                 ReadPermittedUsers = usersWithPermissions,
                                 IsDeleted = false,
-                                CreatedAt = DateTime.Now,
-                                LastModified = DateTime.Now,
+                                CreatedAt = DateTime.UtcNow,
+                                LastModified = DateTime.UtcNow,
                                 Owner = localUser,
                                 Type = SpaceType.MySpace
                             });

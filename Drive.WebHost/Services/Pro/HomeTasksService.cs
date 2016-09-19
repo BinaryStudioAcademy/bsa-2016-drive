@@ -53,7 +53,7 @@ namespace Drive.WebHost.Services.Pro
             {
                 Description = dto.Description,
                 IsDeleted = false,
-                DeadlineDate = dto.DeadlineDate
+                DeadlineDate = dto.DeadlineDate.ToUniversalTime()
             };
 
             _unitOfWork.HomeTasks.Create(link);
@@ -67,7 +67,7 @@ namespace Drive.WebHost.Services.Pro
 
             homeTask.Description = dto.Description;
             homeTask.IsDeleted = dto.IsDeleted;
-            homeTask.DeadlineDate = dto.DeadlineDate;
+            homeTask.DeadlineDate = dto.DeadlineDate.ToUniversalTime();
 
             await _unitOfWork.SaveChangesAsync();
 
