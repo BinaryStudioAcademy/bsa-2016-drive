@@ -31,6 +31,8 @@
         vm.openDocument = openDocument;
         vm.openFolderWindow = openFolderWindow;
         vm.openFileWindow = openFileWindow;
+        vm.openNewCourseWindow = openNewCourseWindow;
+        vm.findById = findById;
 
         vm.search = search;
         vm.cancelSearch = cancelSearch;
@@ -262,14 +264,25 @@
                 vm.file = $itemScope.file;
                 vm.file.parentId = vm.parentId;
                 vm.file.spaceId = vm.space.id;
-                if (vm.file.fileType !== 7) {
-                    vm.openFileWindow();
-                }
-                else {
+                if (vm.file.fileType === 7) {
                     fileService.findCourse(vm.file.id, function (response) {
                         vm.course = response;
                         vm.openNewCourseWindow('lg');
                     });
+
+                }
+                else {
+                    if (vm.file.fileType === 9) {
+                        fileService.findEvent(vm.file.id, function (response) {
+                            vm.event = response;
+                            vm.event.isEdit
+                            localStorageService.set('event', vm.event);
+                            $location.url('/apps/events/' + vm.event.id + '/edit');
+                        });
+                    }
+                    else {
+                        vm.openFileWindow();
+                    }
                 }
             }, function ($itemScope) { return $itemScope.file.canModify; }
             ],
@@ -454,5 +467,43 @@
                     console.log('Modal dismissed');
                 });
         }
+
+        function openNewCourseWindow(size) {
+
+            var courseModalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'Scripts/App/Academy/List/Create.html',
+                windowTemplateUrl: 'Scripts/App/Academy/List/Modal.html',
+                controller: 'CourseCreateController',
+                controllerAs: 'courseCreateCtrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        return vm.course;
+                    }
+                }
+            });
+
+            courseModalInstance.result.then(function (response) {
+                    
+                console.log(response);
+                var index = findById(vm.space.files, response.fileUnit.id);
+                if (index != -1) {
+                    vm.space.files[index] = response.fileUnit;
+                }
+            },
+                function () {
+                    console.log('Modal dismissed');
+                });
+        };
+
+        function findById(data, id) {
+            for (var i = 0; i < data.length; i++) {
+                if (data[i].id === id) {
+                    return i;
+                }
+            }
+            return -1;
+        };
     }
 }());
