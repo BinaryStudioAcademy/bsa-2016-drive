@@ -1,5 +1,4 @@
-﻿
-<div class="row">
+﻿<div class="row">
     <div class="col-sm-8 col-sm-offset-2" ng-if="content.contentType == contentTypes.video">
         <h4>{{content.name}}</h4>
         <youtube-video video-url="content.content"></youtube-video>
@@ -15,15 +14,15 @@
     <div class="col-sm-8 col-sm-offset-2" ng-if="content.contentType == contentTypes.photo">
         <h4>{{content.name}}</h4>
         <img class="img-responsive" ng-src="{{content.content}}" />
-        <p style="text-align:center">{{content.description}}</pstyle="text-align:center">
+        <p style="text-align:center">{{content.description}}</p>
     </div>
 </div>
 <div class="row">
     <div class="col-sm-12" ng-if="content.contentType == contentTypes.link">
-        <div class="col-sm-6">
+        <div class="col-sm-4">
             <a ng-href="{{content.content |external}}" target="_blank">{{content.content}} <i class="fa fa-external-link" aria-hidden="true"></i></a>
         </div>
-        <div class="col-sm-6">
+        <div class="col-sm-8">
             <p>{{content.description}}</p>
         </div>
     </div>
