@@ -17,9 +17,9 @@ namespace Drive.WebHost.Services
         Task<int> GetSpaceByTypeAsync(SpaceType type);
         Task<int> GetTotalAsync(int id);
 
-        Task<int> CreateAsync(SpaceDto space);
+        Task<int> CreateAsync(SpaceSettingsDto space);
 
-        Task UpdateAsync(int id, SpaceDto space);
+        Task UpdateAsync(int id, SpaceSettingsDto space);
 
         Task Delete(int id);
         Task DeleteWithStaff(int id);
@@ -28,6 +28,7 @@ namespace Drive.WebHost.Services
         Task MoveContentAsync(CopyMoveContentDto content);
         Task CopyContentAsync(CopyMoveContentDto content);
         Task DeleteContentAsync(CopyMoveContentDto content);
+        Task<SpaceSettingsDto> GetSpaceSettings(int id);
         void Dispose();
     }
 }

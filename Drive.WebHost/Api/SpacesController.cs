@@ -68,8 +68,21 @@ namespace Drive.WebHost.Api
             return Ok(result);
         }
 
+        // GET: api/spaces/(int)/settings
+        [HttpGet]
+        [Route("{id:int}/settings")]
+        public async Task<IHttpActionResult> GetSpaceSettings(int id)
+        {
+            var result = await _spaceService.GetSpaceSettings(id);
+
+            if (result == null)
+                return NotFound();
+
+            return Ok(result);
+        }
+
         [HttpPost]
-        public async Task<IHttpActionResult> CreateSpace(SpaceDto space)
+        public async Task<IHttpActionResult> CreateSpace(SpaceSettingsDto space)
         {
             int id = await _spaceService?.CreateAsync(space);
             return Ok(id);
@@ -102,7 +115,7 @@ namespace Drive.WebHost.Api
         }
 
         [HttpPut]
-        public async Task<IHttpActionResult> UpdateSpace(int id, SpaceDto space)
+        public async Task<IHttpActionResult> UpdateSpace(int id, SpaceSettingsDto space)
         {
             await _spaceService?.UpdateAsync(id, space);
             return Ok();

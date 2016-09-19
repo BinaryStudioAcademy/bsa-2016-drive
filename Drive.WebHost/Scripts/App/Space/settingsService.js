@@ -29,7 +29,7 @@
         }
 
         function getSpace(id, callback) {
-            $http.get(baseUrl + '/api/spaces/' + id)
+            $http.get(baseUrl + '/api/spaces/' + id + '/settings')
                 .then(function (response) {
                     if (callback) {
                         callback(response.data);

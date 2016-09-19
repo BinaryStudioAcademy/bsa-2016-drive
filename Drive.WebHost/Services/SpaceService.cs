@@ -345,10 +345,9 @@ namespace Drive.WebHost.Services
             return spacesList;
         }
 
-        public async Task<int> CreateAsync(SpaceDto dto)
+        public async Task<int> CreateAsync(SpaceSettingsDto dto)
         {
             string userId = _userService.CurrentUserId;
-            User localUser = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == userId);
             List<User> ReadPermittedUsers = new List<User>();
             foreach (var item in dto.ReadPermittedUsers)
             {
@@ -408,27 +407,34 @@ namespace Drive.WebHost.Services
             return space.Id;
         }
 
-        public async Task UpdateAsync(int id, SpaceDto dto)
+        public async Task UpdateAsync(int id, SpaceSettingsDto dto)
         {
-            var space =
-                await
-                    _unitOfWork?.Spaces?.Query.Include(x => x.ReadPermittedUsers)
-                        .Include(x => x.ModifyPermittedUsers)
-                        .Include(x => x.ReadPermittedRoles)
-                        .Include(x => x.ModifyPermittedRoles)
-                        .SingleOrDefaultAsync(x => x.Id == id);
+            string userId = _userService.CurrentUserId;
+            var space = await _unitOfWork?.Spaces?.Query
+                    .Include(x => x.ReadPermittedUsers)
+                    .Include(x => x.ModifyPermittedUsers)
+                    .Include(x => x.ReadPermittedRoles)
+                    .Include(x => x.ModifyPermittedRoles)
+                    .SingleOrDefaultAsync(s => s.Id == id
+                                        && s.Type == SpaceType.OtherSpace
+                                        && (s.Owner.GlobalId == userId
+                                        || s.ModifyPermittedUsers.Any(x => x.GlobalId == userId)
+                                        || s.ModifyPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))));
 
-            if (space == null) return;
+            if (space == null)
+                return;
+
             List<User> ReadPermittedUsers = new List<User>();
             foreach (var item in dto.ReadPermittedUsers)
             {
                 var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(x => x.GlobalId == item.GlobalId);
                 ReadPermittedUsers.Add(user);
             }
+
             List<User> ModifyPermittedUsers = new List<User>();
             foreach (var item in dto.ModifyPermittedUsers)
             {
-            var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == item.GlobalId);
+                var user = await _unitOfWork?.Users?.Query.FirstOrDefaultAsync(u => u.GlobalId == item.GlobalId);
                 ModifyPermittedUsers.Add(user);
                 var x = ReadPermittedUsers.FirstOrDefault(p => p.GlobalId == user.GlobalId);
                 if (x == null)
@@ -436,9 +442,8 @@ namespace Drive.WebHost.Services
                     ReadPermittedUsers.Add(user);
                 }
             }
+
             List<Role> ReadPermittedRoles = new List<Role>();
-
-
             foreach (var item in dto.ReadPermittedRoles)
             {
                 var role = await _unitOfWork?.Roles?.Query.Include(x => x.Users).FirstOrDefaultAsync(x => x.Id == item.Id);
@@ -456,6 +461,7 @@ namespace Drive.WebHost.Services
                     ReadPermittedRoles.Add(role);
                 }
             }
+
             space.Name = dto.Name;
             space.Description = dto.Description;
             space.MaxFileSize = dto.MaxFileSize;
@@ -841,6 +847,33 @@ namespace Drive.WebHost.Services
             {
                 await _folderService.DeleteAsync(id);
             }
+        }
+
+        public async Task<SpaceSettingsDto> GetSpaceSettings(int id)
+        {
+            string userId = _userService.CurrentUserId;
+
+            var space = await (from s in _unitOfWork.Spaces.Query
+                               select new SpaceSettingsDto
+                               {
+                                   Id = s.Id,
+                                   Name = s.Name,
+                                   Type = s.Type,
+                                   Description = s.Description,
+                                   Owner = s.Owner,
+                                   MaxFileSize = s.MaxFileSize,
+                                   MaxFilesQuantity = s.MaxFilesQuantity,
+                                   ReadPermittedUsers = s.ReadPermittedUsers,
+                                   ModifyPermittedUsers = s.ModifyPermittedUsers,
+                                   ReadPermittedRoles = s.ReadPermittedRoles,
+                                   ModifyPermittedRoles = s.ModifyPermittedRoles,
+                               }).SingleOrDefaultAsync(s => s.Id == id
+                                        && s.Type == SpaceType.OtherSpace
+                                        && (s.Owner.GlobalId == userId
+                                        || s.ModifyPermittedUsers.Any(x => x.GlobalId == userId)
+                                        || s.ModifyPermittedRoles.Any(x => x.Users.Any(p => p.GlobalId == userId))));
+
+            return space;
         }
 
         public void Dispose()
