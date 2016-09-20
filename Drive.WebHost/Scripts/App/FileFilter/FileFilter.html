@@ -34,6 +34,9 @@
         </div>
     </div>
     <div class="wrap" ng-show="fileFilterCtrl.showGrid">
+        <div ng-show="fileFilterCtrl.spaces.length == 0">
+            <h2 class="text-muted text-center">Files not found</h2>
+        </div>
         <div ng-repeat="space in fileFilterCtrl.spaces">
             <div class="grid-space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ space.name }}</div>
             <div uib-collapse="space.isCollapsed">
@@ -112,6 +115,9 @@
             </div>
         </div>
         <div class="filter-table-internal">
+            <div ng-show="fileFilterCtrl.spaces.length == 0">
+                <h2 class="text-muted text-center">Files not found</h2>
+            </div>
             <div ng-repeat="space in fileFilterCtrl.spaces">
                 <div class="space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ space.name }}</div>
                 <div uib-collapse="space.isCollapsed">
