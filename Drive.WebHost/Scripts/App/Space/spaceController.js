@@ -381,8 +381,7 @@
                         if (vm.file.fileType === 9) {
                             fileService.findEvent(vm.file.id, function (response) {
                                 vm.event = response;
-                                vm.event.isEdit
-                                localStorageService.set('event', vm.event);
+                                localStorageService.set('container', 'space');
                                 $location.url('/apps/events/' + vm.event.id + '/edit');
                             });
                         }

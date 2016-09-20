@@ -11,10 +11,11 @@
         '$sce',
         'ContentTypeService',
         '$location',
-        'toastr'
+        'toastr',
+        'localStorageService',
     ];
 
-    function EventController(eventService, $routeParams, $sce, contentTypeService, $location, toastr) {
+    function EventController(eventService, $routeParams, $sce, contentTypeService, $location, toastr, localStorageService) {
         var vm = this;
 
         vm.currentEventId = $routeParams.id;
@@ -35,6 +36,7 @@
         vm.update = update;
         vm.getEventsList = getEventsList;
         vm.changeCollapseState = changeCollapseState;
+        vm.redirectTo = redirectTo;
 
         activate();
 
@@ -47,6 +49,7 @@
             }
             vm.showEditArea = false;
             vm.sortedContentList = [];
+            vm.returnPath = '/apps/events/';
 
             vm.calendar = {
                 isOpen: false,
@@ -139,6 +142,7 @@
                         closeButton: true,
                         timeOut: 6000
                     });
+                redirectTo();
             }
         }
 
@@ -160,7 +164,7 @@
 
         function cancelEvent() {
             vm.isEditing = false;
-            return vm.getEvent();
+            redirectTo();
         }
 
         function getEventsList() {
@@ -173,5 +177,23 @@
 
             vm.calendar.isOpen = true;
         };
+
+        function redirectTo() {
+            var container = localStorageService.get('container');
+            switch (container) {
+                case 'space':
+                    vm.returnPath = localStorageService.get('location');
+                    break;
+                case 'shared':
+                    vm.returnPath = '/sharedspace';
+                    break;
+                default:
+                    vm.returnPath = '/apps/events/';
+                    break;
+            }
+            localStorageService.remove('container')
+            $location.url(vm.returnPath);
+            
+        }
     }
 })();

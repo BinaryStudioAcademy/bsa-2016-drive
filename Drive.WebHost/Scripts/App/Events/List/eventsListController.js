@@ -40,6 +40,7 @@
                     null,
             [
                 'Edit', function ($itemScope) {
+                    localStorageService.set('container', 'filter');
                     $location.url('/apps/events/' + $itemScope.event.id + '/edit');
                 }
             ],
