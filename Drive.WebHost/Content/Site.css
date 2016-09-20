@@ -1593,7 +1593,7 @@ li.folder.on-drag-enter {
     margin-top: 10px;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 80vh;
+    height: 73vh;
 }
 
 .create-event-form {
@@ -1644,7 +1644,7 @@ li.folder.on-drag-enter {
 /*Edit event view*/
 .edit-event-wrap {
     position: relative;
-    width: 86%;
+    width: 100%;
     color: #333;
     margin-top: 20px;
     overflow-y: auto;
@@ -1909,4 +1909,8 @@ li.folder.on-drag-enter {
     margin-top: 15px;
 }
 /*End Admin panel*/
+/*Save btn style*/
+.savebtn {
+    margin-left:10px;
+}
 
