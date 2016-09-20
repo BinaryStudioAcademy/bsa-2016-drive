@@ -1612,7 +1612,7 @@ li.folder.on-drag-enter {
     width: 100%;
     color: #333;
     margin-top: 10px;
-    overflow-y: visible;
+    overflow-y: hidden;
     overflow-x: hidden;
 }
 /*end create event content wrap*/
@@ -1913,4 +1913,18 @@ li.folder.on-drag-enter {
 .savebtn {
     margin-left:10px;
 }
+div[dnd-list], 
+div[dnd-list] > li {
+  position: relative;
+  -webkit-transform: translateZ(0);
+}
 
+div[dnd-list] .dndDraggingSource {
+  display: none;
+}
+
+div[dnd-list] .dndPlaceholder {
+  display: block;
+  background-color: #ddd;
+  min-height: 42px;
+}

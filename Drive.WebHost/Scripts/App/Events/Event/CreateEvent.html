@@ -64,8 +64,8 @@
                     <i role="button" class="glyphicon"
                        title="{{eventCtrl.isCollapsed ? 'Expand' : 'Collapse'}}"
                        ng-click="eventCreateCtrl.changeCollapseState()"
-                       ng-disabled="eventCreateCtrl.event.contentList.length==0"
-                       ng-class="{'fa fa-arrow-circle-o-up fa-3x': !eventCreateCtrl.isCollapsed, 'fa fa-arrow-circle-o-down fa-3x': eventCreateCtrl.isCollapsed}" aria-hidden="true">
+                       ng-hide="eventCreateCtrl.event.contentList.length==0"
+                       ng-class="{'fa fa-compress fa-2x': !eventCreateCtrl.isCollapsed, 'fa fa-expand fa-2x': eventCreateCtrl.isCollapsed}" aria-hidden="true">
 
                     </i>
                 </div>
@@ -96,13 +96,12 @@
                      dnd-moved="eventCreateCtrl.event.contentList.splice($index, 1)">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="space-label">
-                                <i role="button" class="glyphicon"
-                                   ng-click="content.isCollapsed = !content.isCollapsed"
+                            <div class="space-label" ng-click="content.isCollapsed = !content.isCollapsed">
+                                <i class="glyphicon"                                
                                    ng-class="{'fa fa-plus-square-o': content.isCollapsed, 'fa fa-minus-square-o': !content.isCollapsed}" aria-hidden="true"></i>
                                 {{ content.contentType | contentType}}: {{content.name | limitTo: 20}}{{content.name.length > 20 ? '...' : ''}}
-                                <i role="button" class="fa fa-trash fa-lg pull-right" ng-click="eventCreateCtrl.removeContent($index)" title="Delete content" aria-hidden="true"></i>
-                                <i role="button" class="fa fa-pencil-square-o fa-lg pull-right" ng-click="eventCreateCtrl.editContent($index)" title="Edit content" aria-hidden="true"></i>
+                                <i role="button" class="fa fa-trash fa-lg pull-right" ng-click="eventCreateCtrl.removeContent($index); $event.stopPropagation();" title="Delete content" aria-hidden="true"></i>
+                                <i role="button" class="fa fa-pencil-square-o fa-lg pull-right" ng-click="eventCreateCtrl.editContent($index); $event.stopPropagation();" title="Edit content" aria-hidden="true"></i>
                             </div>
                             <div uib-collapse="content.isCollapsed">
                                 <div ng-show="!content.isEdit">
