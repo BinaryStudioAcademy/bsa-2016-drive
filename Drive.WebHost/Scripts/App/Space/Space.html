@@ -1,3 +1,4 @@
+
 <div class="container-fluid" id="data-container" style="overflow: hidden; height: 100%">
     <br />
     <div class="btn-group btn-breadcrumb">
@@ -91,15 +92,21 @@
                     <div class="sp-gv-item-img-wrapper" ng-hide="file.fileType == 8 || file.fileType == 10">
                         <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
                     </div>
-                    <div ng-class="spaceCtrl.classImageWrap" ng-show="file.fileType == 8" style="height: 140px">
-                        <img ng-src="{{file.thumbUrl}}" ng-class="spaceCtrl.classThumbnail" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
+                    <div class="sp-gv-item-img-wrapper" ng-show="file.fileType == 8 && file.link.indexOf('http') === -1">
+                        <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
                     </div>
-                    <div class="sp-gv-item-img-wrapper-image" ng-show="file.fileType == 10" style="height: 140px">
+                    <div class="sp-gv-item-img-wrapper-image" ng-show="file.fileType == 8 && file.link.indexOf('http') !== -1" style="height: 140px">
+                        <img ng-src="{{file.thumbUrl}}" class="img-thumbnail" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
+                    </div>
+                    <div class="sp-gv-item-img-wrapper-image" ng-show="file.fileType == 10 && file.link.indexOf('youtube.com') !== -1" style="height: 140px">
                         <img ng-src="http://img.youtube.com/vi/{{ file.link | getVideoId }}/0.jpg" class="img-thumbnail" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
+                    </div>
+                    <div class="sp-gv-item-img-wrapper" ng-show="file.fileType == 10 && file.link.indexOf('youtube.com') == -1" style="height: 140px">
+                        <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
                     </div>
                     <div class="sp-gv-item-text">
                         <h4 title="{{file.name}}">{{file.name}}</h4>
-                        <div ng-hide="file.fileType == 8 || file.fileType == 10">
+                        <div ng-hide="(file.fileType == 8 || file.fileType == 10) && file.link.indexOf('http') !== -1">
                             <h5 title="{{file.author.name}}">
                                 <i class="fa fa-user" aria-hidden="true"></i>
                                 {{file.author.name}}

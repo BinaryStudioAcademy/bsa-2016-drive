@@ -108,9 +108,6 @@
         vm.fileMenuOptionShareShow = true;
         vm.sharedModalWindowTitle = null;
 
-        vm.classImageWrap = 'sp-gv-item-img-wrapper-image';
-        vm.classThumbnail = 'img-thumbnail';
-
         activate();
 
         function activate() {
@@ -203,18 +200,14 @@
                 vm.sortByDate,
                 function(data) {
                     vm.space = data;
-                    localStorageService.set('space', { spaceId: data.id, name: data.name, ownerId: data.owner.globalId });
+                    localStorageService.set('space',
+                        { spaceId: data.id, name: data.name, ownerId: data.owner.globalId });
 
                     for (var k = 0; k < vm.space.files.length; k++) {
                         var file = vm.space.files[k];
 
                         if (file.fileType === 8) {
                             file.thumbUrl = file.link;
-                            if (file.link.indexOf('http') === -1) {
-                                file.thumbUrl = chooseIcon(file.fileType);
-                                vm.classImageWrap = 'sp-gv-item-img-wrapper';
-                                vm.classThumbnail = '';
-                            }
                             vm.images.push({
                                 url: file.link,
                                 link: file.link,
