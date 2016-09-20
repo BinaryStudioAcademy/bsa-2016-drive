@@ -892,7 +892,7 @@ End Cancel button on search input*/
     border-radius: 3px;
     position: relative;
     margin: 0 auto;
-    height: auto;
+    min-height: 215px;
     background-color: #fff;
     -webkit-box-shadow: 2px 2px 5px 0px rgba(222,222,222,0.87);
     -moz-box-shadow: 2px 2px 5px 0px rgba(222,222,222,0.87);
