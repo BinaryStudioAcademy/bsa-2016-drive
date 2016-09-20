@@ -79,19 +79,23 @@
                     <div class="col-md-3" ng-click="eventsListCtrl.orderEventByColumn('fileUnit.description')">
                         Description
                         <span ng-show="eventsListCtrl.eventColumnForOrder == 'fileUnit.description'"><i class="fa fa-sort-asc"></i></span>
-                        <span ng-show="eventsListCtrl.eventolumnForOrder == '-fileUnit.description'"><i class="fa fa-sort-desc"></i></span>
+                        <span ng-show="eventsListCtrl.eventColumnForOrder == '-fileUnit.description'"><i class="fa fa-sort-desc"></i></span>
                     </div>
                     <div class="col-md-2" ng-click="eventsListCtrl.orderEventByColumn('author.name')">
                         Author
                         <span ng-show="eventsListCtrl.eventColumnForOrder == 'author.name'"><i class="fa fa-sort-asc"></i></span>
                         <span ng-show="eventsListCtrl.eventColumnForOrder == '-author.name'"><i class="fa fa-sort-desc"></i></span>
                     </div>
-                    <div class="col-md-2" ng-click="eventsListCtrl.orderEventByColumn('startDate')">
+                    <div class="col-md-2" ng-click="eventsListCtrl.orderEventByColumn('fileUnit.createdAt')">
                         Created
-                        <span ng-show="eventsListCtrl.eventColumnForOrder == 'startDate'"><i class="fa fa-sort-asc"></i></span>
-                        <span ng-show="eventsListCtrl.eventColumnForOrder == '-startDate'"><i class="fa fa-sort-desc"></i></span>
+                        <span ng-show="eventsListCtrl.eventColumnForOrder == 'fileUnit.createdAt'"><i class="fa fa-sort-asc"></i></span>
+                        <span ng-show="eventsListCtrl.eventColumnForOrder == '-fileUnit.createdAt'"><i class="fa fa-sort-desc"></i></span>
                     </div>
-                    <div class="col-md-2">Type</div>
+                    <div class="col-md-2" ng-click="eventsListCtrl.orderEventByColumn('eventType')">
+                        Type
+                        <span ng-show="eventsListCtrl.eventColumnForOrder == 'eventType'"><i class="fa fa-sort-asc"></i></span>
+                        <span ng-show="eventsListCtrl.eventColumnForOrder == '-eventType'"><i class="fa fa-sort-desc"></i></span>
+                    </div>
                 </div>
             </div>
             <div class="filter-table-internal">
