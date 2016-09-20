@@ -161,6 +161,12 @@ textarea {
     overflow-x: hidden;
 }
 
+.scrollable-dropdown-menu .dropdown-menu {
+    max-height: 220px;
+    overflow-y: auto;
+}
+/*End Scrollable dropdown*/
+
 /*Breadcrumbs paths*/
 .btn-breadcrumb .btn:not(:last-child):after {
     content: " ";
@@ -192,6 +198,7 @@ textarea {
     left: 100%;
     z-index: 3;
 }
+/*End Breadcrumbs paths*/
 
 /** The Spacing **/
 .btn-breadcrumb .btn {
@@ -239,6 +246,7 @@ textarea {
     .btn-breadcrumb .btn.btn-info:hover:not(:last-child):before {
         border-left: 10px solid #269abc;
     }
+/**End The Spacing **/
 
 /*Styles for main menu*/
 #wrapper {
@@ -910,8 +918,8 @@ End Cancel button on search input*/
         margin-top: 15px;
     }
 
-    /*For image GridView*/
-    .sp-gv-item-img-wrapper-image {
+/*For image GridView*/
+.sp-gv-item-img-wrapper-image {
     padding: 0;
     margin: 0;
     list-style: none;
@@ -924,7 +932,7 @@ End Cancel button on search input*/
     align-content: space-around;
     height: 120px;
 }
-    /*End For image GridView*/
+/*End For image GridView*/
 
 
 .sp-gv-item-text {
@@ -1029,7 +1037,7 @@ End Cancel button on search input*/
 
 /*Add new user*/
 .user-add {
-    margin-right: 15px;
+    margin-right: 16px;
 }
 /*End Add new user*/
 
@@ -1300,16 +1308,16 @@ li.folder.on-drag-enter {
     padding-right: 1em;
 }
 
-li.folder.on-drag-enter img {
-    transition: all 0.3s;
-    height: 77px;
-}
+    li.folder.on-drag-enter img {
+        transition: all 0.3s;
+        height: 77px;
+    }
 
 .selected {
     background-color: lightgray;
 }
 
-.cutted, .dragging{
+.cutted, .dragging {
     opacity: 0.5;
 }
 /* END Drag'n'Drop */
@@ -1610,8 +1618,8 @@ li.folder.on-drag-enter img {
 /*end create event content wrap*/
 /* style for textarea*/
 .contenttext {
-    max-width:100%;
-    line-height:1em;
+    max-width: 100%;
+    line-height: 1em;
 }
 /* end style for textarea*/
 .create-event-title {
@@ -1646,12 +1654,14 @@ li.folder.on-drag-enter img {
 /*End Edit event view*/
 /*Admin>Logs*/
 .input-group .form-control {
-  z-index: 0;
-}
-.input-group .form-control:focus {
     z-index: 0;
 }
-.log-t-row-1{
+
+    .input-group .form-control:focus {
+        z-index: 0;
+    }
+
+.log-t-row-1 {
     display: inline-block;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -1659,7 +1669,7 @@ li.folder.on-drag-enter img {
     line-height: 20px;
 }
 
-.log-t-row-4{
+.log-t-row-4 {
     display: -webkit-box;
     text-overflow: ellipsis;
     overflow: hidden !important;
@@ -1670,10 +1680,11 @@ li.folder.on-drag-enter img {
     -webkit-box-orient: vertical;
 }
 
-.log-table-padding{
+.log-table-padding {
     padding: 10px 0;
 }
-.log-footer-wrap{
+
+.log-footer-wrap {
     padding: 0;
     margin: 0;
     list-style: none;
@@ -1686,7 +1697,7 @@ li.folder.on-drag-enter img {
     justify-content: space-around;
 }
 
-.log-form-wrap{
+.log-form-wrap {
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 0;
@@ -1700,33 +1711,34 @@ li.folder.on-drag-enter img {
     justify-content: space-between;
 }
 
-.log-form-col{
-    width:150px;
+.log-form-col {
+    width: 150px;
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
-.log-form-button{
-    width:72px;
+.log-form-button {
+    width: 72px;
 }
 /*END Admin>Logs*/
 
 /*File Reader*/
-    .tfr-modal-header{
-        padding: 0px 15px;
-    }
-    .tfr-modal-header div{
+.tfr-modal-header {
+    padding: 0px 15px;
+}
+
+    .tfr-modal-header div {
         margin-top: 15px;
     }
-    
-    .tfr-modal-header h3{
+
+    .tfr-modal-header h3 {
         display: -moz-inline-box;
         display: inline-block;
         margin-top: 0px;
         margin-bottom: 0px;
     }
-    
-    .tfr-modal-header button{
+
+    .tfr-modal-header button {
         display: -moz-inline-box;
         display: inline-block;
         padding: 15px;
@@ -1734,155 +1746,167 @@ li.folder.on-drag-enter img {
         margin-left: 10px;
     }
 
-    .tfr-modal-container .fr-modal-container{
-        height:88%;
-        overflow:auto;
-    }
+.tfr-modal-container .fr-modal-container {
+    height: 88%;
+    overflow: auto;
+}
 
-    .fr-modal-container-txt{
-        padding: 0 10px;
-        padding: 15px 35px;
-        background: rgba(233, 227, 227, 0.35);
-        height: 100%;
-    }
+.fr-modal-container-txt {
+    padding: 0 10px;
+    padding: 15px 35px;
+    background: rgba(233, 227, 227, 0.35);
+    height: 100%;
+}
 
-    .fr-modal-container canvas{
-        padding: 0;
-        margin: auto;
-        display: block;
-        margin-top: 40px;
-    }
+.fr-modal-container canvas {
+    padding: 0;
+    margin: auto;
+    display: block;
+    margin-top: 40px;
+}
 
-    .tfr-modal-container .clearfix:after,.clearfix:before{
-        content:" ";
-        display:table;
-    }
+.tfr-modal-container .clearfix:after, .clearfix:before {
+    content: " ";
+    display: table;
+}
 
-    .tfr-modal-container .clearfix:after{
-        clear:both;
-    }
+.tfr-modal-container .clearfix:after {
+    clear: both;
+}
 
-    .tfr-modal-container .mb2{
-        margin-bottom:1rem;
-    }
+.tfr-modal-container .mb2 {
+    margin-bottom: 1rem;
+}
 
-    .tfr-modal-container .mb2 input{
+    .tfr-modal-container .mb2 input {
         width: 25px !important;
     }
 
-    .tfr-modal-container .white{
-        color:#666;
-    }
+.tfr-modal-container .white {
+    color: #666;
+}
 
-    .tfr-modal-container .blue{
-        color:#0076df
-    }
+.tfr-modal-container .blue {
+    color: #0076df;
+}
 
-    .tfr-modal-container .bg-blue{
-        position: fixed;
-        width: 95%;
-        margin: 0px;
-        text-align: center;
-        
-    }
+.tfr-modal-container .bg-blue {
+    position: fixed;
+    width: 95%;
+    margin: 0px;
+    text-align: center;
+}
 
-    .tfr-modal-container .left{
-        border-left-style:solid;
-        border-left-width:1px;
-        border-left-color:#ccc;
-        display: inline-block;
-        border: 1px solid lightgray;
-        border-radius: 5px;
-        padding-right: 10px;
-        background: white;
-    }
+.tfr-modal-container .left {
+    border-left-style: solid;
+    border-left-width: 1px;
+    border-left-color: #ccc;
+    display: inline-block;
+    border: 1px solid lightgray;
+    border-radius: 5px;
+    padding-right: 10px;
+    background: white;
+}
 
-    .tfr-modal-container .button,button{
-    font-weight:700;
-    text-decoration:none;
-    cursor:pointer;
-    display:inline-block;
-    -moz-box-sizing:border-box;
-    box-sizing:border-box;
-    line-height:1.125;
-    padding:.5em 1rem;
-    margin:0;
-    height:auto;
-    border:1px solid transparent;
-    -webkit-appearance:none;
-    }
+.tfr-modal-container .button, button {
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-block;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    line-height: 1.125;
+    padding: .5em 1rem;
+    margin: 0;
+    height: auto;
+    border: 1px solid transparent;
+    -webkit-appearance: none;
+}
 
-    .tfr-modal-container .button:hover{
-        text-decoration:none;
+    .tfr-modal-container .button:hover {
+        text-decoration: none;
         color: #fff;
     }
 
-    .tfr-modal-container .button{
-        margin:0;
+.tfr-modal-container .button {
+    margin: 0;
+}
+
+.tfr-modal-container .py2 {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+}
+
+.tfr-modal-container .m0 {
+    margin: 0;
+}
+
+.tfr-modal-container .button-nav-dark {
+    color: #666;
+}
+
+    .tfr-modal-container .button-nav-dark.is-active, .button-nav-dark:active, .button-nav-dark:hover {
+        background-color: rgba(0,0,0,.125);
     }
 
-    .tfr-modal-container .py2{
-        padding-top:1rem;
-        padding-bottom:1rem
+.tfr-modal-container .field-dark {
+    color: #fff;
+    background-color: rgba(0,0,0,.25);
+    border: 1px solid rgba(0,0,0,.0625);
+    border-radius: 3px;
+}
+
+    .tfr-modal-container .field-dark::-webkit-input-placeholder {
+        color: rgba(255,255,255,.75);
     }
 
-    .tfr-modal-container .m0{
-        margin:0;
+    .tfr-modal-container .field-dark::-moz-placeholder {
+        color: rgba(255,255,255,.75);
     }
 
-    .tfr-modal-container .button-nav-dark{
-        color:#666;
+    .tfr-modal-container .field-dark:-ms-input-placeholder {
+        color: rgba(255,255,255,.75);
     }
 
-    .tfr-modal-container .button-nav-dark.is-active, .button-nav-dark:active, .button-nav-dark:hover{
-        background-color:rgba(0,0,0,.125);
+    .tfr-modal-container .field-dark::-moz-placeholder {
+        color: rgba(255,255,255,.75);
     }
 
-    .tfr-modal-container .field-dark{
-        color:#fff;
-        background-color:rgba(0,0,0,.25);
-        border:1px solid rgba(0,0,0,.0625);
-        border-radius:3px;
+    .tfr-modal-container .field-dark:focus {
+        outline: 0;
+        border: 1px solid rgba(255,255,255,.5);
     }
 
-    .tfr-modal-container .field-dark::-webkit-input-placeholder{
-        color:rgba(255,255,255,.75);
+    .tfr-modal-container .field-dark:read-only:not(select) {
+        background-color: rgba(255,255,255,.25);
     }
 
-    .tfr-modal-container .field-dark::-moz-placeholder{
-        color:rgba(255,255,255,.75);
+    .tfr-modal-container .field-dark:invalid {
+        border-color: #f95020;
     }
 
-    .tfr-modal-container .field-dark:-ms-input-placeholder{
-        color:rgba(255,255,255,.75);
+    .tfr-modal-container .field-dark.is-success {
+        border-color: #00cf26;
     }
 
-    .tfr-modal-container .field-dark::-moz-placeholder{
-        color:rgba(255,255,255,.75);
+    .tfr-modal-container .field-dark.is-warning {
+        border-color: #efcc00;
     }
 
-    .tfr-modal-container .field-dark:focus{
-         outline:0;
-         border:1px solid rgba(255,255,255,.5);
-     }
-
-     .tfr-modal-container .field-dark:read-only:not(select){
-         background-color:rgba(255,255,255,.25);
-     }
-
-     .tfr-modal-container .field-dark:invalid{
-         border-color:#f95020;
-     }
-
-     .tfr-modal-container .field-dark.is-success{
-         border-color:#00cf26;
-     }
-
-     .tfr-modal-container .field-dark.is-warning{
-         border-color:#efcc00;
-     }
-
-     .tfr-modal-container .field-dark.is-error{
-         border-color:#f95020;
-     }
+    .tfr-modal-container .field-dark.is-error {
+        border-color: #f95020;
+    }
 /*END File Reader*/
+
+/*Admin panel*/
+.admin-header {
+    margin-top: -3px;
+    margin-bottom: 15px;
+    padding-bottom: 3px;
+}
+
+.btn-open-log {
+    margin-top: 15px;
+}
+/*End Admin panel*/
+

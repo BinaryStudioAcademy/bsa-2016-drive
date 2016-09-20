@@ -4,15 +4,16 @@
     angular.module("driveApp")
         .controller("adminPanelController", AdminPanelController);
 
-    AdminPanelController.$inject = ['AdminPanelService', '$uibModal', '$window'];
+    AdminPanelController.$inject = ['AdminPanelService', '$uibModal', '$window', 'toastr', '$location'];
 
-    function AdminPanelController(adminPanelService, $uibModal, $window) {
+    function AdminPanelController(adminPanelService, $uibModal, $window, toastr,  $location) {
         var vm = this;
         vm.dirty = {};
         vm.createRole = createRole;
         vm.editRole = editRole;
         vm.removeRole = removeRole;
         vm.syncUsers = syncUsers;
+        vm.openLogs = openLogs;
         vm.tab = 1;
         vm.setTab = setTab;
         vm.isSet = isSet;
@@ -20,7 +21,7 @@
 
         function activate() {
             vm.title = "Admin Panel";
-            adminPanelService.getAllRoles(function (data) {
+            adminPanelService.getAllRoles(function(data) {
                 vm.roles = data;
             });
         }
@@ -35,18 +36,19 @@
                 keyboard: true,
                 size: size,
                 resolve: {
-                    items: function () {
+                    items: function() {
                     },
                     parentvm: vm
                 }
             });
-            modalInstance.result.then(function (data) {
-                vm.roles.push({
-                    name: vm.roleName,
-                    id: vm.roleId
+            modalInstance.result.then(function(data) {
+                    vm.roles.push({
+                        name: vm.roleName,
+                        id: vm.roleId
+                    });
+                },
+                function() {
                 });
-            }, function () {
-            });
         };
 
         function editRole(size, id) {
@@ -59,18 +61,19 @@
                 keyboard: true,
                 size: size,
                 resolve: {
-                    items: function () {
+                    items: function() {
                         return id;
                     },
                     parentvm: vm
                 }
             });
-            modalInstance.result.then(function () {
-                adminPanelService.getAllRoles(function (data) {
-                    vm.roles = data;
+            modalInstance.result.then(function() {
+                    adminPanelService.getAllRoles(function(data) {
+                        vm.roles = data;
+                    });
+                },
+                function() {
                 });
-            }, function () {
-            });
         }
 
         function setTab(newTab) {
@@ -83,49 +86,54 @@
 
         function removeRole(id) {
             swal({
-                title: "Deleting role!",
-                text: "Do you really want to delete role?",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#DD6B55",
-                confirmButtonText: "Yes, delete it!",
-                closeOnConfirm: false
-            }, function () {
-                adminPanelService.deleteRole(id, function (response) {
-                    if (response) {
-                        var data = {
-                            operation: 'delete',
-                            item: response
+                    title: "Deleting role!",
+                    text: "Do you really want to delete role?",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    confirmButtonText: "Yes, delete it!",
+                    closeOnConfirm: false
+                },
+                function() {
+                    adminPanelService.deleteRole(id,
+                        function(response) {
+                            if (response) {
+                                var data = {
+                                    operation: 'delete',
+                                    item: response
+                                }
+                            }
+                        });
+                    for (var i = 0; i < vm.roles.length; i++) {
+                        if (vm.roles[i].id === id) {
+                            vm.roles.splice(i, 1);
+                            break;
                         }
                     }
+                    swal({
+                        title: "Deleted!",
+                        text: "Role has been deleted.",
+                        timer: 2000,
+                        showConfirmButton: false,
+                        type: "success"
+                    });
                 });
-                for (var i = 0; i < vm.roles.length; i++) {
-                    if (vm.roles[i].id === id) {
-                        vm.roles.splice(i, 1); break;
-                    }
-                }
-                swal({
-                    title: "Deleted!",
-                    text: "Role has been deleted.",
-                    timer: 2000,
-                    showConfirmButton: false,
-                    type: "success"
-                });
-            });
         }
-        
-        function syncUsers()
-        {
-            adminPanelService.syncUsers(function () {
-                swal({
-                    title: "Synchronized!",
-                    text: "Users have been synchronized.",
-                    timer: 2000,
-                    showConfirmButton: false,
-                    type: "success"
-                });
+
+        function syncUsers() {
+            adminPanelService.syncUsers(function() {
+                toastr.success(
+                    'Users have been synchronized.',
+                    'Synchronized!',
+                    {
+                        closeButton: true,
+                        timeOut: 5000
+                    });
             });
         }
 
+        function openLogs() {
+            $location.url('AdminPanel/Logs');
+        }
     }
 }());

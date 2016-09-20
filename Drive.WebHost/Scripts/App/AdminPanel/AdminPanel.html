@@ -1,40 +1,46 @@
-<div class="container">
+
+<div class="container-fluid">
     <br />
-        <div class="btn-group btn-breadcrumb">
-            <a class="btn btn-info"><i class="fa fa-sliders fa-lg"></i> Admin Panel</a>
-        </div>
-            <a class="btn btn-md btn-default" href="#/AdminPanel/Logs" role="button">Open Logs</a>
-            <button class="btn btn-md btn-default" ng-click="adminCtrl.syncUsers()" role="button">Sync Users</button>
-<br/><br/>
-    <div class="col-md-2">
-        <ul class="nav nav-pills nav-stacked">
-            <li ng-class="{ active: adminCtrl.isSet(1) }">
-                <a href ng-click="adminCtrl.setTab(1)">Roles</a>
-            </li>
-        </ul>
+    <div class="btn-group btn-breadcrumb">
+        <a class="btn btn-info"><i class="fa fa-sliders fa-lg"></i> Admin Panel</a>
     </div>
-    <div class="col-md-7">
+    <div class="page-header col-md-12 admin-header">
+        <div class='pull-right'>
+            <div class="btn-open-log">
+                <button class="btn btn-md btn-default" ng-click="adminCtrl.openLogs()" role="button" title="Open logs page">Logs</button>
+            </div>
+        </div>
+        <h2>Roles</h2>
+    </div>
+    <div class="col-md-9">
         <div ng-show="adminCtrl.isSet(1)">
-            <button class="btn btn-info btn-md" style="width: 25%; height: 40px;" ng-click="adminCtrl.createRole('lg')"><i class="fa iconCustom fa-plus-circle fa-cog fa-lg"></i> Create role</button>
+            <button class="btn btn-md btn-default" ng-click="adminCtrl.syncUsers()" title="Sync Users"><i class="fa fa fa-refresh fa-lg"></i></button>
+            <button class="btn btn-info btn-md" ng-click="adminCtrl.createRole('lg')" title="Create new role"><i class="fa iconCustom fa-plus-circle fa-lg"></i> Create role</button>
             <br />
             <br />
-            <table class="table users table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th style="width:70%">Role name</th>
-                        <th style="width:29%">Actions</th>
-                    </tr>
-                </thead>
-                <tbody style="height: 200px;">
-                    <tr ng-repeat="item in adminCtrl.roles">
-                        <td style="width:70%">{{item.name}}</td>
-                        <td style="width:5%"><i role="button" class="fa fa-wrench fa-lg" aria-hidden="true" ng-click="adminCtrl.editRole('lg', item.id);"></i></td>
-                        <td style="width:25%"><i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="adminCtrl.removeRole(item.id);" ></i></td>
-                    </tr>
-                </tbody>
+            <div class="col-md-12 col-sm-offset-2">
+                <table class="table users table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th style="width: 89%">Role name</th>
+                            <th style="width: 11%">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody style="height: 300px;">
+                        <tr ng-repeat="item in adminCtrl.roles">
+                            <td style="width: 90%" class="description" title="{{item.name}}">
+                                {{item.name | limitTo: 70}}{{item.name.length > 70 ? '...' : ''}}
+                            </td>
+                            <td style="width: 5%">
+                                <i role="button" class="fa fa-pencil-square-o fa-lg" aria-hidden="true" ng-click="adminCtrl.editRole('lg', item.id);" title="Edit role"></i>
+                            </td>
+                            <td style="width: 5%">
+                                <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="adminCtrl.removeRole(item.id);" title="Delete role"></i>
+                            </td>
+                        </tr>
+                    </tbody>
                 </table>
+            </div>
         </div>
     </div>
 </div>
-        ﻿<br />
-
