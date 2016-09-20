@@ -30,6 +30,9 @@
             </div>
         </div>
         <div class="wrap" ng-show="!academyListCtrl.showTable">
+            <div ng-show="academyListCtrl.academiesList.length == 0">
+                <h2 class="text-muted text-center">Files not found</h2>
+            </div>
             <div ng-repeat="academyspace in academyListCtrl.academiesList">
                 <div class="grid-space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ academyspace.name }}</div>
                 <div uib-collapse="space.isCollapsed">
@@ -90,6 +93,9 @@
                 </div>
             </div>
             <div class="filter-table-internal">
+                <div ng-show="academyListCtrl.academiesList.length == 0">
+                    <h2 class="text-muted text-center">Files not found</h2>
+                </div>
                 <div ng-repeat="academyspace in academyListCtrl.academiesList">
                     <div class="space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ academyspace.name }}</div>
                     <div uib-collapse="space.isCollapsed">

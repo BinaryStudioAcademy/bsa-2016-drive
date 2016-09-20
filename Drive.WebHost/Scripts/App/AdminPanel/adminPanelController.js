@@ -6,17 +6,17 @@
 
     AdminPanelController.$inject = ['AdminPanelService', '$uibModal', '$window', 'toastr', '$location'];
 
-    function AdminPanelController(adminPanelService, $uibModal, $window, toastr,  $location) {
+    function AdminPanelController(adminPanelService, $uibModal, $window, toastr, $location) {
+
         var vm = this;
+
         vm.dirty = {};
         vm.createRole = createRole;
         vm.editRole = editRole;
         vm.removeRole = removeRole;
         vm.syncUsers = syncUsers;
         vm.openLogs = openLogs;
-        vm.tab = 1;
-        vm.setTab = setTab;
-        vm.isSet = isSet;
+
         activate();
 
         function activate() {
@@ -76,14 +76,6 @@
                 });
         }
 
-        function setTab(newTab) {
-            vm.tab = newTab;
-        };
-
-        function isSet(tabNum) {
-            return vm.tab === tabNum;
-        };
-
         function removeRole(id) {
             swal({
                     title: "Deleting role!",
@@ -124,7 +116,7 @@
             adminPanelService.syncUsers(function() {
                 toastr.success(
                     'Users have been synchronized.',
-                    'Synchronized!',
+                    'Synced!',
                     {
                         closeButton: true,
                         timeOut: 5000

@@ -6,41 +6,36 @@
     </div>
     <div class="page-header col-md-12 admin-header">
         <div class='pull-right'>
-            <div class="btn-open-log">
+            <div class="admin-btn-group">
+                <button class="btn btn-info btn-md" ng-click="adminCtrl.createRole('lg')" title="Create new role"><i class="fa iconCustom fa-plus-circle fa-lg"></i> Create role</button>
+                <button class="btn btn-md btn-default" ng-click="adminCtrl.syncUsers()" title="Sync Users"><i class="fa fa fa-refresh fa-lg"></i> Sync users</button>
                 <button class="btn btn-md btn-default" ng-click="adminCtrl.openLogs()" role="button" title="Open logs page">Logs</button>
             </div>
         </div>
         <h2>Roles</h2>
     </div>
-    <div class="col-md-9">
-        <div ng-show="adminCtrl.isSet(1)">
-            <button class="btn btn-md btn-default" ng-click="adminCtrl.syncUsers()" title="Sync Users"><i class="fa fa fa-refresh fa-lg"></i></button>
-            <button class="btn btn-info btn-md" ng-click="adminCtrl.createRole('lg')" title="Create new role"><i class="fa iconCustom fa-plus-circle fa-lg"></i> Create role</button>
-            <br />
-            <br />
-            <div class="col-md-12 col-sm-offset-2">
-                <table class="table users table-striped table-hover">
-                    <thead>
-                        <tr>
-                            <th style="width: 89%">Role name</th>
-                            <th style="width: 11%">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody style="height: 300px;">
-                        <tr ng-repeat="item in adminCtrl.roles">
-                            <td style="width: 90%" class="description" title="{{item.name}}">
-                                {{item.name | limitTo: 70}}{{item.name.length > 70 ? '...' : ''}}
-                            </td>
-                            <td style="width: 5%">
-                                <i role="button" class="fa fa-pencil-square-o fa-lg" aria-hidden="true" ng-click="adminCtrl.editRole('lg', item.id);" title="Edit role"></i>
-                            </td>
-                            <td style="width: 5%">
-                                <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="adminCtrl.removeRole(item.id);" title="Delete role"></i>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <div class="col-md-10 col-md-offset-1">
+        <br />
+        <table class="table users table-striped table-hover">
+            <thead>
+                <tr>
+                    <th style="width: 89%">Role name</th>
+                    <th style="width: 11%">Actions</th>
+                </tr>
+            </thead>
+            <tbody style="height: 330px;">
+                <tr ng-repeat="item in adminCtrl.roles">
+                    <td style="width: 90%" class="description" title="{{item.name}}">
+                        {{item.name | limitTo: 90}}{{item.name.length > 90 ? '...' : ''}}
+                    </td>
+                    <td style="width: 5%">
+                        <i role="button" class="fa fa-pencil-square-o fa-lg" aria-hidden="true" ng-click="adminCtrl.editRole('lg', item.id);" title="Edit role"></i>
+                    </td>
+                    <td style="width: 5%">
+                        <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="adminCtrl.removeRole(item.id);" title="Delete role"></i>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </div>
