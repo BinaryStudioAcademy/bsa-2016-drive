@@ -70,6 +70,7 @@ textarea {
 
 .thumbnail {
     margin-bottom: 20px;
+    border: 0;
     padding: 0px;
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
@@ -1608,7 +1609,7 @@ li.folder.on-drag-enter {
 /*end create event content wrap*/
 /* style for textarea*/
 .contenttext {
-    max-width: 100%;
+    max-width: 95%;
     line-height: 1em;
 }
 /* end style for textarea*/
@@ -1632,6 +1633,11 @@ li.folder.on-drag-enter {
 /*Event view*/
 
 /*Edit event view*/
+.event-header {
+    margin: 0;
+    padding-bottom: 0px;
+}
+
 .edit-event-wrap {
     position: relative;
     width: 100%;
