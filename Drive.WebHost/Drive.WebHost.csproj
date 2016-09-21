@@ -462,6 +462,7 @@
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Scripts\App\Academy\Lecture\lectureLinks.directive.html" />
     <Content Include="Scripts\App\Academy\Lecture\lectureLinks.directive.js" />
+    <Content Include="Views\Home\Share.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
