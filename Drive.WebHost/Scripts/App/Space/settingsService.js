@@ -40,7 +40,7 @@
         }
 
         function getAllUsers(callback) {
-            $http.get(baseUrl + '/api/users')
+            $http.get(baseUrl + '/api/users/withoutcurrent')
             .then(function (response) {
                 if (callback) {
                     callback(response.data);
