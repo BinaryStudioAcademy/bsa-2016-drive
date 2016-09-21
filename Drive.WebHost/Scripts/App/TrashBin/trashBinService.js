@@ -24,7 +24,7 @@
 
         function getTrashBinContent(callBack) {
             $http.get(baseUrl + '/api/trashbin/')
-                .then(function (response) {
+                .then(function(response) {
                     if (callBack) {
                         callBack(response.data);
                     }
@@ -32,12 +32,13 @@
         }
 
         function searchTrashBin(text, callBack) {
-            $http.get(baseUrl + '/api/trashbin/', {
-                params: {
-                    text: text
-                }
-            })
-                .then(function (response) {
+            $http.get(baseUrl + '/api/trashbin/',
+                {
+                    params: {
+                        text: text
+                    }
+                })
+                .then(function(response) {
                     if (callBack) {
                         callBack(response.data);
                     }
@@ -46,79 +47,81 @@
 
         function deleteFilePermanently(id, callBack) {
             $http.delete(baseUrl + '/api/trashbin/file/' + id)
-            .then(function (response) {
-                if (callBack) {
-                    callBack(response.data);
-                }
-            });
+                .then(function(response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                });
         }
 
         function deleteFolderPermanently(id, callBack) {
             $http.delete(baseUrl + '/api/trashbin/folder/' + id)
-            .then(function (response) {
-                if (callBack) {
-                    callBack(response.data);
-                }
-            });
+                .then(function(response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                });
         }
 
         function clearSpace(spaceId, callBack) {
             $http.delete(baseUrl + '/api/trashbin/space/' + spaceId)
-            .then(function (response) {
-                if (callBack) {
-                    callBack(response.data);
-                }
-            });
+                .then(function(response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                });
         }
 
         function clearTrashBin(callBack) {
             $http.delete(baseUrl + '/api/trashbin')
-            .then(function (response) {
-                if (callBack) {
-                    callBack(response.data);
-                }
-            });
+                .then(function(response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                });
         }
 
         function restoreFile(id, callBack) {
             $http.put(baseUrl + '/api/trashbin/file/' + id)
-            .then(function (response) {
-                if (callBack) {
-                    callBack(response.data);
-                }
-            });
+                .then(function(response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                });
         }
 
         function restoreFolder(id, callBack) {
             $http.put(baseUrl + '/api/trashbin/folder/' + id)
-            .then(function (response) {
-                if (callBack) {
-                    callBack(response.data);
-                }
-            });
+                .then(function(response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                });
         }
 
         function restoreSpaces(spaces, callBack) {
             $http.put(baseUrl + '/api/trashbin/spaces', spaces)
-            .then(function (response) {
-                if (callBack) {
-                    callBack(response.data);
-                }
-            });
+                .then(function(response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                });
         }
 
         function restoreContent(content, callBack) {
             $http.put(baseUrl + '/api/trashbin/restore', content)
-            .then(function (response) {
-                if (callBack) {
-                    callBack(response.data);
-                }
-            });
+                .then(function(response) {
+                    if (callBack) {
+                        callBack(response.data);
+                    }
+                });
         }
 
         function orderByColumn(columnClicked, columnCurrent) {
             var pos = columnCurrent.indexOf(columnClicked);
-            if (pos === 0) { return '-' + columnClicked; }
+            if (pos === 0) {
+                return '-' + columnClicked;
+            }
             return columnClicked;
         }
 

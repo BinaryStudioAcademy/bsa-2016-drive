@@ -100,10 +100,6 @@
             getContent: null
         }
 
-        //vm.pageChanged = function (pageNumber) {
-        //    vm.paginate.currentPage = pageNumber;
-        //    vm.paginate.getContent();
-        //}
         vm.folderMenuOptionShareShow = true;
         vm.fileMenuOptionShareShow = true;
         vm.sharedModalWindowTitle = null;
@@ -438,7 +434,6 @@
                 }
             ]
         ];
-
 
         function openFolderWindow(size) {
 

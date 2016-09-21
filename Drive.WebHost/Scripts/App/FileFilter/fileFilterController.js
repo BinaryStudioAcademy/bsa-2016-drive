@@ -51,7 +51,6 @@
             vm.binarySpaceId = 0;
 
             vm.spaces = [];
-
             vm.images = [];
 
             setFileData();
@@ -231,15 +230,6 @@
                         for (var k = 0; k < vm.spaces[i].files.length; k++) {
                             var file = vm.spaces[i].files[k];
                             file.thumbUrl = file.link;
-                            if (file.link.indexOf('http') === -1) {
-                                file.thumbUrl = chooseIcon(file.fileType);
-                                vm.classImageWrap = 'sp-gv-item-img-wrapper';
-                                vm.classThumbnail = '';
-                            } else {
-                                vm.classImageWrap = 'sp-gv-item-img-wrapper-image';
-                                vm.classThumbnail = 'img-thumbnail';
-                            }
-
                             vm.images.push({
                                 url: file.link,
                                 link: file.link,
@@ -345,19 +335,22 @@
             if (file.fileType !== 7) {
                 if (file.fileType === 6) {
                     var fileExtantion = file.name.slice(file.name.lastIndexOf("."));
-                    if (fileExtantion === '.pdf' || fileExtantion === '.txt' || fileExtantion === '.cs' || fileExtantion === '.js' || fileExtantion === '.html' || fileExtantion === '.css') {
+                    if (fileExtantion === '.pdf' ||
+                        fileExtantion === '.txt' ||
+                        fileExtantion === '.cs' ||
+                        fileExtantion === '.js' ||
+                        fileExtantion === '.html' ||
+                        fileExtantion === '.css') {
                         vm.openTextFileReader('lg', file);
-                    }
-                    else {
+                    } else {
                         fileService.downloadFile(file.link);
                     }
-                }
-                else {
+                } else {
                     fileService.openFile(file.link);
                 }
             } else {
                 fileService.findCourse(file.id,
-                    function (data) {
+                    function(data) {
                         if (data !== undefined) {
                             $location.url('/apps/academy/' + data.id);
                         }

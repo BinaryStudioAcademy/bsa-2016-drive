@@ -98,24 +98,6 @@ textarea {
         clear: both;
     }
 
-/*Ng-include on Index page*/
-/*.include-index {
-    float: left;
-    max-width: 190px;
-    margin: 0;
-    overflow: hidden;
-}*/
-
-/*Ng-view on Index page*/
-/*.view-index {
-    margin-left: 120px;
-    padding-left: 4%;
-    margin-right: 0%;
-    align-content: center;
-    overflow: hidden;
-    height: 100%
-}*/
-
 /*Modal window for creating new space*/
 .modal-body {
     position: relative;
@@ -610,8 +592,6 @@ hr.style {
 .filter-checkbox-hidden {
     display: none;
 }
-
-
 /*end table in space*/
 
 /*folders and files grid view*/
@@ -837,13 +817,6 @@ small,
     padding-right: 5px;
 }
 /*End Search input*/
-
-/*Cancel button on search input
-input[type="search"]::-webkit-search-cancel-button {
-    -webkit-appearance: searchfield-cancel-button;
-    margin-right: -5px;
-}
-End Cancel button on search input*/
 
 /*Shadow for cards on Gridview*/
 .cards {
@@ -1173,9 +1146,9 @@ End Cancel button on search input*/
 .bootstrap .autocomplete {
     border-radius: 4px;
 }
-/*ent tags input*/
-/*show tags*/
+/*end tags input*/
 
+/*show tags*/
 .tagslist {
     cursor: pointer;
 }
