@@ -33,6 +33,7 @@ namespace Drive.DataAccess.Context
         public DbSet<HomeTask> HomeTasks { get; set; }
         public DbSet<Tag> Tags { get; set; }
         public DbSet<Shared> SharedSpaces { get; set; }
+        public DbSet<ShareLink> ShareLinks { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<EventContent> EventContents { get; set; }
 

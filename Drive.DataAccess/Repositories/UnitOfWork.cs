@@ -37,6 +37,7 @@ namespace Drive.DataAccess.Repositories
         private IRepository<Shared> _sharedSpaceRepository;
         private IRepository<EventContent> _eventContentRepository;
         private IRepository<Event> _eventRepository;
+        private IRepository<ShareLink> _shareLinkRepository;
 
 
         public IRepository<FolderUnit> Folders
@@ -154,6 +155,14 @@ namespace Drive.DataAccess.Repositories
             get
             {
                 return _eventRepository ?? (_eventRepository = _repositoryFactory.CreateRepository<Event>(_context));
+            }
+        }
+
+        public IRepository<ShareLink> ShareLinks
+        {
+            get
+            {
+                return _shareLinkRepository ?? (_shareLinkRepository = _repositoryFactory.CreateRepository<ShareLink>(_context));
             }
         }
 

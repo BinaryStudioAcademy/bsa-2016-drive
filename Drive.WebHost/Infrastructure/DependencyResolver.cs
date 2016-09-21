@@ -41,6 +41,7 @@ namespace Drive.WebHost.Infrastructure
             Kernel.Bind<ITrashBinService>().To<TrashBinService>();
             Kernel.Bind<IEventService>().To<EventService>();
             Kernel.Bind<IEventContentService>().To<EventContentService>();
+            Kernel.Bind<ISharedByLinkService>().To<SharedByLinkService>();
         }
     }
 }

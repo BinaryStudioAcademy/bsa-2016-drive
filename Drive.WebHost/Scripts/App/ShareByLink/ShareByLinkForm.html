@@ -1,0 +1,51 @@
+﻿<div>
+    <form role="form" class="form-inline" novalidate>
+        <div class="modal-header">
+            <h3 class="modal-title">Share items by link</h3>
+        </div>
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-md-2">
+                    <img src="./Content/Icons/share-link_bw.svg" height="80" alt="Share items by link" style="" />
+                </div>
+                <div id="shared-link-modal" class="col-md-10 ">
+                    <div class="row" ng-repeat="folder in shareByLinkCtrl.content.folders">
+                        <div class="col-md-9">{{folder.name}}</div>
+                        <div class="col-md-3">Folder</div>
+                    </div>
+
+                    <div class="row" ng-repeat="file in shareByLinkCtrl.content.files">
+                        <div class="col-md-9">{{file.name}}</div>
+                        <div class="col-md-3">{{ file.fileType | typeOfFile}}</div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal-footer row">
+                <div class="form-group col-md-7" ng-show="shareByLinkCtrl.shareLink !== undefined">
+                    <label for="Link">Link to share: </label>
+                    <input class="form-control" name="Link" type="text" ng-model="shareByLinkCtrl.shareLink"/>
+                </div>
+                <div class="col-md-5 " ng-class="{'col-md-offset-7': shareByLinkCtrl.shareLink == undefined}">
+                    <button type="submit" class="btn btn-primary" ng-click="shareByLinkCtrl.setShareLink()" 
+                            ng-disabled="shareByLinkCtrl.content.files.lenght == 0 && shareByLinkCtrl.content.folders.lenght == 0"
+                            ng-hide="shareByLinkCtrl.shareLink !== undefined">
+                        Get link
+                    </button>
+                    <button class="btn btn-default" type="submit" ng-click="shareByLinkCtrl.cancel()">Cancel</button>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+<style>
+    #shared-link-modal {
+        max-height: 40vh;
+        padding-left: 20px;
+        padding-bottom: 10px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        border: none;
+    }
+</style>

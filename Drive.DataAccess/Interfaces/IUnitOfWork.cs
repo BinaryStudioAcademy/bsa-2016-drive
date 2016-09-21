@@ -26,6 +26,7 @@ namespace Drive.DataAccess.Interfaces
         IRepository<Shared> SharedSpace { get; }
         IRepository<EventContent> EventContents { get; }
         IRepository<Event> Events { get; }
+        IRepository<ShareLink> ShareLinks { get; }
         Task SaveChangesAsync();
     }
 }

@@ -376,6 +376,11 @@ namespace Drive.WebHost.Services
                                                             CreatedAt = f.CreatedAt,
                                                             IsDeleted = f.IsDeleted,
                                                             SpaceId = f.Space.Id,
+                                                            ShareLinks = f.ShareLinks.Where(l => l.Content.Contains(f)).Select(l => new ShareLinkDto()
+                                                            {
+                                                                Id = l.Id,
+                                                                Link = l.Link,
+                                                            }).ToList(),
                                                             Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId },
                                                             CanRead = f.Space.Type == SpaceType.BinarySpace ?
                                                             true : f.Space.Owner.GlobalId == userId ?
@@ -409,6 +414,11 @@ namespace Drive.WebHost.Services
                                                         Name = f.Name,
                                                         CreatedAt = f.CreatedAt,
                                                         Link = f.Link,
+                                                        ShareLinks = f.ShareLinks.Where(l => l.Content.Contains(f)).Select(l => new ShareLinkDto()
+                                                        {
+                                                            Id = l.Id,
+                                                            Link = l.Link,
+                                                        }).ToList(),
                                                         Author = new AuthorDto() { Id = f.Owner.Id, GlobalId = f.Owner.GlobalId },
                                                         CanRead = f.Space.Type == SpaceType.BinarySpace ?
                                                         true : f.Space.Owner.GlobalId == userId ?

@@ -56,6 +56,7 @@
     <Compile Include="Dto\Pro\AppsAPDto.cs" />
     <Compile Include="Dto\Pro\HomeTaskDto.cs" />
     <Compile Include="Dto\SharedSpaceDto.cs" />
+    <Compile Include="Dto\ShareLinkDto.cs" />
     <Compile Include="Dto\SpaceSettingsDto.cs" />
     <Compile Include="Dto\TrashBin\TrashBinDto.cs" />
     <Compile Include="Dto\TrashBin\TrashBinFileDto.cs" />

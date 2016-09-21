@@ -1,6 +1,8 @@
 ﻿using System;
 using Drive.DataAccess.Entities;
 using Driver.Shared.Dto.Users;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Driver.Shared.Dto
 {
@@ -17,6 +19,7 @@ namespace Driver.Shared.Dto
         public AuthorDto Author { get; set; }
         public int SpaceId { get; set; }
         public int ParentId { get; set; }
+        public IList<ShareLinkDto> ShareLinks { get; set; }
         public DateTime LastModified { get; set; }
         public bool CanRead { get; set; }
         public bool CanModify { get; set; }

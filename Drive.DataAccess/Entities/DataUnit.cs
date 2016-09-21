@@ -11,5 +11,6 @@ namespace Drive.DataAccess.Entities
         public IList<Role> MorifyPermittedRoles { get; set; }
         public Space Space { get; set; }
         public FolderUnit FolderUnit { get; set;}
+        public IList<ShareLink> ShareLinks { get; set; }
     }
 }

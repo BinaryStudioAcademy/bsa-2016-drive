@@ -76,6 +76,7 @@
     <Compile Include="Entities\Pro\ContentLink.cs" />
     <Compile Include="Entities\Pro\Tag.cs" />
     <Compile Include="Entities\Shared.cs" />
+    <Compile Include="Entities\ShareLink.cs" />
     <Compile Include="Infrastructure\DataAccessModule.cs" />
     <Compile Include="Entities\ApplicationUnit.cs" />
     <Compile Include="Entities\DataUnit.cs" />

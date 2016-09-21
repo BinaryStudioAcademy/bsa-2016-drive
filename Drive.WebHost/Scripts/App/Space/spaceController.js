@@ -39,6 +39,7 @@
         vm.openNewCourseWindow = openNewCourseWindow;
         vm.createNewAP = createNewAP;
         vm.openSharedContentWindow = openSharedContentWindow;
+        vm.openShareByLinkWindow = openShareByLinkWindow;
         vm.openTextFileReader = openTextFileReader;
 
         vm.sharedContent = sharedContent;
@@ -357,6 +358,11 @@
                 }, function ($itemScope) { return vm.fileMenuOptionShareShow  && $itemScope.folder.canModify }
             ],
             [
+                'Share by link', function ($itemScope) {
+                    vm.sharedContent('byLink');
+                }, function ($itemScope) { return vm.fileMenuOptionShareShow && $itemScope.folder.canModify; }
+            ],
+            [
                 'Delete', function ($itemScope) {
                     var content = getSelectedItems($itemScope.folder, false);
                     deleteContent(content);
@@ -412,6 +418,11 @@
                     vm.contentSharedId = $itemScope.file.id;
                     console.log(vm.contentSharedId);
                     vm.sharedContent();
+                }, function ($itemScope) { return vm.fileMenuOptionShareShow && $itemScope.file.canModify; }
+            ],
+            [
+                'Share by link', function ($itemScope) {
+                   vm.sharedContent('byLink');
                 }, function ($itemScope) { return vm.fileMenuOptionShareShow && $itemScope.file.canModify; }
             ],
             [
@@ -578,6 +589,30 @@
                 });
         }
 
+        function openShareByLinkWindow(size) {
+
+            var fileModalInstance = $uibModal.open({
+                animation: true,
+                templateUrl: 'Scripts/App/ShareByLink/ShareByLinkForm.html',
+                windowTemplateUrl: 'Scripts/App/ShareByLink/Modal.html',
+                controller: 'ShareByLinkController',
+                controllerAs: 'shareByLinkCtrl',
+                size: size,
+                resolve: {
+                    items: function () {
+                        return vm.sharedByLinkContent;
+                    }
+                }
+            });
+
+            fileModalInstance.result.then(function (response) {
+                console.log(response);
+            },
+                function () {
+                    console.log('Modal dismissed');
+                });
+        }
+
         function openTextFileReader(size, file) {
 
             var fileReaderModalInstance = $uibModal.open({
@@ -632,9 +667,18 @@
                 });
         };
 
-        function sharedContent() {
-            vm.fileId = { parentId: vm.parentId, spaceId: vm.space.id };
-            vm.openSharedContentWindow();
+        function sharedContent(shareType) {
+            if (shareType == 'byLink') {
+                var content = { folders: [], files: [] };
+                vm.space.files.forEach(function (f) { if (f.selected) content.files.push(f) });
+                vm.space.folders.forEach(function (f) { if (f.selected) content.folders.push(f) });
+                vm.sharedByLinkContent = content;
+                vm.openShareByLinkWindow();
+            }
+            else {
+                vm.fileId = { parentId: vm.parentId, spaceId: vm.space.id };
+                vm.openSharedContentWindow();
+            }
         }
 
         function createNewFolder() {
