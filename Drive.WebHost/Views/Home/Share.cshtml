@@ -7,14 +7,14 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" 
+    <meta name="viewport" content="width=device-width"
     <link rel="shortcut icon" href="@ViewBag.BasePath/icon.png">
-    <link type="text/css" rel="stylesheet" href="@ViewBag.BasePath/Content/Bundles/styles.css"/>
-    <link href="http://team.binary-studio.com/app/styles/css/style.css" rel="stylesheet"/>
+    <link type="text/css" rel="stylesheet" href="@ViewBag.BasePath/Content/Bundles/styles.css" />
+    <link href="http://team.binary-studio.com/app/styles/css/style.css" rel="stylesheet" />
     <title>Drive</title>
 </head>
 <body>
-    <div> 
+    <div>
         <div class="filter-table container-md">
             <div class="header-wrapper">
                 <div class="row header-row">
@@ -23,7 +23,7 @@
                     </div>
                     <div class="col-xs-3 filter-t-row-1">
                         Description
-                     </div>
+                    </div>
                     <div class="col-xs-2 filter-t-row-1">
                         Author
                     </div>
@@ -38,11 +38,12 @@
 
             <div class="filter-table-internal" style="cursor:pointer;">
                 <div style="transition: all 2s" id="folders">
-                    <div class="filter-table-row">
-                        @foreach (var folder in Model.Folders)
-                        {
+
+                    @foreach (var folder in Model.Folders)
+                    {
+                        <div class="filter-table-row">
                             <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@folder.Name">
-                                <img src="./Content/Icons/folder.svg" height="30"/>
+                                <img src="./Content/Icons/folder.svg" height="30" />
                                 @folder.Name
                             </div>
                             <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@folder.Description">
@@ -50,37 +51,51 @@
                             </div>
                             <div class="col-xs-2 filter-table-cell filter-t-row-1">@folder.Author.Name</div>
                             <div class="col-xs-2 filter-table-cell filter-t-row-1">Folder</div>
-                        }
                         </div>
-                    </div>
+                    }
+
+                </div>
                 <div style="transition: all 2s" id="files">
                     <div class="filter-table-row">
-                        <div class="row filter-table-row">
-                            @foreach (var file in Model.Files)
-                            {
-                            <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@file.Name">
-                                <img src="./Content/Icons/folder.svg" height="30" />
-                                @file.Name
-                            </div>
-                            <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@file.Description">
-                                @file.Description
-                            </div>
-                            <div class="col-xs-2 filter-table-cell filter-t-row-1"> @file.Author.Name</div>
-                            <div class="col-xs-2 filter-table-cell filter-t-row-1"> @file.FileType </div> 
-                                if (@file.Link.Length > 20) {
-                                    <a class="col-xs-2 filter-table-cell filter-t-row-1" href="@file.Link" target="_blank"> @file.Link.Substring(0, 20)... </a>
-                                }
-                                else
-                                {
-                                    <a class="col-xs-2 filter-table-cell filter-t-row-1" href="@file.Link" target="_blank"> @file.Link </a>
-                                }
 
+                        @foreach (var file in Model.Files)
+                        {
+                            if (@file.Link.Length > 20)
+                            {
+                                <div class="row filter-table-row">
+                                    <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@file.Name">
+                                        <img src="./Content/Icons/folder.svg" height="30" />
+                                        @file.Name
+                                    </div>
+                                    <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@file.Description">
+                                        @file.Description
+                                    </div>
+                                    <div class="col-xs-2 filter-table-cell filter-t-row-1"> @file.Author.Name</div>
+                                    <div class="col-xs-2 filter-table-cell filter-t-row-1"> @file.FileType </div>
+                                    <a class="col-xs-2 filter-table-cell filter-t-row-1" href="@file.Link" target="_blank"> @file.Link.Substring(0, 20)... </a>
+                                </div>
                             }
-                        </div>
+                            else
+                            {
+                                <div class="row filter-table-row">
+                                    <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@file.Name">
+                                        <img src="./Content/Icons/folder.svg" height="30" />
+                                        @file.Name
+                                    </div>
+                                    <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@file.Description">
+                                        @file.Description
+                                    </div>
+                                    <div class="col-xs-2 filter-table-cell filter-t-row-1"> @file.Author.Name</div>
+                                    <div class="col-xs-2 filter-table-cell filter-t-row-1"> @file.FileType </div>
+                                    <a class="col-xs-2 filter-table-cell filter-t-row-1" href="@file.Link" target="_blank"> @file.Link </a>
+                                </div>
+                            }
+
+                        }
                     </div>
                 </div>
             </div>
         </div>
-   </div>
+    </div>
 </body>
 </html>
