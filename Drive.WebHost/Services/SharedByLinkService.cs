@@ -36,13 +36,13 @@ namespace Drive.WebHost.Services
                 .Select(l => new ShareLinkDto() {
                     Id = l.Id,
                     Link = l.Link,
-                    Files = l.Content.Cast<FileUnit>().Select(c => new FileUnitDto()
+                    Files = l.Content.OfType<FileUnit>().Select(c => new FileUnitDto()
                     {
                         Id = c.Id,
                         Name = c.Name,
                         FileType = c.FileType,
                     }),
-                    Folders = l.Content.Cast<FolderUnit>().Select(c => new FolderUnitDto()
+                    Folders = l.Content.OfType<FolderUnit>().Select(c => new FolderUnitDto()
                     {
                         Id = c.Id,
                         Name = c.Name
