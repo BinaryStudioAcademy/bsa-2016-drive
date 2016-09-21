@@ -108,7 +108,7 @@
         vm.fileMenuOptions = [
             [
                 'Share', function ($itemScope) {
-                vm.contentSharedId = $itemScope.file.id;
+                vm.contentShared = $itemScope.file;
                     vm.sharedContent();
                 },
                 function ($itemScope) {
@@ -171,7 +171,7 @@
                 resolve: {
                     items: function () {
                         var sharedContInfo = {
-                            contentId: vm.contentSharedId,
+                            content: vm.contentShared,
                             title: 'Shared file'
                         }
                         return sharedContInfo;

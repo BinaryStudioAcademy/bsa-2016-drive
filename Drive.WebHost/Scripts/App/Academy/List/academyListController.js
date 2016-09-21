@@ -30,7 +30,7 @@
         vm.courseMenuOptions = [
         [
             'Share', function ($itemScope) {
-                vm.contentSharedId = $itemScope.academy.fileUnit.id;
+                vm.contentShared = $itemScope.academy.fileUnit;
                 sharedCourseContent();
             },
                 function ($itemScope) {
@@ -197,7 +197,7 @@
                 resolve: {
                     items: function () {
                         var sharedContInfo = {
-                            contentId: vm.contentSharedId,
+                            content: vm.contentShared,
                             title: 'Shared file'
                         }
                         return sharedContInfo;
