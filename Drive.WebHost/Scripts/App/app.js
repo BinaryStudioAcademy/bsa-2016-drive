@@ -17,7 +17,8 @@
         "driveApp.events",
         "bootstrapLightbox",
         "pdf",
-        'videosharing-embed'
+        'videosharing-embed',
+        'ngCookies'
     ])
     .factory('BaseUrl', function () {
         return window.globalVars.baseUrl;

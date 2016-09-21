@@ -5,7 +5,7 @@
         .module("driveApp")
         .controller("SpaceController", SpaceController);
 
-    SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', 'TrashBinService', '$uibModal', 'localStorageService', '$routeParams', '$location', 'toastr', '$scope', 'hotkeys', 'Lightbox'];
+    SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', 'TrashBinService', '$uibModal', 'localStorageService', '$routeParams', '$location', 'toastr', '$scope', 'hotkeys', 'Lightbox', '$cookies'];
 
     function SpaceController(spaceService,
         folderService,
@@ -18,7 +18,8 @@
         toastr,
         $scope,
         hotkeys,
-        Lightbox) {
+        Lightbox,
+        $cookies) {
         var vm = this;
 
         vm.folderList = [];
@@ -378,7 +379,15 @@
                             vm.openFileWindow();
                         }
                     }
-                }, function ($itemScope) { return $itemScope.file.canModify; }
+                }, function ($itemScope) {
+                    if (($itemScope.file.fileType == 7 || $itemScope.file.fileType == 9) && $cookies.get('serverUID') == $itemScope.file.author.globalId) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                    return $itemScope.file.canModify;
+                }
             ],
             null,
             [
