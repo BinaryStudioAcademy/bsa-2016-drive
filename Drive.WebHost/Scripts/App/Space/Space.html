@@ -1,3 +1,4 @@
+
 <div class="container-fluid" id="data-container" style="overflow: hidden; height: 100%">
     <br />
     <div class="btn-group btn-breadcrumb">
@@ -30,7 +31,7 @@
                     <img src="./Content/Icons/upload-doc_bw.svg" height="30" alt="Upload file" />
                 </button>
                 <button type="button" class="btn btn-default btn-custom" ng-click="spaceCtrl.createNewAP()" ng-disabled="!spaceCtrl.space.canModifySpace" title="Add new Academy Pro course">
-                    <img src="./Content/Icons/academyPro_toolbar.svg" height="30" alt="Academy Pro course"/>
+                    <img src="./Content/Icons/academyPro_toolbar.svg" height="30" alt="Academy Pro course" />
                 </button>
                 <button type="button" class="btn btn-default btn-custom" ng-click="spaceCtrl.createNewEvent()" ng-disabled="!spaceCtrl.space.canModifySpace" title="Add new Event">
                     <img src="./Content/Icons/event_toolbar.svg" height="30" alt="Event" />
@@ -60,10 +61,10 @@
     <!--New gridview-->
     <ul class="sp-gv-flex-container wrap" ng-show="spaceCtrl.showGrid" context-menu="spaceCtrl.containerMenuOptions">
         <li class="sp-gv-flex-item folder" role="button" context-menu="spaceCtrl.folderMenuOptions" dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize" total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}"
-            ui-draggable="true" drag="spaceCtrl.getSelectedItems(folder, false)" drag-channel="folder" drop-channel="file, folder"  drag-image-element-id="spaceCtrl.getDragImageId($event, folder, false)"
+            ui-draggable="true" drag="spaceCtrl.getSelectedItems(folder, false)" drag-channel="folder" drop-channel="file, folder" drag-image-element-id="spaceCtrl.getDragImageId($event, folder, false)"
             drop-validate="spaceCtrl.dropValidate(folder, $data)" ui-on-drop="spaceCtrl.onDrop($event, $channel, folder.id, $data)"
             ng-click="spaceCtrl.selectItems($event, folder, false)" ng-mousedown="spaceCtrl.selectItemsForDrag($event, folder, false)" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)"
-            ng-drag-start-end-listen="true" on-drop-failure="spaceCtrl.clearDragImage()" on-drop-success="spaceCtrl.clearDragImage()"                     
+            ng-drag-start-end-listen="true" on-drop-failure="spaceCtrl.clearDragImage()" on-drop-success="spaceCtrl.clearDragImage()"
             ng-class="{selected: folder.selected, cutted: folder.cutted, dragging: folder.isDragging}" ng-right-click="spaceCtrl.rightClickSelection(folder, false)">
             <div class="sp-gv-wrapper-flex-item">
                 <div class="sp-gv-item-content cards">
@@ -91,19 +92,27 @@
                     <div class="sp-gv-item-img-wrapper" ng-hide="file.fileType == 8 || file.fileType == 10">
                         <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
                     </div>
-                    <div ng-class="spaceCtrl.classImageWrap" ng-show="file.fileType == 8" style="height: 105px">
-                        <img ng-src="{{file.thumbUrl}}" ng-class="spaceCtrl.classThumbnail" alt="{{ file.fileType | typeOfFile }}"  title="{{ file.fileType | typeOfFile }}" draggable="false" />
+                    <div class="sp-gv-item-img-wrapper" ng-show="file.fileType == 8 && file.link.indexOf('http') === -1">
+                        <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
                     </div>
-                    <div class="sp-gv-item-img-wrapper-image" ng-show="file.fileType == 10" style="height: 105px">
+                    <div class="sp-gv-item-img-wrapper-image" ng-show="file.fileType == 8 && file.link.indexOf('http') !== -1" style="height: 140px">
+                        <img ng-src="{{file.thumbUrl}}" class="img-thumbnail" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
+                    </div>
+                    <div class="sp-gv-item-img-wrapper-image" ng-show="file.fileType == 10 && file.link.indexOf('youtube.com') !== -1" style="height: 140px">
                         <img ng-src="http://img.youtube.com/vi/{{ file.link | getVideoId }}/0.jpg" class="img-thumbnail" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
+                    </div>
+                    <div class="sp-gv-item-img-wrapper" ng-show="file.fileType == 10 && file.link.indexOf('youtube.com') == -1" style="height: 140px">
+                        <img ng-src="{{spaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
                     </div>
                     <div class="sp-gv-item-text">
                         <h4 title="{{file.name}}">{{file.name}}</h4>
-                        <h5 title="{{file.author.name}}">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                            {{file.author.name}}
-                        </h5>
-                        <p title="{{file.description}}">{{file.description}}</p>
+                        <div ng-hide="(file.fileType == 8 || file.fileType == 10) && file.link.indexOf('http') !== -1">
+                            <h5 title="{{file.author.name}}">
+                                <i class="fa fa-user" aria-hidden="true"></i>
+                                {{file.author.name}}
+                            </h5>
+                            <p title="{{file.description}}">{{file.description}}</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -113,7 +122,7 @@
         <li class="sp-gv-flex-item"></li>
         <li class="sp-gv-flex-item"></li>
     </ul>
-    
+
     <!--End New gridview-->
     <div class="filter-table container-md" ng-show="spaceCtrl.showTable">
         <div class="header-wrapper">
@@ -150,10 +159,10 @@
             <div style="transition: all 2s" id="folders">
                 <div class="filter-table-row">
                     <div class="row filter-table-row" role="button" ng-repeat="folder in spaceCtrl.space.folders"
-                         ui-draggable="true" drag="spaceCtrl.getSelectedItems(folder, false)" drag-channel="folder" drop-channel="file, folder"  drag-image-element-id="spaceCtrl.getDragImageId($event, folder, false)"
+                         ui-draggable="true" drag="spaceCtrl.getSelectedItems(folder, false)" drag-channel="folder" drop-channel="file, folder" drag-image-element-id="spaceCtrl.getDragImageId($event, folder, false)"
                          drop-validate="spaceCtrl.dropValidate(folder, $data)" ui-on-drop="spaceCtrl.onDrop($event, $channel, folder.id, $data)"
                          ng-click="spaceCtrl.selectItems($event, folder, false)" ng-mousedown="spaceCtrl.selectItemsForDrag($event, folder, false)" ng-dblclick="spaceCtrl.getFolderContent(folder.id); spaceCtrl.addElem(folder)"
-                         ng-drag-start-end-listen="true" on-drop-failure="spaceCtrl.clearDragImage()" on-drop-success="spaceCtrl.clearDragImage()"                     
+                         ng-drag-start-end-listen="true" on-drop-failure="spaceCtrl.clearDragImage()" on-drop-success="spaceCtrl.clearDragImage()"
                          ng-class="{selected: folder.selected, cutted: folder.cutted, dragging: folder.isDragging}" context-menu="spaceCtrl.folderMenuOptions" ng-right-click="spaceCtrl.rightClickSelection(folder, false)">
                         <div class="col-md-3 filter-table-cell description" title="{{ folder.name }}">
                             <img src="./Content/Icons/folder.svg" height="{{spaceCtrl.iconHeight}}" draggable="false" />

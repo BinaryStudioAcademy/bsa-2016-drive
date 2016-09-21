@@ -5,12 +5,16 @@
     </div>
     <div>
         <label class="create-event-title">Create new event</label>
-        <button class="btn btn-info pull-right" ng-click="eventCreateCtrl.create()" title="Create new event" ng-disabled="eventForm.$invalid">
-            <i class="fa fa-plus-circle fa-lg"></i> Create
-        </button>
-        <button class="btn btn-default pull-right" ng-click="eventCreateCtrl.cancel()" title="Cancel">
-            Cancel
-        </button>
+        <div class="row" style="margin: 1em 0 1em 0; padding-left: 0">
+            <div class="col-sm-12">
+                <button class="btn btn-info pull-right savebtn" ng-click="eventCreateCtrl.create()" title="Create new event" ng-disabled="eventForm.$invalid">
+                    <i class="fa fa-plus-circle fa-lg"></i> Create
+                </button>
+                <button class="btn btn-default pull-right" ng-click="eventCreateCtrl.cancel()" title="Cancel">
+                    Cancel
+                </button>
+            </div>
+        </div>
     </div>
     <br />
     <div>
@@ -18,59 +22,66 @@
             <div class="container">
                 <div class="col-md-12" style="padding-left: 0">
                     <form name="eventForm" ng-submit="submitForm()" novalidate>
-                        <div class="form-group" ng-class="{ 'has-error' : (eventForm.name.$invalid && !eventForm.name.$pristine) || (eventForm.eventtype.$invalid && !eventForm.eventtype.$pristine) }">
+                        <div class="form-group">
                             <div class="row">
-                                <label class="col-sm-2 col-md-2 col-lg-2 create-event-form">Event name:</label>
-                                <input type="text" name="name" class="form-control col-sm-3 col-md-3 col-lg-3 text-valid" ng-pattern="/^[\w -]*$/" ng-model="eventCreateCtrl.event.fileUnit.name" placeholder="Event name" required>
-                                <label class="col-sm-2 col-md-2 col-lg-2 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 create-event-form">Event type: </label>
-                                <input type="text" name="eventtype" class="form-control col-sm-4 col-md-4 col-lg-4 text-valid" ng-pattern="/^[\w -]*$/" ng-model="eventCreateCtrl.event.eventType" placeholder="Event type" required>
+                                <div ng-class="{ 'has-error' : eventForm.name.$invalid && !eventForm.name.$pristine}">
+                                    <label class="col-sm-2 col-md-2 col-lg-2 create-event-form">Event name:</label>
+                                    <input type="text" name="name" class="form-control col-sm-3 col-md-3 col-lg-3 text-valid" ng-model="eventCreateCtrl.event.fileUnit.name" placeholder="Event name" required>
+                                </div>
+                                <div ng-class="{ 'has-error' : eventForm.eventtype.$invalid && !eventForm.eventtype.$pristine }">
+                                    <label class="col-sm-2 col-md-2 col-lg-2 col-sm-offset-1 col-md-offset-1 col-lg-offset-1 create-event-form">Event type: </label>
+                                    <input type="text" name="eventtype" class="form-control col-sm-4 col-md-4 col-lg-4 text-valid" ng-model="eventCreateCtrl.event.eventType" placeholder="Event type" required>
+                                </div>
                             </div>
                             <div class="col-sm-2 col-md-2 col-lg-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
                                 <p ng-show="eventForm.name.$error.required && eventForm.name.$touched" class="help-block">Name is required</p>
-                                <p ng-show="eventForm.name.$error.pattern" class="help-block">Not a valid name</p>
                             </div>
                             <div class="col-sm-2 col-md-2 col-lg-2 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">
                                 <p ng-show="eventForm.eventtype.$error.required && eventForm.eventtype.$touched" class="help-block">Type is required</p>
-                                <p ng-show="eventForm.eventtype.$error.pattern" class="help-block">Not a valid type</p>
                             </div>
                         </div>
                         <div class="clearfix"></div>
-                        <div class="form-group datetimepicker" ng-class="{ 'has-error' : eventForm.date.$invalid && !eventForm.date.$pristine }">
+                        <div class="form-group datetimepicker">
                             <div class="row">
-                                <label class="col-sm-2 create-event-form">Event date:</label>
-                                <span class="col-sm-4 col-md-4 col-lg-4" style="padding:0">
-                                    <input type="datetime" name="date" class="form-control col-sm-3 col-md-3 col-lg-3" datetime-picker="yyyy-MM-dd HH:mm"
-                                           ng-model="eventCreateCtrl.event.eventDate" is-open="eventCreateCtrl.calendar.isOpen" placeholder="Select date"
-                                           timepicker-options="eventCreateCtrl.calendar.timepickerOptions" required />
-                                    <button type="button" class="btn btn-default" ng-click="eventCreateCtrl.calendar.openCalendar($event, prop)"><i class="fa fa-calendar"></i></button>
-                                </span>
+                                <div ng-class="{ 'has-error' : eventForm.date.$invalid && !eventForm.date.$pristine }">
+                                    <label class="col-sm-2 create-event-form">Event date:</label>
+                                    <span class="col-sm-4 col-md-4 col-lg-4" style="padding:0">
+                                        <input type="datetime" name="date" class="form-control col-sm-3 col-md-3 col-lg-3" datetime-picker="yyyy-MM-dd HH:mm"
+                                               ng-model="eventCreateCtrl.event.eventDate" is-open="eventCreateCtrl.calendar.isOpen" placeholder="Select date"
+                                               timepicker-options="eventCreateCtrl.calendar.timepickerOptions" required />
+                                        <button type="button" class="btn btn-default" ng-click="eventCreateCtrl.calendar.openCalendar($event, prop)"><i class="fa fa-calendar"></i></button>
+                                    </span>
+                                </div>
                                 <label class="col-sm-2 col-md-2 col-lg-2 create-event-form" style="margin-left:-8px">Description:</label>
-                                <textarea type="text" name="description" class="form-control col-sm-4 col-md-4 col-lg-4" ng-model="eventCreateCtrl.event.fileUnit.description" placeholder="Enter description"></textarea>
-                            </div>
-                            <div class="col-sm-2 col-md-2 col-lg-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
-                                <p ng-show="eventForm.date.$error.required && eventForm.date.$touched" class="help-block">Date is required</p>
-                                <p ng-show="eventForm.date.$error.datetime" class="help-block">Not a valid date</p>
+                                <textarea type="text" name="description" rows="7" class="form-control col-sm-4 col-md-4 col-lg-4" ng-model="eventCreateCtrl.event.fileUnit.description" placeholder="Enter description"></textarea>
                             </div>
                         </div>
                     </form>
                 </div>
             </div>
-            <div class="btn-group" style="cursor:pointer">
-                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Add content <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a ng-click="eventCreateCtrl.newText()">New Text</a></li>
-                    <li><a ng-click="eventCreateCtrl.newPhoto()">New photo</a></li>
-                    <li><a ng-click="eventCreateCtrl.newVideo()">New video</a></li>
-                    <li><a ng-click="eventCreateCtrl.newSimpleLink()">New link</a></li>
-                </ul>
-                <button type="button" class="btn btn-default"
-                        ng-click="eventCreateCtrl.changeCollapseState()"
-                        ng-disabled="eventCreateCtrl.event.contentList.length==0">
-                    <span ng-show="eventCreateCtrl.isCollapsed">Expand</span>
-                    <span ng-show="!eventCreateCtrl.isCollapsed">Collapse</span>
-                </button>
+            <div class="row">
+                <div class="col-sm-6">
+                    <i role="button" class="glyphicon"
+                       title="{{eventCtrl.isCollapsed ? 'Expand' : 'Collapse'}}"
+                       ng-click="eventCreateCtrl.changeCollapseState()"
+                       ng-hide="eventCreateCtrl.event.contentList.length==0"
+                       ng-class="{'fa fa-compress fa-2x': !eventCreateCtrl.isCollapsed, 'fa fa-expand fa-2x': eventCreateCtrl.isCollapsed}" aria-hidden="true">
+
+                    </i>
+                </div>
+                <div class="col-sm-6">
+                    <div class="btn-group pull-right" style="cursor:pointer">
+                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Add content <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a ng-click="eventCreateCtrl.newText()">New Text</a></li>
+                            <li><a ng-click="eventCreateCtrl.newPhoto()">New photo</a></li>
+                            <li><a ng-click="eventCreateCtrl.newVideo()">New video</a></li>
+                            <li><a ng-click="eventCreateCtrl.newSimpleLink()">New link</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
             <br />
             <div ng-if="eventCreateCtrl.showEditArea">
@@ -85,13 +96,12 @@
                      dnd-moved="eventCreateCtrl.event.contentList.splice($index, 1)">
                     <div class="row">
                         <div class="col-md-12">
-                            <div class="space-label">
-                                <i role="button" class="glyphicon"
-                                   ng-click="content.isCollapsed = !content.isCollapsed"
+                            <div class="space-label" ng-click="content.isCollapsed = !content.isCollapsed">
+                                <i class="glyphicon"                                
                                    ng-class="{'fa fa-plus-square-o': content.isCollapsed, 'fa fa-minus-square-o': !content.isCollapsed}" aria-hidden="true"></i>
                                 {{ content.contentType | contentType}}: {{content.name | limitTo: 20}}{{content.name.length > 20 ? '...' : ''}}
-                                <i role="button" class="fa fa-trash fa-lg pull-right" ng-click="eventCreateCtrl.removeContent($index)" title="Delete content" aria-hidden="true"></i>
-                                <i role="button" class="fa fa-pencil-square-o fa-lg pull-right" ng-click="eventCreateCtrl.editContent($index)" title="Edit content" aria-hidden="true"></i>
+                                <i role="button" class="fa fa-trash fa-lg pull-right" ng-click="eventCreateCtrl.removeContent($index); $event.stopPropagation();" title="Delete content" aria-hidden="true"></i>
+                                <i role="button" class="fa fa-pencil-square-o fa-lg pull-right" ng-click="eventCreateCtrl.editContent($index); $event.stopPropagation();" title="Edit content" aria-hidden="true"></i>
                             </div>
                             <div uib-collapse="content.isCollapsed">
                                 <div ng-show="!content.isEdit">

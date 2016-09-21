@@ -1,4 +1,5 @@
-﻿<style type="text/css">
+﻿
+<style type="text/css">
     .border-img {
         border: 0px;
     }
@@ -34,6 +35,9 @@
         </div>
     </div>
     <div class="wrap" ng-show="fileFilterCtrl.showGrid">
+        <div ng-show="fileFilterCtrl.spaces.length == 0">
+            <h2 class="text-muted text-center">Files not found</h2>
+        </div>
         <div ng-repeat="space in fileFilterCtrl.spaces">
             <div class="grid-space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ space.name }}</div>
             <div uib-collapse="space.isCollapsed">
@@ -65,11 +69,17 @@
                     <li class="sp-gv-flex-item" role="button" context-menu="fileFilterCtrl.fileMenuOptions" ng-repeat="file in space.files" ng-show="file.fileType == 8 || file.fileType == 10" ng-dblclick="fileFilterCtrl.openLightboxModal(file.id)">
                         <div class="sp-gv-wrapper-flex-item" title="Created {{ file.createdAt | date : 'short' }}">
                             <div class="sp-gv-item-content cards">
-                                <div ng-class="fileFilterCtrl.classImageWrap" ng-show="file.fileType == 8">
-                                    <img ng-src="{{file.thumbUrl}}" ng-class="fileFilterCtrl.classThumbnail" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" />
+                                <div class="sp-gv-item-img-wrapper-image" ng-show="file.fileType == 8 && file.link.indexOf('http') !== -1" style="height: 135px">
+                                    <img ng-src="{{file.thumbUrl}}" class="img-thumbnail" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" />
                                 </div>
-                                <div class="sp-gv-item-img-wrapper-image" ng-show="file.fileType == 10">
+                                <div class="sp-gv-item-img-wrapper" ng-show="file.fileType == 8 && file.link.indexOf('http') === -1" style="margin-bottom: 30px">
+                                    <img ng-src="{{fileFilterCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" style="height: 100px" title="{{ file.fileType | typeOfFile }}" />
+                                </div>
+                                <div class="sp-gv-item-img-wrapper-image" ng-show="file.fileType == 10 && file.link.indexOf('youtube.com') !== -1" style="height: 135px">
                                     <img ng-src="http://img.youtube.com/vi/{{ file.link | getVideoId }}/0.jpg" class="img-thumbnail" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" />
+                                </div>
+                                <div class="sp-gv-item-img-wrapper" ng-show="file.fileType == 10 && file.link.indexOf('youtube.com') == -1" style="height: 135px">
+                                    <img ng-src="{{fileFilterCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" style="height: 100px" title="{{ file.fileType | typeOfFile }}" />
                                 </div>
                                 <div class="sp-gv-item-text">
                                     <h4 title="{{file.name}}">{{file.name}}</h4>
@@ -112,6 +122,9 @@
             </div>
         </div>
         <div class="filter-table-internal">
+            <div ng-show="fileFilterCtrl.spaces.length == 0">
+                <h2 class="text-muted text-center">Files not found</h2>
+            </div>
             <div ng-repeat="space in fileFilterCtrl.spaces">
                 <div class="space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ space.name }}</div>
                 <div uib-collapse="space.isCollapsed">

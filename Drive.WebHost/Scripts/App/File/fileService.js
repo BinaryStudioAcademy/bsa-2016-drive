@@ -65,6 +65,12 @@
                     if (callBack) {
                         callBack(response.data);
                     }
+                },
+                function errorCallback(response) {
+                    console.log('Error in getFilesApp Method! Code:' + response.status);
+                    if (response.status === 404 && callBack) {
+                        callBack(response.data);
+                    }
                 });
         }
 

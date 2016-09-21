@@ -30,6 +30,9 @@
             </div>
         </div>
         <div class="wrap" ng-show="!eventsListCtrl.showTable">
+            <div ng-show="eventsListCtrl.eventsList.length == 0">
+                <h2 class="text-muted text-center">Files not found</h2>
+            </div>
             <div ng-repeat="eventspace in eventsListCtrl.eventsList">
                 <div class="grid-space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ eventspace.name }}</div>
                 <div uib-collapse="space.isCollapsed">
@@ -59,6 +62,7 @@
                         <li class="sp-gv-flex-item"></li>
                         <li class="sp-gv-flex-item"></li>
                         <li class="sp-gv-flex-item"></li>
+                        <li class="sp-gv-flex-item"></li>
                     </ul>
                 </div>
                 <hr />
@@ -75,22 +79,29 @@
                     <div class="col-md-3" ng-click="eventsListCtrl.orderEventByColumn('fileUnit.description')">
                         Description
                         <span ng-show="eventsListCtrl.eventColumnForOrder == 'fileUnit.description'"><i class="fa fa-sort-asc"></i></span>
-                        <span ng-show="eventsListCtrl.eventolumnForOrder == '-fileUnit.description'"><i class="fa fa-sort-desc"></i></span>
+                        <span ng-show="eventsListCtrl.eventColumnForOrder == '-fileUnit.description'"><i class="fa fa-sort-desc"></i></span>
                     </div>
                     <div class="col-md-2" ng-click="eventsListCtrl.orderEventByColumn('author.name')">
                         Author
                         <span ng-show="eventsListCtrl.eventColumnForOrder == 'author.name'"><i class="fa fa-sort-asc"></i></span>
                         <span ng-show="eventsListCtrl.eventColumnForOrder == '-author.name'"><i class="fa fa-sort-desc"></i></span>
                     </div>
-                    <div class="col-md-2" ng-click="eventsListCtrl.orderEventByColumn('startDate')">
+                    <div class="col-md-2" ng-click="eventsListCtrl.orderEventByColumn('fileUnit.createdAt')">
                         Created
-                        <span ng-show="eventsListCtrl.eventColumnForOrder == 'startDate'"><i class="fa fa-sort-asc"></i></span>
-                        <span ng-show="eventsListCtrl.eventColumnForOrder == '-startDate'"><i class="fa fa-sort-desc"></i></span>
+                        <span ng-show="eventsListCtrl.eventColumnForOrder == 'fileUnit.createdAt'"><i class="fa fa-sort-asc"></i></span>
+                        <span ng-show="eventsListCtrl.eventColumnForOrder == '-fileUnit.createdAt'"><i class="fa fa-sort-desc"></i></span>
                     </div>
-                    <div class="col-md-2">Type</div>
+                    <div class="col-md-2" ng-click="eventsListCtrl.orderEventByColumn('eventType')">
+                        Type
+                        <span ng-show="eventsListCtrl.eventColumnForOrder == 'eventType'"><i class="fa fa-sort-asc"></i></span>
+                        <span ng-show="eventsListCtrl.eventColumnForOrder == '-eventType'"><i class="fa fa-sort-desc"></i></span>
+                    </div>
                 </div>
             </div>
             <div class="filter-table-internal">
+                <div ng-show="eventsListCtrl.eventsList.length == 0">
+                    <h2 class="text-muted text-center">Files not found</h2>
+                </div>
                 <div ng-repeat="eventspace in eventsListCtrl.eventsList">
                     <div class="space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ eventspace.name }}</div>
                     <div uib-collapse="space.isCollapsed">

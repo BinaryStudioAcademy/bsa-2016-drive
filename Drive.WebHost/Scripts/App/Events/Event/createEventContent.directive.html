@@ -1,6 +1,5 @@
 ﻿<form name="createcontentform" ng-submit="saveContent()" novalidate>
     <h4>{{contentModel.contentType | contentType}}
-        <i role="button" class="fa fa-times pull-right" ng-click="cancel()" title="Cancel" aria-hidden="true"></i>
     </h4>
        <div class="row">
            <div class="col-sm-4 col-md-4 col-lg-4">
@@ -22,9 +21,8 @@
         </div>
         <div class="row">
             <div class="col-sm-4 col-md-4 col-lg-4" ng-class="{ 'has-error' : createcontentform.eventcontentname.$invalid && !createcontentform.eventcontentname.$pristine }">
-                <input type="text" name="eventcontentname" id="eventcontentname" class="form-control text-valid" ng-pattern="/^[\w -]*$/" ng-model="contentModel.name" placeholder="Name" required>
+                <input type="text" name="eventcontentname" id="eventcontentname" class="form-control text-valid" ng-model="contentModel.name" placeholder="Name" required>
                 <p ng-show="createcontentform.eventcontentname.$error.required && createcontentform.eventcontentname.$touched" class="help-block" ng-cloak>Name is required</p>
-                <p ng-show="createcontentform.eventcontentname.$error.pattern" class="help-block" ng-cloak>Not a valid name</p>
             </div>
             <div ng-hide="contentModel.contentType === 1">
                 <div class="col-sm-4 col-md-4 col-lg-4">
@@ -50,8 +48,10 @@
         </div>
     <div class="row">
         <div class="col-sm-6 pull-right">
-            <button type="submit" class="btn btn-info pull-right" ng-disabled="createcontentform.$invalid">
+            <button type="submit" class="btn btn-info pull-right savebtn" ng-disabled="createcontentform.$invalid">
                 <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i> Submit
+            </button>
+            <button ng-click="cancel()" class="btn btn-default pull-right"> Cancel
             </button>
         </div>
     </div>

@@ -55,9 +55,6 @@
             vm.paginate.getContent();
         }
 
-        vm.classImageWrap = 'sp-gv-item-img-wrapper-image';
-        vm.classThumbnail = 'img-thumbnail';
-
         vm.chooseIcon = chooseIcon;
 
         activate();
@@ -116,11 +113,6 @@
 
                         if (file.fileType === 8) {
                             file.thumbUrl = file.link;
-                            if (file.link.indexOf('http') === -1) {
-                                file.thumbUrl = chooseIcon(file.fileType);
-                                vm.classImageWrap = 'sp-gv-item-img-wrapper';
-                                vm.classThumbnail = '';
-                            }
                             vm.images.push({
                                 url: file.link,
                                 link: file.link,
@@ -275,8 +267,7 @@
                     if (vm.file.fileType === 9) {
                         fileService.findEvent(vm.file.id, function (response) {
                             vm.event = response;
-                            vm.event.isEdit
-                            localStorageService.set('event', vm.event);
+                            localStorageService.set('container', 'shared');
                             $location.url('/apps/events/' + vm.event.id + '/edit');
                         });
                     }

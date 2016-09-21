@@ -13,6 +13,7 @@ namespace Drive.DataAccess.Entities
 
         public int Id { get; set; }
 
+        [DateTimeKind(DateTimeKind.Utc)]
         public DateTime Logged { get; set; }
 
         public string Level { get; set; }

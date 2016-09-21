@@ -12,68 +12,67 @@
         </button>
     </div>
     <div class="page-header">
-        <h2>
-            Space settings
-        </h2>  
+            <h2>
+                Space settings
+                <button class="btn btn-primary" ng-click="settingsCtrl.save()" ng-disabled="settingsForm.spaceName.$invalid || settingsForm.maxQuantity.$invalid || settingsForm.maxSize.$invalid">Save</button>
+                <button class="btn btn-default" ng-click="settingsCtrl.cancel()">Cancel</button>
+            </h2>
     </div>
     <div class="row">
-        <div class="col-md-3" style="padding-right: 20px; border-right: 1px solid #ccc;">
-            <h4>General settings</h4>
-            <form name="settingsForm" novalidate>
-                <div class="col-md-12">
-                    <label>Space name:</label>
-                    <input type="text" class="form-control" name="spaceName" ng-pattern="/^[\w -]*$/" ng-model="settingsCtrl.space.name" required>
-                    <div>
-                        <span style="color:red" ng-show="settingsForm.spaceName.$error.pattern">Not a valid name</span>
-                        <span style="color:red" ng-show="settingsForm.spaceName.$error.required">Data is required</span>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <label>Description:</label>
-                    <input type="text" class="form-control" ng-model="settingsCtrl.space.description">
-                </div>
-                <div class="col-md-12">
-                    <label>Maximum Files Quantity:</label>
-                    <input type="number" class="form-control" name="maxQuantity" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="settingsCtrl.space.maxFilesQuantity" required>
-                    <div>
-                        <span style="color:red" ng-show="settingsForm.maxQuantity.$error.pattern">Not a valid quantity</span>
-                        <span style="color:red" ng-show="settingsForm.maxQuantity.$error.required">Data is required</span>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <label>Maximum file size (MB):</label>
-                    <input type="number" class="form-control" min="0" step="1" max="1024" name="maxSize" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="settingsCtrl.space.maxFileSize" required>
-                    <div>
-                        <span class="error" ng-show="settingsForm.maxSize.$error.max" style="color: red">
-                            Max file size should be less than 1024 MB.
-                        </span>
-                        <span style="color:red" ng-show="settingsForm.maxSize.$error.required">
-                            Data is required
-                        </span>
-                        <span style="color:red" ng-show="settingsForm.maxsize.$error.pattern">
-                            Not a valid file size
-                        </span>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <br />
-                    <button class="btn btn-primary" ng-click="settingsCtrl.save()" ng-disabled="settingsForm.spaceName.$invalid || settingsForm.maxQuantity.$invalid || settingsForm.maxSize.$invalid">Save</button>
-                    <button class="btn btn-default" ng-click="settingsCtrl.cancel()">Cancel</button>
-                </div>
-            </form>
-        </div>
             <div class="col-md-2">
                 <ul class="nav nav-pills nav-stacked">
                     <li ng-class="{ active: settingsCtrl.isSet(1) }">
-                        <a href ng-click="settingsCtrl.setTab(1)">Users</a>
+                        <a href ng-click="settingsCtrl.setTab(1)">General</a>
                     </li>
                     <li ng-class="{ active: settingsCtrl.isSet(2) }">
-                        <a href ng-click="settingsCtrl.setTab(2)">Roles</a>
+                        <a href ng-click="settingsCtrl.setTab(2)">Users</a>
+                    </li>
+                    <li ng-class="{ active: settingsCtrl.isSet(3) }">
+                        <a href ng-click="settingsCtrl.setTab(3)">Roles</a>
                     </li>
                 </ul>
             </div>
             <div class="col-md-7">
                 <div ng-show="settingsCtrl.isSet(1)">
+                    <form name="settingsForm" novalidate>
+                        <div class="col-md-12">
+                            <label>Space name:</label>
+                            <input type="text" class="form-control" name="spaceName" ng-pattern="/^[\w -]*$/" ng-model="settingsCtrl.space.name" required>
+                            <div>
+                                <span style="color:red" ng-show="settingsForm.spaceName.$error.pattern">Not a valid name</span>
+                                <span style="color:red" ng-show="settingsForm.spaceName.$error.required">Data is required</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label>Description:</label>
+                            <input type="text" class="form-control" ng-model="settingsCtrl.space.description">
+                        </div>
+                        <div class="col-md-12">
+                            <label>Maximum Files Quantity:</label>
+                            <input type="number" class="form-control" name="maxQuantity" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="settingsCtrl.space.maxFilesQuantity" required>
+                            <div>
+                                <span style="color:red" ng-show="settingsForm.maxQuantity.$error.pattern">Not a valid quantity</span>
+                                <span style="color:red" ng-show="settingsForm.maxQuantity.$error.required">Data is required</span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label>Maximum file size (MB):</label>
+                            <input type="number" class="form-control" min="0" step="1" max="1024" name="maxSize" ng-pattern="/^[a-zA-Z0-9]*$/" ng-model="settingsCtrl.space.maxFileSize" required>
+                            <div>
+                                <span class="error" ng-show="settingsForm.maxSize.$error.max" style="color: red">
+                                    Max file size should be less than 1024 MB.
+                                </span>
+                                <span style="color:red" ng-show="settingsForm.maxSize.$error.required">
+                                    Data is required
+                                </span>
+                                <span style="color:red" ng-show="settingsForm.maxsize.$error.pattern">
+                                    Not a valid file size
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div ng-show="settingsCtrl.isSet(2)">
                     <div class="form-group" style="margin-bottom: 0px;">
                         <div class="col-md-4" style="">
                             <input type="text" placeholder="Enter a username" ng-model="settingsCtrl.selected" uib-typeahead="user as user.name for user in settingsCtrl.users | filter:{name:$viewValue} | limitTo:10" class="form-control">
@@ -112,19 +111,19 @@
                         </tbody>
                     </table>
                 </div>
-                <div ng-show="settingsCtrl.isSet(2)">
-                    <div class="form-group">
-                        <div class="col-md-4" style="padding-right: 0px;">
+                <div ng-show="settingsCtrl.isSet(3)">
+                    <div class="form-group" style="margin-top: 20px;">
+                        <div class="col-md-4" style="">
                             <input type="text" placeholder="Enter a role name" ng-model="settingsCtrl.selectedRole" uib-typeahead="role as role.name for role in settingsCtrl.roles | filter:{name:$viewValue} | limitTo:10" class="form-control">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-md-2">
-                            <button class="btn btn-primary" ng-click="settingsCtrl.addSpaceRole()">Add</button>
+                    <div class="form-group" style="margin-bottom: -3%">
+                        <div class="col-md-2" style="width: 12%; margin-left: -3%">
+                            <button class="btn btn-primary" ng-click="settingsCtrl.addSpaceRole()" style="">Add</button>
                         </div>
                     </div>
                     <br /> <br />
-                    <table class="table users table-striped table-hover">
+                    <table class="table users table-striped table-hover" style="margin-top: 14px;">
                         <thead>
                             <tr>
                                 <th style="width:30%">Role name</th>
@@ -152,12 +151,3 @@
             </div>
         </div>
 </div>
-
-<!--For tabs-->
-<script type="text/javascript">
-    $('#myTabs a')
-       .click(function (e) {
-           e.preventDefault();
-           $(this).tab('show');
-       });
-</script>

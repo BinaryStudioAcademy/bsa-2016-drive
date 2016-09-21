@@ -15,7 +15,7 @@
 
     function EventsListController(EventsListService, $location, localStorageService, eventService, $uibModal) {
         var vm = this;
-        vm.columnForOrder = 'name';
+        vm.columnForOrder = 'fileUnit.name';
         vm.orderEventByColumn = orderEventByColumn;
         vm.openEvent = openEvent;
         vm.changeView = changeView;
@@ -40,6 +40,7 @@
                     null,
             [
                 'Edit', function ($itemScope) {
+                    localStorageService.set('container', 'filter');
                     $location.url('/apps/events/' + $itemScope.event.id + '/edit');
                 }
             ],
@@ -71,7 +72,7 @@
                 vm.showTable = false;
                 vm.view = "fa fa-list";
             }
-            vm.eventColumnForOrder = 'name';
+            vm.eventColumnForOrder = 'fileUnit.name';
             vm.iconHeight = 30;
             vm.icon = "./Content/Icons/event.svg";
             search();

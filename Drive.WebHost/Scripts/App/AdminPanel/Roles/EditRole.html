@@ -1,4 +1,5 @@
-﻿<div>
+﻿
+<div>
     <div class="modal-header">
         <h3 class="modal-title">Edit role</h3>
     </div>
@@ -21,8 +22,8 @@
                             <div class="form-group" ng-class="{ 'has-error' : roleForm.name.$invalid && !roleForm.name.$pristine }">
                                 <label>Role name:</label>
                                 <input type="text" name="name" id="name" class="form-control" ng-pattern="/^[\w -]*$/" ng-model="roleCtrl.role.name" placeholder="Enter role name" required>
-                                <p ng-show="roleForm.name.$error.required && roleForm.name.$touched" class="help-block">Name is required.</p>
-                                <p ng-show="roleForm.name.$error.pattern" class="help-block">Not a valid name.</p>
+                                <p ng-show="roleForm.name.$error.required && roleForm.name.$touched" class="help-block">Name is required</p>
+                                <p ng-show="roleForm.name.$error.pattern" class="help-block">Not a valid name</p>
                             </div>
                             <div class="form-group">
                                 <label>Description:</label>
@@ -37,7 +38,9 @@
                                 <div class="form">
                                     <div class="col-md-5 user-add">
                                         <div class="form-group">
-                                            <input type="text" placeholder="Enter a user name" ng-model="roleCtrl.selected" uib-typeahead="user as user.name for user in roleCtrl.users | filter:{name:$viewValue} | limitTo:10" class="form-control">
+                                            <div class="scrollable-dropdown-menu">
+                                                <input type="text" placeholder="Enter a user name" ng-model="roleCtrl.selected" uib-typeahead="user as user.name for user in roleCtrl.users | filter:{name:$viewValue} | limitTo:10" class="form-control">
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-md-2">
@@ -45,18 +48,19 @@
                                             <button class="btn btn-primary" ng-click="roleCtrl.addRoleUser()">Add</button>
                                         </div>
                                     </div>
-                                    <br /><br />
+                                    <br />
+                                    <br />
                                     <table class="table users table-striped table-hover">
                                         <thead>
                                             <tr>
-                                                <th style="width:80%">User name</th>
-                                                <th style="width:20%"></th>
+                                                <th style="width:90%">User name</th>
+                                                <th style="width:10%"></th>
                                             </tr>
                                         </thead>
                                         <tbody style="height: 200px;">
                                             <tr ng-repeat="item in roleCtrl.permittedUsers">
-                                                <td style="width:80%">{{item.name}}</td>
-                                                <td style="width:20%">
+                                                <td style="width:90%">{{item.name}}</td>
+                                                <td style="width:10%">
                                                     <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="roleCtrl.removeRoleUser(item.globalId);"></i>
                                                 </td>
                                             </tr>
