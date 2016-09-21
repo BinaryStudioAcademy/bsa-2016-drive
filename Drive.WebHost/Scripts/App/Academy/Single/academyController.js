@@ -20,13 +20,25 @@
     [
         'Edit', function ($itemScope) {
             $location.url('/apps/academy/' + vm.academy.id + '/lecture/' + $itemScope.lecture.id + '/edit');
-        }
+        },
+            function ($itemScope) {
+                if ($itemScope.lecture.canModify == false) {
+                    return false;
+                }
+                return true;
+            }
     ],
     null,
     [
         'Delete', function ($itemScope) {
             deleteLecture($itemScope.lecture.id);
-        }
+        },
+            function ($itemScope) {
+                if ($itemScope.lecture.canModify == false) {
+                    return false;
+                }
+                return true;
+            }
     ]
         ];
         activate();

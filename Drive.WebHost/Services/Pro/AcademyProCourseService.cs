@@ -70,6 +70,7 @@ namespace Drive.WebHost.Services.Pro
 
         public async Task<AcademyProCourseDto> GetAsync(int id)
         {
+            string userId = _userService.CurrentUserId;
             var authors = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
 
             var resultCourse = await _unitOfWork.AcademyProCourses.Query.Where(c => c.Id == id).Select(course => new AcademyProCourseDto
@@ -84,6 +85,7 @@ namespace Drive.WebHost.Services.Pro
                     Description = lecture.Description,
                     StartDate = lecture.StartDate,
                     CreatedAt = lecture.CreatedAt,
+                    CanModify = lecture.Author.GlobalId == userId,
                     Author = new AuthorDto { Id = lecture.Author.Id, GlobalId = lecture.Author.GlobalId }
                 }),
                 FileUnit = new FileUnitDto
@@ -93,7 +95,8 @@ namespace Drive.WebHost.Services.Pro
                     FileType = course.FileUnit.FileType,
                     Description = course.FileUnit.Description,
                     CreatedAt = course.FileUnit.CreatedAt,
-                    LastModified = course.FileUnit.LastModified
+                    LastModified = course.FileUnit.LastModified,
+                    CanModify = course.Author.GlobalId == userId
                 },
                 Tags = course.Tags.Select(tag => new TagDto
                 {
@@ -285,7 +288,8 @@ namespace Drive.WebHost.Services.Pro
                              Description = c.FileUnit.Description,
                              CreatedAt = c.FileUnit.CreatedAt,
                              LastModified = c.FileUnit.LastModified,
-                             SpaceId = c.FileUnit.Space.Id
+                             SpaceId = c.FileUnit.Space.Id,
+                             CanModify = c.Author.GlobalId == userId
                          },
                          Tags = c.Tags.Select(tag => new TagDto
                          {

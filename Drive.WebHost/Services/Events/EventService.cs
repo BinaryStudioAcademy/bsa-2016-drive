@@ -108,7 +108,7 @@ namespace Drive.WebHost.Services.Events
             {
                 return await FilterEvents();
             }
-
+            string userId = _userService.CurrentUserId;
             var authors = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
 
             var events = await _unitOfWork.Events.Query.Include(c => c.FileUnit).
@@ -132,6 +132,7 @@ namespace Drive.WebHost.Services.Events
                                                                                 CreatedAt = c.FileUnit.CreatedAt,
                                                                                 LastModified = c.FileUnit.LastModified,
                                                                                 SpaceId = c.FileUnit.Space.Id,
+                                                                                CanModify = c.FileUnit.Owner.GlobalId == userId
                                                                             },
                                                                             EventDate = c.EventDate,
                                                                             EventType = c.EventType,

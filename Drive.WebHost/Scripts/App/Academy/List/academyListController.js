@@ -45,13 +45,25 @@
             'Edit', function ($itemScope) {
                 vm.academy = $itemScope.academy;
                 vm.openNewCourseWindow();
-            }
+            },
+                function ($itemScope) {
+                    if ($itemScope.academy.fileUnit.canModify == false) {
+                        return false;
+                    }
+                    return true;
+                }
         ],
         null,
         [
             'Delete', function ($itemScope) {
                 deleteCourse($itemScope.academy.id);
-            }
+            },
+                function ($itemScope) {
+                    if ($itemScope.academy.fileUnit.canModify == false) {
+                        return false;
+                    }
+                    return true;
+                }
         ]
         ];
         
