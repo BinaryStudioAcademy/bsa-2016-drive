@@ -340,9 +340,9 @@
             null,
             [
                 'Share', function ($itemScope) {
-                    vm.contentSharedId = $itemScope.folder.id;
+                    vm.contentShared = $itemScope.folder;
                     vm.sharedModalWindowTitle = 'Shared folder';
-                    console.log(vm.contentSharedId);
+                    console.log(vm.contentShared);
                     vm.sharedContent();
                 }, function ($itemScope) { return vm.fileMenuOptionShareShow  && $itemScope.folder.canModify }
             ],
@@ -408,8 +408,7 @@
             [
                 'Share', function ($itemScope) {
                     vm.sharedModalWindowTitle = 'Shared File';
-                    vm.contentSharedId = $itemScope.file.id;
-                    console.log(vm.contentSharedId);
+                    vm.contentShared = $itemScope.file;
                     vm.sharedContent();
                 }, function ($itemScope) { return vm.fileMenuOptionShareShow && $itemScope.file.canModify; }
             ],
@@ -560,7 +559,7 @@
                 resolve: {
                     items: function () {
                         var sharedContInfo = {
-                            contentId: vm.contentSharedId,
+                            content: vm.contentShared,
                             title: vm.sharedModalWindowTitle
                         }
                         return sharedContInfo;

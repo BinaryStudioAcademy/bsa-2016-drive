@@ -29,7 +29,7 @@
                                 <input type="checkbox" ng-model="item.canRead" ng-click="sharedContentModalCtrl.permissionCanReadChanged(item.globalId)">
                             </td>
                             <td style="width:20%; text-align:center;">
-                                <input type="checkbox" ng-model="item.canModify" ng-click="sharedContentModalCtrl.permissionCanModifyChanged(item.globalId)">
+                                <input type="checkbox" ng-model="item.canModify" ng-disabled="sharedContentModalCtrl.canModifyDisabled" ng-click="sharedContentModalCtrl.permissionCanModifyChanged(item.globalId)">
                             </td>
                             <td style="width:25%; text-align:center;">
                                 <i role="button" class="fa fa-trash fa-lg" aria-hidden="true" ng-click="sharedContentModalCtrl.removeUsersWithPermissions(item)"></i>
@@ -44,6 +44,5 @@
                     <button class="btn btn-default" type="submit" ng-click="sharedContentModalCtrl.cancel()">Cancel</button>
                 </div>
             </div>
-        </div>
     </form>
 </div>

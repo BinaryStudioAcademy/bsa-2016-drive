@@ -23,8 +23,15 @@
         activate();
 
         function activate() {
-            vm.fileId = items.contentId;
+            vm.fileId = items.content.id;
             vm.title = items.title;
+            if (items.content.fileType == 7 || items.content.fileType == 9) {
+                vm.canModifyDisabled = true;
+            }
+            else {
+                vm.canModifyDisabled = false;
+            }
+            
 
             getUsersWithPermissions();
             addUsersName();
