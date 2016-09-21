@@ -10,15 +10,10 @@
             {{item.name | limitTo: 10}}{{item.name.length > 10 ? '...' : ''}}
         </a>
     </div>
-    <div class="row" style="margin:1em 0 1em 0">
-        <div class="col-lg-push-4-offset pull-right">
-            <button class="btn btn-default" ng-click="sharedSpaceCtrl.changeView(sharedSpaceCtrl.view)">
-                <i class={{sharedSpaceCtrl.view}} title="view"> </i>
-            </button>
-        </div>
-        <div>
-            <div class="col-sm-3 pull-right">
-                <div>
+    <div class="row" style="margin: 1em 0 1em 0;">
+        <div class="col-md-4 pull-right">
+            <div class="row">
+                <div class="col-xs-10 right">
                     <div class="input-group">
                         <form id="form-container">
                             <div id="searchtext">
@@ -31,9 +26,15 @@
                         </form>
                     </div>
                 </div>
+                <div class="col-xs-2 nopadding pull-right">
+                    <button class="btn btn-default pull-right" ng-click="sharedSpaceCtrl.changeView(sharedSpaceCtrl.view)">
+                        <i class={{sharedSpaceCtrl.view}} title="view"> </i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
+
     <div us-spinner="{radius:5, width:2, length: 5}" style="position:absolute; top:40px; right:37px"></div>
     <!--Gridview-->
     <ul class="sp-gv-flex-container wrap" ng-show="sharedSpaceCtrl.showGrid" context-menu="sharedSpaceCtrl.folderMenuOptions">
@@ -85,6 +86,8 @@
                 </div>
             </div>
         </li>
+        <li class="sp-gv-flex-item"></li>
+        <li class="sp-gv-flex-item"></li>
         <li class="sp-gv-flex-item"></li>
         <li class="sp-gv-flex-item"></li>
         <li class="sp-gv-flex-item"></li>
