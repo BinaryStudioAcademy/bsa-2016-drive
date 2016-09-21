@@ -22,7 +22,7 @@
                         </p>
                     </div>
                     <div class="col-sm-push-6 pull-right" style="margin-top: -45px; margin-right: 2%;">
-                        <button class="btn btn-default" title="Edit event " ng-click="eventCtrl.edit()">Edit</button>
+                        <button ng-show="eventCtrl.event.fileUnit.canModify" class="btn btn-default" title="Edit event " ng-click="eventCtrl.edit()">Edit</button>
                     </div>
                 </div>
                 <p>

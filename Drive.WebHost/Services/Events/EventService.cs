@@ -175,7 +175,8 @@ namespace Drive.WebHost.Services.Events
                              Description = c.FileUnit.Description,
                              CreatedAt = c.FileUnit.CreatedAt,
                              LastModified = c.FileUnit.LastModified,
-                             SpaceId = c.FileUnit.Space.Id
+                             SpaceId = c.FileUnit.Space.Id,
+                             CanModify = c.FileUnit.Owner.GlobalId == userId
                          },
                          EventDate = c.EventDate,
                          EventType = c.EventType,
@@ -196,6 +197,7 @@ namespace Drive.WebHost.Services.Events
 
         public async Task<EventDto> GetAsync(int id)
         {
+            string userId = _userService.CurrentUserId;
             var authors = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
             var events = await _unitOfWork.Events.Query.Where(x => x.Id == id).Include(c => c.ContentList).Select(ev => new EventDto
             {
@@ -205,7 +207,8 @@ namespace Drive.WebHost.Services.Events
                     Id = ev.FileUnit.Id,
                     Name = ev.FileUnit.Name,
                     Description = ev.FileUnit.Description,
-                    Author = new AuthorDto { Id = ev.FileUnit.Owner.Id, GlobalId = ev.FileUnit.Owner.GlobalId }
+                    Author = new AuthorDto { Id = ev.FileUnit.Owner.Id, GlobalId = ev.FileUnit.Owner.GlobalId },
+                    CanModify = ev.FileUnit.Owner.GlobalId == userId
                 },
                 EventType = ev.EventType,
                 ContentList = ev.ContentList.Select(c => new EventContentDto

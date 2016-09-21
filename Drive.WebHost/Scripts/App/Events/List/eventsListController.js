@@ -31,7 +31,7 @@
                 sharedEventContent();
             },
                 function ($itemScope) {
-                    if ($itemScope.event.fileUnit.spaceId == vm.binarySpaceId) {
+                    if ($itemScope.event.fileUnit.spaceId === vm.binarySpaceId) {
                         return false;
                     }
                     return true;
@@ -42,12 +42,24 @@
                 'Edit', function ($itemScope) {
                     localStorageService.set('container', 'filter');
                     $location.url('/apps/events/' + $itemScope.event.id + '/edit');
+                },
+                function ($itemScope) {
+                    if ($itemScope.event.fileUnit.canModify == false) {
+                        return false;
+                    }
+                    return true;
                 }
             ],
             null,
             [
                 'Delete', function ($itemScope) {
                     deleteEvent($itemScope.event.id);
+                },
+                function ($itemScope) {
+                    if ($itemScope.event.fileUnit.canModify == false) {
+                        return false;
+                    }
+                    return true;
                 }
             ]
         ];
@@ -57,7 +69,7 @@
         function activate() {
             vm.eventsList = [];
             var view = localStorageService.get('view')
-            if (view == undefined) {
+            if (view === undefined) {
                 vm.showTable = true;
                 vm.showGrid = false;
                 vm.view = "fa fa-th";
