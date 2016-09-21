@@ -32,6 +32,8 @@
                                     file.filename = fileService.getFileName(file.name);
                                     file.extension = fileService.getFileExtension(file.name);
                                     file.isValid = fileService.checkFileSize(file.size, scope.maxSize);
+                                    file.fname = file.name;
+                                    file.mode = false;
                                     scope.dropFile.push(file);
                                 });
                             }
@@ -61,6 +63,8 @@
                                     file.filename = fileService.getFileName(file.name);
                                     file.extension = fileService.getFileExtension(file.name);
                                     file.isValid = fileService.checkFileSize(file.size, scope.maxSize);
+                                    file.fname = file.name;
+                                    file.mode = false;
                                     scope.inputFile.push(file);
                                 });
                             }

@@ -23,6 +23,7 @@
         vm.getFileName = getFileName;
         vm.getFileExtension = getFileExtension;
         vm.checkModel = checkModel;
+        vm.editMode = editMode;
 
         activate();
 
@@ -211,6 +212,15 @@
             var pointIndex = fullFileName.lastIndexOf(".");
             var fileName = fullFileName.slice(0, pointIndex);
             return fileName;
+        }
+        function editMode(mode, index, name, ext) {
+            if (mode) {
+                vm.inputFile[index].mode = false;
+                vm.inputFile[index].fname = name + ext;
+            }
+            else {
+                vm.inputFile[index].mode = true;
+            }
         }
     }
 }());

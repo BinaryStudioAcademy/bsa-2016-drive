@@ -1,4 +1,4 @@
-﻿<div file-dropzone="" drop-file="fileModalCtrl.inputFile" max-size="fileModalCtrl.file.maxSize" valid="fileModalCtrl.modelIsValid">
+﻿<div>
     <form role="form" name="uploadForm" enctype="multipart/form-data">
         <div class="modal-header">
             <div class="col-md-6">
@@ -9,15 +9,10 @@
                     Upload file
                 </h3>
             </div>
-            <div class="col-md-offset-5 col-xs-1">
-                <button class="btn btn-default btn-sm" type="submit" ng-click="fileModalCtrl.cancel()" title="Close window">
-                    <i class="fa fa-times fa-lg" ></i>
-                </button>
-            </div>
         </div>
-        <div class="modal-body">
+        <div class="modal-body upload-drag-and-drop" file-dropzone drop-file="fileModalCtrl.inputFile" max-size="fileModalCtrl.file.maxSize" valid="fileModalCtrl.modelIsValid">
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-4" style="margin-bottom: 10px">
                     <label>Choose local files</label>
                     <button type="button" class="btn btn-default fileinput-button" style="left:10px">
                         <span>
@@ -31,43 +26,62 @@
             <table class="table table-upload-file" ng-show="!fileModalCtrl.disableElement()">
                 <thead>
                     <tr>
-                        <th width="13%"></th>
-                        <th width="32%">Name</th>
-                        <th width="25%">Description</th>
+                        <th width="48%">Name</th>
+                        <th width="30%">Description</th>
                         <th width="10%">Size</th>
-                        <th width="10%">Type</th>
-                        <th width="10%">Remove</th>
+                        <th width="12%">Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr ng-repeat="file in fileModalCtrl.inputFile" repeat-done model="fileModalCtrl.inputFile" valid="fileModalCtrl.modelIsValid">
-                        <td></td>
-                        <td>
-                            <input ng-model="file.filename" size="27" required />
-                            <label>{{file.extension}}</label>
-                            <span style="color: red" class="alert error" ng-show="file.filename.$error.required && file.filename.$touched">Name required</span>
-                            <span style="color: red" class="alert error" ng-show="!file.isValid">Size of file is more than {{fileModalCtrl.file.maxSize}} MB</span>
-                        </td>
-                        <td><textarea rows="2" cols="25" style="resize:none;" placeholder="enter description of file" ng-model="file.description"></textarea></td>
-                        <td>{{ file.size | sizeOfFile }}</td>
-                        <td>{{ file.type }}</td>
-                        <td>
-                            <button type="button" class="btn btn-default btn-s" ng-click="fileModalCtrl.removeItem($index)">
-                                <i class="fa fa-trash-o" aria-hidden="true"></i>
-                            </button>
+                    <tr>
+                        <td colspan="4">
+                            <div>
+                                <table width="843" class="table table-upload-file">
+                                    <tr ng-repeat="file in fileModalCtrl.inputFile" repeat-done model="fileModalCtrl.inputFile" valid="fileModalCtrl.modelIsValid">
+                                        <td width="48%">
+                                            <span ng-show="!file.mode" title="{{file.fname}}">{{file.fname | limitTo: 45}}{{file.fname.length > 45 ? '...' : ''}}</span>
+                                            <span ng-show="file.mode">
+                                                <input ng-model="file.filename" size="30" class="form-control input-upload" required />
+                                                <label>{{file.extension}}</label>
+                                            </span>
+                                            <span style="color: red" class="alert error" ng-show="!file.isValid">Name required</span>
+                                            <span style="color: red" class="alert error" ng-show="!file.isValid">Size of file is more than {{fileModalCtrl.file.maxSize | sizeOfFile }} </span>
+                                        </td>
+                                        <td width="30%">
+                                            <span ng-show="!file.mode" title="{{file.description}}">{{file.description | limitTo: 30}}{{file.description.length > 30 ? '...' : ''}}</span>
+                                            <span ng-show="file.mode">
+                                                <textarea rows="2" cols="27" class="form-control area-input" placeholder="enter description of file" ng-model="file.description"></textarea>
+                                            </span>
+                                        </td>
+                                        <td width="10%">{{ file.size | sizeOfFile }}</td>
+                                        <td width="12%">
+                                            <button type="button" class="btn btn-default btn-s" ng-click="fileModalCtrl.editMode(file.mode, $index, file.filename, file.extension)">
+                                                <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-default btn-s" ng-click="fileModalCtrl.removeItem($index)">
+                                                <i class="fa fa-trash-o" aria-hidden="true"></i>
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                         </td>
                     </tr>
+
                 </tbody>
             </table>
         </div>
 
         <div class="modal-footer">
-            <div class="col-md-6 col-md-offset-1">
-                <button type="submit" class="btn btn-default btn-s" ng-click="fileModalCtrl.upload()" ng-disabled="fileModalCtrl.disableElement() || !fileModalCtrl.modelIsValid">
-                    <i class="fa fa-arrow-circle-o-up"></i> Upload file
+            <div class="col-md-6 col-md-offset-5">
+                <button type="submit" class="btn btn-default btn-s" ng-click="fileModalCtrl.upload()" ng-disabled="fileModalCtrl.disableElement() || !fileModalCtrl.modelIsValid" title="Upload selected files">
+                    <i class="fa fa-arrow-circle-o-up"></i> Upload files
                 </button>
-                <button type="button" class="btn btn-default btn-s" ng-click="fileModalCtrl.removeAll()" ng-disabled="fileModalCtrl.disableElement()">
-                    <i class="fa fa-trash-o" aria-hidden="true"></i> Remove
+                <button type="button" class="btn btn-default btn-s" ng-click="fileModalCtrl.removeAll()" ng-disabled="fileModalCtrl.disableElement()" title="Remove all files">
+                    <i class="fa fa-trash-o" aria-hidden="true"></i> Remove all
+                </button>
+                <button class="btn btn-default" type="submit" ng-click="fileModalCtrl.cancel()" title="Close window">
+                    Cancel
                 </button>
             </div>
         </div>
