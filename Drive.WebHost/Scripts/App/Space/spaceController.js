@@ -380,11 +380,13 @@
                         }
                     }
                 }, function ($itemScope) {
-                    if (($itemScope.file.fileType == 7 || $itemScope.file.fileType == 9) && $cookies.get('serverUID') == $itemScope.file.author.globalId) {
-                        return true;
-                    }
-                    else {
-                        return false;
+                    if ($itemScope.file.fileType == 7 || $itemScope.file.fileType == 9) {
+                        if ($cookies.get('serverUID') == $itemScope.file.author.globalId) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
                     }
                     return $itemScope.file.canModify;
                 }
