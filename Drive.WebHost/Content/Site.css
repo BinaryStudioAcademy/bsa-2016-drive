@@ -592,6 +592,14 @@ hr.style {
 .filter-checkbox-hidden {
     display: none;
 }
+
+.filter-t-row-1 {
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden !important;
+}
+
 /*end table in space*/
 
 /*folders and files grid view*/

@@ -94,22 +94,22 @@
     <div class="filter-table container-md" ng-show="fileFilterCtrl.showTable">
         <div class="header-wrapper">
             <div class="row header-row">
-                <div class="col-md-3" ng-click="fileFilterCtrl.orderByColumn('name')">
+                <div class="col-xs-3 filter-t-row-1" ng-click="fileFilterCtrl.orderByColumn('name')">
                     Name
                     <span ng-show="fileFilterCtrl.columnForOrder == 'name'"><i class="fa fa-sort-asc"></i></span>
                     <span ng-show="fileFilterCtrl.columnForOrder == '-name'"><i class="fa fa-sort-desc"></i></span>
                 </div>
-                <div class="col-md-5" ng-click="fileFilterCtrl.orderByColumn('description')">
+                <div class="col-xs-5 filter-t-row-1" ng-click="fileFilterCtrl.orderByColumn('description')">
                     Description
                     <span ng-show="fileFilterCtrl.columnForOrder == 'description'"><i class="fa fa-sort-asc"></i></span>
                     <span ng-show="fileFilterCtrl.columnForOrder == '-description'"><i class="fa fa-sort-desc"></i></span>
                 </div>
-                <div class="col-md-2" ng-click="fileFilterCtrl.orderByColumn('author.name')">
+                <div class="col-xs-2 filter-t-row-1" ng-click="fileFilterCtrl.orderByColumn('author.name')">
                     Author
                     <span ng-show="fileFilterCtrl.columnForOrder == 'author.name'"><i class="fa fa-sort-asc"></i></span>
                     <span ng-show="fileFilterCtrl.columnForOrder == '-author.name'"><i class="fa fa-sort-desc"></i></span>
                 </div>
-                <div class="col-md-2" ng-click="fileFilterCtrl.orderByColumn('createdAt')">
+                <div class="col-xs-2 filter-t-row-1" ng-click="fileFilterCtrl.orderByColumn('createdAt')">
                     Created
                     <span ng-show="fileFilterCtrl.columnForOrder == 'createdAt'"><i class="fa fa-sort-asc"></i></span>
                     <span ng-show="fileFilterCtrl.columnForOrder == '-createdAt'"><i class="fa fa-sort-desc"></i></span>
@@ -126,15 +126,15 @@
                     <div style="transition: all 2s">
                         <div class="filter-table-row">
                             <div class="row filter-table-row" role="button" ng-repeat="file in space.files | orderBy: fileFilterCtrl.columnForOrder" ng-dblclick="fileFilterCtrl.checkFileType(file.fileType) ? fileFilterCtrl.openDocument(file) : fileFilterCtrl.openLightboxModal(file.id)" context-menu="fileFilterCtrl.fileMenuOptions">
-                                <div class="col-md-3 filter-table-cell description" title="{{ file.name }}">
+                                <div class="col-xs-3 filter-table-cell filter-t-row-1" title="{{ file.name }}">
                                     <img ng-src="{{fileFilterCtrl.chooseIcon(file.fileType)}}" height="{{fileFilterCtrl.iconHeight}}" />
                                     {{file.name | limitTo: 23}}{{file.name.length > 23 ? '...' : ''}}
                                 </div>
-                                <div class="col-md-5 filter-table-cell description" title="{{ file.description }}">
+                                <div class="col-xs-5 filter-table-cell filter-t-row-1" title="{{ file.description }}">
                                     {{file.description | limitTo: 56}}{{file.description.length > 56 ? '...' : ''}}
                                 </div>
-                                <div class="col-md-2 filter-table-cell">{{ file.author.name }}</div>
-                                <div class="col-md-2 filter-table-cell">{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</div>
+                                <div class="col-xs-2 filter-table-cell filter-t-row-1">{{ file.author.name }}</div>
+                                <div class="col-xs-2 filter-table-cell filter-t-row-1">{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</div>
                             </div>
                         </div>
                     </div>
