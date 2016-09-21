@@ -10,6 +10,7 @@ using System.Data.Entity;
 using System.Security.Cryptography;
 using System.Text;
 using Drive.DataAccess.Entities;
+using System.Configuration;
 
 namespace Drive.WebHost.Services
 {
@@ -68,7 +69,7 @@ namespace Drive.WebHost.Services
             _unitOfWork.ShareLinks.Create(shareLink);
             await _unitOfWork.SaveChangesAsync();
 
-            return shareLink.Link;
+            return string.Format("{0}{1}{2}", ConfigurationManager.AppSettings["basePath"], "/shared/", shareLink.Link);
         }
 
         private string GenerateLink(Object ob)
