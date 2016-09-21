@@ -16,6 +16,8 @@ body {
     padding-right: 15px;
     overflow: hidden;
     height: 100%;
+    min-width: 400px;
+
 }
 
 .navbar-inverse {
@@ -367,6 +369,64 @@ textarea {
 
         #wrapper.toggled {
             padding-left: 20px;
+            padding-right: 1%;
+            margin-left: -50px;
+            overflow: hidden;
+            align-content: center;
+        }
+
+    #sidebar-wrapper {
+        width: 205px;
+    }
+
+    #sidebar-toggle {
+        width: 205px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 42px;
+    }
+
+    #wrapper.toggled #sidebar-toggle {
+        width: 42px;
+    }
+
+    #page-content-wrapper {
+        position: relative;
+        overflow: hidden;
+        margin-left: 2%;
+        margin-right: 1%;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        padding-bottom: 0px;
+        position: relative;
+        margin-right: 0;
+        overflow: hidden;
+        overflow-y: hidden;
+        overflow-x: hidden;
+    }
+
+    #section-menu:hover #sidebar-toggle {
+        width: 205px;
+    }
+
+    #section-menu:hover #sidebar-wrapper {
+        width: 205px;
+    }
+}
+
+@media(max-width:768px) {
+    #wrapper {
+        padding-left: 100px;
+        padding-right: 1%;
+        align-content: center;
+        overflow: hidden;
+        height: 100%;
+    }
+
+        #wrapper.toggled {
+            padding-left: 60px;
             padding-right: 1%;
             margin-left: -50px;
             overflow: hidden;
