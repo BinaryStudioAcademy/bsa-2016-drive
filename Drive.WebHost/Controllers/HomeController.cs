@@ -40,9 +40,7 @@ namespace Drive.WebHost.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> GetFolderContent(string link, int id)
         {
-
             var folderContent = await _sharedByLinkService.GetFolderContent(link, id);
-
             return PartialView("_SharedContent", folderContent);
         }
 
