@@ -12,5 +12,6 @@ namespace Drive.WebHost.Services
         Task<ShareLinkDto> GetShareLinkAsync(int sLinkId);
         Task<string> SetShareLinkAsync(CopyMoveContentDto content);
         Task<ShareLinkDto> GetContentByLink(string id);
+        Task<ShareLinkDto> GetFolderContent(string link, int folderId);
     }
 }

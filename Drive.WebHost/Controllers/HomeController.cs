@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Drive.WebHost.Services;
 using System;
 using Drive.Logging;
-using Drive.WebHost.Models;
 
 namespace Drive.WebHost.Controllers
 {
@@ -38,17 +37,14 @@ namespace Drive.WebHost.Controllers
             return View("Error");
         }
 
-        //[AllowAnonymous]
-        //public async Task<ActionResult> GetFolderContent(int id)
-        //{
-        //    var folderContent = await _folderService.GetContentAsync(id);
-        //    SharedContent shared = new SharedContent()
-        //    {
-        //        Files = folderContent.Files,
-        //        Folders = folderContent.Folders
-        //    };
-        //    return PartialView("_SharedContent", shared);
-        //}
+        [AllowAnonymous]
+        public async Task<ActionResult> GetFolderContent(string link, int id)
+        {
+
+            var folderContent = await _sharedByLinkService.GetFolderContent(link, id);
+
+            return PartialView("_SharedContent", folderContent);
+        }
 
         [AllowAnonymous]
         public async Task<ActionResult> Download(string fileLink)

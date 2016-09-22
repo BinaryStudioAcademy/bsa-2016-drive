@@ -12,7 +12,12 @@
                         {
                             <div class="col-xs-4 middle-div" title="@folder.Name">
                                 <img src="~/Content/Icons/folder.svg" height="30" />
-                                @folder.Name
+                                @Ajax.ActionLink(@folder.Name, "GetFolderContent", new { link = Model.Link, id = @folder.Id },
+                               new AjaxOptions
+                               {
+                                   UpdateTargetId = "content"
+                               })
+                                
                             </div>
                                     <div class="col-xs-5 middle-div" title="@folder.Description">
                                         @folder.Description
