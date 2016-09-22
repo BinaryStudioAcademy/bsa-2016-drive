@@ -10,6 +10,8 @@ using System.Data.Entity;
 using System.Security.Cryptography;
 using System.Text;
 using Drive.DataAccess.Entities;
+using System.Configuration;
+using Driver.Shared.Dto.Users;
 
 namespace Drive.WebHost.Services
 {
@@ -19,29 +21,32 @@ namespace Drive.WebHost.Services
         private readonly ILogger _logger;
         private readonly IUsersService _userService;
         private readonly ISpaceService _spaceService;
+        private readonly IFolderService _folderService;
 
-        public SharedByLinkService(IUnitOfWork unitOfWork, ILogger logger, IUsersService userService, ISpaceService spaceService)
+        public SharedByLinkService(IUnitOfWork unitOfWork, ILogger logger, IUsersService userService, ISpaceService spaceService, IFolderService folderService)
         {
             _unitOfWork = unitOfWork;
             _logger = logger;
             _userService = userService;
             _spaceService = spaceService;
+            _folderService = folderService;
         }
 
 
         public async Task<ShareLinkDto> GetShareLinkAsync(int sLinkId)
         {
             var shareLink = await _unitOfWork.ShareLinks.Query.Include(l => l.Content).Where(l => l.Id == sLinkId)
-                .Select(l => new ShareLinkDto() {
+                .Select(l => new ShareLinkDto()
+                {
                     Id = l.Id,
                     Link = l.Link,
-                    Files = l.Content.Cast<FileUnit>().Select(c => new FileUnitDto()
+                    Files = l.Content.OfType<FileUnit>().Select(c => new FileUnitDto()
                     {
                         Id = c.Id,
                         Name = c.Name,
                         FileType = c.FileType,
                     }),
-                    Folders = l.Content.Cast<FolderUnit>().Select(c => new FolderUnitDto()
+                    Folders = l.Content.OfType<FolderUnit>().Select(c => new FolderUnitDto()
                     {
                         Id = c.Id,
                         Name = c.Name
@@ -68,7 +73,7 @@ namespace Drive.WebHost.Services
             _unitOfWork.ShareLinks.Create(shareLink);
             await _unitOfWork.SaveChangesAsync();
 
-            return shareLink.Link;
+            return string.Format("{0}{1}{2}", ConfigurationManager.AppSettings["basePath"], "/shared/", shareLink.Link);
         }
 
         private string GenerateLink(Object ob)
@@ -86,5 +91,110 @@ namespace Drive.WebHost.Services
             return hashStr;
         }
 
+        public async Task<ShareLinkDto> GetContentByLink(string link)
+        {
+            var shareLink = await _unitOfWork.ShareLinks.Query.Include(l => l.Content).Where(l => l.Link == link)
+                .Select(l => new ShareLinkDto()
+                {
+                    Id = l.Id,
+                    Link = l.Link,
+                    Files = l.Content.OfType<FileUnit>().Where(c => !(c is ImageUnit)).Select(c => new FileUnitDto()
+                    {
+                        Id = c.Id,
+                        Name = c.Name,
+                        Description = c.Description,
+                        FileType = c.FileType,
+                        Link = c.Link
+                    }),
+                    Images = l.Content.OfType<ImageUnit>().Select(c => new ImageUnitDto()
+                    {
+                        Id = c.Id,
+                        Name = c.Name,
+                        Description = c.Description,
+                        FileType = c.FileType,
+                        Link = c.Link,
+                        Prev_Link = c.Prev_Link
+                    }),
+                    Folders = l.Content.OfType<FolderUnit>().Select(c => new FolderUnitDto()
+                    {
+                        Id = c.Id,
+                        Name = c.Name,
+                        Description = c.Description
+                    })
+
+                }).FirstOrDefaultAsync();
+
+            return shareLink;
+        }
+
+        public async Task<ShareLinkDto> GetFolderContent(string link, int folderId)
+        {
+            var shareLink = await _unitOfWork.ShareLinks.Query.Include(l => l.Content).Where(l => l.Link == link)
+                .Select(l => new ShareLinkDto()
+                {
+                    Id = l.Id,
+                    Link = l.Link,
+                    Folders = l.Content.OfType<FolderUnit>().Select(c => new FolderUnitDto()
+                    {
+                        Id = c.Id,
+                        Name = c.Name,
+                        Description = c.Description
+                    })
+                }).FirstOrDefaultAsync();
+
+            if (await checkFolder(shareLink.Folders, folderId))
+            {
+                var content = new ShareLinkDto()
+                {
+                    Link = link,
+                    Folders = await _unitOfWork.Folders.Query.Where(f => f.FolderUnit.Id == folderId).Select(f => new FolderUnitDto()
+                    {
+                        Id = f.Id,
+                        Name = f.Name,
+                        Description = f.Description
+                    }).ToListAsync(),
+                    Files = await _unitOfWork.Files.Query.OfType<FileUnit>().Where(f => !(f is ImageUnit)).Where(f => f.FolderUnit.Id == folderId).Select(f => new FileUnitDto()
+                    {
+                        Id = f.Id,
+                        Name = f.Name,
+                        Description = f.Description,
+                        FileType = f.FileType,
+                        Link = f.Link
+                    }).ToListAsync(),
+                    Images = await _unitOfWork.Files.Query.OfType<ImageUnit>().Where(f => f.FolderUnit.Id == folderId).Select(f => new ImageUnitDto()
+                    {
+                        Id = f.Id,
+                        Name = f.Name,
+                        Description = f.Description,
+                        FileType = f.FileType,
+                        Link = f.Link,
+                        Prev_Link = f.Prev_Link
+                    }).ToListAsync()
+                };
+                return content;         
+            }
+            return null;
+        }
+
+        private async Task<bool> checkFolder(IEnumerable<FolderUnitDto> folders, int folderId)
+        {
+            if (folders.Any(f => f.Id == folderId))
+            {
+                return true;
+            }
+            else if(folders.Count() > 0)
+            {
+                foreach (var f in folders)
+                {
+                    var content = await _folderService.GetContentAsync(f.Id);
+                    if (await checkFolder(content.Folders, folderId))
+                    {
+                        return true;
+                    }
+                }
+
+            }
+            return false;
+        }
     }
 }

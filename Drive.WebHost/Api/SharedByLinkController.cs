@@ -30,15 +30,6 @@ namespace Drive.WebHost.Api
             return Ok(result);
         }
 
-        //// PUT: api/share/getlinks
-        //[HttpPut]
-        //[Route("getlinks")]
-        //public async Task<IHttpActionResult> GetShareLinks(CopyMoveContentDto content)
-        //{
-        //    var result = await _sharedByLinkService.GetShareLinksAsync(content);
-        //    return Ok(result);
-        //}
-
         // PUT: api/share/setlink
         [HttpPut]
         [Route("setlink")]

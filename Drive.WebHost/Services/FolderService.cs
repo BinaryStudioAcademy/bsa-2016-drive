@@ -490,11 +490,16 @@ namespace Drive.WebHost.Services
                 .Select(f => new FolderUnitDto
                 {
                     Id = f.Id,
+                    Name = f.Name,
+                    Description = f.Description
                 }).ToListAsync();
             IEnumerable<FileUnitDto> files = await _unitOfWork.Files.Query.Where(x => x.FolderUnit.Id == id)
                 .Select(f => new FileUnitDto
                 {
                     Id = f.Id,
+                    Name = f.Name,
+                    FileType = f.FileType,
+                    Description = f.Description
                 }).ToListAsync();
 
             return new FolderContentDto

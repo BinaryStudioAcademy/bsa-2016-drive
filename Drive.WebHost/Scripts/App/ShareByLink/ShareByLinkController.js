@@ -5,25 +5,19 @@
         .module("driveApp")
         .controller("ShareByLinkController", ShareByLinkController);
 
-    ShareByLinkController.$inject = ['ShareByLinkService', '$uibModalInstance', 'items'];
+    ShareByLinkController.$inject = ['ShareByLinkService', 'FileService', '$uibModalInstance', 'items'];
 
-    function ShareByLinkController(shareByLinkService, $uibModalInstance, items) {
+    function ShareByLinkController(shareByLinkService, fileService, $uibModalInstance, items) {
         var vm = this;
 
         vm.cancel = cancel;
         vm.setShareLink = setShareLink;
-
+        vm.delItemFromList = delItemFromList;
+        vm.chooseIcon = chooseIcon;
         activate();
 
         function activate() {
             vm.content = items;
-
-            //var shareLinksId = [];
-            //vm.content.files.forEach(function (f) { shareLinksId.push(f.shareLinks); });
-            //vm.content.folders.forEach(function (f) { shareLinksId.push(f.id); });
-            //shareByLinkService.getLink(1, function (data) {
-            //    console.log(data);
-            //});
         }
 
         function setShareLink() {
@@ -33,14 +27,24 @@
             shareByLinkService.setShareLink(contentsId, function (link) {
                 vm.shareLink = link;
             });
-            //$uibModalInstance.close();
+        }
+
+        function delItemFromList(index, isFile) {
+            if (isFile) {
+                vm.content.files.splice(index, 1);
+            }
+            else {
+                vm.content.folders.splice(index, 1);
+            }
         }
 
         function cancel() {
             $uibModalInstance.dismiss('cancel');
         };
 
-
+        function chooseIcon(type) {
+            return fileService.chooseIcon(type);
+        }
 
 
 

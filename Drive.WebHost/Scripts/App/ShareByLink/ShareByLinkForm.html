@@ -6,33 +6,49 @@
         <div class="modal-body">
             <div class="row">
                 <div class="col-md-2">
-                    <img src="./Content/Icons/share-link_bw.svg" height="80" alt="Share items by link" style="" />
+                    <img src="./Content/Icons/share-link_bw.svg" height="75" alt="Share items by link" class="center-block"  style="padding-left:10px;"/>
                 </div>
-                <div id="shared-link-modal" class="col-md-10 ">
-                    <div class="row" ng-repeat="folder in shareByLinkCtrl.content.folders">
-                        <div class="col-md-9">{{folder.name}}</div>
-                        <div class="col-md-3">Folder</div>
-                    </div>
-
-                    <div class="row" ng-repeat="file in shareByLinkCtrl.content.files">
-                        <div class="col-md-9">{{file.name}}</div>
-                        <div class="col-md-3">{{ file.fileType | typeOfFile}}</div>
-                    </div>
-
+                <div id="shared-link-modal" class="col-md-10">
+                    <table class="table table-condensed">
+                        <tbody>
+                            <tr ng-repeat="folder in shareByLinkCtrl.content.folders">
+                                <td>
+                                    <img src="./Content/Icons/folder.svg" height="20" />
+                                    {{folder.name}}
+                                </td>
+                                <td width="5%">
+                                    <span style="font-size: 15px; color: #cccccc; cursor: pointer;" ng-click="shareByLinkCtrl.delItemFromList($index, false)">
+                                        <i class="fa fa-times-circle warning"></i>
+                                    </span>
+                                </td>
+                            </tr>
+                            <tr ng-repeat="file in shareByLinkCtrl.content.files">
+                                <td>
+                                    <img ng-src="{{shareByLinkCtrl.chooseIcon(file.fileType)}}" height="20" />
+                                    {{file.name}}
+                                </td>
+                                <td width="5%">
+                                    <span style="font-size: 15px; color: #cccccc; cursor: pointer;" ng-click="shareByLinkCtrl.delItemFromList($index, true)">
+                                        <i class="fa fa-times-circle"></i>
+                                    </span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="modal-footer row">
                 <div class="form-group col-md-7" ng-show="shareByLinkCtrl.shareLink !== undefined">
                     <label for="Link">Link to share: </label>
-                    <input class="form-control" name="Link" type="text" ng-model="shareByLinkCtrl.shareLink"/>
+                    <input class="form-control" name="Link" type="text" ng-model="shareByLinkCtrl.shareLink" onfocus="this.select();"/>
                 </div>
                 <div class="col-md-5 " ng-class="{'col-md-offset-7': shareByLinkCtrl.shareLink == undefined}">
                     <button type="submit" class="btn btn-primary" ng-click="shareByLinkCtrl.setShareLink()" 
-                            ng-disabled="shareByLinkCtrl.content.files.lenght == 0 && shareByLinkCtrl.content.folders.lenght == 0"
+                            ng-disabled="shareByLinkCtrl.content.files.length == 0 && shareByLinkCtrl.content.folders.length == 0"
                             ng-hide="shareByLinkCtrl.shareLink !== undefined">
                         Get link
                     </button>
-                    <button class="btn btn-default" type="submit" ng-click="shareByLinkCtrl.cancel()">Cancel</button>
+                    <button class="btn btn-default" type="submit" ng-click="shareByLinkCtrl.cancel()">Close</button>
                 </div>
 
             </div>
@@ -43,7 +59,9 @@
     #shared-link-modal {
         max-height: 40vh;
         padding-left: 20px;
-        padding-bottom: 10px;
+        padding-right:35px;
+        padding-top: 10px;
+        padding-bottom: 0;
         overflow-y: auto;
         overflow-x: hidden;
         border: none;
