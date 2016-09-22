@@ -64,5 +64,35 @@ namespace Drive.WebHost.Controllers
             }
             return View("Error");
         }
+
+        [AllowAnonymous]
+        public async Task<ActionResult> FindCourseByFileId(int fileId)
+        {
+            if (fileId != 0)
+            {
+                var course = await _fileService.SearchCourse(fileId);
+                if (course != null)
+                {
+                    string coursePath = string.Format("{0}{1}{2}", System.Configuration.ConfigurationManager.AppSettings["basePath"], "/#/apps/academy/",course.Id);
+                    return Content(string.Format("<script>window.location = '{0}';</script>", coursePath));
+                }                
+            }
+            return View("Error");
+        }
+
+        [AllowAnonymous]
+        public async Task<ActionResult> FindEventByFileId(int fileId)
+        {
+            if (fileId != 0)
+            {
+                var currentEvent = await _fileService.SearchEvent(fileId);
+                if (currentEvent != null)
+                {
+                    string eventPath = string.Format("{0}{1}{2}", System.Configuration.ConfigurationManager.AppSettings["basePath"], "/#/apps/events/", currentEvent.Id);
+                    return Content(string.Format("<script>window.location = '{0}';</script>", eventPath));
+                }
+            }
+            return View("Error");
+        }
     }
 }
