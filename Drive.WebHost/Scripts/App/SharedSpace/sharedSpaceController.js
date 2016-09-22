@@ -5,9 +5,9 @@
         .module("driveApp")
         .controller("SharedSpaceController", SharedSpaceController);
 
-    SharedSpaceController.$inject = ['SharedSpaceService', 'FolderService', 'FileService', '$uibModal', 'localStorageService', '$routeParams', '$location', 'Lightbox'];
+    SharedSpaceController.$inject = ['SharedSpaceService', 'FolderService', 'FileService', '$uibModal', 'localStorageService', '$routeParams', '$location', 'Lightbox', '$cookies'];
 
-    function SharedSpaceController(sharedSpaceService, folderService, fileService, $uibModal, localStorageService, $routeParams, $location, Lightbox) {
+    function SharedSpaceController(sharedSpaceService, folderService, fileService, $uibModal, localStorageService, $routeParams, $location, Lightbox, $cookies) {
         var vm = this;
 
         vm.folderList = [];
@@ -275,7 +275,17 @@
                         vm.openFileWindow();
                     }
                 }
-            }, function ($itemScope) { return $itemScope.file.canModify; }
+            }, function ($itemScope) {
+                if ($itemScope.file.fileType == 7 || $itemScope.file.fileType == 9) {
+                    if ($cookies.get('serverUID') == $itemScope.file.author.globalId) {
+                        return true;
+                    }
+                    else {
+                        return false;
+                    }
+                }
+                return $itemScope.file.canModify;
+            }
             ],
            ['Delete', function ($itemScope) {
                sharedSpaceService.deleteSharedContent($itemScope.file.id, function () {
