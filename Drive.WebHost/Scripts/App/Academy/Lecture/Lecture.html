@@ -6,7 +6,7 @@
             {{lectureCtrl.academy.fileUnit.name | limitTo: 10}}{{lectureCtrl.academy.fileUnit.name.length > 10 ? '...' : ''}}
         </a>
         <a title="{{lectureCtrl.lecture.name}}" class="btn btn-default">
-            {{lectureCtrl.lecture.name | limitTo: 10}}{{lectureCtrl.lecture.name.length > 10 ? '...' : ''}}
+            {{lectureCtrl.lecture.name ? lectureCtrl.lecture.name : 'Lecture' | limitTo: 10}}{{lectureCtrl.lecture.name.length > 10 ? '...' : ''}}
         </a>
     </div>
     <div ng-show="!lectureCtrl.isEditing">
