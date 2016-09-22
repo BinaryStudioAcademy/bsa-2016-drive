@@ -1,8 +1,8 @@
-﻿@model Driver.Shared.Dto.ShareLinkDto
+﻿@using Drive.DataAccess.Entities;
+@model Driver.Shared.Dto.ShareLinkDto
 @{
     Layout = null;
 }
-
 <!DOCTYPE html>
 
 <html>
@@ -38,33 +38,29 @@
 
             <div class="filter-table-internal" style="cursor:pointer;">
                 <div style="transition: all 2s" id="folders">
-
-                    @foreach (var folder in Model.Folders)
-                    {
-                        <div class="filter-table-row">
-                            <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@folder.Name">
-                                <img src="./Content/Icons/folder.svg" height="30" />
-                                @folder.Name
-                            </div>
-                            <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@folder.Description">
-                                @folder.Description
-                            </div>
-                            <div class="col-xs-2 filter-table-cell filter-t-row-1">@folder.Author.Name</div>
-                            <div class="col-xs-2 filter-table-cell filter-t-row-1">Folder</div>
-                        </div>
-                    }
-
+                    <div class="filter-table-row">
+                        @foreach (var folder in Model.Folders)
+                        {
+                                <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@folder.Name">
+                                    <img src="~/Content/Icons/folder.svg" height="30" />
+                                    @folder.Name
+                                </div>
+                                <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@folder.Description">
+                                    @folder.Description
+                                </div>
+                                <div class="col-xs-2 filter-table-cell filter-t-row-1">@folder.Author.Name</div>
+                                <div class="col-xs-2 filter-table-cell filter-t-row-1">Folder</div>
+                        }
+                    </div>
                 </div>
                 <div style="transition: all 2s" id="files">
                     <div class="filter-table-row">
-
                         @foreach (var file in Model.Files)
                         {
                             if (@file.Link.Length > 20)
                             {
-                                <div class="row filter-table-row">
                                     <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@file.Name">
-                                        <img src="./Content/Icons/folder.svg" height="30" />
+                                        <img src="@ChooseIcon(@file.FileType)" height="30" />
                                         @file.Name
                                     </div>
                                     <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@file.Description">
@@ -73,13 +69,11 @@
                                     <div class="col-xs-2 filter-table-cell filter-t-row-1"> @file.Author.Name</div>
                                     <div class="col-xs-2 filter-table-cell filter-t-row-1"> @file.FileType </div>
                                     <a class="col-xs-2 filter-table-cell filter-t-row-1" href="@file.Link" target="_blank"> @file.Link.Substring(0, 20)... </a>
-                                </div>
                             }
                             else
                             {
-                                <div class="row filter-table-row">
                                     <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@file.Name">
-                                        <img src="./Content/Icons/folder.svg" height="30" />
+                                        <img src="@ChooseIcon(@file.FileType)" height="30" />
                                         @file.Name
                                     </div>
                                     <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@file.Description">
@@ -88,7 +82,6 @@
                                     <div class="col-xs-2 filter-table-cell filter-t-row-1"> @file.Author.Name</div>
                                     <div class="col-xs-2 filter-table-cell filter-t-row-1"> @file.FileType </div>
                                     <a class="col-xs-2 filter-table-cell filter-t-row-1" href="@file.Link" target="_blank"> @file.Link </a>
-                                </div>
                             }
 
                         }
@@ -99,3 +92,42 @@
     </div>
 </body>
 </html>
+
+@helper ChooseIcon(FileType type)
+{
+string iconSrc = "/Content/Icons/";
+switch (type)
+{
+    case FileType.Document:
+        iconSrc += "doc.svg";
+        break;
+    case FileType.Sheets:
+        iconSrc += "xls.svg";
+        break;
+    case FileType.Slides:
+        iconSrc += "ppt.svg";
+        break;
+    case FileType.Trello:
+        iconSrc += "trello.svg";
+        break;
+    case FileType.Links:
+        iconSrc += "link.svg";
+        break;
+    case FileType.Uploaded:
+        iconSrc += "physical-file.svg";
+        break;
+    case FileType.AcademyPro:
+        iconSrc += "academyPro.svg";
+        break;
+    case FileType.Images:
+        iconSrc += "image.svg";
+        break;
+    case FileType.Events:
+        iconSrc += "event.svg";
+        break;
+    case FileType.Videos:
+        iconSrc += "video.svg";
+        break;
+}
+    @iconSrc;
+}
