@@ -29,27 +29,26 @@ namespace Drive.WebHost.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> Share(string Id)
         {
-            ViewBag.BasePath = System.Configuration.ConfigurationManager.AppSettings["basePath"];
-            var contentList = await _sharedByLinkService.GetContentByLink(Id);
-            SharedContent shared = new SharedContent()
+            if (!string.IsNullOrEmpty(Id))
             {
-                Files = contentList.Files,
-                Folders = contentList.Folders
-            };
-            return View(shared);
+                ViewBag.BasePath = System.Configuration.ConfigurationManager.AppSettings["basePath"];
+                var contentList = await _sharedByLinkService.GetContentByLink(Id);
+                return View(contentList);
+            }
+            return View("Error");
         }
 
-        [AllowAnonymous]
-        public async Task<ActionResult> GetFolderContent(string link, int id)
-        {
-            var folderContent = await _folderService.GetContentAsync(id);
-            SharedContent shared = new SharedContent()
-            {
-                Files = folderContent.Files,
-                Folders = folderContent.Folders
-            };
-            return PartialView("_SharedContent", shared);
-        }
+        //[AllowAnonymous]
+        //public async Task<ActionResult> GetFolderContent(int id)
+        //{
+        //    var folderContent = await _folderService.GetContentAsync(id);
+        //    SharedContent shared = new SharedContent()
+        //    {
+        //        Files = folderContent.Files,
+        //        Folders = folderContent.Folders
+        //    };
+        //    return PartialView("_SharedContent", shared);
+        //}
 
         [AllowAnonymous]
         public async Task<ActionResult> Download(string fileLink)

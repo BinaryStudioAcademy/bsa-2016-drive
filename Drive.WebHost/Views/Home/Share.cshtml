@@ -1,5 +1,5 @@
-﻿@model Drive.WebHost.Models.SharedContent
-
+﻿@using Drive.DataAccess.Entities;
+@model Driver.Shared.Dto.ShareLinkDto
 @{
     Layout = null;
 }
@@ -13,13 +13,11 @@
     <link href="http://team.binary-studio.com/app/styles/css/style.css" rel="stylesheet" />
     <title>Drive</title>
 </head>
-<body>
-    <div class="row"></div>
+<body style="background-color:#222;">
     <div id="content">
-        @Html.Partial("_SharedContent", Model);
+        @Html.Partial("_SharedContent", Model)
     </div>
     <script src="~/Scripts/Libs/jquery-1.9.0.min.js"></script>
     <script src="~/Scripts/Libs/jquery.unobtrusive-ajax.min.js"></script>
 </body>
 </html>
-
