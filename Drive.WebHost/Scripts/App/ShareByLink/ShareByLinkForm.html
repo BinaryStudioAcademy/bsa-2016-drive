@@ -1,4 +1,5 @@
-﻿<div>
+﻿
+<div>
     <form role="form" class="form-inline" novalidate>
         <div class="modal-header">
             <h3 class="modal-title">Share items by link</h3>
@@ -6,7 +7,7 @@
         <div class="modal-body">
             <div class="row">
                 <div class="col-md-2">
-                    <img src="./Content/Icons/share-link_bw.svg" height="75" alt="Share items by link" class="center-block"  style="padding-left:10px;"/>
+                    <img src="./Content/Icons/share-link_bw.svg" height="75" alt="Share items by link" class="center-block" style="padding-left:10px;" />
                 </div>
                 <div id="shared-link-modal" class="col-md-10">
                     <table class="table table-condensed">
@@ -38,19 +39,25 @@
                 </div>
             </div>
             <div class="modal-footer row">
-                <div class="form-group col-md-7" ng-show="shareByLinkCtrl.shareLink !== undefined">
-                    <label for="Link">Link to share: </label>
-                    <input class="form-control" name="Link" type="text" ng-model="shareByLinkCtrl.shareLink" onfocus="this.select();"/>
+                <div class="form-group col-md-8" ng-show="shareByLinkCtrl.shareLink !== undefined">
+                    <label for="link">Link to share: </label>
+                    <div class="input-group">
+                        <input class="form-control" name="link" id="link" type="text" ng-model="shareByLinkCtrl.shareLink" onfocus="this.select();">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button" ng-copy="shareByLinkCtrl.shareLink" ng-click="shareByLinkCtrl.onSuccess()" title="Copy link to clipboard">
+                                <span class="glyphicon glyphicon glyphicon-copy"></span>
+                            </button>
+                        </span>
+                    </div>
                 </div>
-                <div class="col-md-5 " ng-class="{'col-md-offset-7': shareByLinkCtrl.shareLink == undefined}">
-                    <button type="submit" class="btn btn-primary" ng-click="shareByLinkCtrl.setShareLink()" 
+                <div class="col-md-4" ng-class="{'col-md-offset-8': shareByLinkCtrl.shareLink == undefined}">
+                    <button type="submit" class="btn btn-primary" ng-click="shareByLinkCtrl.setShareLink()"
                             ng-disabled="shareByLinkCtrl.content.files.length == 0 && shareByLinkCtrl.content.folders.length == 0"
                             ng-hide="shareByLinkCtrl.shareLink !== undefined">
                         Get link
                     </button>
                     <button class="btn btn-default" type="submit" ng-click="shareByLinkCtrl.cancel()">Close</button>
                 </div>
-
             </div>
         </div>
     </form>
@@ -59,7 +66,7 @@
     #shared-link-modal {
         max-height: 40vh;
         padding-left: 20px;
-        padding-right:35px;
+        padding-right: 35px;
         padding-top: 10px;
         padding-bottom: 0;
         overflow-y: auto;

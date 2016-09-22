@@ -18,7 +18,8 @@
         "bootstrapLightbox",
         "pdf",
         'videosharing-embed',
-        'ngCookies'
+        'ngCookies',
+        'ng-clipboard'
     ])
     .factory('BaseUrl', function () {
         return window.globalVars.baseUrl;

@@ -74,7 +74,8 @@ gulp.task("libs", function () {
       paths.bower + "build/pdf.combined.js",
       paths.bower + "dist/angular-pdf-viewer.min.js",
       paths.bower + "ng-videosharing-embed.min.js",
-      paths.bower + "angular-cookies.js"
+      paths.bower + "angular-cookies.js",
+      paths.bower + "ng-clipboard.js"
     ])
 
         .pipe(concat("libs.js"))

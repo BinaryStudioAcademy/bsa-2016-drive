@@ -28,7 +28,8 @@
     "pdfjs-dist": "1.5.456",
     "angular-pdf-viewer": "0.2.9",
     "ng-videosharing-embed": "latest",
-    "angular-cookies": "1.5.8"
+    "angular-cookies": "1.5.8",
+    "ng-clipboard": "latest"
   },
   "resolutions": {
     "angular": "1.5.9-build.5006+sha.e3a378e",
