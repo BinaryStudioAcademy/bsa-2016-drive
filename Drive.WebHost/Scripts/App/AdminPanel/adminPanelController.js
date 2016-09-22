@@ -4,9 +4,9 @@
     angular.module("driveApp")
         .controller("adminPanelController", AdminPanelController);
 
-    AdminPanelController.$inject = ['AdminPanelService', '$uibModal', '$window', 'toastr', '$location'];
+    AdminPanelController.$inject = ['AdminPanelService', '$uibModal', '$window', 'toastr', '$location', 'JwtService'];
 
-    function AdminPanelController(adminPanelService, $uibModal, $window, toastr, $location) {
+    function AdminPanelController(adminPanelService, $uibModal, $window, toastr, $location, jwtService) {
 
         var vm = this;
 
@@ -16,11 +16,16 @@
         vm.removeRole = removeRole;
         vm.syncUsers = syncUsers;
         vm.openLogs = openLogs;
+        vm.checkUserIsAdmin = checkUserIsAdmin;
+
+        vm.isAdmin = jwtService.isAdmin;
 
         activate();
 
         function activate() {
+            checkUserIsAdmin();
             vm.title = "Admin Panel";
+
             adminPanelService.getAllRoles(function(data) {
                 vm.roles = data;
             });
@@ -50,6 +55,12 @@
                 function() {
                 });
         };
+
+        function checkUserIsAdmin() {
+            if (vm.isAdmin) {
+                $location.url("/binaryspace");
+            }
+        }
 
         function editRole(size, id) {
             var modalInstance = $uibModal.open({
