@@ -25,13 +25,7 @@
                         Description
                     </div>
                     <div class="col-xs-2 filter-t-row-1">
-                        Author
-                    </div>
-                    <div class="col-xs-2 filter-t-row-1">
                         Type
-                    </div>
-                    <div class="col-xs-2 filter-t-row-1">
-                        Link
                     </div>
                 </div>
             </div>
@@ -48,8 +42,7 @@
                                 <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@folder.Description">
                                     @folder.Description
                                 </div>
-                                <div class="col-xs-2 filter-table-cell filter-t-row-1">@folder.Author.Name</div>
-                                <div class="col-xs-2 filter-table-cell filter-t-row-1">Folder</div>
+                                <div class="col-xs-2 col-xs-offset-4 filter-table-cell filter-t-row-1">Folder</div>
                         }
                     </div>
                 </div>
@@ -57,33 +50,29 @@
                     <div class="filter-table-row">
                         @foreach (var file in Model.Files)
                         {
-                            if (@file.Link.Length > 20)
-                            {
-                                    <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@file.Name">
-                                        <img src="@ChooseIcon(@file.FileType)" height="30" />
-                                        @file.Name
-                                    </div>
-                                    <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@file.Description">
-                                        @file.Description
-                                    </div>
-                                    <div class="col-xs-2 filter-table-cell filter-t-row-1"> @file.Author.Name</div>
-                                    <div class="col-xs-2 filter-table-cell filter-t-row-1"> @file.FileType </div>
-                                    <a class="col-xs-2 filter-table-cell filter-t-row-1" href="@file.Link" target="_blank"> @file.Link.Substring(0, 20)... </a>
-                            }
-                            else
-                            {
-                                    <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@file.Name">
-                                        <img src="@ChooseIcon(@file.FileType)" height="30" />
-                                        @file.Name
-                                    </div>
-                                    <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@file.Description">
-                                        @file.Description
-                                    </div>
-                                    <div class="col-xs-2 filter-table-cell filter-t-row-1"> @file.Author.Name</div>
-                                    <div class="col-xs-2 filter-table-cell filter-t-row-1"> @file.FileType </div>
-                                    <a class="col-xs-2 filter-table-cell filter-t-row-1" href="@file.Link" target="_blank"> @file.Link </a>
-                            }
-
+                           
+                            <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@file.Name">
+                                <img src="@ChooseIcon(@file.FileType)" height="30" />
+                                @if (@file.FileType != FileType.Uploaded)
+                                {
+                                    if (@file.Name.Length > 40)
+                                    {
+                                        <a href="@file.Link" target="_blank"> @file.Name... </a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@file.Link" target="_blank"> @file.Name </a>
+                                    }
+                                }
+                                else
+                                {
+                                    @Html.ActionLink(@file.Name, "Download", new { fileLink = @file.Link})
+                                }
+                            </div>
+                            <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@file.Description">
+                                @file.Description
+                            </div>
+                            <div class="col-xs-2 filter-table-cell filter-t-row-1"> @file.FileType </div>
                         }
                     </div>
                 </div>
