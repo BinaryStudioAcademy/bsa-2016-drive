@@ -5,88 +5,92 @@
 <div class="container-fluid" style="margin-top:10%">
     <div class="row">
         <div class="col-xs-8 col-xs-offset-2" style="background-color:white; padding:0">
-            <div class="filter-table-internal" style="cursor:pointer;">
-                <div style="transition: all 2s" id="folders">
-                    <div class="filter-table-row">
-                        @foreach (var folder in Model.Folders)
-                        {
-                            <div class="col-xs-4 middle-div" title="@folder.Name">
-                                <img src="~/Content/Icons/folder.svg" height="30" />
-                                @Ajax.ActionLink(@folder.Name, "GetFolderContent", new { link = Model.Link, id = @folder.Id },
+            <div class="filter-table-row">
+                @Ajax.ActionLink("Shared", "Share", new { id = Model.Link },
+                               new AjaxOptions { UpdateTargetId = "content" })
+            </div>
+                <div class="filter-table-internal" style="cursor:pointer;">
+                    <div style="transition: all 2s" id="folders">
+                        <div class="filter-table-row">
+                            @foreach (var folder in Model.Folders)
+                            {
+                                <div class="col-xs-4 middle-div" title="@folder.Name">
+                                    <img src="~/Content/Icons/folder.svg" height="30" />
+                                    @Ajax.ActionLink(@folder.Name, "GetFolderContent", new { link = Model.Link, id = @folder.Id },
                                new AjaxOptions
                                {
                                    UpdateTargetId = "content"
                                })
-                                
-                            </div>
-                                    <div class="col-xs-5 middle-div" title="@folder.Description">
-                                        @folder.Description
-                                    </div>
-                                    <div class="col-xs-3 middle-div">Folder</div>
-                        }
-                    </div>
-                </div>
-                <div style="transition: all 2s" id="files">
-                    <div class="filter-table-row">
-                        @foreach (var file in Model.Files)
-                        {
 
-                            <div class="col-xs-4 middle-div" title="@file.Name">
-                                <img src="@ChooseIcon(@file.FileType)" height="30" />
-                                @if (@file.FileType != FileType.Uploaded)
-                                {
-                                    if (@file.Name.Length > 40)
-                                    {
-                                        <a href="@file.Link" target="_blank"> @file.Name... </a>
-                                    }
-                                    else
-                                    {
-                                        <a href="@file.Link" target="_blank"> @file.Name </a>
-                                    }
-                                }
-                                else
-                                {
-                                    @Html.ActionLink(@file.Name, "Download", new { fileLink = @file.Link })
-                                }
-                            </div>
-                                    <div class="col-xs-5 middle-div" title="@file.Description">
-                                        @file.Description
-                                    </div>
-                                    <div class="col-xs-3 middle-div"> @file.FileType </div>
-                        }
+                                </div>
+                                <div class="col-xs-5 middle-div" title="@folder.Description">
+                                    @folder.Description
+                                </div>
+                                    <div class="col-xs-3 middle-div">Folder</div>
+                            }
+                        </div>
                     </div>
-                </div>
-                <div style="transition: all 2s" id="folders">
-                    <div class="filter-table-row">
-                        @foreach (var image in Model.Images)
-                        {
-                            <div class="col-xs-4 middle-div" title="@image.Name">
-                                <img src="~/Content/Icons/image.svg" height="30" />
-                                @if (@image.Prev_Link.Length > 0)
-                                {
-                                    @Html.ActionLink(@image.Name, "Download", new { fileLink = @image.Link })
-                                }
-                                else
-                                {
-                                    if (@image.Name.Length > 40)
+                    <div style="transition: all 2s" id="files">
+                        <div class="filter-table-row">
+                            @foreach (var file in Model.Files)
+                            {
+
+                                <div class="col-xs-4 middle-div" title="@file.Name">
+                                    <img src="@ChooseIcon(@file.FileType)" height="30" />
+                                    @if (@file.FileType != FileType.Uploaded)
                                     {
-                                        <a href="@image.Link" target="_blank"> @image.Name... </a>
+                                        if (@file.Name.Length > 40)
+                                        {
+                                            <a href="@file.Link" target="_blank"> @file.Name... </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@file.Link" target="_blank"> @file.Name </a>
+                                        }
                                     }
                                     else
                                     {
-                                        <a href="@image.Link" target="_blank"> @image.Name </a>
+                                        @Html.ActionLink(@file.Name, "Download", new { fileLink = @file.Link })
                                     }
-                                }
-                            </div>
-                                    <div class="col-xs-5 middle-div" title="@image.Description">
-                                        @image.Description
-                                    </div>
+                                </div>
+                                <div class="col-xs-5 middle-div" title="@file.Description">
+                                    @file.Description
+                                </div>
+                                    <div class="col-xs-3 middle-div"> @file.FileType </div>
+                            }
+                        </div>
+                    </div>
+                    <div style="transition: all 2s" id="folders">
+                        <div class="filter-table-row">
+                            @foreach (var image in Model.Images)
+                            {
+                                <div class="col-xs-4 middle-div" title="@image.Name">
+                                    <img src="~/Content/Icons/image.svg" height="30" />
+                                    @if (@image.Prev_Link.Length > 0)
+                                    {
+                                        @Html.ActionLink(@image.Name, "Download", new { fileLink = @image.Link })
+                                    }
+                                    else
+                                    {
+                                        if (@image.Name.Length > 40)
+                                        {
+                                            <a href="@image.Link" target="_blank"> @image.Name... </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@image.Link" target="_blank"> @image.Name </a>
+                                        }
+                                    }
+                                </div>
+                                <div class="col-xs-5 middle-div" title="@image.Description">
+                                    @image.Description
+                                </div>
                                     <div class="col-xs-3 middle-div">@image.FileType</div>
-                        }
+                            }
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
 </div>
 

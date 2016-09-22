@@ -144,7 +144,6 @@ namespace Drive.WebHost.Services
 
             if (await checkFolder(shareLink.Folders, folderId))
             {
-                // get it
                 var content = new ShareLinkDto()
                 {
                     Link = link,
@@ -154,7 +153,7 @@ namespace Drive.WebHost.Services
                         Name = f.Name,
                         Description = f.Description
                     }).ToListAsync(),
-                    Files = await _unitOfWork.Files.Query.OfType<FileUnit>().Where(f => f.FolderUnit.Id == folderId).Select(f => new FileUnitDto()
+                    Files = await _unitOfWork.Files.Query.OfType<FileUnit>().Where(f => !(f is ImageUnit)).Where(f => f.FolderUnit.Id == folderId).Select(f => new FileUnitDto()
                     {
                         Id = f.Id,
                         Name = f.Name,
