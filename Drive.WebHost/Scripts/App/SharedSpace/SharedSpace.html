@@ -10,15 +10,10 @@
             {{item.name | limitTo: 10}}{{item.name.length > 10 ? '...' : ''}}
         </a>
     </div>
-    <div class="row" style="margin:1em 0 1em 0">
-        <div class="col-lg-push-4-offset pull-right">
-            <button class="btn btn-default" ng-click="sharedSpaceCtrl.changeView(sharedSpaceCtrl.view)">
-                <i class={{sharedSpaceCtrl.view}} title="view"> </i>
-            </button>
-        </div>
-        <div>
-            <div class="col-sm-3 pull-right">
-                <div>
+    <div class="row" style="margin: 1em 0 1em 0;">
+        <div class="col-md-4 pull-right">
+            <div class="row">
+                <div class="col-xs-10 right">
                     <div class="input-group">
                         <form id="form-container">
                             <div id="searchtext">
@@ -31,9 +26,15 @@
                         </form>
                     </div>
                 </div>
+                <div class="col-xs-2 nopadding pull-right">
+                    <button class="btn btn-default pull-right" ng-click="sharedSpaceCtrl.changeView(sharedSpaceCtrl.view)">
+                        <i class={{sharedSpaceCtrl.view}} title="view"> </i>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
+
     <div us-spinner="{radius:5, width:2, length: 5}" style="position:absolute; top:40px; right:37px"></div>
     <!--Gridview-->
     <ul class="sp-gv-flex-container wrap" ng-show="sharedSpaceCtrl.showGrid" context-menu="sharedSpaceCtrl.folderMenuOptions">
@@ -69,12 +70,12 @@
                     <div class="sp-gv-item-img-wrapper-image" ng-show="file.fileType == 10 && file.link.indexOf('youtube.com') !== -1" style="height: 140px">
                         <img ng-src="http://img.youtube.com/vi/{{ file.link | getVideoId }}/0.jpg" class="img-thumbnail" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
                     </div>
-                    <div class="sp-gv-item-img-wrapper" ng-show="file.fileType == 10 && file.link.indexOf('youtube.com') == -1" style="height: 140px">
+                    <div class="sp-gv-item-img-wrapper" ng-show="file.fileType == 10 && file.link.indexOf('youtube.com') == -1">
                         <img ng-src="{{sharedSpaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
                     </div>
                     <div class="sp-gv-item-text">
                         <h4 title="{{file.name}}">{{file.name}}</h4>
-                        <div ng-hide="file.fileType == 8 || file.fileType == 10">
+                        <div ng-hide="(file.fileType == 8 && file.link.indexOf('http') !== -1) || ( file.fileType == 10 && file.link.indexOf('youtube.com') !== -1)">
                             <h5 title="{{file.author.name}}">
                                 <i class="fa fa-user" aria-hidden="true"></i>
                                 {{file.author.name}}
@@ -88,33 +89,35 @@
         <li class="sp-gv-flex-item"></li>
         <li class="sp-gv-flex-item"></li>
         <li class="sp-gv-flex-item"></li>
+        <li class="sp-gv-flex-item"></li>
+        <li class="sp-gv-flex-item"></li>
     </ul>
     <!--End Gridview-->
     <!--TableView-->
     <div class="filter-table container-md" ng-show="sharedSpaceCtrl.showTable">
         <div class="header-wrapper">
             <div class="row header-row" context-menu="sharedSpaceCtrl.containerMenuOptions">
-                <div class="col-md-3" ng-click="sharedSpaceCtrl.orderByColumn('name')">
+                <div class="col-xs-3 filter-t-row-1" ng-click="sharedSpaceCtrl.orderByColumn('name')">
                     Name
                     <span ng-show="sharedSpaceCtrl.columnForOrder == 'name'"><i class="fa fa-sort-asc"></i></span>
                     <span ng-show="sharedSpaceCtrl.columnForOrder == '-name'"><i class="fa fa-sort-desc"></i></span>
                 </div>
-                <div class="col-md-3" ng-click="sharedSpaceCtrl.orderByColumn('description')">
+                <div class="col-xs-3 filter-t-row-1" ng-click="sharedSpaceCtrl.orderByColumn('description')">
                     Description
                     <span ng-show="sharedSpaceCtrl.columnForOrder == 'description'"><i class="fa fa-sort-asc"></i></span>
                     <span ng-show="sharedSpaceCtrl.columnForOrder == '-description'"><i class="fa fa-sort-desc"></i></span>
                 </div>
-                <div class="col-md-2" ng-click="sharedSpaceCtrl.orderByColumn('author.name')">
+                <div class="col-xs-2 filter-t-row-1" ng-click="sharedSpaceCtrl.orderByColumn('author.name')">
                     Author
                     <span ng-show="sharedSpaceCtrl.columnForOrder == 'author.name'"><i class="fa fa-sort-asc"></i></span>
                     <span ng-show="sharedSpaceCtrl.columnForOrder == '-author.name'"><i class="fa fa-sort-desc"></i></span>
                 </div>
-                <div class="col-md-2" ng-click="sharedSpaceCtrl.orderByColumn('createdAt')">
+                <div class="col-xs-2 filter-t-row-1" ng-click="sharedSpaceCtrl.orderByColumn('createdAt')">
                     Created
                     <span ng-show="sharedSpaceCtrl.columnForOrder == 'createdAt'"><i class="fa fa-sort-asc"></i></span>
                     <span ng-show="sharedSpaceCtrl.columnForOrder == '-createdAt'"><i class="fa fa-sort-desc"></i></span>
                 </div>
-                <div class="col-md-2" ng-click="sharedSpaceCtrl.orderByColumn('fileType')">
+                <div class="col-xs-2 filter-t-row-1" ng-click="sharedSpaceCtrl.orderByColumn('fileType')">
                     Type
                     <span ng-show="sharedSpaceCtrl.columnForOrder == 'fileType'"><i class="fa fa-sort-asc"></i></span>
                     <span ng-show="sharedSpaceCtrl.columnForOrder == '-fileType'"><i class="fa fa-sort-desc"></i></span>
@@ -126,32 +129,32 @@
             <div style="transition: all 2s">
                 <div class="filter-table-row">
                     <div class="row filter-table-row" role="button" ng-repeat="folder in sharedSpaceCtrl.space.folders | orderBy: sharedSpaceCtrl.columnForOrder" ng-click="sharedSpaceCtrl.activeRow(folder.id, 'false')" ng-dblclick="sharedSpaceCtrl.getFolderContent(folder.id); sharedSpaceCtrl.addElem(folder)" ng-class="{selected: folder.selected}" context-menu="sharedSpaceCtrl.folderMenuOptions">
-                        <div class="col-md-3 filter-table-cell description" title="{{ folder.name }}">
+                        <div class="col-xs-3 filter-table-cell filter-t-row-1" title="{{ folder.name }}">
                             <img src="./Content/Icons/folder.svg" height="{{sharedSpaceCtrl.iconHeight}}" />
                             {{folder.name | limitTo: 20}}{{folder.name.length > 20 ? '...' : ''}}
                         </div>
-                        <div class="col-md-3 filter-table-cell description" title="{{ folder.description }}">
+                        <div class="col-xs-3 filter-table-cell filter-t-row-1" title="{{ folder.description }}">
                             {{folder.description | limitTo: 28}}{{folder.description.length > 28 ? '...' : ''}}
                         </div>
-                        <div class="col-md-2 filter-table-cell">{{ folder.author.name }}</div>
-                        <div class="col-md-2 filter-table-cell">{{ folder.createdAt | date:'dd-MM-yyyy HH:mm' }}</div>
-                        <div class="col-md-2 filter-table-cell">Folder</div>
+                        <div class="col-xs-2 filter-table-cell filter-t-row-1">{{ folder.author.name }}</div>
+                        <div class="col-xs-2 filter-table-cell filter-t-row-1">{{ folder.createdAt | date:'dd-MM-yyyy HH:mm' }}</div>
+                        <div class="col-xs-2 filter-table-cell filter-t-row-1">Folder</div>
                     </div>
                 </div>
             </div>
             <div style="transition: all 2s">
                 <div class="filter-table-row">
                     <div class="row filter-table-row" role="button" ng-repeat="file in sharedSpaceCtrl.space.files | orderBy: sharedSpaceCtrl.columnForOrder" ng-click="sharedSpaceCtrl.activeRow(file.id, 'true')" ng-class="{selected: file.selected}" context-menu="sharedSpaceCtrl.fileMenuOptions" ng-dblclick="sharedSpaceCtrl.checkFileType(file.fileType) ? sharedSpaceCtrl.openDocument(file) : sharedSpaceCtrl.openLightboxModal(file.id)">
-                        <div class="col-md-3 filter-table-cell description" title="{{ file.name }}">
+                        <div class="col-xs-3 filter-table-cell filter-t-row-1" title="{{ file.name }}">
                             <img ng-src="{{sharedSpaceCtrl.chooseIcon(file.fileType)}}" height="{{sharedSpaceCtrl.iconHeight}}" />
                             {{file.name | limitTo: 20}}{{file.name.length > 20 ? '...' : ''}}
                         </div>
-                        <div class="col-md-3 filter-table-cell description" title="{{ file.description }}">
+                        <div class="col-xs-3 filter-table-cell filter-t-row-1" title="{{ file.description }}">
                             {{file.description | limitTo: 28}}{{file.description.length > 28 ? '...' : ''}}
                         </div>
-                        <div class="col-md-2 filter-table-cell">{{ file.author.name }}</div>
-                        <div class="col-md-2 filter-table-cell">{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</div>
-                        <div class="col-md-2 filter-table-cell">{{ file.fileType | typeOfFile }}</div>
+                        <div class="col-xs-2 filter-table-cell filter-t-row-1">{{ file.author.name }}</div>
+                        <div class="col-xs-2 filter-table-cell filter-t-row-1">{{ file.createdAt | date:'dd-MM-yyyy HH:mm' }}</div>
+                        <div class="col-xs-2 filter-table-cell filter-t-row-1">{{ file.fileType | typeOfFile }}</div>
                     </div>
                 </div>
             </div>

@@ -21,15 +21,15 @@
         vm.getAllSpaces = getAllSpaces;
         vm.open = open;
         vm.spaces = {};
-        vm.isAdmin = jwtService.isAdmin
+        vm.isAdmin = jwtService.isAdmin;
 
         activate();
 
         function getAllSpaces() {
-            menuService.getAllSpaces(function (data) {
+            menuService.getAllSpaces(function(data) {
                 vm.spaces = data;
                 for (var i = 0; i < vm.spaces.length; i++) {
-                    if (vm.spaces[i].type == 2) {
+                    if (vm.spaces[i].type === 2) {
                         vm.showOthers = true;
                         break;
                     }
@@ -83,12 +83,12 @@
 
             });
 
-            modalInstance.result.then(function () {
-                getAllSpaces();
-            },
-            function () {
-                getAllSpaces();
-            });
+            modalInstance.result.then(function() {
+                    getAllSpaces();
+                },
+                function() {
+                    getAllSpaces();
+                });
         };
 
         function activate() {
@@ -96,8 +96,9 @@
             getAllSpaces();
         }
 
-        $rootScope.$on("getSpacesInMenu", function () {
-            getAllSpaces();
-        });
+        $rootScope.$on("getSpacesInMenu",
+            function() {
+                getAllSpaces();
+            });
     }
 }());

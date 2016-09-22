@@ -1,4 +1,5 @@
-﻿<div class="container col-md-12">
+﻿
+<div class="container col-md-12">
     <br />
     <div class="btn-group btn-breadcrumb">
         <a class="btn btn-info"><i class="fa fa-calendar fa-lg"></i> Events</a>
@@ -6,14 +7,9 @@
     <div>
         <div us-spinner="{radius:5, width:2, length: 5}" style="position:absolute; top:40px; right:35px"></div>
         <div class="row" style="margin: 1em 0 1em 0;">
-            <div class="col-lg-push-4-offset pull-right">
-                <button class="btn btn-default" ng-click="eventsListCtrl.changeView(eventsListCtrl.view)">
-                    <i class={{eventsListCtrl.view}} title="view"> </i>
-                </button>
-            </div>
-            <div>
-                <div class="col-sm-3 pull-right">
-                    <div>
+            <div class="col-md-4 pull-right">
+                <div class="row">
+                    <div class="col-xs-10 right">
                         <div class="input-group">
                             <form id="form-container">
                                 <div id="searchtext">
@@ -26,9 +22,15 @@
                             </form>
                         </div>
                     </div>
+                    <div class="col-xs-2 nopadding pull-right">
+                        <button class="btn btn-default pull-right" ng-click="eventsListCtrl.changeView(eventsListCtrl.view)">
+                            <i class={{eventsListCtrl.view}} title="view"> </i>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
+
         <div class="wrap" ng-show="!eventsListCtrl.showTable">
             <div ng-show="eventsListCtrl.eventsList.length == 0">
                 <h2 class="text-muted text-center">Files not found</h2>
@@ -37,7 +39,7 @@
                 <div class="grid-space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ eventspace.name }}</div>
                 <div uib-collapse="space.isCollapsed">
                     <ul class="sp-gv-flex-container">
-                        <li class="sp-gv-flex-item" role="button" ng-repeat="event in eventspace.events" context-menu="eventsListCtrl.eventMenuOptions" ng-dblclick="eventsListCtrl.openEvent(event.id)" title="Created {{ event.createdAt | date : 'short' }}">
+                        <li class="sp-gv-flex-item" style="margin-bottom: 15px" role="button" ng-repeat="event in eventspace.events" context-menu="eventsListCtrl.eventMenuOptions" ng-dblclick="eventsListCtrl.openEvent(event.id)" title="Created {{ event.createdAt | date : 'short' }}">
                             <div class="sp-gv-wrapper-flex-item ">
                                 <div class="sp-gv-item-content cards">
                                     <div class="sp-gv-item-img-wrapper">
@@ -63,6 +65,7 @@
                         <li class="sp-gv-flex-item"></li>
                         <li class="sp-gv-flex-item"></li>
                         <li class="sp-gv-flex-item"></li>
+                        <li class="sp-gv-flex-item"></li>
                     </ul>
                 </div>
                 <hr />
@@ -71,27 +74,27 @@
         <div class="filter-table container-md" ng-show="eventsListCtrl.showTable">
             <div class="header-wrapper">
                 <div class="row header-row">
-                    <div class="col-md-3" ng-click="eventsListCtrl.orderEventByColumn('fileUnit.name')">
+                    <div class="col-xs-3 filter-t-row-1" ng-click="eventsListCtrl.orderEventByColumn('fileUnit.name')">
                         Name
                         <span ng-show="eventsListCtrl.eventColumnForOrder == 'fileUnit.name'"><i class="fa fa-sort-asc"></i></span>
                         <span ng-show="eventsListCtrl.eventColumnForOrder == '-fileUnit.name'"><i class="fa fa-sort-desc"></i></span>
                     </div>
-                    <div class="col-md-3" ng-click="eventsListCtrl.orderEventByColumn('fileUnit.description')">
+                    <div class="col-xs-3 filter-t-row-1" ng-click="eventsListCtrl.orderEventByColumn('fileUnit.description')">
                         Description
                         <span ng-show="eventsListCtrl.eventColumnForOrder == 'fileUnit.description'"><i class="fa fa-sort-asc"></i></span>
                         <span ng-show="eventsListCtrl.eventColumnForOrder == '-fileUnit.description'"><i class="fa fa-sort-desc"></i></span>
                     </div>
-                    <div class="col-md-2" ng-click="eventsListCtrl.orderEventByColumn('author.name')">
+                    <div class="col-xs-2 filter-t-row-1" ng-click="eventsListCtrl.orderEventByColumn('author.name')">
                         Author
                         <span ng-show="eventsListCtrl.eventColumnForOrder == 'author.name'"><i class="fa fa-sort-asc"></i></span>
                         <span ng-show="eventsListCtrl.eventColumnForOrder == '-author.name'"><i class="fa fa-sort-desc"></i></span>
                     </div>
-                    <div class="col-md-2" ng-click="eventsListCtrl.orderEventByColumn('fileUnit.createdAt')">
+                    <div class="col-xs-2 filter-t-row-1" ng-click="eventsListCtrl.orderEventByColumn('fileUnit.createdAt')">
                         Created
                         <span ng-show="eventsListCtrl.eventColumnForOrder == 'fileUnit.createdAt'"><i class="fa fa-sort-asc"></i></span>
                         <span ng-show="eventsListCtrl.eventColumnForOrder == '-fileUnit.createdAt'"><i class="fa fa-sort-desc"></i></span>
                     </div>
-                    <div class="col-md-2" ng-click="eventsListCtrl.orderEventByColumn('eventType')">
+                    <div class="col-xs-2 filter-t-row-1" ng-click="eventsListCtrl.orderEventByColumn('eventType')">
                         Type
                         <span ng-show="eventsListCtrl.eventColumnForOrder == 'eventType'"><i class="fa fa-sort-asc"></i></span>
                         <span ng-show="eventsListCtrl.eventColumnForOrder == '-eventType'"><i class="fa fa-sort-desc"></i></span>
@@ -108,16 +111,16 @@
                         <div style="transition: all 2s">
                             <div class="filter-table-row">
                                 <div class="row filter-table-row" role="button" ng-repeat="event in eventspace.events | orderBy: eventsListCtrl.eventColumnForOrder" ng-dblclick="eventsListCtrl.openEvent(event.id)" context-menu="eventsListCtrl.eventMenuOptions">
-                                    <div class="col-md-3 filter-table-cell description" title="{{ event.fileUnit.name }}">
+                                    <div class="col-xs-3 filter-table-cell filter-t-row-1" title="{{ event.fileUnit.name }}">
                                         <img ng-src="{{eventsListCtrl.icon}}" height="{{eventsListCtrl.iconHeight}}" />
                                         {{event.fileUnit.name | limitTo: 15}}{{event.fileUnit.name.length > 15 ? '...' : ''}}
                                     </div>
-                                    <div class="col-md-3 filter-table-cell description" title="{{event.fileUnit.description}}">
+                                    <div class="col-xs-3 filter-table-cell filter-t-row-1" title="{{event.fileUnit.description}}">
                                         {{event.fileUnit.description | limitTo: 30}}{{event.fileUnit.description.length > 30 ? '...' : ''}}
                                     </div>
-                                    <div class="col-md-2 filter-table-cell">{{ event.author.name }}</div>
-                                    <div class="col-md-2 filter-table-cell">{{ event.fileUnit.createdAt | date:'dd-MM-yyyy HH:mm' }}</div>
-                                    <div class="col-md-2 filter-table-cell">{{ event.eventType }}</div>
+                                    <div class="col-xs-2 filter-table-cell filter-t-row-1">{{ event.author.name }}</div>
+                                    <div class="col-xs-2 filter-table-cell filter-t-row-1">{{ event.fileUnit.createdAt | date:'dd-MM-yyyy HH:mm' }}</div>
+                                    <div class="col-xs-2 filter-table-cell filter-t-row-1">{{ event.eventType }}</div>
                                 </div>
                             </div>
                         </div>

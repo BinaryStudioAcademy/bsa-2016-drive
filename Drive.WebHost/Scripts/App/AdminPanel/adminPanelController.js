@@ -115,7 +115,7 @@
         function syncUsers() {
             adminPanelService.syncUsers(function() {
                 toastr.success(
-                    'Users have been synchronized.',
+                    'Users have been synchronized',
                     'Synced!',
                     {
                         closeButton: true,

@@ -14,19 +14,18 @@
         </div>
         <h2>Roles</h2>
     </div>
-    <div class="col-md-10 col-md-offset-1">
-        <br />
+    <div class="col-md-12">
         <table class="table users table-striped table-hover">
             <thead>
                 <tr>
-                    <th style="width: 89%">Role name</th>
-                    <th style="width: 11%">Actions</th>
+                    <th style="width: 90%">Role name</th>
+                    <th style="width: 10%">Actions</th>
                 </tr>
             </thead>
             <tbody style="height: 330px;">
                 <tr ng-repeat="item in adminCtrl.roles">
                     <td style="width: 90%" class="description" title="{{item.name}}">
-                        {{item.name | limitTo: 90}}{{item.name.length > 90 ? '...' : ''}}
+                        {{item.name | limitTo: 115}}{{item.name.length > 115 ? '...' : ''}}
                     </td>
                     <td style="width: 5%">
                         <i role="button" class="fa fa-pencil-square-o fa-lg" aria-hidden="true" ng-click="adminCtrl.editRole('lg', item.id);" title="Edit role"></i>

@@ -1,11 +1,12 @@
-﻿<div class="container-fluid">
+﻿
+<div class="container-fluid">
     <br />
     <div class="btn-group btn-breadcrumb">
         <a ng-click="eventCreateCtrl.getEventList()" class="btn btn-info"><i class="fa fa-calendar fa-lg"></i> Events </a>
     </div>
     <div>
-        <label class="create-event-title">Create new event</label>
-        <div class="row" style="margin: 1em 0 1em 0; padding-left: 0">
+        <h3>Create new event</h3>
+        <div class="row" style="margin-right: 2%">
             <div class="col-sm-12">
                 <button class="btn btn-info pull-right savebtn" ng-click="eventCreateCtrl.create()" title="Create new event" ng-disabled="eventForm.$invalid">
                     <i class="fa fa-plus-circle fa-lg"></i> Create
@@ -20,7 +21,7 @@
     <div>
         <div class="create-event-wrap">
             <div class="container">
-                <div class="col-md-12" style="padding-left: 0">
+                <div class="col-md-12" style="margin-right: 2%">
                     <form name="eventForm" ng-submit="submitForm()" novalidate>
                         <div class="form-group">
                             <div class="row">
@@ -33,10 +34,10 @@
                                     <input type="text" name="eventtype" class="form-control col-sm-4 col-md-4 col-lg-4 text-valid" ng-model="eventCreateCtrl.event.eventType" placeholder="Event type" required>
                                 </div>
                             </div>
-                            <div class="col-sm-2 col-md-2 col-lg-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
-                                <p ng-show="eventForm.name.$error.required && eventForm.name.$touched" class="help-block">Name is required</p>
+                            <div class="col-sm-1 col-md-1 col-lg-2 col-sm-offset-1">
+                                <p ng-show="eventForm.name.$error.required && eventForm.name.$touched" class="help-block" style="margin-left: 15%">Name is required</p>
                             </div>
-                            <div class="col-sm-2 col-md-2 col-lg-2 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">
+                            <div class="col-sm-2 col-md-2 col-lg-2 col-sm-offset-4 col-md-offset-4">
                                 <p ng-show="eventForm.eventtype.$error.required && eventForm.eventtype.$touched" class="help-block">Type is required</p>
                             </div>
                         </div>
@@ -50,6 +51,7 @@
                                                ng-model="eventCreateCtrl.event.eventDate" is-open="eventCreateCtrl.calendar.isOpen" placeholder="Select date"
                                                timepicker-options="eventCreateCtrl.calendar.timepickerOptions" required />
                                         <button type="button" class="btn btn-default" ng-click="eventCreateCtrl.calendar.openCalendar($event, prop)"><i class="fa fa-calendar"></i></button>
+                                        <span ng-show="eventForm.date.$error.required && eventForm.date.$touched" class="help-block">Date is required</span>
                                     </span>
                                 </div>
                                 <label class="col-sm-2 col-md-2 col-lg-2 create-event-form" style="margin-left:-8px">Description:</label>
@@ -60,35 +62,40 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-6">
-                    <i role="button" class="glyphicon"
-                       title="{{eventCtrl.isCollapsed ? 'Expand' : 'Collapse'}}"
-                       ng-click="eventCreateCtrl.changeCollapseState()"
-                       ng-hide="eventCreateCtrl.event.contentList.length==0"
-                       ng-class="{'fa fa-compress fa-2x': !eventCreateCtrl.isCollapsed, 'fa fa-expand fa-2x': eventCreateCtrl.isCollapsed}" aria-hidden="true">
-
-                    </i>
-                </div>
-                <div class="col-sm-6">
-                    <div class="btn-group pull-right" style="cursor:pointer">
-                        <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Add content <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a ng-click="eventCreateCtrl.newText()">New Text</a></li>
-                            <li><a ng-click="eventCreateCtrl.newPhoto()">New photo</a></li>
-                            <li><a ng-click="eventCreateCtrl.newVideo()">New video</a></li>
-                            <li><a ng-click="eventCreateCtrl.newSimpleLink()">New link</a></li>
-                        </ul>
-                    </div>
+                <div class="btn-group pull-right" style="cursor: pointer; margin-right: 5%">
+                    <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Add content <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a ng-click="eventCreateCtrl.newText()">New Text</a>
+                        </li>
+                        <li>
+                            <a ng-click="eventCreateCtrl.newPhoto()">New photo</a>
+                        </li>
+                        <li>
+                            <a ng-click="eventCreateCtrl.newVideo()">New video</a>
+                        </li>
+                        <li>
+                            <a ng-click="eventCreateCtrl.newSimpleLink()">New link</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
-            <br />
             <div ng-if="eventCreateCtrl.showEditArea">
                 <create-event-content contents-model="eventCreateCtrl.currentContent"
                                       content-list="eventCreateCtrl.event.contentList"
                                       after-save-method="eventCreateCtrl.contentSaved">
                 </create-event-content>
+            </div>
+            <div class="col-sm-6">
+                <i role="button" class="glyphicon"
+                   title="{{eventCtrl.isCollapsed ? 'Expand' : 'Collapse'}}"
+                   ng-click="eventCreateCtrl.changeCollapseState()"
+                   ng-hide="eventCreateCtrl.event.contentList.length==0"
+                   ng-class="{'fa fa-compress fa-2x': !eventCreateCtrl.isCollapsed, 'fa fa-expand fa-2x': eventCreateCtrl.isCollapsed}" aria-hidden="true">
+
+                </i>
             </div>
             <div class="create-eventcontent-wrap" dnd-list="eventCreateCtrl.event.contentList">
                 <div ng-repeat="content in eventCreateCtrl.event.contentList"
@@ -97,7 +104,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="space-label" ng-click="content.isCollapsed = !content.isCollapsed">
-                                <i class="glyphicon"                                
+                                <i class="glyphicon"
                                    ng-class="{'fa fa-plus-square-o': content.isCollapsed, 'fa fa-minus-square-o': !content.isCollapsed}" aria-hidden="true"></i>
                                 {{ content.contentType | contentType}}: {{content.name | limitTo: 20}}{{content.name.length > 20 ? '...' : ''}}
                                 <i role="button" class="fa fa-trash fa-lg pull-right" ng-click="eventCreateCtrl.removeContent($index); $event.stopPropagation();" title="Delete content" aria-hidden="true"></i>

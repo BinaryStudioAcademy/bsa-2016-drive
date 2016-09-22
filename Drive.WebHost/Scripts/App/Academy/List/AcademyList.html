@@ -6,14 +6,9 @@
     <div>
         <div us-spinner="{radius:5, width:2, length: 5}" style="position:absolute; top:40px; right:35px"></div>
         <div class="row" style="margin: 1em 0 1em 0;">
-            <div class="col-lg-push-4-offset pull-right">
-                <button class="btn btn-default" ng-click="academyListCtrl.changeView(academyListCtrl.view)">
-                    <i class={{academyListCtrl.view}} title="view"> </i>
-                </button>
-            </div>
-            <div>
-                <div class="col-sm-3 pull-right">
-                    <div>
+            <div class="col-md-4 pull-right">
+                <div class="row">
+                    <div class="col-xs-10 right">
                         <div class="input-group">
                             <form id="form-container">
                                 <div id="searchtext">
@@ -26,9 +21,16 @@
                             </form>
                         </div>
                     </div>
+                    <div class="col-xs-2 nopadding pull-right">
+                        <button class="btn btn-default pull-right" ng-click="academyListCtrl.changeView(academyListCtrl.view)">
+                            <i class={{academyListCtrl.view}} title="view"> </i>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
+         </div>
+
+
         <div class="wrap" ng-show="!academyListCtrl.showTable">
             <div ng-show="academyListCtrl.academiesList.length == 0">
                 <h2 class="text-muted text-center">Files not found</h2>
@@ -37,7 +39,7 @@
                 <div class="grid-space-label" ng-click="space.isCollapsed = !space.isCollapsed">{{ academyspace.name }}</div>
                 <div uib-collapse="space.isCollapsed">
                     <ul class="sp-gv-flex-container">
-                        <li class="sp-gv-flex-item" role="button" ng-repeat="academy in academyspace.courses" ng-dblclick="academyListCtrl.openCourse(academy.id)" context-menu="academyListCtrl.courseMenuOptions" title="Created {{ academy.createdAt | date : 'short' }}">
+                        <li class="sp-gv-flex-item" style="margin-bottom: 15px" role="button" ng-repeat="academy in academyspace.courses" ng-dblclick="academyListCtrl.openCourse(academy.id)" context-menu="academyListCtrl.courseMenuOptions" title="Created {{ academy.createdAt | date : 'short' }}">
                             <div class="sp-gv-wrapper-flex-item ">
                                 <div class="sp-gv-item-content cards">
                                     <div class="sp-gv-item-img-wrapper">
@@ -62,6 +64,9 @@
                         <li class="sp-gv-flex-item"></li>
                         <li class="sp-gv-flex-item"></li>
                         <li class="sp-gv-flex-item"></li>
+                        <li class="sp-gv-flex-item"></li>
+                        <li class="sp-gv-flex-item"></li>
+                        <li class="sp-gv-flex-item"></li>
                     </ul>
                 </div>
                 <hr />
@@ -70,22 +75,22 @@
         <div class="filter-table container-md" ng-show="academyListCtrl.showTable">
             <div class="header-wrapper">
                 <div class="row header-row">
-                    <div class="col-md-3" ng-click="academyListCtrl.orderCourseByColumn('fileUnit.name')">
+                    <div class="col-xs-3 filter-t-row-1" ng-click="academyListCtrl.orderCourseByColumn('fileUnit.name')">
                         Name
                         <span ng-show="academyListCtrl.courseColumnForOrder == 'fileUnit.name'"><i class="fa fa-sort-asc"></i></span>
                         <span ng-show="academyListCtrl.courseColumnForOrder == '-fileUnit.name'"><i class="fa fa-sort-desc"></i></span>
                     </div>
-                    <div class="col-md-5" ng-click="academyListCtrl.orderCourseByColumn('fileUnit.description')">
+                    <div class="col-xs-5 filter-t-row-1" ng-click="academyListCtrl.orderCourseByColumn('fileUnit.description')">
                         Description
                         <span ng-show="academyListCtrl.courseColumnForOrder == 'fileUnit.description'"><i class="fa fa-sort-asc"></i></span>
                         <span ng-show="academyListCtrl.courseColumnForOrder == '-fileUnit.description'"><i class="fa fa-sort-desc"></i></span>
                     </div>
-                    <div class="col-md-2" ng-click="academyListCtrl.orderCourseByColumn('author.name')">
+                    <div class="col-xs-2 filter-t-row-1" ng-click="academyListCtrl.orderCourseByColumn('author.name')">
                         Author
                         <span ng-show="academyListCtrl.courseColumnForOrder == 'author.name'"><i class="fa fa-sort-asc"></i></span>
                         <span ng-show="academyListCtrl.courseColumnForOrder == '-author.name'"><i class="fa fa-sort-desc"></i></span>
                     </div>
-                    <div class="col-md-2" ng-click="academyListCtrl.orderCourseByColumn('startDate')">
+                    <div class="col-xs-2 filter-t-row-1" ng-click="academyListCtrl.orderCourseByColumn('startDate')">
                         Start Date
                         <span ng-show="academyListCtrl.courseColumnForOrder == 'startDate'"><i class="fa fa-sort-asc"></i></span>
                         <span ng-show="academyListCtrl.courseColumnForOrder == '-startDate'"><i class="fa fa-sort-desc"></i></span>
@@ -102,15 +107,15 @@
                         <div style="transition: all 2s">
                             <div class="filter-table-row">
                                 <div class="row filter-table-row" role="button" ng-repeat="academy in academyspace.courses | orderBy: academyListCtrl.courseColumnForOrder" ng-dblclick="academyListCtrl.openCourse(academy.id)" context-menu="academyListCtrl.courseMenuOptions">
-                                    <div class="col-md-3 filter-table-cell description" title="{{ academy.fileUnit.name }}">
+                                    <div class="col-xs-3 filter-table-cell filter-t-row-1" title="{{ academy.fileUnit.name }}">
                                         <img ng-src="{{academyListCtrl.icon}}" height="{{academyListCtrl.iconHeight}}" />
                                         {{academy.fileUnit.name | limitTo: 23}}{{academy.fileUnit.name.length > 23 ? '...' : ''}}
                                     </div>
-                                    <div class="col-md-5 filter-table-cell description" title="{{academy.fileUnit.description}}">
+                                    <div class="col-xs-5 filter-table-cell filter-t-row-1" title="{{academy.fileUnit.description}}">
                                         {{academy.fileUnit.description | limitTo: 56}}{{academy.fileUnit.description.length > 56 ? '...' : ''}}
                                     </div>
-                                    <div class="col-md-2 filter-table-cell">{{ academy.author.name }}</div>
-                                    <div class="col-md-2 filter-table-cell">{{ academy.startDate | date:'dd-MM-yyyy HH:mm' }}</div>
+                                    <div class="col-xs-2 filter-table-cell filter-t-row-1">{{ academy.author.name }}</div>
+                                    <div class="col-xs-2 filter-table-cell filter-t-row-1">{{ academy.startDate | date:'dd-MM-yyyy HH:mm' }}</div>
                                 </div>
                             </div>
                         </div>

@@ -16,6 +16,8 @@ body {
     padding-right: 15px;
     overflow: hidden;
     height: 100%;
+    min-width: 400px;
+
 }
 
 .navbar-inverse {
@@ -70,6 +72,7 @@ textarea {
 
 .thumbnail {
     margin-bottom: 20px;
+    border: 0;
     padding: 0px;
     -webkit-border-radius: 0px;
     -moz-border-radius: 0px;
@@ -97,24 +100,6 @@ textarea {
     .item.list-group-item:after {
         clear: both;
     }
-
-/*Ng-include on Index page*/
-/*.include-index {
-    float: left;
-    max-width: 190px;
-    margin: 0;
-    overflow: hidden;
-}*/
-
-/*Ng-view on Index page*/
-/*.view-index {
-    margin-left: 120px;
-    padding-left: 4%;
-    margin-right: 0%;
-    align-content: center;
-    overflow: hidden;
-    height: 100%
-}*/
 
 /*Modal window for creating new space*/
 .modal-body {
@@ -431,6 +416,64 @@ textarea {
     }
 }
 
+@media(max-width:768px) {
+    #wrapper {
+        padding-left: 100px;
+        padding-right: 1%;
+        align-content: center;
+        overflow: hidden;
+        height: 100%;
+    }
+
+        #wrapper.toggled {
+            padding-left: 60px;
+            padding-right: 1%;
+            margin-left: -50px;
+            overflow: hidden;
+            align-content: center;
+        }
+
+    #sidebar-wrapper {
+        width: 205px;
+    }
+
+    #sidebar-toggle {
+        width: 205px;
+    }
+
+    #wrapper.toggled #sidebar-wrapper {
+        width: 42px;
+    }
+
+    #wrapper.toggled #sidebar-toggle {
+        width: 42px;
+    }
+
+    #page-content-wrapper {
+        position: relative;
+        overflow: hidden;
+        margin-left: 2%;
+        margin-right: 1%;
+    }
+
+    #wrapper.toggled #page-content-wrapper {
+        padding-bottom: 0px;
+        position: relative;
+        margin-right: 0;
+        overflow: hidden;
+        overflow-y: hidden;
+        overflow-x: hidden;
+    }
+
+    #section-menu:hover #sidebar-toggle {
+        width: 205px;
+    }
+
+    #section-menu:hover #sidebar-wrapper {
+        width: 205px;
+    }
+}
+
 /*Other and Apps tabs in menu*/
 .span-icon {
     margin-left: -10px;
@@ -611,6 +654,12 @@ hr.style {
     display: none;
 }
 
+.filter-t-row-1 {
+    display: inline-block;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden !important;
+}
 
 /*end table in space*/
 
@@ -838,13 +887,6 @@ small,
 }
 /*End Search input*/
 
-/*Cancel button on search input
-input[type="search"]::-webkit-search-cancel-button {
-    -webkit-appearance: searchfield-cancel-button;
-    margin-right: -5px;
-}
-End Cancel button on search input*/
-
 /*Shadow for cards on Gridview*/
 .cards {
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
@@ -1042,6 +1084,10 @@ End Cancel button on search input*/
 /*End Add new user*/
 
 /*Upload file*/
+.upload-drag-and-drop {
+    border: dashed 3px lightgray;
+    margin: 3px 3px 3px 3px;
+}
 .table-upload-file {
     color: #666;
     text-shadow: 1px 1px 0px #fff;
@@ -1053,7 +1099,12 @@ End Cancel button on search input*/
     -webkit-box-shadow: 0 1px 2px #d1d1d1;
     box-shadow: 0 1px 2px #d1d1d1;
 }
-
+    .table-upload-file tbody div{
+        overflow: scroll;
+        max-height: 260px;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
     .table-upload-file th {
         height: 50px;
         background: #eaebec;
@@ -1173,9 +1224,9 @@ End Cancel button on search input*/
 .bootstrap .autocomplete {
     border-radius: 4px;
 }
-/*ent tags input*/
-/*show tags*/
+/*end tags input*/
 
+/*show tags*/
 .tagslist {
     cursor: pointer;
 }
@@ -1618,7 +1669,7 @@ li.folder.on-drag-enter {
 /*end create event content wrap*/
 /* style for textarea*/
 .contenttext {
-    max-width: 100%;
+    max-width: 95%;
     line-height: 1em;
 }
 /* end style for textarea*/
@@ -1642,6 +1693,11 @@ li.folder.on-drag-enter {
 /*Event view*/
 
 /*Edit event view*/
+.event-header {
+    margin: 0;
+    padding-bottom: 0px;
+}
+
 .edit-event-wrap {
     position: relative;
     width: 100%;

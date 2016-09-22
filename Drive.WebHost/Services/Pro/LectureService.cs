@@ -27,6 +27,7 @@ namespace Drive.WebHost.Services.Pro
 
         public async Task<IEnumerable<LectureDto>> GetAllAsync()
         {
+            string userId = _userService.CurrentUserId;
             var result = await _unitOfWork.Lectures.Query.Where(x => x.IsDeleted == false).Select(lecture => new LectureDto
             {
                 Id = lecture.Id,
@@ -36,7 +37,8 @@ namespace Drive.WebHost.Services.Pro
                 ModifiedAt = lecture.ModifiedAt,
                 IsDeleted = lecture.IsDeleted,
                 StartDate = lecture.StartDate,
-                CourseId = lecture.Course.Id
+                CourseId = lecture.Course.Id,
+                CanModify = lecture.Author.GlobalId == userId
             }).ToListAsync();
 
             return result;
@@ -44,6 +46,7 @@ namespace Drive.WebHost.Services.Pro
 
         public async Task<LectureDto> GetAsync(int id)
         {
+            string userId = _userService.CurrentUserId;
             var result = await _unitOfWork.Lectures.Query.Where(x => x.Id == id).Select(lecture => new LectureDto
             {
                 Id = lecture.Id,
@@ -108,6 +111,7 @@ namespace Drive.WebHost.Services.Pro
                     DeadlineDate = task.DeadlineDate
                 }),
                 CourseId = lecture.Course.Id,
+                CanModify = lecture.Author.GlobalId == userId,
                 Author = new AuthorDto { Id = lecture.Author.Id }
             }).SingleOrDefaultAsync();
 

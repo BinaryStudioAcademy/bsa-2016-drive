@@ -5,7 +5,7 @@
         .module("driveApp")
         .controller("SpaceController", SpaceController);
 
-    SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', 'TrashBinService', '$uibModal', 'localStorageService', '$routeParams', '$location', 'toastr', '$scope', 'hotkeys', 'Lightbox'];
+    SpaceController.$inject = ['SpaceService', 'FolderService', 'FileService', 'TrashBinService', '$uibModal', 'localStorageService', '$routeParams', '$location', 'toastr', '$scope', 'hotkeys', 'Lightbox', '$cookies'];
 
     function SpaceController(spaceService,
         folderService,
@@ -18,7 +18,8 @@
         toastr,
         $scope,
         hotkeys,
-        Lightbox) {
+        Lightbox,
+        $cookies) {
         var vm = this;
 
         vm.folderList = [];
@@ -101,13 +102,11 @@
             getContent: null
         }
 
-        //vm.pageChanged = function (pageNumber) {
-        //    vm.paginate.currentPage = pageNumber;
-        //    vm.paginate.getContent();
-        //}
         vm.folderMenuOptionShareShow = true;
         vm.fileMenuOptionShareShow = true;
         vm.sharedModalWindowTitle = null;
+
+        vm.reloadContent = reloadContent;
 
         activate();
 
@@ -344,9 +343,9 @@
             null,
             [
                 'Share', function ($itemScope) {
-                    vm.contentSharedId = $itemScope.folder.id;
+                    vm.contentShared = $itemScope.folder;
                     vm.sharedModalWindowTitle = 'Shared folder';
-                    console.log(vm.contentSharedId);
+                    console.log(vm.contentShared);
                     vm.sharedContent();
                 }, function ($itemScope) { return vm.fileMenuOptionShareShow  && $itemScope.folder.canModify }
             ],
@@ -388,7 +387,17 @@
                             vm.openFileWindow();
                         }
                     }
-                }, function ($itemScope) { return $itemScope.file.canModify; }
+                }, function ($itemScope) {
+                    if ($itemScope.file.fileType == 7 || $itemScope.file.fileType == 9) {
+                        if ($cookies.get('serverUID') == $itemScope.file.author.globalId) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    }
+                    return $itemScope.file.canModify;
+                }
             ],
             null,
             [
@@ -407,8 +416,7 @@
             [
                 'Share', function ($itemScope) {
                     vm.sharedModalWindowTitle = 'Shared File';
-                    vm.contentSharedId = $itemScope.file.id;
-                    console.log(vm.contentSharedId);
+                    vm.contentShared = $itemScope.file;
                     vm.sharedContent();
                 }, function ($itemScope) { return vm.fileMenuOptionShareShow && $itemScope.file.canModify; }
             ],
@@ -449,7 +457,6 @@
                 }
             ]
         ];
-
 
         function openFolderWindow(size) {
 
@@ -565,7 +572,7 @@
                 resolve: {
                     items: function () {
                         var sharedContInfo = {
-                            contentId: vm.contentSharedId,
+                            content: vm.contentShared,
                             title: vm.sharedModalWindowTitle
                         }
                         return sharedContInfo;
@@ -1342,5 +1349,12 @@
             return selected;
         }
         //Selection end
+        function reloadContent() {
+            if (vm.parentId == null) {
+                vm.getSpace();
+            } else {
+                vm.getFolderContent(vm.parentId);
+    }
+        }
     }
 }());
