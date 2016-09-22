@@ -96,7 +96,7 @@ namespace Drive.WebHost.Services.Pro
                     Description = course.FileUnit.Description,
                     CreatedAt = course.FileUnit.CreatedAt,
                     LastModified = course.FileUnit.LastModified,
-                    CanModify = course.Author.GlobalId == userId
+                    CanModify = course.Author.GlobalId == userId || course.FileUnit.Owner.GlobalId == userId
                 },
                 Tags = course.Tags.Select(tag => new TagDto
                 {
@@ -198,7 +198,7 @@ namespace Drive.WebHost.Services.Pro
             {
                 return await FilterCourses();
             }
-
+            string userId = _userService.CurrentUserId;
             var authors = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
 
             var courses = await _unitOfWork.AcademyProCourses.Query.Include(c => c.Tags).Include(c => c.FileUnit).
@@ -232,7 +232,8 @@ namespace Drive.WebHost.Services.Pro
                                                                                 Description = c.FileUnit.Description,
                                                                                 CreatedAt = c.FileUnit.CreatedAt,
                                                                                 LastModified = c.FileUnit.LastModified,
-                                                                                SpaceId = c.FileUnit.Space.Id
+                                                                                SpaceId = c.FileUnit.Space.Id,
+                                                                                CanModify = c.Author.GlobalId == userId || c.FileUnit.Owner.GlobalId == userId
                                                                             },
                                                                             Tags = c.Tags.Select(tag => new TagDto
                                                                             {
@@ -289,7 +290,7 @@ namespace Drive.WebHost.Services.Pro
                              CreatedAt = c.FileUnit.CreatedAt,
                              LastModified = c.FileUnit.LastModified,
                              SpaceId = c.FileUnit.Space.Id,
-                             CanModify = c.Author.GlobalId == userId
+                             CanModify = c.Author.GlobalId == userId || c.FileUnit.Owner.GlobalId == userId
                          },
                          Tags = c.Tags.Select(tag => new TagDto
                          {
