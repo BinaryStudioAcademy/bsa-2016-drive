@@ -144,6 +144,7 @@ namespace Drive.WebHost.Services
 
             if (await checkFolder(shareLink.Folders, folderId))
             {
+                var path = await GeneratePath(folderId, shareLink.Folders, new List<FolderUnitDto>());
                 var content = new ShareLinkDto()
                 {
                     Link = link,
@@ -169,7 +170,8 @@ namespace Drive.WebHost.Services
                         FileType = f.FileType,
                         Link = f.Link,
                         Prev_Link = f.Prev_Link
-                    }).ToListAsync()
+                    }).ToListAsync(),
+                    Path = path.Reverse()
                 };
                 return content;         
             }
@@ -195,6 +197,25 @@ namespace Drive.WebHost.Services
 
             }
             return false;
+        }
+
+        private async Task<IEnumerable<FolderUnitDto>> GeneratePath(int currFolderId, IEnumerable<FolderUnitDto> rootFolders, List<FolderUnitDto> path )
+        {
+            var currFolder = await _unitOfWork.Folders.Query.Include(f => f.FolderUnit).Where(f => f.Id == currFolderId).
+                Select(f => new FolderUnitDto()
+                {
+                    Id = f.Id,
+                    Name = f.Name,
+                    ParentId = f.FolderUnit != null ? f.FolderUnit.Id : 0
+                }).SingleOrDefaultAsync();
+            path.Add(currFolder);
+
+            if (rootFolders.Any(f => f.Id == currFolderId))
+            {
+                return path;
+            }
+
+            return await GeneratePath(currFolder.ParentId, rootFolders, path);
         }
     }
 }

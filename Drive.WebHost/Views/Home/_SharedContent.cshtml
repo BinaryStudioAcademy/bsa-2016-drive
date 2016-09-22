@@ -1,6 +1,8 @@
 ﻿@using Drive.DataAccess.Entities;
+@using Driver.Shared.Dto;
 
-@model Driver.Shared.Dto.ShareLinkDto
+@model ShareLinkDto
+@ViewBag
 
 <div class="container-fluid" style="margin-top:10%">
     <div class="row">
@@ -8,6 +10,14 @@
             <div class="filter-table-row">
                 @Ajax.ActionLink("Shared", "Share", new { id = Model.Link },
                                new AjaxOptions { UpdateTargetId = "content" })
+                @if (Model.Path != null && Model.Path.Count() > 0)
+                {
+                    foreach (var item in Model.Path)
+                    {
+                        @:&nbsp;>&nbsp; @Ajax.ActionLink(@item.Name, "GetFolderContent", new { link = Model.Link, id = @item.Id },
+                                            new AjaxOptions { UpdateTargetId = "content" })
+                    }
+                }
             </div>
                 <div class="filter-table-internal" style="cursor:pointer;">
                     <div style="transition: all 2s" id="folders">
