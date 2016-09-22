@@ -8,7 +8,7 @@
         </a>
     </div>
     <div ng-show="!eventCtrl.isEditing">
-        <div us-spinner="{radius:5, width:2, length: 5}" style="position:absolute; top:35px; right:60px"></div>
+        <div us-spinner="{radius:5, width:2, length: 5}" style="position:absolute; top:50px; right:65px"></div>
         <div class="col-md-12 event-wrap">
             <div class="page-header event-header">
                 <h1 id="timeline">{{eventCtrl.event.fileUnit.name}}</h1>
@@ -35,7 +35,7 @@
                     <div ng-repeat="content in eventCtrl.sortedContentList">
                         <div ng-if="content.contentType != 4" event-content content="content" content-types="eventCtrl.contentTypes" link-trust="eventCtrl.trustSrc"></div>
                     </div>
-                    <div style="cursor:pointer">
+                    <div>
                         <h3 ng-show="eventCtrl.isLinkExists"> Links: </h3>
                         <div ng-repeat="content in eventCtrl.sortedContentList">
                             <div ng-if="content.contentType == 4" event-content content="content" content-types="eventCtrl.contentTypes" link-trust="eventCtrl.trustSrc"></div>
@@ -69,10 +69,10 @@
                                     <input type="text" name="eventtype" class="form-control col-sm-4 col-md-4 col-lg-4 text-valid" ng-pattern="/^[\w -]*$/" ng-model="eventCtrl.event.eventType" placeholder="Event type" required>
                                 </div>
                             </div>
-                            <div class="col-sm-2 col-md-2 col-lg-2 col-sm-offset-2 col-md-offset-2 col-lg-offset-2">
-                                <p ng-show="eventForm.name.$error.required && eventForm.name.$touched" class="help-block">Name is required</p>
+                            <div class="col-sm-1 col-md-1 col-lg-2 col-sm-offset-1">
+                                <p ng-show="eventForm.name.$error.required && eventForm.name.$touched" class="help-block" style="margin-left: 15%">Name is required</p>
                             </div>
-                            <div class="col-sm-2 col-md-2 col-lg-2 col-sm-offset-4 col-md-offset-4 col-lg-offset-4">
+                            <div class="col-sm-2 col-md-2 col-lg-2 col-sm-offset-4 col-md-offset-4">
                                 <p ng-show="eventForm.eventtype.$error.required && eventForm.eventtype.$touched" class="help-block">Type is required</p>
                             </div>
                         </div>
