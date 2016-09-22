@@ -410,7 +410,17 @@
                 'Cut', function ($itemScope) {
                     var content = getSelectedItems($itemScope.file, true);
                     pushToClipboard(content, false);
-                }, function ($itemScope) { return $itemScope.file.canModify; }
+                }, function ($itemScope) {
+                    if ($itemScope.file.fileType == 7 || $itemScope.file.fileType == 9) {
+                        if ($cookies.get('serverUID') == $itemScope.file.author.globalId) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    }
+                    return $itemScope.file.canModify;
+                }
             ],
             null,
             [
@@ -429,7 +439,17 @@
                 'Delete', function ($itemScope) {
                     var content = getSelectedItems($itemScope.file, true);
                     deleteContent(content);
-                }, function ($itemScope) { return $itemScope.file.canModify; }
+                }, function ($itemScope) {
+                    if ($itemScope.file.fileType == 7 || $itemScope.file.fileType == 9) {
+                        if ($cookies.get('serverUID') == $itemScope.file.author.globalId) {
+                            return true;
+                        }
+                        else {
+                            return false;
+                        }
+                    }
+                    return $itemScope.file.canModify;
+                }
             ]
         ];
 
