@@ -86,4 +86,64 @@
             }
         }
     }])
+    .directive('dropZoneContainer', ['$parse', '$rootScope', 'FileService', function ($parse, $rootScope, fileService) {
+        return {
+            restrict: "A",
+            scope: {
+                spaceId: "=",
+                folderId: "=",
+                maxSize: "=",
+                refresh: '&'
+            },
+            link: function (scope, element, attrs) {
+                var processDragOverOrEnter;
+                var queue = [];
+                var data = [];
+                processDragOverOrEnter = function (event) {
+                    if (event != null) {
+                        event.preventDefault();
+                    }
+                    event.dataTransfer.effectAllowed = 'copy';
+                    return false;
+                };
+                element.bind('dragover', processDragOverOrEnter);
+                element.bind('dragenter', processDragOverOrEnter);
+                element.bind('drop', function (event) {
+                    if (event != null) {
+                        event.preventDefault();
+                    }
+                    var files = event.dataTransfer.files;
+                    for (var i = 0; i < files.length; i++) {
+                        (function (file) {
+                            var reader = new FileReader();
+                            var temp = {};
+                            reader.onload = function (dropEvent) {
+                                scope.$apply(function () {
+                                    temp.name = fileService.getFileName(file.name);
+                                    temp.extension = fileService.getFileExtension(file.name);
+                                    temp.description = '';
+                                    file.isValid = fileService.checkFileSize(file.size, scope.maxSize);
+                                    if (file.isValid) {
+                                        queue.push(file);
+                                        data.push(temp);
+
+                                    }
+                                    if (queue.length == files.length) {
+                                        fileService.uploadFile(scope.spaceId, scope.folderId, queue, data, function (response) {
+                                            if (response)
+                                                scope.refresh();
+                                        });
+                                        queue.length = 0;
+                                        data.length = 0;
+                                        temp = {};
+                                    }
+                                });
+                            }
+                            reader.readAsArrayBuffer(file);
+                        })(files[i]);
+                    }
+                });
+            }
+        };
+    }])
 }).call(this);

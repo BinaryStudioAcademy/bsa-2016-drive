@@ -62,7 +62,7 @@
     <div us-spinner="{radius:5, width:2, length: 5}" style="position:absolute; top:40px; right:35px"></div>
 
     <!--New gridview-->
-    <ul class="sp-gv-flex-container wrap" ng-show="spaceCtrl.showGrid" context-menu="spaceCtrl.containerMenuOptions">
+    <ul class="sp-gv-flex-container wrap" ng-show="spaceCtrl.showGrid" context-menu="spaceCtrl.containerMenuOptions" drop-zone-container space-id="spaceCtrl.space.id" folder-id="spaceCtrl.parentId" max-size="spaceCtrl.space.maxFileSize" refresh="spaceCtrl.reloadContent()">
         <li class="sp-gv-flex-item folder" role="button" context-menu="spaceCtrl.folderMenuOptions" dir-paginate="folder in spaceCtrl.space.folders | itemsPerPage: spaceCtrl.paginate.pageSize" total-items="spaceCtrl.paginate.numberOfItems" current-page="spaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}"
             ui-draggable="true" drag="spaceCtrl.getSelectedItems(folder, false)" drag-channel="folder" drop-channel="file, folder" drag-image-element-id="spaceCtrl.getDragImageId($event, folder, false)"
             drop-validate="spaceCtrl.dropValidate(folder, $data)" ui-on-drop="spaceCtrl.onDrop($event, $channel, folder.id, $data)"
@@ -129,7 +129,7 @@
     </ul>
 
     <!--End New gridview-->
-    <div class="filter-table container-md" ng-show="spaceCtrl.showTable">
+    <div class="filter-table container-md" ng-show="spaceCtrl.showTable" drop-zone-container space-id="spaceCtrl.space.id" folder-id="spaceCtrl.parentId" max-size="spaceCtrl.space.maxFileSize" refresh="spaceCtrl.reloadContent()">
         <div class="header-wrapper">
             <div class="row header-row" context-menu="spaceCtrl.containerMenuOptions">
                 <div class="col-xs-3 filter-t-row-1" ng-click="spaceCtrl.reverseSort=!spaceCtrl.reverseSort;spaceCtrl.orderByColumn('name', spaceCtrl.reverseSort)">

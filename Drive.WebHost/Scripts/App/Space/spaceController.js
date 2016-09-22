@@ -105,6 +105,8 @@
         vm.fileMenuOptionShareShow = true;
         vm.sharedModalWindowTitle = null;
 
+        vm.reloadContent = reloadContent;
+
         activate();
 
         function activate() {
@@ -1303,5 +1305,12 @@
             return selected;
         }
         //Selection end
+        function reloadContent() {
+            if (vm.parentId == null) {
+                vm.getSpace();
+            } else {
+                vm.getFolderContent(vm.parentId);
+            }
+        }
     }
 }());
