@@ -5,9 +5,9 @@
         .module("driveApp")
         .controller("FileModalCtrl", FileModalCtrl);
 
-    FileModalCtrl.$inject = ['FileService', '$uibModalInstance', 'items'];
+    FileModalCtrl.$inject = ['FileService', '$uibModalInstance', 'items', 'toastr'];
 
-    function FileModalCtrl(fileService, $uibModalInstance, items) {
+    function FileModalCtrl(fileService, $uibModalInstance, items, toastr) {
         var vm = this;
 
         vm.save = save;
@@ -39,7 +39,6 @@
                 2: ["docs.google.com/spreadsheets/"],
                 3: ["docs.google.com/presentation/"],
                 4: ["trello.com"],
-                //5: ["."], // link
                 8: [".jpg", ".jpeg", ".png", ".bmp"],
                 10: ["youtube.com", "vimeo.com", "dailymotion.com"]
             };
@@ -57,7 +56,7 @@
                 vm.name = items.name;
                 vm.description = items.description;
                 vm.link = items.link;
-                if (vm.file.fileType == 6) {
+                if (vm.file.fileType === 6) {
                     vm.buffer.link = vm.file.link;
                     //vm.link = '';
                     vm.file.link = '';
@@ -76,7 +75,7 @@
                 if (vm.file.id === undefined) {
                     vm.checkUrl();
                     fileService.createFile(vm.file,
-                        function (response) {
+                        function(response) {
                             if (response) {
                                 var data = {
                                     operation: 'create',
@@ -86,13 +85,14 @@
                             }
                         });
                 } else {
-                    if (vm.file.fileType == 6) {
-                        var fullname = vm.file.name + vm.buffer.fileExtantion
+                    if (vm.file.fileType === 6) {
+                        var fullname = vm.file.name + vm.buffer.fileExtantion;
                         vm.file.name = fullname;
                         vm.file.link = vm.buffer.link;
                     }
-                    fileService.updateFile(vm.file.id, vm.file,
-                        function (response) {
+                    fileService.updateFile(vm.file.id,
+                        vm.file,
+                        function(response) {
                             if (response) {
                                 var data = {
                                     operation: 'update',
@@ -139,15 +139,15 @@
         }
 
         function isValidUrl() {
-            var expression = "^(?:(?:ht|f)tps?://)?(?:[\\-\\w]+@)?(?:[\\-0-9a-z]*[0-9a-z]\\.)+[a-z]{2,6}(?::\\d{1,5})?(?:[?/\\\\#][?!^$.(){}:|=[\\]+\\-/\\\\*;&~#@,%\\wР-пр-џ]*)?$";
+            var expression =
+                "^(?:(?:ht|f)tps?://)?(?:[\\-\\w]+@)?(?:[\\-0-9a-z]*[0-9a-z]\\.)+[a-z]{2,6}(?::\\d{1,5})?(?:[?/\\\\#][?!^$.(){}:|=[\\]+\\-/\\\\*;&~#@,%\\wР-пр-џ]*)?$";
             var reg = new RegExp(expression);
             vm.urlIsValid = reg.test(vm.file.link);
 
             if (vm.urlIsValid) {
                 vm.checkUrl();
                 vm.icon = fileService.chooseIcon(vm.file.fileType);
-            }
-            else {
+            } else {
                 vm.icon = "./Content/Icons/add-file_bw.svg";
             }
         }
@@ -164,41 +164,55 @@
                     temp.description = vm.inputFile[i].description;
                     data.push(temp);
                 }
-                fileService.uploadFile(vm.file.spaceId, vm.file.parentId, vm.inputFile, data, function (response) {
-                    if (response)
-                        $uibModalInstance.close(response);
-                });
-            }
-            else {
+                fileService.uploadFile(vm.file.spaceId,
+                    vm.file.parentId,
+                    vm.inputFile,
+                    data,
+                    function(response) {
+                        if (response)
+                            $uibModalInstance.close(response);
+                        toastr.success(
+                            'File(s) successfully uploaded!',
+                            'File upload',
+                            {
+                                closeButton: true,
+                                timeOut: 5000
+                            });
+                    });
+            } else {
                 vm.modelIsValid = false;
             }
         }
+
         function removeAll() {
             vm.inputFile.length = 0;
         }
+
         function removeItem(index) {
             vm.inputFile.splice(index, 1);
             vm.checkModel();
         }
 
         function disableElement() {
-            if (vm.inputFile.length == 0)
+            if (vm.inputFile.length === 0)
                 return true;
         }
+
         function getFileName(fileName) {
             var name = fileName.substr(0, fileName.lastIndexOf('.'));
             return name;
         }
+
         function getFileExtension(fileName) {
             var extension = fileName.substr(fileName.lastIndexOf('.'));
             return extension;
         }
+
         function checkModel() {
             var valid = fileService.checkFilesValidationProperty(vm.inputFile);
             if (valid) {
                 vm.modelIsValid = true;
-            }
-            else vm.modelIsValid = false;
+            } else vm.modelIsValid = false;
         }
 
         function getFileExtantion() {
@@ -207,18 +221,19 @@
             var fileExtantion = fullFileName.slice(pointIndex);
             return fileExtantion;
         }
+
         function getFileName() {
             var fullFileName = vm.file.name;
             var pointIndex = fullFileName.lastIndexOf(".");
             var fileName = fullFileName.slice(0, pointIndex);
             return fileName;
         }
+
         function editMode(mode, index, name, ext) {
             if (mode) {
                 vm.inputFile[index].mode = false;
                 vm.inputFile[index].fname = name + ext;
-            }
-            else {
+            } else {
                 vm.inputFile[index].mode = true;
             }
         }
