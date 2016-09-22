@@ -1928,3 +1928,8 @@ div[dnd-list] .dndPlaceholder {
   background-color: #ddd;
   min-height: 42px;
 }
+
+.middle-div {
+    display:table-cell; 
+    vertical-align:middle
+}

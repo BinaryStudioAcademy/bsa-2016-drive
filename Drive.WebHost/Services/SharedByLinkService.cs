@@ -88,41 +88,38 @@ namespace Drive.WebHost.Services
             return hashStr;
         }
 
-        public async Task<ShareLinkDto> GetContentByLink(string link) {
+        public async Task<ShareLinkDto> GetContentByLink(string link)
+        {
             var shareLink = await _unitOfWork.ShareLinks.Query.Include(l => l.Content).Where(l => l.Link == link)
                 .Select(l => new ShareLinkDto()
                 {
                     Id = l.Id,
                     Link = l.Link,
-                    Files = l.Content.OfType<FileUnit>().Select(c => new FileUnitDto()
+                    Files = l.Content.OfType<FileUnit>().Where( c => !(c is ImageUnit)).Select(c => new FileUnitDto()
+                    {
+                        Id = c.Id,
+                        Name = c.Name,
+                        Description = c.Description,
+                        FileType = c.FileType,
+                        Link = c.Link
+                    }),
+                    Images = l.Content.OfType<ImageUnit>().Select(c => new ImageUnitDto()
                     {
                         Id = c.Id,
                         Name = c.Name,
                         Description = c.Description,
                         FileType = c.FileType,
                         Link = c.Link,
-                        Author = new AuthorDto() { Id = c.Owner.Id, GlobalId = c.Owner.GlobalId }
+                        Prev_Link = c.Prev_Link
                     }),
                     Folders = l.Content.OfType<FolderUnit>().Select(c => new FolderUnitDto()
                     {
                         Id = c.Id,
                         Name = c.Name,
-                        Description = c.Description,
-                        Author = new AuthorDto() { Id = c.Owner.Id, GlobalId = c.Owner.GlobalId }
+                        Description = c.Description
                     })
 
                 }).FirstOrDefaultAsync();
-
-            var owners = (await _userService.GetAllAsync()).Select(f => new { Id = f.id, Name = f.name });
-
-            Parallel.ForEach(shareLink.Files, file =>
-            {
-                file.Author.Name = owners.FirstOrDefault(o => o.Id == file.Author.GlobalId)?.Name;
-            });
-            Parallel.ForEach(shareLink.Folders, folder =>
-            {
-                folder.Author.Name = owners.FirstOrDefault(o => o.Id == folder.Author.GlobalId)?.Name;
-            });
 
             return shareLink;
         }

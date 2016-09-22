@@ -13,5 +13,6 @@ namespace Driver.Shared.Dto
         public string Link { get; set; }
         public IEnumerable<FolderUnitDto> Folders { get; set; }
         public IEnumerable<FileUnitDto> Files { get; set; }
+        public IEnumerable<ImageUnitDto> Images { get; set; }
     }
 }

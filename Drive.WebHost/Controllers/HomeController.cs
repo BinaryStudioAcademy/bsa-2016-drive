@@ -26,9 +26,13 @@ namespace Drive.WebHost.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> Share(string Id)
         {
-            ViewBag.BasePath = System.Configuration.ConfigurationManager.AppSettings["basePath"];
-            var contentList = await _sharedByLinkService.GetContentByLink(Id);
-            return View(contentList);
+            if (!string.IsNullOrEmpty(Id))
+            {
+                ViewBag.BasePath = System.Configuration.ConfigurationManager.AppSettings["basePath"];
+                var contentList = await _sharedByLinkService.GetContentByLink(Id);
+                return View(contentList);
+            }
+            return View("Error");
         }
 
         [AllowAnonymous]
