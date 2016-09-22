@@ -1,5 +1,5 @@
-﻿@using Drive.DataAccess.Entities;
-@model Driver.Shared.Dto.ShareLinkDto
+﻿@model Drive.WebHost.Models.SharedContent
+
 @{
     Layout = null;
 }
@@ -14,109 +14,12 @@
     <title>Drive</title>
 </head>
 <body>
-    <div>
-        <div class="filter-table container-md">
-            <div class="header-wrapper">
-                <div class="row header-row">
-                    <div class="col-xs-3 filter-t-row-1">
-                        Name
-                    </div>
-                    <div class="col-xs-3 filter-t-row-1">
-                        Description
-                    </div>
-                    <div class="col-xs-2 filter-t-row-1">
-                        Type
-                    </div>
-                </div>
-            </div>
-
-            <div class="filter-table-internal" style="cursor:pointer;">
-                <div style="transition: all 2s" id="folders">
-                    <div class="filter-table-row">
-                        @foreach (var folder in Model.Folders)
-                        {
-                                <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@folder.Name">
-                                    <img src="~/Content/Icons/folder.svg" height="30" />
-                                    @folder.Name
-                                </div>
-                                <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@folder.Description">
-                                    @folder.Description
-                                </div>
-                                <div class="col-xs-2 col-xs-offset-4 filter-table-cell filter-t-row-1">Folder</div>
-                        }
-                    </div>
-                </div>
-                <div style="transition: all 2s" id="files">
-                    <div class="filter-table-row">
-                        @foreach (var file in Model.Files)
-                        {
-                           
-                            <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@file.Name">
-                                <img src="@ChooseIcon(@file.FileType)" height="30" />
-                                @if (@file.FileType != FileType.Uploaded)
-                                {
-                                    if (@file.Name.Length > 40)
-                                    {
-                                        <a href="@file.Link" target="_blank"> @file.Name... </a>
-                                    }
-                                    else
-                                    {
-                                        <a href="@file.Link" target="_blank"> @file.Name </a>
-                                    }
-                                }
-                                else
-                                {
-                                    @Html.ActionLink(@file.Name, "Download", new { fileLink = @file.Link})
-                                }
-                            </div>
-                            <div class="col-xs-3 filter-table-cell filter-t-row-1" title="@file.Description">
-                                @file.Description
-                            </div>
-                            <div class="col-xs-2 filter-table-cell filter-t-row-1"> @file.FileType </div>
-                        }
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="row"></div>
+    <div id="content">
+        @Html.Partial("_SharedContent", Model);
     </div>
+    <script src="~/Scripts/Libs/jquery-1.9.0.min.js"></script>
+    <script src="~/Scripts/Libs/jquery.unobtrusive-ajax.min.js"></script>
 </body>
 </html>
 
-@helper ChooseIcon(FileType type)
-{
-string iconSrc = "/Content/Icons/";
-switch (type)
-{
-    case FileType.Document:
-        iconSrc += "doc.svg";
-        break;
-    case FileType.Sheets:
-        iconSrc += "xls.svg";
-        break;
-    case FileType.Slides:
-        iconSrc += "ppt.svg";
-        break;
-    case FileType.Trello:
-        iconSrc += "trello.svg";
-        break;
-    case FileType.Links:
-        iconSrc += "link.svg";
-        break;
-    case FileType.Uploaded:
-        iconSrc += "physical-file.svg";
-        break;
-    case FileType.AcademyPro:
-        iconSrc += "academyPro.svg";
-        break;
-    case FileType.Images:
-        iconSrc += "image.svg";
-        break;
-    case FileType.Events:
-        iconSrc += "event.svg";
-        break;
-    case FileType.Videos:
-        iconSrc += "video.svg";
-        break;
-}
-    @iconSrc;
-}

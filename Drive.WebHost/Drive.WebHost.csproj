@@ -237,6 +237,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Content.cs" />
     <Compile Include="Providers\FakeUserProvider.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AuthorizationService.cs" />
@@ -441,6 +442,9 @@
     <Content Include="Scripts\App\TrashBin\trashBinService.js" />
     <Content Include="Scripts\Bundles\libs.js" />
     <Content Include="Scripts\Bundles\main.js" />
+    <None Include="Scripts\Libs\jquery-1.9.0.intellisense.js" />
+    <Content Include="Scripts\Libs\jquery-1.9.0.min.js" />
+    <Content Include="Scripts\Libs\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -450,10 +454,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="Scripts\Libs\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="packages.config" />
     <Content Include="App_Data\Drive-9345df2608d2.json" />
@@ -463,6 +464,8 @@
     <Content Include="Scripts\App\Academy\Lecture\lectureLinks.directive.html" />
     <Content Include="Scripts\App\Academy\Lecture\lectureLinks.directive.js" />
     <Content Include="Views\Home\Share.cshtml" />
+    <Content Include="Views\Home\_SharedContent.cshtml" />
+    <Content Include="Scripts\Libs\jquery-1.9.0.min.map" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
