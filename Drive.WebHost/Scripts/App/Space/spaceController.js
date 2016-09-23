@@ -352,7 +352,7 @@
             [
                 'Share by link', function ($itemScope) {
                     vm.sharedContent('byLink');
-                }, function ($itemScope) { return vm.fileMenuOptionShareShow && $itemScope.folder.canModify; }
+                }
             ],
             [
                 'Delete', function ($itemScope) {
@@ -433,7 +433,7 @@
             [
                 'Share by link', function ($itemScope) {
                    vm.sharedContent('byLink');
-                }, function ($itemScope) { return vm.fileMenuOptionShareShow && $itemScope.file.canModify; }
+                }
             ],
             [
                 'Delete', function ($itemScope) {

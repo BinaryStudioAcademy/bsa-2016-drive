@@ -1989,3 +1989,13 @@ div[dnd-list] .dndPlaceholder {
     display:table-cell; 
     vertical-align:middle
 }
+
+#link-shared-nav{
+    background: grey;
+    line-height: 4em;
+    padding-left: 1em;
+}
+div#link-shared-nav a{
+    font-weight: bold;
+    color: white;
+} 

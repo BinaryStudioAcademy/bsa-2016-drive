@@ -2,12 +2,11 @@
 @using Driver.Shared.Dto;
 
 @model ShareLinkDto
-@ViewBag
 
 <div class="container-fluid" style="">
     <div class="row">
         <div class="col-xs-12" style="background-color:white; padding:0">
-            <div class="filter-table-row">
+            <div id="link-shared-nav">
                 @Ajax.ActionLink("Shared", "Share", new { id = Model.Link },
                                new AjaxOptions { UpdateTargetId = "content" })
                 @if (Model.Path != null && Model.Path.Count() > 0)
@@ -87,16 +86,21 @@
                                     }
                                 }
                             </div>
-                            <div class="col-xs-5 middle-div" title="@file.Description">
-                                @if (@file.Description.Length > 50)
-                                {
-                                    @(string.Format("{0}{1}", file.Description.Substring(0, 50), "..."))
-                                }
-                                else
-                                {
-                                    @file.Description
-                                }
-                            </div>
+                            @if (@file.Description != null)
+                            {
+                                <div class="col-xs-5 middle-div" title="@file.Description">
+                                    @if (@file.Description.Length > 50)
+                                    {
+                                        @(string.Format("{0}{1}", file.Description.Substring(0, 50), "..."))
+                                    }
+                                    else
+                                    {
+                                        @file.Description
+                                    }
+                                </div>
+                            }
+                            else { <div class="col-xs-5 middle-div"></div> }
+
                             <div class="col-xs-3 middle-div"> @file.FileType </div>
                         </div>
                                     }
@@ -124,16 +128,21 @@
                                     }
                                 }
                             </div>
-                            <div class="col-xs-5 middle-div" title="@image.Description">
-                                @if (@image.Description.Length > 50)
-                                {
-                                    @(string.Format("{0}{1}", image.Description.Substring(0, 50), "..."))
-                                }
-                                else
-                                {
-                                    @image.Description
-                                }
-                            </div>
+                            @if (@image.Description != null)
+                            {
+                                <div class="col-xs-5 middle-div" title="@image.Description">
+                                    @if (@image.Description.Length > 50)
+                                    {
+                                        @(string.Format("{0}{1}", image.Description.Substring(0, 50), "..."))
+                                    }
+                                    else
+                                    {
+                                        @image.Description
+                                    }
+                                </div>
+                            }
+                            else { <div class="col-xs-5 middle-div"></div> }
+
                             <div class="col-xs-3 middle-div">@image.FileType</div>
                         </div>
                     }
