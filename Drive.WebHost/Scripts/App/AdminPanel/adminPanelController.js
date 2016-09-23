@@ -57,7 +57,7 @@
         };
 
         function checkUserIsAdmin() {
-            if (vm.isAdmin) {
+            if (!vm.isAdmin()) {
                 $location.url("/binaryspace");
             }
         }
