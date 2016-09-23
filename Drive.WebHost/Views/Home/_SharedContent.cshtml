@@ -25,7 +25,7 @@
                     {
                         <div class="row filter-table-row">
                             <div class="col-xs-4 middle-div" title="@folder.Name">
-                                <img src="~/Content/Icons/folder.svg" height="30" />
+                                <img src="@ViewBag.BasePath/Content/Icons/folder.svg" height="30" />
                                 @Ajax.ActionLink(@folder.Name.Length > 30 ?
                                    string.Format("{0}{1}", @folder.Name.Substring(0, 30), "...") : @folder.Name, "GetFolderContent", new { link = Model.Link, id = @folder.Id },
                                new AjaxOptions
@@ -110,7 +110,7 @@
                     {
                         <div class="row filter-table-row">
                             <div class="col-xs-4 middle-div" title="@image.Name">
-                                <img src="~/Content/Icons/image.svg" height="30" />
+                                <img src="@ViewBag.BasePath/Content/Icons/image.svg" height="30" />
                                 @if (@image.Prev_Link.Length > 0)
                                 {
                                     @Html.ActionLink(@image.Name.Length > 30 ?
