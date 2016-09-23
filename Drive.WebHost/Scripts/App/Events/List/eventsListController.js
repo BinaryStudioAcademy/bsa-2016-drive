@@ -10,10 +10,11 @@
         '$location',
         'localStorageService',
         'EventService',
-        '$uibModal'
+        '$uibModal',
+        '$cookies'
     ];
 
-    function EventsListController(EventsListService, $location, localStorageService, eventService, $uibModal) {
+    function EventsListController(EventsListService, $location, localStorageService, eventService, $uibModal, $cookies) {
         var vm = this;
         vm.columnForOrder = 'fileUnit.name';
         vm.orderEventByColumn = orderEventByColumn;
@@ -44,10 +45,12 @@
                     $location.url('/apps/events/' + $itemScope.event.id + '/edit');
                 },
                 function ($itemScope) {
-                    if ($itemScope.event.fileUnit.canModify == false) {
+                    if ($cookies.get('serverUID') == $itemScope.event.author.globalId) {
+                        return true;
+                    }
+                    else {
                         return false;
                     }
-                    return true;
                 }
             ],
             null,
@@ -56,10 +59,12 @@
                     deleteEvent($itemScope.event.id);
                 },
                 function ($itemScope) {
-                    if ($itemScope.event.fileUnit.canModify == false) {
+                    if ($cookies.get('serverUID') == $itemScope.event.author.globalId) {
+                        return true;
+                    }
+                    else {
                         return false;
                     }
-                    return true;
                 }
             ]
         ];
