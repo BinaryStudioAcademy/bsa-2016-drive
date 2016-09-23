@@ -437,10 +437,10 @@ namespace Drive.DataAccess.Context
             folder1Content.Add(folder4);
             folder1.DataUnits = folder1Content;
 
-            space1Content.Add(folder1);
-            space1Content.Add(folder2);
-            space1Content.Add(folder3);
-            space1.ContentList = space1Content;
+            //space1Content.Add(folder1);
+            //space1Content.Add(folder2);
+            //space1Content.Add(folder3);
+            //space1.ContentList = space1Content;
             #endregion
             #endregion
 
