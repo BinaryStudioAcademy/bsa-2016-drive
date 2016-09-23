@@ -156,40 +156,40 @@
 
     @helper ChooseIcon(FileType type)
     {
-string iconSrc = "/Content/Icons/";
-switch (type)
-{
-    case FileType.Document:
-        iconSrc += "doc.svg";
-        break;
-    case FileType.Sheets:
-        iconSrc += "xls.svg";
-        break;
-    case FileType.Slides:
-        iconSrc += "ppt.svg";
-        break;
-    case FileType.Trello:
-        iconSrc += "trello.svg";
-        break;
-    case FileType.Links:
-        iconSrc += "link.svg";
-        break;
-    case FileType.Uploaded:
-        iconSrc += "physical-file.svg";
-        break;
-    case FileType.AcademyPro:
-        iconSrc += "academyPro.svg";
-        break;
-    case FileType.Images:
-        iconSrc += "image.svg";
-        break;
-    case FileType.Events:
-        iconSrc += "event.svg";
-        break;
-    case FileType.Videos:
-        iconSrc += "video.svg";
-        break;
-}
-    @iconSrc;
+        string iconSrc = ViewBag.BasePath + "/Content/Icons/";
+        switch (type)
+        {
+            case FileType.Document:
+                iconSrc += "doc.svg";
+                break;
+            case FileType.Sheets:
+                iconSrc += "xls.svg";
+                break;
+            case FileType.Slides:
+                iconSrc += "ppt.svg";
+                break;
+            case FileType.Trello:
+                iconSrc += "trello.svg";
+                break;
+            case FileType.Links:
+                iconSrc += "link.svg";
+                break;
+            case FileType.Uploaded:
+                iconSrc += "physical-file.svg";
+                break;
+            case FileType.AcademyPro:
+                iconSrc += "academyPro.svg";
+                break;
+            case FileType.Images:
+                iconSrc += "image.svg";
+                break;
+            case FileType.Events:
+                iconSrc += "event.svg";
+                break;
+            case FileType.Videos:
+                iconSrc += "video.svg";
+                break;
+        }
+            @iconSrc;
 }
 

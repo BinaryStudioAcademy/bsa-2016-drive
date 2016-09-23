@@ -40,6 +40,7 @@ namespace Drive.WebHost.Controllers
         [AllowAnonymous]
         public async Task<ActionResult> GetFolderContent(string link, int id)
         {
+            ViewBag.BasePath = System.Configuration.ConfigurationManager.AppSettings["basePath"];
             var folderContent = await _sharedByLinkService.GetFolderContent(link, id);
             return PartialView("_SharedContent", folderContent);
         }
@@ -51,6 +52,7 @@ namespace Drive.WebHost.Controllers
             {
                 if (!string.IsNullOrEmpty(fileLink))
                 {
+                    ViewBag.BasePath = System.Configuration.ConfigurationManager.AppSettings["basePath"];
                     var fileStreamContainer = await _fileService.DownloadFile(fileLink);
                     if (fileStreamContainer != null)
                         return File(fileStreamContainer.Content, fileStreamContainer.Type, fileStreamContainer.Name);
@@ -68,6 +70,7 @@ namespace Drive.WebHost.Controllers
         {
             if (fileId != 0)
             {
+                ViewBag.BasePath = System.Configuration.ConfigurationManager.AppSettings["basePath"];
                 var course = await _fileService.SearchCourse(fileId);
                 if (course != null)
                 {
