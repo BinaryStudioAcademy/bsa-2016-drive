@@ -86,7 +86,7 @@
             }
         }
     }])
-    .directive('dropZoneContainer', ['$parse', '$rootScope', 'FileService', function ($parse, $rootScope, fileService) {
+    .directive('dropZoneContainer', ['$parse', '$rootScope', 'FileService', 'toastr', function ($parse, $rootScope, fileService, toastr) {
         return {
             restrict: "A",
             scope: {
@@ -132,6 +132,13 @@
                                         fileService.uploadFile(scope.spaceId, scope.folderId, queue, data, function (response) {
                                             if (response)
                                                 scope.refresh();
+                                            toastr.success(
+                                                'File(s) successfully uploaded!',
+                                                'File upload',
+                                                {
+                                                    closeButton: true,
+                                                    timeOut: 5000
+                                                });
                                         });
                                         queue.length = 0;
                                         data.length = 0;

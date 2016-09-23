@@ -34,64 +34,69 @@
             </div>
         </div>
     </div>
-
     <div us-spinner="{radius:5, width:2, length: 5}" style="position:absolute; top:40px; right:37px"></div>
+
     <!--Gridview-->
-    <ul class="sp-gv-flex-container wrap" ng-show="sharedSpaceCtrl.showGrid" context-menu="sharedSpaceCtrl.folderMenuOptions">
-        <li class="sp-gv-flex-item" role="button" context-menu="sharedSpaceCtrl.folderMenuOptions" dir-paginate="folder in sharedSpaceCtrl.space.folders | itemsPerPage: sharedSpaceCtrl.paginate.pageSize" total-items="sharedSpaceCtrl.paginate.numberOfItems" current-page="sharedSpaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="sharedSpaceCtrl.getFolderContent(folder.id); sharedSpaceCtrl.addElem(folder)">
-            <div class="sp-gv-wrapper-flex-item">
-                <div class="sp-gv-item-content cards">
-                    <div class="sp-gv-item-img-wrapper">
-                        <img ng-src="./Content/Icons/folder.svg" alt="Folder" title="Folder" />
-                    </div>
-                    <div class="sp-gv-item-text">
-                        <h4 title="{{folder.name}}">{{folder.name}}</h4>
-                        <h5 title="{{folder.author.name}}">
-                            <i class="fa fa-user" aria-hidden="true"></i>
-                            {{folder.author.name}}
-                        </h5>
-                        <p title="{{folder.description}}">{{folder.description}}</p>
-                    </div>
-                </div>
-            </div>
-        </li>
-        <li class="sp-gv-flex-item" role="button" context-menu="sharedSpaceCtrl.fileMenuOptions" ng-repeat="file in sharedSpaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="sharedSpaceCtrl.checkFileType(file.fileType) ? sharedSpaceCtrl.openDocument(file) : sharedSpaceCtrl.openLightboxModal(file.id)">
-            <div class="sp-gv-wrapper-flex-item">
-                <div class="sp-gv-item-content cards">
-                    <div class="sp-gv-item-img-wrapper" ng-hide="file.fileType == 8 || file.fileType == 10">
-                        <img ng-src="{{sharedSpaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" />
-                    </div>
-                    <div class="sp-gv-item-img-wrapper" ng-show="file.fileType == 8 && file.link.indexOf('http') === -1">
-                        <img ng-src="{{sharedSpaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
-                    </div>
-                    <div class="sp-gv-item-img-wrapper-image" ng-show="file.fileType == 8 && file.link.indexOf('http') !== -1" style="height: 140px">
-                        <img ng-src="{{file.thumbUrl}}" class="img-thumbnail" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
-                    </div>
-                    <div class="sp-gv-item-img-wrapper-image" ng-show="file.fileType == 10 && file.link.indexOf('youtube.com') !== -1" style="height: 140px">
-                        <img ng-src="http://img.youtube.com/vi/{{ file.link | getVideoId }}/0.jpg" class="img-thumbnail" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
-                    </div>
-                    <div class="sp-gv-item-img-wrapper" ng-show="file.fileType == 10 && file.link.indexOf('youtube.com') == -1">
-                        <img ng-src="{{sharedSpaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
-                    </div>
-                    <div class="sp-gv-item-text">
-                        <h4 title="{{file.name}}">{{file.name}}</h4>
-                        <div ng-hide="(file.fileType == 8 && file.link.indexOf('http') !== -1) || ( file.fileType == 10 && file.link.indexOf('youtube.com') !== -1)">
-                            <h5 title="{{file.author.name}}">
+    <div ng-show="sharedSpaceCtrl.showGrid">
+        <ul class="sp-gv-flex-container wrap" context-menu="sharedSpaceCtrl.folderMenuOptions">
+            <li class="sp-gv-flex-item" role="button" context-menu="sharedSpaceCtrl.folderMenuOptions" dir-paginate="folder in sharedSpaceCtrl.space.folders | itemsPerPage: sharedSpaceCtrl.paginate.pageSize" total-items="sharedSpaceCtrl.paginate.numberOfItems" current-page="sharedSpaceCtrl.paginate.currentPage" title="Created {{ folder.createdAt | date : 'short' }}" ng-dblclick="sharedSpaceCtrl.getFolderContent(folder.id); sharedSpaceCtrl.addElem(folder)">
+                <div class="sp-gv-wrapper-flex-item">
+                    <div class="sp-gv-item-content cards">
+                        <div class="sp-gv-item-img-wrapper">
+                            <img ng-src="./Content/Icons/folder.svg" alt="Folder" title="Folder" />
+                        </div>
+                        <div class="sp-gv-item-text">
+                            <h4 title="{{folder.name}}">{{folder.name}}</h4>
+                            <h5 title="{{folder.author.name}}">
                                 <i class="fa fa-user" aria-hidden="true"></i>
-                                {{file.author.name}}
+                                {{folder.author.name}}
                             </h5>
-                            <p title="{{file.description}}">{{file.description}}</p>
+                            <p title="{{folder.description}}">{{folder.description}}</p>
                         </div>
                     </div>
                 </div>
+            </li>
+            <div ng-show="sharedSpaceCtrl.space.folders.length == 0 && sharedSpaceCtrl.space.files.length == 0" style="width: 100%">
+                <h2 class="text-muted text-center">Files not found</h2>
             </div>
-        </li>
-        <li class="sp-gv-flex-item"></li>
-        <li class="sp-gv-flex-item"></li>
-        <li class="sp-gv-flex-item"></li>
-        <li class="sp-gv-flex-item"></li>
-        <li class="sp-gv-flex-item"></li>
-    </ul>
+            <li class="sp-gv-flex-item" role="button" context-menu="sharedSpaceCtrl.fileMenuOptions" ng-repeat="file in sharedSpaceCtrl.space.files" title="Created {{ file.createdAt | date : 'short' }}" ng-dblclick="sharedSpaceCtrl.checkFileType(file.fileType) ? sharedSpaceCtrl.openDocument(file) : sharedSpaceCtrl.openLightboxModal(file.id)">
+                <div class="sp-gv-wrapper-flex-item">
+                    <div class="sp-gv-item-content cards">
+                        <div class="sp-gv-item-img-wrapper" ng-hide="file.fileType == 8 || file.fileType == 10">
+                            <img ng-src="{{sharedSpaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" />
+                        </div>
+                        <div class="sp-gv-item-img-wrapper" ng-show="file.fileType == 8 && file.link.indexOf('http') === -1">
+                            <img ng-src="{{sharedSpaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
+                        </div>
+                        <div class="sp-gv-item-img-wrapper-image" ng-show="file.fileType == 8 && file.link.indexOf('http') !== -1" style="height: 140px">
+                            <img ng-src="{{file.thumbUrl}}" class="img-thumbnail" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
+                        </div>
+                        <div class="sp-gv-item-img-wrapper-image" ng-show="file.fileType == 10 && file.link.indexOf('youtube.com') !== -1" style="height: 140px">
+                            <img ng-src="http://img.youtube.com/vi/{{ file.link | getVideoId }}/0.jpg" class="img-thumbnail" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
+                        </div>
+                        <div class="sp-gv-item-img-wrapper" ng-show="file.fileType == 10 && file.link.indexOf('youtube.com') == -1">
+                            <img ng-src="{{sharedSpaceCtrl.chooseIcon(file.fileType)}}" alt="{{ file.fileType | typeOfFile }}" title="{{ file.fileType | typeOfFile }}" draggable="false" />
+                        </div>
+                        <div class="sp-gv-item-text">
+                            <h4 title="{{file.name}}">{{file.name}}</h4>
+                            <div ng-hide="(file.fileType == 8 && file.link.indexOf('http') !== -1) || ( file.fileType == 10 && file.link.indexOf('youtube.com') !== -1)">
+                                <h5 title="{{file.author.name}}">
+                                    <i class="fa fa-user" aria-hidden="true"></i>
+                                    {{file.author.name}}
+                                </h5>
+                                <p title="{{file.description}}">{{file.description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </li>
+            <li class="sp-gv-flex-item"></li>
+            <li class="sp-gv-flex-item"></li>
+            <li class="sp-gv-flex-item"></li>
+            <li class="sp-gv-flex-item"></li>
+            <li class="sp-gv-flex-item"></li>
+        </ul>
+    </div>
     <!--End Gridview-->
     <!--TableView-->
     <div class="filter-table container-md" ng-show="sharedSpaceCtrl.showTable">
@@ -126,6 +131,9 @@
         </div>
 
         <div class="filter-table-internal" context-menu="sharedSpaceCtrl.containerMenuOptions">
+            <div ng-show="sharedSpaceCtrl.space.folders.length == 0 && sharedSpaceCtrl.space.files.length == 0">
+                <h2 class="text-muted text-center">Files not found</h2>
+            </div>
             <div style="transition: all 2s">
                 <div class="filter-table-row">
                     <div class="row filter-table-row" role="button" ng-repeat="folder in sharedSpaceCtrl.space.folders | orderBy: sharedSpaceCtrl.columnForOrder" ng-click="sharedSpaceCtrl.activeRow(folder.id, 'false')" ng-dblclick="sharedSpaceCtrl.getFolderContent(folder.id); sharedSpaceCtrl.addElem(folder)" ng-class="{selected: folder.selected}" context-menu="sharedSpaceCtrl.folderMenuOptions">
