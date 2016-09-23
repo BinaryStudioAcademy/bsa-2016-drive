@@ -1,11 +1,15 @@
 ﻿@using Drive.DataAccess.Entities;
 @using Driver.Shared.Dto;
+@using System.Text.RegularExpressions;
 
 @model ShareLinkDto
 
 <div class="container-fluid" style="">
     <div class="row">
         <div class="col-xs-12" style="background-color:white; padding:0">
+
+            @{var path = GetPath().ToString(); }
+
             <div id="link-shared-nav">
                 @Ajax.ActionLink("Shared", "Share", new { id = Model.Link },
                                new AjaxOptions { UpdateTargetId = "content" })
@@ -27,11 +31,12 @@
                             <div class="col-xs-4 middle-div" title="@folder.Name">
                                 <img src="@ViewBag.BasePath/Content/Icons/folder.svg" height="30" />
                                 @Ajax.ActionLink(@folder.Name.Length > 30 ?
-                                   string.Format("{0}{1}", @folder.Name.Substring(0, 30), "...") : @folder.Name, "GetFolderContent", new { link = Model.Link, id = @folder.Id },
-                               new AjaxOptions
-                               {
-                                   UpdateTargetId = "content"
-                               })
+                            string.Format("{0}{1}", @folder.Name.Substring(0, 30), "...") : @folder.Name, "GetFolderContent", "Home", "http",
+                            path, null, new { link = Model.Link, id = @folder.Id },
+                            new AjaxOptions
+                            {
+                                UpdateTargetId = "content"
+                            }, null)
 
                             </div>
                             <div class="col-xs-5 middle-div" title="@folder.Description">
@@ -60,18 +65,18 @@
                                     {
                                         case FileType.Uploaded:
                                             @Html.ActionLink(@file.Name.Length > 30 ?
-                                                        string.Format("{0}{1}", @file.Name.Substring(0, 30), "...") : @file.Name, "Download", new
-                                                        { fileLink = @file.Link })
+                                                        string.Format("{0}{1}", @file.Name.Substring(0, 30), "...") : @file.Name, "Download", "Home","http", path, null, new
+                                                        { fileLink = @file.Link }, null)
                                             break;
                                         case FileType.Events:
                                             @Html.ActionLink(@file.Name.Length > 30 ?
-                                                        string.Format("{0}{1}", @file.Name.Substring(0, 30), "...") : @file.Name, "FindEventByFileId", new
-                                                        { fileId = @file.Id })
+                                                        string.Format("{0}{1}", @file.Name.Substring(0, 30), "...") : @file.Name, "FindEventByFileId", "Home", "http", path, null, new
+                                                        { fileId = @file.Id }, null)
                                             break;
                                         case FileType.AcademyPro:
                                             @Html.ActionLink(@file.Name.Length > 30 ?
-                                                        string.Format("{0}{1}", @file.Name.Substring(0, 30), "...") : @file.Name, "FindCourseByFileId", new
-                                                        { fileId = @file.Id })
+                                                        string.Format("{0}{1}", @file.Name.Substring(0, 30), "...") : @file.Name, "FindCourseByFileId", "Home", "http", path, null, new
+                                                        { fileId = @file.Id }, null)
                                             break;
                                         default:
                                             if (@file.Name.Length > 30)
@@ -114,7 +119,7 @@
                                 @if (@image.Prev_Link.Length > 0)
                                 {
                                     @Html.ActionLink(@image.Name.Length > 30 ?
-                                   string.Format("{0}{1}", @image.Name.Substring(0, 30), "...") : @image.Name, "Download", new { fileLink = @image.Link })
+                                   string.Format("{0}{1}", @image.Name.Substring(0, 30), "...") : @image.Name, "Download","Home", "http", path, null, new { fileLink = @image.Link }, null)
                                 }
                                 else
                                 {
@@ -191,5 +196,12 @@
                 break;
         }
             @iconSrc;
+}
+
+@helper GetPath()
+{
+string path = ViewBag.BasePath;
+path = Regex.Match(path, @"http://(.*):").Groups[1].Value;
+    @path
 }
 
