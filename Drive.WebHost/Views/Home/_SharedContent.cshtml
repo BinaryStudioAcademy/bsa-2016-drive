@@ -11,8 +11,9 @@
             @{var path = GetPath().ToString(); }
 
             <div id="link-shared-nav">
-                @Ajax.ActionLink("Shared", "Share", new { id = Model.Link },
-                               new AjaxOptions { UpdateTargetId = "content" })
+                @Ajax.ActionLink("Shared", "Share", "Home", "http",
+                                            path, null, new { id = Model.Link },
+                               new AjaxOptions { UpdateTargetId = "content" }, null)
                 @if (Model.Path != null && Model.Path.Count() > 0)
                 {
                     foreach (var item in Model.Path)
