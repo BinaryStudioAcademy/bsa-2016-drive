@@ -65,7 +65,6 @@ namespace Drive.WebHost.Controllers
             return View("Error");
         }
 
-        [AllowAnonymous]
         public async Task<ActionResult> FindCourseByFileId(int fileId)
         {
             if (fileId != 0)
@@ -81,7 +80,6 @@ namespace Drive.WebHost.Controllers
             return View("Error");
         }
 
-        [AllowAnonymous]
         public async Task<ActionResult> FindEventByFileId(int fileId)
         {
             if (fileId != 0)
