@@ -9,10 +9,11 @@
         '$location',
         '$uibModal',
         '$routeParams',
-        'localStorageService'
+        'localStorageService',
+        '$cookies'
     ];
 
-    function AcademyListController(academyListService, $location, $uibModal, $routeParams, localStorageService) {
+    function AcademyListController(academyListService, $location, $uibModal, $routeParams, localStorageService,$cookies) {
         var vm = this;
         vm.columnForOrder = 'name';
         vm.openCourse = openCourse;
@@ -47,10 +48,12 @@
                 vm.openNewCourseWindow();
             },
                 function ($itemScope) {
-                    if ($itemScope.academy.fileUnit.canModify == false) {
+                    if ($cookies.get('serverUID') == $itemScope.academy.author.globalId) {
+                        return true;
+                    }
+                    else {
                         return false;
                     }
-                    return true;
                 }
         ],
         null,
@@ -59,10 +62,12 @@
                 deleteCourse($itemScope.academy.id);
             },
                 function ($itemScope) {
-                    if ($itemScope.academy.fileUnit.canModify == false) {
+                    if ($cookies.get('serverUID') == $itemScope.academy.author.globalId) {
+                        return true;
+                    }
+                    else {
                         return false;
                     }
-                    return true;
                 }
         ]
         ];

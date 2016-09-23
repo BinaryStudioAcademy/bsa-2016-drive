@@ -11,10 +11,11 @@
         'LinkTypeService',
         'toastr',
         '$location',
-        'AcademyService'
+        'AcademyService',
+        '$cookies'
     ];
 
-    function LectureController(lectureService, $routeParams, $sce, linkTypeService, toastr, $location, academyService) {
+    function LectureController(lectureService, $routeParams, $sce, linkTypeService, toastr, $location, academyService, $cookies) {
         var vm = this;
         vm.currentLectureId = $routeParams.lectureId;
         vm.currentAcademyId = $routeParams.id;
@@ -67,6 +68,12 @@
             return lectureService.getLecture(vm.currentLectureId)
                 .then(function (data) {
                     vm.lecture = data;
+                    if ($cookies.get('serverUID') == data.author.globalId) {
+                        vm.canEdit = true;
+                    }
+                    else {
+                        vm.canEdit = false;
+                    }
                     return vm.lecture;
                 });
         }

@@ -41,7 +41,7 @@
                     </button>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-default btn-custom" ng-click="academyCtrl.createLecture()" title="Add new lecture">
+                    <button type="button" class="btn btn-default btn-custom" ng-click="academyCtrl.createLecture()" ng-disabled="!academyCtrl.canAddNew" title="Add new lecture">
                         <img src="./Content/Icons/lecture-black.svg" height="32" alt="Add lecture" />
                     </button>
                 </div>

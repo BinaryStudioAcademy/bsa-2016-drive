@@ -4,9 +4,9 @@
     angular.module('driveApp.academyPro')
         .controller('AcademyController', AcademyController);
 
-    AcademyController.$inject = ['AcademyService', '$location', '$routeParams', 'localStorageService'];
+    AcademyController.$inject = ['AcademyService', '$location', '$routeParams', 'localStorageService', '$cookies'];
 
-    function AcademyController(academyService, $location, $routeParams, localStorageService) {
+    function AcademyController(academyService, $location, $routeParams, localStorageService, $cookies) {
         var vm = this;
         vm.currentAcademyId = $routeParams.id;
         vm.academy = null;
@@ -22,10 +22,12 @@
             $location.url('/apps/academy/' + vm.academy.id + '/lecture/' + $itemScope.lecture.id + '/edit');
         },
             function ($itemScope) {
-                if ($itemScope.lecture.canModify == false) {
+                if ($cookies.get('serverUID') == $itemScope.lecture.author.globalId) {
+                    return true;
+                }
+                else {
                     return false;
                 }
-                return true;
             }
     ],
     null,
@@ -34,10 +36,12 @@
             deleteLecture($itemScope.lecture.id);
         },
             function ($itemScope) {
-                if ($itemScope.lecture.canModify == false) {
+                if ($cookies.get('serverUID') == $itemScope.lecture.author.globalId) {
+                    return true;
+                }
+                else {
                     return false;
                 }
-                return true;
             }
     ]
         ];
@@ -71,6 +75,12 @@
             return academyService.getAcademy(vm.currentAcademyId)
                 .then(function (data) {
                     vm.academy = data;
+                    if($cookies.get('serverUID') == data.author.globalId){
+                        vm.canAddNew = true;
+                    }
+                    else {
+                        vm.canAddNew = false;
+                    }
                     return vm.academy;
                 });
         }

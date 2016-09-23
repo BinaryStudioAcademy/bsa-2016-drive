@@ -112,7 +112,7 @@ namespace Drive.WebHost.Services.Pro
                 }),
                 CourseId = lecture.Course.Id,
                 CanModify = lecture.Author.GlobalId == userId,
-                Author = new AuthorDto { Id = lecture.Author.Id }
+                Author = new AuthorDto { Id = lecture.Author.Id, GlobalId = lecture.Author.GlobalId}
             }).SingleOrDefaultAsync();
 
             var author = await _userService.GetAsync(result.Author.Id);
