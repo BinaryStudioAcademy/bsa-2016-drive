@@ -17,8 +17,9 @@
                 {
                     foreach (var item in Model.Path)
                     {
-                        @:&nbsp;>&nbsp; @Ajax.ActionLink(@item.Name, "GetFolderContent", new { link = Model.Link, id = @item.Id },
-                                            new AjaxOptions { UpdateTargetId = "content" })
+                        @:&nbsp;>&nbsp; @Ajax.ActionLink(@item.Name, "GetFolderContent", "Home", "http",
+                                            path, null, new { link = Model.Link, id = @item.Id },
+                                            new AjaxOptions { UpdateTargetId = "content" }, null)
                     }
                 }
             </div>
