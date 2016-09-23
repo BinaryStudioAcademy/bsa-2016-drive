@@ -201,7 +201,7 @@
 @helper GetPath()
 {
 string path = ViewBag.BasePath;
-path = Regex.Match(path, @"http://(.*):").Groups[1].Value;
+path = path.Substring("http://".Length).Split(':')[0];
     @path
 }
 
