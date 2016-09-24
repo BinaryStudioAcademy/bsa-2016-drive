@@ -13,9 +13,10 @@
         '$location',
         'toastr',
         'localStorageService',
+        '$cookies'
     ];
 
-    function EventController(eventService, $routeParams, $sce, contentTypeService, $location, toastr, localStorageService) {
+    function EventController(eventService, $routeParams, $sce, contentTypeService, $location, toastr, localStorageService, $cookies) {
         var vm = this;
 
         vm.currentEventId = $routeParams.id;
@@ -69,6 +70,12 @@
             return eventService.getEvent(vm.currentEventId)
                 .then(function(data) {
                     vm.event = data;
+                    if ($cookies.get('serverUID') == data.author.globalId) {
+                        vm.canEdit = true;
+                    }
+                    else {
+                        vm.canEdit = false;
+                    }
                     vm.sortedContentList = vm.event.contentList;
                     if (vm.sortedContentList.length) {
                         vm.sortedContentList.sort(function (a, b) {

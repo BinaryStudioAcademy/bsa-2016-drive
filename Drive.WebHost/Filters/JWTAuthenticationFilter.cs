@@ -45,6 +45,10 @@ namespace Drive.WebHost.Filters
         {
             var user = filterContext.HttpContext.User;
             if (user != null && user.Identity.IsAuthenticated) return;
+            bool skipAuthorization = filterContext.ActionDescriptor.IsDefined(typeof(AllowAnonymousAttribute), true)
+            || filterContext.ActionDescriptor.ControllerDescriptor.IsDefined(typeof(AllowAnonymousAttribute), true);
+            if (skipAuthorization)
+                return;
             var needAuth = bool.Parse(ConfigurationManager.AppSettings["NeedAuth"]);
             if (!needAuth) return;
             var authServer = ConfigurationManager.AppSettings["AuthServer"];

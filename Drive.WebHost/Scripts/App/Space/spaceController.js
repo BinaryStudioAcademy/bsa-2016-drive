@@ -776,6 +776,33 @@
                     vm.space.folders = data.folders;
                     vm.space.files = data.files;
                     vm.space.canModifySpace = data.canModifySpace;
+
+                    for (var k = 0; k < vm.space.files.length; k++) {
+                        var file = vm.space.files[k];
+
+                        if (file.fileType === 8) {
+                            file.thumbUrl = file.link;
+                            vm.images.push({
+                                url: file.link,
+                                link: file.link,
+                                caption: file.name,
+                                fileType: file.fileType,
+                                created: file.createdAt,
+                                fileId: file.id
+                            });
+                        } else if (file.fileType === 10) {
+                            vm.images.push({
+                                url: file.link,
+                                link: file.link,
+                                caption: file.name,
+                                thumbUrl: file.link,
+                                fileType: file.fileType,
+                                created: file.createdAt,
+                                fileId: file.id,
+                                type: 'video'
+                            });
+                        }
+                    }
                     vm.initSelection();
                 });
         }

@@ -41,7 +41,7 @@
                     </button>
                 </div>
                 <div>
-                    <button type="button" class="btn btn-default btn-custom" ng-click="academyCtrl.createLecture()" title="Add new lecture">
+                    <button type="button" class="btn btn-default btn-custom" ng-click="academyCtrl.createLecture()" ng-disabled="!academyCtrl.canAddNew" title="Add new lecture">
                         <img src="./Content/Icons/lecture-black.svg" height="32" alt="Add lecture" />
                     </button>
                 </div>
@@ -77,16 +77,18 @@
                     <li class="sp-gv-flex-item"></li>
                     <li class="sp-gv-flex-item"></li>
                     <li class="sp-gv-flex-item"></li>
+                    <li class="sp-gv-flex-item"></li>
+                    <li class="sp-gv-flex-item"></li>
                 </ul>
             </div>
         </div>
         <div class="filter-table-lecture container-md" ng-show="academyCtrl.showTable">
             <div class="header-wrapper">
                 <div class="row header-row">
-                    <div class="col-md-2">Name</div>
-                    <div class="col-md-4">Description</div>
-                    <div class="col-md-3">Author</div>
-                    <div class="col-md-3">Start date</div>
+                    <div class="col-xs-2 filter-t-row-1">Name</div>
+                    <div class="col-xs-4 filter-t-row-1">Description</div>
+                    <div class="col-xs-3 filter-t-row-1">Author</div>
+                    <div class="col-xs-3 filter-t-row-1">Start date</div>
                 </div>
             </div>
             <div class="filter-table-internal">
@@ -97,15 +99,15 @@
                     <div class="row filter-table-row" role="button" ng-repeat="lecture in academyCtrl.academy.lectures"
                          context-menu="academyCtrl.academyMenuOptions"
                          ng-dblclick="academyCtrl.openLecture(lecture.id)">
-                        <div class="col-md-2 filter-table-cell description" title="{{ lecture.name }}">
+                        <div class="col-xs-2 filter-table-cell  filter-t-row-1" title="{{ lecture.name }}">
                             <img ng-src="{{academyCtrl.icon}}" height="{{academyCtrl.iconHeight}}" />
                             {{lecture.name | limitTo: 15}}{{lecture.name.length > 15 ? '...' : ''}}
                         </div>
-                        <div class="col-md-4 filter-table-cell description" title="{{ lecture.description }}">
+                        <div class="col-xs-4 filter-table-cell  filter-t-row-1" title="{{ lecture.description }}">
                             {{lecture.description | limitTo: 41}}{{lecture.description.length > 41 ? '...' : ''}}
                         </div>
-                        <div class="col-md-3 filter-table-cell">{{ lecture.author.name }}</div>
-                        <div class="col-md-3 filter-table-cell">{{ lecture.startDate | date:'dd-MM-yyyy HH:mm' }}</div>
+                        <div class="col-xs-3 filter-table-cell filter-t-row-1">{{ lecture.author.name }}</div>
+                        <div class="col-xs-3 filter-table-cell filter-t-row-1">{{ lecture.startDate | date:'dd-MM-yyyy HH:mm' }}</div>
                     </div>
                 </div>
             </div>
