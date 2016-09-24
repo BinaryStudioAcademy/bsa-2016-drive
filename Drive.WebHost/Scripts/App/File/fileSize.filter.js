@@ -9,17 +9,17 @@
                     size = 0;
 
                 if (size < 1024)
-                    return size + ' Bytes';
+                    return size + ' MB';
 
                 size /= 1024;
 
                 if (size < 1024)
-                    return size.toFixed(2) + ' Kb';
+                    return size.toFixed(2) + ' GB';
 
                 size /= 1024;
 
                 if (size < 1024)
-                    return size.toFixed(2) + ' Mb';
+                    return size.toFixed(2) + ' TB';
             }
         });
 })();
