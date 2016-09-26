@@ -74,7 +74,7 @@
         function activate() {
             vm.eventsList = [];
             var view = localStorageService.get('view')
-            if (view === undefined) {
+            if (view == undefined) {
                 vm.showTable = true;
                 vm.showGrid = false;
                 vm.view = "fa fa-th";
